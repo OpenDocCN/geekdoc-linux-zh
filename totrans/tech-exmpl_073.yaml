@@ -1,379 +1,541 @@
 - en: Design an URL shortening service like bit.ly
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设计一个像bit.ly的URL缩短服务
 - en: 原文：[https://techbyexample.com/url-shortner-system-design/](https://techbyexample.com/url-shortner-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/url-shortner-system-design/](https://techbyexample.com/url-shortner-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[API Details](#API_Details "API Details")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[API详情](#API_Details "API详情")'
 - en: '[How Short URL will redirect to the Long URL](#How_Short_URL_will_redirect_to_the_Long_URL
     "How Short URL will redirect to the Long URL")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[短URL如何重定向到长URL](#How_Short_URL_will_redirect_to_the_Long_URL "短URL如何重定向到长URL")'
 - en: '[Encoding Schemes](#Encoding_Schemes "Encoding Schemes")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[编码方案](#Encoding_Schemes "编码方案")'
 - en: '[MD5 Approach](#MD5_Approach "MD5 Approach")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[MD5方法](#MD5_Approach "MD5方法")'
 - en: '[Counter Approach](#Counter_Approach "Counter Approach")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[计数器方法](#Counter_Approach "计数器方法")'
 - en: '[Range of Keys](#Range_of_Keys "Range of Keys")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[密钥范围](#Range_of_Keys "密钥范围")'
 - en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[高级设计](#High-Level_Design "高级设计")'
 - en: '[Short URL Service](#Short_URL_Service "Short URL Service")'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[短URL服务](#Short_URL_Service "短URL服务")'
 - en: '[What database to use](#What_database_to_use "What database to use")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[使用什么数据库](#What_database_to_use "使用什么数据库")'
 - en: '[Key Generation Service](#Key_Generation_Service "Key Generation Service")'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[密钥生成服务](#Key_Generation_Service "密钥生成服务")'
 - en: '[Database Schema](#Database_Schema "Database Schema")'
+  id: totrans-14
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[数据库架构](#Database_Schema "数据库架构")'
 - en: '[Which Database to Use](#Which_Database_to_Use "Which Database to Use")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[使用什么数据库](#Which_Database_to_Use "使用什么数据库")'
 - en: '[How to resolve concurrency issues](#How_to_resolve_concurrency_issues "How
     to resolve concurrency issues")'
+  id: totrans-16
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何解决并发问题](#How_to_resolve_concurrency_issues "如何解决并发问题")'
 - en: '[How to recover key_prefix](#How_to_recover_key_prefix "How to recover key_prefix")'
+  id: totrans-17
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何恢复key_prefix](#How_to_recover_key_prefix "如何恢复key_prefix")'
 - en: '[What happens if the key ranges are getting exhausted](#What_happens_if_the_key_ranges_are_getting_exhausted
     "What happens if the key ranges are getting exhausted")'
+  id: totrans-18
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果密钥范围用尽会发生什么](#What_happens_if_the_key_ranges_are_getting_exhausted "如果密钥范围用尽会发生什么")'
 - en: '[What if the short URL never expires](#What_if_the_short_URL_never_expires
     "What if the short URL never expires")'
+  id: totrans-19
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果短URL永不过期会怎样](#What_if_the_short_URL_never_expires "如果短URL永不过期会怎样")'
 - en: '[Is not KGS service a single point of failure?](#Is_not_KGS_service_a_single_point_of_failure
     "Is not KGS service a single point of failure?")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[KGS服务不是单点故障吗？](#Is_not_KGS_service_a_single_point_of_failure "KGS服务不是单点故障吗？")'
 - en: '[Other common components](#Other_common_components "Other common components")'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[其他常见组件](#Other_common_components "其他常见组件")'
 - en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
     Requirements")'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能性需求](#Non-Functional_Requirements "非功能性需求")'
 - en: '[Scalability](#Scalability "Scalability")'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可扩展性](#Scalability "可扩展性")'
 - en: '[Low latency](#Low_latency "Low latency")'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低延迟](#Low_latency "低延迟")'
 - en: '[Availability](#Availability "Availability")'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可用性](#Availability "可用性")'
 - en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[告警和监控](#Alerting_and_Monitoring "告警和监控")'
 - en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
     to user location")'
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[靠近用户位置](#Moving_closer_to_user_location "靠近用户位置")'
 - en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
     Single Point of Failures")'
+  id: totrans-28
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[避免单点故障](#Avoiding_Single_Point_of_Failures "避免单点故障")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The URL shortening service is used to shorten a long URL. The short URL will
     not be dependent upon the length of the actual URL. For
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: URL缩短服务用于缩短一个长的URL。短URL的长度不会依赖于实际URL的长度。
 - en: '[https://techbyexample/system-design/whatsapp-system-design](https://techbyexample/system-design/whatsapp-system-design)
     should be shortened to [https://bit.ly/sdfse43](https://bit.ly/sdfse43)'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[https://techbyexample/system-design/whatsapp-system-design](https://techbyexample/system-design/whatsapp-system-design)应该缩短为[https://bit.ly/sdfse43](https://bit.ly/sdfse43)'
 - en: '[https://google.com/search/](https://google.com/search/) can be shortened to
     [https://bit.ly/wrewr34](https://bit.ly/wrewr34)'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[https://google.com/search/](https://google.com/search/)可以缩短为[https://bit.ly/wrewr34](https://bit.ly/wrewr34)'
 - en: Notice the second part of the URL in bit.ly. It will always be of fixed length
     irrespective of the length of the input URL. Let’s note down the functional requirement
     of the system
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意bit.ly中的URL第二部分。它将始终是固定长度，无论输入URL的长度如何。我们来记录下系统的功能需求
 - en: You should be able to generate the short URL of fixed length irrespective of
     the length of the input URL.
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 无论输入URL的长度如何，你都应该能够生成固定长度的短URL。
 - en: Once the shortened URL is clicked it should be able to redirect the user to
     the actual URL.
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦点击了短网址，它应该能够将用户重定向到实际的网址。
 - en: There should be an expiration time with each of the URLs. After that, the shortened
     URL will expire
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个网址应该有一个过期时间。之后，短网址将过期
 - en: We are also going to consider the case where a short URL never expires later
     in this tutorial
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们还将考虑一种情况，在本教程中，短网址永不过期
 - en: Here are some of the non-functional requirements
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一些非功能需求
 - en: The system should be highly available
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统应该具有高可用性
 - en: The system should be strongly consistent. What it means is that once a short
     URL is generated for a given long URL then the system should be able to return
     that long URL given the short URL in the next immediate call.
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统应该具有强一致性。这意味着，一旦为给定长网址生成了短网址，那么在下次调用时，系统应该能够根据短网址返回该长网址。
 - en: The system should be fault-tolerant
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统应该具有容错能力
 - en: There should be no single point of failure
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统中不应有单点故障
 - en: What a short URL should look like? Before we look at the requirements, let’s
     look at a sample example URL. Here are some requirements
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 短网址应该是什么样子的？在我们查看要求之前，先看一个示例网址。以下是一些要求
 - en: It must be short and unique. Preferably 6-8 characters in length
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它必须简短且唯一。最好长度为6-8个字符
 - en: It should only have characters that are URL safe. Below are URL safe characters
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它应该只包含URL安全的字符。以下是URL安全字符
 - en: Lower case Alphabets – “a-z”
+  id: totrans-47
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 小写字母 – “a-z”
 - en: Uppercase Alphabets – “A-Z”
+  id: totrans-48
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大写字母 – “A-Z”
 - en: Digits – “0-9”
+  id: totrans-49
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 数字 – “0-9”
 - en: Dot – “.”
+  id: totrans-50
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 点 – “.”
 - en: Ampersand – “~”
+  id: totrans-51
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与符号 – “~”
 - en: Underscore – “_”
+  id: totrans-52
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 下划线 – “_”
 - en: Dash – “-“
+  id: totrans-53
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 连字符 – “-”
 - en: Here is one example of a short URL that has 7 characters as part of the short
     string.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个短网址的示例，它包含7个字符作为短字符串的一部分。
 - en: '[PRE0]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**API Details**'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**API详情**'
 - en: Below will be the API that will be needed in the system
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是系统中所需的API
 - en: '**Create short URL** – This API will create a short URL given a long URL'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**创建短网址** – 该API将根据长网址创建短网址'
 - en: '**Delete Short URL** – This API will be used to delete a short URL that was
     created earlier.'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**删除短网址** – 该API将用于删除之前创建的短网址'
 - en: '**GET URL** – This API will redirect to the long URL given a short URL'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**获取网址** – 该API将在给定短网址时重定向到长网址'
 - en: '**List Short URL** – See all Short URLs for a particular user'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**列出短网址** – 查看某个特定用户的所有短网址'
 - en: '**How Short URL will redirect to the Long URL**'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**短网址如何重定向到长网址**'
 - en: As soon as our service will receive the short URL it will fetch the corresponding
     long or original URL for that short URL. There are two cases
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦我们的服务接收到短网址，它将获取该短网址对应的长网址或原始网址。这里有两种情况
 - en: If not present it will respond with 404 Resource Not Found back to the browser
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果不存在，它将向浏览器返回404资源未找到的响应
 - en: If present then it will issue an HTTP 302 redirect to the browser. The **Location
     response** header will contain the long or original URL. The browser will then
     redirect to the long URL. This is the standard way of redirection as specified
     by the HTTP protocol
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果存在，它将向浏览器发出HTTP 302重定向。**Location响应**头将包含长网址或原始网址。浏览器将随后重定向到长网址。这是HTTP协议中规定的标准重定向方式
 - en: One of the most important parts of implementing a short URL service is to generate
     a short URL string.  Before looking at the solution let’s look at some of the
     encoding schemes that can be used to produce a short URL string
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 实现短网址服务的最重要部分之一是生成短网址字符串。在查看解决方案之前，我们先看看可以用于生成短网址字符串的编码方案
 - en: '**Encoding Schemes**'
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**编码方案**'
 - en: There are three solutions to design a unique short character for a given long
     URL
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计一个唯一的短字符来表示给定长网址有三种解决方案
 - en: MD5
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: MD5
 - en: Counter
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计数器
 - en: Key Range
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 密钥范围
 - en: '**MD5 Approach**'
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**MD5方法**'
 - en: We will have an MD5 function that will return a unique string for a given long
     URL. The MD5 string is of 128-bit fixed length. We can take the first 42 bits
     to represent it as 7 base64 characters. Each character in base64 takes 6 bits
     that is why 6*7=42 bits overall.  We can also take the first 48 bits to represent
     it as 8 base64 characters. H**ow to prevent collision**
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将有一个MD5函数，它会为给定的长网址返回一个唯一的字符串。MD5字符串是128位的固定长度。我们可以取前42位来表示它为7个base64字符。每个base64字符占6位，因此6*7=42位。我们也可以取前48位来表示它为8个base64字符。**如何防止冲突**
 - en: As you can see that the biggest issue with the MD5 approach is a collision.
     Two long URLs can result in an MD5 that has the same first 42 bits. How we can
     detect collision then. We first do an MD5 of a given long URL then we take the
     first 42 bits to create the 7 bases 64 characters string. Then we check that string
     in DB to see if it has been already taken or not. If yes then we take the 2-43
     bits and then check
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 如你所见，MD5方法的最大问题是碰撞。两个长URL可能会产生相同的前42位MD5值。那么我们如何检测碰撞呢？我们首先对给定的长URL进行MD5运算，然后取前42位生成7个base64字符的字符串。接着，我们检查该字符串在数据库中是否已被使用。如果已经被使用，我们就取第2到43位进行检查。
 - en: '**Advantages**'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**'
 - en: The biggest advantage of the MD5 approach is that it is simple to implement.
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: MD5方法的最大优点是它实现起来非常简单。
 - en: If there is a system in which only a few short URL needs to be generated and
     where the short URL generation is async then this scheme could work well as there
     will be fewer collisions and even if a collision happens we still have some time
     to figure out the next short URL since the overall process is async.
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果是一个只需要生成少量短网址的系统，并且短网址生成是异步的，那么这个方案可能会非常有效，因为碰撞较少，即使发生了碰撞，由于整体过程是异步的，我们仍然有时间处理下一个短网址。
 - en: '**Disadvantages**'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: As we can see this solution is not scalable. If we large number of short URLs
     is to be generated within seconds then the system could perform very poorly if
     there are a lot of collisions.
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 正如我们所见，这个解决方案并不具有可扩展性。如果需要在几秒钟内生成大量短网址，且发生了大量碰撞时，系统的性能可能会大幅下降。
 - en: '**Counter Approach**'
+  id: totrans-80
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**计数器方法**'
 - en: As we have already seen there is a way to convert a base10 number to a base64
     string. A counter is nothing but a base10 number. So if we have a way of generating
     a unique number for a given long URL then we will be able to generate a short
@@ -381,183 +543,268 @@
     is to have a free list of ranges of numbers. For that, we can have another service
     that can expose an API that will return the free range of numbers that can be
     returned.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们已经看到的，将base10数字转换为base64字符串是可行的。计数器本质上就是一个base10数字。因此，如果我们有一种方法为给定的长URL生成唯一数字，那么我们就能够生成短网址。问题是我们如何生成这个唯一的计数器或数字。这个思路是拥有一个空闲数字范围的列表。为此，我们可以再有一个服务，通过API返回可以使用的空闲数字范围。
 - en: '**Advantages**:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**：'
 - en: It is a scalable option that can be used for any service which has huge traffic.
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这是一个可扩展的选项，适用于任何流量巨大的服务。
 - en: '**Disadvantages**'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: Converting a base10 number to a base64 will not yield a fixed-length string.
     For example, converting 100,000 into base64 will give **“Yag”**. This might be
     ok but a professional URL shorter service generator should adopt a standard. Also,
     this disadvantage can be circumvented by choosing number ranges that give 6 or
     7 lengths of Base64 strings.
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将一个base10数字转换为base64不会得到固定长度的字符串。例如，将100,000转换为base64会得到**“Yag”**。这可能没问题，但一个专业的短网址生成服务应该采用标准。此缺点可以通过选择产生6位或7位Base64字符串的数字范围来规避。
 - en: There is a  cost of conversion of number to base64 every time though this conversion
     cost might not have a substantial impact.
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每次将数字转换为base64时都会有一定的转换成本，尽管这种转换成本可能不会产生实质性的影响。
 - en: Little complex as compared to MD5
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 相比于MD5，这个方法稍微复杂一点。
 - en: '**Range of Keys**'
+  id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**密钥范围**'
 - en: The third option is to have a range of keys itself instead of a range of the
     counter.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 第三种选择是使用密钥范围本身，而不是计数器范围。
 - en: '**Advantages**:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**：'
 - en: It is a scalable option that can be used for any service which has huge traffic.
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这是一个可扩展的选项，适用于任何流量巨大的服务。
 - en: '**Disadvantages**'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: Little complex as compared to MD5
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 相比于MD5，这个方法稍微复杂一点。
 - en: Both Counter and Range of Keys are good options. We will be considering the
     Range of Keys in this tutorial
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 计数器和密钥范围都是不错的选择。在本教程中，我们将考虑密钥范围的方式。
 - en: '**High-Level Design**'
+  id: totrans-95
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**高级设计**'
 - en: On a high level let’s discuss what will be the higher flow and what all services
     would exist.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 从高层次上讲，我们来讨论一下更高层次的流程以及将会有哪些服务存在。
 - en: There will be an **API gateway** on which every request from all the users will
     land.
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会有一个**API网关**，所有用户的请求都会先到达此网关。
 - en: There will be a **Short URL** service. This service holds the responsibility
     of handling all the APIs that will come for the user.
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会有一个**短网址**服务。该服务负责处理所有来自用户的API请求。
 - en: There will be a **Key Generation Service**  that holds the responsibility of
     generation of short keys
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会有一个**密钥生成服务**，它负责生成短网址的密钥。
 - en: The **Short URL** service will call the key generation service whenever it needs
     new keys.
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**短网址** 服务将会在每次需要新密钥时调用密钥生成服务。'
 - en: When the **Short URL** service has exhausted all the key ranges it will publish
     a Kafka/SNS message specifying that the key ranges have been exhausted.
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当 **短网址** 服务耗尽所有密钥范围时，它将发布一个 Kafka/SNS 消息，指定密钥范围已耗尽。
 - en: This message will be picked by a **Key Recovery** service which will be a worker.
     It will mark the key range as free so that it can be picked again.  This worker
     will also delete the short_url – long_url mapping for all the keys in the range
     from the database.
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条消息将由**密钥恢复**服务处理，该服务将作为一个工作进程。它会将密钥范围标记为可用，从而可以再次选择该范围。该工作进程还将从数据库中删除该范围内所有密钥的
+    short_url – long_url 映射。
 - en: We will cache the **Short URL – Long URL** mapping as soon as it is created
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦创建 short_url 映射，我们将立即缓存该映射
 - en: Below is the high-level diagram of the service
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是该服务的高层设计图
 - en: '![](../Images/3368950d7a04dd4303b3bf88bad75376.png)'
+  id: totrans-105
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/3368950d7a04dd4303b3bf88bad75376.png)'
 - en: Let’s see some of the details of the **Short URL** service and the **Key Generation**
     Service
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看 **短网址** 服务和 **密钥生成** 服务的一些细节
 - en: '**Short URL Service**'
+  id: totrans-107
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**短网址服务**'
 - en: Let’s see what all databases will be needed for the short_url service. We will
     need a short_url table. Below will the fields in the **short_url** table
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看短网址服务需要哪些数据库。我们需要一个 short_url 表。以下是 **short_url** 表中的字段
 - en: '**short_url_key**'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**short_url_key**'
 - en: '**long_url**'
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**long_url**'
 - en: '**user_id**'
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**user_id**'
 - en: '**created**'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**created**'
 - en: '**updated**'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已更新**'
 - en: '**What database to use**'
+  id: totrans-114
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**使用什么数据库**'
 - en: Since we don’t have any ACID requirements. So No SQL database will work for
     us. Also, we might have very large data to save as well so No SQL might be better
     suited. This system will be a write-heavy as well as a read-heavy system. Also,
     there is less secondary index requirement here and almost all queries will be
     on the primary field which is **short_url_key**. So we can use **Cassandra Database**
     here.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们没有任何 ACID 要求，所以 NoSQL 数据库适合我们使用。此外，我们可能需要保存非常大的数据，因此 NoSQL 可能更合适。这个系统将是一个写重和读重的系统。而且，这里几乎没有二级索引需求，几乎所有查询都将基于主字段
+    **short_url_key**。所以我们可以在这里使用 **Cassandra 数据库**。
 - en: As mentioned in the high-level diagram it is the Short URL that is going to
     keep track of all short URLs generated. It will coordinate with the Key Generation
     Service for getting the range of free keys. Each of the keys can generate one
     short URL. Now let’s look at the design of the **Key Generation Service**
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 如高层图所示，短网址将负责跟踪所有生成的短网址。它将与密钥生成服务协调，以获取空闲密钥范围。每个密钥可以生成一个短网址。现在让我们看看 **密钥生成服务**
+    的设计
 - en: '**Key Generation Service**'
+  id: totrans-117
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**密钥生成服务**'
 - en: There will be a KGS service that holds the responsibility of generating the
     keys. First, let’s see what should be the length of each key. Possible options
     of length are 6,7,8\. Only base64 URL-safe characters could be used to generate
     the key. Therefore
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 将有一个 KGS 服务，负责生成密钥。首先，我们来看一下每个密钥的长度应为多少。可选的长度为 6、7、8。生成密钥时只能使用 base64 URL 安全字符。因此
 - en: For 6- We have 64^6= 68.7 billion options
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 6 - 我们有 64^6 = 687 亿种选项
 - en: For 7 – We have 64^7 = ~3500 Billion options
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 7 - 我们有 64^7 = ~3500 亿种选项
 - en: For 8 – We have 64^8= trillion options
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 8 - 我们有 64^8 = 万亿种选项
 - en: We can now assume that 68.7 billion entries will be enough so we can have 6
     characters for the key.  Now the question is how these are going to be maintained
     in the Database. If we are storing 68 billion entries in the database then it
@@ -565,371 +812,535 @@
     of keys in the databases. We can have a range of 64 where we only store the first
     five characters which will act as a prefix for all 64 keys which can be generated
     from this prefix. Let’s say we have below prefix
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们可以假设 687 亿条记录已经足够，因此我们可以使用 6 个字符作为密钥。现在的问题是这些数据将如何在数据库中维护。如果我们将 687 亿条记录存储到数据库中，那么可能会有太多条记录，从而浪费资源。一个选项是将密钥范围存储到数据库中。我们可以存储
+    64 个范围，只存储前五个字符，作为所有从该前缀生成的 64 个密钥的前缀。例如，我们有以下前缀
 - en: '[PRE1]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Then below 64 keys can be generated from this
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，可以从此生成以下 64 个密钥
 - en: '**adcA2[a-z]** – 26 keys'
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[a-z]** – 26 个密钥'
 - en: '**adcA2[A-Z]** – 26 keys'
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[A-Z]** – 26 个密钥'
 - en: '**adcA2[0-9]** – 10 keys'
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[0-9]** – 10 个密钥'
 - en: '**adcA2[-_]** – 2 keys'
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[-_]** – 2 个密钥'
 - en: We can store these ranges in DB. So for 6 characters, we will have overall 64^5
     entries in the database. The keys will be returned by the Key Service to the Tiny
     URL services in ranges and batches only. The Tiny URL service will then use this
     prefix to generate 64 keys and serve 64 different create tiny URL requests.
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将这些范围存储在数据库中。所以对于6个字符的情况，数据库中将总共存储64^5个条目。键将由键服务按范围和批次返回给短网址服务。短网址服务随后将使用这个前缀生成64个键，并处理64个不同的创建短网址请求。
 - en: This is optimization as the Short URL service only needs to call the Key Generation
     Service only when it has exhausted all its 64 keys. So there will be one call
     from the Short URL service to the Key Generation Service for generating 64 short
     URLs
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是优化，因为短网址服务只需要在它已经用完所有64个键时才调用键生成服务。因此，短网址服务将发出一次调用到键生成服务，用于生成64个短网址。
 - en: Let’s now see the points for the KGS service
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们来看一下 KGS 服务的要点。
 - en: Database Schema
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 数据库架构
 - en: Which database to use
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用哪个数据库
 - en: How to resolve concurrency issues
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何解决并发问题
 - en: How to recover key_prefix
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何恢复 key_prefix
 - en: What happens if the key ranges are getting exhausted
+  id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果键范围被耗尽了，会发生什么情况
 - en: What if the short URL never expires
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果短网址永不过期怎么办
 - en: Is not KGS service a single point of failure?
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: KGS 服务难道不是单点故障吗？
 - en: '**Database Schema**'
+  id: totrans-139
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**数据库架构**'
 - en: There will just be a single table that will store the range of keys i.e prefix.
     Below will be the fields in the table
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 只会有一个表来存储键的范围，即前缀。下表将包含该表中的字段。
 - en: '**key_prefix**'
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**key_prefix**'
 - en: '**key_length** – It will always be 6 for now. These fields exist if we need
     7 length keys in any scenario'
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**key_length** – 目前它将始终为6。如果在任何情况下我们需要7位长度的键，这些字段会存在。'
 - en: '**used** – If this is true then the key prefix is currently in use. If false
     then it is free to be used'
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已使用** – 如果为真，则表示该键前缀当前正在使用。如果为假，则表示它可以被使用。'
 - en: '**created**'
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已创建**'
 - en: '**updated**'
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**更新**'
 - en: '**Which Database to Use**'
+  id: totrans-146
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**使用哪个数据库**'
 - en: We don’t have any ACID requirements so we can use the No SQL database. Also,
     we might have very large data to save as well so No SQL might be better suited.
     This system will be a write-heavy as well as a read-heavy system. So we can use
     **Cassandra Database** here. We can do the capacity estimates of the DB and based
     on that we can decide on the number of shards we want to have. Each of the shards
     would be properly replicated as well
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有 ACID 要求，因此可以使用 No SQL 数据库。此外，我们可能需要保存非常大的数据，所以 No SQL 数据库可能更适合。这个系统将是一个既写重也读重的系统。因此，我们可以在这里使用**Cassandra
+    数据库**。我们可以做数据库的容量估算，并基于此来决定我们希望拥有的分片数量。每个分片都会被适当的复制。
 - en: There is one more optimization we can do here to improve the latency. We can
     refill free key ranges in the cache and the KGS service can directly pick from
     there instead of going to the database every time.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里我们还可以进行一次优化，以提高延迟。我们可以在缓存中重新填充空闲的键范围，KGS 服务可以直接从中获取，而不是每次都访问数据库。
 - en: '**How to resolve concurrency issues**'
+  id: totrans-149
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何解决并发问题**'
 - en: It could very well happen that two requests see the same prefix or range as
     free. Since there are multiple servers reading from the key DB simultaneously
     we might have a scenario where two or more servers read the same key as free from
     the key DB. There are two ways to resolve the concurrency issues we just mentioned
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 很有可能会发生两个请求看到相同的前缀或范围是空闲的。由于多个服务器同时从键数据库读取，我们可能会遇到两台或更多服务器从键数据库读取到相同的空闲键范围。我们刚才提到的并发问题有两种方式可以解决。
 - en: Two or more servers read the same key but only one server will be able to mark
     that **key_prefix** as used in the database. Concurrency is at DB level that is
     each row is locked before being updated and we can leverage that here. Db will
     return back to the server whether any record was updated or not. If the record
     was not updated then the server can fetch a new key. If the record was updated
     then that server has got the right key.
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 两台或更多服务器读取相同的键，但只有一台服务器能够在数据库中将该**key_prefix**标记为已使用。并发控制在数据库级别，也就是说每一行在更新之前都会被锁定，我们可以在这里利用这一点。数据库会返回给服务器是否有记录被更新。如果记录没有被更新，则服务器可以获取一个新的键。如果记录被更新，那么该服务器就获得了正确的键。
 - en: The other option is to use a transaction that does Find and Update in one transaction.
     Each Find and Update will return a unique key_prefix every time. This is probably
     not a recommended option because of the load it puts on the database
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 另一种选择是使用事务，在一个事务中进行查找和更新。每次查找和更新都会返回一个唯一的 key_prefix。这可能不是一个推荐的选择，因为它会给数据库带来负载。
 - en: '**How to recover key_prefix**'
+  id: totrans-153
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何恢复 key_prefix**'
 - en: Tiny URL service once it has exhausted the range of keys, then it will enter
     that range into another table from which it can be recovered and put back as free
     after 2 weeks. We know for sure that after two weeks the keys will be free as
     we have an expiry of two weeks
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦Tiny URL服务用尽了密钥范围，它将把该范围输入到另一个表中，经过两周后，密钥将被恢复并重新作为免费密钥提供。我们可以确定，在两周后，密钥将是免费的，因为我们设置了两周的到期时间。
 - en: '**What happens if the key ranges are getting exhausted**'
+  id: totrans-155
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如果密钥范围用尽会发生什么？**'
 - en: This will be an unexpected condition. There will be a background worker that
     will check if the key ranges are getting exhausted. If yes then it can generate
     ranges for 7 length keys. But how it will know if the key ranges are getting exhausted.
     For keeping a rough count there could be another table that will store the user
     count of used keys.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将是一个意外的情况。将有一个后台工作者检查密钥范围是否用尽。如果是，它可以生成7位长度的密钥范围。但是，如何知道密钥范围是否用尽呢？为了保持大致的计数，可能会有另一个表格来存储已使用密钥的用户计数。
 - en: Whenever any range is allotted by the KGS to Tiny URL service it will publish
     a message that will be picked by a synchronous worker that is going to decrease
     the count of used keys by 1.
+  id: totrans-157
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每当KGS为Tiny URL服务分配一个范围时，它会发布一条消息，该消息将被一个同步工作者拾取，工作者将减少已使用密钥的数量。
 - en: Similarly, whenever a range is free we can increment this counter.
+  id: totrans-158
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 同样，每当一个范围变为空时，我们可以递增该计数器。
 - en: '**What if the short URL never expires**'
+  id: totrans-159
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如果短网址永不过期会怎样？**'
 - en: It is easy to extend the above service to serve URLs that never expire.
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: 扩展上述服务以支持永不过期的URL是很容易的。
 - en: Just that our short string will not be limited to 6 length characters. We can
     use 7 lengths, 8 length characters, or even 9 lengths as the need arises.
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 只不过我们的短字符串将不再局限于6个字符。根据需要，我们可以使用7位、8位甚至9位长度的字符。
 - en: There will be no **key recovery** service
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不会提供**密钥恢复**服务
 - en: Once a **key_range** has been allotted we can remove it from the key DB as it
     is never meant to be freed or recovered
+  id: totrans-163
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦**密钥范围**被分配，我们可以将其从密钥数据库中移除，因为它不再需要释放或恢复。
 - en: '**Is not KGS service a single point of failure?**'
+  id: totrans-164
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**KGS服务不是单点故障吗？**'
 - en: To prevent it we will have proper replication of the key database. Also, there
     will be multiple app servers for the service itself. We will also have proper
     autoscaling set up. We can also have Disaster Management
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了防止这种情况，我们将对密钥数据库进行适当的复制。此外，服务本身还将有多个应用服务器。我们还会设置适当的自动扩展机制。我们还可以实施灾难管理。
 - en: '**Other common components**'
+  id: totrans-166
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**其他常见组件**'
 - en: Other common components could be
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 其他常见组件可能包括：
 - en: User Service – It holds the user profile information.
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户服务——存储用户的个人信息。
 - en: Token/Auth Service – Management of User tokens
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 令牌/认证服务——用于管理用户令牌。
 - en: SMS Service- It is used for sending any kind of message back to the user. For
     example – OTP
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 短信服务——用于向用户发送任何类型的消息。例如：一次性密码（OTP）
 - en: Analytics Service – This could be used to track any kind of analytics
+  id: totrans-171
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 分析服务——这可以用于跟踪任何类型的分析数据。
 - en: '**Non-Functional Requirements**'
+  id: totrans-172
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**非功能性需求**'
 - en: Let’s discuss some non-functional requirements now
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们讨论一些非功能性需求。
 - en: '**Scalability**'
+  id: totrans-174
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可扩展性**'
 - en: The first thing to consider with the above design is the scalability factor.
     The scalability of each of the components in the system is very important. Here
     are scalability challenges you can face and their possible resolutions
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述设计中需要考虑的第一件事是可扩展性因素。系统中每个组件的可扩展性非常重要。以下是可能遇到的可扩展性挑战及其可能的解决方案。
 - en: Each of the machines in the **short_url** service and **KGS** service could
     only serve a limited number of requests. Hence each service here should have proper
     autoscaling set in so that based on the number of requests we can add instances
     up and autoscale them when needed
+  id: totrans-176
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**短网址**服务和**KGS**服务中的每台机器只能处理有限数量的请求。因此，每个服务应设置适当的自动扩展机制，以便根据请求数量，我们可以增加实例并在需要时自动扩展。'
 - en: Your Kafka/SNS system might not be able to take that much load. We can scale
     horizontally but to a limit. If that is becoming a bottleneck then depending upon
     the geography or userId we can have two or more such systems. Service discovery
     could be used to figure out which Kafka system a request needs to go to.
+  id: totrans-177
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你的Kafka/SNS系统可能无法承受这么大的负载。我们可以进行水平扩展，但也有一个限制。如果这成为瓶颈，那么根据地理位置或用户ID，我们可以设置两个或更多这样的系统。可以使用服务发现来确定请求应该发送到哪个Kafka系统。
 - en: Another important factor of scalability here is that we have designed our system
     in such a way so that none of the services is bogged with too many things to do.
     There is a separation of concerns and wherever there was too much of a responsibility
     on service, we have broken it down
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性的另一个重要因素是，我们设计了系统的方式，使得没有任何服务被过多的任务拖慢。我们有关注点的分离，在服务责任过重的地方，我们将其拆分开来。
 - en: '**Low latency**'
+  id: totrans-179
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**低延迟**'
 - en: We can cache the short URL when it is created with some expiry of course. As
     and when a short URL is created it is more likely to be accessed in some time.
     It will reduce latency for many of the read calls.
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们可以缓存创建的短网址，并设置一定的过期时间。每当一个短网址被创建时，它很可能会在一段时间内被访问。这将减少许多读取请求的延迟。
 - en: We also created batches of key or key ranges. This prevents the Short URL service
     to call the KGS service every time and overall improves the latency.
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们还创建了键或键范围的批次。这防止了短网址服务每次都调用 KGS 服务，从而整体上提高了延迟。
 - en: There is one more optimization we can do here to improve the latency. We can
     refill free key ranges in the cache and the KGS service can directly pick from
     there instead of going to the database every time.
+  id: totrans-182
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 还有一个优化可以改善延迟。我们可以在缓存中重新填充空闲的键范围，KGS 服务可以直接从那里获取，而不是每次都访问数据库。
 - en: '**Availability**'
+  id: totrans-183
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可用性**'
 - en: In order for the system to be highly available, it is very important to have
     redundancy/backups for almost all components in the system. Here are some of the
     things that need to be done.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使系统具有高可用性，几乎所有组件都必须具有冗余/备份。以下是需要执行的一些事项。
 - en: In the case of our DB, we need to enable replication. There should be multiple
     slaves for each of the master shard nodes.
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在我们的数据库中，我们需要启用复制功能。每个主分片节点应该有多个从节点。
 - en: For Redis we also need replication.
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 Redis，我们也需要启用复制。
 - en: For data redundancy, we could be multi-region as well. This could be one of
     the benefits if one of the regions goes down.
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于数据冗余，我们也可以采用多区域部署。如果其中一个区域发生故障，这可以作为一个优势。
 - en: Disaster Recovery could also be set up
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 灾难恢复也可以设置
 - en: '**Alerting and Monitoring**'
+  id: totrans-189
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**警报与监控**'
 - en: Alerting and Monitoring is also a very important non-functional requirement.
     We should monitor each of our services and set up proper alerts as well. Some
     of the things that could be monitored are
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 警报与监控也是非常重要的非功能性需求。我们应当监控我们的每一个服务并设置合适的警报。可以监控的一些内容包括：
 - en: API Response Time
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: API 响应时间
 - en: Memory Consumption
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内存使用情况
 - en: CPU Consumption
+  id: totrans-193
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CPU 使用情况
 - en: Disk Space Consumption
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 磁盘空间使用情况
 - en: Queue Length
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 队列长度
 - en: ….
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ….
 - en: '**Moving closer to user location**'
+  id: totrans-197
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**靠近用户位置**'
 - en: There are a couple of architectures that could be followed here. One such is
     Cell Architecture. You can read more about cell architecture here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有几种架构可以选择，其中之一是单元架构。你可以在这里阅读更多关于单元架构的信息 – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
 - en: '**Avoiding Single Point of Failures**'
+  id: totrans-199
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**避免单点故障**'
 - en: A single point of failure is that part of a system that when stops working then
     it would lead the entire system to fail. We should try to prevent any single point
     of failure as well in our design. By redundancy and going multi-region we can
     prevent such things
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 单点故障是指当系统的某一部分停止工作时，会导致整个系统的故障。我们在设计时应尽量避免单点故障。通过冗余和多区域部署，我们可以防止这种情况的发生。
 - en: '**Conclusion**'
+  id: totrans-201
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**总结**'
 - en: This is all about the system design of URL shorter service.  Hoped you have
     liked this article. Please share feedback in the comments
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是 URL 缩短服务的系统设计。希望你喜欢这篇文章。请在评论中提供反馈。

@@ -1,45 +1,70 @@
 - en: How to increase the size of an EBS volume in EC2 with the help of cloud formation.
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 如何通过云形成（CloudFormation）来增加 EC2 中 EBS 卷的大小。
 - en: 原文：[https://techbyexample.com/increase-the-ebs-size/](https://techbyexample.com/increase-the-ebs-size/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/increase-the-ebs-size/](https://techbyexample.com/increase-the-ebs-size/)
 - en: '**1\. Attach an EBS to EC2:**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1\. 将 EBS 附加到 EC2：**'
 - en: There are many ways to attach an EBS to EC2\. You can manually attach an EBS
     (Block device) to EC2 through AWS Console UI. You can also do it through AWS CLI
     from the terminal.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有多种方法可以将 EBS 附加到 EC2。你可以通过 AWS 控制台 UI 手动将 EBS（块设备）附加到 EC2。你也可以通过终端中的 AWS CLI
+    来完成这项操作。
 - en: '**Here, I am taking AWS Cloud Formation example to create and attach an EBS
     to EC2.**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这里，我以 AWS CloudFormation 为例，演示如何创建并将 EBS 附加到 EC2。**'
 - en: We have attached an EBS(Block device) on EC2 using cloud formation. Please refer
     to the cloud formation code below. We have a mapping section. In the Resource
     section, we simply Create a **BlockDeviceMappings** in the **LaunchConfig** resource.
     type.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经使用 CloudFormation 在 EC2 上附加了一个 EBS（块设备）。请参阅下面的 CloudFormation 代码。我们有一个映射部分。在资源部分，我们只需在
+    **LaunchConfig** 资源类型中创建一个 **BlockDeviceMappings**。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**2\. Resize the volume size so that it can extend to the new allocated size.**'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2\. 调整卷大小，以便它可以扩展到新的分配大小。**'
 - en: On the launch/At the start of the machine, you can pass the following scripts
     as user-data or you may **run this script on boot**. Please note that you keep
     the device name same **“/dev/sda1”** in the below script as you mention it in
     the cloud formation script above. Let’s say that the below script is “**resize.sh”.**
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在启动/机器启动时，你可以将以下脚本作为用户数据传递，或者你可以 **在启动时运行此脚本**。请注意，确保在下面的脚本中保持设备名称与在上面 CloudFormation
+    脚本中提到的 **“/dev/sda1”** 相同。假设下面的脚本名为 “**resize.sh**”。
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[aws](https://techbyexample.com/tag/aws/)*   [ebs](https://techbyexample.com/tag/ebs/)*   [size](https://techbyexample.com/tag/size/)'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[aws](https://techbyexample.com/tag/aws/)*   [ebs](https://techbyexample.com/tag/ebs/)*   [size](https://techbyexample.com/tag/size/)'

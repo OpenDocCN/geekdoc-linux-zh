@@ -1,67 +1,105 @@
 - en: Interleaving String Program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 字符串交错程序
 - en: 原文：[https://techbyexample.com/interleaving-string-program/](https://techbyexample.com/interleaving-string-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/interleaving-string-program/](https://techbyexample.com/interleaving-string-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Three strings are given **s1**, **s2**, **s3**. Find if string **s3** is interleaving
     of string.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定三个字符串**s1**、**s2**、**s3**。判断字符串**s3**是否是字符串的交错组合。
 - en: '**s3** will be an interleaving of string **s1** and **s2** if the below condition
     is satisfied'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果满足以下条件，**s3**将是字符串**s1**和**s2**的交错字符串。
 - en: s3 contains all characters of **s1** and **s2** and the order of all characters
     in individual strings is preserved.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**s3**包含**s1**和**s2**的所有字符，并且每个字符串中的字符顺序保持不变。'
 - en: Example
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Recursive Solution**'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**递归解法**'
 - en: Below is the recursive solution for the same
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相同问题的递归解法
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If you will notice the above program many subproblems are computed again and
     again hence the complexity of the above solution is exponential. Hence we can
     also use Dynamic Programming here to reduce the overall time complexity.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你注意到上面的程序，许多子问题被反复计算，因此该解法的复杂度是指数级的。我们可以在这里使用动态规划来降低整体时间复杂度。
 - en: Here is the program for the same
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是相同问题的程序
 - en: '**Dynamic Programming Solution**'
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**动态规划解法**'
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Output**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

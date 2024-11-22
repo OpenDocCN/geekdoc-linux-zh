@@ -1,44 +1,68 @@
 - en: Difference between “./”, “.” and “source” in BASH shell or terminal (Linux)
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: BASH shell 或终端中 “./”、 “.” 和 “source” 的区别（Linux）
 - en: 原文：[https://techbyexample.com/difference-dot-slash-source/](https://techbyexample.com/difference-dot-slash-source/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/difference-dot-slash-source/](https://techbyexample.com/difference-dot-slash-source/)
 - en: Let’s understand each of these in the context of the sample **test.sh** file.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们在示例**test.sh**文件的上下文中理解这些概念。
 - en: '**Using “./**“'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用 “./”**'
 - en: 'The changes made by script gets discarded as soon as scripts end because this
     runs script by forking a separate process. Example:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本所做的更改会在脚本结束后被丢弃，因为这会通过分叉一个独立的进程来运行脚本。例子：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Using “.**“'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用 “.”**'
 - en: 'The changes made by the script persist till the terminal remains alive because
     the script gets executed in the same bash process. Example:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本所做的更改会持续到终端保持开启，因为脚本在同一个 bash 进程中执行。例子：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Using “source**“'
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用 “source”**'
 - en: 'source are “.”  are synonyms and the same thing. “.” is the inclusion of POSIX
     standard. Example:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: “.” 和 “.” 是同义词，表示相同的意思。“.” 是 POSIX 标准的一部分。例子：
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

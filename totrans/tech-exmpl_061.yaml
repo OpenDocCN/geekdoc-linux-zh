@@ -1,116 +1,178 @@
 - en: Program for House Robber Problem
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 房屋抢劫问题的程序
 - en: 原文：[https://techbyexample.com/program-for-house-robber-problem/](https://techbyexample.com/program-for-house-robber-problem/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/program-for-house-robber-problem/](https://techbyexample.com/program-for-house-robber-problem/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: There are a couple of houses in the neighborhood. Each house has some money
     in it. The houses are represented as an array which each entry in the array denotes
     the amount of money in that house.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 附近有几所房屋。每所房屋里都有一些钱。这些房屋用一个数组表示，数组中的每个条目表示该房屋里的钱数。
 - en: For example, if we have below array
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果我们有以下数组
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Then
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后
 - en: The **First** house has **2** money
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**第一**所房屋有**2**钱'
 - en: The **Second** house has **3** money
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**第二**所房屋有**3**钱'
 - en: The **Third** house has **4** money
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**第三**所房屋有**4**钱'
 - en: The **Fourth** house has **2** money
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**第四**所房屋有**2**钱'
 - en: The robber can rob any number of houses but he cannot rob in two consecutive
     houses. For example, he can rob in below combinations for the above array
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 盗贼可以抢劫任意数量的房屋，但不能抢劫两个相邻的房屋。例如，他可以在以下组合中抢劫上述数组中的房屋
 - en: 1 and 3
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 1 和 3
 - en: 1 and 4
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 1 和 4
 - en: 2 and 4
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2 和 4
 - en: None of the combinations above has houses that are adjacent. The problem is
     to identify the combination which will yield maximum robbery to the robber.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述组合中没有相邻的房屋。问题是找出可以为盗贼带来最大收益的组合。
 - en: For example, in the above case, the first combination (1 and 3) will give him
     maximum robber which is 2+4 =6Hence the robber can rob in first and third house
     which 2+4=6
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，在上述情况下，第一个组合（1 和 3）将给盗贼带来最大的收益，即 2+4=6，因此盗贼可以抢劫第一和第三所房屋，即 2+4=6
 - en: Another example
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个例子
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The robber can rob in the first, third, and sixth houses which 1+8+4=13
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 盗贼可以抢劫第一、第三和第六所房屋，即 1+8+4=13
 - en: It is a dynamic programming question as it has an optimal substructure. Let’s
     say the name of the array is **money**
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个动态规划问题，因为它具有最优子结构。假设这个数组的名字是**money**
 - en: dp[0] = money[0]
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[0] = money[0]
 - en: dp[1] = max(money[0], money[1])
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[1] = max(money[0], money[1])
 - en: dp[2] = max(money[0]+ money[1), money[2])
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[2] = max(money[0] + money[1], money[2])
 - en: dp[i] = dp[i] + max(dp[i-1], dp[i-1]
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[i] = dp[i] + max(dp[i-1], dp[i-1])
 - en: where **dp[i]** represents the amount which a robber can rob if the ith house
     is included. In the end, we return the maximum in the **dp** array
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 **dp[i]** 表示如果包括第i所房屋，盗贼可以抢到的钱数。最后，我们返回 **dp** 数组中的最大值
 - en: '**Program**'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是相应的程序。
 - en: '[PRE2]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Output**'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE3]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

@@ -1,75 +1,115 @@
 - en: Program to merge two sorted arrays
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 合并两个已排序数组的程序
 - en: 原文：[https://techbyexample.com/program-merge-two-sorted-arrays/](https://techbyexample.com/program-merge-two-sorted-arrays/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/program-merge-two-sorted-arrays/](https://techbyexample.com/program-merge-two-sorted-arrays/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Two arrays are given. Both are sorted
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定两个数组。两个数组都已经排序。
 - en: First array is of length m+n
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个数组的长度为 m+n
 - en: Second array is of n
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二个数组的长度为 n
 - en: The objective is to merge these sorted arrays. The first array contains enough
     length so the first array should be modified only
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是合并这两个已排序的数组。第一个数组具有足够的长度，因此只应修改第一个数组。
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Here is the approach we can take
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是我们可以采取的方法
 - en: Move all elements in the first array to the end in sorted order. The first array
     will become
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将第一个数组中的所有元素按排序顺序移到末尾。第一个数组将变成
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Now start from **mth** index element in the first array and **0th** index in
     the second array.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 现在从第一个数组的**mth**索引元素和第二个数组的**0th**索引开始。
 - en: Compare the two and place the smaller at **0th** index in the first array. The
     first array will become
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 比较两个数组，并将较小的元素放置在第一个数组的**0th**索引位置。第一个数组将变成
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Repeat this process. The values at the end of the first array will be placed
     at the front before getting overridden as we have sufficient space
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 重复这个过程。第一个数组末尾的值将在被覆盖之前移到前面，因为我们有足够的空间。
 - en: '**Program**'
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是实现该功能的程序。
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Output**'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

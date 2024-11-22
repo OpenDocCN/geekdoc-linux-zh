@@ -1,106 +1,162 @@
 - en: Unique Paths Program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 唯一路径程序
 - en: 原文：[https://techbyexample.com/unique-paths-program/](https://techbyexample.com/unique-paths-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/unique-paths-program/](https://techbyexample.com/unique-paths-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: There is an m*n grid. There is a robot at the position (0,0). The robot can
     only move in the right direction and down direction. What is the total number
     of ways for a robot to reach the right-down corner i.e (m-1, n-1)
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个 m*n 的网格。机器人位于位置 (0,0)。机器人只能向右或向下移动。那么机器人到达右下角 (m-1, n-1) 的总路径数是多少？
 - en: Example
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: There is another variation of this program where one of the items in the grid
     could contain an obstacle. Let’s look at the first variation and later we will
     look at the second variation
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个程序还有另一种变体，其中网格中的某个位置可能包含障碍物。让我们先来看第一种变体，稍后再介绍第二种变体。
 - en: '**First Variation**'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**第一种变体**'
 - en: We will solve this question through dynamic programming
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将通过动态规划来解决这个问题
 - en: Create a paths matrix of size m*n
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建一个大小为 m*n 的路径矩阵
 - en: '**paths[i][j]** represents the number of ways for robot to reach the (i,j)
     index'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**paths[i][j]** 表示机器人到达 (i,j) 位置的路径数'
 - en: '**paths[0][0]** = 0'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**paths[0][0]** = 0'
 - en: '**paths[i][j]** = **paths[i-1][j]** + **paths[i][j-1]**'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**paths[i][j]** = **paths[i-1][j]** + **paths[i][j-1]**'
 - en: '**Program**'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是相应的程序代码。
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Second Variation**We will also solve this question through dynamic programming'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**第二种变体**我们也将通过动态规划来解决这个问题'
 - en: Create a paths matrix of size m*n
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建一个大小为 m*n 的路径矩阵
 - en: '**paths[i][j]** represents the number of ways for robot to reach the (i,j)
     index'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**paths[i][j]** 表示机器人到达 (i,j) 位置的路径数'
 - en: '**paths[0][0]** = 0'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**paths[0][0]** = 0'
 - en: If **paths[i][j]** is not an obstacle then **paths[i][j]** = **paths[i-1][j]**
     + **paths[i][j-1]**
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果**paths[i][j]**不是障碍物，则**paths[i][j]** = **paths[i-1][j]** + **paths[i][j-1]**
 - en: If **paths[i][j]** is an obstacle then **paths[i][j]** = 0
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果**paths[i][j]**是障碍物，则**paths[i][j]** = 0
 - en: '**Program**'
+  id: totrans-24
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Output**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE4]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

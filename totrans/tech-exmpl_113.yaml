@@ -1,294 +1,454 @@
 - en: System Design of Tic Tac Toe Game
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 井字棋游戏的系统设计
 - en: 原文：[https://techbyexample.com/system-design-tic-tac-toe-game/](https://techbyexample.com/system-design-tic-tac-toe-game/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/system-design-tic-tac-toe-game/](https://techbyexample.com/system-design-tic-tac-toe-game/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML图](#UML_Diagram "UML图")'
 - en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low-Level_Design "低级设计")'
 - en: '[Program](#Program "Program")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[程序](#Program "程序")'
 - en: '[Full Working Code:](#Full_Working_Code "Full Working Code:")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[完整工作代码：](#Full_Working_Code "完整工作代码：")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Tic Tac Toe is a board game. Let’s first understand the rules of the game. In
     this tutorial, we will
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 井字棋是一种棋盘游戏。首先让我们理解游戏规则。在本教程中，我们将
 - en: First, understand the tic tac toe game with an example
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先通过一个例子了解井字棋游戏
 - en: See the UML diagram of the low-level design
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查看低级设计的UML图
 - en: Then we will see the low-level design expressed in the Go language
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后我们将看到用Go语言表达的低级设计
 - en: Finally, we will see a proper working code of the same with proper design
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最后，我们将看到一个具有适当设计的完整工作代码
 - en: Let’s first understand what is Tic Tac Toe with an example
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先通过一个例子了解井字棋游戏
 - en: There is an n*n board and each block in the board can be marked with either
     a **cross** or a **circle** only if the block is empty
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这是一个n*n的棋盘，每个块只能标记为**十字**或**圆圈**，前提是该块为空。
 - en: Maxtwo players play the game at a time with each taking turn.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 两个玩家同时进行游戏，每个玩家轮流行动。
 - en: The first player marks a **cross** at any block in the board in its turn.  While
     the second player marks a **circle** at any block in the board in its turn.
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一玩家在其回合时在棋盘上的任意一个空块上标记一个**十字**。而第二玩家在其回合时在棋盘上的任意一个空块上标记一个**圆圈**。
 - en: The objective is to have either an entire row or an entire column or an entire
     diagonal with any of the one symbol either **cross** or **circle**.
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 游戏的目标是让某一方在一整行、一整列或一条对角线上占满任意一个符号，**十字**或**圆圈**。
 - en: Both players will try to stop the other player from achieving this objective.
     Whosoever achieves it first will win.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 两个玩家将尽力阻止对方实现目标。谁先实现目标，谁就获胜。
 - en: If all blocks in the board are full and none of the players have not been able
     to mark the entire row, column, or diagonal with its symbol then the game results
     in a draw.
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果棋盘上的所有块都已满，且没有任何玩家能够用其符号标记整行、整列或对角线，则游戏结果为平局。
 - en: No more moves are allowed after one player wins the game.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦有一方获胜，游戏将不再允许任何移动。
 - en: Let’s understand this game with an example. Assume a 3*3 grid. Dot (‘.’) represents
     an empty block
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个例子来理解这个游戏。假设是一个3*3的网格。点（‘.’）表示一个空白块。
 - en: '[PRE0]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: In the above game First Player Win because the third row is all occupied with
     symbol cross – **‘*’**
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的游戏中，第一玩家获胜，因为第三行全部被**十字**符号‘*’占据。
 - en: '**UML Diagram**'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML图**'
 - en: Let’s first see the UML diagram for the same.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们先看看同样的UML图。
 - en: '![](../Images/75cbd2f93eabd5a1cdbe3a7f29e54a4b.png)'
+  id: totrans-28
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/75cbd2f93eabd5a1cdbe3a7f29e54a4b.png)'
 - en: Here are some ideas from the UML diagram
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是UML图中的一些思路
 - en: There is a Symbol Enum which represents different symbols used on the board.
     The symbol could be a **Cross**, **Circle**, or **Dot**. The **Dot** represents
     an empty block in the board
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个符号枚举（Symbol Enum），表示棋盘上使用的不同符号。符号可以是**十字**、**圆圈**或**点**。**点**表示棋盘中的一个空白块。
 - en: There is an iPlayer interface that represents the player in the game.
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个iPlayer接口，表示游戏中的玩家。
 - en: A player can be a human player or a computer player. As such, there is a **humanPlayer**
     class and a **computerPlayer** class that implements the iPlayer interface
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 玩家可以是人类玩家或计算机玩家。因此，有一个**humanPlayer**类和一个**computerPlayer**类，它们实现了iPlayer接口。
 - en: There is a board class that only captures the details of the board. Depending
     upon the state of the board it tells whether any of its row,  column, or diagonal
     has been completed and by which symbol. It knows nothing about a player or the
     game itself. It knows how to print the board as well. This board class will be
     used by the Game class as we will later see.
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个棋盘类，仅用于捕获棋盘的细节。根据棋盘的状态，它会告诉你是否有某一行、列或对角线已经被完成，并且是哪个符号。它与玩家或游戏本身无关。它知道如何打印棋盘。这个棋盘类将会被游戏类使用，正如我们接下来所见。
 - en: There is a Game Status Enum class that defines the different starts of the game.
     A game can be either Inprogresss, Draw,  FirstPlayerWin, or SecondPlayerWin state.
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个游戏状态枚举类（Game Status Enum），定义了游戏的不同状态。游戏可以处于进行中（Inprogresss）、平局（Draw）、第一玩家胜（FirstPlayerWin）或第二玩家胜（SecondPlayerWin）状态。
 - en: There is a game class that controls the execution of the game. It has the board
     object,  as well as both players’ objects as its field. Other than that it has
     other fields as well such as gameStatus, moveIndex, etc.
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个游戏类用于控制游戏的执行。它包含了棋盘对象，以及两个玩家对象作为其字段。除此之外，它还有其他字段，如gameStatus（游戏状态）、moveIndex（步数索引）等。
 - en: '**Low-Level Design**'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Let’s look at the low-level design of the problem expressed in the Go programming
     language.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看一下用Go编程语言表达的该问题的低级设计。
 - en: '**iPlayerInterface**'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer接口**'
 - en: '[PRE1]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Human Player Class**'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**人类玩家类**'
 - en: '[PRE2]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Computer Player Class**'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算机玩家类**'
 - en: '[PRE3]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Symbol Enum**'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**符号枚举**'
 - en: '[PRE4]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**GameStatus Enum**'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏状态枚举**'
 - en: '[PRE5]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Board Class**'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '**棋盘类**'
 - en: '[PRE6]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**Game Class**'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏类**'
 - en: '[PRE7]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Program**'
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是完整的工作代码。
 - en: '**symbol.go**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**symbol.go**'
 - en: '[PRE8]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**iPlayer.go**'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer.go**'
 - en: '[PRE9]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**humanPlayer.go**'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '**humanPlayer.go**'
 - en: '[PRE10]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**computerPlayer.go**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**computerPlayer.go**'
 - en: '[PRE11]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**gameStatus.go**'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gameStatus.go**'
 - en: '[PRE12]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**board.go**'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**board.go**'
 - en: '[PRE13]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**game.go**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**game.go**'
 - en: '[PRE14]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**Output**'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: In the above program, we have fixed the moves for both the player in the **humanPlayer.go**
     file. Here is the output based upon those moves.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的程序中，我们已经在**humanPlayer.go**文件中固定了两个玩家的步伐。基于这些步伐，以下是输出结果。
 - en: '[PRE15]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**Full Working Code:**'
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整工作代码：**'
 - en: Here is the full working code in one file
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个文件中的完整工作代码。
 - en: '**main.go**'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE16]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**Output**'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: In the above program as well, we have fixed the moves for both the player in
     the **humanPlayer class**. Here is the output based upon those moves.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述程序中，我们同样在**humanPlayer类**中固定了两个玩家的步伐。基于这些步伐，以下是输出结果。
 - en: '[PRE17]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**Conclusion**'
+  id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing the Tic Tac Toe game. Hope you have liked this tutorial.
     Please provide your feedback in the comments.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于设计井字棋游戏的内容。希望你喜欢这个教程。请在评论中提供你的反馈。

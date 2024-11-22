@@ -1,264 +1,376 @@
 - en: What does Strong Consistency mean in Database
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 数据库中的强一致性意味着什么
 - en: 原文：[https://techbyexample.com/strong-consistency-databases/](https://techbyexample.com/strong-consistency-databases/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/strong-consistency-databases/](https://techbyexample.com/strong-consistency-databases/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[The formula for Strong Consistency](#The_formula_for_Strong_Consistency "The
     formula for Strong Consistency")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[强一致性的公式](#The_formula_for_Strong_Consistency "强一致性的公式")'
 - en: '[Number of Nodes or Replicas](#Number_of_Nodes_or_Replicas "Number of Nodes
     or Replicas")'
+  id: totrans-5
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点或副本的数量](#Number_of_Nodes_or_Replicas "节点或副本的数量")'
 - en: '[Write Quoram](#Write_Quoram "Write Quoram")'
+  id: totrans-6
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数](#Write_Quoram "写法定人数")'
 - en: '[Read Quoram](#Read_Quoram "Read Quoram")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[读取法定人数](#Read_Quoram "读取法定人数")'
 - en: '[The number of nodes is 1](#The_number_of_nodes_is_1 "The number of nodes is
     1")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点数量为1](#The_number_of_nodes_is_1 "节点数量为1")'
 - en: '[The number of nodes is 2](#The_number_of_nodes_is_2 "The number of nodes is
     2")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点数量为2](#The_number_of_nodes_is_2 "节点数量为2")'
 - en: '[Write Quoram is 2 and Read Quoram is 1](#Write_Quoram_is_2_and_Read_Quoram_is_1
     "Write Quoram is 2 and Read Quoram is 1")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为2，读法定人数为1](#Write_Quoram_is_2_and_Read_Quoram_is_1 "写法定人数为2，读法定人数为1")'
 - en: '[Write Quoram is 1 and Read Quoram is 2](#Write_Quoram_is_1_and_Read_Quoram_is_2
     "Write Quoram is 1 and Read Quoram is 2")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为1，读法定人数为2](#Write_Quoram_is_1_and_Read_Quoram_is_2 "写法定人数为1，读法定人数为2")'
 - en: '[Write Quoram is 2 and Read Quoram is 2](#Write_Quoram_is_2_and_Read_Quoram_is_2
     "Write Quoram is 2 and Read Quoram is 2")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为2，读法定人数为2](#Write_Quoram_is_2_and_Read_Quoram_is_2 "写法定人数为2，读法定人数为2")'
 - en: '[Write Quoram is 1 and Read Quoram is 1](#Write_Quoram_is_1_and_Read_Quoram_is_1
     "Write Quoram is 1 and Read Quoram is 1")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为1，读法定人数为1](#Write_Quoram_is_1_and_Read_Quoram_is_1 "写法定人数为1，读法定人数为1")'
 - en: '[The number of nodes is 3](#The_number_of_nodes_is_3 "The number of nodes is
     3")'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点数量为3](#The_number_of_nodes_is_3 "节点数量为3")'
 - en: '[Write Quoram is 2 and Read Quoram is 2](#Write_Quoram_is_2_and_Read_Quoram_is_2-2
     "Write Quoram is 2 and Read Quoram is 2")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为2，读法定人数为2](#Write_Quoram_is_2_and_Read_Quoram_is_2-2 "写法定人数为2，读法定人数为2")'
 - en: '[Write Quoram is 2 and Read Quoram is 1](#Write_Quoram_is_2_and_Read_Quoram_is_1-2
     "Write Quoram is 2 and Read Quoram is 1")'
+  id: totrans-16
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为2，读法定人数为1](#Write_Quoram_is_2_and_Read_Quoram_is_1-2 "写法定人数为2，读法定人数为1")'
 - en: '[Write Quoram is 1 and Read Quoram is 2](#Write_Quoram_is_1_and_Read_Quoram_is_2-2
     "Write Quoram is 1 and Read Quoram is 2")'
+  id: totrans-17
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写法定人数为1，读法定人数为2](#Write_Quoram_is_1_and_Read_Quoram_is_2-2 "写法定人数为1，读法定人数为2")'
 - en: '[Disadvantages of Strong Consistency](#Disadvantages_of_Strong_Consistency
     "Disadvantages of Strong Consistency")'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[强一致性的缺点](#Disadvantages_of_Strong_Consistency "强一致性的缺点")'
 - en: '[How consistency is achieved](#How_consistency_is_achieved "How consistency
     is achieved")'
+  id: totrans-19
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[一致性是如何实现的](#How_consistency_is_achieved "一致性是如何实现的")'
 - en: '[How availability is achieved](#How_availability_is_achieved "How availability
     is achieved")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可用性是如何实现的](#How_availability_is_achieved "可用性是如何实现的")'
 - en: '[When is strong consistency desirable?](#When_is_strong_consistency_desirable
     "When is strong consistency desirable?")'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[何时需要强一致性？](#When_is_strong_consistency_desirable "何时需要强一致性？")'
 - en: '**Overview**'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: In simple terms, a system is strongly consistent if it is reading the most updated
     write. It never returns out of date or stale values. As per the Wikipedia, the
     definition of Strong Consistency is
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单来说，如果一个系统在读取时总是获取最新的写入数据，那么它就是强一致的。它永远不会返回过时或陈旧的值。根据维基百科，强一致性的定义是：
 - en: '**The protocol is said to support strong consistency if: All accesses are seen
     by all parallel processes (or nodes, processors, etc.) in the same order (sequentially).
     Therefore, only one consistent state can be observed, as opposed to weak consistency,
     where different parallel processes (or nodes, etc.) can perceive variables in
     different states.**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**如果协议支持强一致性，则意味着：所有访问都按相同顺序（顺序）由所有并行进程（或节点、处理器等）看到。因此，只有一个一致的状态可以被观察到，而与弱一致性不同，弱一致性下不同的并行进程（或节点等）可能会在不同的状态下感知变量。**'
 - en: '**The formula for Strong Consistency**'
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**强一致性的公式**'
 - en: To understand strong consistency in Databases we need to understand three terms
     first
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解数据库中的强一致性，我们首先需要理解三个术语：
 - en: Number of Nodes or Replicas
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点或副本的数量
 - en: Write Quoram
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写法定人数
 - en: Read Quoram
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 阅读法定人数
 - en: '**Number of Nodes or Replicas**'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**节点或副本的数量**'
 - en: This is the number of Nodes that exist in your system. When we say node here
     then that essentially means the number of replicas that have the same data
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是你系统中存在的节点数量。当我们说节点时，实际上是指具有相同数据的副本数量
 - en: '**Write Quoram**'
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写法定人数**'
 - en: It is the minimum number of nodes to which write will happen before it is returned
     as a success.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 它是发生写入并被视为成功返回的最小节点数。
 - en: '**Read Quoram**'
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**读取法定值**'
 - en: It is the minimum number of nodes from which the read will happen before it
     is returned as a success. If the value returned by those minimum number of nodes
     is not the same then that read will be rejected
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 它是发生读取并被视为成功返回的最小节点数。如果这些最小节点返回的值不同，则该读取将被拒绝
 - en: Mathematically if the sum of **Write Quoram** and **Read Quoram** is greater
     than the number of read nodes then the system is said to be strongly consistent.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 从数学上讲，如果**写入法定值**和**读取法定值**的和大于读取节点的数量，那么系统被认为是强一致的。
 - en: That is if Write Quoram is W and Read Quoram is R and the number of nodes is
     N, then
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 也就是说，如果写入法定值为 W，读取法定值为 R，节点数量为 N，则
 - en: The system is strongly consistent if W+R > N
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 W+R > N，则系统是强一致的
 - en: The system is not guaranteed to be strongly consistent if W+R<=N
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 W+R<=N，则系统不能保证强一致性
 - en: In other words, if there is a node common between Write Quoram nodes and Read
     Quoram nodes then the system will be strongly consistent. That common node will
     reject the stale reads. A node is always common between Write Quoram and Read
     Quoram whenever W+R > N. It is not mathematically difficult to know why.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，如果写入法定值节点和读取法定值节点之间有一个公共节点，那么系统将是强一致的。这个公共节点将拒绝过时的读取。每当 W+R > N 时，写入法定值和读取法定值之间总会有一个公共节点。要理解这一点在数学上并不困难。
 - en: Let’s see by some examples how this formula holds. We are going to see the following
     cases.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一些示例来看一下这个公式是如何成立的。我们将看到以下几种情况。
 - en: The number of nodes is 1
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 1
 - en: The number of nodes is 2
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 2
 - en: The number of nodes is 3
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 3
 - en: '**The number of nodes is 1**'
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**节点数量为 1**'
 - en: In this case, the only combination of Write and Read Quoram possible is 1 and
     1\. The Sum of Write Quoram and Read Quoram is greater than the read node. Since
     there is a single instance, read is always the latest because read and write are
     happening on the same instance
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，唯一可能的写入和读取法定值组合是 1 和 1。写入法定值和读取法定值的和大于读取节点的数量。由于只有一个实例，因此读取总是最新的，因为读取和写入发生在同一个实例上
 - en: '**The number of nodes is 2**'
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**节点数量为 2**'
 - en: In this, there are further four cases.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此，还有四种情况。
 - en: Write Quoram is 2 and Read Quoram is 1 – **Strongly Consistent**
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定值为 2，读取法定值为 1 – **强一致**
 - en: Write Quoram is 1 and Read Quoram is 2 – **Strongly Consistent**
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定值为 1，读取法定值为 2 – **强一致**
 - en: Write Quoram is 2 and Read Quoram is 2 – **Strongly Consistent**
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定值为 2，读取法定值为 2 – **强一致**
 - en: Write Quoram is 1 and Read Quoram is 1 – **Not Strongly Consistent**
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定值为 1，读取法定值为 1 – **非强一致**
 - en: '**Write Quoram is 2 and Read Quoram is 1**'
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入法定值为 2，读取法定值为 1**'
 - en: In this case, the sum of Write Quoram and Read Quoram is 3 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     since write is happening on both the nodes, hence read from either of the nodes
     will return the same data and the system overall will be strongly consistent
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，写入法定值和读取法定值的和为 3，大于节点的数量，因此系统应当是强一致的。在这种情况下，由于写入发生在两个节点上，因此从任意一个节点读取都会返回相同的数据，系统整体上将是强一致的
 - en: '**Write Quoram is 1 and Read Quoram is 2**'
+  id: totrans-55
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入法定值为 1，读取法定值为 2**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 3 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     write is happening only on a single instance. But read is happening from both
@@ -271,209 +383,308 @@
     A as 2 while the second node will return the value of A as 1\. Since the value
     returned by both the nodes is not the same, the system will reject that read to
     maintain strong consistency.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次，在这种情况下，写入仲裁数和读取仲裁数的总和为 3，超过了节点数量，因此系统应保持强一致性。在这种情况下，写入仅发生在一个实例上。但读取发生在两个节点上。假设有一个名为
+    A 的数据，其初始值为 1。两个节点的 A 值都是 1。现在在第一个节点上进行了写入，A 的值被更改为 2。由于写入仲裁数为 1，写入将在第一个节点上进行并成功返回。假设在节点
+    2 与节点 1 的最新数据同步之前，发生了读取操作。由于读取仲裁数为 2，它将从两个节点读取。第一个节点将返回 A 的值为 2，而第二个节点将返回 A 的值为
+    1。由于两个节点返回的值不同，系统将拒绝该读取操作以保持强一致性。
 - en: '**Write Quoram is 2 and Read Quoram is 2**'
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入仲裁数为 2，读取仲裁数为 2**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 4 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     since write is happening on both the nodes and read also from both the nodes.
     Therefore the read will be the latest every time.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次，在这种情况下，写入仲裁数和读取仲裁数的总和为 4，超过了节点数量，因此系统应保持强一致性。在这种情况下，由于写入发生在两个节点上且读取也来自两个节点，因此每次读取将是最新的。
 - en: '**Write Quoram is 1 and Read Quoram is 1**'
+  id: totrans-59
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入仲裁数为 1，读取仲裁数为 1**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 2 which is equal
     to the Number of nodes hence system is not strongly consistent.  Write happened
     on node 1\. A read happened on node 2 before data could be synced to node 2\.
     This read is stale data.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次，在这种情况下，写入仲裁数和读取仲裁数的总和为 2，等于节点数量，因此系统不是强一致的。写入发生在节点 1 上，在数据同步到节点 2 之前，节点 2
+    上发生了读取操作。这是过时的数据。
 - en: '**The number of nodes is 3**'
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**节点数量为 3**'
 - en: In this scenario, there can be multiple cases but we are only going to discuss
     a few cases.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，可以有多种情况，但我们只讨论其中几种。
 - en: Write Quoram is 2 and Read Quoram is 2 – **Strongly Consistent**
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为 2，读取仲裁数为 2 – **强一致性**
 - en: Write Quoram is 2 and Read Quora is 1 – **Not Strongly Consistent**
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为 2，读取仲裁数为 1 – **非强一致性**
 - en: Write Quoram is 1 and Read Quoram is 2 – **Not Strongly Consistent**
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为 1，读取仲裁数为 2 – **非强一致性**
 - en: '**Write Quoram is 2 and Read Quoram is 2**'
+  id: totrans-66
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入仲裁数为 2，读取仲裁数为 2**'
 - en: 'In this case, the sum of Write Quoram and Read Quoram is 4 which is greater
     than the number of nodes hence in the system should be strongly consistent. Imagine
     there are three nodes: **node1**, **node2,** and **node3**.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，写入仲裁数和读取仲裁数的总和为 4，超过了节点数量，因此系统应保持强一致性。假设有三个节点：**节点 1**、**节点 2** 和 **节点
+    3**。
 - en: Again imagine a case where the initial value of a data named A is 1\. A Write
     happened on node 1 and node 2 and the value of A is increased to 2\. Before the
     data could be synced to node 3, a read happened. For read, there could be three
     cases.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 再假设一个情况，其中名为 A 的数据的初始值为 1。对节点 1 和节点 2 进行了写入操作，A 的值增加至 2。在数据同步到节点 3 之前，发生了读取操作。对于读取，可能会有三种情况。
 - en: Read happened from node 1 and node 2
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 读取来自节点 1 和节点 2
 - en: Read happened from node 1 and node 3
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 读取来自节点 1 和节点 3
 - en: Read happened from node 2 and node 3
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 读取来自节点 2 和节点 3
 - en: '**a. Read happened from node 1 and node 2**'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**a. 读取来自节点 1 和节点 2**'
 - en: In this case, there is no issue, the value of A will be returned as 2 from both
     the two nodes and the system will be strongly consistent.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，没有问题，A 的值将在两个节点中均返回为 2，系统将保持强一致性。
 - en: '**b. Read happened from node 1 and node 3**'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**b. 读取来自节点 1 和节点 3**'
 - en: In this case node 1 will return the value as 2 while node 3 will return the
     value of A as 1\. Since both the values are not the same the read will be rejected
     and the system will be strongly consistent.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，节点 1 将返回值 2，而节点 3 将返回值 A 为 1。由于这两个值不同，读取将被拒绝，系统将保持强一致性。
 - en: '**c. Read happened from node 2 and node 3**'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**c. 读取来自节点 2 和节点 3**'
 - en: In this case, also node 2 will return the value as 2 while node 3 will return
     the value as 1\. Since both the values are not thesame the read will be rejected
     and the system will be strongly consistent.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，节点2将返回值为2，而节点3将返回值为1。由于这两个值不同，读取将被拒绝，系统将保持强一致性。
 - en: '**Write Quoram is 2 and Read Quoram is 1**'
+  id: totrans-78
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入仲裁数为2，读取仲裁数为1**'
 - en: In this case, the sum of Write Quoram and Read Quoram is 3 which is not greater
     than the number of nodes in the system should not be strongly consistent
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，写入仲裁数和读取仲裁数的总和为3，而该总和不大于系统中的节点数，因此系统不应该保持强一致性。
 - en: Write happens on node 1 and node 2 and the value of A is updated to 2\. Read
     happened from node3 and value is returned as 1 making the system not strongly
     consistent or weak consistent
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 写入发生在节点1和节点2，A的值更新为2。读取发生在节点3，返回的值为1，使得系统既不保持强一致性也不保持弱一致性。
 - en: '**Write Quoram is 1 and Read Quoram is** 2'
+  id: totrans-81
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入仲裁数为1，读取仲裁数为2**'
 - en: Write happened on node1 and the value of A is updated to 2\. Read happened from
     node2 and node3 and both nodes return the value of A as 1\. Since both the return
     values are the same, the read is not rejected and the system is not strongly consistent.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 写入发生在节点1，A的值更新为2。读取发生在节点2和节点3，两个节点都返回A的值为1。由于返回值相同，读取没有被拒绝，系统不保持强一致性。
 - en: '**Disadvantages of Strong Consistency**'
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**强一致性的缺点**'
 - en: It is only possible to achieve strong consistency at the cost of availability
     in the case of a network partition. This is as per the CAP theorem as well. CAP
     theorem states that in a distributed system, you will only be able to achieve
     two of the three properties below
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 只有在网络分区的情况下，才能以牺牲可用性为代价实现强一致性。这也是CAP定理的内容。CAP定理指出，在分布式系统中，你只能实现以下三种属性中的两种：
 - en: Consistency
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一致性
 - en: Availability
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可用性
 - en: Partition Tolerance
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 分区容错
 - en: It is not practically possible to achieve partition tolerance because the network
     is bound to be failed and communication between nodes is bound to be lost. That
     is why in a distributed system that is not partitioned tolerant, it is only possible
     to achieve either consistency or availability.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，很难实现分区容错，因为网络注定会失败，节点之间的通信注定会中断。这也是为什么在一个不具备分区容错的分布式系统中，只能实现一致性或可用性中的一种。
 - en: Let’s take an example to understand why one has to be sacrificed. Assume you
     have two nodes in the system. Both are connected to each other and both are in
     sync.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们举个例子来理解为什么必须牺牲其中之一。假设系统中有两个节点，它们相互连接，并且都处于同步状态。
 - en: Now let’s say a network partition happened between the two nodes
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在假设两个节点之间发生了网络分区。
 - en: '**How consistency is achieved**'
+  id: totrans-91
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何实现一致性**'
 - en: Here the number of nodes is 2\. Hence two achieve strong consistency we have
     three options
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里节点数为2。因此，为了实现强一致性，我们有三种选择。
 - en: Write Quoram is 2 and Read Quoram is 1
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为2，读取仲裁数为1。
 - en: Write Quoram is 1 and Read Quoram is 2
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为1，读取仲裁数为2。
 - en: Write Quoram is 2 and Read Quoram is 2
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入仲裁数为2，读取仲裁数为2。
 - en: In the first case since Write Quoram is 2 hence it must write to both the nodes.
     But since the second node is not available. Hence it will reject the write. Hence
     the system is not available for write
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第一种情况下，由于写入仲裁数是2，因此必须同时写入两个节点。但由于第二个节点不可用，因此它将拒绝写入操作。因此，系统无法进行写入。
 - en: In the second case since Read Quoram is 2 hence it must read from both the nodes.
     But since the second node is not available. Hence it will reject the read. Hence
     the system is not available for reading
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第二种情况下，由于读取仲裁数是2，因此必须从两个节点读取。但由于第二个节点不可用，因此它将拒绝读取操作。因此，系统无法进行读取。
 - en: In the third case since Write Quoram is 2 hence it must write to both the nodes
     and since Read Quoram is 2 hence it must read from both the nodes. But since the
     second node is not available. Hence it will reject both read and write. Hence
     the system is not available for reading as well as writing
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第三种情况下，由于写入仲裁数是2，因此必须同时写入两个节点，而由于读取仲裁数是2，因此必须同时从两个节点读取。但由于第二个节点不可用，因此它将拒绝读写请求。因此，系统无法进行读写操作。
 - en: From the three cases you can deduce that we get strong consistency at the cost
     of availability in case of network partitions and network partitions are bound
     to happen
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这三个案例中，你可以推断出，在网络分区的情况下，我们以牺牲可用性为代价来实现强一致性，而网络分区是不可避免的。
 - en: '**How availability is achieved**'
+  id: totrans-100
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何实现可用性**'
 - en: To achieve availability we must give up consistency. Here the number of nodes
     is 2\. Hence there is one option in which the system will not be strongly consistent.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了实现可用性，我们必须放弃一致性。这里节点数为2。因此，有一个选项使得系统不会强一致。
 - en: Write Quoram is 1 and Read Quoram is 1
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数是1，读取法定人数是1
 - en: In the first case since Write Quoram is 1, hence it can write to node 1\. Also,
     the Read Quoram is 1, and hence it can read from node 1\. Hence the system is
     available. The sum of Write Quoram and Read Quoram is 2 which is equal to the
@@ -481,22 +692,32 @@
     Read Quoram is less than equal to the number of nodes, then the system is not
     strongly consistent. Hence in this case we have availability but the system is
     not consistent.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第一个例子中，由于写入法定人数（Write Quorum）为1，因此它可以写入节点1。并且读取法定人数（Read Quorum）也是1，因此它可以从节点1读取。因此，系统是可用的。写入法定人数和读取法定人数之和为2，这等于节点数。根据公式，当写入法定人数和读取法定人数之和小于或等于节点数时，系统就不是强一致的。因此，在这种情况下，我们有可用性，但系统不一致。
 - en: '**When is strong consistency desirable?**'
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**何时强一致性是可取的？**'
 - en: There are a couple of use cases when strong consistency is desirable. For example
     in the case of banking transactions, it is desirable to get the latest value every
     time you read.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一些使用场景需要强一致性。例如，在银行交易的情况下，每次读取时都希望得到最新的值。
 - en: This is all about **Strong Consistency in Databases**. Hope you have liked this
     article.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于**数据库中的强一致性**。希望你喜欢这篇文章。
 - en: '**Note:** Also, check out our system design tutorial series here – [System
     Design Tutorial Series](https://techbyexample.com/system-design-questions/)'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 另外，查看我们的系统设计教程系列 – [系统设计教程系列](https://techbyexample.com/system-design-questions/)'

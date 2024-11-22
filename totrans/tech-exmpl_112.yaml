@@ -1,303 +1,459 @@
 - en: ATM Machine System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自动取款机系统设计
 - en: 原文：[https://techbyexample.com/atm-machine-system-design/](https://techbyexample.com/atm-machine-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/atm-machine-system-design/](https://techbyexample.com/atm-machine-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "Overview")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML图](#UML_Diagram "UML Diagram")'
 - en: '[Low–Level Design](#Low%E2%80%93Level_Design "Low–Level Design")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low%E2%80%93Level_Design "Low–Level Design")'
 - en: '[Program](#Program "Program")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[程序](#Program "Program")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "Conclusion")'
 - en: '**Overview**'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The objective is to design an ATM machine. Please note that designing an ATM
     Machine is an Object-Oriented Problem. It is not a distributed system problem.
     So we need to approach it that way. Below are the requirements
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是设计一个自动取款机。请注意，设计自动取款机是一个面向对象的问题，而不是分布式系统问题。因此我们需要以这种方式来处理。下面是需求。
 - en: An ATM machine will allow the admin or bank to add the money
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动取款机将允许管理员或银行添加资金
 - en: An ATM machine will allow users to enter the amount
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动取款机将允许用户输入金额
 - en: Once the amount is entered the user can enter the pin. The cash will be dispensed
     after the pin is entered and is correct
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦输入金额，用户可以输入密码。密码正确后，现金将被发放。
 - en: An ATM machine will have different states.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动取款机将具有不同的状态。
 - en: Also for simplicity let’s assume that an ATM Machine can be in 4 different states
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，为了简单起见，假设自动取款机可以处于四种不同的状态。
 - en: '**noMoney –** This is the initial state when ATM has no money and hence it
     cannot accept the withdrawal of money.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**noMoney –** 这是自动取款机没有资金时的初始状态，因此无法接受提款。'
 - en: '**hasMoney –** This is the next state when ATM is ready to accept the withdrawal
     of money.'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**hasMoney –** 这是自动取款机准备接受提款时的下一个状态。'
 - en: '**amountEntered –** This is the state after which the amount is entered by
     the user. At this state, it will allow the user to enter the amount'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**amountEntered –** 这是用户输入金额后的状态。在此状态下，它将允许用户输入金额。'
 - en: '**pinEntered –** This is the state when the user has entered the pin. If the
     pin is correct then the cash will be dispensed'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**pinEntered –** 这是用户输入密码后的状态。如果密码正确，则现金将被发放。'
 - en: '**An ATM machine will also have different actions. Again for simplicity lets
     assume that there are only four actions:**'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**自动取款机还会有不同的动作。为了简单起见，假设只有四个动作：**'
 - en: '***   **Add money**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '***   **添加资金**'
 - en: '**Enter amount**'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**输入金额**'
 - en: '**Enter Pin**'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**输入密码**'
 - en: '**Dispense Cash**'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**发放现金**'
 - en: We can use a state design pattern here to design the ATM machine. State design
     pattern is a behavioral design pattern that is based on a Finite State Machine.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在这里使用状态设计模式来设计自动取款机。状态设计模式是一种基于有限状态机的行为设计模式。
 - en: Now the question is why we are using a State Design Pattern to design an ATM
     Machine? Below are two reasons
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么问题是，为什么我们要使用状态设计模式来设计自动取款机？下面是两个原因。
 - en: State design pattern is used when an object can be in many different states. Depending
     upon the current request the object needs to change its current state
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 状态设计模式用于当对象可以处于多种不同的状态时。根据当前的请求，对象需要改变其当前状态。
 - en: ATM machines can be in many different states. An ATM Machine will move from
     one state to another. Let’s say ATM Machine is in **amountEntered** then it will
     move to **pinEntered** state once the action **“Enter Pin”** is done
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动取款机可以处于多个不同的状态。假设自动取款机当前处于**amountEntered**状态，那么一旦执行了**“Enter Pin”**操作，它将转移到**pinEntered**状态。
 - en: State design pattern is used when an object will have different responses to
     the same request depending upon the current state. Using state design pattern
     here will prevent a lot of conditional statements
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 状态设计模式用于当对象在不同的状态下对相同的请求有不同响应时。使用状态设计模式可以避免许多条件语句。
 - en: For example in the case of an ATM Machine, if a user wants to dispense cash
     then the machine will proceed if it is in **hasMoney** or it will reject if it
     is in **noMoney**. If you notice here that the ATM Machine on the request of withdrawal
     gives two different responses depending upon whether it is in **hasMoney** or **noMoney.**
     With this approach, our code will not have any kind of conditional statement.
     All the logic is being handled by concrete state implementations.
+  id: totrans-29
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 例如，在自动取款机（ATM）的情况下，如果用户想要取款，则机器将在**hasMoney**状态下继续操作，或者如果处于**noMoney**状态则拒绝操作。如果你注意到这里，自动取款机在取款请求时，根据是否处于**hasMoney**或**noMoney**状态，会给出两种不同的响应。通过这种方式，我们的代码将不会有任何条件语句。所有的逻辑都由具体的状态实现来处理。
 - en: '**UML Diagram**'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML图**'
 - en: Below is the UML diagram of the ATM Machine
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是 ATM 机器的 UML 图
 - en: '![](../Images/abc27bbd3d788680b834477c96729157.png)'
+  id: totrans-32
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/abc27bbd3d788680b834477c96729157.png)'
 - en: Here is the overall idea
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是整体的想法
 - en: We will have an interface “State” which defines signatures of functions that
     represents action in the context of an ATM Machine. Below are the actions function
     signatures
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们将有一个接口“State”，它定义了表示 ATM 机器上下文中的操作的函数签名。以下是操作函数签名
 - en: stateName() string
+  id: totrans-35
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: stateName() string
 - en: addMoney(int) error
+  id: totrans-36
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: addMoney(int) error
 - en: enterAmount(int) error
+  id: totrans-37
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: enterAmount(int) error
 - en: enterPin(money int) error
+  id: totrans-38
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: enterPin(money int) error
 - en: dispenseCash() error
+  id: totrans-39
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: dispenseCash() error
 - en: Each of the concrete states implements all 5 above functions and either move
     to another state on these actions or gives some response.
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个具体状态都实现了上述所有 5 个功能，并根据这些操作要么转移到另一个状态，要么做出相应的响应。
 - en: Each of the concrete states also embeds a pointer to the current ATM Machine
     object so that state transition can invoke some calls on the ATM Machine Object.
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个具体状态还嵌入了指向当前 ATM 机器对象的指针，以便状态转换可以调用 ATM 机器对象上的某些方法。
 - en: '**Low**–**Level Design**'
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低**–**级设计**'
 - en: Below is the low-level design expressed in the Go programming language.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用 Go 编程语言表达的低级设计。
 - en: Later we will see a working example as well
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 稍后我们还会看到一个工作示例
 - en: '**ATM Machine Class**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ATM 机器类**'
 - en: '[PRE0]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**State Interface**'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '**状态接口**'
 - en: '[PRE1]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**NoMoney State Class**'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '**NoMoney 状态类**'
 - en: '[PRE2]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Has Money State Class**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Has Money 状态类**'
 - en: '[PRE3]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Amount Entered State Class**'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Amount 输入状态类**'
 - en: '[PRE4]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Pin Entered State Class**'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**密码输入状态类**'
 - en: '[PRE5]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Program**'
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code if anyone is interested in the Go programming
     language
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码，如果有人对 Go 编程语言感兴趣的话
 - en: '**atmMachine.go**'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**atmMachine.go**'
 - en: '[PRE6]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**state.go**'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**state.go**'
 - en: '[PRE7]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**noMoneyState.go**'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**noMoneyState.go**'
 - en: '[PRE8]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**hasMoneyState.go**'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hasMoneyState.go**'
 - en: '[PRE9]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**amountEnteredState.go**'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '**amountEnteredState.go**'
 - en: '[PRE10]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**pinEnteredState.go**'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pinEnteredState.go**'
 - en: '[PRE11]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**main.go**'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE12]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**Output:**'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出：**'
 - en: '[PRE13]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**Conclusion**'
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing an ATM Machine. Hope you have liked this article.
     Please share feedback in the comments
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是设计 ATM 机器的全部内容。希望你喜欢这篇文章。请在评论中分享反馈
 - en: '[atm](https://techbyexample.com/tag/atm/)*   [system](https://techbyexample.com/tag/system/)**'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[atm](https://techbyexample.com/tag/atm/)*   [system](https://techbyexample.com/tag/system/)**'

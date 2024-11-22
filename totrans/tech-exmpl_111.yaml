@@ -1,103 +1,149 @@
 - en: Design a Vending Machine
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设计一个自动售货机
 - en: 原文：[https://techbyexample.com/vending-machine-design/](https://techbyexample.com/vending-machine-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/vending-machine-design/](https://techbyexample.com/vending-machine-design/)
 - en: '**Overview**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The objective is to design a vending machine. Please note that designing a Vending
     Machine is an Object-Oriented Problem. It is not a distributed system problem.
     So we need to approach it that way. Below are the requirements
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是设计一个自动售货机。请注意，设计自动售货机是一个面向对象的问题，而不是一个分布式系统问题。因此，我们需要以这种方式来处理它。以下是需求：
 - en: A vending machine will allow users to select the item
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动售货机会允许用户选择物品
 - en: A vending machine will allow the admin to add the items
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动售货机会允许管理员添加物品
 - en: Once the item is selected the user can insert the money. The item will be dispensed
     after money is entered
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦物品被选中，用户就可以投入金钱。物品将在输入金钱后被发放
 - en: A vending machine will have different states.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动售货机将有不同的状态。
 - en: For simplicity, let’s assume that vending machine only has one type of item
     or product. Also for simplicity let’s assume that a Vending Machine can be in
     4 different states
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了简化，假设自动售货机只有一种物品或产品。同时，假设自动售货机可以处于4种不同的状态。
 - en: '**hasItem**'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**hasItem**'
 - en: '**noItem**'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**noItem**'
 - en: '**itemRequested**'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**itemRequested**'
 - en: '**hasMoney**'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**hasMoney**'
 - en: '**A vending machine will also have different actions. Again for simplicity
     lets assume that there are only four actions:**'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**自动售货机还将有不同的操作。为了简化，假设只有四个操作：**'
 - en: '***   **Select the item**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '***   **选择物品**'
 - en: '**Add the item**'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**添加物品**'
 - en: '**Insert Money**'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**投入金钱**'
 - en: '**Dispense Item**'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**发放物品**'
 - en: We can use a state design pattern here to design the vending machine. State
     design pattern is a behavioral design pattern that is based on a Finite State
     Machine.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在这里使用状态设计模式来设计自动售货机。状态设计模式是一种基于有限状态机的行为设计模式。
 - en: Now the question is why we are using a State Design Pattern to design a Vending
     Machine? Below are two reasons
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在问题是，为什么我们要使用状态设计模式来设计自动售货机？以下是两个原因：
 - en: State design pattern is used when an object can be in many different states. Depending
     upon the current request the object needs to change its current state
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 状态设计模式用于当一个对象可以处于多种不同的状态时。根据当前请求，对象需要改变其当前状态。
 - en: Vending machines can be in many different states. A Vending Machine will move
     from one state to another. Let’s say Vending Machine is in **itemRequested** then
     it will move to **hasMoney** state once the action “Insert Money” is done
+  id: totrans-21
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 自动售货机可以处于多种不同的状态。自动售货机会从一种状态转移到另一种状态。假设自动售货机处于**itemRequested**状态，然后在执行“插入金钱”操作后，它将转移到**hasMoney**状态。
 - en: State design pattern is used when an object will have different responses to
     the same request depending upon the current state. Using state design pattern
     here will prevent a lot of conditional statements
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 状态设计模式用于当一个对象对相同的请求根据当前状态给出不同的响应时。在这里使用状态设计模式可以避免大量的条件语句。
 - en: For example in the case of Vending Machine, if a user wants to purchase an item
     then the machine will proceed if it is **hasItemState** or it will reject if it
     is in **noItemState**. If you notice here that the Vending Machine on the request
@@ -105,156 +151,244 @@
     is in **hasItemState** or **noItemState.** With this approach, our code will not
     have any kind of conditional statement. All the logic is being handled by concrete
     state implementations.
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 例如，在自动售货机的情况下，如果用户想购买物品，机器将在处于**hasItemState**状态时继续操作，而在处于**noItemState**状态时拒绝。如果你注意到，在购买物品的请求下，自动售货机会根据是否处于**hasItemState**或**noItemState**给出两种不同的响应。通过这种方式，我们的代码中不会有任何条件语句。所有逻辑都由具体的状态实现处理。
 - en: '**UML Diagram**'
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML图**'
 - en: Below is the UML diagram of the Vending Machine
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是自动售货机的UML图：
 - en: '![](../Images/ac015f70eb1afb4272c287d586fe1503.png)'
+  id: totrans-26
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/ac015f70eb1afb4272c287d586fe1503.png)'
 - en: Here is the overall idea
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是整体思路：
 - en: We will have an interface “State” which defines signatures of functions which
     represents action in the context of Vending Machine. Below are the actions function
     signatures
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们将拥有一个接口“State”，它定义了表示自动售货机中动作的函数签名。以下是这些动作的函数签名：
 - en: addItem(int) error
+  id: totrans-29
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: addItem(int) error
 - en: requestItem() error
+  id: totrans-30
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: requestItem() error
 - en: insertMoney(money int) error
+  id: totrans-31
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: insertMoney(money int) error
 - en: dispenseItem() error
+  id: totrans-32
   prefs:
   - PREF_IND
   - PREF_OL
   type: TYPE_NORMAL
+  zh: dispenseItem() error
 - en: Each of the concrete states implements all 4 above functions and either move
     to another state on these actions or gives some response.
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个具体状态都实现了上述四个函数，并根据这些操作转移到其他状态或给出一些响应。
 - en: Each of the concrete states also embeds a pointer to the current Vending Machine
     object so that state transition can happen on that object.
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个具体的状态还会嵌入一个指向当前自动售货机对象的指针，这样状态转换可以在该对象上进行。
 - en: '**Low**–**Level Design**'
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Below is the low-level design expressed in the Go programming language. Later
     we will see a working example as well
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用 Go 编程语言表达的低级设计，稍后我们还会看到一个实际的例子
 - en: '**Vending Machine Class**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**自动售货机类**'
 - en: '[PRE0]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**State Interface**'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**状态接口**'
 - en: '[PRE1]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**NoItem State Class**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**无商品状态类**'
 - en: '[PRE2]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Item Requested State Class**'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**请求商品状态类**'
 - en: '[PRE3]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Has Item State Class**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**有商品状态类**'
 - en: '[PRE4]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Has Money State Class**'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '**有钱状态类**'
 - en: '[PRE5]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Program**'
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code if anyone is interested in the Go programming
     language
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果有人对 Go 编程语言感兴趣，这里是完整的工作代码
 - en: '**vendingMachine.go**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**vendingMachine.go**'
 - en: '[PRE6]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**state.go**'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**state.go**'
 - en: '[PRE7]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**noItemState.go**'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**noItemState.go**'
 - en: '[PRE8]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**itemRequestedState.go**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**itemRequestedState.go**'
 - en: '[PRE9]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**hasItemState.go**'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hasItemState.go**'
 - en: '[PRE10]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**hasMoneyState.go**'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hasMoneyState.go**'
 - en: '[PRE11]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**main.go**'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE12]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**Output:**'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出：**'
 - en: '[PRE13]**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE13]**'

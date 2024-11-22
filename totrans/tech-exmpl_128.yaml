@@ -1,96 +1,152 @@
 - en: Execute System Commands in Ruby Language
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在 Ruby 语言中执行系统命令
 - en: 原文：[https://techbyexample.com/execute-system-commands-ruby/](https://techbyexample.com/execute-system-commands-ruby/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/execute-system-commands-ruby/](https://techbyexample.com/execute-system-commands-ruby/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Ruby’s system method can be used to run system commands in Ruby. Below is the
     syntax for the same
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: Ruby 的 system 方法可以用来在 Ruby 中运行系统命令。以下是相应的语法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Some important points to note about system command
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于系统命令的一些重要事项
 - en: It will wait until the command is executed
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它将等待直到命令执行完毕
 - en: It will return true if the command is a success
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果命令成功，它将返回 true
 - en: It will return false if the command is a failure and returns an error code
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果命令执行失败并返回错误代码，它将返回 false
 - en: It will return nil if the command is not found
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果命令未找到，它将返回 nil
 - en: Let’s check out a program for the same
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看一个相同的程序
 - en: '**Program**'
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: In the above program, there are three cases
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的程序中，有三种情况
 - en: When the command is a success
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当命令成功时
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The output, in this case, is **true**
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，输出是 **true**
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: When the command is a failure
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当命令失败时
 - en: '[PRE5]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: The output, in this case, is **false**
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，输出是 **false**
 - en: '[PRE6]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: When the command doesn’t exist i.e **pwd1** is an invalid command
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当命令不存在时，例如 **pwd1** 是一个无效命令
 - en: '[PRE7]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The output, in this case, is  **nil**
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，输出是 **nil**
 - en: '[PRE8]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'

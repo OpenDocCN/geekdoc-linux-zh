@@ -1,49 +1,77 @@
 - en: Check if a file is writable or not in Ruby language
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 检查文件在 Ruby 语言中是否可写
 - en: 原文：[https://techbyexample.com/file-writable-ruby/](https://techbyexample.com/file-writable-ruby/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/file-writable-ruby/](https://techbyexample.com/file-writable-ruby/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: File class of ruby provides the below method that can be used to check if a
     file is writable by the effective user and group id of the current process.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: Ruby 的 File 类提供了以下方法，可用于检查当前进程的有效用户和组 ID 是否具有文件的写权限。
 - en: Here is the signature of the function
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是该函数的签名
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: It returns true if the file is writable or else it will return false.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果文件可写，它返回 true，否则返回 false。
 - en: '**Program**'
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Create a file named **test.txt** in the current directory. With the same user
     run the below program
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在当前目录创建一个名为**test.txt**的文件。使用相同的用户运行以下程序
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Now change the user and group id of the **test.txt** file using **chown** command.
     Make sure that the current user doesn’t belong to the new group id.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在使用**chown**命令更改**test.txt**文件的用户和组 ID。确保当前用户不属于新的组 ID。
 - en: Run the above program again. This time it will output false.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次运行上述程序。这次它将输出 false。

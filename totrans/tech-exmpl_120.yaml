@@ -1,76 +1,117 @@
 - en: Group anagrams together program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 将字谜分组的程序
 - en: 原文：[https://techbyexample.com/group-anagrams-together-program/](https://techbyexample.com/group-anagrams-together-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/group-anagrams-together-program/](https://techbyexample.com/group-anagrams-together-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Given an array of strings, write a program to group all anagrams together. 
     From Wikipedia
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个字符串数组，编写一个程序将所有字谜分组。来自维基百科
 - en: An **anagram** is a word or phrase formed by rearranging the letters of a different
     word or phrase, typically using all the original letters exactly once. For example,
     the word *anagram* itself can be rearranged into *nag a ram*, also the word *binary* into *brainy*^, and
     the word *adobe* into the *abode*.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**字谜** 是通过重新排列另一个单词或短语的字母形成的单词或短语，通常使用所有原始字母且每个字母恰好使用一次。例如，单词*anagram*本身可以重新排列成*nag
+    a ram*，单词*binary*可以重新排列成*brainy*，单词*adobe*可以重新排列成*abode*。'
 - en: For eg
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Below will the strategy.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是策略。
 - en: Duplicate the original array. Sort each string in the duplicate array. After
     sorting the duplicate array will look like this
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 复制原始数组。对每个字符串进行排序，复制数组将如下所示
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Create a map to store the output
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建一个映射来存储输出
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Build a trie for the above duplicate array with all strings sorted. Update the
     map above after inserting each element. Map should look like as below for “art”
     as art has its anagrams at 0,2 and 5 positions in the original array.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为上述复制数组构建一个字典树，所有字符串都已排序。在插入每个元素后更新上述映射。对于“art”，映射应如下所示，因为art在原始数组中的字谜分别位于0、2和5的位置。
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Iterate over the map and print the output by indexing in the input array of
     strings
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 遍历映射，并通过索引输入字符串数组来打印输出
 - en: '**Program**'
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Below is the program for the same
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相应的程序
 - en: '[PRE4]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Output**'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'

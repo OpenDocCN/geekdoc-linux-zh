@@ -1,105 +1,162 @@
 - en: Wildcard matching or regex matching problem
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 通配符匹配或正则表达式匹配问题
 - en: 原文：[https://techbyexample.com/wildcard-matching-problem/](https://techbyexample.com/wildcard-matching-problem/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://techbyexample.com/wildcard-matching-problem/](https://techbyexample.com/wildcard-matching-problem/)'
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: We are given an input regex and an input string. Regex can have two special
     characters
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们给定一个输入正则表达式和输入字符串。正则表达式可以包含两个特殊字符
 - en: '**Star Sign ‘*’ –** the star matches zero or more characters.'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**星号‘*’ –** 星号匹配零个或多个字符。'
 - en: '**Question Mark ‘?’ –** It matches any character.'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**问号‘?’ –** 它匹配任何字符。'
 - en: The objective is to find whether the given input string matches the regex or
     not.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是判断给定的输入字符串是否匹配正则表达式。
 - en: Eg
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Below is the recursive solution for the same
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相同问题的递归解法
 - en: '**Recursive Solution**'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**递归解法**'
 - en: In the recursive solution
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在递归解法中
 - en: If we encounter a star * then we have two cases. We ignore the * character in
     the pattern and move on to the next character in the pattern. The other case is
     that we move one character in the input string assuming * matches at least one
     character. Basically check for a match with **(inputIndex, patternIndex+1)** and
     **(inputIndex+1, patternIndex)**. If either of them returns true then the input
     string matches the regex.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果遇到星号*，我们有两种情况。我们忽略模式中的*字符，继续处理模式中的下一个字符。另一种情况是我们在输入字符串中向前移动一个字符，假设*至少匹配一个字符。基本上，我们需要检查**(inputIndex,
+    patternIndex+1)**和**(inputIndex+1, patternIndex)**是否匹配。如果其中一个返回true，那么输入字符串匹配正则表达式。
 - en: If we encounter a question mark ? then we simple proceed with **(inputIndex+1,
     patternIndex+1)**
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果遇到问号?，我们也简单地继续处理**(inputIndex+1, patternIndex+1)**
 - en: If we encounter a simple character then we simply proceed in the input string
     as well as the patter  ie. we do proceed with **(inputIndex+1, patternIndex+1)**
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果遇到一个简单字符，我们就简单地沿着输入字符串和模式继续前进，也就是说，我们继续处理**(inputIndex+1, patternIndex+1)**
 - en: Here is the program
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是程序
 - en: '[PRE1]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Dynamic Program Solution**'
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**动态规划解法**'
 - en: The above program is not an optimized solution as the subproblems are solved
     again and again. This problem can also be solved with DP.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的程序并不是一个优化的解法，因为子问题被一遍又一遍地解决。这个问题也可以通过动态规划（DP）来解决。
 - en: Create a two-dimensional matrix named **isMatchingMatrix** where
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个名为**isMatchingMatrix**的二维矩阵，其中
 - en: '**isMatchingMatrix[i][j]** will be true if the first **i** character in the
     input string matches the first **j** character in the pattern'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**isMatchingMatrix[i][j]** 如果输入字符串的前**i**个字符与模式的前**j**个字符匹配，则为true'
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Below is the program for the same.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相同问题的程序。
 - en: '[PRE4]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Output**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'

@@ -1,1194 +1,1772 @@
 - en: Unique ID Generation System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 唯一ID生成系统设计
 - en: 原文：[https://techbyexample.com/unique-id-generation/](https://techbyexample.com/unique-id-generation/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/unique-id-generation/](https://techbyexample.com/unique-id-generation/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "Overview")'
 - en: '[Types of Unique IDs](#Types_of_Unique_IDs "Types of Unique IDs")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[唯一ID的类型](#Types_of_Unique_IDs "Types of Unique IDs")'
 - en: '[Unique ID ( Loosely Sortable)](#Unique_ID_Loosely_Sortable "Unique ID ( Loosely
     Sortable)")'
+  id: totrans-5
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[唯一ID（松散可排序）](#Unique_ID_Loosely_Sortable "Unique ID ( Loosely Sortable)")'
 - en: '[Unique IDs ( Not time sortable) or Random UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID
     "Unique IDs ( Not time sortable) or Random UUID")'
+  id: totrans-6
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[唯一ID（不可时间排序）或随机UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID "Unique
+    IDs ( Not time sortable) or Random UUID")'
 - en: '[Sequence Number](#Sequence_Number "Sequence Number")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[序列号](#Sequence_Number "Sequence Number")'
 - en: '[Unique ID ( Loosely Sortable)](#Unique_ID_Loosely_Sortable-2 "Unique ID (
     Loosely Sortable)")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[唯一ID（松散可排序）](#Unique_ID_Loosely_Sortable-2 "Unique ID ( Loosely Sortable)")'
 - en: '[UUID or GUID](#UUID_or_GUID "UUID or GUID")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UUID或GUID](#UUID_or_GUID "UUID or GUID")'
 - en: '[96 bit GUID](#96_bit_GUID "96 bit GUID")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[96位GUID](#96_bit_GUID "96 bit GUID")'
 - en: '[64 bit IDs](#64_bit_IDs "64 bit IDs")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[64位ID](#64_bit_IDs "64 bit IDs")'
 - en: '[Snowflake by Twitter](#Snowflake_by_Twitter "Snowflake by Twitter")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Twitter的Snowflake](#Snowflake_by_Twitter "Snowflake by Twitter")'
 - en: '[Instagram ID generator](#Instagram_ID_generator "Instagram ID generator")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Instagram ID生成器](#Instagram_ID_generator "Instagram ID generator")'
 - en: '[Unique IDs ( Not time sortable) or Random UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID-2
     "Unique IDs ( Not time sortable) or Random UUID")'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[唯一ID（不可时间排序）或随机UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID-2 "Unique
+    IDs ( Not time sortable) or Random UUID")'
 - en: '[6 or 7  or 8 length digit base 64 encoded digit](#6_or_7_or_8_length_digit_base_64_encoded_digit
     "6 or 7  or 8 length digit base 64 encoded digit")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[6位、7位或8位长度的Base64编码数字](#6_or_7_or_8_length_digit_base_64_encoded_digit "6
+    or 7 or 8 length digit base 64 encoded digit")'
 - en: '[16 or 32 bit Random IDs](#16_or_32_bit_Random_IDs "16 or 32 bit Random IDs")'
+  id: totrans-16
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[16位或32位随机ID](#16_or_32_bit_Random_IDs "16 or 32 bit Random IDs")'
 - en: '[Sequence Number](#Sequence_Number-2 "Sequence Number")'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[序列号](#Sequence_Number-2 "Sequence Number")'
 - en: '[High-Level Design of Time Sortable Unique IDs](#High-Level_Design_of_Time_Sortable_Unique_IDs
     "High-Level Design of Time Sortable Unique IDs")'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[时间可排序唯一ID的高层设计](#High-Level_Design_of_Time_Sortable_Unique_IDs "High-Level
+    Design of Time Sortable Unique IDs")'
 - en: '[API Details](#API_Details "API Details")'
+  id: totrans-19
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[API详情](#API_Details "API Details")'
 - en: '[Time Component](#Time_Component "Time Component")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[时间组件](#Time_Component "Time Component")'
 - en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  id: totrans-21
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[高层设计](#High-Level_Design "High-Level Design")'
 - en: '[High-Level Design of Unique IDs ( Not time sortable) or Random UUID](#High-Level_Design_of_Unique_IDs_Not_time_sortable_or_Random_UUID
     "High-Level Design of Unique IDs ( Not time sortable) or Random UUID")'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[不可时间排序的唯一ID（或随机UUID）的高层设计](#High-Level_Design_of_Unique_IDs_Not_time_sortable_or_Random_UUID
+    "High-Level Design of Unique IDs ( Not time sortable) or Random UUID")'
 - en: '[Database Schema](#Database_Schema "Database Schema")'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[数据库架构](#Database_Schema "Database Schema")'
 - en: '[Which Database to Use](#Which_Database_to_Use "Which Database to Use")'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[选择使用哪个数据库](#Which_Database_to_Use "Which Database to Use")'
 - en: '[How to resolve concurrency issues](#How_to_resolve_concurrency_issues "How
     to resolve concurrency issues")'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何解决并发问题](#How_to_resolve_concurrency_issues "How to resolve concurrency issues")'
 - en: '[What happens if the key ranges are getting exhausted](#What_happens_if_the_key_ranges_are_getting_exhausted
     "What happens if the key ranges are getting exhausted")'
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果键范围耗尽会发生什么](#What_happens_if_the_key_ranges_are_getting_exhausted "What
+    happens if the key ranges are getting exhausted")'
 - en: '[Is not KGS service a single point of failure?](#Is_not_KGS_service_a_single_point_of_failure
     "Is not KGS service a single point of failure?")'
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[KGS服务不是单点故障吗？](#Is_not_KGS_service_a_single_point_of_failure "Is not KGS service
+    a single point of failure?")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "Conclusion")'
 - en: '**Overview**'
+  id: totrans-29
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Distributed Systems are a norm these days. Sometimes there is a requirement
     to generate Unique IDs across such distributed systems. Some of these unique ID
     requirements could be
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 分布式系统如今已成为常态。有时需要在这些分布式系统中生成唯一ID。这些唯一ID的需求可能包括：
 - en: There is Order Management System in the company and each of the order needs
     to have a unique ID
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 公司中有一个订单管理系统，每个订单都需要有一个唯一的ID。
 - en: Each of the users stored in the system needs to have a unique ID
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统中存储的每个用户都需要有一个唯一ID。
 - en: If we take an example of Instagram then there could be billions of status updates
     or posts from the user. Each of the posts will require a different unique ID.
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们以Instagram为例，那么用户可能会有数十亿条状态更新或帖子。每个帖子都需要一个不同的唯一ID。
 - en: ……
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ……
 - en: '**Types of Unique IDs**'
+  id: totrans-35
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**唯一ID的类型**'
 - en: Also, there are three types of IDs that could be generated when it comes to
     a unique ID generator
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，在唯一ID生成器方面，有三种类型的ID可以生成
 - en: Unique ID ( Loosely Sortable)
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 唯一ID（松散可排序）
 - en: Unique ID (Not Loosely Sortable) or Random Unique ID
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 唯一ID（非松散可排序）或随机唯一ID
 - en: Sequence Number
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号
 - en: Let’s look at the definition of each of these first, then we will look into
     each Unique ID in detail
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先让我们看看这些定义，然后再详细了解每个唯一ID
 - en: '**Unique ID ( Loosely Sortable)**'
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**唯一ID（松散可排序）**'
 - en: These IDs are loosely time sortable and can be generated in a decentralized
     manner. There are several ways of generating as we will see in this article. These
     ids have some time components in them usually epoch time.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些ID是松散的时间可排序，并且可以以去中心化的方式生成。正如我们在本文中将看到的那样，有多种生成方法。这些ID通常包含时间组件，通常是纪元时间。
 - en: Examples include UUID (128 bit), MongoDB Object IDs (96 bit), 64 bit IDs. Since
     these IDs are time sortable, hence it can be used by applications to organize
     data.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例包括UUID（128位），MongoDB对象ID（96位），64位ID。由于这些ID是时间可排序的，因此可以被应用程序用于组织数据。
 - en: Example of UUID  (128 bit)
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: UUID示例（128位）
 - en: '[PRE0]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Unique IDs ( Not time sortable) or Random UUID**'
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**唯一ID（不可时间排序）或随机UUID**'
 - en: These are generally sort IDs. Generally 6 or 7 or 8 character length IDs. For
     example, there is a short string that is used for generating a short URL. These
     short URLs could be used by websites like bitly.com or even youtube.  Youtube
     uses these short URLs for videos so that they could be shared easily.  So these
     IDs don’t have a use case of sort per se. These IDs could be large as well with
     no inherent information related to ordering.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些通常是短ID，通常长度为6、7或8个字符。例如，有一个短字符串用于生成短网址。这些短网址可以被像bitly.com或YouTube这样的网站使用。YouTube使用这些短网址来分享视频，方便分享。因此，这些ID本身并没有排序的用例。它们也可以是大的ID，且与排序无关。
 - en: One example of a large random ID could be let’s say a reference id or transaction
     id provided when someone does a payment at a payment gateway. These IDs have a
     use case of being totally random so that there is no possibility of guessing any
     reference id or transaction id.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个大随机ID的示例是，当某人在支付网关进行支付时，提供的参考ID或交易ID。这些ID完全随机，避免了任何人能够猜测参考ID或交易ID。
 - en: There could be many more such requirements in which we need to generate billions
     of records.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能还会有更多类似的需求，我们需要生成数十亿条记录。
 - en: Example of 7 character IDs
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 7个字符ID的示例
 - en: '[PRE1]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Sequence Number**'
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**序列号**'
 - en: As the name suggests is an auto-increment number. When generating sequence numbers
     in a distributed system, it requires knowledge of other workers in the system.
     And as such it requires a shared state. It is very difficult to generate a sequence
     number in a distributed system in a high scalable manner as it requires some central
     management.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如其名字所示，这是一个自动递增的数字。在分布式系统中生成序列号时，需要了解系统中其他工作者的信息。因此，它需要一个共享状态。由于需要集中管理，在分布式系统中高效地生成序列号是非常困难的。
 - en: An example of a sequence number is MY SQL Auto Increment Number
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个序列号的示例是MySQL自动递增数字
 - en: Example
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例
 - en: '[PRE2]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: We will first look at the description and design of
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们首先来看一下描述和设计
 - en: Unique ID ( Loosely Sortable)
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 唯一ID（松散可排序）
 - en: Followed by Unique ID (Not Loosely Sortable) or Random Unique ID
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接下来是唯一ID（非松散可排序）或随机唯一ID
 - en: And in the end, we will talk about Sequence Number Generation
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最后，我们将讨论序列号生成
 - en: '**Unique ID ( Loosely Sortable)**'
+  id: totrans-61
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**唯一ID（松散可排序）**'
 - en: Some of the requirements of a unique ID generation system could be.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些唯一ID生成系统的需求可能是：
 - en: The generated unique IDs should be short
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成的唯一ID应当是短的
 - en: The generated IDs should be time sortable
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成的ID应当是时间可排序的
 - en: It should be possible to generate 10000 IDs per second in an available manner
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 应该能够以可用的方式每秒生成10000个ID
 - en: Some of the unique IDs which could be generated in our system are
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们系统中可能生成的一些唯一ID是：
 - en: UUID or GUID which is 128 bits in length
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: UUID或GUID，长度为128位
 - en: 96 bit UUID. An example is Mongo DB Object ID
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 96位UUID。例如Mongo DB对象ID
 - en: 64-bit length UUID
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 64位UUID
 - en: 56-bit length UUID
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 56位UUID
 - en: '**UUID or GUID**'
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UUID或GUID**'
 - en: UUID stands for Universally Unique Identifiers. It is a 16 byte or 128-bit ID
     which is guaranteed to be unique.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: UUID代表通用唯一标识符。它是一个16字节或128位的ID，保证唯一。
 - en: '**Advantages of UUID or GUID**'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**UUID或GUID的优势**'
 - en: No special separate system is required for the generation of these IDs
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不需要专门的独立系统来生成这些ID
 - en: Generation of these IDs is fast
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这些ID的生成速度很快
 - en: These IDs are time sortable
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这些 ID 是按时间排序的。
 - en: '**Disadvantages**'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: The major disadvantage of GUID or UUID is its size
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: GUID 或 UUID 的主要缺点是其大小。
 - en: There could be collisions but chances are pretty less
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可能会发生冲突，但几率非常小。
 - en: '**96 bit GUID**'
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**96 位 GUID**'
 - en: Mongo DB Object is of 12 bytes or 96 bits. Each of the IDs comprises of
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: Mongo DB 对象为 12 字节或 96 位。每个 ID 包含：
 - en: A 4-byte timestamp value. It is the number of seconds since the epoch time
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个 4 字节的时间戳值，表示从纪元时间以来的秒数。
 - en: A 5-byte random value
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个 5 字节的随机值。
 - en: A 3-byte increment counter
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个 3 字节的增量计数器。
 - en: This Object ID is unique per shard in the Mongo DB world. This means that two
     different Object IDs generated by two different shards could be the same.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 该对象 ID 在 Mongo DB 世界中对于每个分片都是唯一的。这意味着，由两个不同分片生成的两个不同对象 ID 可能是相同的。
 - en: '**Advantages**'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**'
 - en: The ID generated is time sortable
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成的 ID 是时间可排序的。
 - en: '**Disadvantages**'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: The size is still large which could make the indexes large.
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 尺寸仍然较大，这可能导致索引变得庞大。
 - en: So these IDs cannot be used where IDs less than 64 bit are desirable
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 因此，这些 ID 不能在需要小于 64 位的 ID 的地方使用。
 - en: '**64 bit IDs**'
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**64 位 ID**'
 - en: The 64-bit IDs could be generated which are time sorted. And since it is 64
     bit it is obviously smaller in size as well.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以生成 64 位的 ID，这些 ID 是按时间排序的。而且由于它是 64 位，它的大小显然也较小。
 - en: For 64-bit IDS we have two approaches to consider here
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 64 位 ID，我们有两种方法需要考虑。
 - en: '**Snowflake by Twitter**'
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Twitter 的 Snowflake**'
 - en: There is a snowflake by Twitter that has been created to generate 64-bit unique
     IDs. It uses three criteria to determine the unique ID
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: Twitter 的 Snowflake 被创建用于生成 64 位唯一 ID。它使用三个标准来确定唯一 ID。
 - en: Current timestamp in milliseconds – It is 41 bits and based upon the Epoch system
     it gives us 69 years
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前时间戳（毫秒级）——为 41 位，基于纪元系统，它给我们 69 年的时间。
 - en: The sequence number of the instance generating the unique ID – It is 10 bit
     and hence it allows 2^10 = 1024 instances.
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成唯一 ID 的实例的序列号——为 10 位，因此允许 2^10 = 1024 个实例。
 - en: The sequence number of the thread within that instance which is generating the
     unique ID – Is 12 bit which allows 2^12 = 4096 per instance.
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成唯一 ID 的实例中的线程的序列号——为 12 位，允许每个实例 2^12 = 4096。
 - en: 1 bit is reserved for future use.
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 1 位保留供未来使用。
 - en: Let’s see how this system is scalable. There could be 1024 instances so there
     is no single point of failure. With 1024 instances the system now has a lot more
     nodes to handle the traffic
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看这个系统的可扩展性。可以有 1024 个实例，因此没有单点故障。通过 1024 个实例，系统现在有更多节点来处理流量。
 - en: '**Disadvantages**'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: It requires the zookeeper to manage the mapping of the machine
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它需要 Zookeeper 来管理机器的映射。
 - en: Require several snowflake servers which is an additional level of complexity
     and management
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要多个 Snowflake 服务器，这增加了管理和复杂度。
 - en: '**Instagram ID generator**'
+  id: totrans-104
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Instagram ID 生成器**'
 - en: It also generates a 64-bit ID. Each of the IDs consists of
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 它还生成一个 64 位 ID。每个 ID 包含：
 - en: 41 bits for the timestamp in milliseconds. If we have a custom epoch it can
     give us 69 years
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 41 位时间戳（毫秒级）。如果我们有自定义纪元，它可以提供 69 年的时间。
 - en: 13 bits which represents the logical shard ID
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 13 位代表逻辑分片 ID。
 - en: 10 bits which represents the sequence number per shard.
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 10 位表示每个分片的序列号。
 - en: So essentially  1024 IDs can be generated per shard per millisecond.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本上，每个分片每毫秒可以生成 1024 个 ID。
 - en: The sharded system has many thousand logical shards that are mapped to a few
     physical machines. Since it uses logical shards hence we can start with fewer
     physical servers which contain many logical shards. Once your shards get bigger,
     we can add more physical servers and move these shards to the new physical servers.
     Just the shard has to be moved to a new physical server. There is no re-bucketing
     of data that needs to happen.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 分片系统有成千上万的逻辑分片，这些分片映射到少数物理机器。由于它使用逻辑分片，因此我们可以从较少的物理服务器开始，这些服务器包含许多逻辑分片。一旦分片变大，我们可以添加更多物理服务器并将这些分片迁移到新物理服务器中。只需要将分片移到新的物理服务器，无需进行数据的重新分配。
 - en: Instagram ID generator doesn’t require a zookeeper which was needed in Twitter
     snowflake. It uses the Postgress Schema feature for administration
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: Instagram ID 生成器不需要像 Twitter Snowflake 那样的 Zookeeper。它使用 Postgress 架构特性进行管理。
 - en: '**What is Postgress Architecture**'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '**什么是 Postgress 架构**'
 - en: A Postgress DB consists of multiple schemas. Each of the schemas consists of
     multiple tables. A table name must only be unique across a schema only. So in
     the case of Instagram, each logical shard is mapped to one schema, and the table
     inside the schema is used to generate the IDs
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: Postgress 数据库由多个模式（schema）组成，每个模式又包含多个表。表名必须在每个模式内唯一。所以在 Instagram 的例子中，每个逻辑分片会映射到一个模式，模式中的表用来生成
+    ID。
 - en: '**Unique IDs ( Not time sortable) or Random UUID**'
+  id: totrans-114
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**唯一 ID（不可按时间排序）或随机 UUID**'
 - en: Examples of such IDs
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种 ID 的示例。
 - en: 6 pr 7 or 8 digit length which is 36, 42, and 48-bit length respectively
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 6、7 或 8 位长度，分别为 36、42 和 48 位长度。
 - en: 16 character length ID
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 16 字符长度的 ID。
 - en: 32 character length ID
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 32 字符长度的 ID。
 - en: '**6 or 7  or 8 length digit base 64 encoded digit**'
+  id: totrans-119
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**6 或 7 或 8 位的 base 64 编码数字**'
 - en: Since it is base 64 encoded, hence each of the digits is 6 bit.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于它是 base 64 编码的，因此每个数字占 6 位。
 - en: So if the unique ID is of size 6 then the overall size will be 7*6=42 bits.
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所以如果唯一 ID 是 6 位，那么总长度将是 7*6=42 位。
 - en: So if the unique ID is of size 7 then the overall size will be 7*6=42 bits.
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所以如果唯一 ID 是 7 位，那么总长度将是 7*6=42 位。
 - en: If the unique ID is of the size 8 then the overall size will be 8*6=48 bits.
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果唯一 ID 的大小是 8，那么总长度将是 8*6=48 位。
 - en: Some of the use cases of using such an ID is
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此类 ID 的一些用例是：
 - en: URL shortener system where the required URL is needed to be as short as possible
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: URL 短链接系统，其中要求 URL 尽可能短。
 - en: Paste Bin type systems were again required paste bin generated needs to be short.
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Paste Bin 类型的系统再次要求生成的 Paste Bin 需要短小。
 - en: Youtube requires such IDs to generate short URLs for videos
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Youtube 需要这样的 ID 来生成视频的短链接。
 - en: '**Advantages**'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**'
 - en: Very small in size hence suitable for sharing
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大小非常小，因此适合共享。
 - en: '**Disadvantages**'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: These IDs generated are not time sorted
+  id: totrans-131
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这些生成的 ID 不是按时间排序的。
 - en: '**16 or 32 bit Random IDs**'
+  id: totrans-132
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**16 或 32 位随机 ID**'
 - en: The character range for such IDs could be over 100 ASCII characters. And since
     it uses a large character set hence generation of these IDs is pretty simple and
     there are fewer chances of collision.
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种 ID 的字符范围可以超过 100 个 ASCII 字符。由于它使用了一个大的字符集，因此生成这些 ID 非常简单，碰撞的几率也较小。
 - en: Examples of 16-bit Random IDs
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 16 位随机 ID 示例。
 - en: '[PRE3]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Examples of 32-bit Random IDs
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 32 位随机 ID 示例。
 - en: '[PRE4]'
+  id: totrans-137
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Sequence Number**'
+  id: totrans-138
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**序列号**'
 - en: These IDs could be generated by using a database that could give us auto-increment
     numbers. Since there is a database that is generating unique IDs therefore it
     is guaranteed to be unique
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些 ID 可以通过使用一个数据库来生成，数据库可以为我们提供自动递增的数字。由于是数据库生成唯一 ID，因此可以保证 ID 的唯一性。
 - en: Unique IDs in sequential order. For example, the database generates a unique
     incremented ID.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 顺序生成的唯一 ID。例如，数据库生成唯一递增的 ID。
 - en: '**Advantages**'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '**优点**'
 - en: Short increment IDs could be generated
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可以生成短增量 ID。
 - en: It is easily time sorted
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它易于按时间排序。
 - en: '**Disadvantages**'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缺点**'
 - en: Unique generated IDs could be of any length
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 生成的唯一 ID 可以是任意长度。
 - en: The system is not scalable and the instance which is generating the unique ID
     is a single point of failure
+  id: totrans-146
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统不可扩展，生成唯一 ID 的实例是单点故障。
 - en: To improve the scalability and prevent a single point of failure we could increase
     the number of instances. Each of the instances will increment in a different way.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提高可扩展性并防止单点故障，我们可以增加实例的数量。每个实例的递增方式会不同。
 - en: For example, if we have two instances then one will generate an even number
     and the other will generate an odd number
+  id: totrans-148
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 例如，如果我们有两个实例，那么一个实例会生成偶数，另一个实例会生成奇数。
 - en: If we have three instances then the first one will generate IDs in multiple
     of 3, the second will generate in multiples of 3 plus 1 and the third one will
     generate in multiples of 3 plus 2
+  id: totrans-149
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果我们有三个实例，第一个实例会生成 3 的倍数的 ID，第二个实例会生成 3 的倍数加 1 的 ID，第三个实例会生成 3 的倍数加 2 的 ID。
 - en: Even after increasing the number of instances, there are a couple of disadvantages.
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使增加实例的数量，仍然有一些缺点。
 - en: It is no longer a sequence number
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它不再是一个序列号。
 - en: The unique IDs generated by two different instances will no longer be time sorted.
     For eg let’s say there are two instances and one instance could be generating
     IDs like 1001, or 1003\. The other could be generating IDs like 502,506 … at the
     same time. Obviously, by looking at two IDs it is difficult to tell which came
     earlier.
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 由两个不同实例生成的唯一 ID 不再按时间排序。例如，假设有两个实例，一个实例可能生成类似 1001 或 1003 的 ID，另一个实例可能会同时生成类似
+    502 或 506 的 ID。显然，仅通过查看两个 ID 很难判断哪个先生成。
 - en: What if the traffic is huge and we have to add more instances.  Similarly, let’s
     say the traffic is less and we have to decrease some instances. Increasing and
     decreasing instances could involve changes in the logic of the generation of IDs
     for each of the instances and managing such things is complicated as well as difficult.
+  id: totrans-153
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果流量非常大，我们必须增加更多的实例。类似地，假设流量较少，我们需要减少一些实例。增加和减少实例可能涉及更改每个实例的ID生成逻辑，管理这些事情既复杂又困难。
 - en: Flickr unique ID generator uses the above approach.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: Flickr 唯一 ID 生成器采用了上述方法。
 - en: '**High-Level Design of Time Sortable Unique IDs**'
+  id: totrans-155
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**可排序的时间唯一 ID 高级设计**'
 - en: Some of the non-functional requirements of the system is that it should be highly
     scalable and available
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统的部分非功能性要求是它应该具有高度的可扩展性和可用性
 - en: '**API Details**'
+  id: totrans-157
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**API 详细信息**'
 - en: There will be only a single API needed in our system. This API will be used
     to get a bunch of unique IDs generated. So essentially it will return an array
     of Unique IDs
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的系统中只需要一个 API。这个 API 将用于获取一批生成的唯一 ID。因此，它基本上会返回一个唯一 ID 数组。
 - en: We will generate an ID that will have the below fields
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将生成一个包含以下字段的 ID
 - en: Time Part
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间部分
 - en: Machine Number
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 机器编号
 - en: Process or Thread Number
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 进程或线程编号
 - en: Local Counter
+  id: totrans-163
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地计数器
 - en: Here is the description of each of these fields
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是每个字段的描述
 - en: Time Part – It denotes the time component of the Unique ID. Adding a time component
     to the unique IDs makes it time sortable.
+  id: totrans-165
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间部分 – 它表示唯一 ID 的时间组件。将时间组件添加到唯一 ID 中，使其可以按时间排序。
 - en: Machine Number – This is a unique number of the machine or instance or container.
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 机器编号 – 这是机器、实例或容器的唯一编号。
 - en: Thread Number – Unique number assigned to each thread
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 线程编号 – 分配给每个线程的唯一编号
 - en: Local Counter – This is the number of unique IDs that can be generated by the
     thread in one millisecond
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地计数器 – 这是线程在一毫秒内可以生成的唯一 ID 数量
 - en: We will have a 64-bit ID. With 64-bit IDs we will be able to generate 2^64 IDs.
     If our requirement is 100 million IDs per
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将生成一个 64 位的 ID。通过 64 位 ID，我们可以生成 2^64 个 ID。如果我们的需求是每秒 1 亿个 ID，
 - en: '**Time Component**'
+  id: totrans-170
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**时间组件**'
 - en: The number of bits out of 64 for the time component will depend upon the lifespan
     of our application. The timestamp will be number of milliseconds starting EPOCH
     time. Also note that the EPOCH timestamp starts from January 1st, 1970\. But for
     our application can have a custom epoch timestamp starting on 1 Jan 2022 or any
     other date which corresponds to the start of your application.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 时间组件所占的 64 位数将取决于我们应用程序的生命周期。时间戳将是从 EPOCH 时间开始的毫秒数。还要注意，EPOCH 时间戳从 1970 年 1
+    月 1 日开始。但对于我们的应用程序，可以有一个自定义的纪元时间戳，开始时间是 2022 年 1 月 1 日或其他任何与应用程序开始相关的日期。
 - en: Assume the lifespan of our application is 50 years. Our unique ID will have
     a millisecond component in it. So the number of milliseconds in 50 years is
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们的应用程序生命周期是 50 年。我们的唯一 ID 将包含毫秒组件。因此，50 年的毫秒数为
 - en: 50*365*24*60*60 = 1577000000000 milliseconds
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 50*365*24*60*60 = 1577000000000 毫秒
 - en: The number of bits needed to store a number that big is 41\. Basically, 41 bits
     because
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 存储如此大数字所需的位数是 41 位。基本上，41 位是因为
 - en: '[PRE5]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: In fact here is the table that tells how many bits for timestamp define how
     many years.
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，这里有一个表格，告诉你时间戳的位数如何定义年份。
 - en: '| **Number of Bits** | **Max Binary Number** | **Number of milliseconds** |
     **Number of years** |'
+  id: totrans-177
   prefs: []
   type: TYPE_TB
+  zh: '| **位数** | **最大二进制数** | **毫秒数** | **年份数** |'
 - en: '| 40 Bits | 1111111111111111111111111111111111111111 | 1099511627979 | 34.8
     years |'
+  id: totrans-178
   prefs: []
   type: TYPE_TB
+  zh: '| 40 位 | 1111111111111111111111111111111111111111 | 1099511627979 | 34.8 年
+    |'
 - en: '| 41 Bits | 11111111111111111111111111111111111111111 | 2199023255755 | 69.7
     years |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '| 41 位 | 11111111111111111111111111111111111111111 | 2199023255755 | 69.7 年
+    |'
 - en: '| 42 | 111111111111111111111111111111111111111111 | 4398046511307 | 139.4 years
     |'
+  id: totrans-180
   prefs: []
   type: TYPE_TB
+  zh: '| 42 | 111111111111111111111111111111111111111111 | 4398046511307 | 139.4 年
+    |'
 - en: Let’s see how many bits we need for each component.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看每个组件需要多少位。
 - en: Time Component – 41 bits
+  id: totrans-182
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间组件 – 41 位
 - en: Machine Component – 10 bits – Max 2^10 = 1024 instances or machines or containers
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 机器组件 – 10 位 – 最大 2^10 = 1024 个实例或机器或容器
 - en: Thread Component – 3 . Max 2^3 threads per instance or machine or container
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 线程组件 – 3。每个实例或机器或容器最多 2^3 个线程。
 - en: Local Counter- 10\. Max 2^10 unique IDS per millisecond per container.
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地计数器 – 10。每个容器每毫秒最多生成 2^10 个唯一 ID。
 - en: Let’s check the capacity of our service
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们检查一下我们服务的容量
 - en: Max Instances – 2^10 = **1024**
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大实例数 – 2^10 = **1024**
 - en: Number of threads per instance – 2^3 = **8**
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个实例的线程数 – 2^3 = **8**
 - en: Max Number of threads possible – 2^10*2^3 = 2^13 = **8192**
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大线程数 – 2^10*2^3 = 2^13 = **8192**
 - en: Unique IDs per thread per millisecond = 2^10 = **1024**
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个线程每毫秒生成的唯一 ID = 2^10 = **1024**
 - en: Number of Unique IDs possible per millisecond = 2^13*2^10 = 2^23 = **8,388,608**
     = roughly 8 million per millisecond
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每毫秒可能生成的唯一 ID 数量 = 2^13*2^10 = 2^23 = **8,388,608** = 每毫秒大约 800 万个
 - en: Number of Unique IDs possible per second = 2^23*1000 = **8,388,608,000** = 8
     billion Unique IDs per second
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每秒可能生成的唯一 ID 数量 = 2^23*1000 = **8,388,608,000** = 每秒 80 亿个唯一 ID
 - en: So theoretically this system could generate 8 billion Unique IDS per second
     for a total of 69.7\. years.. We can also have a system that generates 56 bit
     IDs. Let’s see how many bits we need for each component
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以理论上这个系统每秒可以生成 80 亿个唯一 ID，总时长为 69.7 年……我们也可以拥有一个生成 56 位 ID 的系统。让我们看看每个组件需要多少位
 - en: Time Component – 41 bits
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间组件 – 41 位
 - en: Machine Component – 8 bits – Max 2^8 = 256 instances or machines or containers
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 机器组件 – 8 位 – 最大 2^8 = 256 个实例、机器或容器
 - en: Thread Component – 2 bits. Max 2^2 = 4 threads per instance or machine or container
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 线程组件 – 2 位。每个实例、机器或容器最多可有 2^2 = 4 个线程
 - en: Local Counter- 4 bits. Max 2^4 unique IDS per millisecond per container.
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地计数器 - 4 位。每毫秒每个容器最多可生成 2^4 个唯一 ID。
 - en: Let’s check the capacity of our service
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们检查一下服务的容量
 - en: Max Instances – 2^10 = **1024**
+  id: totrans-199
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大实例数 – 2^10 = **1024**
 - en: Number of threads per instance – 2^2 = **4**
+  id: totrans-200
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个实例的线程数量 – 2^2 = **4**
 - en: Max Number of threads possible – 2^10*2^2 = 2^12 = **4096**
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大线程数 – 2^10*2^2 = 2^12 = **4096**
 - en: Unique IDs per thread per millisecond (Local Counter) = 2^4 = **16**
+  id: totrans-202
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个线程每毫秒生成的唯一 ID（本地计数器） = 2^4 = **16**
 - en: Number of Unique IDs possible per millisecond = 2^12*2^4 = 2^16 = **65,536**
     = roughly 65K per millisecond
+  id: totrans-203
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每毫秒可能生成的唯一 ID 数量 = 2^12*2^4 = 2^16 = **65,536** = 每毫秒大约 65K
 - en: Number of Unique IDs possible per second = 2^16*1000 = **65,536,000** = 65 million
     Unique IDs per second
+  id: totrans-204
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每秒可能生成的唯一 ID 数量 = 2^16*1000 = **65,536,000** = 每秒 6500 万个唯一 ID
 - en: So theoretically this system could generate 65 million Unique IDS per second
     for a total of 69.7\. years
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以理论上这个系统每秒可以生成 6500 万个唯一 ID，总时长为 69.7 年
 - en: '**Can we choose a very long timestamp such that the timestamp is 10000 years
     or even more?**'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们能选择一个非常长的时间戳，使得时间戳可以达到 10000 年或更长吗？**'
 - en: Choosing a very long timestamp will require a larger number of bits for the
     timestamp. That will limit the number of workers or threads or local Counter.
     This will in turn limit the capability to generate a number of Unique IDs per
     second.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 选择一个非常长的时间戳将需要更多的位数，这将限制工作节点、线程或本地计数器的数量。这反过来又限制了每秒生成唯一 ID 的能力。
 - en: '**How do we assign a unique number to each of the machines or the instances
     in our system?**'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我们如何为系统中的每个机器或实例分配一个唯一编号？**'
 - en: We can use zookeeper here. Whenever any new instance or machine or a container
     is coming up it can register itself with the zookeeper and get a unique number
     from the zookeeper
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在这里使用 ZooKeeper。每当一个新的实例、机器或容器启动时，它可以向 ZooKeeper 注册并从 ZooKeeper 获取一个唯一编号
 - en: '**High-Level Design**'
+  id: totrans-210
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**高层设计**'
 - en: There will be a zookeeper service
+  id: totrans-211
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个 ZooKeeper 服务
 - en: There will be a load balancer behind which there will be a number of instances
+  id: totrans-212
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个负载均衡器，后面会有多个实例
 - en: Each instance when it comes up, it registers itself with the zookeeper. When
     it registers, it obtains a unique number from the zookeeper. This unique number
     varies from 1 to 1024 since we have only 10 bits for the instance number.
+  id: totrans-213
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个实例启动时，它会向 ZooKeeper 注册。当它注册时，它会从 ZooKeeper 获得一个唯一的编号。这个唯一编号的范围从 1 到 1024，因为我们只有
+    10 位用于实例编号。
 - en: Autoscaling of the instances will be done based on CPU load. There will be a
     supervisor to which every node in the cluster will send its CPU. The supervisor
     is going to add and remove the instances or machines from the cluster depending
     upon the CPU load. If we are using AWS then it is simple to set up autoscaling
+  id: totrans-214
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 实例的自动扩展将基于 CPU 负载进行。每个集群中的节点都会向一个监控者发送其 CPU 状态。监控者将根据 CPU 负载来添加或移除集群中的实例或机器。如果我们使用
+    AWS，那么设置自动扩展非常简单
 - en: Below is the high-level diagram for the same
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相应的高层设计图
 - en: '![](../Images/979c92cc32257266566443b33543a07d.png)'
+  id: totrans-216
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/979c92cc32257266566443b33543a07d.png)'
 - en: '**High-Level Design of Unique IDs ( Not time sortable) or Random UUID**'
+  id: totrans-217
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**唯一 ID 的高层设计（非时间可排序）或随机 UUID**'
 - en: For this, we will only look at the design of 6,7, and 8 character length random
     UUID.   Generating a 16 length or 32 lengths random UUID is straightforward as
     there is no chance of collision.
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 对此，我们只关注 6、7 和 8 位长度的随机 UUID 的设计。生成 16 位或 32 位长度的随机 UUID 是直接的，因为没有碰撞的机会。
 - en: Below will be the high-level components in the system for generating  6,7, and
     8 character length random UUID
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是系统中生成6、7和8字符长度随机UUID的高层组件：
 - en: '**Key Generation Service** – This service holds the responsibility of generating
     of short keys'
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**密钥生成服务** – 该服务负责生成短密钥'
 - en: '**Upstream Service** – This is the business service that uses all the generated
     short keys for business purposes'
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**上游服务** – 这是一个业务服务，使用所有生成的短密钥进行业务用途。'
 - en: '**Key Recovery Service** –  This service will be a worker that will recover
     the expired keys and put them back into the database for future use'
+  id: totrans-222
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**密钥恢复服务** – 该服务将是一个工作进程，负责恢复过期的密钥，并将其重新放入数据库供将来使用。'
 - en: '**Kafka/SNS+ Queue/SQS System**'
+  id: totrans-223
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Kafka/SNS+队列/SQS系统**'
 - en: '**Database**'
+  id: totrans-224
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**数据库**'
 - en: '**Cache**'
+  id: totrans-225
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存**'
 - en: So Key Generation Service or  KGS service will hold the responsibility of generating
     the short keys. First, let’s see what should be the length of each key. Possible
     options of length are 6,7,8\. Only base64 URL-safe characters could be used to
     generate the key. Below are URL safe characters
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，密钥生成服务（KGS服务）将负责生成短密钥。首先，我们来看看每个密钥的长度应该是多少。可选的长度有6、7、8。生成密钥时只能使用base64 URL安全字符。以下是URL安全字符：
 - en: Lower case Alphabets – “a-z”
+  id: totrans-227
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 小写字母 – “a-z”
 - en: Uppercase Alphabets – “A-Z”
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大写字母 – “A-Z”
 - en: Digits – “0-9”
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 数字 – “0-9”
 - en: Underscore – “_”
+  id: totrans-230
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 下划线 – “_”
 - en: Dash – “-“
+  id: totrans-231
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 连字符 – “-”
 - en: Since only URL-safe characters can be used, therefore
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于只能使用URL安全字符，因此：
 - en: For 6- We have 64^6= 68.7 billion options
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于6个字符 – 我们有64^6 = 687亿个选项。
 - en: For 7 – We have 64^7 = ~3500 Billion options
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于7个字符 – 我们有64^7 = ~3500亿个选项。
 - en: For 8 – We have 64^8= trillion options
+  id: totrans-235
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于8个字符 – 我们有64^8 = 万亿个选项。
 - en: We can now assume that 68.7 billion entries will be enough so we can have 6
     characters for the key.  Now the question is how these are going to be maintained
     in the Database. If we are storing 68 billion entries in the database then it
     might be too many entries and a waste of resources.
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们可以假设687亿条记录已经足够，所以我们可以将密钥的字符长度定为6。现在的问题是这些记录将如何在数据库中维护。如果我们在数据库中存储687亿条记录，那么可能会有太多条记录，浪费资源。
 - en: One option is to store a range of keys in the databases. We can have a range
     of 64 where we only store the first five characters. These five characters will
     act as a prefix for all 64 keys which can be generated from this prefix. Let’s
     say we have the below prefix
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种选择是将一组密钥范围存储在数据库中。我们可以存储一个64范围，只保存前五个字符。这五个字符将作为所有64个密钥的前缀，这些密钥可以通过该前缀生成。假设我们有以下前缀：
 - en: '[PRE6]'
+  id: totrans-238
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Then below 64 keys can be generated from this
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后可以从此生成以下64个密钥：
 - en: '**adcA2[a-z]** – 26 keys'
+  id: totrans-240
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[a-z]** – 26个密钥'
 - en: '**adcA2[A-Z]** – 26 keys'
+  id: totrans-241
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[A-Z]** – 26个密钥'
 - en: '**adcA2[0-9]** – 10 keys'
+  id: totrans-242
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[0-9]** – 10个密钥'
 - en: '**adcA2[-_]** – 2 keys'
+  id: totrans-243
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**adcA2[-_]** – 2个键'
 - en: We can store these ranges in DB. So for 6 characters, we will have overall 64^5
     entries in the database.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以将这些范围存储在数据库中。所以对于6个字符，我们将在数据库中有总共64^5条记录。
 - en: The keys will be returned by the Key Service to the Tiny URL services in ranges
     and batches only. The upstream service will then use this prefix to generate 64
     keys and serve 64 different create tiny URL requests.
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: 密钥将由密钥服务按范围和批次返回给Tiny URL服务。上游服务随后将使用此前缀生成64个密钥，并处理64个不同的创建短网址请求。
 - en: This is optimization as the upstream service only needs to call the Key Generation
     Service only when it has exhausted all its 64 keys. So there will be one call
     from the upstream service to the Key Generation Service for generating 64 short
     URLs
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是优化，因为上游服务只有在用完所有64个键时，才需要调用密钥生成服务。所以，上游服务将只调用密钥生成服务一次，以生成64个短网址。
 - en: Let’s now see the points for the KGS service
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们来看一下KGS服务的要点。
 - en: Database Schema
+  id: totrans-248
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 数据库架构
 - en: Which database to use
+  id: totrans-249
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用哪个数据库？
 - en: How to resolve concurrency issues
+  id: totrans-250
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何解决并发问题？
 - en: How to recover key_prefix
+  id: totrans-251
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如何恢复key_prefix
 - en: What happens if the key ranges are getting exhausted
+  id: totrans-252
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果密钥范围耗尽会发生什么？
 - en: What if the short URL never expires
+  id: totrans-253
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果短网址永不过期怎么办？
 - en: Is not KGS service a single point of failure?
+  id: totrans-254
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: KGS服务不是单点故障吗？
 - en: '**Database Schema**'
+  id: totrans-255
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**数据库架构**'
 - en: There will just be a single table that will store the range of keys i.e prefix.
     Below will be the fields in the table
+  id: totrans-256
   prefs: []
   type: TYPE_NORMAL
+  zh: 只会有一个表来存储密钥范围，即前缀。以下是表中的字段：
 - en: '**key_prefix**'
+  id: totrans-257
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**key_prefix**'
 - en: '**key_length** – It will always be 6 for now. These fields exist if we need
     7 length keys in any scenario'
+  id: totrans-258
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**key_length** – 目前将始终为6。如果在某些情况下需要7个字符的密钥，则会有这些字段。'
 - en: '**used** – If this is true then the key prefix is currently in use. If false
     then it is free to be used'
+  id: totrans-259
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**used** – 如果为真，则说明该密钥前缀当前正在使用。如果为假，则表示该前缀可以自由使用。'
 - en: '**created**'
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已创建**'
 - en: '**updated**'
+  id: totrans-261
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已更新**'
 - en: '**Which Database to Use**'
+  id: totrans-262
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**选择使用哪种数据库**'
 - en: We don’t have any ACID requirements so we can use the No SQL database. Also,
     we might have very large data to save as well so No SQL might be better suited. 
     This system will be a write-heavy as well as a read-heavy system. So we can use
     **Cassandra Database** here.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们没有任何 ACID 要求，因此可以使用 No SQL 数据库。此外，我们可能还需要保存非常大的数据，因此 No SQL 可能更适合。这个系统将是一个写重型和读重型系统。所以我们可以在这里使用**Cassandra
+    数据库**。
 - en: We can do the capacity estimates of the DB and based on that we can decide on
     the number of shards we want to have. Each of the shards would be properly replicated
     as well
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以对数据库进行容量估算，基于此我们可以决定要拥有的分片数量。每个分片也将进行适当的复制。
 - en: There is one more optimization we can do here to improve the latency. We can
     refill free key ranges in the cache and the KGS service can directly pick from
     there instead of going to the database every time.
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以在这里做进一步优化来提高延迟。我们可以重新填充缓存中的空闲键范围，KGS 服务可以直接从那里获取，而不是每次都去访问数据库。
 - en: '**How to resolve concurrency issues**'
+  id: totrans-266
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**如何解决并发问题**'
 - en: It could very well happen that two requests see the same prefix or range as
     free. Since there are multiple servers reading from the key DB simultaneously
     we might have a scenario where two or more servers read the same key as free from
     the key DB.
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 很有可能会发生两个请求看到相同的前缀或范围为空。由于多个服务器同时从键数据库读取，我们可能会遇到这种情况，即两个或更多的服务器从键数据库读取相同的键为空。
 - en: There are two ways to resolve the concurrency issues we just mentioned
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决我们刚刚提到的并发问题有两种方法
 - en: Two or more servers read the same key but only one server will be able to mark
     that **key_prefix** as used in the database. Concurrency is at DB level that is
     each row is locked before being updated and we can leverage that here. Db will
     return back to the server whether any record was updated or not. If the record
     was not updated then the server can fetch a new key. If the record was updated
     then that server has got the right key.
+  id: totrans-269
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 两个或多个服务器读取相同的键，但只有一个服务器能够在数据库中将该**key_prefix**标记为已使用。并发发生在数据库级别，即每行在更新前被锁定，我们可以利用这一点。数据库将返回是否有记录被更新。如果记录未更新，服务器可以获取一个新键。如果记录已更新，则该服务器获得正确的键。
 - en: The other option is to use a transaction that does Find and Update in one transaction.
     Each Find and Update will return a unique key_prefix every time. This is probably
     not a recommended option because of the load it puts on the database
+  id: totrans-270
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 另一个选项是使用一个事务，在一个事务中同时进行查找和更新。每次查找和更新都会返回一个唯一的 key_prefix。这可能不是一个推荐的选项，因为它会给数据库带来很大的负担。
 - en: '**What happens if the key ranges are getting exhausted**'
+  id: totrans-271
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**如果键范围耗尽会怎样**'
 - en: This will be an unexpected condition. There will be a background worker that
     will check if the key ranges are getting exhausted. If yes then it can generate
     ranges for 7 length keys. But how it will know if the key ranges are getting exhausted.
     For keeping a rough count there could be another table that will store the user
     count of used keys.
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将是一个意外的情况。将有一个后台工作者检查键范围是否耗尽。如果是的话，它可以生成7长度键的范围。但是它如何知道键范围是否耗尽呢？为了保持大致的计数，可以有另一个表来存储已使用键的用户计数。
 - en: Whenever any range is allotted by the KGS to the upstream service it will publish
     a message that will be picked by a synchronous worker that is going to decrease
     the count of used keys by 1.
+  id: totrans-273
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每当 KGS 将任何范围分配给上游服务时，它将发布一条消息，消息将被一个同步工作者接收，后者将减少已用键的计数值。
 - en: Similarly, whenever a range is free we can increment this counter.
+  id: totrans-274
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 同样，每当一个范围为空时，我们可以递增这个计数器。
 - en: '**Is not KGS service a single point of failure?**'
+  id: totrans-275
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**KGS 服务不是单点故障吗？**'
 - en: To prevent it we will have proper replication of the key database. Also, there
     will be multiple app servers for the service itself. We will also have proper
     autoscaling set up. We can also have Disaster Management
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了防止这种情况发生，我们将对键数据库进行适当的复制。此外，服务本身将有多个应用服务器。我们还将设置适当的自动扩展。我们还可以进行灾难管理。
 - en: Below is the high-level diagram of the overall system
+  id: totrans-277
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是整个系统的高层次图示
 - en: '![](../Images/25c14df5e6663608e906136d41ed7410.png)'
+  id: totrans-278
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/25c14df5e6663608e906136d41ed7410.png)'
 - en: '**Conclusion**'
+  id: totrans-279
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This was all about unique ID generation Hoped you have liked this article. Please
     share feedback in the comments.
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: 以上是关于唯一 ID 生成的内容，希望你喜欢这篇文章。请在评论中分享你的反馈。

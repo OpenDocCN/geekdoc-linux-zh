@@ -1,80 +1,122 @@
 - en: Program to divide two integers without using multiplication or division operator
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 程序：在不使用乘法或除法运算符的情况下，除以两个整数
 - en: 原文：[https://techbyexample.com/divide-two-integers-progam/](https://techbyexample.com/divide-two-integers-progam/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/divide-two-integers-progam/](https://techbyexample.com/divide-two-integers-progam/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Two numbers are given. The objective is to divide those numbers and return the
     quotient. Ignore the remainder in the solution. But division needs to be done
     without using the multiplication or division operator.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定两个数字，目标是将这两个数字相除并返回商。在解法中忽略余数。但是必须在不使用乘法或除法运算符的情况下进行除法运算。
 - en: The first number is the dividend
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个数字是被除数
 - en: The second number is the divisor
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二个数字是除数
 - en: For example
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Here is the idea of how to do it. The first thing to notice is that
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是实现方法的思路。首先要注意的是
 - en: If dividend and divisor are either both positive or both negative then the quotient
     is positive
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果被除数和除数都是正数或都是负数，则商是正数
 - en: If either one of dividend and divisor is negative then the quotient is negative
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果被除数和除数中有一个是负数，则商是负数
 - en: So there is an XOR relation between signs of dividend and divisor. We can follow
     the below steps to write the program
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，被除数和除数的符号之间有一个异或关系。我们可以按照以下步骤编写程序
 - en: First, determine the sign of the quotient as per the XOR logic above.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先，根据上面的异或逻辑确定商的符号。
 - en: Then make both dividend and divisor positive.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后将被除数和除数都变为正数。
 - en: Now increase the divisor by itself until it is less than or equal to the dividend.
     Also, keep a counter for each increment
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 现在将除数加倍，直到它小于或等于被除数。同时，为每次增量保持一个计数器
 - en: counter*sign will be the answer
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: counter*sign 将是答案
 - en: '**Program**'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是相应的程序。
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

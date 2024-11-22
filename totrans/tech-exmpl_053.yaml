@@ -1,420 +1,609 @@
 - en: CAP Theorem in Distributed Systems
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 分布式系统中的CAP定理
 - en: 原文：[https://techbyexample.com/cap-theorem-distributed-systems/](https://techbyexample.com/cap-theorem-distributed-systems/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/cap-theorem-distributed-systems/](https://techbyexample.com/cap-theorem-distributed-systems/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Consistency](#Consistency "Consistency")'
+  id: totrans-4
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[一致性](#Consistency "一致性")'
 - en: '[Availability](#Availability "Availability")'
+  id: totrans-5
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可用性](#Availability "可用性")'
 - en: '[Partition Tolerance](#Partition_Tolerance "Partition Tolerance")'
+  id: totrans-6
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[分区容忍](#Partition_Tolerance "分区容忍")'
 - en: '[CAP Theorem](#CAP_Theorem "CAP Theorem")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[CAP定理](#CAP_Theorem "CAP定理")'
 - en: '[Consistency and Availability](#Consistency_and_Availability "Consistency and
     Availability")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[一致性与可用性](#Consistency_and_Availability "一致性与可用性")'
 - en: '[Consistency and Partition Tolerant](#Consistency_and_Partition_Tolerant "Consistency
     and Partition Tolerant")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[一致性与分区容忍](#Consistency_and_Partition_Tolerant "一致性与分区容忍")'
 - en: '[Availability and Partition Tolerant](#Availability_and_Partition_Tolerant
     "Availability and Partition Tolerant")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可用性与分区容忍](#Availability_and_Partition_Tolerant "可用性与分区容忍")'
 - en: '[The formula for Strong Consistency](#The_formula_for_Strong_Consistency "The
     formula for Strong Consistency")'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[强一致性的公式](#The_formula_for_Strong_Consistency "强一致性的公式")'
 - en: '[Number of Nodes or Replicas](#Number_of_Nodes_or_Replicas "Number of Nodes
     or Replicas")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点或副本的数量](#Number_of_Nodes_or_Replicas "节点或副本的数量")'
 - en: '[Write Quoram](#Write_Quoram "Write Quoram")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写入法定人数](#Write_Quoram "写入法定人数")'
 - en: '[Read Quoram](#Read_Quoram "Read Quoram")'
+  id: totrans-14
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[读取法定人数](#Read_Quoram "读取法定人数")'
 - en: '[The number of nodes is 1](#The_number_of_nodes_is_1 "The number of nodes is
     1")'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点数量为1](#The_number_of_nodes_is_1 "节点数量为1")'
 - en: '[The number of nodes is 2](#The_number_of_nodes_is_2 "The number of nodes is
     2")'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[节点数量为2](#The_number_of_nodes_is_2 "节点数量为2")'
 - en: '[Write Quoram is 2 and Read Quoram is 1](#Write_Quoram_is_2_and_Read_Quoram_is_1
     "Write Quoram is 2 and Read Quoram is 1")'
+  id: totrans-17
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写入法定人数为2，读取法定人数为1](#Write_Quoram_is_2_and_Read_Quoram_is_1 "写入法定人数为2，读取法定人数为1")'
 - en: '[Write Quoram is 1 and Read Quoram is 2](#Write_Quoram_is_1_and_Read_Quoram_is_2
     "Write Quoram is 1 and Read Quoram is 2")'
+  id: totrans-18
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写入法定人数为1，读取法定人数为2](#Write_Quoram_is_1_and_Read_Quoram_is_2 "写入法定人数为1，读取法定人数为2")'
 - en: '[Write Quoram is 2 and Read Quoram is 2](#Write_Quoram_is_2_and_Read_Quoram_is_2
     "Write Quoram is 2 and Read Quoram is 2")'
+  id: totrans-19
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写入法定人数为2，读取法定人数为2](#Write_Quoram_is_2_and_Read_Quoram_is_2 "写入法定人数为2，读取法定人数为2")'
 - en: '[Write Quoram is 1 and Read Quoram is 1](#Write_Quoram_is_1_and_Read_Quoram_is_1
     "Write Quoram is 1 and Read Quoram is 1")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[写入法定人数为1，读取法定人数为1](#Write_Quoram_is_1_and_Read_Quoram_is_1 "写入法定人数为1，读取法定人数为1")'
 - en: '[Proof of CAP Theorem](#Proof_of_CAP_Theorem "Proof of CAP Theorem")'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[CAP定理的证明](#Proof_of_CAP_Theorem "CAP定理的证明")'
 - en: '[How consistency is achieved at the cost of Availability](#How_consistency_is_achieved_at_the_cost_of_Availability
     "How consistency is achieved at the cost of Availability")'
+  id: totrans-22
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何在牺牲可用性的情况下实现一致性](#How_consistency_is_achieved_at_the_cost_of_Availability
+    "如何在牺牲可用性的情况下实现一致性")'
 - en: '[How availability is achieved at the cost of Consistency](#How_availability_is_achieved_at_the_cost_of_Consistency
     "How availability is achieved at the cost of Consistency")'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何在牺牲一致性的情况下实现可用性](#How_availability_is_achieved_at_the_cost_of_Consistency
+    "如何在牺牲一致性的情况下实现可用性")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: A distributed system is a system in which that has multiple nodes connected
     to each other through the network. CAP theorem is a fundamental theorem in distributed
     systems and has three things
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 分布式系统是由多个节点通过网络相互连接的系统。CAP定理是分布式系统中的一个基本定理，包含三项内容
 - en: C stands for Consistency
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: C代表一致性
 - en: A stands for Availability
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: A代表可用性
 - en: P stands for Partition Tolerance
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: P代表分区容忍性
 - en: It states that you can only achieve only two of the three things mentioned.
     Why is that?. Let’s first understand each of the above terms before understanding
     why only two of them can be achieved,
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 该定理指出，你只能实现提到的三个目标中的两个。为什么会这样呢？在理解为什么只能实现其中两个之前，让我们先理解一下上述每个术语的含义。
 - en: '**Consistency**'
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**一致性**'
 - en: This means all nodes are consistent with respect to data. Essentially all nodes
     see the same view of data. So every read will return the most recent write. Once
     the writing of any value is successful then the subsequent read will that value
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 这意味着所有节点的数据是一致的。本质上，所有节点看到的数据视图是相同的。所以每次读取都将返回最新的写入数据。一旦某个值的写入成功，随后的读取将返回该值。
 - en: '**Availability**'
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可用性**'
 - en: Your distributed system should be able to send a non-error response in a reasonable
     amount of time to every request. That response is not guaranteed to be the latest
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 你的分布式系统应该能够在合理的时间内对每一个请求发送一个无错误的响应。这个响应不一定是最新的。
 - en: '**Partition Tolerance**'
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**分区容忍性**'
 - en: Your system continues to work in case of network partition happens. It means
     that even if there is some network issue between the nodes and there are some
     message failures, packets drop, then also the system continues to operate. It
     is not that the system shuts down. In other words, the system is tolerant of network
     partitions.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 当发生网络分区时，系统仍然可以继续工作。这意味着，即使节点之间存在网络问题，出现消息失败、数据包丢失，系统仍然会继续运行。并不是系统会关闭。换句话说，系统是容忍网络分区的。
 - en: Ideally, a system should be tolerant of network partitions.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 理想情况下，系统应该容忍网络分区。
 - en: Now we have understood all the terms let’s see what the CAP theorem states
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们已经理解了所有术语，让我们看看CAP定理是如何描述的。
 - en: '**CAP Theorem**'
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**CAP定理**'
 - en: CAP theorem states that in a distributed system, you will only be able to achieve
     two of any three properties above
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: CAP定理指出，在一个分布式系统中，你只能实现上述三个属性中的两个。
 - en: CA
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CA
 - en: CP
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CP
 - en: AP
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AP
 - en: In other words, a distributed system can’t be consistent, available, and partition
     tolerant at the same time.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，分布式系统不可能在同一时间内既是一致的、可用的，又是容忍分区的。
 - en: This is illustrated in the graph below
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面的图表中进行了说明
 - en: '![](../Images/1cb9381d0d8d92b472c43044907a3b12.png)'
+  id: totrans-46
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/1cb9381d0d8d92b472c43044907a3b12.png)'
 - en: '**Consistency and Availability**'
+  id: totrans-47
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**一致性和可用性**'
 - en: If your system is not tolerant to network partitions then it is possible to
     achieve both Consistency and Availability
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的系统不容忍网络分区，那么它有可能同时实现一致性和可用性。
 - en: '**Consistency and Partition Tolerant**'
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**一致性和分区容忍性**'
 - en: If your system is tolerant to network partitions then you can achieve consistency
     at the cost of availability
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的系统容忍网络分区，那么你可以以牺牲可用性的代价来实现一致性。
 - en: '**Availability and Partition Tolerant**'
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可用性和分区容忍性**'
 - en: If your system is tolerant to network partitions then you can achieve availability
     at the cost of consistency
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的系统容忍网络分区，那么你可以以牺牲一致性的代价来实现可用性。
 - en: As we mentioned earlier that the system has to be partition tolerant as the
     network is bound to be failed and communication between nodes is bound to be lost. It
     should continue to work despite network failure or message loss. As **P** should
     always be true for a system hence we can only achieve either **C** or **A**. In
     other words, we can only achieve **Consistency** or **Availability** when your
     system is **Partition Tolerant**.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们之前提到的，系统必须是分区容忍的，因为网络必然会失败，节点之间的通信必定会中断。系统应该在网络失败或消息丢失的情况下继续运行。因此，**P**对于系统来说应该始终为真，因此我们只能实现**C**或**A**中的一个。换句话说，当你的系统是**分区容忍**时，只有**一致性**或**可用性**可以实现。
 - en: Let’s take an example to understand why either **Consistency** or **Availability**
     has to be sacrificed when a system is **Partition Tolerant**. We will try to prove
     the CAP theorem in this tutorial using an example.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个示例来理解为什么当系统是**分区容忍**时，必须牺牲**一致性**或**可用性**中的一个。在本教程中，我们将通过一个示例来证明CAP定理。
 - en: But even to understand the example correctly, we first need to understand the
     term **Consistency** in **CAP** correctly. When we refer to consistency here we
     are referring to Strong Consistency here.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是即便要正确理解示例，我们首先需要准确理解**CAP**中的**一致性**一词。当我们在这里提到一致性时，我们指的是强一致性。
 - en: A system is strongly consistent if it is reading the most updated write. It
     never returns out of date or stale values. To take an example consider a distributed
     system with two nodes.  We will see an example of a consistent case as well as
     an inconsistent case
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个系统强一致，它就会读取到最新的写入数据。它永远不会返回过时或陈旧的值。举个例子，假设有一个分布式系统，包含两个节点。我们将看到一致性情况和不一致性情况的示例。
 - en: '**Example of a consistent case**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**一致性案例示例**'
 - en: Both the nodes n0 and n1 contain the value of data item ‘A’ as 1\. Read from
     either of the nodes will return the value of ‘A’ as 1\. Now the value of ‘A’ is
     updated to 2 on both the nodes. Again a read from either of the nodes will return
     value f ‘A’ as 2\. Everything is consistent.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 节点n0和n1都包含数据项'A'的值为1。从任一节点读取都将返回'A'的值为1。现在，'A'的值在两个节点上都被更新为2。再次从任一节点读取，将返回'A'的值为2。一切都是一致的。
 - en: '**Example of an inconsistent case**'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**不一致性案例示例**'
 - en: Both the nodes n0 and n1 contain the value of data item ‘A’ as 1\. Read from
     either of the nodes will return the value of ‘A’ as 1\. Now the value of ‘A’ is
     updated to 2 on the first node but not on the second. So a read from the first
     node will return the value of ‘A’ as 2 while a read from node2 will return the
     value as ‘1’. This is an example of an inconsistent state
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 节点 n0 和 n1 都包含数据项 ‘A’ 的值为 1\. 从任一节点读取都会返回值为 1\. 现在，‘A’ 的值在第一个节点上更新为 2，但在第二个节点上没有更新。因此，从第一个节点读取将返回值为
+    2，而从第二个节点读取将返回值为 1。这是一个不一致状态的例子
 - en: Let’s look at the formula for strong consistency now
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们来看强一致性的公式
 - en: '**The formula for Strong Consistency**'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**强一致性的公式**'
 - en: To understand strong consistency in Databases we need to understand three terms
     first
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解数据库中的强一致性，我们首先需要理解三个术语
 - en: Number of Nodes or Replicas
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点或副本的数量
 - en: Write Quoram
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数
 - en: Read Quoram
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 读取法定人数
 - en: '**Number of Nodes or Replicas**'
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**节点或副本的数量**'
 - en: This is the number of Nodes that exist in your system. When we say node here
     then that essentially means the number of replicas that have the same data
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是你系统中存在的节点数量。这里所说的节点，实质上指的是具有相同数据的副本数量
 - en: '**Write Quoram**'
+  id: totrans-69
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入法定人数**'
 - en: It is the minimum number of nodes to which write will happen before it is returned
     as a success.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是写入成功返回之前必须进行写入的最小节点数量。
 - en: '**Read Quoram**'
+  id: totrans-71
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**读取法定人数**'
 - en: It is the minimum number of nodes from which the read will happen before it
     is returned as a success. If the value returned by those minimum number of nodes
     is not the same then that read will be rejected
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是读取发生之前必须进行写入的最小节点数量。如果这些最小节点返回的值不同，则该读取将被拒绝
 - en: Mathematically if the sum of **Write Quoram** and **Read Quoram** is greater
     than the number of read nodes then the system is said to be strongly consistent.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 从数学角度看，如果 **写入法定人数** 和 **读取法定人数** 之和大于读取节点的数量，那么系统被认为是强一致的。
 - en: That is if Write Quoram is W and Read Quoram is R and the number of nodes is
     N, then
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 也就是说，如果写入法定人数为 W，读取法定人数为 R，节点数量为 N，那么
 - en: The system is strongly consistent if W+R > N
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 W+R > N，则系统是强一致的
 - en: The system is not guaranteed to be strongly consistent if W+R<=N
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 W+R<=N，则系统无法保证强一致性
 - en: In other words, if there is a node common between Write Quoram nodes and Read
     Quoram nodes then the system will be strongly consistent. That common node will
     reject the stale reads. A node is always common between Write Quoram and Read
     Quoram whenever W+R > N. It is not mathematically difficult to know why.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 换句话说，如果写入法定人数节点和读取法定人数节点之间有一个共同节点，那么系统将是强一致的。这个共同节点将拒绝过时的读取。当 W+R > N 时，写入法定人数和读取法定人数之间总会有一个共同节点。从数学上来说，为什么是这样并不难理解。
 - en: Let’s see by some examples how this formula holds. We are going to see the following
     cases.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一些例子来看这个公式是如何成立的。我们将看到以下几种情况。
 - en: The number of nodes is 1
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 1
 - en: The number of nodes is 2
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 2
 - en: The number of nodes is 3
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 节点数量为 3
 - en: '**The number of nodes is 1**'
+  id: totrans-82
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**节点数量为 1**'
 - en: In this case, the only combination of Write and Read Quoram possible is 1 and
     1\. The Sum of Write Quoram and Read Quoram is greater than the read node. Since
     there is a single instance, read is always the latest because read and write are
     happening on the same instance
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，唯一可能的写入和读取法定人数组合是 1 和 1\. 写入法定人数和读取法定人数之和大于读取节点的数量。由于只有一个实例，读取总是最新的，因为读取和写入都发生在同一个实例上
 - en: '**The number of nodes is 2**'
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**节点数量为 2**'
 - en: In this, there are further four cases.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此，有进一步的四种情况。
 - en: Write Quoram is 2 and Read Quoram is 1 – **Strongly Consistent**
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数为 2，读取法定人数为 1 – **强一致性**
 - en: Write Quoram is 1 and Read Quoram is 2 – **Strongly Consistent**
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数为 1，读取法定人数为 2 – **强一致性**
 - en: Write Quoram is 2 and Read Quoram is 2 – **Strongly Consistent**
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数为 2，读取法定人数为 2 – **强一致性**
 - en: Write Quoram is 1 and Read Quoram is 1 – **Not Strongly Consistent**
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写入法定人数为 1，读取法定人数为 1 – **不强一致**
 - en: '**Write Quoram is 2 and Read Quoram is 1**'
+  id: totrans-90
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入法定人数为 2，读取法定人数为 1**'
 - en: In this case, the sum of Write Quoram and Read Quoram is 3 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     since write is happening on both the nodes, hence read from either of the nodes
     will return the same data and the system overall will be strongly consistent
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，写入法定人数和读取法定人数之和为 3，这大于节点数量，因此系统应该是强一致的。在这种情况下，由于写入发生在两个节点上，因此从任一节点读取都将返回相同的数据，系统整体将是强一致的
 - en: '**Write Quoram is 1 and Read Quoram is 2**'
+  id: totrans-92
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写入法定人数为 1，读取法定人数为 2**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 3 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     write is happening only on a single instance. But read is happening from both
@@ -427,119 +616,171 @@
     A as 2 while the second node will return the value of A as 1\. Since the value
     returned by both the nodes is not the same, the system will reject that read to
     maintain strong consistency.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次强调，在这种情况下，写操作法定数和读操作法定数的和为3，这大于节点的数量，因此系统应该是强一致性的。在这种情况下，写操作只在一个节点上进行。但是，读操作来自两个节点。假设有一个名为A的数据，它的初始值是1。两个节点的A的值都是1。现在，在第一个节点上发生了写操作，将A的值更改为2。由于写操作法定数是1，因此写操作将在第一个节点上执行并成功返回。假设在节点2同步到节点1上的最新数据之前，发生了一次读操作。由于读操作法定数是2，因此它将从两个节点读取数据。第一个节点将返回A的值为2，而第二个节点将返回A的值为1。由于两个节点返回的值不相同，系统将拒绝此次读操作，以保持强一致性。
 - en: '**Write Quoram is 2 and Read Quoram is 2**'
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写操作法定数是2，读操作法定数是2**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 4 which is greater
     than the number of nodes hence system should be strongly consistent. In this case,
     since write is happening on both the nodes and read also from both the nodes.
     Therefore the read will be the latest every time.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次强调，在这种情况下，写操作法定数和读操作法定数的和为4，这大于节点的数量，因此系统应该是强一致性的。在这种情况下，由于写操作发生在两个节点上，且读操作也来自两个节点。因此，每次读取都会是最新的。
 - en: '**Write Quoram is 1 and Read Quoram is 1**'
+  id: totrans-96
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**写操作法定数是1，读操作法定数是1**'
 - en: Again, in this case, the sum of Write Quoram and Read Quoram is 2 which is equal
     to the Number of nodes hence system is not strongly consistent.  Write happened
     on node 1\. A read happened on node 2 before data could be synced to node 2\.
     This read is stale data.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次强调，在这种情况下，写操作法定数和读操作法定数的和为2，等于节点的数量，因此系统不是强一致性的。写操作发生在节点1上。数据还没有同步到节点2时，节点2上发生了读操作。这个读操作的数据是过时的。
 - en: '**Proof of CAP Theorem**'
+  id: totrans-98
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**CAP定理的证明**'
 - en: Now you are aware of the strong consistency, let’s now try to understand the
     CAP theorem in a better way. Assume you have two nodes in the system. Both are
     connected to each other and both are in sync.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在你已经了解了强一致性，让我们更好地理解一下CAP定理。假设系统中有两个节点，它们相互连接并且保持同步。
 - en: As we already know with the above formulas that with two nodes, the system will
     be strongly consistent when
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们从上面的公式中已经知道的，当系统有两个节点时，它将会是强一致性的，当
 - en: Write Quoram is 2 and Read Quoram is 1
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是2，读操作法定数是1
 - en: Write Quoram is 1 and Read Quoram is 2
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是1，读操作法定数是2
 - en: Write Quoram is 2 and Read Quoram is 2
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是2，读操作法定数是2
 - en: And the system will not be strongly consistent when
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统将不会是强一致性的，当
 - en: Write Quoram is 1 and Read Quoram is 1
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是1，读操作法定数是1
 - en: We already mentioned that in a distributed system that is partitioned tolerant,
     it is only possible to achieve either consistency or availability. Let’s see how.
     Imagine a network partition happened between the two nodes and the second node
     is not available
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们之前提到过，在一个具有分区容忍性的分布式系统中，只有在一致性或可用性之间做出选择。让我们来看一下是如何实现的。假设两个节点之间发生了网络分区，并且第二个节点不可用。
 - en: '**How consistency is achieved at the cost of Availability**'
+  id: totrans-107
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何以牺牲可用性来实现一致性**'
 - en: Here the number of nodes is 2\. Hence two achieve strong consistency we have
     three options
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里节点的数量是2。因此，为了实现强一致性，我们有三种选择
 - en: Write Quoram is 2 and Read Quoram is 1
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是2，读操作法定数是1
 - en: Write Quoram is 1 and Read Quoram is 2
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是1，读操作法定数是2
 - en: Write Quoram is 2 and Read Quoram is 2
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定数是2，读操作法定数是2
 - en: In the first case since Write Quoram is 2 hence it must write to both the nodes.
     But since the second node is not available. Hence it will reject the write. Hence
     the system is not available for write
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第一种情况中，由于写操作法定数是2，因此必须写入两个节点。但由于第二个节点不可用，写操作将被拒绝。因此，系统在写操作上不可用。
 - en: In the second case since Read Quoram is 2 hence it must read from both the nodes.
     But since the second node is not available. Hence it will reject the read. Hence
     the system is not available for reading
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第二种情况下，由于读操作法定人数为2，因此必须从两个节点读取数据。但是，由于第二个节点不可用，因此会拒绝读取操作。因此，系统在读取操作上不可用。
 - en: In the third case since Write Quoram is 2 hence it must write to both the nodes
     and since Read Quoram is 2 hence it must read from both the nodes. But since the
     second node is not available. Hence it will reject both read and write. Hence
     the system is not available for reading as well as writing
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第三种情况下，由于写操作法定人数为2，因此必须向两个节点写入数据；同时，由于读操作法定人数为2，因此必须从两个节点读取数据。但是，由于第二个节点不可用，因此会拒绝读写操作。因此，系统在读写操作上都不可用。
 - en: From the three cases, you can deduce that we get strong consistency at the cost
     of availability in the case of network partitions. Thus we only achieve **C**
     and **P** here. We are not able to get **A** in any case
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 从这三种情况中，可以推断出，在网络分区的情况下，我们以牺牲可用性为代价获得强一致性。因此，在这种情况下，我们只能实现**C**和**P**。在任何情况下我们都无法获得**A**。
 - en: '**How availability is achieved at the cost of Consistency**'
+  id: totrans-116
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何以牺牲一致性为代价实现可用性**'
 - en: To achieve availability we must give up consistency. Here the number of nodes
     is 2\. Hence there is one option in which the system will not be strongly consistent.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了实现可用性，我们必须放弃一致性。这里的节点数量为2。因此，有一种情况系统将不具备强一致性。
 - en: Write Quoram is 1 and Read Quoram is 1
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 写操作法定人数（Write Quorum）为1，读操作法定人数（Read Quorum）为1
 - en: In the first case since Write Quoram is 1, hence it can write to node 1\. Also,
     the Read Quoram is 1, and hence it can read from node 1\. Hence the system is
     available. The sum of Write Quoram and Read Quoram is 2 which is equal to the
@@ -547,22 +788,34 @@
     Read Quoram is less than equal to the number of nodes, then the system is not
     strongly consistent. Hence in this case we have availability but the system is
     not consistent.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第一种情况下，由于写操作法定人数为1，因此可以向节点1写入数据。同时，由于读操作法定人数为1，因此可以从节点1读取数据。因此，系统是可用的。写操作法定人数和读操作法定人数的总和为2，等于节点的数量。根据公式，当写操作法定人数和读操作法定人数的总和小于等于节点的数量时，系统就不具备强一致性。因此，在这种情况下，系统是可用的，但不一致。
 - en: Thus we only achieve **A** and **P** here. We are not able to get **C** here
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在这种情况下我们只能实现**A**和**P**。我们无法获得**C**。
 - en: This is the proof of the CAP theorem
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是CAP定理的证明
 - en: '**Conclusion**'
+  id: totrans-122
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about the CAP theorem in a distributed system. Hope you have liked
     this article. Please share feedback in the comments.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是分布式系统中的CAP定理。希望你喜欢这篇文章。请在评论中分享反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'

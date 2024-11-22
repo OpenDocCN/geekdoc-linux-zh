@@ -1,116 +1,168 @@
 - en: Design an In-Memory Cache
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设计一个内存缓存
 - en: 原文：[https://techbyexample.com/design-in-memory-cache/](https://techbyexample.com/design-in-memory-cache/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/design-in-memory-cache/](https://techbyexample.com/design-in-memory-cache/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Set(key int, value int)](#Setkey_int_value_int "Set(key int, value int)")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[设置(key int, value int)](#Setkey_int_value_int "设置(key int, value int)")'
 - en: '[Get(key int)](#Getkey_int "Get(key int)")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[获取(key int)](#Getkey_int "获取(key int)")'
 - en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low-Level_Design "低级设计")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML 图](#UML_Diagram "UML 图")'
 - en: '[Program](#Program "Program")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[程序](#Program "程序")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The objective is to Design an in-memory cache. Below are the requirements
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是设计一个内存缓存。以下是要求
 - en: It should support **Set** and **Get** Operation
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它应该支持**设置**和**获取**操作
 - en: O(1) Time Complexity for both **Set** and **Get**
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**设置**和**获取**操作的时间复杂度为O(1)'
 - en: Assume the maximum capacity of the cache is 3\. Once the cache is full and there
     is one more key to be inserted then one of the existing entries needs to be deleted
     from the cache
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设缓存的最大容量为3。当缓存已满并且有一个新键需要插入时，必须删除缓存中的一个现有条目
 - en: Deletion should be based on eviction algorithm – FIFO or LRU
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 删除应该基于驱逐算法——FIFO或LRU
 - en: Assume key and value in the cache are of type string
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设缓存中的键和值都是字符串类型
 - en: The eviction Algorithm it should support is **First-In-First-Out(FIFO)** and
     **Least Recently Used (LRU)**
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它应该支持的驱逐算法是**先进先出(FIFO)**和**最近最少使用(LRU)**
 - en: The Eviction Algorithm should be pluggable. That means that you should be able
     to change your eviction algorithm at runtime.
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 驱逐算法应该是可插拔的。这意味着你应该能够在运行时更改驱逐算法。
 - en: Below are the high-level things we will have in our design
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是我们设计中的高层内容
 - en: We will have a **Cache** class that will act as an interface for interacting
     with the client
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们将拥有一个**缓存**类，作为与客户端交互的接口
 - en: '**Cache** class will be using a combination of a **Map** and a **Doubly-linked
     List** for storing everything. Both map and doubly-linked list are used so that
     get and set are of  O(1) even with evictions. How this is achieved, we will later
     in this tutorial.'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存**类将使用**映射**和**双向链表**的组合来存储所有内容。使用映射和双向链表是为了确保即使在驱逐情况下，获取和设置操作的时间复杂度依然是O(1)。我们将在本教程的后续部分详细介绍如何实现。'
 - en: The **Map** will have the key of type string and the value of the type pointer
     to a node in the **Doubly-linked List**
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**映射**将具有字符串类型的键，以及指向**双向链表**节点的指针类型值'
 - en: Each node of the **Doubly Linked List** will contain the key as well as value.
     Each node will also have a pointer to the previous node in the double linked list
     and a pointer to the next node in the **doubly linked list**
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个**双向链表**的节点将包含键和值。每个节点还将有一个指向双向链表中前一个节点的指针，以及一个指向下一个节点的指针
 - en: There will be an **evictionAlgorithm** interface. There will be **LRU** and
     **FIFO** class which implements this **evictionAlgorithm** Interface
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**驱逐算法**接口。将有**LRU**和**FIFO**类来实现这个**驱逐算法**接口
 - en: Cache class will also embed an instance of **evictionAlgorithm** interface.
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缓存类还将嵌入一个**驱逐算法**接口实例。
 - en: '**evictionAlgorithm** interface exists to decouple our **Cache** class with
     the algorithm such that we should be able to change the algorithm at run time.
     Also **Cache** class should not change when a new algorithm is being added. This
@@ -119,50 +171,73 @@
     class. Each of these classes follows the same interface and this makes the algorithm
     interchangeable within the family. Let’s say the common interface name is **evictionAlgo**.
     Then **FIFO** and **LRU** classes will implement this interface.'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**驱逐算法**接口的存在是为了将我们的**缓存**类与算法解耦，以便我们可以在运行时更改算法。而且，当添加新算法时，**缓存**类不应发生变化。这就是**策略设计模式**的应用场景。策略模式建议创建一个算法家族，每个算法都有自己的类。这些类遵循相同的接口，使得算法在这个家族中是可互换的。假设通用接口名称是**驱逐算法**，那么**FIFO**和**LRU**类将实现这个接口。'
 - en: Now our main **Cache** class will embed **evictionAlgo** interface. Instead
     of implementing all types of eviction algorithms in itself, our Cache class will
     delegate all of them to the **evictionAlgo** interface. Since evictionAlgo is
     an interface, we can run time change the algorithm to either be LRU, or FIFO without
     any change in Cache class.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们的主 **Cache** 类将嵌入 **evictionAlgo** 接口。我们的 Cache 类不会在自己内部实现所有类型的驱逐算法，而是将所有的工作委托给
+    **evictionAlgo** 接口。由于 evictionAlgo 是一个接口，我们可以在运行时改变算法，使其成为 LRU 或 FIFO，而无需修改 Cache
+    类。
 - en: Also, we will use the Factory Design Pattern to create the instance of each
     of the algorithms ie. FIFO, LRU
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，我们将使用工厂设计模式来创建每个算法的实例，即 FIFO、LRU。
 - en: Let’s see how Get and Set are going to work in O(1) time
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看 Get 和 Set 如何在 O(1) 时间内工作。
 - en: '**Set(key int, value int)**'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Set(key int, value int)**'
 - en: For any set operation, it will first create a doubly-linked list node with key
     and value supplied. Then an entry will be made into the map with key as the input
     key and value as the address of the node. Once the node is created, then there
     are two cases
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何 set 操作，它将首先创建一个带有提供的 key 和 value 的双向链表节点。然后，在 map 中创建一个条目，key 为输入的 key，value
+    为该节点的地址。节点创建后，有两种情况：
 - en: '**The cache is not full** –  In this case, it will pass the control to the
     current evictionAlgorithm interface. The evictionAlgorithm interface is going
     to do insert that node in a double-linked list either at the end or at the front
     depending upon the current eviction algorithm. Every operation is O(1) here'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存未满** – 在这种情况下，它将控制权交给当前的 evictionAlgorithm 接口。evictionAlgorithm 接口将根据当前的驱逐算法，将该节点插入到双向链表的末尾或前面。这里的每个操作都是
+    O(1)。'
 - en: '**The cache is full** – In this case, it will pass the control to the current
     evictionAlgorithm interface to evict one of the nodes based upon the current eviction
     Algorithm. Once that node is evicted it will insert the new node. Every operation
     is O(1) here'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存已满** – 在这种情况下，它将控制权交给当前的 evictionAlgorithm 接口，根据当前的驱逐算法驱逐其中一个节点。驱逐后，它会插入新节点。这里的每个操作都是
+    O(1)。'
 - en: '**Get(key int)**'
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Get(key int)**'
 - en: For any Get operation, it will first check the map if the given key exists.
     If it exists then it will fetch the address of the node pointed to by key in the
     map. It will then fetch the value from the node. Then it will pass the control
@@ -170,111 +245,181 @@
     going to shuffle the current node in the doubly-linked list either at the end
     or front depending upon the current eviction algorithm. Every operation is O(1)
     here.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何 Get 操作，它将首先检查 map 中是否存在给定的 key。如果存在，它将获取该 key 在 map 中指向的节点的地址。然后，它会从节点中获取值。接着，它会将控制权交给当前的
+    evictionAlgorithm 接口。evictionAlgorithm 接口将根据当前的驱逐算法，重新排列当前节点在双向链表中的位置，可能是末尾或前面。这里的每个操作都是
+    O(1)。
 - en: '**Low-Level Design**'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Below is the low-level design expressed in go programming language. Later we
     will see a UML diagram as well as a working example
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用 Go 编程语言表达的低级设计。稍后我们将看到一个 UML 图以及一个工作示例。
 - en: '**Cache Class**'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Cache 类**'
 - en: '[PRE0]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Doubly Linked List**'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**双向链表**'
 - en: '[PRE1]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Eviction Algorithm Interface**'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**驱逐算法接口**'
 - en: '[PRE2]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**FIFO Algorithm** – It implements the Eviction Algorithm Interface'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**FIFO 算法** – 它实现了驱逐算法接口。'
 - en: '[PRE3]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**LRU Algorithm** – It implements the Eviction Algorithm Interface'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**LRU 算法** – 它实现了驱逐算法接口'
 - en: '[PRE4]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**UML Diagram**'
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML 图**'
 - en: '![](../Images/93ba75ea015d9c055a7f090acda77d83.png)'
+  id: totrans-49
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/93ba75ea015d9c055a7f090acda77d83.png)'
 - en: '**Program**'
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code in go programming language if anyone is interested.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是用 Go 编程语言编写的完整工作代码，如果有兴趣的人可以查看。
 - en: '**doublylinklist.go**'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '**doublylinklist.go**'
 - en: '[PRE5]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**evictionAlgorithm.go**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**evictionAlgorithm.go**'
 - en: '[PRE6]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**lru.go**'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lru.go**'
 - en: '[PRE7]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**fifo.go**'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fifo.go**'
 - en: '[PRE8]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**cache.go**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cache.go**'
 - en: '[PRE9]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**main.go**'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE10]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Output**'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE11]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**Conclusion**'
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing an In-Memory Cache. Hope you have liked this article.
     Please share feedback in the comments
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是设计内存缓存的全部内容。希望你喜欢这篇文章。请在评论中分享反馈。
 - en: '[cache](https://techbyexample.com/tag/cache/)*   [fifo](https://techbyexample.com/tag/fifo/)*   [lru](https://techbyexample.com/tag/lru/)'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cache](https://techbyexample.com/tag/cache/)*   [fifo](https://techbyexample.com/tag/fifo/)*   [lru](https://techbyexample.com/tag/lru/)'

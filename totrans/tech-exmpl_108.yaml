@@ -1,229 +1,351 @@
 - en: 'Interview Question: Design an Object Pool'
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 面试问题：设计一个对象池
 - en: 原文：[https://techbyexample.com/design-object-pool/](https://techbyexample.com/design-object-pool/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/design-object-pool/](https://techbyexample.com/design-object-pool/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[When we want to create a object pool](#When_we_want_to_create_a_object_pool
     "When we want to create a object pool")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当我们需要创建一个对象池时](#When_we_want_to_create_a_object_pool "当我们需要创建一个对象池时")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML 图](#UML_Diagram "UML 图")'
 - en: '[Low–Level Design](#Low%E2%80%93Level_Design "Low–Level Design")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low%E2%80%93Level_Design "低级设计")'
 - en: '[Program](#Program "Program")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[程序](#Program "程序")'
 - en: '[Full Working Code:](#Full_Working_Code "Full Working Code:")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[完整工作代码：](#Full_Working_Code "完整工作代码：")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The Object Pool Design Pattern can be used to design an Object Pool. It is a
     creational design pattern in which a pool of objects is initialized and created
     beforehand and kept in a pool. As and when needed, a client can request an object
     from the pool, use it, and return it to the pool. The object in the pool is never
     destroyed. In this tutorial, we will look at
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 对象池设计模式可以用来设计对象池。它是一种创建型设计模式，其中对象池在预先初始化并创建好后被保存在池中。需要时，客户端可以从池中请求一个对象，使用后再将其归还到池中。池中的对象永远不会被销毁。在本教程中，我们将看到
 - en: When we want to create a object pool
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当我们需要创建一个对象池时
 - en: UML diagram for the design
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设计的 UML 图
 - en: Low-Level Design
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 低级设计
 - en: Full Working Code
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 完整的工作代码
 - en: '**When we want to create a object pool**'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**当我们需要创建一个对象池时**'
 - en: When the cost to create the object of the class is high and the number of such
     objects that will be needed at a particular time is not much.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当类的对象创建成本较高，且在特定时间内需要的此类对象数量不多时。
 - en: -Let’s take the example of DB connections. Each of the connection object creation
     is the cost is high as there is network calls involved and also at a time not
     more than a certain connection might be needed. The object pool design pattern
     is perfectly suitable for such cases.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: -以数据库连接为例。每个连接对象的创建成本较高，因为涉及网络调用，而且一次只需要有限数量的连接。对象池设计模式非常适用于这种情况。
 - en: When the pool object is the immutable object
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当池对象是不可变对象时
 - en: -Again take the example of DB connection again. A DB connection is an immutable
     object. Almost none of its property needs to be changed
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: -再以数据库连接为例。数据库连接是一个不可变的对象。几乎没有它的任何属性需要更改。
 - en: For performance reasons. It will boost the application performance significantly
     since the pool is already created
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 出于性能考虑。这将显著提升应用程序的性能，因为池已经创建好。
 - en: '**UML Diagram**'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML 图**'
 - en: Below is the UML diagram of the Object Pool Design
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是对象池设计的 UML 图
 - en: '![](../Images/e7551a768df2f1429bd40a7b24bbd4ff.png)'
+  id: totrans-24
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e7551a768df2f1429bd40a7b24bbd4ff.png)'
 - en: Here is the overall idea
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是总体思路
 - en: We have a **Pool** Class that does the management of **Pool** Objects. The **Pool**
     class is first initialized with a set of an already created fixed number of pool
     objects. Then it supports lending, receiving back, and removing of pool objects.
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们有一个**Pool**类，它负责管理**Pool**对象。**Pool**类首先通过一组已经创建的固定数量的池对象进行初始化。然后它支持借出、归还和移除池对象。
 - en: There is an interface **iPoolOjbect** that represents the type of objects that
     will reside in the Pool. There will be different implementations of this interface
     depending upon the type of use case. For example, in the case of DB Connections,
     a DB connection will implement this **iPoolObject** interface.
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个接口**iPoolObject**，它表示将驻留在池中的对象类型。根据使用场景的不同，这个接口会有不同的实现。例如，在数据库连接的情况下，数据库连接会实现该**iPoolObject**接口。
 - en: There is a **Client** class that uses **Pool** class to loan a **Pool Object**.
     When it is done with the **Pool Object,** it returns it to the pool.
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有一个**客户端**类，它使用**Pool**类借用一个**Pool Object**。当它使用完**Pool Object**后，会将其归还给池。
 - en: '**Low**–**Level Design**'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Below is the low-level design expressed in the Go programming language. Later
     we will see a working example as well
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用 Go 编程语言表示的低级设计。稍后我们还将看到一个完整的示例。
 - en: '**iPoolObject Interface**'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPoolObject 接口**'
 - en: '[PRE0]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**DBConnection Class**'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**DBConnection 类**'
 - en: '[PRE1]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Pool Class**'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Pool 类**'
 - en: '[PRE2]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Client Class**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**客户端类**'
 - en: '[PRE3]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Program**'
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code if anyone is interested in the Go programming
     language
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码，如果有任何人对 Go 编程语言感兴趣的话。
 - en: '**iPoolObject.go**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPoolObject.go**'
 - en: '[PRE4]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**dbconnection.go**'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dbconnection.go**'
 - en: '[PRE5]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**pool.go**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pool.go**'
 - en: '[PRE6]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**client.go**'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '**client.go**'
 - en: '[PRE7]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**main.go**'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE8]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**Output**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE9]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**Full Working Code:**'
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整工作代码：**'
 - en: Here is the full working code in one file
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个文件中的完整工作代码
 - en: '**main.go**'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE10]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Output**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE11]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**Conclusion**'
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing an Object Pool. Hope you have liked this article.
     Please share feedback in the comments
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章主要介绍了对象池的设计。希望你喜欢这篇文章。请在评论中分享反馈

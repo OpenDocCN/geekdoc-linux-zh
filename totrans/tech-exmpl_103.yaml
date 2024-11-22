@@ -1,71 +1,109 @@
 - en: Maximum continuous subarray sum program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 最大连续子数组和程序
 - en: 原文：[https://techbyexample.com/maximum-continuous-subarray-sum-program/](https://techbyexample.com/maximum-continuous-subarray-sum-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/maximum-continuous-subarray-sum-program/](https://techbyexample.com/maximum-continuous-subarray-sum-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The objective is to find the maximum subarray in a given input array. The subarray
     should be contiguous and should contain at least one element
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是找到给定输入数组中的最大子数组。子数组应该是连续的，并且至少包含一个元素
 - en: For example
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Another example
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个示例
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: We use the Kadane algorithm here. In the Kadane algorithm, we keep two variables
     **max** and **currentMax**
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在这里使用Kadane算法。在Kadane算法中，我们保持两个变量**max**和**currentMax**
 - en: '**max** is initialized to IntMin and **currentMax** is initialized to zero'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**max**初始化为IntMin，**currentMax**初始化为零'
 - en: Then we Loop for each element in the array
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后我们遍历数组中的每个元素
 - en: Set **currentMax** = **currentMax** + a[i]
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置**currentMax** = **currentMax** + a[i]
 - en: If **currentMax** > **max** then **max** is set to **currentMax**
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果**currentMax** > **max**，则将**max**设置为**currentMax**
 - en: if **currentMax** is less than zero then **currentMax** is reset to zero
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果**currentMax**小于零，则**currentMax**被重置为零
 - en: '**Program**'
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是相同的程序
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Output**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

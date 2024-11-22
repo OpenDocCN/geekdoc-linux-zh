@@ -1,299 +1,457 @@
 - en: Understanding Directory-Based Sharding
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 理解基于目录的分片
 - en: 原文：[https://techbyexample.com/directory-based-sharding/](https://techbyexample.com/directory-based-sharding/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/directory-based-sharding/](https://techbyexample.com/directory-based-sharding/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "Overview")'
 - en: '[When to use Directory Based Sharding.](#When_to_use_Directory_Based_Sharding
     "When to use Directory Based Sharding.")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[何时使用基于目录的分片](#When_to_use_Directory_Based_Sharding "When to use Directory
+    Based Sharding.")'
 - en: '[Disadvantages of Directory-Based Sharding](#Disadvantages_of_Directory-Based_Sharding
     "Disadvantages of Directory-Based Sharding")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[基于目录的分片的缺点](#Disadvantages_of_Directory-Based_Sharding "Disadvantages of Directory-Based
+    Sharding")'
 - en: '[The Problem of Hot Shard](#The_Problem_of_Hot_Shard "The Problem of Hot Shard")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[热分片问题](#The_Problem_of_Hot_Shard "The Problem of Hot Shard")'
 - en: '[Solution 1](#Solution_1 "Solution 1")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[解决方案 1](#Solution_1 "Solution 1")'
 - en: '[Solution 2](#Solution_2 "Solution 2")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[解决方案 2](#Solution_2 "Solution 2")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "Conclusion")'
 - en: '**Overview**'
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: In this tutorial, we will try to understand directory-based sharding. Other
     than directory-based sharding there are two types of sharding as well
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将尝试理解基于目录的分片。除了基于目录的分片外，还有两种其他类型的分片
 - en: Key Based Sharding
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 基于键的分片
 - en: Range Based Sharding
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 基于范围的分片
 - en: Directory-based sharding keeps a static lookup table that keeps track of what
     shard is holding what data. Let’s consider an example.  Assume you have to keep
     track of all restaurants present in different parts of the US. Each of the restaurants
     will belong to a certain location within the US. We can divide the US into multiple
     zones. Each of the zones will be stored in a separate shard.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于目录的分片保持一个静态查找表，用来追踪哪些分片存储了哪些数据。让我们考虑一个例子。假设你需要跟踪美国不同地区的所有餐馆。每个餐馆将属于美国的某个特定位置。我们可以将美国划分为多个区域，每个区域将存储在一个独立的分片中。
 - en: '**Restaurant Table**'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**餐馆表**'
 - en: '| Restaurant Name | Zone |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| 餐馆名称 | 区域 |'
 - en: '| R1 | ZA |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| R1 | ZA |'
 - en: '| R2 | ZB |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| R2 | ZB |'
 - en: '| R3 | ZC |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| R3 | ZC |'
 - en: '| R4 | ZA |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| R4 | ZA |'
 - en: '| R5 | ZD |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| R5 | ZD |'
 - en: '| R6 | ZB |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| R6 | ZB |'
 - en: Now we will maintain a lookup table that will store the mapping of the zone
     to the shard
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们将维护一个查找表，用于存储区域与分片的映射关系
 - en: '**Lookup Table**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**查找表**'
 - en: '| Zone | Shard |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| 区域 | 分片 |'
 - en: '| ZA | 1 |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| ZA | 1 |'
 - en: '| ZB | 2 |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| ZB | 2 |'
 - en: '| ZC | 3 |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| ZC | 3 |'
 - en: '| ZD | 4 |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| ZD | 4 |'
 - en: It could very well be the case that two of the zones are stored in the shard.
     That is also allowed. This look-up table is saved generally outside the application
     and the database
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 很有可能两个区域会存储在同一个分片中，这是允许的。这个查找表通常保存在应用程序和数据库之外
 - en: '**When to use Directory Based Sharding.**'
+  id: totrans-31
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**何时使用基于目录的分片。**'
 - en: When the cardinality of the column on which the lookup table is based is low.
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当查找表基于的列的基数较低时。
 - en: For example, in the above case, we will have a fixed number of zones within
     the US. Even if there exist a million restaurant records, the number of zones
     is fixed. And hence the cardinality of the zone column in the Restaurants Table
     is low.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，在上述情况中，我们将在美国范围内有固定数量的区域。即使存在一百万条餐馆记录，区域的数量也是固定的。因此，餐馆表中的区域列的基数较低。
 - en: As a counter-example, we cannot use the **employee_id** in the lookup table
     because if there are let’s say 20K employees then there will be 20K different
     **employee_id** and the size of the lookup table will be unbounded as here the
     cardinality of the **employee_id** column is high
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为反例，我们不能使用查找表中的**employee_id**，因为如果有比如说 2 万个员工，那么就会有 2 万个不同的**employee_id**，这会导致查找表的大小是无限的，因为这里**employee_id**列的基数较高
 - en: Another important factor is that other than the cardinality of a column being
     low, the column value should also not change. For example, consider an **Order**
     table. An order will have different  status
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个重要因素是，除了列的基数较低外，列的值也不应该发生变化。例如，考虑一个**订单**表。一个订单会有不同的状态
 - en: Init
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 初始化
 - en: Success
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成功
 - en: Failed
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 失败
 - en: Shipped
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 已发货
 - en: Here the cardinality of the status column is low but the order can move from
     Init to  **Success** or **Failed**. From **Success,** it can move to **Shipped**.
     Hence status column is not the right field here to use for the lookup table as
     otherwise, the order would move from one shard to another shard once the order
     status changes.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，状态列的基数较低，但订单可以从初始化状态变为**成功**或**失败**。从**成功**状态，它可以变为**已发货**。因此，状态列不是适合用作查找表的字段，否则，订单的状态变化时，订单会从一个分片转移到另一个分片。
 - en: '**Disadvantages of Directory-Based Sharding**'
+  id: totrans-41
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**基于目录的分片的缺点**'
 - en: '**Overhead of a lookup table**'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**查找表的开销**'
 - en: There is an overhead consulting the table every time we want to know which shard
     the user data belongs to. And this lookup will happen for every  read and write
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 每次我们想知道用户数据属于哪个分片时，都需要查询查找表。这种查找操作会在每次读写时发生。
 - en: '**Lookup table being Single Point of Failure**'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**查找表作为单点故障**'
 - en: The lookup table can be maintained in a separate place may be Redis or some
     other database. This lookup table can be a single point of failure.  So we have
     to maintain multiple copies of a lookup table.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找表可以保存在一个单独的位置，可能是Redis或其他数据库。这个查找表可能成为单点故障。因此，我们必须维护多个查找表的副本。
 - en: '**The Problem of Hot Shard**'
+  id: totrans-46
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**热门分片问题**'
 - en: Like any other sharding technique, this sharding can also result in several
     hot shards. So generally when the directory-based sharding is done,  the sharding
     key is chosen such that the data is evenly divided between the shards. In the
     above case, we can argue that some of the zones might contain more restaurants
     than others. In that case, we can two ways to fix it
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 像其他任何分片技术一样，这种分片方法也可能导致几个热门分片。所以通常在做基于目录的分片时，分片键的选择是让数据在各个分片之间均匀分布。在上述例子中，我们可以认为某些区域可能包含比其他区域更多的餐馆。在这种情况下，我们可以通过两种方式来解决这个问题。
 - en: '**Solution 1**'
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**解决方案 1**'
 - en: Map a few zones with less number of restaurants to the same shard.  But map
     zone with a large number of restaurants to one shard. For example, let’s assume
     for the case above that **ZA** and **ZB** have a large number of restaurants,
     and **ZC** and **ZD** will have less number of restaurants. Then the look table
     can be  like this
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将一些餐馆数量较少的区域映射到同一个分片。但将餐馆数量较多的区域映射到一个分片。例如，假设在上面的例子中，**ZA**和**ZB**有大量餐馆，而**ZC**和**ZD**的餐馆较少。那么查找表可能会是这样的。
 - en: '**Lookup Table**'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**查找表**'
 - en: '| Zone | Shard |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| 区域 | 分片 |'
 - en: '| ZA | 1 |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| ZA | 1 |'
 - en: '| ZB | 2 |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| ZB | 2 |'
 - en: '| ZC | 3 |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| ZC | 3 |'
 - en: '| ZD | 3 |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| ZD | 3 |'
 - en: '**Solution 2**'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**解决方案 2**'
 - en: Use the hybrid approach. We can have the combination of zone and subzone decide
     the shard. For example, ZA contains so many restaurants that it cannot simply
     fit in one of the shards. Then the combination of zone and subzone will  decide
     the shard
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用混合方法。我们可以通过区域和子区域的组合来决定分片。例如，ZA包含了很多餐馆，无法简单地放入一个分片中。此时，区域和子区域的组合将决定分片。
 - en: '**Restaurant Table**'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '**餐馆表**'
 - en: '| Restaurant Name | Zone | Sub Zone |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| 餐馆名称 | 区域 | 子区域 |'
 - en: '| R1 | ZA | X |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| R1 | ZA | X |'
 - en: '| R2 | ZB | X |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| R2 | ZB | X |'
 - en: '| R3 | ZC | X |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| R3 | ZC | X |'
 - en: '| R4 | ZA | Y |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| R4 | ZA | Y |'
 - en: '| R5 | ZD | X |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| R5 | ZD | X |'
 - en: '| R6 | ZB | Y |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| R6 | ZB | Y |'
 - en: '| Zone | Shard |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| 区域 | 分片 |'
 - en: '| ZA_X | 1 |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| ZA_X | 1 |'
 - en: '| ZA_Y | 2 |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| ZA_Y | 2 |'
 - en: '| ZB_X | 3 |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| ZB_X | 3 |'
 - en: '| ZB_Y | 4 |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| ZB_Y | 4 |'
 - en: '| ZC_X | 5 |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| ZC_X | 5 |'
 - en: '| ZC_Y | 5 |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| ZC_Y | 5 |'
 - en: '| ZD_X | 6 |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| ZD_X | 6 |'
 - en: '| ZD_Y | 6 |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| ZD_Y | 6 |'
 - en: Both the subzones of zone **ZA** and **ZB** map to a different shard. While
     subzones of zone **ZC** and **ZD** map to the same shard.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 区域**ZA**和**ZB**的子区域映射到不同的分片。而区域**ZC**和**ZD**的子区域映射到同一个分片。
 - en: '**Conclusion**'
+  id: totrans-76
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about directory-based sharding. Hope you have liked the article
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 这完全是基于目录的分片。希望你喜欢这篇文章。

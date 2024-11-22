@@ -1,81 +1,125 @@
 - en: Find all Arithmetic series of length greater than two
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 找出所有长度大于二的算术序列
 - en: 原文：[https://techbyexample.com/arithmetic-series/](https://techbyexample.com/arithmetic-series/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/arithmetic-series/](https://techbyexample.com/arithmetic-series/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: An Arithmetic series is a series in which the difference between each element
     is equal. In this program, an array of integers is given. The objective is to
     find all arithmetic series greater than two.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 算术序列是一个每个元素之间的差相等的序列。在这个程序中，给定了一个整数数组。目标是找到所有长度大于二的算术序列。
 - en: The problem is best understood with an example
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个问题最好通过一个例子来理解
 - en: Examples
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: We have three arithmetic slices of length greater than 2 in the above array
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的数组中，我们有三个长度大于2的算术切片
 - en: 2,3,4
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2,3,4
 - en: 3,4,5
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 3,4,5
 - en: 2,3,4,5
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2,3,4,5
 - en: It is a dynamic programming question as it has an optimal substructure. Let’s
     say the name of the array is input
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个动态规划问题，因为它具有最优子结构。假设数组的名字是 input
 - en: dp[0] = 0
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[0] = 0
 - en: dp[1] = 0
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[1] = 0
 - en: dp[2] = 1 if dp[2] – dp[1] == dp[1] – dp[0]
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[2] = 1 如果 dp[2] – dp[1] == dp[1] – dp[0]
 - en: dp[i] = 1 if dp[i] – dp[i-1] == dp[i-1] – dp[i-2]
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: dp[i] = 1 如果 dp[i] – dp[i-1] == dp[i-1] – dp[i-2]
 - en: where **dp[i]** represents the number of arithmetic series of length greater
     than 2 till length **i+1**
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 **dp[i]** 表示从长度大于2到长度 **i+1** 的算术子序列的数量
 - en: '**Program**'
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是相应的程序。
 - en: '[PRE1]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

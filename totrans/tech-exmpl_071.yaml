@@ -1,70 +1,109 @@
 - en: Minimum Path Sum Program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 最小路径和程序
 - en: 原文：[https://techbyexample.com/minimum-path-sum-program/](https://techbyexample.com/minimum-path-sum-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/minimum-path-sum-program/](https://techbyexample.com/minimum-path-sum-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: There is an m*n matrix that contains non-negative integers. The objective is
     to find a minimum sum path moving from Top-Left to Bottom-Right. You can only
     move right or down.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个 m*n 的矩阵，包含非负整数。目标是找到一条从左上角到右下角的最小路径和。你只能向右或向下移动。
 - en: For example, let’s say we have below matrix
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，假设我们有如下矩阵
 - en: '![](../Images/695599be49b8f5c57183e0e8a42623c8.png)'
+  id: totrans-5
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/695599be49b8f5c57183e0e8a42623c8.png)'
 - en: Then minimum sum path is below the path. It has a sum of 1+1+2+2+1 = 7
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，最小路径和如下图所示。它的和为 1+1+2+2+1 = 7
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: It is a dynamic programming question as it has an optimal substructure. Let’s
     say the name of the matrix is input
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个动态规划问题，因为它具有最优子结构。假设矩阵的名称是 input
 - en: minPath[0][0] = input[0][0]
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: minPath[0][0] = input[0][0]
 - en: minPath[i][j] = ming(minPath[i-1][j], minPath[i][j-1])) + input[i][j]
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: minPath[i][j] = ming(minPath[i-1][j], minPath[i][j-1])) + input[i][j]
 - en: where minPath[i][j] represents the minimum sum from {0,0} to {i,j}
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 minPath[i][j] 表示从 {0,0} 到 {i,j} 的最小路径和
 - en: '**Program**'
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相应的程序。
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Output**'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Note:** Check out our Golang Advanced Tutorial. The tutorials in this series
     are elaborative and we have tried to cover all concepts with examples. This tutorial
     is for those who are looking to gain expertise and a solid understanding of golang
     – [Golang Advance Tutorial](https://golangbyexample.com/golang-comprehensive-tutorial/)'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 请查看我们的 Golang 高级教程。本系列教程内容详尽，我们尽力用示例覆盖所有概念。本教程适用于那些希望在 Golang 中获得专业知识并深入理解的人——[Golang
+    高级教程](https://golangbyexample.com/golang-comprehensive-tutorial/)'
 - en: Also if you are interested in understanding how all design patterns can be implemented
     in Golang. If yes, then this post is for you –[All Design Patterns Golang](https://golangbyexample.com/all-design-patterns-golang/)
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你有兴趣了解如何在 Golang 中实现所有设计模式。如果是的话，那么这篇文章适合你——[Golang 中的所有设计模式](https://golangbyexample.com/all-design-patterns-golang/)

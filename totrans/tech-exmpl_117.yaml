@@ -1,654 +1,935 @@
 - en: Whatsapp System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Whatsapp系统设计
 - en: 原文：[https://techbyexample.com/whatsapp-system-design/](https://techbyexample.com/whatsapp-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/whatsapp-system-design/](https://techbyexample.com/whatsapp-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Whatsapp cannot work over an HTTP protocol.](#Whatsapp_cannot_work_over_an_HTTP_protocol
     "Whatsapp cannot work over an HTTP protocol.")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Whatsapp无法通过HTTP协议工作](#Whatsapp_cannot_work_over_an_HTTP_protocol "Whatsapp无法通过HTTP协议工作")'
 - en: '[Consistency is more important in Whatsapp than availability](#Consistency_is_more_important_in_Whatsapp_than_availability
     "Consistency is more important in Whatsapp than availability")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[在Whatsapp中，一致性比可用性更重要](#Consistency_is_more_important_in_Whatsapp_than_availability
+    "在Whatsapp中，一致性比可用性更重要")'
 - en: '[One to one messaging](#One_to_one_messaging "One to one messaging")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[一对一消息](#One_to_one_messaging "一对一消息")'
 - en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[高级设计](#High-Level_Design "高级设计")'
 - en: '[Let’s what all APIs will be needed](#Lets_what_all_APIs_will_be_needed "Let’s
     what all APIs will be needed")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[让我们看看需要哪些API](#Lets_what_all_APIs_will_be_needed "让我们看看需要哪些API")'
 - en: '[Let’s see how each feature will work](#Lets_see_how_each_feature_will_work
     "Let’s see how each feature will work")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[让我们看看每个功能是如何工作的](#Lets_see_how_each_feature_will_work "让我们看看每个功能是如何工作的")'
 - en: '[How read receipts are going to work](#How_read_receipts_are_going_to_work
     "How read receipts are going to work")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[已读回执将如何工作](#How_read_receipts_are_going_to_work "已读回执将如何工作")'
 - en: '[What if the User B is offline](#What_if_the_User_B_is_offline "What if the
     User B is offline")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果用户B处于离线状态怎么办](#What_if_the_User_B_is_offline "如果用户B处于离线状态怎么办")'
 - en: '[How ordering of messages is ensured at the User B end](#How_ordering_of_messages_is_ensured_at_the_User_B_end
     "How ordering of messages is ensured at the User B end")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何确保在用户B端消息的顺序](#How_ordering_of_messages_is_ensured_at_the_User_B_end "如何确保在用户B端消息的顺序")'
 - en: '[What if one of the machines goes down to which a user is connected](#What_if_one_of_the_machines_goes_down_to_which_a_user_is_connected
     "What if one of the machines goes down to which a user is connected")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果连接用户的机器之一发生故障怎么办](#What_if_one_of_the_machines_goes_down_to_which_a_user_is_connected
+    "如果连接用户的机器之一发生故障怎么办")'
 - en: '[What about race conditions](#What_about_race_conditions "What about race conditions")'
+  id: totrans-14
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[竞态条件怎么办](#What_about_race_conditions "竞态条件怎么办")'
 - en: '[What if User A is offline](#What_if_User_A_is_offline "What if User A is offline")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如果用户A处于离线状态怎么办](#What_if_User_A_is_offline "如果用户A处于离线状态怎么办")'
 - en: '[How online and last seen will work](#How_online_and_last_seen_will_work "How
     online and last seen will work")'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[在线状态和最后一次见面将如何工作](#How_online_and_last_seen_will_work "在线状态和最后一次见面将如何工作")'
 - en: '[Group Messaging](#Group_Messaging "Group Messaging")'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[群组消息](#Group_Messaging "群组消息")'
 - en: '[Uploading Images or Videos](#Uploading_Images_or_Videos "Uploading Images
     or Videos")'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[上传图片或视频](#Uploading_Images_or_Videos "上传图片或视频")'
 - en: '[Other common components](#Other_common_components "Other common components")'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[其他常见组件](#Other_common_components "其他常见组件")'
 - en: '[Non-Functional Requirement](#Non-Functional_Requirement "Non-Functional Requirement")'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能性需求](#Non-Functional_Requirement "非功能性需求")'
 - en: '[Scalability](#Scalability "Scalability")'
+  id: totrans-21
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可扩展性](#Scalability "可扩展性")'
 - en: '[Low latency](#Low_latency "Low latency")'
+  id: totrans-22
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低延迟](#Low_latency "低延迟")'
 - en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[警报和监控](#Alerting_and_Monitoring "警报和监控")'
 - en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
     to user location")'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[向用户位置靠近](#Moving_closer_to_user_location "向用户位置靠近")'
 - en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
     Single Point of Failures")'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[避免单点故障](#Avoiding_Single_Point_of_Failures "避免单点故障")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: While answering any system design question it is important to keep in mind that
     system design questions can be really broad. Hence never directly jump to the
     solution. It is good to discuss the use cases with the interviewer so as to grasp
     what he is looking for. Decide on a set of features that you are going to include
     in your system design.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在回答任何系统设计问题时，重要的是要记住系统设计问题可能非常宽泛。因此，切勿直接跳到解决方案。与面试官讨论使用场景是非常有益的，这样可以理解他在寻找什么。决定你将包括在系统设计中的一组功能。
 - en: This is also one of the aspects the interview is looking for. They might be
     looking for
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也是面试官所关注的方面之一。他们可能在寻找
 - en: How you are doing requirement analysis
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你是如何进行需求分析的
 - en: Are you able to list down all the requirements
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你是否能够列出所有需求
 - en: What question you are asking.
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你在问什么问题。
 - en: Also, it is important to do the System Design incrementally. You first list
     down all the features that will be supported by your system design. You first
     discuss the design of the first feature and later on extend the design of other
     features as well.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 同时，在进行系统设计时，逐步进行设计非常重要。你需要先列出系统设计将支持的所有功能。首先讨论第一个功能的设计，然后再扩展其他功能的设计。
 - en: '**Whatsapp cannot work over an HTTP protocol.**'
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Whatsapp 无法通过 HTTP 协议工作。**'
 - en: The thing to keep in mind while designing WhatsApp is that it maintains connections
     per user. So important point to note here is that there is a persistent connection
     that is maintained per user. This persistent connection exists with the server
     per user.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '设计 WhatsApp 时需要记住的一点是，它为每个用户保持连接。因此，需要注意的要点是，每个用户都会保持一个持久的连接，这个持久连接与服务器之间保持。 '
 - en: If you think of WhatsApp obviously it cannot work over an HTTP protocol.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你考虑 WhatsApp，显然它不能通过 HTTP 协议工作。
 - en: This is because HTTP is a client-to-server protocol. It is a request-response
     architecture where the client sends a request and the server sends the response.
     Since it is a client-to-server protocol hence the server cannot communicate with
     the client. Also, a persistent connection is not maintained.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是因为 HTTP 是一个客户端到服务器的协议。它是一种请求-响应架构，客户端发送请求，服务器发送响应。由于它是客户端到服务器的协议，因此服务器无法与客户端通信。此外，持久连接也没有保持。
 - en: Hence Whatsapp needs to work over a TCP protocol which is peer-to-peer communication.
     Here are a few options
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，Whatsapp 需要通过 TCP 协议进行通信，这是点对点通信。以下是一些选项。
 - en: '**HTTP Long Polling** – In this client will wait for a certain amount of time
     after sending a request to the server. So there is long polling involved. After
     that certain time client can initiate the request again.'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**HTTP 长轮询** – 在这种方式中，客户端在向服务器发送请求后会等待一段时间。涉及长轮询。然后，客户端可以在特定时间后重新发起请求。'
 - en: '**Web sockets** – It is a fully bidirectional connection in which a client
     can talk to a server and also a server can talk to a client. In this, the server
     or client can send/receive data at any time. The connection is open all the time.'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Web sockets** – 这是一种完全双向连接，客户端可以与服务器通信，服务器也可以与客户端通信。在这种方式下，服务器或客户端可以随时发送/接收数据，连接始终保持开放。'
 - en: Overall web sockets are best for our scenario. Another advantage of web sockets
     is that they have a sticky session where if a particular user has to open its
     connection to a particular server and it connects to one of the instances at the
     server end, then it will always be connected to that instance. All the requests
     of that user will go to that particular instance only.  Hence this is what makes
     web sockets a good option for peer-to-peer communication.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 总的来说，Web sockets 最适合我们的场景。Web sockets 的另一个优点是它们具有粘性会话，如果特定用户需要连接到特定服务器并连接到服务器端的某个实例，那么它将始终与该实例保持连接。该用户的所有请求都将只发送到那个特定实例。因此，这使得
+    Web sockets 成为点对点通信的一个很好的选择。
 - en: Another thing to consider while doing system design of any service is that to
     not immediately jump to the solution. Since the application can have a lot of
     features it is always good to clarify what exactly features you are actually going
     to include as part of your system design. This is very important to discuss. Another
     important thing to keep in mind is to have non-functional requirements in mind.
     Some of the non-functional requirements could be
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 在进行任何服务的系统设计时，另一个需要考虑的点是不要立即跳到解决方案上。因为应用程序可能具有很多功能，最好先明确你将要在系统设计中包含哪些功能。这一点非常重要，必须进行讨论。另一个需要记住的重要事项是要考虑非功能性需求。一些非功能性需求可能包括：
 - en: Single point of failures
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 单点故障
 - en: Scalability – Scale into millions of millions of users
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性 – 扩展到数百万的用户
 - en: Availability
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可用性
 - en: Low Latency or Performance
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 低延迟或性能
 - en: Fault Tolerance
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 容错性
 - en: Storage Estimation
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 存储估算
 - en: Cost Estimation
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成本估算
 - en: We will be targetting the below features as part of our system design
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将在系统设计中针对以下功能进行设计。
 - en: One to one messaging
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一对一消息
 - en: Group messaging
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组消息
 - en: Read receiptsOnline status
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 已读回执 / 在线状态
 - en: Storage of messages
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 消息存储
 - en: Image/Video Messages
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 图片/视频消息
 - en: '**Consistency is more important in Whatsapp than availability**'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**在 WhatsApp 中，一致性比可用性更为重要。**'
 - en: With Whatsapp availability is an important factor but consistency is more important.
     Basically, it is more important for messages to be delivered and to be received
     in the same order to all users than availability.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于Whatsapp来说，可用性是一个重要因素，但一致性更为重要。基本上，比可用性更重要的是确保消息能够按顺序传送并被所有用户接收。
 - en: '**One to one messaging**'
+  id: totrans-58
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**一对一消息传递**'
 - en: For one to one messaging let’s see the high-level design that will be required
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一对一消息传递，让我们来看一下所需的高层次设计。
 - en: '**High-Level Design**'
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**高层设计**'
 - en: On a high level let’s discuss what will be the higher flow and what all services
     would exist.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 从高层次来讨论，我们来看看整体流程是什么样的，存在哪些服务。
 - en: There will be an **API gateway** on which every request from all the users will
     land.
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**API网关**，所有用户的请求都会通过它。
 - en: There will be a **Session Service**. **Session Service** will contain a group
     of instances to which users will be connected by a web socket. Since there is
     a limit on the number of web sockets that you can open per machine,  depending
     upon the load. So based upon the number of users we can have that number of machines
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**会话服务**。**会话服务**将包含一组实例，用户将通过WebSocket连接到这些实例。由于每台机器上可打开的WebSocket数量有限，具体数量取决于负载。因此，根据用户数量，我们可以配置相应数量的机器。
 - en: This **Session Service** will be connected to a **Distributed Redis** cluster
     which will contain information of what user is connected to what box. This information
     is transient till the user is connected and hence we can use a **Distributed Redis**
     for that. It will be the responsibility of the session service to maintain the
     User-id and machine-id mapping. This service will
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这个**会话服务**将连接到一个**分布式Redis**集群，该集群将包含关于哪个用户连接到哪个机器的信息。这些信息是暂时的，直到用户断开连接，因此我们可以使用**分布式Redis**来存储。会话服务将负责维护用户ID和机器ID的映射关系。这个服务将会
 - en: Will insert into if any user is connected to any machine
+  id: totrans-65
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果有用户连接到某台机器，将会插入数据。
 - en: When the user gets disconnected.
+  id: totrans-66
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户断开连接时。
 - en: Other than this the session will be a dumb service in the sense that it will
     just accept the connection and will forward any requests to it on an **SNS/Kafka**
     Topic.
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 除此之外，会话服务将是一个简单的服务，意味着它只会接受连接，并将任何请求转发到一个**SNS/Kafka**主题。
 - en: The **Session Service** will publish a message to an SNS topic or Kafka on receiving
     any user activity.
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**会话服务**将在接收到任何用户活动时，发布消息到一个SNS主题或Kafka。'
 - en: There will be a **User Activity Service** that will be a worker that will listen
     to this SNS/Kafka topic. After receiving the message it will talk to distributed
     Redis and identify which user the recipient is connected to. This service will
     also handle the User Offline case. Once it fetches all the information then it
     will send the message to another service will be a worker again. This service
     will be **Message Outbound Service**
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**用户活动服务**，它是一个工作服务，监听这个SNS/Kafka主题。接收到消息后，它将与分布式Redis交互，识别接收方连接的用户。这项服务还将处理用户离线的情况。一旦获取所有信息，它将把消息发送到另一个服务，那个服务也是一个工作服务。这个服务将是**消息外发服务**。
 - en: There will be a **Message Outbound Service** which will be a worker whose work
     will be to send the outbound messages back to the user. This service will not
     have any kind of business logic at all. It will only accept a message that contains
     the details of what message to send, to whom it needs to send, and to which machine
     the user is connected. This is a very dump service that only which doesn’t have
     any business logic at all.
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**消息外发服务**，这是一个工作服务，它的工作是将外发消息发送回用户。此服务不包含任何业务逻辑。它只会接受一个包含发送消息的详细信息的消息，这些信息包括消息内容、接收人以及用户连接的机器。这是一个非常简单的服务，完全不包含任何业务逻辑。
 - en: We need to have a database that will store the messages if the recipient user
     is offline. We can use **Mongo DB** for that.
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们需要一个数据库来存储消息，如果接收方用户离线。我们可以使用**Mongo DB**来实现。
 - en: '**Let’s what all APIs will be needed**'
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**让我们看看需要哪些API**'
 - en: Send text message
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发送文本消息
 - en: Get all unread messages (When the user comes online after being offline for
     some time).
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 获取所有未读消息（当用户在离线一段时间后重新上线时）。
 - en: '**Mongo DB** will have one table to store the messages. Let’s name this table
     **Message** Table.'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Mongo DB**将有一个表来存储消息。我们可以把这个表命名为**消息表**。'
 - en: '**Message Table**'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**消息表**'
 - en: Below will be the fields in the message table.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 消息表中将包含以下字段。
 - en: '**message_id**'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**消息ID**'
 - en: '**sender_user_id**'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**发送方用户ID**'
 - en: '**receiver_user_id**'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**接收方用户ID**'
 - en: '**type** – could be **text**, **image**, or **video**'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**类型** – 可能是**文本**、**图片**或**视频**'
 - en: '**body** – the actual message'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**body** – 实际的消息内容。'
 - en: '**created**'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**created**'
 - en: '**updated**'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**updated**'
 - en: '**is_received**'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**is_received**'
 - en: '**is_group** – Is this message group message or not'
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**is_group** – 这条消息是否为群组消息。'
 - en: '**group_id** – It is set only if the message is a group message'
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**group_id** – 仅在消息为群组消息时设置。'
 - en: '**Let’s see how each feature will work**'
+  id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**让我们看看每个功能如何工作**'
 - en: User A will get connected to one of the machines of the session service via
     web sockets. Let’s say it gets connected to machine number 2\. An entry will be
     made into distributed Redis. It will be User A to machine 1 mapping. Similarly,
     let’s assume that user B is connected to machine number 3\. An entry of user B
     to machine 3 mapping will also be created in Redis.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 A 将通过 WebSocket 连接到会话服务的某一台机器。假设它连接到机器 2。会在分布式 Redis 中创建一条用户 A 到机器 1 的映射。同样，假设用户
+    B 连接到机器 3，也会在 Redis 中创建用户 B 到机器 3 的映射。
 - en: User A will send a message to User B. The message will come to Session Service
     on machine 1\. It will send it to a **Kafka/SNS** topic.
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 A 将向用户 B 发送一条消息。消息会传送到机器 1 上的会话服务，然后被发送到 **Kafka/SNS** 主题。
 - en: The user activity service/worker will listen to this message.
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户活动服务/工作者将监听这条消息。
 - en: It will check the distributed Redis to check which machine User B is connected
     to. Then it will publish two messages to Kafka/SNS again on a different topic.
     One message will be the delivery to User B and another message will be the acknowledgment
     to User A that message has been sent. This topic will be listened to by the **Message
     Outbound Service**
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它将检查分布式 Redis 以确认用户 B 连接到哪台机器。然后，它会再次向不同的 Kafka/SNS 主题发布两条消息。一条消息是发送给用户 B 的交付消息，另一条消息是向用户
+    A 确认消息已经发送。这些消息将被 **消息出站服务** 监听。
 - en: '**Message Outbound Service** will pick these two messages and process them.
     This service is a dumb service that only knows to forward a message to the right
     machine so that it gets delivered to the user. It only talks to **Session Service**
     and nothing else'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**消息出站服务** 将获取这两条消息并处理它们。这个服务是一个傻瓜服务，只知道将消息转发到正确的机器，从而确保消息能够送达用户。它只与 **会话服务**
+    通信，其他的什么也不做。'
 - en: Below is the architecture diagram for the same. The diagram represents the flow
     for sending a message for User A to User B
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是相应的架构图。该图表示了用户 A 向用户 B 发送消息的流程。
 - en: '![](../Images/6e5626ab95df697617d14339228ac61b.png)'
+  id: totrans-95
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/6e5626ab95df697617d14339228ac61b.png)'
 - en: Let’s understand the above diagram.
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来理解上述图示。
 - en: '**Flow for User A**'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户 A 的流程**'
 - en: User A makes a call to the API gateway.
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户 A 调用 API 网关。
 - en: User Authentication happens with Token Service
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户身份验证通过令牌服务进行。
 - en: User A is connected to Box number 1
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户 A 连接到第 1 号机器。
 - en: An entry is made into Redis for userId-machineID mapping.
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 会在 Redis 中创建用户 ID 到机器 ID 的映射。
 - en: The message that is sent to UserB is published on the topic.
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 发送给用户 B 的消息会发布到该主题上。
 - en: It is picked by user activity service/worker
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它被用户活动服务/工作者提取。
 - en: It checks from the Redis to know which machine does User B is currently connected
     to. If User B is offline then Mongo DB comes into the picture. We will discuss
     this later
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它将从 Redis 中查询，了解用户 B 当前连接的机器。如果用户 B 离线，MongoDB 将发挥作用。我们稍后会讨论这个问题。
 - en: After knowing which machine the User B is connected it publishes a message to
     the topic for the Outbound Message Service/Worker
+  id: totrans-105
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在确认用户 B 连接的机器后，它会将消息发布到用于出站消息服务/工作者的主题。
 - en: Outbound message Service/Worker picks this message from the topic. The message
     contains the details of what message to send, to whom it needs to send, and to
     which machine the user is connected. This is a very dump service that only which
     doesn’t have any business logic at all.
+  id: totrans-106
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 出站消息服务/工作者从主题中获取这条消息。该消息包含要发送的消息内容、接收方和用户当前连接的机器。这个服务非常简单，根本没有任何业务逻辑。
 - en: It makes an API call on machine 3 to which User B is connected.
+  id: totrans-107
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它会在与用户 B 连接的机器 3 上发起 API 调用。
 - en: The message is then sent to User B via web sockets.
+  id: totrans-108
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 消息通过 WebSocket 发送到用户 B。
 - en: '**Flow for User B**'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户 B 的流程**'
 - en: User B makes a call to the API gateway
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 B 调用 API 网关。
 - en: User Authentication happens with Token Service
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户身份验证通过令牌服务进行。
 - en: User B is connected to Box number 3
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 B 连接到第 3 号机器。
 - en: There are still some open questions that need to be answered
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 还有一些未解答的问题需要解决。
 - en: How read receipts are going to work
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 阅读回执将如何工作。
 - en: What if User B is offline
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果用户 B 离线怎么办？
 - en: How ordering of messages is ensured at the User B end. Meaning that if User
     A has sent two messages M1 and M2 in that order then User B should also receive
     the message in the same order i.e the User B should be shown M1 first and then
     M2.
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**如何确保在用户B端消息的顺序**。这意味着，如果用户A发送了两条消息 M1 和 M2，且顺序为 M1 后 M2，那么用户B也应该按相同的顺序接收这些消息，即用户B应该先看到
+    M1，然后是 M2。'
 - en: What if one of the machines goes down to which a user is connected
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果用户连接的某台机器发生故障怎么办
 - en: What about race conditions. We will discuss an example of a race condition as
     well.
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 那么竞争条件（race condition）该如何处理呢？我们也将讨论一个竞争条件的例子。
 - en: What if User A is offline
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果用户A离线怎么办
 - en: Let’s discuss each of these points one by one
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们逐一讨论这些点
 - en: '**How read receipts are going to work**'
+  id: totrans-121
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何处理已读回执**'
 - en: Once User B receives the message an acknowledgment will be sent again to machine
     3, then to User Activity Service, and then to the message outbound service, and
     then to machine 1 to user A. The same flow will happen when User B reads the message.
     That is how read receipts are going to work
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦用户B接收到消息，确认消息将再次发送给机器 3，然后到用户活动服务，再到消息外发服务，最后发送回机器 1，传递给用户A。当用户B读取消息时，也会发生相同的流程。这就是已读回执的工作方式。
 - en: '**What if the User B is offline**'
+  id: totrans-123
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如果用户B离线怎么办**'
 - en: Whatsapp stores the message for up to 30 days in case the user is offline. So
     in this case WhatsApp will store messages in its database which is Mongo DB. So
     when the user comes online and the connection is first getting established then
     below will be the flow.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果用户离线，WhatsApp 会将消息存储最长达 30 天。因此，在这种情况下，WhatsApp 会将消息存储在其数据库中，数据库是 Mongo DB。所以当用户上线并且首次建立连接时，以下是流程。
 - en: User B will be connected to machine 7 let’s say. An entry will be created in
     distributed Redis. It will then publish a message on a topic.
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设用户B将连接到机器 7。系统会在分布式 Redis 中创建一条记录。然后，它会在一个主题上发布消息。
 - en: The user activity service will pick this message. It will then check what all
     message exists in the database for User B.
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户活动服务将获取这条消息。接着，它会检查数据库中是否存在用户B的所有消息。
 - en: It will then send those messages to User Outbound Service which will send it
     to machine 7 and then to user B.
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统会将这些消息发送给用户外发服务，然后通过机器 7 发送给用户B。
 - en: Once User B receives all those messages then an acknowledgment will be sent
     to all the senders that message has been received. The same flow we discussed
     above will be followed
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦用户B收到所有这些消息，系统将向所有发送者发送确认消息，表示该消息已被接收。我们上面讨论的相同流程将会继续。
 - en: Once User B reads all those messages then an acknowledgment will be sent to
     all the senders that message has been read. After this acknowledgment, the message
     will be deleted from the DB possibly via another service which will be **Cleanup
     Service**
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦用户B读取了所有这些消息，系统将向所有发送者发送确认消息，表示该消息已被读取。在发送完确认消息后，消息将从数据库中删除，可能通过另一个服务，即 **清理服务**。
 - en: '**How ordering of messages is ensured at the User B end**'
+  id: totrans-130
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如何确保在用户B端消息的顺序**'
 - en: At the server end, every message processing is stateless which means that each
     message is processed independently of other messages. Below is one idea that we
     can use to ensure ordering.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 在服务器端，每条消息的处理是无状态的，这意味着每条消息都独立处理，不受其他消息的影响。以下是一种可以用来确保消息顺序的方法。
 - en: Every message will have a parent message-id. The parent message-id will be the
     id of the message which is just before the current message in the order. The WA
     client will generate this message ID using the UUID.
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每条消息都会有一个父消息 ID。父消息 ID 是指在消息顺序中，当前消息前一条消息的 ID。WA 客户端将使用 UUID 来生成这个消息 ID。
 - en: Every message will be delivered to the WA client. It will be the WA client’s
     responsibility to show the ordered message. For example, let’s say there are three
     messages
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每条消息都会被发送到 WA 客户端。由 WA 客户端负责展示有序的消息。例如，假设有三条消息。
 - en: M1 with parent message-id as null as assuming this is the first message that
     is ever sent.
+  id: totrans-134
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: M1 的父消息 ID 为 null，假设这是第一次发送的消息。
 - en: M2 with parent message-id as of M1’s
+  id: totrans-135
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: M2 的父消息 ID 是 M1 的
 - en: M3 with parent message0id as of M2’s
+  id: totrans-136
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: M3 的父消息 ID 是 M2 的
 - en: All these three messages will be processed individually in a stateless manner
     and sent back to the WA client. If the WA client receives any message but has
     not received the message with id as parent message-id of the current message then
@@ -657,591 +938,857 @@
     M1 to the user and wait for M2 to arrive. How does it know that it has to wait
     for M2? It does because the M3 parent message-id is of M2’s and it knows there
     is one message missing.
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这三条消息将以无状态的方式逐个处理，并返回到WA客户端。如果WA客户端收到某条消息，但没有收到当前消息的父消息ID对应的消息，它会等待该消息到达，而不是直接显示。例如，假设WA客户端收到M1和M3消息，但没有收到M2消息。那么它只会向用户显示M1，并等待M2到达。它怎么知道需要等待M2呢？因为M3的父消息ID是M2的，它知道有一条消息丢失了。
 - en: What if M2 doesn’t arrive within time. In this case, the WA client on User B
     can ask the message to be resent from User A.
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果M2消息没有在规定时间内到达怎么办？在这种情况下，用户B的WA客户端可以要求用户A重新发送这条消息。
 - en: This is one idea of how the ordering will be ensured.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是确保消息顺序的一种思路。
 - en: '**What if one of the machines goes down to which a user is connected**'
+  id: totrans-140
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如果用户连接的某台机器宕机怎么办**'
 - en: Let’s consider a scenario where one of the instances to which a particular user
     is connected is just terminated. It could be terminated due to autoscaling/downscaling
     or it could be due to maintenance activity as well. In this case, the User will
     again make a connection and probably it will get connected to some other machine.
     Once the connection is made the Redis entry will be updated to reflect the new
     machine-id.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设某个实例终止了，而用户恰好连接到这个实例。可能是因为自动扩缩容，也可能是因为维护活动。在这种情况下，用户将重新建立连接，并且可能会连接到另一台机器。一旦连接建立，Redis条目将会更新，反映新的机器ID。
 - en: It might be the case that several messages that were supposed to send to that
     user might have failed in between. But since we would have a retrial mechanism
     every place with some delay and jitter and hence when the user comes online then
     all the messages will be correctly sent via the new connection
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能会有几条本应发送给该用户的消息在传输过程中失败。但由于每个地方都有重试机制，并且会带有一些延迟和抖动，因此当用户上线时，所有的消息都会通过新的连接正确发送。
 - en: '**What about race conditions**'
+  id: totrans-143
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**那如果出现竞态条件怎么办**'
 - en: For example, User A sends a message to User B. At that moment User B was offline
     and the message was saved in DB. But before the message could be saved User B
     came online and fetched all pending messages from the DB. But it couldn’t fetch
     the latest message from User A.
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，用户A向用户B发送了一条消息。当时用户B处于离线状态，消息被保存在数据库中。但在消息保存之前，用户B上线并从数据库中获取了所有待处理消息。但它无法获取到用户A的最新消息。
 - en: To prevent this the client can at some interval fetch all messages that are
     in the Database which are in an undelivered state.
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了防止这种情况，客户端可以定期从数据库中获取所有处于未送达状态的消息。
 - en: '**What if User A is offline**'
+  id: totrans-146
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**如果用户A处于离线状态怎么办**'
 - en: If user A is offline then the Whatsapp client is going to store the message
     till User A comes online
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果用户A处于离线状态，那么Whatsapp客户端会在用户A上线之前将消息存储起来。
 - en: '**How online and last seen will work**'
+  id: totrans-148
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**在线状态和最后一次见面如何运作**'
 - en: For this, there will be an additional table that will be maintained at the new
     service which we can call as **user_last_seen**  service end. Below will be the
     fields in that table
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 为此，新的服务端将维护一个额外的表格，我们可以称之为**user_last_seen**服务端。该表格中的字段如下：
 - en: user_id
+  id: totrans-150
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: last_seen
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: last_seen
 - en: Let’s see how this table will be updated.  Imagine there are two users A and
     B
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们来看一下这个表格如何更新。假设有两个用户A和B。
 - en: '**For User A**'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对于用户A**'
 - en: This table will be updated for User A for any user activity which is any activity
     which is initiated by the user. In case of any activity by the user, it will send
     to the session service. It will publish a message on the SNS/Kafka Topic. **user_last_seen**
     service will also subscribe to this topic via a queue. And for every user activity,
     it will update the last seen field in the table.
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这个表格会在用户A进行任何用户活动时更新，任何由用户发起的活动都会被视为用户活动。如果用户进行活动，系统会将信息发送到会话服务，并在SNS/Kafka主题上发布一条消息。**user_last_seen**服务端也会通过队列订阅这个主题。对于每个用户活动，它会更新表格中的最后一次见面字段。
 - en: There could be a case where the user is just online and he is not doing any
     activity. In that case, then a heartbeat message will be sent and this table will
     be updated.
+  id: totrans-155
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 也可能出现用户刚在线但没有进行任何活动的情况。在这种情况下，会发送一个心跳消息，并更新该表格。
 - en: Do note that this table will not be updated by any non-user activity. A non-user
     activity could be for example when the user Whatsapp is not open and it is fetching
     the messages.
+  id: totrans-156
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 请注意，这张表格不会因非用户活动而更新。例如，当用户的 WhatsApp 未打开并正在获取消息时，这就是一种非用户活动。
 - en: '**For User B**'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对于用户 B**'
 - en: User B wants to get the online status of User A. It will send a request for
     the same. The request will come to **user_last_seen** service.
+  id: totrans-158
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 B 想要获取用户 A 的在线状态。它会发送请求。请求会到达 **user_last_seen** 服务。
 - en: We can have a threshold. If the **last_seen** field of a user is less than 2
     seconds for now then it will send the status as online and User B will see User
     A as online
+  id: totrans-159
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们可以设置一个阈值。如果用户的 **last_seen** 字段距离现在不到 2 秒，它将把状态发送为在线，用户 B 将看到用户 A 在线。
 - en: If the last seen field is greater than 2 seconds from now, then it will send
     the status online as false and will also return the last seen timestamp. This
     timestamp will be shown to User B
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果最后一次查看字段距离现在超过 2 秒，则会将状态发送为离线（false），并返回最后查看的时间戳。这个时间戳将显示给用户 B。
 - en: '**Group Messaging**'
+  id: totrans-161
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**群组消息**'
 - en: Let’s see how group messaging will work. For that, we can have a Group Service
     which will again be a worker. It will have the below database.
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看群组消息是如何工作的。我们可以使用一个群组服务，它将作为一个工作节点。它将有以下数据库。
 - en: '**Group Table**'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '**群组表**'
 - en: It will contain below fields
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将包含以下字段
 - en: group_id
+  id: totrans-165
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: group_id
 - en: group_title
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: group_title
 - en: created
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建
 - en: updated
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新
 - en: group_image_id
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: group_image_id
 - en: '**GroupId-UserId Mapping**'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '**GroupId-UserId 映射**'
 - en: It will contain below fields
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将包含以下字段
 - en: group_id
+  id: totrans-172
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: group_id
 - en: user_id
+  id: totrans-173
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: is_admin
+  id: totrans-174
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: is_admin
 - en: An important thing to note about this **GroupId-UserId** is that it will be
     sharded on groupId so that call goes to only one of the shards when fetching all
     the user Ids belonging to a particular groupId.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个重要的要点是，这个 **GroupId-UserId** 会根据 groupId 分片，这样当获取属于特定 groupId 的所有用户 ID 时，调用只会发送到某个分片。
 - en: We will have below APIs
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将提供以下 API
 - en: Group Create
+  id: totrans-177
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组创建
 - en: Group Member Add
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组成员添加
 - en: Group Member Delete
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组成员删除
 - en: Group Member Admin
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组成员管理员
 - en: Group Member Remove
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组成员移除
 - en: Group Title Update
+  id: totrans-182
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组标题更新
 - en: Group Image Update
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组图片更新
 - en: Group message send
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 群组消息发送
 - en: Let’s see how a group message will be sent.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看群组消息是如何发送的。
 - en: A group has four users. A, B, C, and D
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个群组有四个用户：A、B、C 和 D
 - en: User A wants to send the message to the entire group
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 A 想要向整个群组发送消息
 - en: It calls the send group message and also sends the group id and the message.
     The message reaches the machine to which the user is connected. The machine publishes
     the message to a topic.
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它调用发送群组消息的功能，并同时发送群组 ID 和消息。消息到达用户所连接的机器，并由机器将消息发布到一个主题。
 - en: It is picked by the group service. It fetches all group members from the group
     table. For each group member, it fans out the messages again to a different topic.
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它由群组服务选择。该服务从群组表中获取所有群组成员。对于每个群组成员，它将消息重新分发到不同的主题。
 - en: All these messages are again picked by the group service or worker. Each of
     these messages is processed and sent to each of the group members.
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所有这些消息再次被群组服务或工作节点选择。每条消息都被处理并发送给每个群组成员。
 - en: When any of the group members receive the message,  an acknowledgment is sent
     back to the sender of the message.
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当任何群组成员接收到消息时，会向消息发送者发送一条确认回执。
 - en: If any of the group members read the message then again an acknowledgment is
     sent back to the sender of the message.
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果任何群组成员阅读了消息，则会再次向消息发送者发送确认回执。
 - en: Note that if any of the group members are offline then an entry is made into
     the message table in Mongo DB for that member. That is why we have **group_id**
     and **is_group** fields in the massage table
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，如果任何群组成员处于离线状态，则会在 MongoDB 的消息表中为该成员创建一个条目。因此，我们在消息表中有 **group_id** 和 **is_group**
+    字段。
 - en: Below is the architecture diagram for the same. The diagram represents the flow
     for sending a message for User A to User B and User C which belong to the same
     Whatsapp group
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相应的架构图。该图表示从用户 A 到用户 B 和用户 C 发送消息的流程，他们属于同一个 WhatsApp 群组。
 - en: '![](../Images/e0524cf452fa1f284702a7747a7332d2.png)'
+  id: totrans-195
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/e0524cf452fa1f284702a7747a7332d2.png)'
 - en: Let’s understand the above diagram.
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们理解上面的图示。
 - en: '**Flow for User A**'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户 A 的流程**'
 - en: User A makes a call to the API gateway.
+  id: totrans-198
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户 A 向 API 网关发起调用。
 - en: User Authentication happens with Token Service
+  id: totrans-199
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户认证通过 Token 服务进行
 - en: User A is connected to Box number 1
+  id: totrans-200
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户 A 连接到编号为 1 的盒子
 - en: An entry is made into Redis for userId-machineID mapping.
+  id: totrans-201
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 会在 Redis 中为 userId-machineID 映射创建一条条目。
 - en: The message that is sent to the group is published on the topic.
+  id: totrans-202
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 发送给群组的消息会发布到该主题。
 - en: It is picked by group service/worker
+  id: totrans-203
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它由小组服务/工作者接收
 - en: It fetches all the other members of the group from the Mongo Database
+  id: totrans-204
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它从Mongo数据库中获取小组的所有其他成员
 - en: For each member then it checks Redis to know what all each member is connected.
     If any of the members are offline then Mongo DB comes into the picture.
+  id: totrans-205
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于每个成员，它会检查Redis，以了解每个成员的连接情况。如果任何成员离线，则会通过Mongo数据库获取信息。
 - en: It fans outs the messages for each of the other members of the group. 9.1 –
     It sends the for User B. 9.2 – It sends the message out for User C
+  id: totrans-206
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它将消息分发给小组中每个其他成员。9.1 – 它将消息发送给用户B。9.2 – 它将消息发送给用户C
 - en: Both the messages are picked by the Outbound message Service/Worker The message
     contains the details of what message to send, to whom it needs to send, and to
     which machine the user is connected
+  id: totrans-207
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 两条消息都由外发消息服务/工作者接收。消息包含了发送的消息内容、发送对象以及用户连接的机器信息。
 - en: It makes an API call on machine 3 to which User B is connected (11.1) and an
     API call to machine 4 on which User C is connected **(11.2)**
+  id: totrans-208
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它会在连接到用户B的机器3上进行API调用（11.1），并在连接到用户C的机器4上进行API调用**（11.2）**
 - en: The message is then sent to User B and User C via web sockets.
+  id: totrans-209
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 消息随后通过WebSockets发送给用户B和用户C。
 - en: '**Flow for User B**'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户B的流程**'
 - en: User B makes a call to the API gateway
+  id: totrans-211
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户B发起对API网关的调用
 - en: User Authentication happens with Token Service
+  id: totrans-212
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户认证通过令牌服务进行。
 - en: User B is connected to Box number 3
+  id: totrans-213
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户B已连接到编号为3的盒子
 - en: '**Flow for User C**'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户C的流程**'
 - en: User C makes a call to the API gateway
+  id: totrans-215
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户C发起对API网关的调用
 - en: User Authentication happens with Token Service
+  id: totrans-216
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户认证通过令牌服务进行
 - en: User C is connected to Box number 4
+  id: totrans-217
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户C已连接到编号为4的盒子
 - en: '**Uploading Images or Videos**'
+  id: totrans-218
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**上传图片或视频**'
 - en: Let’s see how image and videos upload would work. For images and video upload,
     we can make the assumption that the original size of the image or video will not
     be uploaded. A low res version of it will be created at the client’s end and then
     it will be uploaded. Even the low res version of any image and video would be
     of a few KBs. They can be uploaded to a storage provider directly. For eg let’s
     say that the storage provider is AWS S3 then below will be the flow
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看一下图片和视频上传的工作流程。对于图片和视频上传，我们可以假设上传的不会是图片或视频的原始大小。客户端端会创建其低分辨率版本，然后进行上传。即使是任何图片和视频的低分辨率版本也只有几KB。它们可以直接上传到存储提供商。例如，假设存储提供商是AWS
+    S3，那么以下是流程：
 - en: Let’s User A on its WA client wants to send a request that it wants to upload
     an image. The client will send a request to the server to send the presigned URL
     to which the client can upload the image
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设用户A在其WA客户端上希望发送一个请求，要求上传一张图片。客户端将向服务器发送请求，请求获取预签名的URL，客户端可以通过该URL上传图片。
 - en: The server will respond with a pre-signed URL whose validity can be of few hours.
     You can read this article to get an idea of the pre-signed URL [https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
     . Basically, it is an URL that is already signed with a token and hence it can
     be used to directly upload to that URL without requiring any further authentication.
     This is also called direct upload. The server will also return the image_id here
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 服务器将响应一个预签名的URL，其有效期可能为几小时。您可以阅读这篇文章了解预签名URL的概念：[https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)。基本上，这是一个已经通过令牌签名的URL，因此可以直接上传到该URL，无需进一步认证。这也被称为直接上传。服务器还会返回图像ID。
 - en: The client will upload the image to that URL. It will directly be stored in
     S3
+  id: totrans-222
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 客户端将图片上传到该URL。图片将直接存储在S3中。
 - en: Now the client will request to send the image/video upload message to the receiver.
     It will also pass in the image_id in the request.
+  id: totrans-223
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 现在客户端将请求向接收者发送图片/视频上传消息。请求中还将传递图像ID。
 - en: The server will now send the message to User B using the one-to-one messaging
     flow that we had discussed above.
+  id: totrans-224
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 服务器将通过我们上面讨论的单对单消息流程，将消息发送给用户B。
 - en: Let’s consider a scenario where the same image is being uploaded by multiple
     people. This could be pretty well a case with a particular meme getting popular.
     It will send by multiple users.  It will be a wastage of storage if we want to
     store each instance of the image whenever it is sent. There is a scope of optimization
     here.
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设有多个用户同时上传相同的图片，这种情况可能会发生，例如某个特定的梗图变得流行。它将被多个用户发送。如果每次发送时都存储该图片的每个实例，将会浪费存储空间。这里有优化的空间。
 - en: What we can do here is to calculate the digest or hash of the image at the client
     end. This hash or digest will be sent to the server. The server will check if
     this digest or hash already exists. If yes then it will simply return the image
     id of that image and it will not return the presigned URL. That way the client
     will know that the image already exists and it will not upload the image. It will
     simply use the image ID to send the message.
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以做的是在客户端计算图像的摘要或哈希值。这个哈希值或摘要将被发送到服务器，服务器将检查该摘要或哈希值是否已存在。如果存在，服务器将直接返回该图像的ID，而不返回预签名URL。这样客户端就会知道图像已经存在，而不会再次上传图像。它只需使用图像ID来发送消息。
 - en: Let’s see a diagram for the same as well. As you can see from the diagram as
     well. Both User A and User B use Direct Upload and Direct Download to and from
     the S3 or any other storage layer. It doesn’t go through the API gateway and hence
     eliminate the costly travel of image/video large number of bits
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看这个方案的图示。正如图示所示，用户A和用户B使用直接上传和直接下载与S3或其他存储层进行数据传输，不通过API网关，从而避免了图像/视频传输过程中大量数据的高成本。
 - en: '![](../Images/3fe7160311a4c58cd0a3f84199b7449b.png)'
+  id: totrans-228
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/3fe7160311a4c58cd0a3f84199b7449b.png)'
 - en: '**Other common components**'
+  id: totrans-229
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**其他常见组件**'
 - en: Other common components could be
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: 其他常见组件可能包括：
 - en: User Service – It holds the user profile information.
+  id: totrans-231
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户服务 – 存储用户个人资料信息。
 - en: Token/Auth Service – Management of User tokens
+  id: totrans-232
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Token/认证服务 – 用户令牌管理
 - en: SMS Service- It is used for sending any kind of message back to the user. For
     example – OTP
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 短信服务 – 用于向用户发送任何类型的消息。例如：一次性密码（OTP）
 - en: Analytics Service – This could be used to track any kind of analytics
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 分析服务 – 用于跟踪任何类型的分析数据。
 - en: '**Non-Fun**c**tional Requirement**'
+  id: totrans-235
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**非功能性需求**'
 - en: We have discussed the system design for all functional requirements now. Let’s
     discuss some of the non-functional things
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经讨论了所有功能需求的系统设计。现在，让我们讨论一些非功能性需求。
 - en: Scalability
+  id: totrans-237
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性
 - en: Availability
+  id: totrans-238
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可用性
 - en: Low Latency
+  id: totrans-239
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 低延迟
 - en: Moving closer to user location.
+  id: totrans-240
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 向用户位置靠近。
 - en: Avoiding Single Point of Failures
+  id: totrans-241
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 避免单点故障。
 - en: '**Scalability**'
+  id: totrans-242
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可扩展性**'
 - en: The first thing to consider with the above design is the scalability factor.
     The scalability of each of the components in the system is very important. Here
     are scalability challenges you can face and their possible resolutions
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述设计中需要考虑的第一点是可扩展性因素。系统中每个组件的可扩展性非常重要。以下是可能遇到的可扩展性挑战及其可能的解决方案：
 - en: Each of the machines in the session service could hold only a limited number
     of connections. Hence based upon the number of users online at a moment, the number
     of machines and number of instances could be set up.  For eg one machine has around
     65000 ports.
+  id: totrans-244
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会话服务中的每台机器只能承载有限数量的连接。因此，根据当前在线用户数量，可以设置机器和实例的数量。例如，一台机器有大约65000个端口。
 - en: Your Kafka system might not be able to take that much load. We can scale horizontally
     but to a limit. If that is becoming a bottleneck then depending upon the geography
     or userId we can have two or more such systems. Service discovery could be used
     to figure out which Kafka system a request needs to go to.
+  id: totrans-245
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你的Kafka系统可能无法承受如此大的负载。我们可以进行水平扩展，但有其限制。如果这成为瓶颈，那么根据地理位置或用户ID，我们可以拥有两个或更多这样的系统。可以使用服务发现来确定请求需要访问哪个Kafka系统。
 - en: A similar approach can be taken for other services as well.
+  id: totrans-246
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对其他服务也可以采用类似的方式。
 - en: Another important factor of scalability here is that we have designed our system
     in such a way so that none of the services is bogged with too many things to do.
     There is a separation of concerns and wherever there was too much of a responsibility
     on service, we have broken it down
+  id: totrans-247
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性的另一个重要因素是，我们已经设计了系统，使得没有任何服务被过多的任务所压垮。服务之间有明确的职责分离，且我们在服务职责过重时进行了拆分。
 - en: '**Low latency**'
+  id: totrans-248
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**低延迟**'
 - en: A message could be sent in batches from the client. This would potentially reduce
     the round trip time. **Availability**In order for the system to be highly available,
     it is very important to have redundancy/backups for almost all components in the
     system. Here are some of the things that need to be done.
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 消息可以从客户端以批次的形式发送，这样可能减少往返时间。**可用性**为了使系统具有高度可用性，几乎所有组件都需要具备冗余/备份。以下是一些需要完成的事项。
 - en: In the case of our DB, we need to enable replication. There should be multiple
     slaves for each of the master shard nodes.
+  id: totrans-250
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于我们的数据库，我们需要启用复制。每个主分片节点应该有多个从节点。
 - en: For distributed Redis clusters we also need replication.
+  id: totrans-251
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于分布式 Redis 集群，我们还需要复制。
 - en: For data redundancy, we could be multi-region as well. This could be one of
     the benefits if one of the regions goes down.
+  id: totrans-252
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为了实现数据冗余，我们也可以采取多区域架构。如果其中一个区域出现故障，这可能是其中一个好处。
 - en: Disaster Recovery could also be set up
+  id: totrans-253
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 还可以设置灾难恢复
 - en: '**Alerting and Monitoring**'
+  id: totrans-254
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**警报和监控**'
 - en: Alerting and Monitoring is also a very important non-functional requirement.
     We should monitor each of our services and set up proper alerts as well. Some
     of the things that could be monitored are
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 警报和监控也是非常重要的非功能性需求。我们应该监控每一个服务，并设置适当的警报。可以监控的一些内容包括：
 - en: API Response Time
+  id: totrans-256
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: API 响应时间
 - en: Memory Consumption
+  id: totrans-257
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内存消耗
 - en: CPU Consumption
+  id: totrans-258
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CPU 消耗
 - en: Disk Space Consumption
+  id: totrans-259
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 磁盘空间消耗
 - en: Queue Length
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 队列长度
 - en: ….
+  id: totrans-261
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ….
 - en: '**Moving closer to user location**'
+  id: totrans-262
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**靠近用户位置**'
 - en: There are a couple of architectures that could be followed here. One such is
     Cell Architecture. You can read more about cell architecture more here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有几种架构可以选择。其中一种是单元架构（Cell Architecture）。你可以在这里了解更多关于单元架构的内容 – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
 - en: '**Avoiding Single Point of Failures**'
+  id: totrans-264
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**避免单点故障**'
 - en: A single point of failure which that part of a system which if stops working
     then it would lead the entire system to fail. We should try to prevent any single
     point of failure as well in our design. By redundancy and going multi-region we
     can prevent such things
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 单点故障是指系统中的某个部分，如果停止工作，可能导致整个系统崩溃。我们应该在设计中尽量避免任何单点故障。通过冗余和多区域部署，我们可以防止此类问题。
 - en: '**Conclusion**'
+  id: totrans-266
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This was all about Whatsapp system design. Hope you have liked this article.
     Please share feedback in the comments
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 以上就是关于 WhatsApp 系统设计的内容。希望你喜欢这篇文章。请在评论中分享反馈。
 - en: '[design](https://techbyexample.com/tag/design/)*   [system](https://techbyexample.com/tag/system/)*   [whatsapp](https://techbyexample.com/tag/whatsapp/)'
+  id: totrans-268
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[设计](https://techbyexample.com/tag/design/)*   [系统](https://techbyexample.com/tag/system/)*   [whatsapp](https://techbyexample.com/tag/whatsapp/)'

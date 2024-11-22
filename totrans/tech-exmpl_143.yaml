@@ -1,158 +1,244 @@
 - en: How to run a command in the background on Linux
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 如何在Linux上将命令运行在后台
 - en: 原文：[https://techbyexample.com/run-command-in-the-background-on-linux/](https://techbyexample.com/run-command-in-the-background-on-linux/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/run-command-in-the-background-on-linux/](https://techbyexample.com/run-command-in-the-background-on-linux/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Using ‘&’ command
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用‘&’命令
 - en: Using ‘bg’ command
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用‘bg’命令
 - en: Using ‘nohup’ utility
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用‘nohup’工具
 - en: '**Using ‘&’ command**'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用‘&’命令**'
 - en: Use & at the last of the command to send the command in the background.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在命令末尾加上&以将命令发送到后台。
 - en: '**Syntax**'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**语法**'
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Example:**'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：**'
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Note:**– This is risky since it will throw output to the terminal and prevent
     you to type any command. so if a command sends out some output then redirect it
     to a file or somewhere or /dev/null before sending it to the background. That’s
     why I redirected the output of the command to a file name ‘out’ and appended ‘2>&1’
     to redirect the error to the file as well along with output.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：**– 这很危险，因为它会将输出发送到终端，阻止你输入任何命令。因此，如果某个命令输出内容，请将其重定向到文件或其他地方，或者重定向到/dev/null，然后再将命令发送到后台。这就是为什么我将命令的输出重定向到名为‘out’的文件，并加上‘2>&1’将错误也重定向到文件中。'
 - en: '**jobs command**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**jobs命令**'
 - en: It lists all the jobs running in the background with a job number written in
     placeholder []
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 它会列出所有在后台运行的作业，并在占位符[]中显示作业编号。
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**fg command**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fg命令**'
 - en: '**Syntax**:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**语法**：'
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Note:-** job_number you get after running the command using ‘&’ and can also
     find it in the outputs of the ‘jobs’ command.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：-** 你可以在运行命令时通过‘&’获取作业编号，也可以在‘jobs’命令的输出中找到它。'
 - en: '**Example:**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：**'
 - en: '[PRE5]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Note:- **Once we bring the above command to the foreground then We had to
     cancel it using ‘Ctrl + C’ because it was blocking the terminal. So Always keep
     another terminal open in case something doesn’t work as planned you can kill that
     process using **‘kill’ or ‘pkill’ c**ommand from that terminal.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：-** 一旦我们将上述命令带到前台，就必须使用‘Ctrl + C’取消它，因为它会阻塞终端。因此，始终保持另一个终端打开，以防某些操作未按计划执行，你可以使用**‘kill’或‘pkill’命令**从该终端终止该进程。'
 - en: '[PRE6]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '[PRE7]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Using ‘bg’ command**'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用‘bg’命令**'
 - en: To use this command follow these two steps.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用此命令，请按照以下两个步骤进行操作。
 - en: Run the command and press Ctrl + Z to stop it
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 运行命令后按Ctrl + Z停止它
 - en: Now run the ‘bg’ command it will run the last command in the background
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 现在运行‘bg’命令，它将把上一个命令放到后台执行。
 - en: '**Example:**'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：**'
 - en: '[PRE8]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '[PRE9]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Now run the bg command
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在运行bg命令
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Using ‘nohup’ utilit**y'
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用‘nohup’工具**'
 - en: Just start the command with ‘nohup’ prefix. it detaches the terminal from the
     process and sends output and errors to its default log file i.e. nohup.out in
     the current directory. You can configure it to your own output file like the below
     commands
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 只需在命令前加上‘nohup’前缀，它将把终端与进程分离，并将输出和错误信息发送到其默认日志文件，即当前目录中的nohup.out。你可以像下面的命令一样配置输出文件。
 - en: '**Example:**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：**'
 - en: '[PRE11]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**Note:-**'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：-**'
 - en: In the above command, we appended ‘&’ at last to free the terminal in the current
     session you can use the terminal and do other activities while the above long-running
     command will keep running.
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在上述命令中，我们在最后加上‘&’，以释放当前会话中的终端，这样你就可以继续使用终端进行其他操作，而长时间运行的命令会继续在后台运行。
 - en: We redirected output/errors to a customized file. i.e. results**.**out using
     these lines in the above command “**> results.out 2>&1**“.
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们将输出/错误重定向到自定义文件，即通过在上述命令中使用这些行“**> results.out 2>&1**”将结果保存到results.out。
 - en: We started the ‘workflow.py’ script with ‘nohup’ by writing before the command.
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们通过在命令前加上‘nohup’，启动了‘workflow.py’脚本。

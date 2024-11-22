@@ -1,64 +1,98 @@
 - en: Range Sum 2d array program
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 范围和二维数组程序
 - en: 原文：[https://techbyexample.com/range-sum-2d-array-program/](https://techbyexample.com/range-sum-2d-array-program/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/range-sum-2d-array-program/](https://techbyexample.com/range-sum-2d-array-program/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: There is a 2d matrix of numbers that is given. The objective Calculate the **sum**
     of the elements of matrix inside the rectangle defined by its **upper left corner**
     (row1, col1) and **lower right corner** (row2, col2).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个二维矩阵，目标是计算矩阵中由其**左上角**（row1, col1）和**右下角**（row2, col2）定义的矩形内的元素**和**。
 - en: Seem simple right. Just iterate from the left corner to the right corner in
     the given array and return the sum. But here is the catch. Allowed TC is O(1)
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 看起来很简单，对吧？只需从左上角遍历到右下角的给定数组并返回总和。但问题在于，允许的时间复杂度是 O(1)。
 - en: Here is the approach we can follow so that we are able to return the answer
     in O(1) time complexity
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是我们可以遵循的方法，以便能够在 O(1) 时间复杂度内返回答案
 - en: Pre compute another sum_array for that 2d matrix
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 预先计算另一个 sum_array 用于该二维矩阵
 - en: sum_array[i][j] = sum of numbers from the **left corner** (0, 0) and **right
     corner** (i, j).
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: sum_array[i][j] = 从**左上角**（0, 0）到**右下角**（i, j）的数字之和。
 - en: For a given left corner (row1, col1) and right corner (row2, col2) compute
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于给定的左上角（row1, col1）和右下角（row2, col2），计算
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Then return
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后返回
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Program**'
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the program for the same.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是相应的程序。
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Output**'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
