@@ -1,384 +1,568 @@
 - en: Parking Lot System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 停车场系统设计
 - en: 原文：[https://techbyexample.com/parking-lot-system-design/](https://techbyexample.com/parking-lot-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/parking-lot-system-design/](https://techbyexample.com/parking-lot-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Requirements](#Requirements "Requirements")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[需求](#Requirements "需求")'
 - en: '[All the actors in a Parking System Design](#All_the_actors_in_a_Parking_System_Design
     "All the actors in a Parking System Design")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车系统设计中的所有角色](#All_the_actors_in_a_Parking_System_Design "停车系统设计中的所有角色")'
 - en: '[Parking Spot](#Parking_Spot "Parking Spot")'
+  id: totrans-6
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车位](#Parking_Spot "停车位")'
 - en: '[Parking Gate](#Parking_Gate "Parking Gate")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车门](#Parking_Gate "停车门")'
 - en: '[Parking Ticket](#Parking_Ticket "Parking Ticket")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车票](#Parking_Ticket "停车票")'
 - en: '[Payment Gateway Type](#Payment_Gateway_Type "Payment Gateway Type")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[支付网关类型](#Payment_Gateway_Type "支付网关类型")'
 - en: '[Vehicle](#Vehicle "Vehicle")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[车辆](#Vehicle "车辆")'
 - en: '[Parking Rate](#Parking_Rate "Parking Rate")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车费](#Parking_Rate "停车费")'
 - en: '[Parking Floor](#Parking_Floor "Parking Floor")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车楼层](#Parking_Floor "停车楼层")'
 - en: '[Parking System](#Parking_System "Parking System")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[停车系统](#Parking_System "停车系统")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML 图](#UML_Diagram "UML 图")'
 - en: '[Low–Level Design](#Low%E2%80%93Level_Design "Low–Level Design")'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low%E2%80%93Level_Design "低级设计")'
 - en: '[Program](#Program "Program")'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[程序](#Program "程序")'
 - en: '[Full Working Code in one File](#Full_Working_Code_in_one_File "Full Working
     Code in one File")'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[完整工作代码在一个文件中](#Full_Working_Code_in_one_File "完整工作代码在一个文件中")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-19
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: While answering any system design question it is important to keep in mind that
     system design questions can be really broad. Hence never directly jump to the
     solution. It is good to discuss the use cases with the interviewer so as to grasp
     what he is looking for. Decide on a set of features that you are going to include
     in your system design.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在回答任何系统设计问题时，重要的是要记住系统设计问题可能非常广泛。因此，切勿直接跳到解决方案。与面试官讨论用例是很好的，这样可以理解他在寻找什么。决定在你的系统设计中包含哪些功能。
 - en: This is also one of the aspects the interview is looking for. They might be
     looking for
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也是面试官在考察的一个方面。他们可能在寻找
 - en: How you are doing requirement analysis
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你如何进行需求分析
 - en: Are you able to list down all the requirements
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你能否列出所有的需求
 - en: What question you are asking?
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你在问什么问题？
 - en: Designing a Parking Lot is a very common system design interview question and
     as with any other system design interview this is what the interviewer is looking
     for
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计一个停车场是一个非常常见的系统设计面试问题，和其他任何系统设计面试一样，面试官在寻找的就是这些
 - en: Your knowledge of Object-Oriented Design
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你对面向对象设计的理解
 - en: How do you frame your design in terms of Design Patterns
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你如何在设计模式的框架下进行设计
 - en: Also, note that this question is not a distributed system design.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 另外，请注意，这个问题不是分布式系统设计问题。
 - en: In this tutorial, we will discuss the low-level design of the Parking Lot. Along
     with that, we will also see into the full working code for the Parking Lot. Here
     is the table of contents
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将讨论停车场的低级设计。除此之外，我们还将展示停车场的完整工作代码。以下是目录
 - en: Requirements
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需求
 - en: Actor in the design
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设计中的角色
 - en: UML diagram
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: UML 图
 - en: Low-level design represented in Go programming Language
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用 Go 编程语言表示的低级设计
 - en: Full Working Code
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 完整的工作代码
 - en: Full Working Code in One file
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 完整工作代码在一个文件中
 - en: '**Requirements**'
+  id: totrans-36
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**需求**'
 - en: One of the essential things while designing anything is understanding some high-level
     requirements of the system.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计任何东西时，了解系统的一些高级需求是至关重要的。
 - en: There could be multiple entrances to the system.
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统可能有多个入口
 - en: There could be multiple exist in the parking lot.
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车场中可能会有多个
 - en: There will be different types of parking spots.
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将有不同类型的停车位
 - en: There will be charges per parking per hour. The charges will be for different
     types of parking spots and different vehicle
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每小时停车将收取费用。费用将根据不同类型的停车位和不同的车辆类型进行收费
 - en: The system should be adaptable to any kind of changes
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统应该能够适应任何类型的变化
 - en: The parking lot can be multilevel
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车场可以是多层的
 - en: '**All the actors in a Parking System Design**'
+  id: totrans-44
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**停车系统设计中的所有角色**'
 - en: Parking System
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车系统
 - en: Parking Floor
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车楼层
 - en: Parking Spot – Different types of parking Spots
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车位 – 不同类型的停车位
 - en: Car Parking Spot
+  id: totrans-48
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车位
 - en: Truck Parking Spot
+  id: totrans-49
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 卡车停车位
 - en: Motorcycle Parking Spot
+  id: totrans-50
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 摩托车停车位
 - en: Parking Ticket
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车票
 - en: Entry and Exit Gates
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 入口和出口门
 - en: Payment Gateway
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 支付网关
 - en: Vehicle
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 车辆
 - en: Let’s look at each of these actors
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看这些角色中的每一个
 - en: '**Parking Spot**'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车位**'
 - en: Now a parking spot can be of different types. It could be
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，停车位可以是不同类型的。它可以是：
 - en: Car Parking Spot
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 汽车停车位
 - en: Big Vehicle Parking Spot
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大型车辆停车位
 - en: Motorcycle Parking Spot
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 摩托车停车位
 - en: '**Parking Gate**'
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车闸口**'
 - en: There could be entry or exit gates.  There could gate on different floors.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能会有进出口闸口。不同楼层可能会有不同的闸口。
 - en: '**Parking Ticket**'
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车票**'
 - en: A parking ticket will be issued to every incoming vehicle. Vehicles will be
     given parking spots based on the type of vehicle. Eg Car vehicles will be allotted
     a Car Parking Spot Type, a motorcycle vehicle will be allotted a motor cycle Parking
     Spot, and so on
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 每辆进场的车辆都会发放停车票。车辆将根据类型分配停车位。例如，汽车将被分配到汽车停车位类型，摩托车将被分配到摩托车停车位，等等。
 - en: '**Payment Gateway Type**'
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**支付网关类型**'
 - en: A customer could either pay via
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户可以通过以下方式支付：
 - en: Cash
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 现金
 - en: Debit Card
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 借记卡
 - en: Credit Card
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 信用卡
 - en: '**Vehicle**'
+  id: totrans-70
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**车辆**'
 - en: The parking lot as parking spots for the below vehicle types
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 停车场为以下车辆类型提供停车位
 - en: Car
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 汽车
 - en: Truck
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 卡车
 - en: Motorcycle
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 摩托车
 - en: '**Parking Rate**'
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车费**'
 - en: The rate for parking a car or a truck or a motorcycle vehicle is different.
     This will be encapsulated in Parking Rate Classes
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 停车一辆车、卡车或摩托车的费用是不同的。这些将被封装在停车费用类别中。
 - en: '**Parking Floor**'
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车楼层**'
 - en: A parking floor maintains a list of all parking spots present on that floor.
     A Parking Floor will be responsible for booking and freeing up the parking spots
     of different types on the floor
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 停车楼层维护该楼层所有停车位的列表。停车楼层将负责预定和释放该楼层不同类型的停车位。
 - en: '**Parking System**'
+  id: totrans-79
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**停车系统**'
 - en: It is the main component of the system. It is the driver class in our design
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 它是系统的主要组件，是我们设计中的驱动类。
 - en: How these actors communicate with each other will be clear with UML diagram
     and an explanation given after that.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些角色如何相互通信将通过UML图和后续的解释来清楚展示。
 - en: '**UML Diagram**'
+  id: totrans-82
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**UML图**'
 - en: Below is the UML diagram of the Parking Lot
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是停车场的UML图
 - en: '![](../Images/863385fa42c1a1f7f1f476f1f69385a2.png)'
+  id: totrans-84
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/863385fa42c1a1f7f1f476f1f69385a2.png)'
 - en: Let’s understand this UML diagram by looking at different components and how
     each components integrate with other components
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过查看不同的组件，理解这个UML图以及每个组件是如何与其他组件集成的。
 - en: The simplest component in the above UML system is a Parking Spot. A Parking
     Spot has three pieces of information in it
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述UML系统中最简单的组件是停车位。一个停车位包含三个信息：
 - en: full – Denotes whether is it full or not
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 满位 – 表示停车位是否已满
 - en: floor – Parking Spot lies on which floor
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 楼层 – 停车位所在的楼层
 - en: location – What is the location number of the parking Spot
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 位置 – 停车位的具体位置编号
 - en: The next component is the Parking Ticket. A parking Ticket will have below pieces
     of information
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一个组件是停车票。停车票将包含以下信息：
 - en: '**Vehicle** – This ticket is issued for which type of vehicle. The vehicle
     will vehicle number as well'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**车辆** – 该停车票是为哪种类型的车辆发放的。车辆还会有车牌号码。'
 - en: '**Parking Spot** – At which Parking Spot the vehicle is parked. You might be
     wondering why we have this information in the Parking Ticket. This information
     exists in the Parking Ticket so that we can reclaim the parking spot. You might
@@ -388,318 +572,504 @@
     for a given ticket the parking could be assigned to any spot then it is easier
     to do so where we can simply maintain a count for each parking spot. In fact,
     that is a simple version of the design in this tutorial'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**停车位** – 车辆停放的具体停车位。你可能会想为什么停车票中需要包含这一信息。这个信息存在于停车票中是为了我们能够找回停车位。你可能会争辩说，一旦停车票发出，停车就可以停在任何位置。但在本教程中，我们正在构建一个更复杂的系统，在这个系统中，我们可以确切知道车辆停放的位置。如果你想构建一个系统，在其中针对某张停车票停车可以分配到任何停车位，那是比较简单的，方法是我们只需为每个停车位维护一个计数。事实上，这就是本教程中设计的简化版本。'
 - en: Other than that a Parking Ticket will have entry time, exit time, price, gate
     information, pg information, etc,.
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 除此之外，停车票还会包含入场时间、出场时间、价格、闸口信息、PG信息等。
 - en: The next component is **Parking Floor.** A parking floor maintains a list of
     all parking spots present on that floor. It has below pieces of information
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一个组件是**停车楼层**。停车楼层维护该楼层所有停车位的列表。它包含以下信息：
 - en: '**Parking Spots** – There is Double Linked List for each for each type of Parking
     Spot present on this floor. For example, Car Type Parking Spot will have a separate
     DLL, and Truck type Parking Spot on that floor will have a different DLL. Why
     DLL? With DLL it is easy to know the next free Parking Spot in 0(1) time.  Also
     when a Parking Spot gets free then in DLL we can simply move it to the front to
     denote that it is free'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**停车位** – 每种类型的停车位都会有一个双向链表。例如，车位类型停车位会有一个单独的DLL，而卡车类型停车位则会有不同的DLL。为什么使用DLL？使用DLL可以轻松在O(1)时间内找到下一个空闲停车位。而且当一个停车位变为空闲时，我们可以简单地将其移到链表前面，表示它是空的。'
 - en: '**Floor Number –** the floor number simply'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**楼层编号 –** 楼层编号仅仅是'
 - en: '**isFull –** Denotes whether it is full or not'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**isFull –** 表示是否已满'
 - en: Then the main component is **ParkingSystem.** It will have below pieces of information
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，主要组件是**ParkingSystem**。它将包含以下信息
 - en: An Array of Parking Floors
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个停车楼层的数组
 - en: The list of Parking Ticket it has issued
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它已经发出的停车票列表
 - en: Other than that it will have information about entry and exit gates, **isFull**
     variable to denote whether the entire Parking Lot is full or not.
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 除此之外，它还会包含关于出入口门的信息，**isFull** 变量用于表示整个停车场是否已满。
 - en: Other than these main components we also have
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了这些主要组件，我们还有
 - en: Vehicle Component
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 车辆组件
 - en: Payment Gateway Component
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 支付网关组件
 - en: Entry and Exit Gates
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 出入口门
 - en: Parking Rates
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 停车费
 - en: Etc
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 等等
 - en: '**Design Pattern used in this design**'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: '**此设计中使用的设计模式**'
 - en: Factory Pattern to create different instances of Parking Spot Type
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用工厂模式创建不同类型停车位的实例
 - en: Flyweight Design Pattern to create fixed instances of Parking Rate and Payment
     Gateway.
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用享元设计模式创建固定的停车费和支付网关实例。
 - en: '**Low**–**Level Design**'
+  id: totrans-111
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**低**–**级设计**'
 - en: Below is the low-level design expressed in the Go programming language. Later
     we will see a working example as well
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用Go编程语言表示的低级设计，稍后我们还会看到一个实际的示例
 - en: '**Parking System**'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车系统**'
 - en: '[PRE0]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Parking Floor**'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车楼层**'
 - en: '[PRE1]'
+  id: totrans-116
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Parking Ticket**'
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车票**'
 - en: '[PRE2]'
+  id: totrans-118
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Parking Ticket Status Enum**'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车票状态枚举**'
 - en: '[PRE3]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Parking Spot Interface**'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车位接口**'
 - en: '[PRE4]'
+  id: totrans-122
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Parking Spot Type Enum**'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车位类型枚举**'
 - en: '[PRE5]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Car Parking Spot**'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**汽车停车位**'
 - en: '[PRE6]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**Truck Parking Spot**'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '**卡车停车位**'
 - en: '[PRE7]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Motorcycle Parking Spot**'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '**摩托车停车位**'
 - en: '[PRE8]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**Parking Rate Factory and Parking Rate and Child Parking Rate**'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '**停车费工厂与停车费及子停车费**'
 - en: '[PRE9]'
+  id: totrans-132
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**Payment Gateway Class and Child Payment Gateway Classes**'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '**支付网关类与子支付网关类**'
 - en: '[PRE10]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Program**'
+  id: totrans-135
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**程序**'
 - en: Here is the full working code if anyone is interested in the Go programming
     language. In the below example, we are going to look at two examples
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是完整的工作代码，如果有人对Go编程语言感兴趣的话。在下面的示例中，我们将查看两个示例
 - en: First, one is a small Parking Lot that has only one floor and two car Parking
     Spots
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个是一个小型停车场，只有一层和两个汽车停车位
 - en: The other is a big Parking Lot that has two floors and on each floor, it has
     two cars, two motorcycles, one truck Parking Spot.
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 另一个是一个大停车场，拥有两层，每层都有两个汽车停车位、两个摩托车停车位和一个卡车停车位。
 - en: We have used a Doubly Linked List to store the list of Parking Spots so that
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用了双向链表来存储停车位列表，这样
 - en: We can find a free parking spot in O(1)
+  id: totrans-140
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们可以在O(1)时间内找到一个空闲停车位
 - en: We should be able to reclaim a parking spot in O(1)
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们应该能够在O(1)时间内重新获取一个停车位
 - en: '**parkingSystem.go**'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingSystem.go**'
 - en: '[PRE11]'
+  id: totrans-143
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**parkingFloor.go**'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingFloor.go**'
 - en: '[PRE12]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**parkingSpot.go**'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingSpot.go**'
 - en: '[PRE13]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**parkingSpotType.go**'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingSpotType.go**'
 - en: '[PRE14]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**carParkingSpot.go**'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: '**carParkingSpot.go**'
 - en: '[PRE15]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**truckParkingSpot.go**'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '**truckParkingSpot.go**'
 - en: '[PRE16]'
+  id: totrans-153
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**motorcycleParkingSpot.go**'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '**motorcycleParkingSpot.go**'
 - en: '[PRE17]'
+  id: totrans-155
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**parkingTicket.go**'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingTicket.go**'
 - en: '[PRE18]'
+  id: totrans-157
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**parkingTicketStatus.go**'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingTicketStatus.go**'
 - en: '[PRE19]'
+  id: totrans-159
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '**dll.go**'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dll.go**'
 - en: '[PRE20]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '**gate.go**'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gate.go**'
 - en: '[PRE21]'
+  id: totrans-163
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '**gateType.go**'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gateType.go**'
 - en: '[PRE22]'
+  id: totrans-165
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '**vehicle.go**'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '**vehicle.go**'
 - en: '[PRE23]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '**vehicleType.go**'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '**vehicleType.go**'
 - en: '[PRE24]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '**parkingRate.go**'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '**parkingRate.go**'
 - en: '[PRE25]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '**paymentGateway.go**'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '**paymentGateway.go**'
 - en: '[PRE26]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '**main.go**'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE27]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '**Output**'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE28]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '**Full Working Code in one File**'
+  id: totrans-178
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**单文件完整工作代码**'
 - en: Here is the full working code
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码
 - en: '[PRE29]'
+  id: totrans-180
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '**Output**'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE30]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '**Conclusion**'
+  id: totrans-183
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing a Parking Lot. Hope you have liked this article.
     Please share feedback in the comments
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章的内容是关于设计一个停车场的，希望你喜欢这篇文章。如果有任何反馈，请在评论中分享。
