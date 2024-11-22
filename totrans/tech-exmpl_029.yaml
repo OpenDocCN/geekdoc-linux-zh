@@ -1,0 +1,299 @@
+- en: Understanding Directory-Based Sharding
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/directory-based-sharding/](https://techbyexample.com/directory-based-sharding/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When to use Directory Based Sharding.](#When_to_use_Directory_Based_Sharding
+    "When to use Directory Based Sharding.")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Disadvantages of Directory-Based Sharding](#Disadvantages_of_Directory-Based_Sharding
+    "Disadvantages of Directory-Based Sharding")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[The Problem of Hot Shard](#The_Problem_of_Hot_Shard "The Problem of Hot Shard")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Solution 1](#Solution_1 "Solution 1")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Solution 2](#Solution_2 "Solution 2")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this tutorial, we will try to understand directory-based sharding. Other
+    than directory-based sharding there are two types of sharding as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: Key Based Sharding
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Range Based Sharding
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Directory-based sharding keeps a static lookup table that keeps track of what
+    shard is holding what data. Let’s consider an example.  Assume you have to keep
+    track of all restaurants present in different parts of the US. Each of the restaurants
+    will belong to a certain location within the US. We can divide the US into multiple
+    zones. Each of the zones will be stored in a separate shard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Restaurant Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Restaurant Name | Zone |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R1 | ZA |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R2 | ZB |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R3 | ZC |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R4 | ZA |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R5 | ZD |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R6 | ZB |'
+  prefs: []
+  type: TYPE_TB
+- en: Now we will maintain a lookup table that will store the mapping of the zone
+    to the shard
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Lookup Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Zone | Shard |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZA | 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZB | 2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZC | 3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZD | 4 |'
+  prefs: []
+  type: TYPE_TB
+- en: It could very well be the case that two of the zones are stored in the shard.
+    That is also allowed. This look-up table is saved generally outside the application
+    and the database
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When to use Directory Based Sharding.**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: When the cardinality of the column on which the lookup table is based is low.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For example, in the above case, we will have a fixed number of zones within
+    the US. Even if there exist a million restaurant records, the number of zones
+    is fixed. And hence the cardinality of the zone column in the Restaurants Table
+    is low.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As a counter-example, we cannot use the **employee_id** in the lookup table
+    because if there are let’s say 20K employees then there will be 20K different
+    **employee_id** and the size of the lookup table will be unbounded as here the
+    cardinality of the **employee_id** column is high
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another important factor is that other than the cardinality of a column being
+    low, the column value should also not change. For example, consider an **Order**
+    table. An order will have different  status
+  prefs: []
+  type: TYPE_NORMAL
+- en: Init
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Success
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Failed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Shipped
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Here the cardinality of the status column is low but the order can move from
+    Init to  **Success** or **Failed**. From **Success,** it can move to **Shipped**.
+    Hence status column is not the right field here to use for the lookup table as
+    otherwise, the order would move from one shard to another shard once the order
+    status changes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Disadvantages of Directory-Based Sharding**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '**Overhead of a lookup table**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is an overhead consulting the table every time we want to know which shard
+    the user data belongs to. And this lookup will happen for every  read and write
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Lookup table being Single Point of Failure**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The lookup table can be maintained in a separate place may be Redis or some
+    other database. This lookup table can be a single point of failure.  So we have
+    to maintain multiple copies of a lookup table.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The Problem of Hot Shard**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Like any other sharding technique, this sharding can also result in several
+    hot shards. So generally when the directory-based sharding is done,  the sharding
+    key is chosen such that the data is evenly divided between the shards. In the
+    above case, we can argue that some of the zones might contain more restaurants
+    than others. In that case, we can two ways to fix it
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Solution 1**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Map a few zones with less number of restaurants to the same shard.  But map
+    zone with a large number of restaurants to one shard. For example, let’s assume
+    for the case above that **ZA** and **ZB** have a large number of restaurants,
+    and **ZC** and **ZD** will have less number of restaurants. Then the look table
+    can be  like this
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Lookup Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Zone | Shard |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZA | 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZB | 2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZC | 3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZD | 3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Solution 2**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Use the hybrid approach. We can have the combination of zone and subzone decide
+    the shard. For example, ZA contains so many restaurants that it cannot simply
+    fit in one of the shards. Then the combination of zone and subzone will  decide
+    the shard
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Restaurant Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Restaurant Name | Zone | Sub Zone |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R1 | ZA | X |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R2 | ZB | X |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R3 | ZC | X |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R4 | ZA | Y |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R5 | ZD | X |'
+  prefs: []
+  type: TYPE_TB
+- en: '| R6 | ZB | Y |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Zone | Shard |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZA_X | 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZA_Y | 2 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZB_X | 3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZB_Y | 4 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZC_X | 5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZC_Y | 5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZD_X | 6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ZD_Y | 6 |'
+  prefs: []
+  type: TYPE_TB
+- en: Both the subzones of zone **ZA** and **ZB** map to a different shard. While
+    subzones of zone **ZC** and **ZD** map to the same shard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about directory-based sharding. Hope you have liked the article
+  prefs: []
+  type: TYPE_NORMAL

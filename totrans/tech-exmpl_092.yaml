@@ -1,0 +1,56 @@
+- en: Range Sum Array Program
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/range-sum-array-program/](https://techbyexample.com/range-sum-array-program/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There is an array of numbers that are given. The objective is to find the range
+    sum in that given array. What does it mean that a range will be given which will
+    have a left index and a right index. And we have to find the sum between the left
+    index and the right index in the given array of numbers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Seem simple right. Just iterate from the left index to the right index in the
+    given array and return the sum. But here is the catch. Allowed TC is O(1)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is the approach we can follow so that we are able to return the answer
+    in O(1) time complexity
+  prefs: []
+  type: TYPE_NORMAL
+- en: Pre compute another sum_array from the given array of numbers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: sum_array[i] = sum of numbers from the 0 index to the ith  index.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For a given range with left index and right index  simply return sum_array[left-1]
+    – sum_array[right]. Of course, we need to validate that left-1 is greater than
+    or equal to zero.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE

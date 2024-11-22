@@ -1,0 +1,49 @@
+- en: Check if a file is writable or not in Ruby language
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/file-writable-ruby/](https://techbyexample.com/file-writable-ruby/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: File class of ruby provides the below method that can be used to check if a
+    file is writable by the effective user and group id of the current process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is the signature of the function
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: It returns true if the file is writable or else it will return false.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Create a file named **test.txt** in the current directory. With the same user
+    run the below program
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now change the user and group id of the **test.txt** file using **chown** command.
+    Make sure that the current user doesn’t belong to the new group id.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Run the above program again. This time it will output false.
+  prefs: []
+  type: TYPE_NORMAL

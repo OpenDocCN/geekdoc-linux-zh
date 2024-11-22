@@ -1,0 +1,100 @@
+- en: Difference between soft links and hard links in Linux?
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/difference-soft-links-and-hard-links/](https://techbyexample.com/difference-soft-links-and-hard-links/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Before looking into the difference, we should look at “what is inode” in brief
+    first.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**What is inode:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**inode(index node)** is the data structure in the** Unix-based file system** which
+    stores the metadata of the file and how and where the data of the file is stored. This
+    includes information related to **file size, permissions, groups, ownership, file
+    type, file size, number of links**, etc. Remember!! The inode doesn’t store the
+    name of the file. file name information is always stored in the directory with
+    its respective inode numbers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Soft link:**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Soft links are also referred to as symlinks. it is the windows equivalent of
+    shortcuts. if you delete the original file,  symlinks will not work. each symlink
+    has a different inode.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Hard link:**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is another alias of the file, unlike the shortcuts. if you delete the original
+    file, still hard links will work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Let’s understand the difference**s** by example and diagram.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Diagram:**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![](../Images/8dfa1b61121cd8fc6020a7ce389151cf.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Summarising the differences:**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Soft links | Hard links |'
+  prefs: []
+  type: TYPE_TB
+- en: '| It has a different inode compared to the original file. | It points to the
+    inode of the original file. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Can be created on both files and directories both. | Can only be created
+    with files and not directories. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| It is equivalent to the shortcuts on windows. | It is equivalent to another
+    copy of the original file which points to the same inode of the file. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| **Command**  *ln -s file_name soft_link_name* | **Command**:   *ln file_name
+    hard_link_name* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Can be used across different file systems. | Cannot be used across different
+    file systems. The reason is inode of a filesystem can not be shared across different
+    file systems because their structure is different. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| If we delete the original file, soft links will not work. | If we delete
+    the original file, still hard links will work. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Soft links work with both absolute and relative paths. | Hard link only works
+    with absolute path. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Any changes in the soft link don’t impact the original file. | Any changes
+    in the hard link impact the original file. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| It takes extra space. | it doesn’t need extra space. |'
+  prefs: []
+  type: TYPE_TB
+- en: '[hard](https://techbyexample.com/tag/hard/)*   [link](https://techbyexample.com/tag/link/)*   [soft](https://techbyexample.com/tag/soft/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

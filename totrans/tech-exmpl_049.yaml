@@ -1,0 +1,1194 @@
+- en: Unique ID Generation System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/unique-id-generation/](https://techbyexample.com/unique-id-generation/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Types of Unique IDs](#Types_of_Unique_IDs "Types of Unique IDs")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Unique ID ( Loosely Sortable)](#Unique_ID_Loosely_Sortable "Unique ID ( Loosely
+    Sortable)")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Unique IDs ( Not time sortable) or Random UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID
+    "Unique IDs ( Not time sortable) or Random UUID")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Sequence Number](#Sequence_Number "Sequence Number")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Unique ID ( Loosely Sortable)](#Unique_ID_Loosely_Sortable-2 "Unique ID (
+    Loosely Sortable)")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[UUID or GUID](#UUID_or_GUID "UUID or GUID")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[96 bit GUID](#96_bit_GUID "96 bit GUID")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[64 bit IDs](#64_bit_IDs "64 bit IDs")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Snowflake by Twitter](#Snowflake_by_Twitter "Snowflake by Twitter")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Instagram ID generator](#Instagram_ID_generator "Instagram ID generator")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Unique IDs ( Not time sortable) or Random UUID](#Unique_IDs_Not_time_sortable_or_Random_UUID-2
+    "Unique IDs ( Not time sortable) or Random UUID")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6 or 7  or 8 length digit base 64 encoded digit](#6_or_7_or_8_length_digit_base_64_encoded_digit
+    "6 or 7  or 8 length digit base 64 encoded digit")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[16 or 32 bit Random IDs](#16_or_32_bit_Random_IDs "16 or 32 bit Random IDs")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Sequence Number](#Sequence_Number-2 "Sequence Number")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design of Time Sortable Unique IDs](#High-Level_Design_of_Time_Sortable_Unique_IDs
+    "High-Level Design of Time Sortable Unique IDs")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[API Details](#API_Details "API Details")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Time Component](#Time_Component "Time Component")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design of Unique IDs ( Not time sortable) or Random UUID](#High-Level_Design_of_Unique_IDs_Not_time_sortable_or_Random_UUID
+    "High-Level Design of Unique IDs ( Not time sortable) or Random UUID")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Database Schema](#Database_Schema "Database Schema")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Which Database to Use](#Which_Database_to_Use "Which Database to Use")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to resolve concurrency issues](#How_to_resolve_concurrency_issues "How
+    to resolve concurrency issues")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What happens if the key ranges are getting exhausted](#What_happens_if_the_key_ranges_are_getting_exhausted
+    "What happens if the key ranges are getting exhausted")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Is not KGS service a single point of failure?](#Is_not_KGS_service_a_single_point_of_failure
+    "Is not KGS service a single point of failure?")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Distributed Systems are a norm these days. Sometimes there is a requirement
+    to generate Unique IDs across such distributed systems. Some of these unique ID
+    requirements could be
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is Order Management System in the company and each of the order needs
+    to have a unique ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each of the users stored in the system needs to have a unique ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If we take an example of Instagram then there could be billions of status updates
+    or posts from the user. Each of the posts will require a different unique ID.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ……
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Types of Unique IDs**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Also, there are three types of IDs that could be generated when it comes to
+    a unique ID generator
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unique ID ( Loosely Sortable)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Unique ID (Not Loosely Sortable) or Random Unique ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Sequence Number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s look at the definition of each of these first, then we will look into
+    each Unique ID in detail
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Unique ID ( Loosely Sortable)**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: These IDs are loosely time sortable and can be generated in a decentralized
+    manner. There are several ways of generating as we will see in this article. These
+    ids have some time components in them usually epoch time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples include UUID (128 bit), MongoDB Object IDs (96 bit), 64 bit IDs. Since
+    these IDs are time sortable, hence it can be used by applications to organize
+    data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of UUID  (128 bit)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Unique IDs ( Not time sortable) or Random UUID**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: These are generally sort IDs. Generally 6 or 7 or 8 character length IDs. For
+    example, there is a short string that is used for generating a short URL. These
+    short URLs could be used by websites like bitly.com or even youtube.  Youtube
+    uses these short URLs for videos so that they could be shared easily.  So these
+    IDs don’t have a use case of sort per se. These IDs could be large as well with
+    no inherent information related to ordering.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One example of a large random ID could be let’s say a reference id or transaction
+    id provided when someone does a payment at a payment gateway. These IDs have a
+    use case of being totally random so that there is no possibility of guessing any
+    reference id or transaction id.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There could be many more such requirements in which we need to generate billions
+    of records.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example of 7 character IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Sequence Number**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As the name suggests is an auto-increment number. When generating sequence numbers
+    in a distributed system, it requires knowledge of other workers in the system.
+    And as such it requires a shared state. It is very difficult to generate a sequence
+    number in a distributed system in a high scalable manner as it requires some central
+    management.
+  prefs: []
+  type: TYPE_NORMAL
+- en: An example of a sequence number is MY SQL Auto Increment Number
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: We will first look at the description and design of
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unique ID ( Loosely Sortable)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Followed by Unique ID (Not Loosely Sortable) or Random Unique ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: And in the end, we will talk about Sequence Number Generation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Unique ID ( Loosely Sortable)**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Some of the requirements of a unique ID generation system could be.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The generated unique IDs should be short
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The generated IDs should be time sortable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It should be possible to generate 10000 IDs per second in an available manner
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Some of the unique IDs which could be generated in our system are
+  prefs: []
+  type: TYPE_NORMAL
+- en: UUID or GUID which is 128 bits in length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 96 bit UUID. An example is Mongo DB Object ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 64-bit length UUID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 56-bit length UUID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**UUID or GUID**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: UUID stands for Universally Unique Identifiers. It is a 16 byte or 128-bit ID
+    which is guaranteed to be unique.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages of UUID or GUID**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: No special separate system is required for the generation of these IDs
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Generation of these IDs is fast
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: These IDs are time sortable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The major disadvantage of GUID or UUID is its size
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There could be collisions but chances are pretty less
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**96 bit GUID**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Mongo DB Object is of 12 bytes or 96 bits. Each of the IDs comprises of
+  prefs: []
+  type: TYPE_NORMAL
+- en: A 4-byte timestamp value. It is the number of seconds since the epoch time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A 5-byte random value
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A 3-byte increment counter
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This Object ID is unique per shard in the Mongo DB world. This means that two
+    different Object IDs generated by two different shards could be the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The ID generated is time sortable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The size is still large which could make the indexes large.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So these IDs cannot be used where IDs less than 64 bit are desirable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**64 bit IDs**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The 64-bit IDs could be generated which are time sorted. And since it is 64
+    bit it is obviously smaller in size as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For 64-bit IDS we have two approaches to consider here
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Snowflake by Twitter**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There is a snowflake by Twitter that has been created to generate 64-bit unique
+    IDs. It uses three criteria to determine the unique ID
+  prefs: []
+  type: TYPE_NORMAL
+- en: Current timestamp in milliseconds – It is 41 bits and based upon the Epoch system
+    it gives us 69 years
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The sequence number of the instance generating the unique ID – It is 10 bit
+    and hence it allows 2^10 = 1024 instances.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The sequence number of the thread within that instance which is generating the
+    unique ID – Is 12 bit which allows 2^12 = 4096 per instance.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 1 bit is reserved for future use.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see how this system is scalable. There could be 1024 instances so there
+    is no single point of failure. With 1024 instances the system now has a lot more
+    nodes to handle the traffic
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It requires the zookeeper to manage the mapping of the machine
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Require several snowflake servers which is an additional level of complexity
+    and management
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Instagram ID generator**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It also generates a 64-bit ID. Each of the IDs consists of
+  prefs: []
+  type: TYPE_NORMAL
+- en: 41 bits for the timestamp in milliseconds. If we have a custom epoch it can
+    give us 69 years
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 13 bits which represents the logical shard ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 10 bits which represents the sequence number per shard.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So essentially  1024 IDs can be generated per shard per millisecond.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The sharded system has many thousand logical shards that are mapped to a few
+    physical machines. Since it uses logical shards hence we can start with fewer
+    physical servers which contain many logical shards. Once your shards get bigger,
+    we can add more physical servers and move these shards to the new physical servers.
+    Just the shard has to be moved to a new physical server. There is no re-bucketing
+    of data that needs to happen.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Instagram ID generator doesn’t require a zookeeper which was needed in Twitter
+    snowflake. It uses the Postgress Schema feature for administration
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**What is Postgress Architecture**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Postgress DB consists of multiple schemas. Each of the schemas consists of
+    multiple tables. A table name must only be unique across a schema only. So in
+    the case of Instagram, each logical shard is mapped to one schema, and the table
+    inside the schema is used to generate the IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Unique IDs ( Not time sortable) or Random UUID**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Examples of such IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6 pr 7 or 8 digit length which is 36, 42, and 48-bit length respectively
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 16 character length ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 32 character length ID
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**6 or 7  or 8 length digit base 64 encoded digit**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Since it is base 64 encoded, hence each of the digits is 6 bit.
+  prefs: []
+  type: TYPE_NORMAL
+- en: So if the unique ID is of size 6 then the overall size will be 7*6=42 bits.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So if the unique ID is of size 7 then the overall size will be 7*6=42 bits.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If the unique ID is of the size 8 then the overall size will be 8*6=48 bits.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Some of the use cases of using such an ID is
+  prefs: []
+  type: TYPE_NORMAL
+- en: URL shortener system where the required URL is needed to be as short as possible
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Paste Bin type systems were again required paste bin generated needs to be short.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Youtube requires such IDs to generate short URLs for videos
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Advantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Very small in size hence suitable for sharing
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: These IDs generated are not time sorted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**16 or 32 bit Random IDs**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The character range for such IDs could be over 100 ASCII characters. And since
+    it uses a large character set hence generation of these IDs is pretty simple and
+    there are fewer chances of collision.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples of 16-bit Random IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Examples of 32-bit Random IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Sequence Number**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: These IDs could be generated by using a database that could give us auto-increment
+    numbers. Since there is a database that is generating unique IDs therefore it
+    is guaranteed to be unique
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unique IDs in sequential order. For example, the database generates a unique
+    incremented ID.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Short increment IDs could be generated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It is easily time sorted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unique generated IDs could be of any length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system is not scalable and the instance which is generating the unique ID
+    is a single point of failure
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To improve the scalability and prevent a single point of failure we could increase
+    the number of instances. Each of the instances will increment in a different way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example, if we have two instances then one will generate an even number
+    and the other will generate an odd number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If we have three instances then the first one will generate IDs in multiple
+    of 3, the second will generate in multiples of 3 plus 1 and the third one will
+    generate in multiples of 3 plus 2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Even after increasing the number of instances, there are a couple of disadvantages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is no longer a sequence number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The unique IDs generated by two different instances will no longer be time sorted.
+    For eg let’s say there are two instances and one instance could be generating
+    IDs like 1001, or 1003\. The other could be generating IDs like 502,506 … at the
+    same time. Obviously, by looking at two IDs it is difficult to tell which came
+    earlier.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What if the traffic is huge and we have to add more instances.  Similarly, let’s
+    say the traffic is less and we have to decrease some instances. Increasing and
+    decreasing instances could involve changes in the logic of the generation of IDs
+    for each of the instances and managing such things is complicated as well as difficult.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Flickr unique ID generator uses the above approach.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**High-Level Design of Time Sortable Unique IDs**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Some of the non-functional requirements of the system is that it should be highly
+    scalable and available
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**API Details**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There will be only a single API needed in our system. This API will be used
+    to get a bunch of unique IDs generated. So essentially it will return an array
+    of Unique IDs
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will generate an ID that will have the below fields
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time Part
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Machine Number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Process or Thread Number
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Local Counter
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Here is the description of each of these fields
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time Part – It denotes the time component of the Unique ID. Adding a time component
+    to the unique IDs makes it time sortable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Machine Number – This is a unique number of the machine or instance or container.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Thread Number – Unique number assigned to each thread
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Local Counter – This is the number of unique IDs that can be generated by the
+    thread in one millisecond
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We will have a 64-bit ID. With 64-bit IDs we will be able to generate 2^64 IDs.
+    If our requirement is 100 million IDs per
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Time Component**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The number of bits out of 64 for the time component will depend upon the lifespan
+    of our application. The timestamp will be number of milliseconds starting EPOCH
+    time. Also note that the EPOCH timestamp starts from January 1st, 1970\. But for
+    our application can have a custom epoch timestamp starting on 1 Jan 2022 or any
+    other date which corresponds to the start of your application.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assume the lifespan of our application is 50 years. Our unique ID will have
+    a millisecond component in it. So the number of milliseconds in 50 years is
+  prefs: []
+  type: TYPE_NORMAL
+- en: 50*365*24*60*60 = 1577000000000 milliseconds
+  prefs: []
+  type: TYPE_NORMAL
+- en: The number of bits needed to store a number that big is 41\. Basically, 41 bits
+    because
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: In fact here is the table that tells how many bits for timestamp define how
+    many years.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **Number of Bits** | **Max Binary Number** | **Number of milliseconds** |
+    **Number of years** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 40 Bits | 1111111111111111111111111111111111111111 | 1099511627979 | 34.8
+    years |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 41 Bits | 11111111111111111111111111111111111111111 | 2199023255755 | 69.7
+    years |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 42 | 111111111111111111111111111111111111111111 | 4398046511307 | 139.4 years
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: Let’s see how many bits we need for each component.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time Component – 41 bits
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Machine Component – 10 bits – Max 2^10 = 1024 instances or machines or containers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Thread Component – 3 . Max 2^3 threads per instance or machine or container
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Local Counter- 10\. Max 2^10 unique IDS per millisecond per container.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s check the capacity of our service
+  prefs: []
+  type: TYPE_NORMAL
+- en: Max Instances – 2^10 = **1024**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of threads per instance – 2^3 = **8**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Max Number of threads possible – 2^10*2^3 = 2^13 = **8192**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Unique IDs per thread per millisecond = 2^10 = **1024**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of Unique IDs possible per millisecond = 2^13*2^10 = 2^23 = **8,388,608**
+    = roughly 8 million per millisecond
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of Unique IDs possible per second = 2^23*1000 = **8,388,608,000** = 8
+    billion Unique IDs per second
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So theoretically this system could generate 8 billion Unique IDS per second
+    for a total of 69.7\. years.. We can also have a system that generates 56 bit
+    IDs. Let’s see how many bits we need for each component
+  prefs: []
+  type: TYPE_NORMAL
+- en: Time Component – 41 bits
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Machine Component – 8 bits – Max 2^8 = 256 instances or machines or containers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Thread Component – 2 bits. Max 2^2 = 4 threads per instance or machine or container
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Local Counter- 4 bits. Max 2^4 unique IDS per millisecond per container.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s check the capacity of our service
+  prefs: []
+  type: TYPE_NORMAL
+- en: Max Instances – 2^10 = **1024**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of threads per instance – 2^2 = **4**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Max Number of threads possible – 2^10*2^2 = 2^12 = **4096**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Unique IDs per thread per millisecond (Local Counter) = 2^4 = **16**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of Unique IDs possible per millisecond = 2^12*2^4 = 2^16 = **65,536**
+    = roughly 65K per millisecond
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of Unique IDs possible per second = 2^16*1000 = **65,536,000** = 65 million
+    Unique IDs per second
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So theoretically this system could generate 65 million Unique IDS per second
+    for a total of 69.7\. years
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Can we choose a very long timestamp such that the timestamp is 10000 years
+    or even more?**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Choosing a very long timestamp will require a larger number of bits for the
+    timestamp. That will limit the number of workers or threads or local Counter.
+    This will in turn limit the capability to generate a number of Unique IDs per
+    second.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How do we assign a unique number to each of the machines or the instances
+    in our system?**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can use zookeeper here. Whenever any new instance or machine or a container
+    is coming up it can register itself with the zookeeper and get a unique number
+    from the zookeeper
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**High-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There will be a zookeeper service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a load balancer behind which there will be a number of instances
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each instance when it comes up, it registers itself with the zookeeper. When
+    it registers, it obtains a unique number from the zookeeper. This unique number
+    varies from 1 to 1024 since we have only 10 bits for the instance number.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Autoscaling of the instances will be done based on CPU load. There will be a
+    supervisor to which every node in the cluster will send its CPU. The supervisor
+    is going to add and remove the instances or machines from the cluster depending
+    upon the CPU load. If we are using AWS then it is simple to set up autoscaling
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below is the high-level diagram for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/979c92cc32257266566443b33543a07d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**High-Level Design of Unique IDs ( Not time sortable) or Random UUID**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: For this, we will only look at the design of 6,7, and 8 character length random
+    UUID.   Generating a 16 length or 32 lengths random UUID is straightforward as
+    there is no chance of collision.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the high-level components in the system for generating  6,7, and
+    8 character length random UUID
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Key Generation Service** – This service holds the responsibility of generating
+    of short keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Upstream Service** – This is the business service that uses all the generated
+    short keys for business purposes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Key Recovery Service** –  This service will be a worker that will recover
+    the expired keys and put them back into the database for future use'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Kafka/SNS+ Queue/SQS System**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Database**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Cache**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So Key Generation Service or  KGS service will hold the responsibility of generating
+    the short keys. First, let’s see what should be the length of each key. Possible
+    options of length are 6,7,8\. Only base64 URL-safe characters could be used to
+    generate the key. Below are URL safe characters
+  prefs: []
+  type: TYPE_NORMAL
+- en: Lower case Alphabets – “a-z”
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Uppercase Alphabets – “A-Z”
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Digits – “0-9”
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Underscore – “_”
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Dash – “-“
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Since only URL-safe characters can be used, therefore
+  prefs: []
+  type: TYPE_NORMAL
+- en: For 6- We have 64^6= 68.7 billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 7 – We have 64^7 = ~3500 Billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 8 – We have 64^8= trillion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can now assume that 68.7 billion entries will be enough so we can have 6
+    characters for the key.  Now the question is how these are going to be maintained
+    in the Database. If we are storing 68 billion entries in the database then it
+    might be too many entries and a waste of resources.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One option is to store a range of keys in the databases. We can have a range
+    of 64 where we only store the first five characters. These five characters will
+    act as a prefix for all 64 keys which can be generated from this prefix. Let’s
+    say we have the below prefix
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Then below 64 keys can be generated from this
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**adcA2[a-z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[A-Z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[0-9]** – 10 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[-_]** – 2 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can store these ranges in DB. So for 6 characters, we will have overall 64^5
+    entries in the database.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The keys will be returned by the Key Service to the Tiny URL services in ranges
+    and batches only. The upstream service will then use this prefix to generate 64
+    keys and serve 64 different create tiny URL requests.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is optimization as the upstream service only needs to call the Key Generation
+    Service only when it has exhausted all its 64 keys. So there will be one call
+    from the upstream service to the Key Generation Service for generating 64 short
+    URLs
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s now see the points for the KGS service
+  prefs: []
+  type: TYPE_NORMAL
+- en: Database Schema
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Which database to use
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to resolve concurrency issues
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to recover key_prefix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What happens if the key ranges are getting exhausted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What if the short URL never expires
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Is not KGS service a single point of failure?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Database Schema**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There will just be a single table that will store the range of keys i.e prefix.
+    Below will be the fields in the table
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**key_prefix**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**key_length** – It will always be 6 for now. These fields exist if we need
+    7 length keys in any scenario'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**used** – If this is true then the key prefix is currently in use. If false
+    then it is free to be used'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Which Database to Use**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We don’t have any ACID requirements so we can use the No SQL database. Also,
+    we might have very large data to save as well so No SQL might be better suited. 
+    This system will be a write-heavy as well as a read-heavy system. So we can use
+    **Cassandra Database** here.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can do the capacity estimates of the DB and based on that we can decide on
+    the number of shards we want to have. Each of the shards would be properly replicated
+    as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is one more optimization we can do here to improve the latency. We can
+    refill free key ranges in the cache and the KGS service can directly pick from
+    there instead of going to the database every time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How to resolve concurrency issues**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It could very well happen that two requests see the same prefix or range as
+    free. Since there are multiple servers reading from the key DB simultaneously
+    we might have a scenario where two or more servers read the same key as free from
+    the key DB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are two ways to resolve the concurrency issues we just mentioned
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two or more servers read the same key but only one server will be able to mark
+    that **key_prefix** as used in the database. Concurrency is at DB level that is
+    each row is locked before being updated and we can leverage that here. Db will
+    return back to the server whether any record was updated or not. If the record
+    was not updated then the server can fetch a new key. If the record was updated
+    then that server has got the right key.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other option is to use a transaction that does Find and Update in one transaction.
+    Each Find and Update will return a unique key_prefix every time. This is probably
+    not a recommended option because of the load it puts on the database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**What happens if the key ranges are getting exhausted**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This will be an unexpected condition. There will be a background worker that
+    will check if the key ranges are getting exhausted. If yes then it can generate
+    ranges for 7 length keys. But how it will know if the key ranges are getting exhausted.
+    For keeping a rough count there could be another table that will store the user
+    count of used keys.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Whenever any range is allotted by the KGS to the upstream service it will publish
+    a message that will be picked by a synchronous worker that is going to decrease
+    the count of used keys by 1.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Similarly, whenever a range is free we can increment this counter.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Is not KGS service a single point of failure?**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To prevent it we will have proper replication of the key database. Also, there
+    will be multiple app servers for the service itself. We will also have proper
+    autoscaling set up. We can also have Disaster Management
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below is the high-level diagram of the overall system
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/25c14df5e6663608e906136d41ed7410.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This was all about unique ID generation Hoped you have liked this article. Please
+    share feedback in the comments.
+  prefs: []
+  type: TYPE_NORMAL

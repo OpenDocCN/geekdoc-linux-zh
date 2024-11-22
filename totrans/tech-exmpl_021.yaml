@@ -1,0 +1,89 @@
+- en: 'zsh: no matches found: HEAD^'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/zsh-no-matches-found-head/](https://techbyexample.com/zsh-no-matches-found-head/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: ^ character is a special character in filename expansion in zsh. There are a
+    couple of ways to fix it
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Workaround 1**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Escape the ^ character
+  prefs: []
+  type: TYPE_NORMAL
+- en: Eg
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: or use quotes
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Workaround 2 (Permanent Fix)**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: It happens because of **EXTENDED_GLOB** option due to which zsh allow ^ to negate
+    blobs. As quoted here
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**EXTENDED_GLOB**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Treat the ‘#’, ‘~’ and ‘^’ characters as part of patterns for filename generation,
+    etc. (An initial unquoted ‘~’ always produces named directory expansion.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: So simply **unsetopt** this option in the terminal
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: To fix it permanently, you can write this line on your .zshrc file. This tells
+    .zsh to not print an error when pattern matching fails and to use the command
+    as is
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'PS: It is not a good idea to **unsetopt EXTENDED_GLOB** in .zshrc otherwise
+    you won’t be able to use that behavior. With NOMATCH turned off it is not simply
+    printing the error when pattern matching fails'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A description of NOMATCH can be found here
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**NOMATCH (+3) <C> <Z>**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If a pattern for filename generation has no matches, print an error, instead
+    of leaving it unchanged in the argument list. This also applies to file expansion
+    of an initial ‘~’ or ‘=’.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

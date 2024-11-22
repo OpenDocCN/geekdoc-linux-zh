@@ -1,0 +1,705 @@
+- en: Parking Lot System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/parking-lot-system-design/](https://techbyexample.com/parking-lot-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Requirements](#Requirements "Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[All the actors in a Parking System Design](#All_the_actors_in_a_Parking_System_Design
+    "All the actors in a Parking System Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking Spot](#Parking_Spot "Parking Spot")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking Gate](#Parking_Gate "Parking Gate")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking Ticket](#Parking_Ticket "Parking Ticket")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Payment Gateway Type](#Payment_Gateway_Type "Payment Gateway Type")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Vehicle](#Vehicle "Vehicle")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking Rate](#Parking_Rate "Parking Rate")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking Floor](#Parking_Floor "Parking Floor")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Parking System](#Parking_System "Parking System")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low–Level Design](#Low%E2%80%93Level_Design "Low–Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Program](#Program "Program")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Full Working Code in one File](#Full_Working_Code_in_one_File "Full Working
+    Code in one File")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: While answering any system design question it is important to keep in mind that
+    system design questions can be really broad. Hence never directly jump to the
+    solution. It is good to discuss the use cases with the interviewer so as to grasp
+    what he is looking for. Decide on a set of features that you are going to include
+    in your system design.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is also one of the aspects the interview is looking for. They might be
+    looking for
+  prefs: []
+  type: TYPE_NORMAL
+- en: How you are doing requirement analysis
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Are you able to list down all the requirements
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What question you are asking?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Designing a Parking Lot is a very common system design interview question and
+    as with any other system design interview this is what the interviewer is looking
+    for
+  prefs: []
+  type: TYPE_NORMAL
+- en: Your knowledge of Object-Oriented Design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How do you frame your design in terms of Design Patterns
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Also, note that this question is not a distributed system design.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this tutorial, we will discuss the low-level design of the Parking Lot. Along
+    with that, we will also see into the full working code for the Parking Lot. Here
+    is the table of contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: Requirements
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Actor in the design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: UML diagram
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Low-level design represented in Go programming Language
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Full Working Code
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Full Working Code in One file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Requirements**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: One of the essential things while designing anything is understanding some high-level
+    requirements of the system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There could be multiple entrances to the system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There could be multiple exist in the parking lot.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be different types of parking spots.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be charges per parking per hour. The charges will be for different
+    types of parking spots and different vehicle
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be adaptable to any kind of changes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The parking lot can be multilevel
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**All the actors in a Parking System Design**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Parking System
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Parking Floor
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Parking Spot – Different types of parking Spots
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Car Parking Spot
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Truck Parking Spot
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Motorcycle Parking Spot
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Parking Ticket
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Entry and Exit Gates
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Payment Gateway
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Vehicle
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s look at each of these actors
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking Spot**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Now a parking spot can be of different types. It could be
+  prefs: []
+  type: TYPE_NORMAL
+- en: Car Parking Spot
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Big Vehicle Parking Spot
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Motorcycle Parking Spot
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Parking Gate**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There could be entry or exit gates.  There could gate on different floors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking Ticket**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A parking ticket will be issued to every incoming vehicle. Vehicles will be
+    given parking spots based on the type of vehicle. Eg Car vehicles will be allotted
+    a Car Parking Spot Type, a motorcycle vehicle will be allotted a motor cycle Parking
+    Spot, and so on
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Payment Gateway Type**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A customer could either pay via
+  prefs: []
+  type: TYPE_NORMAL
+- en: Cash
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Debit Card
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Credit Card
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Vehicle**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The parking lot as parking spots for the below vehicle types
+  prefs: []
+  type: TYPE_NORMAL
+- en: Car
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Truck
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Motorcycle
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Parking Rate**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The rate for parking a car or a truck or a motorcycle vehicle is different.
+    This will be encapsulated in Parking Rate Classes
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking Floor**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A parking floor maintains a list of all parking spots present on that floor.
+    A Parking Floor will be responsible for booking and freeing up the parking spots
+    of different types on the floor
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking System**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is the main component of the system. It is the driver class in our design
+  prefs: []
+  type: TYPE_NORMAL
+- en: How these actors communicate with each other will be clear with UML diagram
+    and an explanation given after that.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**UML Diagram**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Below is the UML diagram of the Parking Lot
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/863385fa42c1a1f7f1f476f1f69385a2.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Let’s understand this UML diagram by looking at different components and how
+    each components integrate with other components
+  prefs: []
+  type: TYPE_NORMAL
+- en: The simplest component in the above UML system is a Parking Spot. A Parking
+    Spot has three pieces of information in it
+  prefs: []
+  type: TYPE_NORMAL
+- en: full – Denotes whether is it full or not
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: floor – Parking Spot lies on which floor
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: location – What is the location number of the parking Spot
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The next component is the Parking Ticket. A parking Ticket will have below pieces
+    of information
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Vehicle** – This ticket is issued for which type of vehicle. The vehicle
+    will vehicle number as well'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Parking Spot** – At which Parking Spot the vehicle is parked. You might be
+    wondering why we have this information in the Parking Ticket. This information
+    exists in the Parking Ticket so that we can reclaim the parking spot. You might
+    argue that once a ticket is issued then the parking could be done in any spot.
+    But in this tutorial, we are building a more sophisticated system in which we
+    can know where exactly a vehicle is parked. If you want to build a system in which
+    for a given ticket the parking could be assigned to any spot then it is easier
+    to do so where we can simply maintain a count for each parking spot. In fact,
+    that is a simple version of the design in this tutorial'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than that a Parking Ticket will have entry time, exit time, price, gate
+    information, pg information, etc,.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The next component is **Parking Floor.** A parking floor maintains a list of
+    all parking spots present on that floor. It has below pieces of information
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking Spots** – There is Double Linked List for each for each type of Parking
+    Spot present on this floor. For example, Car Type Parking Spot will have a separate
+    DLL, and Truck type Parking Spot on that floor will have a different DLL. Why
+    DLL? With DLL it is easy to know the next free Parking Spot in 0(1) time.  Also
+    when a Parking Spot gets free then in DLL we can simply move it to the front to
+    denote that it is free'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Floor Number –** the floor number simply'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**isFull –** Denotes whether it is full or not'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then the main component is **ParkingSystem.** It will have below pieces of information
+  prefs: []
+  type: TYPE_NORMAL
+- en: An Array of Parking Floors
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The list of Parking Ticket it has issued
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than that it will have information about entry and exit gates, **isFull**
+    variable to denote whether the entire Parking Lot is full or not.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than these main components we also have
+  prefs: []
+  type: TYPE_NORMAL
+- en: Vehicle Component
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Payment Gateway Component
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Entry and Exit Gates
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Parking Rates
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Etc
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Design Pattern used in this design**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Factory Pattern to create different instances of Parking Spot Type
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Flyweight Design Pattern to create fixed instances of Parking Rate and Payment
+    Gateway.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low**–**Level Design**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Below is the low-level design expressed in the Go programming language. Later
+    we will see a working example as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parking System**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Floor**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Ticket**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Ticket Status Enum**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Spot Interface**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Spot Type Enum**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Car Parking Spot**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Truck Parking Spot**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Motorcycle Parking Spot**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Parking Rate Factory and Parking Rate and Child Parking Rate**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Payment Gateway Class and Child Payment Gateway Classes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Program**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Here is the full working code if anyone is interested in the Go programming
+    language. In the below example, we are going to look at two examples
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, one is a small Parking Lot that has only one floor and two car Parking
+    Spots
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other is a big Parking Lot that has two floors and on each floor, it has
+    two cars, two motorcycles, one truck Parking Spot.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We have used a Doubly Linked List to store the list of Parking Spots so that
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can find a free parking spot in O(1)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We should be able to reclaim a parking spot in O(1)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**parkingSystem.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingFloor.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingSpot.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingSpotType.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**carParkingSpot.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**truckParkingSpot.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**motorcycleParkingSpot.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingTicket.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingTicketStatus.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**dll.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**gate.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**gateType.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**vehicle.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**vehicleType.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**parkingRate.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**paymentGateway.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code in one File**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Here is the full working code
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about designing a Parking Lot. Hope you have liked this article.
+    Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

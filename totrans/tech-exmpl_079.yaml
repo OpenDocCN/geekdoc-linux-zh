@@ -1,0 +1,106 @@
+- en: Unique Paths Program
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/unique-paths-program/](https://techbyexample.com/unique-paths-program/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There is an m*n grid. There is a robot at the position (0,0). The robot can
+    only move in the right direction and down direction. What is the total number
+    of ways for a robot to reach the right-down corner i.e (m-1, n-1)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: There is another variation of this program where one of the items in the grid
+    could contain an obstacle. Let’s look at the first variation and later we will
+    look at the second variation
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**First Variation**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We will solve this question through dynamic programming
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a paths matrix of size m*n
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paths[i][j]** represents the number of ways for robot to reach the (i,j)
+    index'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paths[0][0]** = 0'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paths[i][j]** = **paths[i-1][j]** + **paths[i][j-1]**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Second Variation**We will also solve this question through dynamic programming'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a paths matrix of size m*n
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paths[i][j]** represents the number of ways for robot to reach the (i,j)
+    index'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paths[0][0]** = 0'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If **paths[i][j]** is not an obstacle then **paths[i][j]** = **paths[i-1][j]**
+    + **paths[i][j-1]**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If **paths[i][j]** is an obstacle then **paths[i][j]** = 0
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE

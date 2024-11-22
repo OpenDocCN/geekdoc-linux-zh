@@ -1,0 +1,138 @@
+- en: How to run os commands in python
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/how-to-run-os-commands-in-python/](https://techbyexample.com/how-to-run-os-commands-in-python/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many ways but I am going to discuss two popular methods to do it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**os.system**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**subprocess.Popen**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**os.system**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It executes the string command in subshell by calling the standard C function
+    i.e. **system()**. It has some limitations like Changes to **sys.stdin** etc.
+    are not reflected in the environment of the executed command. It only returns
+    the **exit code**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**0** – exit code 0 means the command runs successfully.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Non 0** – exit code other than 0 means command produced some error.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note:- On Unix, the return value is the exit status of the process encoded in
+    the format specified for the wait method.  On Windows, the return value is returned
+    by the system shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Syntax**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Example: Run a OS command**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**subprocess module**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: So when you want the output of the command then you use the subprocess module.
+    It has inbuilt various methods like call, Popen which comes with greater capabilities.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**subprocess.Popen** – Execute a child program in a new process.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This module allows you to spawn new processes, connect to their input/output/error
+    pipes, and obtain their **outputs, errors, and return codes**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Syntax**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '***args**** –  *Sequence of program arguments or a single string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***bufsize*** – Increase bufsize in case of experience performance issues, 
+    You can set *bufsize* to either -1 or a large enough positive value (such as 4096).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***preexec_fn*** – This object will be called in the child process just before
+    the child is executed. (Unix only)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***close_fds***(**True/False**) – if True, Close all file descriptors except **0**, **1** and **2** before
+    the child process is executed. (Unix only). Note that on Windows, you cannot set *close_fds* to
+    true'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***cwd***  –  Change current working directory of the child’s process.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***env***  –  If you don’t want to inherit the current process’s environment,
+    which is the default behavior then use this param to pass the environment to the
+    child process.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '***universal_newlines*** (**True/False**)  –  If True, then stderr and stout
+    will be treated in universal newlines.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Note:**   Passing **shell=True** can be a security hazard and also need shell-type
+    formatting before running the command, so be cautious.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 1: Read the output of the command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Example 2: We can pass command with arguments in a list**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Example 3: We can pass command in a string directly.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[os](https://techbyexample.com/tag/os/)*   [python](https://techbyexample.com/tag/python/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

@@ -1,0 +1,1 @@
+["```go\na=b&x=y\n```", "```go\n{\n \"a\" => \"b\",\n \"x\" => \"y\"\n}\n```", "```go\ninput_sring = 'a=b&x=y'\n\nquery_params_hash = {}\ninput_string_split = input_sring.split('&')\ninput_string_split.each do |q|\n    q_split = q.split('=')\n    query_params_hash[q_split[0]] = q_split[1]\nend \n\nputs query_params_hash\n```", "```go\n{\"a\"=>\"b\", \"x\"=>\"y\"}\n```"]

@@ -1,0 +1,935 @@
+- en: Design an URL shortening service like bit.ly
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/url-shortner-system-design/](https://techbyexample.com/url-shortner-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[API Details](#API_Details "API Details")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How Short URL will redirect to the Long URL](#How_Short_URL_will_redirect_to_the_Long_URL
+    "How Short URL will redirect to the Long URL")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Encoding Schemes](#Encoding_Schemes "Encoding Schemes")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[MD5 Approach](#MD5_Approach "MD5 Approach")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Counter Approach](#Counter_Approach "Counter Approach")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Range of Keys](#Range_of_Keys "Range of Keys")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Short URL Service](#Short_URL_Service "Short URL Service")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What database to use](#What_database_to_use "What database to use")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Key Generation Service](#Key_Generation_Service "Key Generation Service")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Database Schema](#Database_Schema "Database Schema")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Which Database to Use](#Which_Database_to_Use "Which Database to Use")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to resolve concurrency issues](#How_to_resolve_concurrency_issues "How
+    to resolve concurrency issues")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to recover key_prefix](#How_to_recover_key_prefix "How to recover key_prefix")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What happens if the key ranges are getting exhausted](#What_happens_if_the_key_ranges_are_getting_exhausted
+    "What happens if the key ranges are getting exhausted")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What if the short URL never expires](#What_if_the_short_URL_never_expires
+    "What if the short URL never expires")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Is not KGS service a single point of failure?](#Is_not_KGS_service_a_single_point_of_failure
+    "Is not KGS service a single point of failure?")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Other common components](#Other_common_components "Other common components")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Scalability](#Scalability "Scalability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low latency](#Low_latency "Low latency")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Availability](#Availability "Availability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
+    to user location")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
+    Single Point of Failures")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The URL shortening service is used to shorten a long URL. The short URL will
+    not be dependent upon the length of the actual URL. For
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://techbyexample/system-design/whatsapp-system-design](https://techbyexample/system-design/whatsapp-system-design)
+    should be shortened to [https://bit.ly/sdfse43](https://bit.ly/sdfse43)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[https://google.com/search/](https://google.com/search/) can be shortened to
+    [https://bit.ly/wrewr34](https://bit.ly/wrewr34)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Notice the second part of the URL in bit.ly. It will always be of fixed length
+    irrespective of the length of the input URL. Let’s note down the functional requirement
+    of the system
+  prefs: []
+  type: TYPE_NORMAL
+- en: You should be able to generate the short URL of fixed length irrespective of
+    the length of the input URL.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once the shortened URL is clicked it should be able to redirect the user to
+    the actual URL.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There should be an expiration time with each of the URLs. After that, the shortened
+    URL will expire
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We are also going to consider the case where a short URL never expires later
+    in this tutorial
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Here are some of the non-functional requirements
+  prefs: []
+  type: TYPE_NORMAL
+- en: The system should be highly available
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be strongly consistent. What it means is that once a short
+    URL is generated for a given long URL then the system should be able to return
+    that long URL given the short URL in the next immediate call.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be fault-tolerant
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There should be no single point of failure
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What a short URL should look like? Before we look at the requirements, let’s
+    look at a sample example URL. Here are some requirements
+  prefs: []
+  type: TYPE_NORMAL
+- en: It must be short and unique. Preferably 6-8 characters in length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It should only have characters that are URL safe. Below are URL safe characters
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Lower case Alphabets – “a-z”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Uppercase Alphabets – “A-Z”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Digits – “0-9”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Dot – “.”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Ampersand – “~”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Underscore – “_”
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Dash – “-“
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Here is one example of a short URL that has 7 characters as part of the short
+    string.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**API Details**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below will be the API that will be needed in the system
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Create short URL** – This API will create a short URL given a long URL'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Delete Short URL** – This API will be used to delete a short URL that was
+    created earlier.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**GET URL** – This API will redirect to the long URL given a short URL'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**List Short URL** – See all Short URLs for a particular user'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How Short URL will redirect to the Long URL**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As soon as our service will receive the short URL it will fetch the corresponding
+    long or original URL for that short URL. There are two cases
+  prefs: []
+  type: TYPE_NORMAL
+- en: If not present it will respond with 404 Resource Not Found back to the browser
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If present then it will issue an HTTP 302 redirect to the browser. The **Location
+    response** header will contain the long or original URL. The browser will then
+    redirect to the long URL. This is the standard way of redirection as specified
+    by the HTTP protocol
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: One of the most important parts of implementing a short URL service is to generate
+    a short URL string.  Before looking at the solution let’s look at some of the
+    encoding schemes that can be used to produce a short URL string
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Encoding Schemes**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are three solutions to design a unique short character for a given long
+    URL
+  prefs: []
+  type: TYPE_NORMAL
+- en: MD5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Counter
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Key Range
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**MD5 Approach**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We will have an MD5 function that will return a unique string for a given long
+    URL. The MD5 string is of 128-bit fixed length. We can take the first 42 bits
+    to represent it as 7 base64 characters. Each character in base64 takes 6 bits
+    that is why 6*7=42 bits overall.  We can also take the first 48 bits to represent
+    it as 8 base64 characters. H**ow to prevent collision**
+  prefs: []
+  type: TYPE_NORMAL
+- en: As you can see that the biggest issue with the MD5 approach is a collision.
+    Two long URLs can result in an MD5 that has the same first 42 bits. How we can
+    detect collision then. We first do an MD5 of a given long URL then we take the
+    first 42 bits to create the 7 bases 64 characters string. Then we check that string
+    in DB to see if it has been already taken or not. If yes then we take the 2-43
+    bits and then check
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The biggest advantage of the MD5 approach is that it is simple to implement.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If there is a system in which only a few short URL needs to be generated and
+    where the short URL generation is async then this scheme could work well as there
+    will be fewer collisions and even if a collision happens we still have some time
+    to figure out the next short URL since the overall process is async.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we can see this solution is not scalable. If we large number of short URLs
+    is to be generated within seconds then the system could perform very poorly if
+    there are a lot of collisions.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Counter Approach**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: As we have already seen there is a way to convert a base10 number to a base64
+    string. A counter is nothing but a base10 number. So if we have a way of generating
+    a unique number for a given long URL then we will be able to generate a short
+    URL. The question is how we can generate that unique counter or number. The idea
+    is to have a free list of ranges of numbers. For that, we can have another service
+    that can expose an API that will return the free range of numbers that can be
+    returned.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is a scalable option that can be used for any service which has huge traffic.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Converting a base10 number to a base64 will not yield a fixed-length string.
+    For example, converting 100,000 into base64 will give **“Yag”**. This might be
+    ok but a professional URL shorter service generator should adopt a standard. Also,
+    this disadvantage can be circumvented by choosing number ranges that give 6 or
+    7 lengths of Base64 strings.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is a  cost of conversion of number to base64 every time though this conversion
+    cost might not have a substantial impact.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Little complex as compared to MD5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Range of Keys**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The third option is to have a range of keys itself instead of a range of the
+    counter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Advantages**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is a scalable option that can be used for any service which has huge traffic.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Disadvantages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Little complex as compared to MD5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Both Counter and Range of Keys are good options. We will be considering the
+    Range of Keys in this tutorial
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**High-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: On a high level let’s discuss what will be the higher flow and what all services
+    would exist.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There will be an **API gateway** on which every request from all the users will
+    land.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Short URL** service. This service holds the responsibility
+    of handling all the APIs that will come for the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Key Generation Service**  that holds the responsibility of
+    generation of short keys
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Short URL** service will call the key generation service whenever it needs
+    new keys.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the **Short URL** service has exhausted all the key ranges it will publish
+    a Kafka/SNS message specifying that the key ranges have been exhausted.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by a **Key Recovery** service which will be a worker.
+    It will mark the key range as free so that it can be picked again.  This worker
+    will also delete the short_url – long_url mapping for all the keys in the range
+    from the database.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We will cache the **Short URL – Long URL** mapping as soon as it is created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below is the high-level diagram of the service
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/3368950d7a04dd4303b3bf88bad75376.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Let’s see some of the details of the **Short URL** service and the **Key Generation**
+    Service
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Short URL Service**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s see what all databases will be needed for the short_url service. We will
+    need a short_url table. Below will the fields in the **short_url** table
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**short_url_key**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**long_url**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**What database to use**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Since we don’t have any ACID requirements. So No SQL database will work for
+    us. Also, we might have very large data to save as well so No SQL might be better
+    suited. This system will be a write-heavy as well as a read-heavy system. Also,
+    there is less secondary index requirement here and almost all queries will be
+    on the primary field which is **short_url_key**. So we can use **Cassandra Database**
+    here.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As mentioned in the high-level diagram it is the Short URL that is going to
+    keep track of all short URLs generated. It will coordinate with the Key Generation
+    Service for getting the range of free keys. Each of the keys can generate one
+    short URL. Now let’s look at the design of the **Key Generation Service**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Key Generation Service**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There will be a KGS service that holds the responsibility of generating the
+    keys. First, let’s see what should be the length of each key. Possible options
+    of length are 6,7,8\. Only base64 URL-safe characters could be used to generate
+    the key. Therefore
+  prefs: []
+  type: TYPE_NORMAL
+- en: For 6- We have 64^6= 68.7 billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 7 – We have 64^7 = ~3500 Billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 8 – We have 64^8= trillion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can now assume that 68.7 billion entries will be enough so we can have 6
+    characters for the key.  Now the question is how these are going to be maintained
+    in the Database. If we are storing 68 billion entries in the database then it
+    might be too many entries and a waste of resources. One option is to store ranges
+    of keys in the databases. We can have a range of 64 where we only store the first
+    five characters which will act as a prefix for all 64 keys which can be generated
+    from this prefix. Let’s say we have below prefix
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Then below 64 keys can be generated from this
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**adcA2[a-z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[A-Z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[0-9]** – 10 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[-_]** – 2 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can store these ranges in DB. So for 6 characters, we will have overall 64^5
+    entries in the database. The keys will be returned by the Key Service to the Tiny
+    URL services in ranges and batches only. The Tiny URL service will then use this
+    prefix to generate 64 keys and serve 64 different create tiny URL requests.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is optimization as the Short URL service only needs to call the Key Generation
+    Service only when it has exhausted all its 64 keys. So there will be one call
+    from the Short URL service to the Key Generation Service for generating 64 short
+    URLs
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s now see the points for the KGS service
+  prefs: []
+  type: TYPE_NORMAL
+- en: Database Schema
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Which database to use
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to resolve concurrency issues
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to recover key_prefix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What happens if the key ranges are getting exhausted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What if the short URL never expires
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Is not KGS service a single point of failure?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Database Schema**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There will just be a single table that will store the range of keys i.e prefix.
+    Below will be the fields in the table
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**key_prefix**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**key_length** – It will always be 6 for now. These fields exist if we need
+    7 length keys in any scenario'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**used** – If this is true then the key prefix is currently in use. If false
+    then it is free to be used'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Which Database to Use**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We don’t have any ACID requirements so we can use the No SQL database. Also,
+    we might have very large data to save as well so No SQL might be better suited.
+    This system will be a write-heavy as well as a read-heavy system. So we can use
+    **Cassandra Database** here. We can do the capacity estimates of the DB and based
+    on that we can decide on the number of shards we want to have. Each of the shards
+    would be properly replicated as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is one more optimization we can do here to improve the latency. We can
+    refill free key ranges in the cache and the KGS service can directly pick from
+    there instead of going to the database every time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How to resolve concurrency issues**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It could very well happen that two requests see the same prefix or range as
+    free. Since there are multiple servers reading from the key DB simultaneously
+    we might have a scenario where two or more servers read the same key as free from
+    the key DB. There are two ways to resolve the concurrency issues we just mentioned
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two or more servers read the same key but only one server will be able to mark
+    that **key_prefix** as used in the database. Concurrency is at DB level that is
+    each row is locked before being updated and we can leverage that here. Db will
+    return back to the server whether any record was updated or not. If the record
+    was not updated then the server can fetch a new key. If the record was updated
+    then that server has got the right key.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other option is to use a transaction that does Find and Update in one transaction.
+    Each Find and Update will return a unique key_prefix every time. This is probably
+    not a recommended option because of the load it puts on the database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How to recover key_prefix**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Tiny URL service once it has exhausted the range of keys, then it will enter
+    that range into another table from which it can be recovered and put back as free
+    after 2 weeks. We know for sure that after two weeks the keys will be free as
+    we have an expiry of two weeks
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**What happens if the key ranges are getting exhausted**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This will be an unexpected condition. There will be a background worker that
+    will check if the key ranges are getting exhausted. If yes then it can generate
+    ranges for 7 length keys. But how it will know if the key ranges are getting exhausted.
+    For keeping a rough count there could be another table that will store the user
+    count of used keys.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Whenever any range is allotted by the KGS to Tiny URL service it will publish
+    a message that will be picked by a synchronous worker that is going to decrease
+    the count of used keys by 1.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Similarly, whenever a range is free we can increment this counter.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**What if the short URL never expires**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It is easy to extend the above service to serve URLs that never expire.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Just that our short string will not be limited to 6 length characters. We can
+    use 7 lengths, 8 length characters, or even 9 lengths as the need arises.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be no **key recovery** service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once a **key_range** has been allotted we can remove it from the key DB as it
+    is never meant to be freed or recovered
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Is not KGS service a single point of failure?**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To prevent it we will have proper replication of the key database. Also, there
+    will be multiple app servers for the service itself. We will also have proper
+    autoscaling set up. We can also have Disaster Management
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Other common components**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Other common components could be
+  prefs: []
+  type: TYPE_NORMAL
+- en: User Service – It holds the user profile information.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Token/Auth Service – Management of User tokens
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: SMS Service- It is used for sending any kind of message back to the user. For
+    example – OTP
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Analytics Service – This could be used to track any kind of analytics
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s discuss some non-functional requirements now
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Scalability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first thing to consider with the above design is the scalability factor.
+    The scalability of each of the components in the system is very important. Here
+    are scalability challenges you can face and their possible resolutions
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each of the machines in the **short_url** service and **KGS** service could
+    only serve a limited number of requests. Hence each service here should have proper
+    autoscaling set in so that based on the number of requests we can add instances
+    up and autoscale them when needed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Your Kafka/SNS system might not be able to take that much load. We can scale
+    horizontally but to a limit. If that is becoming a bottleneck then depending upon
+    the geography or userId we can have two or more such systems. Service discovery
+    could be used to figure out which Kafka system a request needs to go to.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another important factor of scalability here is that we have designed our system
+    in such a way so that none of the services is bogged with too many things to do.
+    There is a separation of concerns and wherever there was too much of a responsibility
+    on service, we have broken it down
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low latency**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We can cache the short URL when it is created with some expiry of course. As
+    and when a short URL is created it is more likely to be accessed in some time.
+    It will reduce latency for many of the read calls.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We also created batches of key or key ranges. This prevents the Short URL service
+    to call the KGS service every time and overall improves the latency.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is one more optimization we can do here to improve the latency. We can
+    refill free key ranges in the cache and the KGS service can directly pick from
+    there instead of going to the database every time.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Availability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In order for the system to be highly available, it is very important to have
+    redundancy/backups for almost all components in the system. Here are some of the
+    things that need to be done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the case of our DB, we need to enable replication. There should be multiple
+    slaves for each of the master shard nodes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For Redis we also need replication.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For data redundancy, we could be multi-region as well. This could be one of
+    the benefits if one of the regions goes down.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disaster Recovery could also be set up
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Alerting and Monitoring**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Alerting and Monitoring is also a very important non-functional requirement.
+    We should monitor each of our services and set up proper alerts as well. Some
+    of the things that could be monitored are
+  prefs: []
+  type: TYPE_NORMAL
+- en: API Response Time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Memory Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: CPU Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disk Space Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Queue Length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ….
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Moving closer to user location**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are a couple of architectures that could be followed here. One such is
+    Cell Architecture. You can read more about cell architecture here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Avoiding Single Point of Failures**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A single point of failure is that part of a system that when stops working then
+    it would lead the entire system to fail. We should try to prevent any single point
+    of failure as well in our design. By redundancy and going multi-region we can
+    prevent such things
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about the system design of URL shorter service.  Hoped you have
+    liked this article. Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

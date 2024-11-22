@@ -1,0 +1,1041 @@
+- en: Pastebin System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/pastebin-system-design/](https://techbyexample.com/pastebin-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Functional Requirements](#Functional_Requirements "Functional Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non Functional Requirements](#Non_Functional_Requirements "Non Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Capacity Estimate](#Capacity_Estimate "Capacity Estimate")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Traffic Estimation](#Traffic_Estimation "Traffic Estimation")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Data Estimation](#Data_Estimation "Data Estimation")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Text Upload](#Text_Upload "Text Upload")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Image Upload](#Image_Upload "Image Upload")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Database Schema](#Database_Schema "Database Schema")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Text Storage](#Text_Storage "Text Storage")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Image Storage](#Image_Storage "Image Storage")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[User Table](#User_Table "User Table")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Paste Table](#Paste_Table "Paste Table")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How Unique URLs will be generated](#How_Unique_URLs_will_be_generated "How
+    Unique URLs will be generated")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Paste Bin Service](#Paste_Bin_Service "Paste Bin Service")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[For Upload](#For_Upload "For Upload")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[For download](#For_download "For download")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Key Generation Service](#Key_Generation_Service "Key Generation Service")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Database Schema](#Database_Schema-2 "Database Schema")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Which Database to Use](#Which_Database_to_Use "Which Database to Use")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to resolve concurrency issues](#How_to_resolve_concurrency_issues "How
+    to resolve concurrency issues")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to recover key_prefix](#How_to_recover_key_prefix "How to recover key_prefix")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What happens if the key ranges are getting exhausted](#What_happens_if_the_key_ranges_are_getting_exhausted
+    "What happens if the key ranges are getting exhausted")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What if the PasteBin never expires](#What_if_the_PasteBin_never_expires "What
+    if the PasteBin never expires")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Is not KGS service a single point of failure?](#Is_not_KGS_service_a_single_point_of_failure
+    "Is not KGS service a single point of failure?")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Other common components](#Other_common_components "Other common components")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Scalability](#Scalability "Scalability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low latency](#Low_latency "Low latency")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Availability](#Availability "Availability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
+    to user location")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
+    Single Point of Failures")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: First, let’s look at the definition of **Pastebin**.  Pastebin service allows
+    you to share text and images over a link which can be shared with multiple users.
+    So basically **Pastebin** is a service that allows you to share data temporarily
+    over a link.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Requirement analysis is a critical part of any system design question. It is
+    divided into two parts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Functional Requirements** – Defines the Business Requirements'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements** – Defines the quality attributes of a system
+    such as performance, scalability, security, etc.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see some of the functional and non-functional requirements of the **Pastebin**
+    service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Users should be able to paste the text or upload an image and then share that
+    text or image using a unique URL which will be generated by the Pastebin service
+    with others
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Users should be able to set expiry for an URL. If not specified by default the
+    expiry would be 1 week
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Users can be either logged in or anonymous
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The user should be able to log in and view the pastebins that have been generated
+    by him
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other users can access the paste text content or image whenever they access
+    the paste URL.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The system should be highly durable. The unique URL once generated should persist.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be strongly consistent. What it means is that once a paste
+    is generated then the system should be able to return that paste in the next immediate
+    call.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be highly available
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be fault-tolerant
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There should be no single point of failure
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Capacity Estimate**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We will do a capacity estimate for three things
+  prefs: []
+  type: TYPE_NORMAL
+- en: Network Estimation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Data Estimation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Traffic Estimation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Traffic Estimation**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Assume the number of active users per day 200K
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of pastebins created – 200K
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each of the pastebins created is read 10 times. Total read – 200K*10 = 2000K
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So our system is more read-heavy than write**–**heavySo total writes per sec
+    = 200K/24*60*60 ~ 3 requests/sec.Considering peak traffic = 200 request/sec.Total
+    read per sec = 2000K/24*60*60 – 30 requests/secConsidering peak traffic = 2000
+    request/sec
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Data Estimation**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: While creating Pastebin a user can specify either text or an image. Assume the
+    max text size that is allowed to the user is 5MB and the maximum image size is
+    10 MB.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Also, assume that the ratio of  text upload vs image upload is 9:1
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Text Upload**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Number of text upload = 180K
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Max size of text upload – 5MB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Average size of text upload – 10KB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Total Size per day = 10KB * 180K = 1.8 GB per day
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Assume no paste is getting expired, then the total size required for 3 years
+    will be = 1.8*3*365 ~= 2TB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Image Upload**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Number of image upload = 20K
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Max size of text upload – 10MB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Average size of image upload – 100KB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Total Size per day = 100KB * 20K = 2 GB per day
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Assume no paste is getting expired, then the total size required for 3 years
+    will be = 2*3*365 ~= 2.2TB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Total Size Needed = 2TB + 2.2TB  =~ 4.2 TB for 3 years
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Database Schema**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We need to store each paste created by the user along with the corresponding
+    text or image. As we already mentioned that text can go up to the size of 5MB
+    and image can go up to the size of 10 MB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We cannot store images in the database otherwise it will be a bad design as
+    there will be much database IO involved. Also storing text could also be not stored
+    in the database if it is larger in size. So below strategy can be adopted for
+    text and image storage
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Text Storage**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If the text is less than 10 KB then it can be stored as part of the database.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If not then the text will be stored in blob storage. We can use Amazon S3 here.
+    The link of the S3 will be stored in the database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Image Storage**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The image will always be stored in S3
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We don’t have any ACID requirements so we can use No SQL databases to store
+    the paste that will be created. We can use Cassandra Database in this case.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will have the below tables
+  prefs: []
+  type: TYPE_NORMAL
+- en: User Table
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Paste Table
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**User Table**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It will have below fields
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_name**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**password_encrypted**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Paste Table**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It will have below fields
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**paste_id** – It will be a UUID'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**paste_type** – It will either text or image'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**text** – If the paste_type is text and text size is less than 10kb then it
+    will be populated'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**s3_url** – Populated in two conditions. If the paste_type is text and text
+    size is greater than 10kb. When the paste_type is an image'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How Unique URLs will be generated**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Since the paste is meant to be created and also share with other users it will
+    be good if we have a short URL generated so that it is easy to share. So now we
+    will look at how we can generate the short URL for the paste. For that, we will
+    have another service called Key Generation Service that will be used to generate
+    a short key which then will be used in the created paste URL
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**High-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: On a high level let’s discuss what will be the higher flow and what all services
+    would exist.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There will be an **API gateway** on which every request from all the users will
+    land.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Pastebin** service. This service holds the responsibility
+    of generating all the paste URLs.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Key Generation Service**  that holds the responsibility of
+    generation of short keys
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Pastebin** service will call the key generation service whenever it needs
+    new keys.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the **Pastebin** service has exhausted all the key ranges it will publish
+    a Kafka/SNS message specifying that the key ranges have been exhausted.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by a **Key Recovery** service which will be a worker.
+    It will mark the key range as free so that it can be picked again.  This worker
+    will also delete the paste created for all the keys in the range from the database.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We will cache the latest paste created as they are more likely to be shared
+    and accessed after they are created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below is the high-level diagram of the service
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/670bd24c89724e87a31eb2ff94ec892d.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Let’s see some of the details of the **Paste Bin** service and the **Key Generation**
+    Service
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Paste Bin Service**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This service will be the interface to all the APIs that exist in our system.
+    The PasteBin service will expose an API to create the paste as well as it will
+    also expose an API to read that paste.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Create Paste** – It will interact with the Key Generation Service to get
+    the short keys. These keys will be used for generating the URL. It will then make
+    an entry into the database for that paste. It will also make an entry into the
+    cache.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Read Paste** – It will first see if the paste already exists in the cache.
+    If yes then it will return that paste. If not it will fetch the paste from the
+    database.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Making Create and Read Paste more efficient When text is in KBs or when paste
+    contains an image then creating as well as reading paste via PaateBin service
+    is a challenge. Here we can do one optimization. We can directly upload the large
+    text or image to the Blob Storage which could be Amazon S3 or HDFS. How do we
+    do that
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**For Upload**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let’s User A wants to create a Paste that contains an image. The client will
+    send a request to the server to send the presigned URL to which the client can
+    upload the image
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The server will respond with a pre-signed URL whose validity can be of few hours.
+    You can read this article to get an idea of the pre-signed URL [https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
+    . Basically, it is an URL that is already signed with a token and hence it can
+    be used to directly upload to that URL without requiring any further authentication.
+    This is also called direct upload. The server will also return the image_id here
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The client will upload the image to that URL. It will directly be stored in
+    S3
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Now the client will call the Create Paste API. While calling the Create Paste
+    API, it will pass in the image_id in the request body as well. The server will
+    then have the image_id. Since it has image_id, it will know that the image corresponding
+    to the Paste has already been uploaded to the Blob Storage which is S3 here. It
+    will save the path as a field while saving the paste in DB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: With the above approach, we prevent bytes of image or text via the PasteBin
+    service which is an optimization in terms of cost and performance
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**For download**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: User A has created a paste that will be shared with User B. So user B will be
+    reading the paste
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: While reading, the reverse happens. The PasteBin service fetches the paste from
+    cache or DB.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once it fetches the paste, it will see if it contains a large text or image.
+    If yes then it will fetch the S3 location from the DB.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then it will generate a Presigned URL again for that S3 location. The client
+    is returned both the paste information as well the S3 URL
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using this Presigned S3 URL, the client can directly download the corresponding
+    big paste or image file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Key Generation Service**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There will be a KGS service that holds the responsibility of generating the
+    keys. First, let’s see what should be the length of each key. Possible options
+    of length are 6,7,8\. Only base64 URL-safe characters could be used to generate
+    the key. Therefore
+  prefs: []
+  type: TYPE_NORMAL
+- en: For 6- We have 64^6= 68.7 billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 7 – We have 64^7 = ~3500 Billion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For 8 – We have 64^8= trillion options
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can now assume that 68.7 billion entries will be enough so we can have 6
+    characters for the key.  Now the question is how these are going to be maintained
+    in the Database. If we are storing 68 billion entries in the database then it
+    might be too many entries and a waste of resources.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One option is to store ranges of keys in the databases. We can have a range
+    of 64 where we only store the first five characters which will act as a prefix
+    for all 64 keys which can be generated from this prefix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s say we have the below prefix
+  prefs: []
+  type: TYPE_NORMAL
+- en: adcA2
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then below 64 keys can be generated from this
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**adcA2[a-z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[A-Z]** – 26 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[0-9]** – 10 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**adcA2[-_]** – 2 keys'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can store these ranges in DB. So for 6 characters, we will have overall 64^5
+    entries in the database. The keys will be returned by the Key Service to the Tiny
+    URL services in ranges and batches only. The Tiny URL service will then use this
+    prefix to generate 64 keys and serve 64 different create tiny URL requests. This
+    is optimization as the **PasteBin** service only needs to call the Key Generation
+    Service only when it has exhausted all its 64 keys. So there will be one call
+    from **PasteBin** service to the Key Generation Service for generating 64 short
+    URLsLet’s now see the points for the KGS service
+  prefs: []
+  type: TYPE_NORMAL
+- en: Database Schema
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Which database to use
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to resolve concurrency issues
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How to recover key_prefix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What happens if the key ranges are getting exhausted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: What if the paste never expires
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Is not KGS service a single point of failure?
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Database Schema**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There will just be a single table that will store the range of keys i.e prefix.
+    Below will be the fields in the table
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**key_prefix**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**key_length** – It will always be 6 for now. These fields exist if we need
+    7 length keys in any scenario'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**used** – If this is true then the key prefix is currently in use. If false
+    then it is free to be used'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Which Database to Use**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We don’t have any ACID requirements so we can use the No SQL database. Also,
+    we might have very large data to save as well so No SQL might be better suited. 
+    This system will be a write-heavy as well as a read-heavy system. So we can use
+    **Cassandra Database** here. We can do the capacity estimates of the DB and based
+    on that we can decide on the number of shards we want to have. Each of the shards
+    would be properly replicated as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is one more optimization we can do here to improve the latency. We can
+    refill free key ranges in the cache and the KGS service can directly pick from
+    there instead of going to the database every time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How to resolve concurrency issues**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It could very well happen that two requests see the same prefix or range as
+    free. Since there are multiple servers reading from the key DB simultaneously
+    we might have a scenario where two or more servers read the same key as free from
+    the key DB. There are two ways to resolve the concurrency issues we just mentioned
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two or more servers read the same key but only one server will be able to mark
+    that **key_prefix** as used in the database. Concurrency is at DB level that is
+    each row is locked before being updated and we can leverage that here. Db will
+    return back to the server whether any record was updated or not. If the record
+    was not updated then the server can fetch a new key. If the record was updated
+    then that server has got the right key.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other option is to use a transaction that does Find and Update in one transaction.
+    Each Find and Update will return a unique key_prefix every time. This is probably
+    not a recommended option because of the load it puts on the database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How to recover key_prefix**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Tiny URL service once it has exhausted the range of keys, then it will enter
+    that range into another table from which it can be recovered and put back as free
+    after 2 weeks. We know for sure that after two weeks the keys will be free as
+    we have an expiry of two weeks
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**What happens if the key ranges are getting exhausted**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This will be an unexpected condition. There will be a background worker that
+    will check if the key ranges are getting exhausted. If yes then it can generate
+    ranges for 7 length keys. But how it will know if the key ranges are getting exhausted.
+    For keeping a rough count there could be another table that will store the user
+    count of used keys.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Whenever any range is allotted by the KGS to Tiny URL service it will publish
+    a message that will be picked by a synchronous worker that is going to decrease
+    the count of used keys by 1.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Similarly, whenever a range is free we can increment this counter.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**What if the PasteBin never expires**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It is easy to extend the above service to serve paste that never expires.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Just that our short string will not be limited to 6 length characters. We can
+    use 7 lengths, 8 length characters, or even 9 lengths as the need arises.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be no **key recovery** service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once a **key_range** has been allotted we can remove it from the key DB as it
+    is never meant to be freed or recovered
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Is not KGS service a single point of failure?**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To prevent it we will have proper replication of the key database. Also, there
+    will be multiple app servers for the service itself. We will also have proper
+    autoscaling set up. We can also have Disaster Management
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Other common components**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Other common components could be
+  prefs: []
+  type: TYPE_NORMAL
+- en: User Service – It holds the user profile information.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Token/Auth Service – Management of User tokens
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: SMS Service- It is used for sending any kind of message back to the user. For
+    example – OTP
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Analytics Service – This could be used to track any kind of analytics
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s discuss some non-functional requirements now
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Scalability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first thing to consider with the above design is the scalability factor.
+    The scalability of each of the components in the system is very important. Here
+    are scalability challenges you can face and their possible resolutions
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each of the machines in the **paste_bin** service and **KGS** service could
+    only serve a limited number of requests. Hence each service here should have proper
+    autoscaling set in so that based on the number of requests we can add instances
+    up and autoscale them when needed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Your Kafka/SNS system might not be able to take that much load. We can scale
+    horizontally but to a limit. If that is becoming a bottleneck then depending upon
+    the geography or userId we can have two or more such systems. Service discovery
+    could be used to figure out which Kafka system a request needs to go to.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another important factor of scalability here is that we have designed our system
+    in such a way so that none of the services is bogged with too many things to do.
+    There is a separation of concerns and wherever there was too much of a responsibility
+    on service, we have broken it down
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low latency**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We can cache the newly created paste when it is created with some expiry of
+    course. As and when a paste is created it is more likely to be accessed in some
+    time. It will reduce latency for many of the read calls.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We also created batches of key or key ranges. This prevents the Paste Bin service
+    to call the KGS service every time and overall improves the latency.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is one more optimization we can do here to improve the latency. We can
+    refill free key ranges in the cache and the KGS service can directly pick from
+    there instead of going to the database every time.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Availability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In order for the system to be highly available, it is very important to have
+    redundancy/backups for almost all components in the system. Here are some of the
+    things that need to be done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the case of our DB, we need to enable replication. There should be multiple
+    slaves for each of the master shard nodes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For Redis we also need replication.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For data redundancy, we could be multi-region as well. This could be one of
+    the benefits if one of the regions goes down.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disaster Recovery could also be set up
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Alerting and Monitoring**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Alerting and Monitoring is also very important non-functional requirement. We
+    should monitor each of our services and set up proper alerts as well. Some of
+    the things that could be monitored are
+  prefs: []
+  type: TYPE_NORMAL
+- en: API Response Time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Memory Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: CPU Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disk Space Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Queue Length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ….
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Moving closer to user location**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are a couple of architectures that could be followed here. One such is
+    Cell Architecture. You can read more about cell architecture here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Avoiding Single Point of Failures**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A single point of failure is that part of a system that when stops working then
+    it would lead the entire system to fail. We should try to prevent any single point
+    of failure as well in our design. By redundancy and going multi-region we can
+    prevent such things
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about the system design of **Pastebin** service.  Hoped you have
+    liked this article. Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

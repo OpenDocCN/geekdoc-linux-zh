@@ -1,0 +1,81 @@
+- en: Find all Arithmetic series of length greater than two
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/arithmetic-series/](https://techbyexample.com/arithmetic-series/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: An Arithmetic series is a series in which the difference between each element
+    is equal. In this program, an array of integers is given. The objective is to
+    find all arithmetic series greater than two.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The problem is best understood with an example
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: We have three arithmetic slices of length greater than 2 in the above array
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2,3,4
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 3,4,5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 2,3,4,5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It is a dynamic programming question as it has an optimal substructure. Let’s
+    say the name of the array is input
+  prefs: []
+  type: TYPE_NORMAL
+- en: dp[0] = 0
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: dp[1] = 0
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: dp[2] = 1 if dp[2] – dp[1] == dp[1] – dp[0]
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: dp[i] = 1 if dp[i] – dp[i-1] == dp[i-1] – dp[i-2]
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: where **dp[i]** represents the number of arithmetic series of length greater
+    than 2 till length **i+1**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE

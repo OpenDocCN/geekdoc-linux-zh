@@ -1,0 +1,437 @@
+- en: System Design of Snake and Ladder game
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/snake-ladder-game-oops-design/](https://techbyexample.com/snake-ladder-game-oops-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[All Actors in Snake and Ladder Game](#All_Actors_in_Snake_and_Ladder_Game
+    "All Actors in Snake and Ladder Game")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Requirements Analysis](#Requirements_Analysis "Requirements Analysis")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Full Working Code](#Full_Working_Code "Full Working Code")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Full Working Code in One File](#Full_Working_Code_in_One_File "Full Working
+    Code in One File")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Designing a snake and ladder game is a low-level design problem and it should
+    be solved that way only.  In this question, the interview is looking to test your
+    Object Oriented skills.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can learn more about the Snake and Ladders game here – [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this tutorial, we will discuss the low-level design of the Snake and Ladder
+    Game. Along with that, we will also look into the full working code for the Snake
+    and Ladder Game. Here is the table of contents for this tutorial
+  prefs: []
+  type: TYPE_NORMAL
+- en: All Actors in Snake and Ladder Game
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Requirements Analysis
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: UML Diagram
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The low-level design represented in Go Programming Language
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Full Working Code in Go
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Full Working Code in One file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**All Actors in Snake and Ladder Game**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s identify all the main actors which exist in the design
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Board** –  The board will be numbered from 1 to 100 and simply represents
+    the board in the game.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Game** – it is the main class that controls the overall flow of the game.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Player** – It is an interface that represents the player. Two concrete class
+    is going to implement this interface.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Human Player
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Computer Player
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Snake** – It represents a ladder'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Ladder** – It represents a ladder'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Requirements Analysis**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Other than the rules of the snake and ladder game as mentioned here [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)
+    , we are also going to design in an extensible way where –
+  prefs: []
+  type: TYPE_NORMAL
+- en: The game could be played between any number of players
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should support any number of ladders and snakes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The game should support any number of dice rolled
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**UML Diagram**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below is the UML diagram for the Snake and Ladder game.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Snake and Ladder Game UML Diagram](../Images/00aeb0e9b8aa0e3fecb09308097d0b02.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Snake and Ladder Game UML Diagram
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s understand this UML diagram
+  prefs: []
+  type: TYPE_NORMAL
+- en: The simplest component in the above UML diagram is the iPlayer interface. It
+    defines the following functions
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Roll Dice** – a player is going to roll dice and return the dice number.
+    It will take the number of dice to roll as an argument'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Set Position** – A player position is set in this method. The player position
+    will be from 1 to n*n where n is the dimension of the board'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Get Position** – A utility method to get the position.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Get ID** – A simple function to get the ID of the player'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This interface is implemented by two classes
+  prefs: []
+  type: TYPE_NORMAL
+- en: Human Player
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Computer Player
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Next are the **Snake** and **Ladder** classes. These classes only exist for
+    creating and validating the snake and ladder respectively. By validation, we mean
+    that for the snake we are going to verify that the snake start is greater than
+    the snake end. For the ladder, we are going to verify that the ladder start is
+    less than the ladder end.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Both snake and ladder created are in turn passed into the creation of a board
+    that internally implements the snake and ladder as a map.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Next is the board class itself. It will hold the below fields
+  prefs: []
+  type: TYPE_NORMAL
+- en: A **square** of n*n where each square is of type Symbol class. The symbol class
+    only holds the player Id map. For example, let’s say there are two players playing
+    the game. During the game, both the player could be at square 5\. Both the players
+    are present at position 5 is represented by the player’s Id map in the Symbol
+    class
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Dimension** – dimension of the the board'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Snake Map** – Represents the snake on the board. The **key** in the map is
+    the start point and the **value** is the endpoint of the snake'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Ladder Map**– It Represents the ladder on the board. The **key** in the map
+    is the start point and the **value** is the endpoint of the ladder'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is a Game Status Enum class that defines the different states of the game.
+    A game can be either in **GameInProgress** or **GameFinished** state.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Next is the Game Class which is the driver class. It has below components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Board**  – The board itself'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Players**  – the list of players that are playing the game'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Num Moves**  – Number of moves that have happened till now'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Game Status** – What is the game status at this moment'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Winning Player** – Who is the winning player at the end.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Num Dice** – With how many dice is the game player with.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s look at low level design now expressed in Go Programming Language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Low-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below is the low-level design expressed in Go Programming Language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**iPlayer interface**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Human Player Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Computer Player Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Game Status Enum**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Snake Class (Only used for creation and validation of snake)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Ladder Class (Only used for creation and validation of ladder)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Symbol Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Board Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Game Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**iPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**humanPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**computerPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**gameStatus.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**symbol.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**snake.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**ladder.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**board.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**game.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s run this program
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that the output will be different every time you run this program
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code in One File**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code in one file
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s run this program
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that the output will be different every time you run this program
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about the low-level design of the Snake and Ladder program. Hope
+    you have liked this article. Please share the feedback in the comments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

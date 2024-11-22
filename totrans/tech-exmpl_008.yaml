@@ -1,0 +1,146 @@
+- en: What is Virtual IP
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/virtual-ip/](https://techbyexample.com/virtual-ip/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How Virtual IP Helps in high availability (Load Balancing and Failover)](#How_Virtual_IP_Helps_in_high_availability_Load_Balancing_and_Failover
+    "How Virtual IP Helps in high availability (Load Balancing and Failover)")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example of Failover](#Example_of_Failover "Example of Failover")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example of Load Balancing](#Example_of_Load_Balancing "Example of Load Balancing")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In distributed systems at the end level, a server or machine and a NIC (Network
+    Interface Card) have a defined physical IP address. A physical IP address is an
+    address that is assigned to one machine or device. It cannot be assigned to another
+    physical device. In other terms, a physical IP address is tied to a specific machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A virtual IP address is not tied to a specific machine or device. A virtual
+    IP address can move from one device to another device. It is like a floating IP
+    address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we say a Virtual IP address belongs to a server at a point in time then
+    that doesn’t mean that it is tied to the network interface card of the server.
+    It is assigned to that server at one moment of time while the same virtual IP
+    address could be assigned to another server at a different moment of time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The typical use case of a virtual IP address is when there is a particular set
+    of physical devices or servers acting as a single application or a service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The virtual IP address acts as an entry point for that application or service
+    and provides load balancing and failover mechanisms and helps them in achieving
+    high availability. How it provides these things we will see later in this tutorial
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Virtual IP address can be assigned –
+  prefs: []
+  type: TYPE_NORMAL
+- en: Multiple Servers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Multiple Domain Names
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Multiple Applications residing on a single server
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Single Server itself
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: …
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How Virtual IP Helps in high availability (Load Balancing and Failover)**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let’s see examples of both
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example of Failover**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: One example where a virtual IP address helps in high availability and provides
+    failover is the case of databases. In databases generally, we have a primary and
+    a couple of secondary nodes. The primary node is behind a particular virtual IP
+    address. Now the client always communicates with the virtual IP address through
+    which it connects with the primary node.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now if behind the scenes, the primary goes down then its virtual IP address
+    will now be given to the machine which becomes the new primary. This is possible
+    because the Virtual IP address is not to a particular physical machine as compared
+    to the physical IP address which is tied to a specific machine. The client would
+    still communicate to the same virtual IP address. It wouldn’t get to know that
+    the primary has changed and it is now a different machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What we described above is a failover mechanism provided by Virtual IP
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example of Load Balancing**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Another example of High Availability by providing Load Balancing using Virtual
+    IP is as below
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since the Virtual IP address is not tied to a specific machine, we can have
+    a load balancer built to send messages to a set of Virtual IP addresses behind
+    it. Each of the machines behind the load balancer is given a Virtual IP address.
+    When any machine goes away due to some failure or some other reason then its virtual
+    IP address could be assigned to a new machine that gets spun up.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can think of having a set of free virtual IP addresses behind a load balancer.
+    Whenever a new instance comes up it takes one Virtual IP from that free pool.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about virtual IP addresses. Hope you have liked this article. Please
+    share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

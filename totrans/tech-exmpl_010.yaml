@@ -1,0 +1,380 @@
+- en: LFU Cache Design and Implementation
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/lfu-cache-implementation-design/](https://techbyexample.com/lfu-cache-implementation-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**LFU** stands for **Least Frequently Used**. In the LFU cache, the least frequently
+    used object is removed whenever there is a new entry that needs to be inserted
+    and the cache is full.  Let’s first see the requirements then we will see an example
+    to understand **LFU** better.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below are the requirements
+  prefs: []
+  type: TYPE_NORMAL
+- en: The cache should support **Set** and **Get** Operation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: O(logn) Time Complexity for both **Set** and **Get**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Assume the maximum capacity of the cache is n. Once the cache is full and there
+    is one more key to be inserted then one of the existing entries needs to be deleted
+    from the cache
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Deletion should be based on the eviction algorithm – LFU (Least Frequently Used).
+    If two cache entries have the same frequency or count then remove the one which
+    is Least Recently Used
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Assume both key and value in the cache are of type string
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**LFU Example**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As an example consider a cache of size two where both the key and value of the
+    cache entry is a string. Let’s assume below are the operations
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Set (“a”, “1”)** – It adds one element to the cache'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Set (“b”, “2”)** – Adds the second element in the cache'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Get (“a”)** – Get cache entry with key **“a”**. Cache entry with key **“a”**
+    is now used twice while cache entry with key **“b”** is used only once'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Set (“c”, “3”)** – A third cache entry needs to be created. The cache is
+    already full so we need to evict one of the cache entries by the LFU algorithm.
+    Cache entry with key **“a”** is used twice while cache entry with key **“b”**
+    is used only once. Hence we will delete the cache with key **“b”** as it is the
+    **Least Frequently Used**. Once **“b”** is deleted we will insert the entry with
+    key **“c”**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Data Structures to use**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As per the requirements, both Set and Get operations should be O(logn). **MinHeap**
+    seems to be the right size for maintaining the Least Frequently Used Entry. Other
+    than that we are also going to use a Map in order to ensure O(logn) Time complexity.
+    Overall below data structure will be used
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Map**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A map can only have a key and a value where
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Key of the map will be the key of the cache entry
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The value of the map will be a pointer to the Min Heap Node.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**MinHeap**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Each minheap node will have four entries
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Key** of the cache entry'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Value** of the cache entry'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Index** into the Min Heap'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Count** of how many times it has been used'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: As an example for the below set of operations
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Set (“a”, “1”)**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Set (“b”, “2”)**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Get (“a”)**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below will be entries in these data structures
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Map**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Min Heap**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Two things
+  prefs: []
+  type: TYPE_NORMAL
+- en: The count for **“a”** is 2 because it has been used twice i.e once using the
+    SET operation and the other during the GET operation. The count for **“b”** is
+    one as it is only used once during the SET operation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The index for **“b”** is 0 because it has the lowest count among **“a”** and
+    **“b”**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below are the high-level things we will have in our design
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will have a **Cache** class that will act as an interface for interacting
+    with the client
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **cache** class will be using a combination of a **Map** and a **Min Heap**
+    for storing everything. Both map and Min Heap are used so that GET and SET operations
+    are of  O(logn) even with evictions. How this is achieved, we will see later in
+    this tutorial.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Map** will have the key of type string and the value of the type pointer
+    to a node in the **Min Heap** as discussed above
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Min Heap Node will have four entries as discussed above
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be an **evictionAlgorithm** interface. There will be **LFU** which
+    implements this **evictionAlgorithm** Interface
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The cache class will also embed an instance of **evictionAlgorithm** interface.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see how Get and Set are going to work in O(logn) time
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Set Operation (key string, value string)**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For any set operation, it is first going to check if the entry with the given
+    key exists in the cache or not. It can be checked by looking at the **Map**. If
+    the entry exists there we are simply going to update the count and the value in
+    the Min Heap Node. Since the count is increasing we are going to Down Heapify
+    that MinHeap node as the count has changed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the cache entry with the given key doesn’t exist,  it will first create a
+    Min Heap node with the below details
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **Key** will be the key of the cache entry
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Value** will be the value of the cache entry
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Index**  as the (size of MinHeap+1)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Count** as 1'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Once the MinHeap node is created there are two cases
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The cache is not full** –  In this case, it will pass the control to the
+    current evictionAlgorithm interface. The LFU Algo (implementor of eviction Algorithm
+    Interface) is going to insert that node in the Min Heap at the end and then call
+    Up Heapfiy so that the node reaches its right place in the MinHeap. Overall operation
+    will be O(logn) here'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**The cache is full** – In this case, it will pass the control to the LFU algorithm.
+    It is going to evict the node which has the least count. Once that node is evicted
+    it will insert the new node. Overall operation is O(logn) here'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Get(key string)**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For any Get operation, it will first check the **Map** if the given key exists.
+    If it exists then it will fetch the address of the **Min Heap Node** pointed to
+    by the key in the map. It will then fetch the value from that MinHeap Node. Then
+    it will pass the control to the current LFU algorithm. The LFU algorithm is going
+    to increase the count of that MinHeap Node by 1 and then call the Down Heapify
+    so that the node reaches its right place in the MinHeap
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s see the UML diagram now
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**UML Diagram**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![](../Images/4b55bd526d3f13a182e3d59b43b9e868.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Low-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below is the low-level design expressed in GO programming language. Later we
+    will see a UML diagram as well as a working example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Cache Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Min Heap Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Eviction Algorithm Interface**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**LFU Algorithm** – It implements the Eviction Algorithm Interface'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code if anyone is interested in the GO programming
+    language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**minHeap.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**evictionAlgorithm.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**lfu.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**cache.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code in one file**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code in one file
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about designing an LFU-based Memory Cache. Hope you have liked this
+    article. Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

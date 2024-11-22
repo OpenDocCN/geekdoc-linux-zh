@@ -1,0 +1,230 @@
+- en: Design a hit counter
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/system-design-hit-counter/](https://techbyexample.com/system-design-hit-counter/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The objective is to design a hit counter that will record the number of visits
+    to a website till the last 5 min. It is a tricky question. Your design should
+    be able to answer the below query in general
+  prefs: []
+  type: TYPE_NORMAL
+- en: Number of hits for the last n minutes where 1 < = n <= 5
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The solution described in this tutorial could also be extended to n minutes
+    where n is greater than 5.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Idea is to have a data structure that could record the hit for each minute in
+    the last five minutes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For that, we can have below data structure
+  prefs: []
+  type: TYPE_NORMAL
+- en: Counter Array – An array of integers of length 5.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Timestamp Array – An array of integers of length 5.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Counter[i] will store the count of hits in the ith minute
+  prefs: []
+  type: TYPE_NORMAL
+- en: Timestamp[i] will store the last timestamp of a hit in the ith minute. It will
+    be a number that will represent the epoch timestamp in min.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the algorithm
+  prefs: []
+  type: TYPE_NORMAL
+- en: Get the epoch timestamp in min for the given timestamp. Let this be called **timestamp_epoch**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Divide that epoch timestamp by 5 and take the remainder. Let this remainder
+    be called **I**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If timestamp[i] = **timestamp_epoch** then it means that the previous hit for
+    the ith minute happened in the same minute. Therefore increase the counter. Basically
+    do counter[i]++
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If timestamp[i] != **timestamp_epoch** then it means that the last hit for the
+    ith minute happened during a different minute. Therefore we need to reset the
+    counter. Basically do counter[i] =1
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Below is the code for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s understand it with an example as well
+  prefs: []
+  type: TYPE_NORMAL
+- en: During start counter[i] = 0 for i =0 to 4\. Also timestamp[i] = 0 for i =0 to
+    4
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s say the current epoch timestamp is in min is 1000\. Let this be called
+    **timestamp_epoch**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s say there is one hit in the first minute
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**i = 1000%5**  which is 0'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**timestamp[i]** is 0\. So **timestamp[i]** is not equal to **timestamp_epoch**.'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Do **counter[i]++**, which means counter[0] = 1
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set **timestamp[i]** = 1000 which is the current timestamp in min. So counter
+    and timestamp will be
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s say there is another hit in the first minute
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: i = 1000%5  which is 0
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: timestamp[i] is 1\. So timestamp[i] is equal to **timestamp_epoch**.
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Do counter[i]++ which means counter[0] = 2
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set timestamp[0] = 1000 which is the current timestamp in min. So counter and
+    timestamp will be
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s say there is another hit in the second minute when the timestamp in the
+    minute was **1001**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: i = 1001%5  which is 1
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: timestamp[1] is 0 currently. So timestamp[1] is not equal to **timestamp_epoch**.
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Do counter[1]++ which means counter[1] = **timestamp_remainder**
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set timestamp[1] = 1001 which is **timestamp_epoch** in min. So counter and
+    timestamp will be
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now let’s say there is another hit at 6 min. At that time the current epoch
+    timestamp in min will be 1005\. Why 1005? 1000 is the first minute then 1005 will
+    be the sixth min)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: i = 1005%5  which is 0
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: timestamp[0] is 1000\. So timestamp[0] is not equal to **timestamp_epoch**.
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Reset counter. Do counter[0]=1 which means counter[0] = 1
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set timestamp[0] = 1005 which is **timestamp_epoch** in min. So counter and
+    timestamp will be
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: At any given time to get the number of hits per minute, we can simply add all
+    the entries in the counter array.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about designing a Hit Counter. Hope you have liked this article.
+    Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

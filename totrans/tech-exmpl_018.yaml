@@ -1,0 +1,1367 @@
+- en: Instagram System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/instagram-system-design/](https://techbyexample.com/instagram-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Functional Requirements](#Functional_Requirements "Functional Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[User APIs](#User_APIs "User APIs")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Data Storage](#Data_Storage "Data Storage")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[What database to use](#What_database_to_use "What database to use")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How upload of photos and videos is going to be uploaded](#How_upload_of_photos_and_videos_is_going_to_be_uploaded
+    "How upload of photos and videos is going to be uploaded")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How Likes and Comments are going to be stored](#How_Likes_and_Comments_are_going_to_be_stored
+    "How Likes and Comments are going to be stored")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Posting a Status Update](#Posting_a_Status_Update "Posting a Status Update")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How Timeline will be generated](#How_Timeline_will_be_generated "How Timeline
+    will be generated")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Different Methods of Timeline Generation](#Different_Methods_of_Timeline_Generation
+    "Different Methods of Timeline Generation")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[First Method – Fetch updates at Run Time](#First_Method_%E2%80%93_Fetch_updates_at_Run_Time
+    "First Method – Fetch updates at Run Time")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Second Method – Timeline Generation Using the Pull Method (Fetch from DB)](#Second_Method_%E2%80%93_Timeline_Generation_Using_the_Pull_Method_Fetch_from_DB
+    "Second Method – Timeline Generation Using the Pull Method (Fetch from DB)")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Third Method – Timeline Generation Using the Push Method](#Third_Method_%E2%80%93_Timeline_Generation_Using_the_Push_Method
+    "Third Method – Timeline Generation Using the Push Method")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Fourth Method – Pushing updates to client as and when available](#Fourth_Method_%E2%80%93_Pushing_updates_to_client_as_and_when_available
+    "Fourth Method – Pushing updates to client as and when available")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Other common components](#Other_common_components "Other common components")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirements](#Non-Functional_Requirements-2 "Non-Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Scalability](#Scalability "Scalability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low latency](#Low_latency "Low latency")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Availability](#Availability "Availability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
+    to user location")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
+    Single Point of Failures")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Instagram is one of the most popular social media sharing apps which allows
+    users to share their photos and videos with other users.  Users can like and comment
+    on other users’ photos and videos. Users can follow each other and can view their
+    news feed which contains updates from the users they follow
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some of the functional requirements of the Instagram design are
+  prefs: []
+  type: TYPE_NORMAL
+- en: Users can post a status update along with an image or a video
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A timeline will be generated for a user which will contain the newsfeed for
+    that user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Users will be able to like or comment on a post
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: One level of comment nesting is allowed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Users should be able to follow/unfollow each other
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some of the Non-Functional requirements of the system are
+  prefs: []
+  type: TYPE_NORMAL
+- en: In systems such as Instagram people will be viewing photos and new feeds more
+    than uploading. So it is a read-heavy system. We need to design our system in
+    such a way that latency is minimum. Read – Write ratio will be 80-20
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be highly available and able to serve 500 million users
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system should be durable. Any image, video, post uploaded to the system
+    must always persist unless deleted by the user himself
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system needs to be eventually consistent. What it means is that once the
+    user uploads any photo then it will visible in the timeline of its followers in
+    some time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**User APIs**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below will the APIs that will be needed
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a POST with a photo or a video
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Comment on a POST
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Comment on a Comment itself
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Like a Post
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Like a Comment
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Fetch the timeline
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Data Storage**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For data storage, we have below things to store
+  prefs: []
+  type: TYPE_NORMAL
+- en: Image and Video
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Post
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Comments and Likes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Followers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: News Feed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**What database to use**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For Instagram we will not have ACID requirements and also the data will be pretty
+    large so we need a No SQL database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The system will be read-heavy.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can use the Cassandra database as it is a No SQL database, it can store large
+    amounts of data and also can handle a high number of read and as well as writes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now let’s see the data model for storage of each of the element
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How upload of photos and videos is going to be uploaded**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: For storing images and videos we need cheap storage which could be a file system.
+    For that, we can use Amazon S3 or HDFS.  We can further use a CDN to cache the
+    images and videos.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How Likes and Comments are going to be stored**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: First of all, let’s list all the requirements with respect to likes and comments
+  prefs: []
+  type: TYPE_NORMAL
+- en: A post can have any number of likes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Post can have any number of comments
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can like a post as well a comment
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: One level of comment nesting is allowed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To keep things simple we will have
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two tables for likes. One for **post_like** and the other for **comment_like**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: One table for posts, and
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: One table for comment.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below will all the tables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**post table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the fields in the **Post Table.** This table will be partitioned
+    on **user_id.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**post_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**title**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**description**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**tags –** This field will be a hash'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**thumbnail**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**image_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This table will be sharded on user_id so that we are able to access all posts
+    of a user from a single shard**comment table**
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the fields in the **Comment Table.** This table will be partitioned
+    based on **post_id.** This is done so that all comments related to a post is in
+    a single shard
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**comment_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**comment –** This will be a text field'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**post_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**parent_id –** This will take care of nesting of comments'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This table should be sharded on post_id so that we are able to fetch all comments
+    belonging to a post from a single shard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**post_like table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Instagram shows you which post you have liked or not. Also, it shows what users
+    have liked a particular post. All this information will be stored in this table.
+    This table will be sharded on post_id so that you are able to fetch all likes
+    related to a post using a single shard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the fields in the
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Post_Like Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**post_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This table should be sharded on post_id so that we are able to fetch all likes
+    belonging to a post from a single shard.How we can fetch the number of likes for
+    a given post. We can simply query this table to fetch this info. This count information
+    can also be kept in a cache. This cache can be updated whenever a **like** is
+    made on a post. The other way is to break the cache whenever a **like** is made
+    on a post.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can have a separate service which could be a worker that listens to a topic
+    on which an event is published whenever a **like** is made on a post. This worker
+    will then either update the cache or invalidate the cache.**comment_like table**
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below will be the fields in the Comment_Like Table. This table will be partitioned
+    based on post_id as well. This is done so that all likes related to comments on
+    a  post are in a single shard
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**post_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**comment_id**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**created**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**updated**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This table should be sharded on comment_id so that we are able to fetch all
+    likes belonging to a comment from a single shard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: How to fetch the number of likes for a given comment. We can simply query this
+    table for the same. Similar to the **post_like** table we can also keep this information
+    in one kind of cache.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**How followers and the following data will be stored. **'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For that, there will be a **Follow** table. Below will be the fields in the
+    **Follow** table
+  prefs: []
+  type: TYPE_NORMAL
+- en: user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: follower_user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: updated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How news feed will be stored**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will talk about news feed storage when we talk about how the news feed will
+    be generated
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**High-Level Design**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: On a high level let’s discuss what will be the higher flow and what all services
+    would exist.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There will be an **API gateway** on which every request from all the users will
+    land.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **User** **service** that will be storing the user profile information
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Token** **service** that is going to generate and validate
+    tokens. Basically, it is going to do everything related to token management
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Post Service** on which all requests related to the post will
+    be received.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Post** **service** first creates an entry into the DB for the post in
+    the post table
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: After the post is created in the database sends the messages to a **Kafka +
+    SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by a **Timeline_Init** **Service** which is a worker,
+    this worker is going to make a call to the **Follower Service** to fetch all followers
+    of the user who is the owner of the post. Then it is going to fan out the message
+    for each of the followers to the **Kafka + SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each fanout message will be picked by another worker which will be a **Timeline_Create
+    Worker.** It will create a timeline for the user. Later in this tutorial, we will
+    study different ways and scenarios in which a feed will be generated.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Follower Service**. As soon as any user follows any user,
+    the call is going to come to this service. This service is going to create an
+    entry in the database and push a message to the **Kafka + SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by a **Notification Service** which will be a worker.
+    This **Notification Worker** is going to send a notification to the user that
+    was a follower
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Feedback Service** as well which is going to handle all API
+    calls related to liking a post or comment, commenting on a post, or commenting
+    on a comment itself. Again as soon as it receives any such activity it is going
+    to publish a message to Kafka + SNS system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by the **Notification Service** which is a worker
+    that is going to send the notification to the post owner or comment owner whatever
+    is applicable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will also be picked by another worker whose name is **Feedback_Counter**
+    worker. This worker is going to increment the count for the number of likes on
+    a comment or a post whichever is applicable. The count will be increased in the
+    cache
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s discuss each of the flows in detail and a diagram for each of them
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Posting a Status Update**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As mentioned earlier when someone creates a post then post service will come
+    into the picture. A post might contain a photo or a video to be uploaded.  Let’s
+    see how this image and videos upload would work. For images and video uploads,
+    we can make the assumption that the original size of the image or video will not
+    be uploaded. A low res version of it will be created at the client’s end and then
+    it will be uploaded. Even the low res version of any image and video would be
+    of a few KBs. They can be uploaded to a storage provider directly. For eg let’s
+    say that the storage provider is AWS S3 then below will be the flow
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s User A on its Instagram client wants to post a status that contains an
+    image or video. The client will send a request to the server to send the presigned
+    URL to which the client can upload the image or video
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The server will respond with a pre-signed URL whose validity can be of few hours.
+    You can read this article to get an idea of the pre-signed URL. Refer this doc
+    to know more about presigned URL – [https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
+    . Basically, it is an URL that is already signed with a token and hence it can
+    be used to directly upload to the storage provider which is S3 here without requiring
+    any further authentication. This is also called direct upload. The server will
+    also return the image_id here
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The client will upload the image to that URL. It will directly be stored in
+    S3
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Now the client will request to send the request to create the POST which has
+    the image or video which got uploaded in the previous steps. It will also send
+    the id of the uploaded video and photo.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This request will be received by the **Post Service** which is going to create
+    an entry in the database for the post in the post table.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then it sends the messages to a **Kafka + SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by **Timeline Services** which includes the **timeline_Init**
+    and **timeline_create** worker. They are going to create the timeline.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Post Service** is also going to cache the newly created post in Distributed
+    Redis
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A post might also contain a video. We can do one optimization related to videos
+    streaming. For video streaming, we have two requirements
+  prefs: []
+  type: TYPE_NORMAL
+- en: Video uploaded is should suitable to view across multiple devices.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Different people around the world will have different network speeds. So Adaptive
+    Bit Rate Streaming means choosing different resolutions based upon network speed
+    so that there is no buffering.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To fulfill the above two requirements we can do the below things
+  prefs: []
+  type: TYPE_NORMAL
+- en: Transcode the video into a different format
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Convert each transcoded video into different resolutions. Each of the different
+    resolutions could be either 144p, 480p, 1080p
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There could be separate services related to video management that does the above
+    things.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below is the high-level diagram for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/14bb2825ec12c2626e79275e9c1de4de.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**How Timeline will be generated**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s see how the user timeline will be generated. A user’s timeline will be
+    updated in advance in a cache.  We have already seen what happens when somebody
+    posts a status. Let’s see what happens after that so that a user timeline is generated.
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, let’s explore the different methods of timeline generation
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Different Methods of Timeline Generation**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are four major approaches for generating the timeline
+  prefs: []
+  type: TYPE_NORMAL
+- en: Fetch updates at Run Time (Client to Server)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Timeline Pre Generation Using the Pull Method (Fetch from DB and Client to Server)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Timeline Pre Generation Using the Push Method (Event-Driven and Client to Server)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pushing updates as and when available ( Server to client)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We will use the combination of these methods to eventually generate the timeline
+    of a user depending upon
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the user is an active user or an inactive user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The user follows other celebrities who could have millions of followers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: All these methods will be dependent upon a timestamp value that will be kept
+    for getting each user’s timeline. This timestamp will be used to build the timeline
+    based on what updates the user has already seen. If the timestamp for the user
+    is 23 Feb 2022 at 11:15 GMT then it means he has seen all updates before that
+    timestamp. When the calls come to the server, then it will only return the timelines
+    or updates after that timestamp
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s discuss these four methods now. But before we discuss all the methods,
+    let’s discuss the user scenario first
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is user X who follows the below users
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**A**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**B**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**C**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**D**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**E**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**F**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Below is more data**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***   **A, B, C, D** are normal users who have followers in 100s'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**E** is a celebrity who has millions of followers'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**F** is a business account that also has millions of followers'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**First Method – Fetch updates at Run Time**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In the first method, the client application will make a call to the server.
+    The service will at run time fetch all updates of the customer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Making a pull call to the server will fetch the current timestamp of the current
+    user. Let’s that timestamp be **t1**. Then it will make a call to the POST service
+    to fetch the updates of users A, B, C, D, E, and F that are created after **t1\.**
+    Once it has to fetch that data then it will send it to the client. Below is the
+    diagram for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/72440abaa420d79247bb25b150354f90.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: There are multiple problems with this approach-
+  prefs: []
+  type: TYPE_NORMAL
+- en: First of all, it is a time-consuming approach. Why because it is going to fetch
+    the up
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Second, it is going to fetch updates from all the users and we have already
+    mentioned that the post table is shared on the user_id. Hence this query is going
+    to multiple shards which has a performance cost.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This approach is not scalable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Second Method – Timeline Generation Using the Pull Method (Fetch from DB)**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In the second method, there will be an additional **timeline_create** service
+    which is going to create the timeline of the user beforehand. This worker will
+    be called for each user periodically. It will fetch the current timestamp of the
+    current user. Let’s that timestamp be **t1**. Then it will make a call to the
+    database to fetch the updates of users A, B, C, D, E, and F that are created after
+    **t1**. Once it fetches the updates then it is going to insert them into some
+    kind of database or cache. We will call this a timeline database or timeline cache.
+    Below will be the schema for this database.
+  prefs: []
+  type: TYPE_NORMAL
+- en: user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: post_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: updated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Below is the diagram for the same**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/faae40ce118cd359b3b3b288611cb2b8.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Some problems with this approach**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There might not be new updates for the user. Hence even though we are trying
+    to find new posts for the user but a couple of times it is just empty.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We are fetching and updating the timeline of a user at regular intervals. It
+    could very well be the case that the user is not active at all and we might still
+    be generating the timeline of the user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Third Method – Timeline Generation Using the Push Method**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In this method
+  prefs: []
+  type: TYPE_NORMAL
+- en: Users  posts any status update then it publishes a message on SNS/Kafka
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message is picked by the **timeline_init** service which is a worker.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **timeline_init** service fetches the first 100 batches of followers. For
+    every follower, it fans out the message again to **timeline_create** service which
+    is again a worker. This process is repeated for all the followers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**timeline_create** service on receiving the message will update the timeline
+    of the follower with that post_id'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below is the diagram for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/b5594586b3a1ff92abd00f111f6e9fb0.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Some problems with this approach**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A celebrity or a business account could have a large number of followers. And
+    when such accounts post a status then all million followers’ timeline needs to
+    be updated.  This is not efficient.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Again similar to approach 2 we might be updating the timeline of a user who
+    is not active
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Fourth Method – Pushing updates to client as and when available**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is a server-to-client communication. It will be event-driven as well. Just
+    that, as soon as the update is available it will be pushed to the client from
+    the server. So there is no pre-generated timeline for the user since updates are
+    pushed directly from the server to the client. Such server-to-client communication
+    would require a different type of protocol such as web sockets.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below is the diagram for this approach.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/aa879a9fcf5c8a9744faf446fc8a28ef.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '**Some problems with this approach**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***   Server-to-client communication requires sockets or any other similar
+    technology. These technologies are expensive in terms of resource consumption
+    and require a persistent connection to be maintained'
+  prefs: []
+  type: TYPE_NORMAL
+- en: What if the client is offline. In that case, while pushing the server realizes
+    that the client is offline then it can save the updates to the DB and also cache.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Web sockets are useful for a very real-time application for example WhatsApp
+    and might not be that suitable for Instagram. Hence this method can be used if
+    Instagram uses web sockets
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Recommended Approach**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we can see above that each of the methods above has some disadvantages. Therefore
+    timeline generation of a user will depend on weather
+  prefs: []
+  type: TYPE_NORMAL
+- en: The user is an active user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The user is an inactive user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**The user is an active user**I'
+  prefs: []
+  type: TYPE_NORMAL
+- en: n this case, we can use the combination of method 1 and method 3.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using method 3 we can generate the timeline for that user only for those accounts
+    which have followers in 100s
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then at run time we can fetch the updates from all the celebrities and business
+    accounts and merge them with the generated timeline in step 1.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s understand the above with an example. As we already mentioned that there
+    is user X who follows below users
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**A  – A1->A2**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**B – B1**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**C – C1**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**D – D1->D2**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**E – E1**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**F – F1->F2**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**A, B, C, D** are normal users who have followers in 100s'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**E** is a celebrity who has millions of followers'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**F** is a business account that also has millions of followers'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So when the user is an active user below is how the timeline will be generated.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**A, B, C, D** are normal users who have followers in 100s. Hence timeline
+    for X having posts of these users will generate using Method 3\. So the timeline
+    for user X will be generated as below and saved in a cache'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A1->A2->B2->C1->D1-D2
+  prefs: []
+  type: TYPE_NORMAL
+- en: Timeline for user **X** will not be generated having posts from user **E** and
+    user **F**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the user makes a call to fetch the timeline, then at run time it will fetch
+    the updates/posts from users E and F. It will then merge it with the already generated
+    timeline from users **A, B, C, D** and return it back
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**The user is not an active user**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this case, we can only use method 1\. Since the user is not an active user
+    at all and only opens the app once a week then there is no point generating a
+    timeline for the user beforehand as it is a wastage of storage.So in this case
+    when the user makes a call to fetch the timeline, then at run time it will fetch
+    the updates/posts from users **A, B, C, D, E, F**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: But this doesn’t seem efficient if a user has a large number of followers. This
+    is where method 2 comes into the picture. When a user comes online we can use
+    method 1 to fetch the updates for that user from some of its followers. Then it
+    could trigger a background job to generate the remaining timeline for the user
+    using method 2\. Below is an example to understand it
+  prefs: []
+  type: TYPE_NORMAL
+- en: When the user makes a call to fetch the timeline, then at run time it will fetch
+    the updates/posts from **A, B, C**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A background job is triggered to create the rest of the timeline of the user
+    using method 2 for updates/posts from **D, E, F**. By the time user is watching
+    the first set of updates the second set of updates can be fetched from the generated
+    timeline
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So overall method 2 can be used at run time to generate the timeline for a user.
+    Method 2 can also be preferred when Method 1 is very expensive.**Below is the
+    high-level diagram for Timeline Generation. Assume there are two users X and Y
+    and Y is a follower of X. Y also follow other users which are celebrity user.
+    In the below high-level diagram we are using a combination of Method 1 and Method
+    3.**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '***   Using Method 1 it fetches updates from celebrity users which User Y follows'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using Method 3, it pre-creates the timeline for the User Y. This timeline is
+    created with posts from users who are not a celebrity and which User Y follows.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![](../Images/618f3eb4ffe99883e6aa7268239e1097.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Below is the high-level flow
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**For User A**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: User A wants to create a post having an image. It calls the POST service to
+    fetch the resigned URL. Using the resigned URL it uploads to tS3 directly.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then it calls the Post service directly to create the post. The post is saved
+    in the DB as well as in the cache.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: After the post is created in the database sends the messages to a **Kafka +
+    SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by a **Timeline_Init** **Service** which is a worker,
+    this worker is going to make a call to the **Follower Service** to fetch all followers
+    of the user who is the owner of the post. Then it is going to fan out the message
+    for each of the followers to the **Kafka + SNS/SQS system**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each fanout message will be picked by another worker which will be a **Timeline_Create
+    Worker.** It will create the news feed for User B. This is where method 3 of Timeline
+    Generation comes into the picture.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**For User B**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: User B wants to fetch his timeline
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Instagram makes a call to the Timeline App Service. Timeline App service does
+    two things
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: First, it makes a call follower service to fetch the celebrity users which User
+    Y follows. Then it fetches the updates for those celebrity users from the POST
+    service. This is where method 1 comes into the picture
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Second, it fetches the pre-created timeline for User Y from the cache and DB.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It merges both the results and returns back to the Instagram client for the
+    User Y
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Instagram then uses URLs in the returned timeline to directly download the images/videos
+    from S3\. We can also cache the photo/video on the CDN. This will enable faster
+    retrieval of the media.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This is all about timeline generation in Instagram.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Other common components**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Other common components could be
+  prefs: []
+  type: TYPE_NORMAL
+- en: User Service – It holds the user profile information.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Token/Auth Service – Management of User tokens
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: SMS Service- It is used for sending any kind of message back to the user. For
+    example – OTP
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Analytics Service – This could be used to track any kind of analytics
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s discuss some non-functional requirements now
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Scalability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first thing to consider with the above design is the scalability factor.
+    The scalability of each of the components in the system is very important. Here
+    are scalability challenges you can face and their possible resolutions
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each of the machines in the **Post Service**, **Timeline** **Service** etc could
+    only serve a limited number of requests. Hence each service here should have proper
+    autoscaling set in so that based on the number of requests we can add instances
+    up and autoscale them when needed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Your Kafka/SNS system might not be able to take that much load. We can scale
+    horizontally but to a limit. If that is becoming a bottleneck then depending upon
+    the geography or userId we can have two or more such systems. Service discovery
+    could be used to figure out which Kafka system a request needs to go to.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another important factor of scalability here is that we have designed our system
+    in such a way so that none of the services is bogged with too many things to do.
+    There is a separation of concerns and wherever there was too much of a responsibility
+    on service, we have broken it down
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another factor of scalability is sharding. There is a huge amount of data that
+    needs to be stored and obviously, it cannot be stored on a single machine. It
+    will be good to partition the data stored into different machines so that the
+    overall architecture is scalability. We need to choose the number of shards based
+    on our storage estimates. Also we need to choose the shard key or partition key
+    smartly so that none of the queries is multi sharded
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low latency**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We can cache the newly created posts with some expiry of course. As and when
+    a post is created it is more likely to be visible in some other user timeline.
+    It will reduce latency for many of the read calls.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is one more optimization that we are doing here to improve the latency.
+    We are caching the timeline of a user other than saving it to DB. With cache the
+    timeline can be returned faster
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We can cache the photos and videos to a CDN. It will enable faster retrieval
+    of the media
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another area to further improve latency is optimizing video streaming.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Availability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: In order for the system to be highly available, it is very important to have
+    redundancy/backups for almost all components in the system. Here are some of the
+    things that need to be done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the case of our DB, we need to enable replication. There should be multiple
+    slaves for each of the master shard nodes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For Redis we also need replication.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For data redundancy, we could be multi-region as well. This could be one of
+    the benefits if one of the regions goes down.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disaster Recovery could also be set up
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Alerting and Monitoring**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Alerting and Monitoring is also very important non-functional requirement. We
+    should monitor each of our services and set up proper alerts as well. Some of
+    the things that could be monitored are
+  prefs: []
+  type: TYPE_NORMAL
+- en: API Response Time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Memory Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: CPU Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Disk Space Consumption
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Queue Length
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ….
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Moving closer to user location**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are a couple of architectures that could be followed here. One such is
+    Cell Architecture. You can read more about cell architecture here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Avoiding Single Point of Failures**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A single point of failure is that part of a system that when stops working then
+    it would lead the entire system to fail. We should try to prevent any single point
+    of failure as well in our design. By redundancy and going multi-region we can
+    prevent such things
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about the system design of Instagram.  Hoped you have liked this
+    article. Please share feedback in the comments******
+  prefs: []
+  type: TYPE_NORMAL

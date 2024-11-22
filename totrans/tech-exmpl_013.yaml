@@ -1,0 +1,1495 @@
+- en: Nearby Friends System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/nearby-friends-system-design/](https://techbyexample.com/nearby-friends-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Functional Requirements](#Functional_Requirements "Functional Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Data Storage](#Data_Storage "Data Storage")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Location Updates Requirements](#Location_Updates_Requirements "Location Updates
+    Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[API Design](#API_Design "API Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Location Update API](#Location_Update_API "Location Update API")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Set Location Preference on or off](#Set_Location_Preference_on_or_off "Set
+    Location Preference on or off")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How location sharing is going to work](#How_location_sharing_is_going_to_work
+    "How location sharing is going to work")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[First Approach – Using Distributed Redis](#First_Approach_%E2%80%93_Using_Distributed_Redis
+    "First Approach – Using Distributed Redis")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[The user first comes online](#The_user_first_comes_online "The user first
+    comes online")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When the user is already online](#When_the_user_is_already_online "When the
+    user is already online")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When the user goes offline or turns off the online status](#When_the_user_goes_offline_or_turns_off_the_online_status
+    "When the user goes offline or turns off the online status")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Second Approach – Using Redis Pub/Sub](#Second_Approach_%E2%80%93_Using_Redis_PubSub
+    "Second Approach – Using Redis Pub/Sub")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When the user first comes online](#When_the_user_first_comes_online "When
+    the user first comes online")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When the user is already online](#When_the_user_is_already_online-2 "When
+    the user is already online")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[When the user goes offline or turns off the online status](#When_the_user_goes_offline_or_turns_off_the_online_status-2
+    "When the user goes offline or turns off the online status")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Non-Functional Requirement](#Non-Functional_Requirement "Non-Functional Requirement")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Scalability](#Scalability "Scalability")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Scalability of Redis Pub/Sub Server](#Scalability_of_Redis_PubSub_Server "Scalability
+    of Redis Pub/Sub Server")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Number of Channels](#Number_of_Channels "Number of Channels")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Type of instance used in the Redis Pub/Sub Cluster](#Type_of_instance_used_in_the_Redis_PubSub_Cluster
+    "Type of instance used in the Redis Pub/Sub Cluster")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Number of Instances in the cluster or horizontal scalability of the cluster](#Number_of_Instances_in_the_cluster_or_horizontal_scalability_of_the_cluster
+    "Number of Instances in the cluster or horizontal scalability of the cluster")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[The average size of the message that is published to the channel](#The_average_size_of_the_message_that_is_published_to_the_channel
+    "The average size of the message that is published to the channel")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Replication of the cluster](#Replication_of_the_cluster "Replication of the
+    cluster")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The objective is to design the nearby friends feature. When we say nearby then
+    it means that the location of the friends is constantly changing. As and when
+    the location changes, then their location is constantly getting updated and shared
+    with their nearby friends.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s first list down the functional requirements of the system
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A user when online should be able to view the current location of all their
+    friends and vice versa
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: As and when the friend’s location gets changed it should get reflected in the
+    view of the user and vice versa
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We should be able to store the location history of the user as and when it changes.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A user should be able to control whether they want to appear as a nearby friend
+    or not. In other words, they have the capability to turn off the feature for them.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The latency of the system should be less.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The location of friends shown to the user will be eventually consistent.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Also with respect to sharing location updates, the system should be eventually
+    consistent. Meaning that the location of the user will be communicated to his
+    friends in an eventually consistent way in the sense that immediately the user’s
+    location will not be correctly shown to his friends but eventually the correct
+    location will be shown.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now the first question that comes to mind while designing nearby friends is
+    how the location update of friends will be updated back in the client app. For
+    that, we have a couple of options
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**HTTP long polling** – in this case, the client keeps polling for the location
+    of friends nearby. This will be inefficient because the polling will return an
+    empty result quite a few times. In other words, there could be a lot of empty
+    receives which will waste network bandwidth. Also in the case of HTTP polling,
+    only the client can poll the server. There is no way for the server to push updates
+    back to the client.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Web Sockets** – The other option is web sockets. In this case, the client
+    app will always be connected to the server and the communication is two-way. The
+    client can communicate with the server as well as the server can push updates
+    to the clients. This approach will be efficient in the sense that the server will
+    only communicate back to the client only when there are some location updates
+    from any of the friends of the user.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Overall web sockets are best for our scenario. Another advantage of web sockets
+    is that they have a sticky session where if a particular user has to open its
+    connection to a particular server and it connects to one of the instances at the
+    server end, then it will always be connected to that instance. All the requests
+    of that user will go to that particular instance only.  Hence this is what makes
+    web sockets a good option for peer-to-peer communication.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are going to discuss the below things in the tutorial
+  prefs: []
+  type: TYPE_NORMAL
+- en: Data Storage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Location Update Requirements
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: High-Level Design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: API Design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How location sharing is going to work
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: First Approach – Using Distributed Redis
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Second Approach – Using Redis Pub/Sub
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Non-Functional Requirement
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Scalability of Redis Pub/Sub Server
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Conclusion
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Data Storage**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s now analyze what data we need to be storing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**User Profile**: We need to store the user profile information, their name,
+    profile picture, etc. Also, we need to save their preference related to enabling
+    or disabling nearby friends.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Friend List**:  The system should be able to store the friend list of all
+    users. This friend list will be used to eventually show nearby friends.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Location tracking and storage**: The system should be able to track the location
+    info for the user. Also, they should be able to store the location history as
+    well.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The nearby friends are only shown for online users. Hence the system should
+    have a way of storing the online status as well.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Location Updates Requirements**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: With respect to the working of nearby friends’ location updates, there are a
+    few below requirements
+  prefs: []
+  type: TYPE_NORMAL
+- en: When the user comes online first he should be able to see all friends who
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Are online
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: And whose current location is within x miles of the current location of the
+    user
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: While the user is online, if any of his online friend’s new location is within
+    of **x** miles from the current location of the user then it will start showing
+    in the nearby friends and vice versa
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the user goes offline then he should be shown offline to his friends as
+    well and his location will not be shared.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So there are three scenarios that we need to take care of in our design
+  prefs: []
+  type: TYPE_NORMAL
+- en: When the user first comes online
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: While the user is being online
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the user goes offline
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**High-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: On a high level let’s discuss what will be the higher flow and what all services
+    would exist.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There will be an **API gateway** on which every request from all the users will
+    land.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Session Service**. **Session Service** will contain a group
+    of instances to which users will be connected by a web socket. Since there is
+    a limit on the number of web sockets that you can open per machine,  depending
+    upon the load. So based on the number of users, we can have that number of machines
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This **Session Service** will be connected to a **Distributed Redis** cluster
+    which will contain information on which user is connected to which box. This information
+    is transient till the user is connected and hence we can use a **Distributed Redis**
+    for that. It will be the responsibility of the session service to maintain the
+    User-id and machine-id mapping. This service will
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Will insert into if any user is connected to any machine
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the user gets disconnected
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than this the session will be a dumb service in the sense that it will
+    just accept the connection and will forward any requests to it on an **SNS/Kafka**
+    Topic.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Session Service** will publish a message to an SNS topic or Kafka on receiving
+    any user activity.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Location History** service that is going to save the location
+    history of the user.  There will be a separate table to store location history.
+    Only the Location History service is going to connect to this table.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **User Last Seen** service that is going to maintain the last
+    seen time and last known location of the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Friends** service that is going to maintain the friend list
+    of all users. There will be a separate table to store the friend list. Only the
+    **Friends** service is going to connect to this table.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **User Profile Service** that is going to maintain the user
+    profile. Again it will have its own set of tables to manage user profiles
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Near By Friends** service that will be responsible for the
+    management of nearby friends. It is going to handle cases when the user is online,
+    the user went offline, etc. We will be discussing this service in detail in this
+    tutorial
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Message Outbound Service** which will be a worker whose work
+    will be to send the outbound messages back to the user. This service will not
+    have any kind of business logic at all. It will only accept a message that contains
+    the details of what message to send, to whom it needs to send, and to which machine
+    the user is connected. This is a very dump service that only which doesn’t have
+    any business logic at all.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a **Token****Service** that is going to manage different types
+    of tokens for the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**API Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Below will be the list of APIs needed
+  prefs: []
+  type: TYPE_NORMAL
+- en: Location Update API
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set Location Preference on or off
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Location Update API**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The location update API will be called by the clients whenever the location
+    of the user changes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Request Body:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: longitude
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: latitude
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: timestamp
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Set Location Preference on or off**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This will be called by the client’s app when the user set their location preference
+    on or off
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Request Body:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: on/off
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: timestamp
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**How location sharing is going to work**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: With respect to location sharing, there are two ways
+  prefs: []
+  type: TYPE_NORMAL
+- en: Location updates are pulled by the client app of the user at regular intervals.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Location updates of friends being pushed to the client app of the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So basically it is **Pull** vs **Push**. As we have seen earlier the disadvantage
+    of the **Pull** model is that it might be a waste of network resources as many
+    times it could be an empty receive.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second approach of **Push** is better in two senses
+  prefs: []
+  type: TYPE_NORMAL
+- en: Updates will only be pushed when there is an actual location change of a friend.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **Push** approach will reflect the correct state in a more timely manner.
+    As the **Pull** approach could only be done at regular intervals and regular intervals
+    will be in seconds
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We are going to discuss two ways in which we can implement **Push** of location
+    updates
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the first approach, we are going to design in a very basic way. We will use
+    distributed cache in this approach.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In the second approach, we are going to use redis pub/sub and we will see how
+    we can scale that
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**First Approach – Using Distributed Redis**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: First, let’s discuss some of the services in detail that we are going to need
+    in order to fulfill the requirement
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Location History** Service'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There will Location History service that is going to connect to **location_history_db**.
+    This DB is going to store the location history of the user. Below will be the
+    fields in this DB. We can use any No SQL database for the same such as MongoDB
+  prefs: []
+  type: TYPE_NORMAL
+- en: id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: location
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: updated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**User Last Seen** Service'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This service is going to maintain two things
+  prefs: []
+  type: TYPE_NORMAL
+- en: last_seen time of the user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: last location of the user if applicable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It is going to store both things in the **user_last_seen_db**. Below are the
+    fields in the **user_last_seen_db.** We can use any No SQL database in this case
+    as well such as MongoDB
+  prefs: []
+  type: TYPE_NORMAL
+- en: id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user_id
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: last_seen – It is the timestamp of when the user was last seen
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: location – this will only be populated if the user has location sharing preference
+    **ON**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: updated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be a new service that will be responsible for managing the nearby
+    friends. Let’s name this service – **nearby_friends** service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To maintain nearby friends we will use a distributed cache. This distributed
+    cache could be a redis cache as well. This cache will maintain a subscriber list
+    for all the users who have there location preferences on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example assume there are two users A, B, and C. Below is the friend list
+  prefs: []
+  type: TYPE_NORMAL
+- en: A and B
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A and C
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A and D
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Below keys will exist in redis where
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **key** will be the user **user_id** of the user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **value** will be a **Set**. You can read about Set in redis here – [https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/](https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Subscriber List for user **A**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **B**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **C**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **D**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s consider three scenarios in which all the above data will be maintained
+    and how the overall nearby friends’ feature is going to work.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The user first comes online
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When the user is already online
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The user goes offline
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see these three cases in detail. But before looking into more details.
+    Let’s first assume that
+  prefs: []
+  type: TYPE_NORMAL
+- en: user A is connected to node 1
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user B is connected to node 2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user C is connected to node 3
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user D is connected to node 4
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**The user first comes online**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We are going to describe this scenario from user **A’s** perspective. Below
+    is the diagram for the case when the user first comes online. Assume user **A**
+    comes online and gets connected to node 1 of the session service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Near By Friends HLD](../Images/ca05fee8c85d2290b8ba3ee172c4bf78.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Near By Friends High Level Design
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then Node 1 is going to publish the message to Kafka/SNS+ SQS system with the
+    current location and the user_id. This message will be picked by three different
+    services
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**location_history** service'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**user_last_seen** service'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**nearby_friends service**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**location_history** service is going to update the current location of user
+    A in the **location_history_database**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**user_last_seen** service is going to update the last_seen time of the user
+    in the **user_last_seen_db**.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**nearby_friends** service is going to perform the below actions'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is going to fetch all the friends of user **A** who have location-sharing
+    preferences enabled. Assume user **A** has three friends **B**, **C**, and **D**
+    who have location sharing enabled.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It is going to fan out the message with a different **message_type** for each
+    of the friends **B**, **C**, and **D.**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s follow the flow for message published for user B
+  prefs: []
+  type: TYPE_NORMAL
+- en: The message for user **B** will be picked **nearby_friends** service again.
+    The **nearby_friends** service is going to first check if user B is online from
+    the **user_last_seen** service.  If **B** is online the **user_last_seen** service
+    is also going to return the current location of the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then the nearby friend’s service is going to compute the distance of user **B**
+    from user **A**. If the distance is less than the threshold then it is going to
+    add **B** as a subscriber to **A**.  It will create a redis entry as below. Basically,
+    it will add user **B**, as a subscriber to **A**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Also, it will add user **A** as a subscriber to user **B**. Below redis entry
+    will also be created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Then it is going to publish two messages to the **Kafka/SNS +SQS** system one
+    for informing user **A** and one for user **B**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This first message will be picked by the **message_outbound** service, which
+    is going to determine which node user **B** is connected to which is node 2\.
+    The message outbound service is going to call node 2\. Node 2 is going to inform
+    user **B’s** client app that user **A** has come online. The client app will start
+    showing user **A** to user **B**
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The second will also be picked by the **message_outbound** service, which is
+    going to determine which node user **A** is connected to which is node 1\. The
+    message outbound service is going to call node 1\. Node 1 is going to inform user
+    **A’s** client app that **B** is within the threshold distance. The client app
+    will start showing user **B** to user **A.**
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The same thing will happen for users C and D. Assume the distance for user C
+    was within x km while for user D it was not. After the message is processed for
+    message C, the below redis entries would have been created.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Subscriber List for user **A**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **B**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **C**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**When the user is already online**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: User A is already online but user A’s location has changed. The call will come
+    to node 1 with a new location Then Node 1 is going to publish the message to Kafka/SNS+
+    SQS system with the current location and of the user. This message again will
+    be picked by three different services
+  prefs: []
+  type: TYPE_NORMAL
+- en: location_history service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user_last_seen service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: nearby_friends service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**location_history** and **user_last_seen** services are going to update the
+    location history and last_seen time of the user respectively.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**nearby_friends** service is going to'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Fetch the list of subscribers for **A** which is **B** and **C** in this case.
+    Then it is going to fan out the message with a different **message_type** for
+    **B** and **C**. Note that it is only going to fan out the message again for users
+    **B** and **C**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This message will be picked by **nearby_friends** service again and it is going
+    to recompute the distance if the distance is within the threshold it is going
+    to inform users **B** and **C** about the new location of user **A** via the same
+    approach as discussed when the user first came online using **message_outbound**
+    worker
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If the location is not within the threshold then it is going to remove that
+    user from the list of subscribers and vice versa. For example, let’s assume **A’s**
+    and **B’s** location is not within x km. Then the subscription of **A** from user
+    **B** and the subscription of user **B** from user **A** will be removed.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Both user **A** and user **B** will be informed via **message_outbound** worker
+    that the other friend is not within range.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: But what about the case where let’s say friend **D** was already online and
+    with the new location change of user **A**, friend **D** is within a range of
+    x km? So friend **D** should start showing to friend **A** and vice versa.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To handle such cases, at some regular intervals of let’s say 5 min or maybe
+    more, every location update from user **A** we are going to re-fetch the entire
+    friends again and recompute the distance to check whether an existing online friend
+    came within range. It is going to repeat the same steps that we mentioned when
+    the user first came online.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s say this time user **D** has a distance less than x km, with user **A**.
+    Then below redis entries will be updated and user **A** and user **D** will be
+    informed of each other.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Subscriber List for user **A**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **B**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **C**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Subscriber List for user **D**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: We can further optimize the above scenario by maintaining a subscription list
+    of friends that are within (x + 10) km to prevent frequent removal and insertions
+    to the subscribers’ list.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, the subscriber list is maintained for a range of (x + 10) km but
+    the notification is only sent out if any of the friends is within the threshold
+    of x km
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user goes offline or turns off the online status**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When the user goes offline or when the user turns off the online status than
+    his online status should stop showing to all his friends. Let’s discuss both of
+    these cases one by one
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user goes offline**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The below diagram depicts the flow when the user goes offline
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Near By Friends Offline Case](../Images/be0882b53567ad1693101d8433f3b5f6.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Near By Friends Offline Case
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assume that user **A** goes offline. User **A** friend’s **B**, **C**, and **D**
+    were online when user A goes offline.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Below is the sequence of steps that are going to happen
+  prefs: []
+  type: TYPE_NORMAL
+- en: User A is connected to node 1 of the session service. As soon as the web socket
+    connection is terminated, the node or machine on which the connection got ended
+    will publish a message to the Kafka/SNS +SQS system
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **nearby_friends** service is going to pick up the message
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: First, this service is going to fetch all the current subscribers of user **A**
+    from the redis distributed cache. The current subscribers returned will be **B**,
+    **C**, and **D**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then it is going to fan out three messages for users **B**, **C**, and **D**.
+    These messages will be published to Kafka/SNS + SQS system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There will be different messages and each of the messages and all the messages
+    will be picked by the **nearby_friends** service again. It is going to remove
+    the subscription of **A** from users **B**, **C**, and **D** in their respective
+    fan-out messages. Then it is going to publish to the **message_outbound** service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The **message_outbound** service is going to forward the message to users **B**,
+    **C**, and **D** informing them that user **A** went offline.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**When the user turns off the online status**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is the same as when the user goes offline
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Second Approach – Using Redis Pub/Sub**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Now we are going to discuss the Redis Pub/Sub approach in detail. First of all,
+    what is Redis Pub/Sub? Redis Pub/Sub allows
+  prefs: []
+  type: TYPE_NORMAL
+- en: Creation of named channels
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A publisher can publish to this named channel
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Any number of subscribers can listen to this from the channel. Any message published
+    by the publisher will be available to all the subscribers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can read more about Redis Pub/Sub here – [https://redis.io/docs/manual/pubsub/](https://redis.io/docs/manual/pubsub/)
+  prefs: []
+  type: TYPE_NORMAL
+- en: So in this approach what we are going to do is maintain a separate named channel
+    for each user. All of the online friends of the user who are within the threshold
+    distance are going to subscribe to this named channel.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Also for simplicity let’s assume that the named channel for a particular user
+    will be created using the user_id of that user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s consider all three scenarios that we discussed earlier again
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user first comes online**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Assume user **A** comes online and gets connected to node 1 of the session service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Node 1 is first going to create a named channel for user A if it doesn’t already
+    exist in the redis distributed cache. Then Node 1 is going to publish the message
+    to Kafka/SNS+ SQS system with the current location of the user. Node 1 is also
+    going to cache the latest location of A as well. This message will be picked by
+    three different services
+  prefs: []
+  type: TYPE_NORMAL
+- en: location_history service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: user_last_seen service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: nearby_friends service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**location_history** service is going to update the current location of user
+    A in the location_history_database'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**user_last_seen** service is going to update the last_seen time of the user
+    in the last_seen database.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**nearby_friends** service is going to perform the below actions'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is going to fetch all the friends of user **A** from the **friends** service
+    who have location-sharing preferences enabled. Assume user A has three friends
+    **B**, **C**, and **D** who have location sharing enabled.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For each of the friends, it is going to fan out the message with a different
+    message_type. So three different messages will be published each for users **B**,
+    **C**,  and **D**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s follow the flow for message published for user B
+  prefs: []
+  type: TYPE_NORMAL
+- en: The message for user B will be picked **nearby_friends** service again. The
+    **nearby_friends** service is going to first check if user B is online from the
+    **user_last_seen** service.  If online the **user_last_seen** service is also
+    going to return the current location of the user.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then the **nearby_friends** service is going to compute the distance of itself
+    from user **A**. If the distance is less than the threshold then it is going to
+    publish two messages to the Kafka/SNS +SQS system
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This first message will be picked by the **message_outbound** service, which
+    is going to determine which node user **B** is connected to which is node 2\.
+    The message outbound service is going to call node 2\. Node 2 is going to subscribe
+    **B** to user **A**‘s named channel and start listening to it.  Also, node 2 is
+    going to inform user **B**‘s client app that A has come online. The client app
+    will start showing user **A** to user **B**. Also
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The second will also be picked by the **message_outbound** service as well,
+    which is going to determine which node user A is connected to which is node 1\.
+    The message outbound service is going to call node 1\. Node 1 is going to inform
+    user A’s client app that B is within the threshold distance. Also, Node 1 is going
+    to subscribe user **A** to user user **B’s** named channel and start listening
+    to it. The client app will start showing user **B** to user **A**
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The same thing will happen for user **C** and user **D** but assume that user
+    **D** is not within the threshold of x km from user A so user **D** will not be
+    shown to user **A**
+  prefs: []
+  type: TYPE_NORMAL
+- en: So overall
+  prefs: []
+  type: TYPE_NORMAL
+- en: Node 1 to which user **A** is connected has subscribed to the named channel
+    of user **B** and user **C**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Node 2 to which user **B** is connected has subscribed to the named channel
+    of user **A**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Node 3 to which user **C** is connected has subscribed to the named channel
+    of user **A**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**When the user is already online**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: User A’s location changes. The call is going to come to node 1\. It is going
+    to publish the new location to the named channel of user A.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The new location will be received by node 2 and node 3 for users B and C respectively.
+    Both are going to recompute the distance and-
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the distance is less than x km then it is going to inform **B** and **C**
+    of the new location of user **A**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If the distance is more than x km then first it is going to remove the subscription
+    of **B** and **C** from user **A’s** named channel. Also, it is going to inform
+    both users B and C that user A is not within the range
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Node 1 is also going to publish the new location to the SNS/Kafka + SQS system
+    and that message will be heard by
+  prefs: []
+  type: TYPE_NORMAL
+- en: location_history service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: last_seen service
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: nearby_friends – It is going to fetch all friends and recompute distance to
+    cater to the case where two users were already online and their location is now
+    within the range of x km.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**location_history** and **user_last_seen** services are going to do the same
+    thing as they did earlier.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user goes offline or turns off the online status**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When the user goes offline or when the user turns off the online status than
+    his online status should stop showing to all his friends. Let’s discuss both of
+    these cases one by one
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user goes offline**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Assume that user **A** goes offline. User **A** friend’s **B** and **C** were
+    online when user **A** goes offline. Below is the sequence of steps that are going
+    to happen
+  prefs: []
+  type: TYPE_NORMAL
+- en: The call is going to come to node 1 to which User **A** is connected.  As soon
+    as the web socket connection is terminated on node 1, the node or machine on which
+    the connection got ended will send a message on the named channel of user A. The
+    message will be as below indicating that the user went offline
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Node 2 and Node 3 having users **B** and **C** respectively will listen to this
+    message and immediately inform **B** and **C** that user **A** went offline. The
+    client App of **B** and **C** will stop showing user **A** right away
+  prefs: []
+  type: TYPE_NORMAL
+- en: Apart from that they are also going to remove **B** and **C** as subscribers
+    from user A’s named channel.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optimization: Removing subscriptions of **B** and **C** can also be done async
+    via **nearby_friends** service in a sync manner.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**When the user turns off the online status**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is the same as when the user goes offline
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Comparison of the two approaches**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second approach is definitely a bit faster as all the nodes or machines
+    in the session service are listening directly to the pub/sub channel in redis
+    and soon as the message is published there the subscribers are informed immediately.
+  prefs: []
+  type: TYPE_NORMAL
+- en: But there is a downside as well. There could be millions or billions of named
+    channels if there are that number of users. On top of that for such a number of
+    channels, there could n times subscriptions where n is the average number of friends
+    online at a time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All these subscriptions need to be maintained on the nodes of the session service
+    which could be difficult to scale. Later on, we will do a capacity estimate as
+    well as talk about the scaling challenges of the pub/sub model
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Non-Functional Requirement**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Scalability**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The first thing to consider with the above design is the scalability factor.
+    The scalability of each of the components in the system is very important. Here
+    are scalability challenges you can face and their possible resolutions
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each of the machines in the session service could hold only a limited number
+    of connections. Hence based on the number of users online at a moment, the number
+    of machines and a number of instances could be set up.  For eg one machine has
+    around 65000 ports
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Also for the second approach, each of the machines in the session service could
+    also have millions of subscriptions to the redis pub/sub. For example, if a machine
+    has a total of 1000 users connected via a web socket and each user has 200 online
+    friends. Then that machine will have 1000*200 = 200K subscriptions. These subscriptions
+    will have a memory and CPU impact. This impact has to be taken into consideration
+    while scaling session service.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For the scalability of distributed cache, we should have horizontal scaling
+    enabled. We will discuss the scaling of distributed cache for redis pub/sub in
+    detail later in this tutorial
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Your Kafka system might not be able to take that much load. We can scale horizontally
+    but to a limit. If that is becoming a bottleneck then depending upon the geography
+    or userId we can have two or more such systems. Service discovery could be used
+    to figure out which Kafka system a request needs to go to.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A similar approach can be taken for other services as well.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Another important factor of scalability here is that we have designed our system
+    in such a way that none of the services is bogged with too many things to do.
+    There is a separation of concerns and wherever there was too much of a responsibility
+    for service, we have broken it down
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Scalability of Redis Pub/Sub Server**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As we mentioned earlier, redis pub/sub channels are very cheap to create. Redis
+    Pub/Sub can handle a large number of channels and therefore a large number of
+    publishers and subscribers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What are some of the scalability factors for Redis Pub/Sub?
+  prefs: []
+  type: TYPE_NORMAL
+- en: Number of Channels
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Type of instance used in the Redis Pub/Sub Cluster
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Memory
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: CPU
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Number of Instances in the cluster or horizontal scalability of the cluster.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The average size of the message that is published to the channel
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Replication of the cluster
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Number of Channels**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Let’s do some math based on the user estimate. Assume there are 1 billion users.
+    20% of the users are always online and have their location preferences enabled.
+    So that is 200 million users. Assume on average 20 friends of each user are online
+    at the same time. So overall we will need
+  prefs: []
+  type: TYPE_NORMAL
+- en: 200 million channels to be created
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Each channel will have 20 subscribers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Type of instance used in the Redis Pub/Sub Cluster**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The hardware on which redis pub/sub is running is an important factory. Basically
+    the memory and CPU of the machine. The more memory and the CPU of the machine,
+    the more the channel can be created.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Memory**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each UUID of a user is 16 bytes. Each channel will have 200 subscribers. Redis
+    Pub/Sub channel is implemented using a hash map and a double-linked list internally.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The overall size will be around
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16 bytes UUID * 1 publisher = 16 bytes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 16 bytes UUID * 200 subscriber = 3200 bytes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 8 bytes Pointer * 21 = 180 bytes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So 1 channel will take around 3400 bytes on average. We can assume that each
+    channel takes 4000 bytes or 4KB on average
+  prefs: []
+  type: TYPE_NORMAL
+- en: 200 million channel * 4 KB= 800 GB
+  prefs: []
+  type: TYPE_NORMAL
+- en: If a server has 20 GB of memory around on average. We will need approx 800/20=40
+    servers minimum. Also, it has to be added
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**CPU**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**TheCPU requirement of the cluster is something that has to be calculated
+    using load testing. Based upon the load test either the number of servers has
+    to be increased or decreased**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**### **Number of Instances in the cluster or horizontal scalability of the
+    cluster**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The cluster has to be horizontally scalable meaning that new servers can be
+    added if required or removed if not required. We can use consistent hashing for
+    that. With consistent hashing, the distribution of keys is minimized in case of
+    the addition of new servers or the deletion of the new servers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The average size of the message that is published to the channel**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is also an important factor to consider for scalability because when a
+    message is published to a channel, the redis pub/sub is going to hold it until
+    it is received by all the subscribers
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Replication of the cluster**'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The cluster will have replication enabled as well. Each of the instances in
+    the cluster will have replicas as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The above scalability considerations apply to the distributed cache as well
+    that we are going to use in Approach 1
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about designing nearby friends. Hope you have liked this article.
+    Please share feedback in the comments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)**'
+  prefs: []
+  type: TYPE_NORMAL

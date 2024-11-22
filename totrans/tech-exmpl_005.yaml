@@ -1,0 +1,81 @@
+- en: How to find what /bin/sh points to on your machine
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/bin-sh-points/](https://techbyexample.com/bin-sh-points/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '**/bin/sh** could be either a symbolic or hard link to what it points to. /bin/sh
+    could point to'
+  prefs: []
+  type: TYPE_NORMAL
+- en: /bin/bash
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: /bin/dash
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: ….
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**If /bin/sh is a symbolic link**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: If /bin/sh is a symbolic link then we can find what it points to using the below
+    command
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: If the **/bin/sh** has a symbolic link to bash then it will output
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**If /bin/sh is a hard link**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this case, we can use the below command to find what /bin/sh points to
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: If it points to dash then below will be the output
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: For example on the docker ubuntu container the **/bin/sh** points to **/bin/dash**.
+    So if you will run the above command in the docker ubuntu container then it will
+    output as /bin/dash
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command to run for docker container
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

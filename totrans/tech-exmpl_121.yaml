@@ -1,0 +1,105 @@
+- en: Wildcard matching or regex matching problem
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/wildcard-matching-problem/](https://techbyexample.com/wildcard-matching-problem/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We are given an input regex and an input string. Regex can have two special
+    characters
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Star Sign ‘*’ –** the star matches zero or more characters.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Question Mark ‘?’ –** It matches any character.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The objective is to find whether the given input string matches the regex or
+    not.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Eg
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Below is the recursive solution for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Recursive Solution**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the recursive solution
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we encounter a star * then we have two cases. We ignore the * character in
+    the pattern and move on to the next character in the pattern. The other case is
+    that we move one character in the input string assuming * matches at least one
+    character. Basically check for a match with **(inputIndex, patternIndex+1)** and
+    **(inputIndex+1, patternIndex)**. If either of them returns true then the input
+    string matches the regex.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If we encounter a question mark ? then we simple proceed with **(inputIndex+1,
+    patternIndex+1)**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If we encounter a simple character then we simply proceed in the input string
+    as well as the patter  ie. we do proceed with **(inputIndex+1, patternIndex+1)**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Here is the program
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Dynamic Program Solution**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The above program is not an optimized solution as the subproblems are solved
+    again and again. This problem can also be solved with DP.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a two-dimensional matrix named **isMatchingMatrix** where
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**isMatchingMatrix[i][j]** will be true if the first **i** character in the
+    input string matches the first **j** character in the pattern'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Below is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE

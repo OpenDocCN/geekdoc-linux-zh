@@ -1,0 +1,158 @@
+- en: How to run a command in the background on Linux
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/run-command-in-the-background-on-linux/](https://techbyexample.com/run-command-in-the-background-on-linux/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Using ‘&’ command
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using ‘bg’ command
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Using ‘nohup’ utility
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Using ‘&’ command**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Use & at the last of the command to send the command in the background.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Syntax**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Example:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note:**– This is risky since it will throw output to the terminal and prevent
+    you to type any command. so if a command sends out some output then redirect it
+    to a file or somewhere or /dev/null before sending it to the background. That’s
+    why I redirected the output of the command to a file name ‘out’ and appended ‘2>&1’
+    to redirect the error to the file as well along with output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**jobs command**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It lists all the jobs running in the background with a job number written in
+    placeholder []
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**fg command**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Syntax**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note:-** job_number you get after running the command using ‘&’ and can also
+    find it in the outputs of the ‘jobs’ command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note:- **Once we bring the above command to the foreground then We had to
+    cancel it using ‘Ctrl + C’ because it was blocking the terminal. So Always keep
+    another terminal open in case something doesn’t work as planned you can kill that
+    process using **‘kill’ or ‘pkill’ c**ommand from that terminal.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Using ‘bg’ command**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To use this command follow these two steps.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Run the command and press Ctrl + Z to stop it
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Now run the ‘bg’ command it will run the last command in the background
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Example:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now run the bg command
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Using ‘nohup’ utilit**y'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Just start the command with ‘nohup’ prefix. it detaches the terminal from the
+    process and sends output and errors to its default log file i.e. nohup.out in
+    the current directory. You can configure it to your own output file like the below
+    commands
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note:-**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the above command, we appended ‘&’ at last to free the terminal in the current
+    session you can use the terminal and do other activities while the above long-running
+    command will keep running.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We redirected output/errors to a customized file. i.e. results**.**out using
+    these lines in the above command “**> results.out 2>&1**“.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: We started the ‘workflow.py’ script with ‘nohup’ by writing before the command.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

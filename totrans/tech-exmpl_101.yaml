@@ -1,0 +1,80 @@
+- en: Program to divide two integers without using multiplication or division operator
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/divide-two-integers-progam/](https://techbyexample.com/divide-two-integers-progam/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Two numbers are given. The objective is to divide those numbers and return the
+    quotient. Ignore the remainder in the solution. But division needs to be done
+    without using the multiplication or division operator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first number is the dividend
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The second number is the divisor
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here is the idea of how to do it. The first thing to notice is that
+  prefs: []
+  type: TYPE_NORMAL
+- en: If dividend and divisor are either both positive or both negative then the quotient
+    is positive
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If either one of dividend and divisor is negative then the quotient is negative
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: So there is an XOR relation between signs of dividend and divisor. We can follow
+    the below steps to write the program
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, determine the sign of the quotient as per the XOR logic above.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then make both dividend and divisor positive.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Now increase the divisor by itself until it is less than or equal to the dividend.
+    Also, keep a counter for each increment
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: counter*sign will be the answer
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE

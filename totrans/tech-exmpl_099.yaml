@@ -1,0 +1,66 @@
+- en: Program for Length of Longest Increasing Subsequence
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/longest-increasing-subsequence/](https://techbyexample.com/longest-increasing-subsequence/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The objective is to find the longest increasing subsequence in a given input
+    array. It is the longest subsequence in a given sequence such that every element
+    is larger than its previous element
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Another example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Longest Increasing Subsequence is a DP problem. Assume the input array is named
+    **input** only. Let’s say **lis** is the array where **lis[i]** is the length
+    of the longest increasing subsequence at index **i**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**lis[0]** = 1'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**lis[i]** = **max(lis[j])** + 1 where 0 <= **j** < **i** and **input[i]**
+    > **input[j]**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**lis[i]** = 1 if there is no such **j**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE

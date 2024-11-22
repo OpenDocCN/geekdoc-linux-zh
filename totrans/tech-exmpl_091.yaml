@@ -1,0 +1,64 @@
+- en: Range Sum 2d array program
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/range-sum-2d-array-program/](https://techbyexample.com/range-sum-2d-array-program/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There is a 2d matrix of numbers that is given. The objective Calculate the **sum**
+    of the elements of matrix inside the rectangle defined by its **upper left corner**
+    (row1, col1) and **lower right corner** (row2, col2).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Seem simple right. Just iterate from the left corner to the right corner in
+    the given array and return the sum. But here is the catch. Allowed TC is O(1)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is the approach we can follow so that we are able to return the answer
+    in O(1) time complexity
+  prefs: []
+  type: TYPE_NORMAL
+- en: Pre compute another sum_array for that 2d matrix
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: sum_array[i][j] = sum of numbers from the **left corner** (0, 0) and **right
+    corner** (i, j).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For a given left corner (row1, col1) and right corner (row2, col2) compute
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Then return
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE

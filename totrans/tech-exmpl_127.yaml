@@ -1,0 +1,206 @@
+- en: Understanding Curly Braces in Regular Expressions or Regex
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/curly-braces-quantifier-regex/](https://techbyexample.com/curly-braces-quantifier-regex/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Curly braces act as a repetition quantifier in regex. They specify the number
+    of times a character before preceding it can appear in the input string or text.
+    They can also be used to specify a range i.e specify the minimum and maximum of
+    times a  character can appear.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Its syntax is
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: where
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**min** denotes the minimum number of times a character can appear'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**max** denotes the maximum number of times a character can appear'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This specifies that character “a” can appear exactly n times. Similarly for
+    the below regex
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: This specifies that any digit can appear exactly n times. Curly braces can also
+    be used to define a range.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For example
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**{m,n}** – Atleast **m** and up to **n** times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**{m, }** – Atleast **m** times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**{, n}** – Upto **n** times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see an example for the same in ruby language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**main.ruby**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: By default, curly braces are greedy or non-lazy. What does it mean? They will
+    match all the possible characters and always prefers more. It is also possible
+    to make the curly braces operator non-greedy or lazy. This can be done by adding
+    a question mark after the curly braces operator. Let’s see an example for the
+    same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As you can see from the output that after adding a question mark operator after
+    the curly brace operator, it tries to match the minimum number of characters as
+    possible i.e it becomes nongreedy
+  prefs: []
+  type: TYPE_NORMAL
+- en: That is why given regex
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: It gives a match **abb** for all below input strings
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Program for the same in ruby language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**main.ruby**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: while
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**ab{2,4}?** will always give match as **abb** for all the above input strings'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Program for the same
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Curly braces applied to a grouping**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A part of the regular expression can be placed inside a balanced parenthesis.
+    This part is one group now. We can additionally apply curly braces to this group.
+    The curly braces will be added after the grouping
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s see an example of the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Curly Braces applied to a Character Class**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Curly Brace quantifier can also be applied to the entire character class. Its
+    meaning remains the same though. A character class is represented by square brackets
+    in regex. Let’s see a program for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We have below regex in the above program
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: It means it would match a string of length exactly 4 and comprised of characters
+    **‘a’** and **‘b’** in any order
+  prefs: []
+  type: TYPE_NORMAL
+- en: That is why the regex matches the below string
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: And it does not match
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**How to use the curly brace as a literal character in regex. **'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The escaping character can be placed before the opening brace or closing brace
+    if they are needed to be used in a literal way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A closing brace that is not preceded by an opening is treated as a literal closing
+    brace.
+  prefs: []
+  type: TYPE_NORMAL
+- en: That is all about curly braces in regex in Regex. Hope you have liked this article.
+    Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,173 @@
+- en: Point to Point (P2P) vs Pub/Sub in Distributed Message Queue
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/p2p-pub-sub-message-queue/](https://techbyexample.com/p2p-pub-sub-message-queue/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Distributed Message Queue has two models
+  prefs: []
+  type: TYPE_NORMAL
+- en: Point to Point
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pub-Sub
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To understand the difference we have to understand a few terms first
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Producer** – The producer is the one who is producing the message that needs
+    to be consumed by the consumer in an asynchronous way.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Message Queue** – The message Queue is the place where the producer pushes
+    the messages  and the place where messages are kept till they are read by the
+    consumer'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Consumer or Subscriber** – The consumer is the one who is consuming the message
+    that has been put. When it comes to consumers then there is one important thing
+    to note. There could be multiple processes or threads of the same consumer running
+    on the same or different machine in order to parallelize the processing of messages
+    from the message queue. We will use the term consumer in this tutorial although
+    both consumer and subscriber can be used analogously.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s see the difference between the two
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Point to Point**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In the Point to Point model, there is one producer and one consumer, and bookkeeping
+    is done per message level. Basically, there is one destination for the message.
+    So for example let’s say there are two threads that are running for the consumer.
+    There is one message in the message queue which has been put by the producer.
+    Then only one thread of that consumer will be able to consume that message and
+    once done it can delete that message from the queue. Below is the diagram for
+    P2P
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![P2P](../Images/291b7364bf469cbefdcd09953ed662be.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: If there are two messages in the queue then one message could be picked by one
+    thread and the other message could be picked by the other thread. Or there could
+    be a case where both the messages are being picked or consumed by either of the
+    thread. And so on for more than two messages
+  prefs: []
+  type: TYPE_NORMAL
+- en: The point is that one message could only be consumed by one thread or process
+    of the consumer and then it is deleted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is also possible that the second message is processed first and deleted from
+    the queue and the first message is then processed and deleted. So therefore an
+    unordered bookkeeping of which messages have been deleted and which have not been
+    deleted is done by the distributed message queue.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Pub-Sub Model**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In the Pub-Sub there is one producer and multiple consumers. Again for each
+    of the consumers, there could be multiple threads or processes running on the
+    same or different machine. Basically in Pub-Sub Model, there could be multiple
+    destinations for the same message.  Here is the diagram for Pub-Sub Model
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Pub Sub](../Images/f7446cee4ca41c30112a5084b9b660a3.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: If there is one message in the message queue then that message will be consumed
+    by all the consumers. The message is only deleted from the distributed message
+    queue once it is processed by all the consumers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the Pub-Sub model generally, the bookkeeping is not done per message per
+    consumer level. Instead distributed message queue maintains an offset up to which
+    each consumer has processed the message.  Based upon that offset distributed message
+    queue will decide to delete that message.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As an example consider there are 4 consumers. Also, assume there are 10 messages
+    in the queue. Initially, none of the consumers processed any of the messages,
+    so the offset for each of the consumers is zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Consumer Name | Offset |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C1 | 0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C2 | 0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C3 | 0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C4 | 0 |'
+  prefs: []
+  type: TYPE_TB
+- en: After that, all the consumers start consuming the messages. Let’s say C1 is
+    able to process all 10 messages and informs Message Queue that it has consumed
+    and processed all 10 messages. Similarly, C2 is able to process the first 5 messages
+    and inform Message Queue about the same. Similarly, C3 and C4 are able to process
+    the first 8 and the first 4 messages respectively. So below will the offset table
+    for each consumer
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Consumer Name | Offset |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C1 | 10 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C2 | 5 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C3 | 8 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| C4 | 4 |'
+  prefs: []
+  type: TYPE_TB
+- en: The message queue can safely delete the first four messages as it knows that
+    the first four have been consumed by all the consumers. Basically, it looks at
+    the minimum offset and decides to delete based on that.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another point to note here is that the consumers can only commit offset up to
+    which they have consumed the messages. So if a consumer C4 has let’s say successfully
+    message 1,2,3,4, and 6\. But it has not been able to process message 5 then it
+    will only commit offset 4 into the Publisher and not 6.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Also note that in the Pub-Sub case as well only a single thread or process of
+    a particular consumer is consuming a particular message then that message cannot
+    be consumed by other thread/process of the same consumer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about the general differences between the P2P and Pub-Sub Model
+    of a Distributed Message Queue. Hoped you have liked this article. Please share
+    feedback in the comments.
+  prefs: []
+  type: TYPE_NORMAL

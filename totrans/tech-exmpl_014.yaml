@@ -1,0 +1,726 @@
+- en: Chess Game System Design
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/chess-low-level-design/](https://techbyexample.com/chess-low-level-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Requirements](#Requirements "Requirements")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[All actors in a game of Chess](#All_actors_in_a_game_of_Chess "All actors
+    in a game of Chess")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Piece](#Piece "Piece")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Cell](#Cell "Cell")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Move](#Move "Move")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Player](#Player "Player")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Board](#Board "Board")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Game Class](#Game_Class "Game Class")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low–Level Diagram](#Low%E2%80%93Level_Diagram "Low–Level Diagram")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Code](#Code "Code")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this tutorial, we are going to design a chess game. Chess is a board game
+    that is played between two players.  More information about chess is available
+    here
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://en.wikipedia.org/wiki/Chess](https://en.wikipedia.org/wiki/Chess)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Before we start, please note that this is Low-Level Design Problem. We are going
+    to design a chess game using Object Oriented Principles.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Designing a Chess Game is a very common system design interview question and
+    as with any other system design interview this is what the interviewer is looking
+    for
+  prefs: []
+  type: TYPE_NORMAL
+- en: Your knowledge of Object-Oriented Design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: How do you frame your design in terms of Design Patterns
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Also, note that this question is not a distributed system design.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this tutorial, we will discuss the low-level design of the Chess Game. Along
+    with that, we will also see into the working code for the Chess Game. Here is
+    the table of contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: Requirements
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Actor in the design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: UML diagram
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The low-Level design represented in Go Programming Language
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Working Code
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Requirements**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The requirement of this tutorial is to design a chess game as per the rules
+    of chess using Object Oriented Design Principles
+  prefs: []
+  type: TYPE_NORMAL
+- en: This article can be referred to know more about the rules of chess
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://en.wikipedia.org/wiki/Rules_of_chess](https://en.wikipedia.org/wiki/Rules_of_chess)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The next step is to identify all actors in a game of Chess
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**All actors in a game of Chess**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Board
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Cell
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Player
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Human Player
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Computer Player
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Move
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pieces
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: King
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Queen
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Bishop
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Rook
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Knight
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pawn
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Game
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Move
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s look at each of these actors
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Board** – We have an 8*8 board in a game of chess. So total there are 64
+    cells'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Cell –** A cell represents one of the cells of 8*8 = 64 cells'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Player –** It represents one of the two players playing the game. A player
+    can be a'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Human Player –
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Computer Player
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Move –** It represents a move made by one of the players'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Pieces**– There are different types of pieces in a chess game namely'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: King
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Queen
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Bishop
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Rook
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Knight
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pawn
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Game** –  The game class controls the entire flow of the chess game. It decides
+    which player turn it is, the overall result of the game, etc.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Move** – It simply represents a move in the game.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than the above actors we also have **GameStatus** Enum that has the below
+    types
+  prefs: []
+  type: TYPE_NORMAL
+- en: FirstPlayerWin
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: SecondPlayerWin
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: GameInProgress
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: GameDraw
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Stalemate
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**UML Diagram**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Below is the UML diagram for the Chess Game
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/0e0214be283d36a07a402affd8c98290.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Let’s understand this UML diagram by looking at different components and how
+    each component integrate with other components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Piece**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The simplest component in the above design is a **Piece**. As mentioned above
+    a Piece is of 7 types namely king, queen, rook, bishop, knight, and pawn. The
+    Piece class is an abstract class that has the below information
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**white** – it is set to true if the piece is white otherwise false'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**killed** – whether a piece is captured or not.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other than that it also provides a function **canMove()** which returns true
+    if a given piece can move from its current location on the board to a new location.
+    This function has the below signature
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**canMove(board, location, location)**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Cell**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The next simplest component is a **cell**. A cell represents a cell on the board.
+    A cell will have the below components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**location** – It represents the **x** and **y** coordinate of the cell on
+    the board'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**piece –** The piece which is present on a given cell. It will be nil if the
+    piece is not present at that cell location'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Move**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It represents a move in a chess game. There are three different moves that can
+    happen in chess
+  prefs: []
+  type: TYPE_NORMAL
+- en: Resign
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Draw Offer
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Moving a piece from its current cell to a new cell
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It has below components that represent either of the above three types of move.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Current Location** – The current location of the piece'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**New Location** – The new location to which a piece has moved to'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Piece** – The piece which got moved'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Resign** – The move is a resign or not'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Draw Offered** – Weather a player offered a draw or not.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Player**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are two different types of player
+  prefs: []
+  type: TYPE_NORMAL
+- en: Human Player
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Computer Player
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A player will have below fields or components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**isWhite** – whether the player is playing as a white or black'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**getNextMove** – get the next move of the player'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**agreeDraw** – whether the player agreed to a draw offer'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Board**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Next is **Board** class. It represents the board of the game. It has below components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Square** – Two-dimensional array of **Cell**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Dimension –** The dimension of the board which will be always 8'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Game Class**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Next is the most important class in the system which is **Game** class. It has
+    below components
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Board**  – It represents the board'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**First Player**  – The first player'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Second Player** – The second player'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**First Player Turn** – Will be true if the current turn is of the first player
+    otherwise false'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Game Status  –** What is the current Game Status'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Moves**  – List of moves that have been made till now'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low**–**Level Diagram**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Here is the low-level diagram in the Go Programming Language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Game**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Game Status**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Board**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Cell**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Move**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**iPlayer Interface**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Human Player**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Computer Player**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Piece Type**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**King Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Queen Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Rook Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Bishop Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Knight Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Pawn Piece**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Location**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Code**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let’s look at the code. The below code is not fully working functional code
+    as per the chess algorithm and moves, but it will give you an idea
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**game.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**gamestatus.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**board.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**cell.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**move.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**iPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**humanPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**computerPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**piece.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**pieceType.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**king.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**queen.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**rook.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**bishop.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**knight.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**pawn.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**location.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about the low-level design of the chess game. We hope you have liked
+    this article. Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL

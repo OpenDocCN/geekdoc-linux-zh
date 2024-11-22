@@ -1,0 +1,460 @@
+- en: Design a Leaderboard or Low-Level Design of a Leaderboard
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/leaderboard-system-design/](https://techbyexample.com/leaderboard-system-design/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Balanced BST + Hashmap Solution](#Balanced_BST_Hashmap_Solution "Balanced
+    BST + Hashmap Solution")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Comparison with Min Heap](#Comparison_with_Min_Heap "Comparison with Min Heap")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Implementation](#Implementation "Implementation")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[AddScore](#AddScore "AddScore")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Reset Score](#Reset_Score "Reset Score")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Retrieve the top k sum from the leaderboard](#Retrieve_the_top_k_sum_from_the_leaderboard
+    "Retrieve the top k sum from the leaderboard")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Retrieve the top k players from the leaderboard.](#Retrieve_the_top_k_players_from_the_leaderboard
+    "Retrieve the top k players from the leaderboard.")'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Full Working Code](#Full_Working_Code "Full Working Code")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this tutorial, we will design a leaderboard and see the full working code
+    for it. Below are some of the requirements for the leaderboard which we are going
+    to design
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**AddScore(id, score)** – Add score to the score of the player with playerId
+    as id. If no such player exists then create one.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**RestScore(id)**– Reset the score to zero of the player with playerId as id'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Top K Sum** – Should be able to retrieve the top k sum from the leaderboard.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Top K Players** – Should be able to retrieve the top k players from the leaderboard.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The first solution that comes to mind looking at this problem is to use a **Min
+    Heap + HashMap**. But Min Heap is not an optimal solution if the Top K sum or
+    Top K players are called too frequently which they will be as it is a leaderboard
+    that is meant to show leaders. But why is it not an optimal solution and then
+    what is the optimal solution? We will look at it in this tutorial. Let’s first
+    see how this problem can be solved using Min Heap + Hashmap solution
+  prefs: []
+  type: TYPE_NORMAL
+- en: Two data structures will be required
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**MinHeap**– MinHeap will only be created at the time when Top K Sum or Top
+    K players method will be called'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Hashmap** – Other than MinHeap we will also maintain a hashmap that will
+    contain the entry for each of the players and their score. So for this hashmap
+    the'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The key will be playerID
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The value will be the player’s Score
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s look at the Time Complexity of each of the operations in the case of the
+    Min Heap + Hashmap solution
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Add Score:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Add to the Hash Map. TC is O(1)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Reset Score**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Set the value in the Hash Map to zero. TC is O(1)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Top K Sum:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a Min Heap of k elements. Traverse through the HashMap and add elements
+    to the Min Heap if the score is more than the top element of the Min Heap. TC
+    of this operation will be O(Nlogk) where N is the number of players
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Top K Players:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Same as Top K Sum. TC is O(NlogK) where N is the number of players
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here we can see that Time Complexity of Top K sum and Top K Players is O(Nlogk)
+    which is on the higher side. We can optimize it using a Balanced BST + Hashmap
+    Solution. For a Balanced BST + Hashmap Solution below will be the Time Complexity
+    of each of the operations
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Add Score: O(logN)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Reset Score: O(logN)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Top K Sum: O(K)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Top K Players: O(K)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The Time Complexity of **AddScore** and **ResetScore** has increased at the
+    cost of the lower Time Complexity of Top K Sum and Top K playeroperations. Let’s
+    look at how it will be implemented and then compare it with Min Heap Solution
+    later on in the tutorial.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Balanced BST + Hashmap Solution**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Balanced BST solution. We are going to maintain two data structures
+  prefs: []
+  type: TYPE_NORMAL
+- en: Balanced BST – We are going to use the AVL tree here. Each node in the AVL tree
+    will store below things
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Score
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Player IDs with that score. We will store it on a map. Why map and not an array?
+    So that we can easily remove a player from the node when its score changes
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Num Player with that score. It will be equal to the number of entries in the
+    Players Map
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Hashmap – Other than Balanced BST we will also maintain a hashmap that will
+    contain the entry for each of the players and their score. So for this hashmap
+    the
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The key will be playerID
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The value will be the player’s Score
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Comparison with Min Heap**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The below table compares (Balanced BST + HashMap) to (Min Heap + Hashmap)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Assumption: N is the number of players'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **Operation** | Balanced BST + HashMap | Min Heap + HashMap |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Add Score | O(logN) | O(1) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Reset Score | O(logN) | O(1) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Top K Sum | O(k) | O(Nlogk) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Top K players | O(k) | O(Nlogk) |'
+  prefs: []
+  type: TYPE_TB
+- en: The purpose of the leaderboard is to show the top score players at all times
+    and the board needs to be refreshed every time any score of any player changes.
+    So we would want to optimize the **Top K Sum** and **Top K** players method more.
+    Hence Balanced BST + Hashmap is more suited to designing the leaderboard
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Implementation**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let’s look at how the implementation and design of the Balanced BST + Hashmap
+    solution
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is an example of how things are stored in the AVL tree
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/84383e2642233fa1f3ee6f78ab4eb5f7.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here is how each of the operations is going to work
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**AddScore**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For this scenario, we have two cases
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The player already exists in the leaderboard**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For this, we simply add the player to the hashmap as well as the AVL tree.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The player doesn’t already exist in the leaderboard**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In this case, it means that the player’s score is getting changed. So in this
+    case we will do two things. Let’s understand the two things which are required
+    to be done using an example. For eg let’s say that the earlier score of the player
+    was 5 and now 3 is getting added to his score. So 5 is the old score and 5+3=8
+    is the new score. So we will simply
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remove that player from the node in the AVL tree with a score of 5.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Add that player to the node in the AVL tree with a score of 8\. If a node with
+    a score of 8 doesn’t already exist then create it.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The TC for AddScore will be **O(logN)** where N is the number of players
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Reset Score**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In this scenario as well we have two cases
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The player already exists in the leaderboard with a score of x**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: For this, we simply remove that player from the node in the AVL tree with a
+    score of x. Check in the map if the player exists in the leaderboard. If it exists
+    then perform the above-mentioned action
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**The player doesn’t already exist in the leaderboard**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In this case, we don’t need to do anything
+  prefs: []
+  type: TYPE_NORMAL
+- en: The TC for ResetScore will be **O(logN)** where N is the number of players
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Retrieve the top k sum from the leaderboard**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For this, we simply need to traverse the AVL tree starting with the node having
+    the highest score, then add that **score*num_players** at the output sum. If NumPlayers
+    at that AVL node is greater than k, then add **score*k** to the output sum. Keep
+    repeating this process with the node with the second-highest score and then the
+    third-highest score until the overall k score has been added.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The TC for this operation will be **O(K)** because it is the same as traversing
+    K nodes in a balanced BST
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Retrieve the top k players from the leaderboard.**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For this, we simply need to traverse the AVL tree starting with the node having
+    the highest score, then add all the players with that score to the output. If
+    num players at that AVL node are greater than k, then add only k players.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Keep repeating this process with the node with the second-highest score and
+    then third highest score until the overall k players have been added
+  prefs: []
+  type: TYPE_NORMAL
+- en: The TC for this operation will be **O(K)** because it is the same as traversing
+    K nodes in a balanced BST
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Low-Level Design**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this design, we are going to use two classes
+  prefs: []
+  type: TYPE_NORMAL
+- en: The first is the leaderboard class. The leaderboard class will expose all methods
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**AddScore(playerId string, scoreToAdd int)**'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Reset(playerId string)**'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**TopPlayers(k int)**'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**TopSum(k int)**'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: leaderboard class will internally use AVL to return all the results
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second is the AVL class. This class with contain below two classes and will
+    encapsulate all logic for implementing an AVL tree
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: AVL Tree Class
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: AVLNode class
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Full Working Code**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The code for AVL tree in golang has been inspired by [https://github.com/karask/go-avltree](https://github.com/karask/go-avltree)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is the working code for the same in Go Programming Language
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**lederboard.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**avl.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is all about designing and implementing a leaderboard. Hope you have liked
+    this article. Please share feedback in the comments
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

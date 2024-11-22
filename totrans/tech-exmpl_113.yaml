@@ -1,0 +1,294 @@
+- en: System Design of Tic Tac Toe Game
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/system-design-tic-tac-toe-game/](https://techbyexample.com/system-design-tic-tac-toe-game/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Table of Contents
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Overview](#Overview "Overview")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Program](#Program "Program")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Full Working Code:](#Full_Working_Code "Full Working Code:")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conclusion](#Conclusion "Conclusion")'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Tic Tac Toe is a board game. Let’s first understand the rules of the game. In
+    this tutorial, we will
+  prefs: []
+  type: TYPE_NORMAL
+- en: First, understand the tic tac toe game with an example
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: See the UML diagram of the low-level design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Then we will see the low-level design expressed in the Go language
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Finally, we will see a proper working code of the same with proper design
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s first understand what is Tic Tac Toe with an example
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is an n*n board and each block in the board can be marked with either
+    a **cross** or a **circle** only if the block is empty
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Maxtwo players play the game at a time with each taking turn.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The first player marks a **cross** at any block in the board in its turn.  While
+    the second player marks a **circle** at any block in the board in its turn.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The objective is to have either an entire row or an entire column or an entire
+    diagonal with any of the one symbol either **cross** or **circle**.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Both players will try to stop the other player from achieving this objective.
+    Whosoever achieves it first will win.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If all blocks in the board are full and none of the players have not been able
+    to mark the entire row, column, or diagonal with its symbol then the game results
+    in a draw.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: No more moves are allowed after one player wins the game.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Let’s understand this game with an example. Assume a 3*3 grid. Dot (‘.’) represents
+    an empty block
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above game First Player Win because the third row is all occupied with
+    symbol cross – **‘*’**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**UML Diagram**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s first see the UML diagram for the same.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![](../Images/75cbd2f93eabd5a1cdbe3a7f29e54a4b.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Here are some ideas from the UML diagram
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is a Symbol Enum which represents different symbols used on the board.
+    The symbol could be a **Cross**, **Circle**, or **Dot**. The **Dot** represents
+    an empty block in the board
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is an iPlayer interface that represents the player in the game.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A player can be a human player or a computer player. As such, there is a **humanPlayer**
+    class and a **computerPlayer** class that implements the iPlayer interface
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is a board class that only captures the details of the board. Depending
+    upon the state of the board it tells whether any of its row,  column, or diagonal
+    has been completed and by which symbol. It knows nothing about a player or the
+    game itself. It knows how to print the board as well. This board class will be
+    used by the Game class as we will later see.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is a Game Status Enum class that defines the different starts of the game.
+    A game can be either Inprogresss, Draw,  FirstPlayerWin, or SecondPlayerWin state.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: There is a game class that controls the execution of the game. It has the board
+    object,  as well as both players’ objects as its field. Other than that it has
+    other fields as well such as gameStatus, moveIndex, etc.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Low-Level Design**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Let’s look at the low-level design of the problem expressed in the Go programming
+    language.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**iPlayerInterface**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Human Player Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Computer Player Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Symbol Enum**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**GameStatus Enum**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Board Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Game Class**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Program**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**symbol.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**iPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**humanPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**computerPlayer.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**gameStatus.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**board.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**game.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the above program, we have fixed the moves for both the player in the **humanPlayer.go**
+    file. Here is the output based upon those moves.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Full Working Code:**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here is the full working code in one file
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**main.go**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Output**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the above program as well, we have fixed the moves for both the player in
+    the **humanPlayer class**. Here is the output based upon those moves.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Conclusion**'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is all about designing the Tic Tac Toe game. Hope you have liked this tutorial.
+    Please provide your feedback in the comments.
+  prefs: []
+  type: TYPE_NORMAL

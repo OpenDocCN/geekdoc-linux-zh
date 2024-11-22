@@ -1,0 +1,78 @@
+- en: What does the set -e command do
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/set-e-command/](https://techbyexample.com/set-e-command/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Overview**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: If you want your shell script or shell file to exit in case any command in the
+    shell file returns a non-zero value then you can use set -e at the start of the
+    script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is sometimes annoying that one of the commands fails in your script, but
+    the script continues without failing and causes unintentional output as it breaks
+    the assumption in the rest of the script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is where the **set -e** comes to the rescue
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example**'
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let’s understand it with an example. We will first write a script without set
+    -e. Below is a simple script. Let’s name it **demo.sh** In this script p is undefined
+    and results in an error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**demo.sh**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Let’s run this script
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Below will the output
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Even though the script fails at line 1 but the last command of echo did got
+    executed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let’s now the same script with set -e
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**demo.sh**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Run the script again. Below will be the output
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: With set -e the script exists immediately as soon as the first command fails.
+    Therefore the subsequent command of echo is never executed
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  prefs: []
+  type: TYPE_NORMAL

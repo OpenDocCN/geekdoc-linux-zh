@@ -1,0 +1,44 @@
+- en: Difference between “./”, “.” and “source” in BASH shell or terminal (Linux)
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://techbyexample.com/difference-dot-slash-source/](https://techbyexample.com/difference-dot-slash-source/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Let’s understand each of these in the context of the sample **test.sh** file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Using “./**“'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The changes made by script gets discarded as soon as scripts end because this
+    runs script by forking a separate process. Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Using “.**“'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The changes made by the script persist till the terminal remains alive because
+    the script gets executed in the same bash process. Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Using “source**“'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'source are “.”  are synonyms and the same thing. “.” is the inclusion of POSIX
+    standard. Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
