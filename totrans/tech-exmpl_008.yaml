@@ -1,146 +1,216 @@
 - en: What is Virtual IP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 什么是虚拟 IP
 - en: 原文：[https://techbyexample.com/virtual-ip/](https://techbyexample.com/virtual-ip/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/virtual-ip/](https://techbyexample.com/virtual-ip/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[How Virtual IP Helps in high availability (Load Balancing and Failover)](#How_Virtual_IP_Helps_in_high_availability_Load_Balancing_and_Failover
     "How Virtual IP Helps in high availability (Load Balancing and Failover)")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[虚拟 IP 如何帮助高可用性（负载均衡与故障转移）](#How_Virtual_IP_Helps_in_high_availability_Load_Balancing_and_Failover
+    "虚拟 IP 如何帮助高可用性（负载均衡与故障转移）")'
 - en: '[Example of Failover](#Example_of_Failover "Example of Failover")'
+  id: totrans-5
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[故障转移示例](#Example_of_Failover "故障转移示例")'
 - en: '[Example of Load Balancing](#Example_of_Load_Balancing "Example of Load Balancing")'
+  id: totrans-6
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[负载均衡示例](#Example_of_Load_Balancing "负载均衡示例")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-8
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: In distributed systems at the end level, a server or machine and a NIC (Network
     Interface Card) have a defined physical IP address. A physical IP address is an
     address that is assigned to one machine or device. It cannot be assigned to another
     physical device. In other terms, a physical IP address is tied to a specific machine.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在分布式系统的最终层，服务器或机器和网卡（NIC）有一个定义的物理 IP 地址。物理 IP 地址是分配给某台机器或设备的地址，无法分配给另一台物理设备。换句话说，物理
+    IP 地址是与特定机器绑定的。
 - en: A virtual IP address is not tied to a specific machine or device. A virtual
     IP address can move from one device to another device. It is like a floating IP
     address.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 虚拟 IP 地址不绑定到特定的机器或设备上。虚拟 IP 地址可以从一台设备移动到另一台设备，就像是一个浮动的 IP 地址。
 - en: When we say a Virtual IP address belongs to a server at a point in time then
     that doesn’t mean that it is tied to the network interface card of the server.
     It is assigned to that server at one moment of time while the same virtual IP
     address could be assigned to another server at a different moment of time.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们说虚拟 IP 地址属于某台服务器时，并不意味着它绑定到该服务器的网卡上。它在某一时刻分配给该服务器，而在另一个时刻同一虚拟 IP 地址可能会分配给另一台服务器。
 - en: The typical use case of a virtual IP address is when there is a particular set
     of physical devices or servers acting as a single application or a service.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 虚拟 IP 地址的典型应用场景是当一组物理设备或服务器作为一个单独的应用或服务来工作时。
 - en: The virtual IP address acts as an entry point for that application or service
     and provides load balancing and failover mechanisms and helps them in achieving
     high availability. How it provides these things we will see later in this tutorial
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 虚拟 IP 地址作为该应用程序或服务的入口点，提供负载均衡和故障转移机制，帮助实现高可用性。它如何提供这些功能，我们将在本教程中进一步探讨。
 - en: A Virtual IP address can be assigned –
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 虚拟 IP 地址可以分配给 –
 - en: Multiple Servers
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 多台服务器
 - en: Multiple Domain Names
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 多个域名
 - en: Multiple Applications residing on a single server
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 多个应用程序托管在单一服务器上
 - en: Single Server itself
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 单台服务器本身
 - en: …
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: …
 - en: '**How Virtual IP Helps in high availability (Load Balancing and Failover)**'
+  id: totrans-20
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**虚拟 IP 如何帮助高可用性（负载均衡与故障转移）**'
 - en: Let’s see examples of both
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们来看两个示例
 - en: '**Example of Failover**'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**故障转移示例**'
 - en: One example where a virtual IP address helps in high availability and provides
     failover is the case of databases. In databases generally, we have a primary and
     a couple of secondary nodes. The primary node is behind a particular virtual IP
     address. Now the client always communicates with the virtual IP address through
     which it connects with the primary node.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 虚拟 IP 地址在高可用性和故障转移中的应用举例是数据库的情况。在数据库中，通常有一个主节点和几个备份节点。主节点背后有一个特定的虚拟 IP 地址。客户端始终通过这个虚拟
+    IP 地址与主节点进行通信。
 - en: Now if behind the scenes, the primary goes down then its virtual IP address
     will now be given to the machine which becomes the new primary. This is possible
     because the Virtual IP address is not to a particular physical machine as compared
     to the physical IP address which is tied to a specific machine. The client would
     still communicate to the same virtual IP address. It wouldn’t get to know that
     the primary has changed and it is now a different machine.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果在后台，主服务器宕机，其虚拟 IP 地址将被分配给成为新主服务器的机器。这是因为虚拟 IP 地址不像物理 IP 地址那样绑定到特定的物理机器。客户端仍然与相同的虚拟
+    IP 地址进行通信，无法察觉主服务器已更换，且现在是另一台机器。
 - en: What we described above is a failover mechanism provided by Virtual IP
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述描述的是虚拟 IP 提供的故障转移机制
 - en: '**Example of Load Balancing**'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**负载均衡示例**'
 - en: Another example of High Availability by providing Load Balancing using Virtual
     IP is as below
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个通过提供虚拟IP进行负载均衡来实现高可用性的示例如下：
 - en: Since the Virtual IP address is not tied to a specific machine, we can have
     a load balancer built to send messages to a set of Virtual IP addresses behind
     it. Each of the machines behind the load balancer is given a Virtual IP address.
     When any machine goes away due to some failure or some other reason then its virtual
     IP address could be assigned to a new machine that gets spun up.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于虚拟IP地址并不绑定到特定机器，我们可以构建一个负载均衡器，将消息发送到其后面的虚拟IP地址集合。负载均衡器后的每台机器都会分配一个虚拟IP地址。当任何机器因故障或其他原因停止工作时，它的虚拟IP地址可以分配给新启动的机器。
 - en: We can think of having a set of free virtual IP addresses behind a load balancer.
     Whenever a new instance comes up it takes one Virtual IP from that free pool.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以想象在负载均衡器后面有一组免费的虚拟IP地址。每当一个新实例启动时，它就会从这组空闲的虚拟IP池中获取一个虚拟IP。
 - en: '**Conclusion**'
+  id: totrans-30
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about virtual IP addresses. Hope you have liked this article. Please
     share feedback in the comments
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于虚拟IP地址的全部内容。希望你喜欢这篇文章。请在评论中留下反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 请查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'

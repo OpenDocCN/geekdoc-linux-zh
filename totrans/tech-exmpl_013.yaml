@@ -1,1495 +1,2187 @@
 - en: Nearby Friends System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附近朋友系统设计
 - en: 原文：[https://techbyexample.com/nearby-friends-system-design/](https://techbyexample.com/nearby-friends-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/nearby-friends-system-design/](https://techbyexample.com/nearby-friends-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Functional Requirements](#Functional_Requirements "Functional Requirements")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[功能需求](#Functional_Requirements "功能需求")'
 - en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
     Requirements")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能性需求](#Non-Functional_Requirements "非功能性需求")'
 - en: '[Data Storage](#Data_Storage "Data Storage")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[数据存储](#Data_Storage "数据存储")'
 - en: '[Location Updates Requirements](#Location_Updates_Requirements "Location Updates
     Requirements")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[位置更新需求](#Location_Updates_Requirements "位置更新需求")'
 - en: '[High-Level Design](#High-Level_Design "High-Level Design")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[高层设计](#High-Level_Design "高层设计")'
 - en: '[API Design](#API_Design "API Design")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[API 设计](#API_Design "API 设计")'
 - en: '[Location Update API](#Location_Update_API "Location Update API")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[位置更新 API](#Location_Update_API "位置更新 API")'
 - en: '[Set Location Preference on or off](#Set_Location_Preference_on_or_off "Set
     Location Preference on or off")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[开启或关闭位置偏好设置](#Set_Location_Preference_on_or_off "开启或关闭位置偏好设置")'
 - en: '[How location sharing is going to work](#How_location_sharing_is_going_to_work
     "How location sharing is going to work")'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[位置共享的工作原理](#How_location_sharing_is_going_to_work "位置共享的工作原理")'
 - en: '[First Approach – Using Distributed Redis](#First_Approach_%E2%80%93_Using_Distributed_Redis
     "First Approach – Using Distributed Redis")'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第一种方法 – 使用分布式 Redis](#First_Approach_%E2%80%93_Using_Distributed_Redis "第一种方法
+    – 使用分布式 Redis")'
 - en: '[The user first comes online](#The_user_first_comes_online "The user first
     comes online")'
+  id: totrans-14
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[用户首次上线](#The_user_first_comes_online "用户首次上线")'
 - en: '[When the user is already online](#When_the_user_is_already_online "When the
     user is already online")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当用户已经在线时](#When_the_user_is_already_online "当用户已经在线时")'
 - en: '[When the user goes offline or turns off the online status](#When_the_user_goes_offline_or_turns_off_the_online_status
     "When the user goes offline or turns off the online status")'
+  id: totrans-16
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当用户离线或关闭在线状态时](#When_the_user_goes_offline_or_turns_off_the_online_status
+    "当用户离线或关闭在线状态时")'
 - en: '[Second Approach – Using Redis Pub/Sub](#Second_Approach_%E2%80%93_Using_Redis_PubSub
     "Second Approach – Using Redis Pub/Sub")'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第二种方法 – 使用 Redis 发布/订阅](#Second_Approach_%E2%80%93_Using_Redis_PubSub "第二种方法
+    – 使用 Redis 发布/订阅")'
 - en: '[When the user first comes online](#When_the_user_first_comes_online "When
     the user first comes online")'
+  id: totrans-18
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当用户首次上线时](#When_the_user_first_comes_online "当用户首次上线时")'
 - en: '[When the user is already online](#When_the_user_is_already_online-2 "When
     the user is already online")'
+  id: totrans-19
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当用户已经在线时](#When_the_user_is_already_online-2 "当用户已经在线时")'
 - en: '[When the user goes offline or turns off the online status](#When_the_user_goes_offline_or_turns_off_the_online_status-2
     "When the user goes offline or turns off the online status")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[当用户离线或关闭在线状态时](#When_the_user_goes_offline_or_turns_off_the_online_status-2
+    "当用户离线或关闭在线状态时")'
 - en: '[Non-Functional Requirement](#Non-Functional_Requirement "Non-Functional Requirement")'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能性需求](#Non-Functional_Requirement "非功能性需求")'
 - en: '[Scalability](#Scalability "Scalability")'
+  id: totrans-22
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[扩展性](#Scalability "扩展性")'
 - en: '[Scalability of Redis Pub/Sub Server](#Scalability_of_Redis_PubSub_Server "Scalability
     of Redis Pub/Sub Server")'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Redis 发布/订阅服务器的扩展性](#Scalability_of_Redis_PubSub_Server "Redis 发布/订阅服务器的扩展性")'
 - en: '[Number of Channels](#Number_of_Channels "Number of Channels")'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[频道数量](#Number_of_Channels "频道数量")'
 - en: '[Type of instance used in the Redis Pub/Sub Cluster](#Type_of_instance_used_in_the_Redis_PubSub_Cluster
     "Type of instance used in the Redis Pub/Sub Cluster")'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Redis 发布/订阅集群中使用的实例类型](#Type_of_instance_used_in_the_Redis_PubSub_Cluster
+    "Redis 发布/订阅集群中使用的实例类型")'
 - en: '[Number of Instances in the cluster or horizontal scalability of the cluster](#Number_of_Instances_in_the_cluster_or_horizontal_scalability_of_the_cluster
     "Number of Instances in the cluster or horizontal scalability of the cluster")'
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[集群中的实例数量或集群的横向扩展性](#Number_of_Instances_in_the_cluster_or_horizontal_scalability_of_the_cluster
+    "集群中的实例数量或集群的横向扩展性")'
 - en: '[The average size of the message that is published to the channel](#The_average_size_of_the_message_that_is_published_to_the_channel
     "The average size of the message that is published to the channel")'
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[发布到频道的消息的平均大小](#The_average_size_of_the_message_that_is_published_to_the_channel
+    "发布到频道的消息的平均大小")'
 - en: '[Replication of the cluster](#Replication_of_the_cluster "Replication of the
     cluster")'
+  id: totrans-28
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[集群的复制](#Replication_of_the_cluster "集群的复制")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: The objective is to design the nearby friends feature. When we say nearby then
     it means that the location of the friends is constantly changing. As and when
     the location changes, then their location is constantly getting updated and shared
     with their nearby friends.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 目标是设计附近朋友功能。当我们提到“附近”时，意味着朋友的位置在不断变化。位置变化时，他们的位置会不断更新，并与他们的附近朋友共享。
 - en: Let’s first list down the functional requirements of the system
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们首先列出系统的功能需求
 - en: '**Functional Requirements**'
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**功能需求**'
 - en: A user when online should be able to view the current location of all their
     friends and vice versa
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户在线时，应能查看所有朋友的当前位置信息，反之亦然。
 - en: As and when the friend’s location gets changed it should get reflected in the
     view of the user and vice versa
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每当朋友的位置发生变化时，应当反映在用户的视图中，反之亦然。
 - en: We should be able to store the location history of the user as and when it changes.
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们应该能够存储用户的位置信息历史，随着位置的变化进行更新。
 - en: A user should be able to control whether they want to appear as a nearby friend
     or not. In other words, they have the capability to turn off the feature for them.
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户应能够控制是否希望自己显示为附近的朋友。换句话说，他们有能力关闭该功能。
 - en: '**Non-Functional Requirements**'
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**非功能需求**'
 - en: The latency of the system should be less.
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统的延迟应尽可能小。
 - en: The location of friends shown to the user will be eventually consistent.
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 显示给用户的朋友位置将是最终一致的。
 - en: Also with respect to sharing location updates, the system should be eventually
     consistent. Meaning that the location of the user will be communicated to his
     friends in an eventually consistent way in the sense that immediately the user’s
     location will not be correctly shown to his friends but eventually the correct
     location will be shown.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于位置共享更新，系统应最终一致。这意味着用户的位置将以最终一致的方式传达给他的朋友，虽然用户的位置可能会暂时不正确地显示给朋友，但最终会显示正确的位置。
 - en: Now the first question that comes to mind while designing nearby friends is
     how the location update of friends will be updated back in the client app. For
     that, we have a couple of options
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 在设计附近朋友功能时，第一个问题是朋友的位置信息如何更新到客户端应用中。为此，我们有几种选择。
 - en: '**HTTP long polling** – in this case, the client keeps polling for the location
     of friends nearby. This will be inefficient because the polling will return an
     empty result quite a few times. In other words, there could be a lot of empty
     receives which will waste network bandwidth. Also in the case of HTTP polling,
     only the client can poll the server. There is no way for the server to push updates
     back to the client.'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**HTTP 长轮询** – 在这种情况下，客户端不断轮询附近朋友的位置。这种方法效率较低，因为轮询很可能会返回空结果多次。换句话说，可能会有很多空接收，这会浪费网络带宽。此外，在
+    HTTP 轮询的情况下，只有客户端可以轮询服务器，服务器无法主动将更新推送给客户端。'
 - en: '**Web Sockets** – The other option is web sockets. In this case, the client
     app will always be connected to the server and the communication is two-way. The
     client can communicate with the server as well as the server can push updates
     to the clients. This approach will be efficient in the sense that the server will
     only communicate back to the client only when there are some location updates
     from any of the friends of the user.'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Web Sockets** – 另一种选择是 Web Sockets。在这种情况下，客户端应用将始终与服务器连接，并且通信是双向的。客户端可以与服务器进行通信，服务器也可以将更新推送给客户端。这种方法的效率较高，因为服务器只会在用户的朋友有位置更新时才与客户端进行通信。'
 - en: Overall web sockets are best for our scenario. Another advantage of web sockets
     is that they have a sticky session where if a particular user has to open its
     connection to a particular server and it connects to one of the instances at the
     server end, then it will always be connected to that instance. All the requests
     of that user will go to that particular instance only.  Hence this is what makes
     web sockets a good option for peer-to-peer communication.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 总体来说，Web Sockets 最适合我们的场景。Web Sockets 还有一个额外的优点，就是它们具有粘性会话。如果某个用户必须与特定的服务器实例建立连接，并且连接到服务器端的某个实例，那么他将始终连接到该实例。该用户的所有请求都将只发送到这个特定实例。因此，这使得
+    Web Sockets 成为点对点通信的一个好选择。
 - en: We are going to discuss the below things in the tutorial
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将讨论以下内容
 - en: Data Storage
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 数据存储
 - en: Location Update Requirements
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 位置更新要求
 - en: High-Level Design
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 高级设计
 - en: API Design
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: API 设计
 - en: How location sharing is going to work
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 位置共享的工作原理
 - en: First Approach – Using Distributed Redis
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一种方法 – 使用分布式 Redis
 - en: Second Approach – Using Redis Pub/Sub
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二种方法 – 使用 Redis Pub/Sub
 - en: Non-Functional Requirement
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 非功能需求
 - en: Scalability of Redis Pub/Sub Server
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Redis Pub/Sub 服务器的可扩展性
 - en: Conclusion
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 结论
 - en: '**Data Storage**'
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**数据存储**'
 - en: Let’s now analyze what data we need to be storing.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们分析需要存储的数据。
 - en: '**User Profile**: We need to store the user profile information, their name,
     profile picture, etc. Also, we need to save their preference related to enabling
     or disabling nearby friends.'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**用户档案**：我们需要存储用户的个人资料信息，包括姓名、头像等。同时，我们需要保存与启用或禁用附近朋友相关的偏好设置。'
 - en: '**Friend List**:  The system should be able to store the friend list of all
     users. This friend list will be used to eventually show nearby friends.'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**好友列表**：系统应该能够存储所有用户的好友列表。该好友列表最终将用于显示附近的朋友。'
 - en: '**Location tracking and storage**: The system should be able to track the location
     info for the user. Also, they should be able to store the location history as
     well.'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**位置跟踪与存储**：系统应能够跟踪用户的位置信息。同时，它们还应该能够存储位置历史记录。'
 - en: The nearby friends are only shown for online users. Hence the system should
     have a way of storing the online status as well.
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 附近的朋友仅对在线用户可见。因此，系统应能够存储在线状态。
 - en: '**Location Updates Requirements**'
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**位置更新需求**'
 - en: With respect to the working of nearby friends’ location updates, there are a
     few below requirements
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于附近朋友位置更新的工作原理，以下是一些需求
 - en: When the user comes online first he should be able to see all friends who
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户首次上线时，他应该能够看到所有在线的朋友
 - en: Are online
+  id: totrans-66
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在线用户
 - en: And whose current location is within x miles of the current location of the
     user
+  id: totrans-67
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 且其当前位置在用户当前地点的 x 英里范围内
 - en: While the user is online, if any of his online friend’s new location is within
     of **x** miles from the current location of the user then it will start showing
     in the nearby friends and vice versa
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户在线时，如果任何在线朋友的新位置在用户当前位置的**x**英里范围内，它将开始显示在附近的朋友列表中，反之亦然
 - en: When the user goes offline then he should be shown offline to his friends as
     well and his location will not be shared.
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户下线时，他应该显示为离线状态，且其位置将不再共享。
 - en: So there are three scenarios that we need to take care of in our design
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们需要在设计中考虑三种场景。
 - en: When the user first comes online
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户首次上线时
 - en: While the user is being online
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户在线时
 - en: When the user goes offline
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户下线时
 - en: '**High-Level Design**'
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**高层设计**'
 - en: On a high level let’s discuss what will be the higher flow and what all services
     would exist.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 从高层次上讲，让我们讨论一下更高的流程以及所有需要存在的服务。
 - en: There will be an **API gateway** on which every request from all the users will
     land.
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**API 网关**，所有来自用户的请求都将通过该网关。
 - en: There will be a **Session Service**. **Session Service** will contain a group
     of instances to which users will be connected by a web socket. Since there is
     a limit on the number of web sockets that you can open per machine,  depending
     upon the load. So based on the number of users, we can have that number of machines
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**会话服务**。**会话服务**将包含一组实例，用户将通过 WebSocket 连接到这些实例。由于每台机器可以打开的 WebSocket
+    数量有限，因此根据负载，用户的数量决定了需要多少台机器。
 - en: This **Session Service** will be connected to a **Distributed Redis** cluster
     which will contain information on which user is connected to which box. This information
     is transient till the user is connected and hence we can use a **Distributed Redis**
     for that. It will be the responsibility of the session service to maintain the
     User-id and machine-id mapping. This service will
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 该**会话服务**将连接到一个**分布式 Redis**集群，该集群将包含哪些用户连接到哪个机器的信息。由于这些信息是临时的，直到用户断开连接，因此可以使用**分布式
+    Redis**来存储。这将由会话服务负责维护用户 ID 和机器 ID 的映射。此服务将
 - en: Will insert into if any user is connected to any machine
+  id: totrans-79
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果有用户连接到任何一台机器，将插入记录。
 - en: When the user gets disconnected
+  id: totrans-80
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户断开连接时
 - en: Other than this the session will be a dumb service in the sense that it will
     just accept the connection and will forward any requests to it on an **SNS/Kafka**
     Topic.
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 除此之外，会话将是一个“傻”服务，意思是它只接受连接，并将任何请求转发到一个**SNS/Kafka**主题。
 - en: The **Session Service** will publish a message to an SNS topic or Kafka on receiving
     any user activity.
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**会话服务**将在接收到任何用户活动时，向 SNS 主题或 Kafka 发布消息。'
 - en: There will be a **Location History** service that is going to save the location
     history of the user.  There will be a separate table to store location history.
     Only the Location History service is going to connect to this table.
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**位置历史**服务，用于保存用户的位置信息历史。将会有一个单独的表来存储位置历史，只有位置历史服务会连接到这个表。
 - en: There will be a **User Last Seen** service that is going to maintain the last
     seen time and last known location of the user.
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**用户最后一次查看**服务，用于维护用户的最后查看时间和最后已知位置。
 - en: There will be a **Friends** service that is going to maintain the friend list
     of all users. There will be a separate table to store the friend list. Only the
     **Friends** service is going to connect to this table.
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**好友**服务，用于维护所有用户的好友列表。将会有一个单独的表来存储好友列表，只有**好友**服务会连接到这个表。
 - en: There will be a **User Profile Service** that is going to maintain the user
     profile. Again it will have its own set of tables to manage user profiles
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**用户档案服务**，用于维护用户档案。它将有自己的一组表格来管理用户档案。
 - en: There will be a **Near By Friends** service that will be responsible for the
     management of nearby friends. It is going to handle cases when the user is online,
     the user went offline, etc. We will be discussing this service in detail in this
     tutorial
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**附近好友**服务，负责管理附近的好友。它将处理用户在线、用户下线等情况。我们将在本教程中详细讨论此服务。
 - en: There will be a **Message Outbound Service** which will be a worker whose work
     will be to send the outbound messages back to the user. This service will not
     have any kind of business logic at all. It will only accept a message that contains
     the details of what message to send, to whom it needs to send, and to which machine
     the user is connected. This is a very dump service that only which doesn’t have
     any business logic at all.
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**消息输出服务**，它是一个工作服务，负责将外发消息发送给用户。该服务不会包含任何业务逻辑。它只会接收一条消息，消息中包含了需要发送的内容、发送对象以及用户连接的机器信息。这个服务非常简单，只处理消息，不包含任何业务逻辑。
 - en: There will be a **Token****Service** that is going to manage different types
     of tokens for the user.
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**令牌服务**，用于管理用户的不同类型令牌。
 - en: '**API Design**'
+  id: totrans-90
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**API设计**'
 - en: Below will be the list of APIs needed
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是所需的API列表：
 - en: Location Update API
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 位置更新API
 - en: Set Location Preference on or off
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 开启或关闭位置偏好设置
 - en: '**Location Update API**'
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**位置更新API**'
 - en: The location update API will be called by the clients whenever the location
     of the user changes.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 当用户的位置发生变化时，客户端将调用位置更新API。
 - en: '**Request Body:**'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**请求体：**'
 - en: longitude
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 经度
 - en: latitude
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 纬度
 - en: timestamp
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间戳
 - en: '**Set Location Preference on or off**'
+  id: totrans-100
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**开启或关闭位置偏好设置**'
 - en: This will be called by the client’s app when the user set their location preference
     on or off
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 当用户设置其位置偏好为开启或关闭时，将由客户端应用调用此接口。
 - en: '**Request Body:**'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '**请求体：**'
 - en: user_id
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户ID
 - en: on/off
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 开/关
 - en: timestamp
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 时间戳
 - en: '**How location sharing is going to work**'
+  id: totrans-106
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**位置共享如何工作**'
 - en: With respect to location sharing, there are two ways
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于位置共享，有两种方式。
 - en: Location updates are pulled by the client app of the user at regular intervals.
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户客户端应用将在定时间隔内拉取位置更新。
 - en: Location updates of friends being pushed to the client app of the user.
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 好友的位置更新将推送到用户的客户端应用。
 - en: So basically it is **Pull** vs **Push**. As we have seen earlier the disadvantage
     of the **Pull** model is that it might be a waste of network resources as many
     times it could be an empty receive.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以基本上就是**拉取**与**推送**的区别。如我们之前所见，**拉取**模型的缺点是，它可能会浪费网络资源，因为很多时候接收到的可能是空数据。
 - en: The second approach of **Push** is better in two senses
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Push**的第二种方法在两个方面更好。'
 - en: Updates will only be pushed when there is an actual location change of a friend.
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 只有当好友的实际位置发生变化时，更新才会被推送。
 - en: The **Push** approach will reflect the correct state in a more timely manner.
     As the **Pull** approach could only be done at regular intervals and regular intervals
     will be in seconds
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**推送**方法将能更及时地反映正确的状态。因为**拉取**方法只能在固定时间间隔内执行，而时间间隔通常是以秒为单位。'
 - en: We are going to discuss two ways in which we can implement **Push** of location
     updates
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将讨论两种实现**推送**位置更新的方法。
 - en: In the first approach, we are going to design in a very basic way. We will use
     distributed cache in this approach.
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在第一种方法中，我们将设计一个非常基础的方式。在此方法中，我们将使用分布式缓存。
 - en: In the second approach, we are going to use redis pub/sub and we will see how
     we can scale that
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在第二种方法中，我们将使用 Redis 的发布/订阅（pub/sub）模式，并且我们将查看如何扩展这一方案
 - en: '**First Approach – Using Distributed Redis**'
+  id: totrans-117
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**第一种方法 – 使用分布式 Redis**'
 - en: First, let’s discuss some of the services in detail that we are going to need
     in order to fulfill the requirement
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，让我们详细讨论一下为满足需求所需要的某些服务
 - en: '**Location History** Service'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**位置历史** 服务'
 - en: There will Location History service that is going to connect to **location_history_db**.
     This DB is going to store the location history of the user. Below will be the
     fields in this DB. We can use any No SQL database for the same such as MongoDB
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 将会有一个位置历史服务，它将连接到 **location_history_db**。这个数据库将存储用户的位置信息历史。以下是该数据库中的字段。我们可以使用任何
+    NoSQL 数据库，例如 MongoDB
 - en: id
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: id
 - en: user_id
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: location
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: location
 - en: created
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建时间
 - en: updated
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新
 - en: '**User Last Seen** Service'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户最后一次出现** 服务'
 - en: This service is going to maintain two things
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个服务将维护两项内容
 - en: last_seen time of the user
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户的 last_seen 时间
 - en: last location of the user if applicable.
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户的最后位置（如果适用）。
 - en: It is going to store both things in the **user_last_seen_db**. Below are the
     fields in the **user_last_seen_db.** We can use any No SQL database in this case
     as well such as MongoDB
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将把这两项内容存储在 **user_last_seen_db** 中。以下是 **user_last_seen_db** 中的字段。我们也可以在这种情况下使用任何
+    NoSQL 数据库，例如 MongoDB
 - en: id
+  id: totrans-131
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: id
 - en: user_id
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: last_seen – It is the timestamp of when the user was last seen
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: last_seen – 这是用户最后一次出现的时间戳
 - en: location – this will only be populated if the user has location sharing preference
     **ON**.
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: location – 只有在用户开启位置共享偏好 **ON** 时，这个字段才会被填充。
 - en: created
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建时间
 - en: updated
+  id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新
 - en: There will be a new service that will be responsible for managing the nearby
     friends. Let’s name this service – **nearby_friends** service.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 将会有一个新服务，负责管理附近的朋友。我们将这个服务命名为 **nearby_friends** 服务。
 - en: To maintain nearby friends we will use a distributed cache. This distributed
     cache could be a redis cache as well. This cache will maintain a subscriber list
     for all the users who have there location preferences on.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了维护附近的朋友，我们将使用分布式缓存。这个分布式缓存也可以是 Redis 缓存。该缓存将维护所有打开位置偏好的用户的订阅列表。
 - en: For example assume there are two users A, B, and C. Below is the friend list
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 举个例子，假设有两个用户 A、B 和 C。以下是朋友列表
 - en: A and B
+  id: totrans-140
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: A 和 B
 - en: A and C
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: A 和 C
 - en: A and D
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: A 和 D
 - en: Below keys will exist in redis where
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下键将在 Redis 中存在，其中
 - en: The **key** will be the user **user_id** of the user
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**key** 将是用户的 **user_id**'
 - en: The **value** will be a **Set**. You can read about Set in redis here – [https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/](https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/)
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**值** 将是一个 **Set**。您可以在这里阅读有关 Redis 中 Set 的内容 – [https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/](https://redis.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/1-2-3-sets-in-redis/)'
 - en: 'Example:'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Subscriber List for user **A**
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **A** 的订阅列表
 - en: '[PRE0]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Subscriber List for user **B**
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **B** 的订阅列表
 - en: '[PRE1]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Subscriber List for user **C**
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **C** 的订阅列表
 - en: '[PRE2]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Subscriber List for user **D**
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **D** 的订阅列表
 - en: '[PRE3]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Let’s consider three scenarios in which all the above data will be maintained
     and how the overall nearby friends’ feature is going to work.
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设有三种场景，其中所有上述数据将被维护，并且整个附近朋友功能将如何工作。
 - en: The user first comes online
+  id: totrans-156
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户首次上线
 - en: When the user is already online
+  id: totrans-157
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当用户已经在线时
 - en: The user goes offline
+  id: totrans-158
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户下线
 - en: Let’s see these three cases in detail. But before looking into more details.
     Let’s first assume that
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将详细讨论这三种情况。但在深入细节之前，我们先假设
 - en: user A is connected to node 1
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 A 连接到节点 1
 - en: user B is connected to node 2
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 B 连接到节点 2
 - en: user C is connected to node 3
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 C 连接到节点 3
 - en: user D is connected to node 4
+  id: totrans-163
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 D 连接到节点 4
 - en: '**The user first comes online**'
+  id: totrans-164
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**用户首次上线**'
 - en: We are going to describe this scenario from user **A’s** perspective. Below
     is the diagram for the case when the user first comes online. Assume user **A**
     comes online and gets connected to node 1 of the session service.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将从用户 **A** 的角度描述这个场景。以下是用户首次上线时的情况图。假设用户 **A** 上线并连接到会话服务的节点 1。
 - en: '![Near By Friends HLD](../Images/ca05fee8c85d2290b8ba3ee172c4bf78.png)'
+  id: totrans-166
   prefs: []
   type: TYPE_IMG
+  zh: '![附近朋友高层设计](../Images/ca05fee8c85d2290b8ba3ee172c4bf78.png)'
 - en: Near By Friends High Level Design
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 附近朋友高层设计
 - en: Then Node 1 is going to publish the message to Kafka/SNS+ SQS system with the
     current location and the user_id. This message will be picked by three different
     services
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后节点 1 将把消息发布到 Kafka/SNS+ SQS 系统，消息包含当前位置和用户 ID。该消息将被三种不同的服务处理。
 - en: '**location_history** service'
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**location_history** 服务。'
 - en: '**user_last_seen** service'
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**user_last_seen** 服务。'
 - en: '**nearby_friends service**'
+  id: totrans-171
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**nearby_friends 服务**'
 - en: '**location_history** service is going to update the current location of user
     A in the **location_history_database**'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '**location_history** 服务将会更新 **location_history_database** 中用户 A 的当前位置。'
 - en: '**user_last_seen** service is going to update the last_seen time of the user
     in the **user_last_seen_db**.'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: '**user_last_seen** 服务将更新 **user_last_seen_db** 中用户的最后一次见面时间。'
 - en: '**nearby_friends** service is going to perform the below actions'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nearby_friends** 服务将执行以下操作。'
 - en: It is going to fetch all the friends of user **A** who have location-sharing
     preferences enabled. Assume user **A** has three friends **B**, **C**, and **D**
     who have location sharing enabled.
+  id: totrans-175
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它将会获取所有启用了位置共享的用户 **A** 的朋友。假设用户 **A** 有三位启用了位置共享的朋友：**B**、**C** 和 **D**。
 - en: It is going to fan out the message with a different **message_type** for each
     of the friends **B**, **C**, and **D.**
+  id: totrans-176
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它将针对每个朋友 **B**、**C** 和 **D** 使用不同的 **message_type** 分发消息。
 - en: Let’s follow the flow for message published for user B
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们跟踪发布给用户 B 的消息流程。
 - en: The message for user **B** will be picked **nearby_friends** service again.
     The **nearby_friends** service is going to first check if user B is online from
     the **user_last_seen** service.  If **B** is online the **user_last_seen** service
     is also going to return the current location of the user.
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 **B** 的消息将再次被 **nearby_friends** 服务处理。**nearby_friends** 服务将首先检查用户 **B**
+    是否在线，查询 **user_last_seen** 服务。如果 **B** 在线，**user_last_seen** 服务还将返回用户的当前位置。
 - en: Then the nearby friend’s service is going to compute the distance of user **B**
     from user **A**. If the distance is less than the threshold then it is going to
     add **B** as a subscriber to **A**.  It will create a redis entry as below. Basically,
     it will add user **B**, as a subscriber to **A**.
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接着，附近朋友服务将计算用户 **B** 与用户 **A** 之间的距离。如果距离小于阈值，则将 **B** 添加为 **A** 的订阅者。它将创建如下的
+    Redis 条目。基本上，它将把用户 **B** 添加为 **A** 的订阅者。
 - en: '[PRE4]'
+  id: totrans-180
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Also, it will add user **A** as a subscriber to user **B**. Below redis entry
     will also be created
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它还将把用户 **A** 添加为用户 **B** 的订阅者。以下 Redis 条目也将被创建。
 - en: '[PRE5]'
+  id: totrans-182
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Then it is going to publish two messages to the **Kafka/SNS +SQS** system one
     for informing user **A** and one for user **B**
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后它将向 **Kafka/SNS +SQS** 系统发布两条消息，一条用于通知用户 **A**，一条用于通知用户 **B**。
 - en: This first message will be picked by the **message_outbound** service, which
     is going to determine which node user **B** is connected to which is node 2\.
     The message outbound service is going to call node 2\. Node 2 is going to inform
     user **B’s** client app that user **A** has come online. The client app will start
     showing user **A** to user **B**
+  id: totrans-184
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一条消息将由 **message_outbound** 服务处理，该服务将确定用户 **B** 连接的节点是节点 2。消息外发服务将调用节点 2，节点
+    2 将通知用户 **B** 的客户端应用程序用户 **A** 已上线。客户端应用程序将开始向用户 **B** 显示用户 **A**。
 - en: The second will also be picked by the **message_outbound** service, which is
     going to determine which node user **A** is connected to which is node 1\. The
     message outbound service is going to call node 1\. Node 1 is going to inform user
     **A’s** client app that **B** is within the threshold distance. The client app
     will start showing user **B** to user **A.**
+  id: totrans-185
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二条消息也将由 **message_outbound** 服务处理，该服务将确定用户 **A** 连接的节点是节点 1。消息外发服务将调用节点 1，节点
+    1 将通知用户 **A** 的客户端应用程序用户 **B** 在阈值距离内。客户端应用程序将开始向用户 **A** 显示用户 **B**。
 - en: The same thing will happen for users C and D. Assume the distance for user C
     was within x km while for user D it was not. After the message is processed for
     message C, the below redis entries would have been created.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于用户 C 和 D 也会发生相同的事情。假设用户 C 的距离在 x 公里以内，而用户 D 的距离不在此范围内。在处理完用户 C 的消息后，将创建以下
+    Redis 条目。
 - en: Subscriber List for user **A**
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **A** 的订阅者列表。
 - en: '[PRE6]'
+  id: totrans-188
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Subscriber List for user **B**
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **B** 的订阅者列表。
 - en: '[PRE7]'
+  id: totrans-190
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Subscriber List for user **C**
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户 **C** 的订阅者列表。
 - en: '[PRE8]'
+  id: totrans-192
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**When the user is already online**'
+  id: totrans-193
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**当用户已经在线时**'
 - en: User A is already online but user A’s location has changed. The call will come
     to node 1 with a new location Then Node 1 is going to publish the message to Kafka/SNS+
     SQS system with the current location and of the user. This message again will
     be picked by three different services
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户A已经在线，但用户A的位置发生了变化。此时，新的位置信息将传递给节点1。然后节点1将会将消息发布到Kafka/SNS+ SQS系统中，包含用户的当前位置。这个消息将会被三个不同的服务再次接收。
 - en: location_history service
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: location_history 服务
 - en: user_last_seen service
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_last_seen 服务
 - en: nearby_friends service
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: nearby_friends 服务
 - en: '**location_history** and **user_last_seen** services are going to update the
     location history and last_seen time of the user respectively.'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**location_history**和**user_last_seen**服务将分别更新用户的位置历史和最后一次见到的时间。'
 - en: '**nearby_friends** service is going to'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nearby_friends**服务将会'
 - en: Fetch the list of subscribers for **A** which is **B** and **C** in this case.
     Then it is going to fan out the message with a different **message_type** for
     **B** and **C**. Note that it is only going to fan out the message again for users
     **B** and **C**
+  id: totrans-200
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 获取**A**的订阅者列表，这里是**B**和**C**。然后，它将以不同的**message_type**将消息发送给**B**和**C**。注意，它只会再次将消息发送给用户**B**和**C**。
 - en: This message will be picked by **nearby_friends** service again and it is going
     to recompute the distance if the distance is within the threshold it is going
     to inform users **B** and **C** about the new location of user **A** via the same
     approach as discussed when the user first came online using **message_outbound**
     worker
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 该消息将再次由**nearby_friends**服务接收，如果距离在阈值范围内，它将通知用户**B**和**C**关于用户**A**的新位置，采用与用户首次上线时相同的方法，通过**message_outbound**工作者发送。
 - en: If the location is not within the threshold then it is going to remove that
     user from the list of subscribers and vice versa. For example, let’s assume **A’s**
     and **B’s** location is not within x km. Then the subscription of **A** from user
     **B** and the subscription of user **B** from user **A** will be removed.
+  id: totrans-202
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果位置不在阈值范围内，那么该用户将被从订阅者列表中移除，反之亦然。例如，假设**A**和**B**的地点相距超过x公里。那么用户**B**对用户**A**的订阅以及用户**A**对用户**B**的订阅将被移除。
 - en: Both user **A** and user **B** will be informed via **message_outbound** worker
     that the other friend is not within range.
+  id: totrans-203
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户**A**和用户**B**将通过**message_outbound**工作者被通知，表示对方不在范围内。
 - en: But what about the case where let’s say friend **D** was already online and
     with the new location change of user **A**, friend **D** is within a range of
     x km? So friend **D** should start showing to friend **A** and vice versa.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，如果假设朋友**D**已经在线，并且由于用户**A**的位置信息变化，朋友**D**现在位于x公里范围内，怎么办呢？那么朋友**D**应该开始在朋友**A**的列表中显示，反之亦然。
 - en: To handle such cases, at some regular intervals of let’s say 5 min or maybe
     more, every location update from user **A** we are going to re-fetch the entire
     friends again and recompute the distance to check whether an existing online friend
     came within range. It is going to repeat the same steps that we mentioned when
     the user first came online.
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了处理这种情况，我们将在每隔一段时间，比如5分钟（甚至更长时间），从用户**A**收到位置更新时，重新获取所有朋友的信息，并重新计算距离，以检查现有的在线朋友是否进入了范围。它将重复用户首次上线时提到的相同步骤。
 - en: Let’s say this time user **D** has a distance less than x km, with user **A**.
     Then below redis entries will be updated and user **A** and user **D** will be
     informed of each other.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设这次用户**D**与用户**A**的距离小于x公里。那么以下的redis条目将被更新，用户**A**和用户**D**将被通知彼此的存在。
 - en: Subscriber List for user **A**
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**A**的订阅者列表
 - en: '[PRE9]'
+  id: totrans-208
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Subscriber List for user **B**
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**B**的订阅者列表
 - en: '[PRE10]'
+  id: totrans-210
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Subscriber List for user **C**
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**C**的订阅者列表
 - en: '[PRE11]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Subscriber List for user **D**
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**D**的订阅者列表
 - en: '[PRE12]'
+  id: totrans-214
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: We can further optimize the above scenario by maintaining a subscription list
     of friends that are within (x + 10) km to prevent frequent removal and insertions
     to the subscribers’ list.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以通过维护一个在（x + 10）公里范围内的朋友订阅列表来进一步优化上述场景，从而防止频繁移除和插入订阅者列表。
 - en: Of course, the subscriber list is maintained for a range of (x + 10) km but
     the notification is only sent out if any of the friends is within the threshold
     of x km
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，订阅者列表会维护在（x + 10）公里的范围内，但只有当朋友之一位于x公里的阈值范围内时，才会发送通知。
 - en: '**When the user goes offline or turns off the online status**'
+  id: totrans-217
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**当用户下线或关闭在线状态时**'
 - en: When the user goes offline or when the user turns off the online status than
     his online status should stop showing to all his friends. Let’s discuss both of
     these cases one by one
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 当用户下线或关闭在线状态时，他的在线状态应该停止向所有朋友显示。让我们逐一讨论这两种情况。
 - en: '**When the user goes offline**'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当用户下线时**'
 - en: The below diagram depicts the flow when the user goes offline
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下图表展示了用户下线时的流程。
 - en: '![Near By Friends Offline Case](../Images/be0882b53567ad1693101d8433f3b5f6.png)'
+  id: totrans-221
   prefs: []
   type: TYPE_IMG
+  zh: '![附近朋友下线情况](../Images/be0882b53567ad1693101d8433f3b5f6.png)'
 - en: Near By Friends Offline Case
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 附近朋友下线情况
 - en: Assume that user **A** goes offline. User **A** friend’s **B**, **C**, and **D**
     were online when user A goes offline.
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设用户**A**下线。用户**A**的朋友**B**、**C**和**D**在用户**A**下线时仍然在线。
 - en: Below is the sequence of steps that are going to happen
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是即将发生的步骤顺序：
 - en: User A is connected to node 1 of the session service. As soon as the web socket
     connection is terminated, the node or machine on which the connection got ended
     will publish a message to the Kafka/SNS +SQS system
+  id: totrans-225
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户**A**连接到会话服务的节点 1。一旦 WebSocket 连接被终止，连接终止所在的节点或机器将向 Kafka/SNS + SQS 系统发布一条消息。
 - en: The **nearby_friends** service is going to pick up the message
+  id: totrans-226
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**nearby_friends** 服务将接收消息。'
 - en: First, this service is going to fetch all the current subscribers of user **A**
     from the redis distributed cache. The current subscribers returned will be **B**,
     **C**, and **D**
+  id: totrans-227
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先，该服务将从 Redis 分布式缓存中获取用户**A**的所有当前订阅者。返回的当前订阅者将是**B**、**C**和**D**。
 - en: Then it is going to fan out three messages for users **B**, **C**, and **D**.
     These messages will be published to Kafka/SNS + SQS system.
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后它将为用户**B**、**C**和**D**分别发送三条消息。这些消息将被发布到 Kafka/SNS + SQS 系统。
 - en: There will be different messages and each of the messages and all the messages
     will be picked by the **nearby_friends** service again. It is going to remove
     the subscription of **A** from users **B**, **C**, and **D** in their respective
     fan-out messages. Then it is going to publish to the **message_outbound** service
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会有不同的消息，每条消息都会被**nearby_friends**服务接收。它将从用户**B**、**C**和**D**的相应广播消息中移除用户**A**的订阅。然后它将发布到**message_outbound**
+    服务。
 - en: The **message_outbound** service is going to forward the message to users **B**,
     **C**, and **D** informing them that user **A** went offline.
+  id: totrans-230
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**message_outbound** 服务将把消息转发给用户**B**、**C**和**D**，通知他们用户**A**已经下线。'
 - en: '**When the user turns off the online status**'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当用户关闭在线状态时**'
 - en: It is the same as when the user goes offline
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与用户下线时的情况相同。
 - en: '**Second Approach – Using Redis Pub/Sub**'
+  id: totrans-233
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**第二种方法 – 使用 Redis Pub/Sub**'
 - en: Now we are going to discuss the Redis Pub/Sub approach in detail. First of all,
     what is Redis Pub/Sub? Redis Pub/Sub allows
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们将详细讨论 Redis Pub/Sub 方法。首先，什么是 Redis Pub/Sub？Redis Pub/Sub 允许
 - en: Creation of named channels
+  id: totrans-235
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 命名频道的创建
 - en: A publisher can publish to this named channel
+  id: totrans-236
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发布者可以向该命名频道发布消息。
 - en: Any number of subscribers can listen to this from the channel. Any message published
     by the publisher will be available to all the subscribers
+  id: totrans-237
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 任何数量的订阅者都可以从该频道收听此消息。发布者发布的任何消息都将提供给所有订阅者。
 - en: You can read more about Redis Pub/Sub here – [https://redis.io/docs/manual/pubsub/](https://redis.io/docs/manual/pubsub/)
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以在这里阅读更多关于 Redis Pub/Sub 的内容 – [https://redis.io/docs/manual/pubsub/](https://redis.io/docs/manual/pubsub/)
 - en: So in this approach what we are going to do is maintain a separate named channel
     for each user. All of the online friends of the user who are within the threshold
     distance are going to subscribe to this named channel.
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以在这种方法中，我们将为每个用户维护一个单独的命名频道。所有在阈值距离内的在线朋友都将订阅该命名频道。
 - en: Also for simplicity let’s assume that the named channel for a particular user
     will be created using the user_id of that user.
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了简单起见，假设特定用户的命名频道将使用该用户的 user_id 创建。
 - en: Let’s consider all three scenarios that we discussed earlier again
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们再次考虑之前讨论的三种情况。
 - en: '**When the user first comes online**'
+  id: totrans-242
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**当用户第一次上线时**'
 - en: Assume user **A** comes online and gets connected to node 1 of the session service.
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设用户**A**上线并连接到会话服务的节点 1。
 - en: Node 1 is first going to create a named channel for user A if it doesn’t already
     exist in the redis distributed cache. Then Node 1 is going to publish the message
     to Kafka/SNS+ SQS system with the current location of the user. Node 1 is also
     going to cache the latest location of A as well. This message will be picked by
     three different services
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 节点 1 首先将在 Redis 分布式缓存中为用户 A 创建一个命名频道（如果尚不存在）。然后，节点 1 将发布包含用户当前位置的消息到 Kafka/SNS
+    + SQS 系统。节点 1 还将缓存 A 的最新位置。此消息将被三个不同的服务获取。
 - en: location_history service
+  id: totrans-245
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: location_history 服务
 - en: user_last_seen service
+  id: totrans-246
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_last_seen 服务
 - en: nearby_friends service
+  id: totrans-247
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: nearby_friends 服务
 - en: '**location_history** service is going to update the current location of user
     A in the location_history_database'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: '**location_history**服务将更新用户 A 在 location_history_database 中的当前位置。'
 - en: '**user_last_seen** service is going to update the last_seen time of the user
     in the last_seen database.'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: '**user_last_seen**服务将更新用户在 last_seen 数据库中的最后一次看到时间。'
 - en: '**nearby_friends** service is going to perform the below actions'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nearby_friends**服务将执行以下操作：'
 - en: It is going to fetch all the friends of user **A** from the **friends** service
     who have location-sharing preferences enabled. Assume user A has three friends
     **B**, **C**, and **D** who have location sharing enabled.
+  id: totrans-251
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它将从**friends**服务中获取所有启用了位置共享偏好的用户**A**的朋友。假设用户 A 有三位朋友**B**、**C** 和**D**，他们都启用了位置共享。
 - en: For each of the friends, it is going to fan out the message with a different
     message_type. So three different messages will be published each for users **B**,
     **C**,  and **D**.
+  id: totrans-252
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于每个朋友，它将以不同的消息类型分发消息。因此，将分别为用户**B**、**C**和**D**发布三条不同的消息。
 - en: Let’s follow the flow for message published for user B
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们跟踪发布给用户 B 的消息流程。
 - en: The message for user B will be picked **nearby_friends** service again. The
     **nearby_friends** service is going to first check if user B is online from the
     **user_last_seen** service.  If online the **user_last_seen** service is also
     going to return the current location of the user.
+  id: totrans-254
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户 B 的消息将由**nearby_friends**服务再次获取。**nearby_friends**服务将首先检查用户 B 是否在线，通过**user_last_seen**服务。如果在线，**user_last_seen**服务还将返回用户的当前位置。
 - en: Then the **nearby_friends** service is going to compute the distance of itself
     from user **A**. If the distance is less than the threshold then it is going to
     publish two messages to the Kafka/SNS +SQS system
+  id: totrans-255
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后，**nearby_friends**服务将计算自己与用户**A**的距离。如果距离小于阈值，它将向 Kafka/SNS + SQS 系统发布两条消息。
 - en: This first message will be picked by the **message_outbound** service, which
     is going to determine which node user **B** is connected to which is node 2\.
     The message outbound service is going to call node 2\. Node 2 is going to subscribe
     **B** to user **A**‘s named channel and start listening to it.  Also, node 2 is
     going to inform user **B**‘s client app that A has come online. The client app
     will start showing user **A** to user **B**. Also
+  id: totrans-256
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条首条消息将由**message_outbound**服务获取，后者将确定用户**B**连接的节点，即节点 2。消息外发服务将调用节点 2。节点 2
+    将用户**B**订阅到用户**A**的命名频道并开始监听。同时，节点 2 将通知用户**B**的客户端应用程序，A 已上线。客户端应用程序将开始将用户**A**展示给用户**B**。此外
 - en: The second will also be picked by the **message_outbound** service as well,
     which is going to determine which node user A is connected to which is node 1\.
     The message outbound service is going to call node 1\. Node 1 is going to inform
     user A’s client app that B is within the threshold distance. Also, Node 1 is going
     to subscribe user **A** to user user **B’s** named channel and start listening
     to it. The client app will start showing user **B** to user **A**
+  id: totrans-257
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二条消息也会由**message_outbound**服务获取，后者将确定用户 A 连接的节点，即节点 1。消息外发服务将调用节点 1。节点 1 会通知用户
+    A 的客户端应用程序，B 在阈值距离内。同时，节点 1 将用户**A**订阅到用户**B**的命名频道并开始监听。客户端应用程序将开始将用户**B**展示给用户**A**。
 - en: The same thing will happen for user **C** and user **D** but assume that user
     **D** is not within the threshold of x km from user A so user **D** will not be
     shown to user **A**
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**C**和用户**D**也会发生同样的事情，但假设用户**D**距离用户**A**的阈值 x 公里之外，因此用户**D**不会显示给用户**A**。
 - en: So overall
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 总体来说
 - en: Node 1 to which user **A** is connected has subscribed to the named channel
     of user **B** and user **C**
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户**A**连接的节点 1 已订阅用户**B**和**C**的命名频道。
 - en: Node 2 to which user **B** is connected has subscribed to the named channel
     of user **A**
+  id: totrans-261
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户**B**连接的节点 2 已订阅用户**A**的命名频道。
 - en: Node 3 to which user **C** is connected has subscribed to the named channel
     of user **A**
+  id: totrans-262
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户**C**连接的节点3已订阅了用户**A**的命名频道。
 - en: '**When the user is already online**'
+  id: totrans-263
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**当用户已经在线时**'
 - en: User A’s location changes. The call is going to come to node 1\. It is going
     to publish the new location to the named channel of user A.
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户**A**的位置发生变化。调用会到达节点1，节点1将把新位置发布到用户**A**的命名频道。
 - en: The new location will be received by node 2 and node 3 for users B and C respectively.
     Both are going to recompute the distance and-
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 新位置将被节点2和节点3分别接收到，并通知用户B和C。两者都会重新计算距离，并
 - en: If the distance is less than x km then it is going to inform **B** and **C**
     of the new location of user **A**
+  id: totrans-266
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果距离小于x公里，则会通知**B**和**C**用户**A**的新位置。
 - en: If the distance is more than x km then first it is going to remove the subscription
     of **B** and **C** from user **A’s** named channel. Also, it is going to inform
     both users B and C that user A is not within the range
+  id: totrans-267
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果距离超过x公里，则首先会从用户**A**的命名频道中移除**B**和**C**的订阅。同时，系统会通知**B**和**C**，用户**A**不在范围内。
 - en: Node 1 is also going to publish the new location to the SNS/Kafka + SQS system
     and that message will be heard by
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 节点1还会将新位置发布到SNS/Kafka + SQS系统，消息会被
 - en: location_history service
+  id: totrans-269
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: location_history服务
 - en: last_seen service
+  id: totrans-270
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: last_seen服务
 - en: nearby_friends – It is going to fetch all friends and recompute distance to
     cater to the case where two users were already online and their location is now
     within the range of x km.
+  id: totrans-271
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: nearby_friends - 它将获取所有朋友并重新计算距离，以应对这种情况，即两位用户曾经在线，现在他们的位置已在x公里范围内。
 - en: '**location_history** and **user_last_seen** services are going to do the same
     thing as they did earlier.'
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: '**location_history**和**user_last_seen**服务将会做与之前相同的操作。'
 - en: '**When the user goes offline or turns off the online status**'
+  id: totrans-273
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**当用户下线或关闭在线状态时**'
 - en: When the user goes offline or when the user turns off the online status than
     his online status should stop showing to all his friends. Let’s discuss both of
     these cases one by one
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: 当用户下线或关闭在线状态时，他的在线状态应停止显示给所有朋友。我们将逐一讨论这两种情况。
 - en: '**When the user goes offline**'
+  id: totrans-275
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当用户下线时**'
 - en: Assume that user **A** goes offline. User **A** friend’s **B** and **C** were
     online when user **A** goes offline. Below is the sequence of steps that are going
     to happen
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设用户**A**下线。当用户**A**下线时，用户**A**的朋友**B**和**C**正在线。以下是将要发生的步骤顺序：
 - en: The call is going to come to node 1 to which User **A** is connected.  As soon
     as the web socket connection is terminated on node 1, the node or machine on which
     the connection got ended will send a message on the named channel of user A. The
     message will be as below indicating that the user went offline
+  id: totrans-277
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用会到达与用户**A**连接的节点1。当节点1上的WebSocket连接被终止时，连接结束的节点或机器会在用户**A**的命名频道上发送一条消息，消息如下，表示用户已下线。
 - en: '[PRE13]'
+  id: totrans-278
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Node 2 and Node 3 having users **B** and **C** respectively will listen to this
     message and immediately inform **B** and **C** that user **A** went offline. The
     client App of **B** and **C** will stop showing user **A** right away
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 节点2和节点3，分别对应用户**B**和**C**，会监听到这个消息，并立即通知**B**和**C**用户**A**已下线。**B**和**C**的客户端应用会立刻停止显示用户**A**。
 - en: Apart from that they are also going to remove **B** and **C** as subscribers
     from user A’s named channel.
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: 除此之外，还会将**B**和**C**从用户**A**的命名频道中移除作为订阅者。
 - en: 'Optimization: Removing subscriptions of **B** and **C** can also be done async
     via **nearby_friends** service in a sync manner.'
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: 优化：通过**nearby_friends**服务以同步方式异步地移除**B**和**C**的订阅也可以实现。
 - en: '**When the user turns off the online status**'
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当用户关闭在线状态时**'
 - en: It is the same as when the user goes offline
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与用户下线时的情况相同。
 - en: '**Comparison of the two approaches**'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: '**两种方法的比较**'
 - en: The second approach is definitely a bit faster as all the nodes or machines
     in the session service are listening directly to the pub/sub channel in redis
     and soon as the message is published there the subscribers are informed immediately.
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二种方法显然稍微更快，因为会话服务中的所有节点或机器直接监听redis中的pub/sub频道，一旦消息发布，订阅者会立即收到通知。
 - en: But there is a downside as well. There could be millions or billions of named
     channels if there are that number of users. On top of that for such a number of
     channels, there could n times subscriptions where n is the average number of friends
     online at a time.
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是也有一个缺点。如果用户数量如此庞大，则可能会有数百万或数十亿个命名频道。此外，对于如此数量的频道，可能会有 n 次订阅，其中 n 是每次在线的平均好友数。
 - en: All these subscriptions need to be maintained on the nodes of the session service
     which could be difficult to scale. Later on, we will do a capacity estimate as
     well as talk about the scaling challenges of the pub/sub model
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有这些订阅需要在会话服务的节点上维护，这可能会导致扩展困难。稍后，我们将进行容量估算，并讨论发布/订阅模型的扩展挑战。
 - en: '**Non-Functional Requirement**'
+  id: totrans-288
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**非功能性需求**'
 - en: '**Scalability**'
+  id: totrans-289
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可扩展性**'
 - en: The first thing to consider with the above design is the scalability factor.
     The scalability of each of the components in the system is very important. Here
     are scalability challenges you can face and their possible resolutions
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述设计中，首先需要考虑的是可扩展性因素。系统中每个组件的可扩展性非常重要。以下是你可能面临的可扩展性挑战及其可能的解决方案
 - en: Each of the machines in the session service could hold only a limited number
     of connections. Hence based on the number of users online at a moment, the number
     of machines and a number of instances could be set up.  For eg one machine has
     around 65000 ports
+  id: totrans-291
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 会话服务中的每台机器只能容纳有限数量的连接。因此，基于当前在线用户的数量，可以设置机器数量和实例数量。例如，一台机器大约有 65000 个端口。
 - en: Also for the second approach, each of the machines in the session service could
     also have millions of subscriptions to the redis pub/sub. For example, if a machine
     has a total of 1000 users connected via a web socket and each user has 200 online
     friends. Then that machine will have 1000*200 = 200K subscriptions. These subscriptions
     will have a memory and CPU impact. This impact has to be taken into consideration
     while scaling session service.
+  id: totrans-292
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于第二种方法，会话服务中的每台机器也可能会有数百万个对 Redis 发布/订阅的订阅。例如，如果一台机器通过 WebSocket 连接了 1000 个用户，而每个用户有
+    200 个在线好友。那么该机器将有 1000 * 200 = 200K 个订阅。这些订阅将会对内存和 CPU 产生影响。扩展会话服务时，必须考虑这一影响。
 - en: For the scalability of distributed cache, we should have horizontal scaling
     enabled. We will discuss the scaling of distributed cache for redis pub/sub in
     detail later in this tutorial
+  id: totrans-293
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于分布式缓存的可扩展性，我们应该启用水平扩展。稍后在本教程中，我们将详细讨论 Redis 发布/订阅的分布式缓存扩展。
 - en: Your Kafka system might not be able to take that much load. We can scale horizontally
     but to a limit. If that is becoming a bottleneck then depending upon the geography
     or userId we can have two or more such systems. Service discovery could be used
     to figure out which Kafka system a request needs to go to.
+  id: totrans-294
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你的 Kafka 系统可能无法承载如此大的负载。我们可以进行水平扩展，但有其限制。如果成为瓶颈，那么根据地理位置或用户 ID，我们可以部署两个或更多这样的系统。可以使用服务发现来确定请求应该发送到哪个
+    Kafka 系统。
 - en: A similar approach can be taken for other services as well.
+  id: totrans-295
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对其他服务也可以采取类似的方法。
 - en: Another important factor of scalability here is that we have designed our system
     in such a way that none of the services is bogged with too many things to do.
     There is a separation of concerns and wherever there was too much of a responsibility
     for service, we have broken it down
+  id: totrans-296
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 另一个可扩展性的重要因素是我们已经设计了系统，以确保没有任何服务被过多任务拖累。系统之间有清晰的责任分离，对于那些负担过重的服务，我们进行了拆分。
 - en: '**Scalability of Redis Pub/Sub Server**'
+  id: totrans-297
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Redis 发布/订阅服务器的可扩展性**'
 - en: As we mentioned earlier, redis pub/sub channels are very cheap to create. Redis
     Pub/Sub can handle a large number of channels and therefore a large number of
     publishers and subscribers.
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们之前提到的，Redis 发布/订阅频道创建成本很低。Redis 发布/订阅能够处理大量频道，因此可以支持大量发布者和订阅者。
 - en: What are some of the scalability factors for Redis Pub/Sub?
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: Redis 发布/订阅的可扩展性因素有哪些？
 - en: Number of Channels
+  id: totrans-300
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 频道数量
 - en: Type of instance used in the Redis Pub/Sub Cluster
+  id: totrans-301
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Redis 发布/订阅集群中使用的实例类型
 - en: Memory
+  id: totrans-302
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内存
 - en: CPU
+  id: totrans-303
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CPU
 - en: Number of Instances in the cluster or horizontal scalability of the cluster.
+  id: totrans-304
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 集群中的实例数量或集群的水平扩展性。
 - en: The average size of the message that is published to the channel
+  id: totrans-305
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发布到频道的消息的平均大小
 - en: Replication of the cluster
+  id: totrans-306
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 集群的复制
 - en: '**Number of Channels**'
+  id: totrans-307
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**频道数量**'
 - en: Let’s do some math based on the user estimate. Assume there are 1 billion users.
     20% of the users are always online and have their location preferences enabled.
     So that is 200 million users. Assume on average 20 friends of each user are online
     at the same time. So overall we will need
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们来做一些基于用户估算的数学假设。假设有10亿个用户，其中20%的用户始终在线，并启用了位置偏好设置。也就是说，200百万用户。假设每个用户平均有20个朋友同时在线。所以总体上我们将需要
 - en: 200 million channels to be created
+  id: totrans-309
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要创建2亿个频道
 - en: Each channel will have 20 subscribers
+  id: totrans-310
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个频道将有20个订阅者
 - en: '**Type of instance used in the Redis Pub/Sub Cluster**'
+  id: totrans-311
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**Redis 发布/订阅集群中使用的实例类型**'
 - en: The hardware on which redis pub/sub is running is an important factory. Basically
     the memory and CPU of the machine. The more memory and the CPU of the machine,
     the more the channel can be created.
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: Redis 发布/订阅运行所在的硬件是一个重要因素，主要是机器的内存和CPU。机器的内存和CPU越多，可以创建的频道就越多。
 - en: '**Memory**'
+  id: totrans-313
   prefs: []
   type: TYPE_NORMAL
+  zh: '**内存**'
 - en: Each UUID of a user is 16 bytes. Each channel will have 200 subscribers. Redis
     Pub/Sub channel is implemented using a hash map and a double-linked list internally.
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个用户的UUID为16字节。每个频道将有200个订阅者。Redis 发布/订阅频道是通过哈希表和双向链表在内部实现的。
 - en: The overall size will be around
+  id: totrans-315
   prefs: []
   type: TYPE_NORMAL
+  zh: 总体大小大约为
 - en: 16 bytes UUID * 1 publisher = 16 bytes
+  id: totrans-316
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 16字节UUID * 1个发布者 = 16字节
 - en: 16 bytes UUID * 200 subscriber = 3200 bytes
+  id: totrans-317
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 16字节的UUID * 200个订阅者 = 3200字节
 - en: 8 bytes Pointer * 21 = 180 bytes
+  id: totrans-318
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 8字节指针 * 21 = 180字节
 - en: So 1 channel will take around 3400 bytes on average. We can assume that each
     channel takes 4000 bytes or 4KB on average
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以每个频道大约需要3400字节。我们可以假设每个频道平均占用4000字节或4KB。
 - en: 200 million channel * 4 KB= 800 GB
+  id: totrans-320
   prefs: []
   type: TYPE_NORMAL
+  zh: 2亿个频道 * 4 KB = 800 GB
 - en: If a server has 20 GB of memory around on average. We will need approx 800/20=40
     servers minimum. Also, it has to be added
+  id: totrans-321
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果每台服务器的内存平均为20 GB，我们大约需要800/20=40台服务器作为最小配置。同时，还需要考虑到这一点。
 - en: '**CPU**'
+  id: totrans-322
   prefs: []
   type: TYPE_NORMAL
+  zh: '**CPU**'
 - en: '**TheCPU requirement of the cluster is something that has to be calculated
     using load testing. Based upon the load test either the number of servers has
     to be increased or decreased**'
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
+  zh: '**集群的CPU需求必须通过负载测试来计算。根据负载测试的结果，可能需要增加或减少服务器数量。**'
 - en: '**### **Number of Instances in the cluster or horizontal scalability of the
     cluster**'
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: '**### 集群中的实例数量或集群的水平可扩展性**'
 - en: The cluster has to be horizontally scalable meaning that new servers can be
     added if required or removed if not required. We can use consistent hashing for
     that. With consistent hashing, the distribution of keys is minimized in case of
     the addition of new servers or the deletion of the new servers.
+  id: totrans-325
   prefs: []
   type: TYPE_NORMAL
+  zh: 集群必须具备水平可扩展性，这意味着如果需要，可以添加新服务器；如果不需要，可以删除现有服务器。我们可以使用一致性哈希来实现这一点。使用一致性哈希时，新增或删除服务器时，键的分布会最小化。
 - en: '**The average size of the message that is published to the channel**'
+  id: totrans-326
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**发布到频道的消息的平均大小**'
 - en: This is also an important factor to consider for scalability because when a
     message is published to a channel, the redis pub/sub is going to hold it until
     it is received by all the subscribers
+  id: totrans-327
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是考虑可扩展性时需要注意的一个重要因素，因为当消息发布到频道时，Redis 发布/订阅将会一直保存消息，直到所有订阅者接收到该消息。
 - en: '**Replication of the cluster**'
+  id: totrans-328
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**集群的复制**'
 - en: The cluster will have replication enabled as well. Each of the instances in
     the cluster will have replicas as well.
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
+  zh: 集群还将启用复制。集群中的每个实例也会有副本。
 - en: The above scalability considerations apply to the distributed cache as well
     that we are going to use in Approach 1
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述可扩展性考虑同样适用于我们将在方法1中使用的分布式缓存。
 - en: '**Conclusion**'
+  id: totrans-331
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing nearby friends. Hope you have liked this article.
     Please share feedback in the comments.
+  id: totrans-332
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于设计附近朋友的内容。希望你喜欢这篇文章。请在评论中分享反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)**'
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
+  zh: '**备注：** 查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)**'

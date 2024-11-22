@@ -1,460 +1,690 @@
 - en: Design a Leaderboard or Low-Level Design of a Leaderboard
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设计一个排行榜或排行榜的低级设计
 - en: 原文：[https://techbyexample.com/leaderboard-system-design/](https://techbyexample.com/leaderboard-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/leaderboard-system-design/](https://techbyexample.com/leaderboard-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Balanced BST + Hashmap Solution](#Balanced_BST_Hashmap_Solution "Balanced
     BST + Hashmap Solution")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[平衡二叉搜索树 + 哈希映射解决方案](#Balanced_BST_Hashmap_Solution "平衡二叉搜索树 + 哈希映射解决方案")'
 - en: '[Comparison with Min Heap](#Comparison_with_Min_Heap "Comparison with Min Heap")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[与最小堆的比较](#Comparison_with_Min_Heap "与最小堆的比较")'
 - en: '[Implementation](#Implementation "Implementation")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[实现](#Implementation "实现")'
 - en: '[AddScore](#AddScore "AddScore")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[添加得分](#AddScore "添加得分")'
 - en: '[Reset Score](#Reset_Score "Reset Score")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[重置得分](#Reset_Score "重置得分")'
 - en: '[Retrieve the top k sum from the leaderboard](#Retrieve_the_top_k_sum_from_the_leaderboard
     "Retrieve the top k sum from the leaderboard")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[从排行榜中检索前 k 个和](#Retrieve_the_top_k_sum_from_the_leaderboard "从排行榜中检索前 k 个和")'
 - en: '[Retrieve the top k players from the leaderboard.](#Retrieve_the_top_k_players_from_the_leaderboard
     "Retrieve the top k players from the leaderboard.")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[从排行榜中检索前 k 个玩家。](#Retrieve_the_top_k_players_from_the_leaderboard "从排行榜中检索前
+    k 个玩家。")'
 - en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low-Level_Design "低级设计")'
 - en: '[Full Working Code](#Full_Working_Code "Full Working Code")'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[完整工作代码](#Full_Working_Code "完整工作代码")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-14
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: In this tutorial, we will design a leaderboard and see the full working code
     for it. Below are some of the requirements for the leaderboard which we are going
     to design
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将设计一个排行榜，并查看其完整的工作代码。以下是我们将要设计的排行榜的一些要求
 - en: '**AddScore(id, score)** – Add score to the score of the player with playerId
     as id. If no such player exists then create one.'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**AddScore(id, score)** – 为玩家 id 为 id 的玩家添加得分。如果没有此玩家，则创建一个。'
 - en: '**RestScore(id)**– Reset the score to zero of the player with playerId as id'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**RestScore(id)** – 重置玩家 id 为 id 的玩家得分为零'
 - en: '**Top K Sum** – Should be able to retrieve the top k sum from the leaderboard.'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Top K 和 Sum** – 应该能够从排行榜中检索前 k 个和。'
 - en: '**Top K Players** – Should be able to retrieve the top k players from the leaderboard.'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Top K 玩家** – 应该能够从排行榜中检索前 k 个玩家。'
 - en: The first solution that comes to mind looking at this problem is to use a **Min
     Heap + HashMap**. But Min Heap is not an optimal solution if the Top K sum or
     Top K players are called too frequently which they will be as it is a leaderboard
     that is meant to show leaders. But why is it not an optimal solution and then
     what is the optimal solution? We will look at it in this tutorial. Let’s first
     see how this problem can be solved using Min Heap + Hashmap solution
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 看着这个问题，第一个想到的解决方案是使用**最小堆 + 哈希映射**。但是，如果 Top K 和 Top K 玩家调用的频率过高，最小堆就不是一个最佳解决方案，因为排行榜是用来展示领先者的。但为什么它不是一个最佳解决方案，最优的解决方案是什么呢？我们将在本教程中进行探讨。首先，让我们看看如何使用最小堆
+    + 哈希映射解决方案来解决这个问题
 - en: Two data structures will be required
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 需要两个数据结构
 - en: '**MinHeap**– MinHeap will only be created at the time when Top K Sum or Top
     K players method will be called'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**最小堆**– 最小堆只会在调用 Top K 和 Sum 或 Top K 玩家方法时创建'
 - en: '**Hashmap** – Other than MinHeap we will also maintain a hashmap that will
     contain the entry for each of the players and their score. So for this hashmap
     the'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**哈希映射** – 除了最小堆外，我们还将维护一个哈希映射，该映射将包含每个玩家及其得分的条目。因此，对于这个哈希映射'
 - en: The key will be playerID
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 关键将是 playerID
 - en: The value will be the player’s Score
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 值将是玩家的得分
 - en: Let’s look at the Time Complexity of each of the operations in the case of the
     Min Heap + Hashmap solution
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看一下 Min Heap + 哈希映射解决方案中每个操作的时间复杂度
 - en: '**Add Score:**'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '**添加得分：**'
 - en: Add to the Hash Map. TC is O(1)
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 添加到哈希映射中。时间复杂度是 O(1)
 - en: '**Reset Score**'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '**重置得分**'
 - en: Set the value in the Hash Map to zero. TC is O(1)
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 将哈希映射中的值设置为零。时间复杂度是 O(1)
 - en: '**Top K Sum:**'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Top K 和 Sum：**'
 - en: Create a Min Heap of k elements. Traverse through the HashMap and add elements
     to the Min Heap if the score is more than the top element of the Min Heap. TC
     of this operation will be O(Nlogk) where N is the number of players
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个包含 k 个元素的最小堆。遍历哈希映射并将元素添加到最小堆中，如果得分大于最小堆的顶部元素。此操作的时间复杂度将是 O(Nlogk)，其中 N
+    是玩家的数量
 - en: '**Top K Players:**'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Top K 玩家：**'
 - en: Same as Top K Sum. TC is O(NlogK) where N is the number of players
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 Top K 和 Sum 相同。时间复杂度是 O(NlogK)，其中 N 是玩家的数量
 - en: Here we can see that Time Complexity of Top K sum and Top K Players is O(Nlogk)
     which is on the higher side. We can optimize it using a Balanced BST + Hashmap
     Solution. For a Balanced BST + Hashmap Solution below will be the Time Complexity
     of each of the operations
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里我们可以看到，前 K 名得分和前 K 名玩家的时间复杂度是 O(Nlogk)，这是相对较高的。我们可以通过使用平衡二叉搜索树 + 哈希表解决方案来优化它。对于平衡二叉搜索树
+    + 哈希表解决方案，下面是每个操作的时间复杂度
 - en: 'Add Score: O(logN)'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 添加得分：O(logN)
 - en: 'Reset Score: O(logN)'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 重置得分：O(logN)
 - en: 'Top K Sum: O(K)'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 前 K 名得分：O(K)
 - en: 'Top K Players: O(K)'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 排名前 K 的玩家：O(K)
 - en: The Time Complexity of **AddScore** and **ResetScore** has increased at the
     cost of the lower Time Complexity of Top K Sum and Top K playeroperations. Let’s
     look at how it will be implemented and then compare it with Min Heap Solution
     later on in the tutorial.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**添加得分** 和 **重置得分** 的时间复杂度增加了，这代价是 **前 K 名得分** 和 **前 K 名玩家** 操作时间复杂度的降低。让我们看看如何实现它，并在教程后续部分与最小堆解决方案进行比较。'
 - en: '**Balanced BST + Hashmap Solution**'
+  id: totrans-41
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**平衡二叉搜索树 + 哈希表解决方案**'
 - en: Balanced BST solution. We are going to maintain two data structures
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 平衡二叉搜索树解决方案。我们将维护两种数据结构
 - en: Balanced BST – We are going to use the AVL tree here. Each node in the AVL tree
     will store below things
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 平衡二叉搜索树—我们将使用 AVL 树。在 AVL 树中的每个节点将存储以下内容
 - en: Score
+  id: totrans-44
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 得分
 - en: Player IDs with that score. We will store it on a map. Why map and not an array?
     So that we can easily remove a player from the node when its score changes
+  id: totrans-45
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用该得分的玩家 ID，我们将其存储在一个映射中。为什么选择映射而不是数组？因为这样我们可以在玩家得分变化时，轻松地将玩家从节点中移除。
 - en: Num Player with that score. It will be equal to the number of entries in the
     Players Map
+  id: totrans-46
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 该得分的玩家数量将等于玩家映射中条目的数量
 - en: Hashmap – Other than Balanced BST we will also maintain a hashmap that will
     contain the entry for each of the players and their score. So for this hashmap
     the
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 哈希表—除了平衡二叉搜索树外，我们还将维护一个哈希表，其中包含每个玩家及其得分的条目。对于这个哈希表
 - en: The key will be playerID
+  id: totrans-48
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 键将是 playerID
 - en: The value will be the player’s Score
+  id: totrans-49
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 值将是玩家的得分
 - en: '**Comparison with Min Heap**'
+  id: totrans-50
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**与最小堆的比较**'
 - en: The below table compares (Balanced BST + HashMap) to (Min Heap + Hashmap)
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下表格比较了（平衡二叉搜索树 + 哈希表）与（最小堆 + 哈希表）的区别
 - en: 'Assumption: N is the number of players'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设：N 是玩家的数量
 - en: '| **Operation** | Balanced BST + HashMap | Min Heap + HashMap |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| **操作** | 平衡二叉搜索树 + 哈希表 | 最小堆 + 哈希表 |'
 - en: '| Add Score | O(logN) | O(1) |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| 添加得分 | O(logN) | O(1) |'
 - en: '| Reset Score | O(logN) | O(1) |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| 重置得分 | O(logN) | O(1) |'
 - en: '| Top K Sum | O(k) | O(Nlogk) |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| 前 K 名得分 | O(k) | O(Nlogk) |'
 - en: '| Top K players | O(k) | O(Nlogk) |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| 排名前 K 的玩家 | O(k) | O(Nlogk) |'
 - en: The purpose of the leaderboard is to show the top score players at all times
     and the board needs to be refreshed every time any score of any player changes.
     So we would want to optimize the **Top K Sum** and **Top K** players method more.
     Hence Balanced BST + Hashmap is more suited to designing the leaderboard
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 排行榜的目的是始终展示得分最高的玩家，并且每当任何玩家的得分发生变化时，榜单需要刷新。因此，我们希望进一步优化 **前 K 名得分** 和 **前 K
+    名玩家** 的方法。鉴于此，平衡二叉搜索树 + 哈希表更适合设计排行榜。
 - en: '**Implementation**'
+  id: totrans-59
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**实现**'
 - en: Let’s look at how the implementation and design of the Balanced BST + Hashmap
     solution
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看一下平衡二叉搜索树（Balanced BST）+ 哈希表（Hashmap）解决方案的实现和设计。
 - en: Here is an example of how things are stored in the AVL tree
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个示例，展示如何在 AVL 树中存储数据
 - en: '![](../Images/84383e2642233fa1f3ee6f78ab4eb5f7.png)'
+  id: totrans-62
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/84383e2642233fa1f3ee6f78ab4eb5f7.png)'
 - en: Here is how each of the operations is going to work
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是每个操作将如何工作的示例
 - en: '**AddScore**'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**添加得分**'
 - en: For this scenario, we have two cases
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这种情况，我们有两种情况
 - en: '**The player already exists in the leaderboard**'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家已经存在于排行榜上**'
 - en: For this, we simply add the player to the hashmap as well as the AVL tree.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于此操作，我们将玩家同时添加到哈希表和 AVL 树中。
 - en: '**The player doesn’t already exist in the leaderboard**'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家尚未出现在排行榜上**'
 - en: In this case, it means that the player’s score is getting changed. So in this
     case we will do two things. Let’s understand the two things which are required
     to be done using an example. For eg let’s say that the earlier score of the player
     was 5 and now 3 is getting added to his score. So 5 is the old score and 5+3=8
     is the new score. So we will simply
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，意味着玩家的得分正在发生变化。所以在这种情况下，我们将做两件事。让我们通过一个示例来理解这两件事。假设玩家的原始得分是 5，现在他的得分增加了
+    3。那么 5 是原始得分，5+3=8 是新得分。所以我们将简单地
 - en: Remove that player from the node in the AVL tree with a score of 5.
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从 AVL 树中的节点中移除该玩家，其得分为 5。
 - en: Add that player to the node in the AVL tree with a score of 8\. If a node with
     a score of 8 doesn’t already exist then create it.
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将该玩家添加到 AVL 树中得分为 8 的节点。如果得分为 8 的节点不存在，则创建该节点。
 - en: The TC for AddScore will be **O(logN)** where N is the number of players
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: AddScore的时间复杂度为**O(logN)**，其中N是玩家的数量。
 - en: '**Reset Score**'
+  id: totrans-73
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**重置得分**'
 - en: In this scenario as well we have two cases
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们也有两种情况
 - en: '**The player already exists in the leaderboard with a score of x**'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家已在排行榜中，得分为x**'
 - en: For this, we simply remove that player from the node in the AVL tree with a
     score of x. Check in the map if the player exists in the leaderboard. If it exists
     then perform the above-mentioned action
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 为此，我们只需从得分为x的AVL树节点中删除该玩家。检查该玩家是否存在于排行榜的映射中。如果存在，则执行上述操作。
 - en: '**The player doesn’t already exist in the leaderboard**'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家尚未在排行榜中存在**'
 - en: In this case, we don’t need to do anything
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们不需要做任何操作。
 - en: The TC for ResetScore will be **O(logN)** where N is the number of players
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: ResetScore的时间复杂度为**O(logN)**，其中N是玩家的数量。
 - en: '**Retrieve the top k sum from the leaderboard**'
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**从排行榜中获取前k名总分**'
 - en: For this, we simply need to traverse the AVL tree starting with the node having
     the highest score, then add that **score*num_players** at the output sum. If NumPlayers
     at that AVL node is greater than k, then add **score*k** to the output sum. Keep
     repeating this process with the node with the second-highest score and then the
     third-highest score until the overall k score has been added.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 为此，我们只需要从分数最高的节点开始遍历AVL树，然后将该**分数*num_players**添加到输出总和。如果该AVL节点的NumPlayers大于k，则将**分数*k**添加到输出总和。继续重复此过程，依次遍历第二高分和第三高分的节点，直到所有k个分数都被添加。
 - en: The TC for this operation will be **O(K)** because it is the same as traversing
     K nodes in a balanced BST
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个操作的时间复杂度是**O(K)**，因为它与在平衡的二叉搜索树中遍历K个节点是一样的。
 - en: '**Retrieve the top k players from the leaderboard.**'
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**从排行榜中获取前k名玩家。**'
 - en: For this, we simply need to traverse the AVL tree starting with the node having
     the highest score, then add all the players with that score to the output. If
     num players at that AVL node are greater than k, then add only k players.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 为此，我们只需要从分数最高的节点开始遍历AVL树，然后将该分数的所有玩家添加到输出中。如果该AVL节点的玩家数量大于k，则只添加k个玩家。
 - en: Keep repeating this process with the node with the second-highest score and
     then third highest score until the overall k players have been added
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 继续重复此过程，依次遍历第二高分和第三高分的节点，直到所有k个玩家被添加。
 - en: The TC for this operation will be **O(K)** because it is the same as traversing
     K nodes in a balanced BST
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个操作的时间复杂度是**O(K)**，因为它与在平衡的二叉搜索树中遍历K个节点是一样的。
 - en: '**Low-Level Design**'
+  id: totrans-87
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: In this design, we are going to use two classes
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个设计中，我们将使用两个类
 - en: The first is the leaderboard class. The leaderboard class will expose all methods
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个是排行榜类。排行榜类将暴露所有方法。
 - en: '**AddScore(playerId string, scoreToAdd int)**'
+  id: totrans-90
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**AddScore(playerId string, scoreToAdd int)**'
 - en: '**Reset(playerId string)**'
+  id: totrans-91
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Reset(playerId string)**'
 - en: '**TopPlayers(k int)**'
+  id: totrans-92
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**TopPlayers(k int)**'
 - en: '**TopSum(k int)**'
+  id: totrans-93
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**TopSum(k int)**'
 - en: leaderboard class will internally use AVL to return all the results
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 排行榜类将内部使用AVL来返回所有结果。
 - en: The second is the AVL class. This class with contain below two classes and will
     encapsulate all logic for implementing an AVL tree
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二个是AVL类。这个类将包含以下两个类，并封装实现AVL树的所有逻辑。
 - en: AVL Tree Class
+  id: totrans-96
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AVL树类
 - en: AVLNode class
+  id: totrans-97
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AVLNode类
 - en: '**Full Working Code**'
+  id: totrans-98
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**完整工作代码**'
 - en: The code for AVL tree in golang has been inspired by [https://github.com/karask/go-avltree](https://github.com/karask/go-avltree)
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: Golang中的AVL树代码灵感来自于[https://github.com/karask/go-avltree](https://github.com/karask/go-avltree)
 - en: Here is the working code for the same in Go Programming Language
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是使用Go编程语言实现的相应代码。
 - en: '**lederboard.go**'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lederboard.go**'
 - en: '[PRE0]'
+  id: totrans-102
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**avl.go**'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '**avl.go**'
 - en: '[PRE1]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**main.go**'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE2]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Output**'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE3]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Conclusion**'
+  id: totrans-109
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing and implementing a leaderboard. Hope you have liked
     this article. Please share feedback in the comments
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章主要讲解了如何设计和实现一个排行榜。希望你喜欢这篇文章，请在评论中分享反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 请查看我们的系统设计教程系列[系统设计问题](https://techbyexample.com/system-design-questions/)'

@@ -1,56 +1,80 @@
 - en: Point to Point (P2P) vs Pub/Sub in Distributed Message Queue
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 点对点（P2P）与发布/订阅（Pub/Sub）在分布式消息队列中的区别
 - en: 原文：[https://techbyexample.com/p2p-pub-sub-message-queue/](https://techbyexample.com/p2p-pub-sub-message-queue/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/p2p-pub-sub-message-queue/](https://techbyexample.com/p2p-pub-sub-message-queue/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Distributed Message Queue has two models
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 分布式消息队列有两种模型
 - en: Point to Point
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 点对点
 - en: Pub-Sub
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发布/订阅
 - en: To understand the difference we have to understand a few terms first
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了理解两者的区别，我们需要先理解一些术语。
 - en: '**Producer** – The producer is the one who is producing the message that needs
     to be consumed by the consumer in an asynchronous way.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**生产者** — 生产者是指生成需要由消费者异步消费的消息的人。'
 - en: '**Message Queue** – The message Queue is the place where the producer pushes
     the messages  and the place where messages are kept till they are read by the
     consumer'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**消息队列** — 消息队列是生产者推送消息的地方，也是消息在被消费者读取之前保存的地方。'
 - en: '**Consumer or Subscriber** – The consumer is the one who is consuming the message
     that has been put. When it comes to consumers then there is one important thing
     to note. There could be multiple processes or threads of the same consumer running
     on the same or different machine in order to parallelize the processing of messages
     from the message queue. We will use the term consumer in this tutorial although
     both consumer and subscriber can be used analogously.'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**消费者或订阅者** — 消费者是指正在消费已投递的消息的人。谈到消费者时，有一个重要的点需要注意。可能会有多个相同消费者的进程或线程在同一台或不同的机器上运行，以便并行处理消息队列中的消息。尽管“消费者”和“订阅者”可以互换使用，但在本教程中我们将使用“消费者”这一术语。'
 - en: Let’s see the difference between the two
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看两者之间的区别
 - en: '**Point to Point**'
+  id: totrans-11
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**点对点**'
 - en: In the Point to Point model, there is one producer and one consumer, and bookkeeping
     is done per message level. Basically, there is one destination for the message.
     So for example let’s say there are two threads that are running for the consumer.
@@ -58,116 +82,172 @@
     Then only one thread of that consumer will be able to consume that message and
     once done it can delete that message from the queue. Below is the diagram for
     P2P
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在点对点模型中，有一个生产者和一个消费者，且是按消息级别进行记账管理的。基本上，消息只有一个目标。例如，假设消费者有两个线程在运行。消息队列中有一条由生产者投递的消息。那么只有消费者的一个线程可以消费这条消息，一旦消费完，消息可以从队列中删除。以下是P2P模型的示意图
 - en: '![P2P](../Images/291b7364bf469cbefdcd09953ed662be.png)'
+  id: totrans-13
   prefs: []
   type: TYPE_IMG
+  zh: '![P2P](../Images/291b7364bf469cbefdcd09953ed662be.png)'
 - en: If there are two messages in the queue then one message could be picked by one
     thread and the other message could be picked by the other thread. Or there could
     be a case where both the messages are being picked or consumed by either of the
     thread. And so on for more than two messages
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果队列中有两条消息，那么一条消息可能会被一个线程取走，另一条消息则可能被另一个线程取走。或者可能会出现两条消息都被同一个线程取走或消费的情况。对于多于两条消息的情况也是如此。
 - en: The point is that one message could only be consumed by one thread or process
     of the consumer and then it is deleted.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键点是，一条消息只能被消费者的一个线程或进程消费，消费后该消息会被删除。
 - en: It is also possible that the second message is processed first and deleted from
     the queue and the first message is then processed and deleted. So therefore an
     unordered bookkeeping of which messages have been deleted and which have not been
     deleted is done by the distributed message queue.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 也有可能是第二条消息先被处理并从队列中删除，接着第一条消息被处理并删除。因此，分布式消息队列会对已删除和未删除的消息进行无序的记账管理。
 - en: '**Pub-Sub Model**'
+  id: totrans-17
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**发布/订阅模型**'
 - en: In the Pub-Sub there is one producer and multiple consumers. Again for each
     of the consumers, there could be multiple threads or processes running on the
     same or different machine. Basically in Pub-Sub Model, there could be multiple
     destinations for the same message.  Here is the diagram for Pub-Sub Model
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在发布/订阅模式中，有一个生产者和多个消费者。同样，对于每个消费者，可能会有多个线程或进程在同一台或不同的机器上运行。基本上，在发布/订阅模型中，可能有多个目标接收相同的消息。下面是发布/订阅模型的示意图
 - en: '![Pub Sub](../Images/f7446cee4ca41c30112a5084b9b660a3.png)'
+  id: totrans-19
   prefs: []
   type: TYPE_IMG
+  zh: '![Pub Sub](../Images/f7446cee4ca41c30112a5084b9b660a3.png)'
 - en: If there is one message in the message queue then that message will be consumed
     by all the consumers. The message is only deleted from the distributed message
     queue once it is processed by all the consumers.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果消息队列中只有一条消息，那么所有消费者都会消费这条消息。只有在所有消费者都处理完该消息后，这条消息才会从分布式消息队列中删除。
 - en: In the Pub-Sub model generally, the bookkeeping is not done per message per
     consumer level. Instead distributed message queue maintains an offset up to which
     each consumer has processed the message.  Based upon that offset distributed message
     queue will decide to delete that message.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在发布-订阅模型中，一般不会按每条消息每个消费者进行账务处理。相反，分布式消息队列会维护一个偏移量，表示每个消费者已处理的消息位置。基于这个偏移量，分布式消息队列决定删除该消息。
 - en: As an example consider there are 4 consumers. Also, assume there are 10 messages
     in the queue. Initially, none of the consumers processed any of the messages,
     so the offset for each of the consumers is zero.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 举个例子，假设有 4 个消费者。同时假设队列中有 10 条消息。起初，所有消费者都没有处理任何消息，因此每个消费者的偏移量都是零。
 - en: '| Consumer Name | Offset |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| 消费者名称 | 偏移量 |'
 - en: '| C1 | 0 |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| C1 | 0 |'
 - en: '| C2 | 0 |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| C2 | 0 |'
 - en: '| C3 | 0 |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| C3 | 0 |'
 - en: '| C4 | 0 |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| C4 | 0 |'
 - en: After that, all the consumers start consuming the messages. Let’s say C1 is
     able to process all 10 messages and informs Message Queue that it has consumed
     and processed all 10 messages. Similarly, C2 is able to process the first 5 messages
     and inform Message Queue about the same. Similarly, C3 and C4 are able to process
     the first 8 and the first 4 messages respectively. So below will the offset table
     for each consumer
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 之后，所有消费者开始消费消息。假设 C1 能够处理所有 10 条消息，并通知消息队列它已消费并处理了这 10 条消息。同样，C2 能够处理前 5 条消息，并通知消息队列。C3
+    和 C4 分别能够处理前 8 条和前 4 条消息。以下是每个消费者的偏移量表：
 - en: '| Consumer Name | Offset |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 消费者名称 | 偏移量 |'
 - en: '| C1 | 10 |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| C1 | 10 |'
 - en: '| C2 | 5 |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| C2 | 5 |'
 - en: '| C3 | 8 |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| C3 | 8 |'
 - en: '| C4 | 4 |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| C4 | 4 |'
 - en: The message queue can safely delete the first four messages as it knows that
     the first four have been consumed by all the consumers. Basically, it looks at
     the minimum offset and decides to delete based on that.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 消息队列可以安全地删除前四条消息，因为它知道这四条消息已经被所有消费者消费。基本上，消息队列会查看最小的偏移量，然后根据该偏移量决定是否删除。
 - en: Another point to note here is that the consumers can only commit offset up to
     which they have consumed the messages. So if a consumer C4 has let’s say successfully
     message 1,2,3,4, and 6\. But it has not been able to process message 5 then it
     will only commit offset 4 into the Publisher and not 6.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里另一个需要注意的点是，消费者只能提交它们已消费的消息的偏移量。所以，如果消费者 C4 已经成功处理了消息 1、2、3、4 和 6，但未能处理消息 5，那么它只会将偏移量
+    4 提交给发布者，而不会提交 6。
 - en: Also note that in the Pub-Sub case as well only a single thread or process of
     a particular consumer is consuming a particular message then that message cannot
     be consumed by other thread/process of the same consumer.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 还需要注意的是，在发布-订阅模式下，如果某个消费者的某个线程或进程正在消费某条消息，那么该消息不能被同一消费者的其他线程/进程消费。
 - en: '**Conclusion**'
+  id: totrans-37
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about the general differences between the P2P and Pub-Sub Model
     of a Distributed Message Queue. Hoped you have liked this article. Please share
     feedback in the comments.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章主要讲述了分布式消息队列中 P2P 模型与发布-订阅（Pub-Sub）模型之间的主要区别。希望你喜欢这篇文章，请在评论中分享反馈。

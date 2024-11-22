@@ -1,437 +1,678 @@
 - en: System Design of Snake and Ladder game
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 蛇与梯子游戏的系统设计
 - en: 原文：[https://techbyexample.com/snake-ladder-game-oops-design/](https://techbyexample.com/snake-ladder-game-oops-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/snake-ladder-game-oops-design/](https://techbyexample.com/snake-ladder-game-oops-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概览](#Overview "概览")'
 - en: '[All Actors in Snake and Ladder Game](#All_Actors_in_Snake_and_Ladder_Game
     "All Actors in Snake and Ladder Game")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[蛇与梯子游戏中的所有角色](#All_Actors_in_Snake_and_Ladder_Game "蛇与梯子游戏中的所有角色")'
 - en: '[Requirements Analysis](#Requirements_Analysis "Requirements Analysis")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[需求分析](#Requirements_Analysis "需求分析")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML 图](#UML_Diagram "UML 图")'
 - en: '[Low-Level Design](#Low-Level_Design "Low-Level Design")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级设计](#Low-Level_Design "低级设计")'
 - en: '[Full Working Code](#Full_Working_Code "Full Working Code")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[完整工作代码](#Full_Working_Code "完整工作代码")'
 - en: '[Full Working Code in One File](#Full_Working_Code_in_One_File "Full Working
     Code in One File")'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[单文件中的完整工作代码](#Full_Working_Code_in_One_File "单文件中的完整工作代码")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概览**'
 - en: Designing a snake and ladder game is a low-level design problem and it should
     be solved that way only.  In this question, the interview is looking to test your
     Object Oriented skills.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计蛇与梯子游戏是一个低级设计问题，应该以这种方式解决。在这个问题中，面试官希望测试你的面向对象技能。
 - en: You can learn more about the Snake and Ladders game here – [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在这里了解更多关于蛇与梯子游戏的信息 – [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)
 - en: In this tutorial, we will discuss the low-level design of the Snake and Ladder
     Game. Along with that, we will also look into the full working code for the Snake
     and Ladder Game. Here is the table of contents for this tutorial
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将讨论蛇与梯子游戏的低级设计。同时，我们还将查看蛇与梯子游戏的完整工作代码。以下是本教程的目录
 - en: All Actors in Snake and Ladder Game
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 蛇与梯子游戏中的所有角色
 - en: Requirements Analysis
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需求分析
 - en: UML Diagram
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: UML 图
 - en: The low-level design represented in Go Programming Language
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用 Go 编程语言表示的低级设计
 - en: Full Working Code in Go
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Go 语言中的完整工作代码
 - en: Full Working Code in One file
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 单文件中的完整工作代码
 - en: '**All Actors in Snake and Ladder Game**'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**蛇与梯子游戏中的所有角色**'
 - en: Let’s identify all the main actors which exist in the design
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们确定设计中存在的所有主要角色
 - en: '**Board** –  The board will be numbered from 1 to 100 and simply represents
     the board in the game.'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋盘** – 棋盘将从 1 到 100 编号，简单地表示游戏中的棋盘。'
 - en: '**Game** – it is the main class that controls the overall flow of the game.'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**游戏** – 它是控制游戏整体流程的主要类。'
 - en: '**Player** – It is an interface that represents the player. Two concrete class
     is going to implement this interface.'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家** – 它是一个表示玩家的接口。将有两个具体类实现这个接口。'
 - en: Human Player
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 人类玩家
 - en: Computer Player
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算机玩家
 - en: '**Snake** – It represents a ladder'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**蛇** – 它表示一条蛇'
 - en: '**Ladder** – It represents a ladder'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**梯子** – 它表示一把梯子'
 - en: '**Requirements Analysis**'
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**需求分析**'
 - en: Other than the rules of the snake and ladder game as mentioned here [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)
     , we are also going to design in an extensible way where –
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了这里提到的蛇与梯子游戏规则 [https://en.wikipedia.org/wiki/Snakes_and_ladders](https://en.wikipedia.org/wiki/Snakes_and_ladders)，我们还将以可扩展的方式进行设计，其中
+    –
 - en: The game could be played between any number of players
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 游戏可以由任意数量的玩家进行
 - en: The system should support any number of ladders and snakes.
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 系统应支持任意数量的梯子和蛇。
 - en: The game should support any number of dice rolled
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 游戏应该支持任何数量的骰子掷投
 - en: '**UML Diagram**'
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML 图**'
 - en: Below is the UML diagram for the Snake and Ladder game.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是蛇与梯子游戏的 UML 图。
 - en: '![Snake and Ladder Game UML Diagram](../Images/00aeb0e9b8aa0e3fecb09308097d0b02.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![蛇与梯子游戏的 UML 图](../Images/00aeb0e9b8aa0e3fecb09308097d0b02.png)'
 - en: Snake and Ladder Game UML Diagram
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 蛇与梯子游戏的 UML 图
 - en: Let’s understand this UML diagram
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们理解这个 UML 图
 - en: The simplest component in the above UML diagram is the iPlayer interface. It
     defines the following functions
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述 UML 图中最简单的组件是 iPlayer 接口。它定义了以下功能
 - en: '**Roll Dice** – a player is going to roll dice and return the dice number.
     It will take the number of dice to roll as an argument'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**掷骰子** – 玩家将掷骰子并返回骰子点数。它将骰子的数量作为参数'
 - en: '**Set Position** – A player position is set in this method. The player position
     will be from 1 to n*n where n is the dimension of the board'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**设置位置** – 通过这种方法设置玩家的位置。玩家的位置将从 1 到 n*n，其中 n 是棋盘的维度'
 - en: '**Get Position** – A utility method to get the position.'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**获取位置** – 一个用于获取位置的工具方法'
 - en: '**Get ID** – A simple function to get the ID of the player'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**获取ID** – 一个简单的函数，用于获取玩家的ID'
 - en: This interface is implemented by two classes
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 该接口由两个类实现
 - en: Human Player
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 人类玩家
 - en: Computer Player
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算机玩家
 - en: Next are the **Snake** and **Ladder** classes. These classes only exist for
     creating and validating the snake and ladder respectively. By validation, we mean
     that for the snake we are going to verify that the snake start is greater than
     the snake end. For the ladder, we are going to verify that the ladder start is
     less than the ladder end.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来是**蛇**和**梯子**类。这些类仅用于创建和验证蛇和梯子。通过验证，我们的意思是，对于蛇，我们将验证蛇的起始点是否大于蛇的终点。对于梯子，我们将验证梯子的起始点是否小于梯子的终点。
 - en: Both snake and ladder created are in turn passed into the creation of a board
     that internally implements the snake and ladder as a map.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建的蛇和梯子将依次传递到棋盘的创建中，棋盘内部实现了蛇和梯子作为一个映射。
 - en: Next is the board class itself. It will hold the below fields
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来是棋盘类本身。它将包含以下字段
 - en: A **square** of n*n where each square is of type Symbol class. The symbol class
     only holds the player Id map. For example, let’s say there are two players playing
     the game. During the game, both the player could be at square 5\. Both the players
     are present at position 5 is represented by the player’s Id map in the Symbol
     class
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个n*n的**方格**，其中每个方格都是符号类类型。符号类只包含玩家ID映射。例如，假设有两个玩家在玩游戏。在游戏过程中，两个玩家可能都在方格5中。玩家在位置5的位置由符号类中的玩家ID映射表示。
 - en: '**Dimension** – dimension of the the board'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**维度** – 棋盘的维度'
 - en: '**Snake Map** – Represents the snake on the board. The **key** in the map is
     the start point and the **value** is the endpoint of the snake'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**蛇图** – 表示棋盘上的蛇。地图中的**键**是蛇的起始点，**值**是蛇的终点'
 - en: '**Ladder Map**– It Represents the ladder on the board. The **key** in the map
     is the start point and the **value** is the endpoint of the ladder'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**梯子图** – 表示棋盘上的梯子。地图中的**键**是梯子的起始点，**值**是梯子的终点'
 - en: There is a Game Status Enum class that defines the different states of the game.
     A game can be either in **GameInProgress** or **GameFinished** state.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个游戏状态枚举类，定义了游戏的不同状态。游戏可以处于**进行中**或**游戏结束**状态。
 - en: Next is the Game Class which is the driver class. It has below components
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来是游戏类，它是驱动类。它包含以下组件
 - en: '**Board**  – The board itself'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋盘** – 棋盘本身'
 - en: '**Players**  – the list of players that are playing the game'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家** – 玩游戏的玩家列表'
 - en: '**Num Moves**  – Number of moves that have happened till now'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已移动次数** – 到目前为止已经发生的移动次数'
 - en: '**Game Status** – What is the game status at this moment'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**游戏状态** – 此时的游戏状态是什么'
 - en: '**Winning Player** – Who is the winning player at the end.'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**获胜玩家** – 最终获胜的玩家是谁'
 - en: '**Num Dice** – With how many dice is the game player with.'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**骰子数量** – 游戏使用的骰子数量'
 - en: Let’s look at low level design now expressed in Go Programming Language
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们看看低级设计，以下是用Go编程语言表示的
 - en: '**Low-Level Design**'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Below is the low-level design expressed in Go Programming Language
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是用Go编程语言表示的低级设计
 - en: '**iPlayer interface**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer接口**'
 - en: '[PRE0]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Human Player Class**'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '**人类玩家类**'
 - en: '[PRE1]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Computer Player Class**'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算机玩家类**'
 - en: '[PRE2]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Game Status Enum**'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏状态枚举**'
 - en: '[PRE3]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Snake Class (Only used for creation and validation of snake)**'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**蛇类（仅用于创建和验证蛇）**'
 - en: '[PRE4]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Ladder Class (Only used for creation and validation of ladder)**'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**梯子类（仅用于创建和验证梯子）**'
 - en: '[PRE5]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Symbol Class**'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**符号类**'
 - en: '[PRE6]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**Board Class**'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '**棋盘类**'
 - en: '[PRE7]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Game Class**'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏类**'
 - en: '[PRE8]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**Full Working Code**'
+  id: totrans-84
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整工作代码**'
 - en: Here is the full working code
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码
 - en: '**iPlayer.go**'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer.go**'
 - en: '[PRE9]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**humanPlayer.go**'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '**humanPlayer.go**'
 - en: '[PRE10]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**computerPlayer.go**'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '**computerPlayer.go**'
 - en: '[PRE11]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**gameStatus.go**'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gameStatus.go**'
 - en: '[PRE12]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**symbol.go**'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '**symbol.go**'
 - en: '[PRE13]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**snake.go**'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**snake.go**'
 - en: '[PRE14]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**ladder.go**'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ladder.go**'
 - en: '[PRE15]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**board.go**'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**board.go**'
 - en: '[PRE16]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**game.go**'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '**game.go**'
 - en: '[PRE17]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**main.go**'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE18]'
+  id: totrans-105
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Let’s run this program
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们运行这个程序
 - en: Note that the output will be different every time you run this program
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，每次运行此程序时，输出都会有所不同
 - en: '**Output**'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE19]'
+  id: totrans-109
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '**Full Working Code in One File**'
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整工作代码在一个文件中**'
 - en: Here is the full working code in one file
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码，全部在一个文件中
 - en: '[PRE20]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: Let’s run this program
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们运行这个程序
 - en: Note that the output will be different every time you run this program
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，每次运行此程序时，输出都会有所不同
 - en: '**Output**'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE21]'
+  id: totrans-116
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '**Conclusion**'
+  id: totrans-117
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about the low-level design of the Snake and Ladder program. Hope
     you have liked this article. Please share the feedback in the comments.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章主要讲解了“蛇与梯子”程序的低级设计。希望你喜欢这篇文章。请在评论中分享你的反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 查看我们的系统设计教程系列 [System Design Questions](https://techbyexample.com/system-design-questions/)'

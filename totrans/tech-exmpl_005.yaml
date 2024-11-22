@@ -1,81 +1,128 @@
 - en: How to find what /bin/sh points to on your machine
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 如何在你的机器上找到 /bin/sh 指向的内容
 - en: 原文：[https://techbyexample.com/bin-sh-points/](https://techbyexample.com/bin-sh-points/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/bin-sh-points/](https://techbyexample.com/bin-sh-points/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: '**/bin/sh** could be either a symbolic or hard link to what it points to. /bin/sh
     could point to'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**/bin/sh** 可以是符号链接或硬链接，指向它所指向的目标。/bin/sh 可以指向'
 - en: /bin/bash
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: /bin/bash
 - en: /bin/dash
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: /bin/dash
 - en: ….
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ….
 - en: '**If /bin/sh is a symbolic link**'
+  id: totrans-7
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**如果 /bin/sh 是符号链接**'
 - en: If /bin/sh is a symbolic link then we can find what it points to using the below
     command
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 /bin/sh 是符号链接，我们可以使用以下命令查找它指向的目标。
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If the **/bin/sh** has a symbolic link to bash then it will output
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 **/bin/sh** 是指向 bash 的符号链接，那么输出将是：
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**If /bin/sh is a hard link**'
+  id: totrans-12
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**如果 /bin/sh 是硬链接**'
 - en: In this case, we can use the below command to find what /bin/sh points to
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们可以使用以下命令查找 /bin/sh 指向的目标。
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If it points to dash then below will be the output
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果它指向 dash，那么输出将如下：
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: For example on the docker ubuntu container the **/bin/sh** points to **/bin/dash**.
     So if you will run the above command in the docker ubuntu container then it will
     output as /bin/dash
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，在 Docker 的 Ubuntu 容器中，**/bin/sh** 指向 **/bin/dash**。所以，如果你在 Docker 的 Ubuntu
+    容器中运行上述命令，它将输出 /bin/dash。
 - en: Command to run for docker container
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在 Docker 容器中运行的命令
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Output**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE5]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 请查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'

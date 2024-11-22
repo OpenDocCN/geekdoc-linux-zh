@@ -1,380 +1,575 @@
 - en: LFU Cache Design and Implementation
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: LFU缓存设计与实现
 - en: 原文：[https://techbyexample.com/lfu-cache-implementation-design/](https://techbyexample.com/lfu-cache-implementation-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/lfu-cache-implementation-design/](https://techbyexample.com/lfu-cache-implementation-design/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: '**LFU** stands for **Least Frequently Used**. In the LFU cache, the least frequently
     used object is removed whenever there is a new entry that needs to be inserted
     and the cache is full.  Let’s first see the requirements then we will see an example
     to understand **LFU** better.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**LFU**代表**最不常用的（Least Frequently Used）**。在LFU缓存中，当缓存已满并且需要插入一个新条目时，最不常用的对象会被移除。让我们首先查看需求，然后通过示例更好地理解**LFU**。'
 - en: '**Requirements**'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**需求**'
 - en: Below are the requirements
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是需求
 - en: The cache should support **Set** and **Get** Operation
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缓存应支持**Set**和**Get**操作
 - en: O(logn) Time Complexity for both **Set** and **Get**
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set**和**Get**操作的时间复杂度为O(logn)'
 - en: Assume the maximum capacity of the cache is n. Once the cache is full and there
     is one more key to be inserted then one of the existing entries needs to be deleted
     from the cache
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设缓存的最大容量是n。一旦缓存满了并且有新的键需要插入，则必须从缓存中删除现有的一个条目
 - en: Deletion should be based on the eviction algorithm – LFU (Least Frequently Used).
     If two cache entries have the same frequency or count then remove the one which
     is Least Recently Used
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 删除应基于驱逐算法——LFU（最不常用）。如果两个缓存条目的使用频率或计数相同，则删除最近最少使用的条目
 - en: Assume both key and value in the cache are of type string
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设缓存中的键和值都是字符串类型
 - en: '**LFU Example**'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**LFU 示例**'
 - en: As an example consider a cache of size two where both the key and value of the
     cache entry is a string. Let’s assume below are the operations
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为示例，假设缓存大小为2，其中缓存条目的键和值都是字符串。假设以下是操作
 - en: '**Set (“a”, “1”)** – It adds one element to the cache'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set (“a”, “1”)** – 向缓存中添加一个元素'
 - en: '**Set (“b”, “2”)** – Adds the second element in the cache'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set (“b”, “2”)** – 向缓存中添加第二个元素'
 - en: '**Get (“a”)** – Get cache entry with key **“a”**. Cache entry with key **“a”**
     is now used twice while cache entry with key **“b”** is used only once'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Get (“a”)** – 获取键为**“a”**的缓存条目。键为**“a”**的缓存条目现在已被使用了两次，而键为**“b”**的缓存条目只使用了一次'
 - en: '**Set (“c”, “3”)** – A third cache entry needs to be created. The cache is
     already full so we need to evict one of the cache entries by the LFU algorithm.
     Cache entry with key **“a”** is used twice while cache entry with key **“b”**
     is used only once. Hence we will delete the cache with key **“b”** as it is the
     **Least Frequently Used**. Once **“b”** is deleted we will insert the entry with
     key **“c”**'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set (“c”, “3”)** – 需要创建第三个缓存条目。缓存已经满了，因此我们需要通过LFU算法驱逐一个缓存条目。键为**“a”**的缓存条目被使用了两次，而键为**“b”**的缓存条目仅使用了一次。因此我们将删除键为**“b”**的缓存条目，因为它是**最不常用的**。一旦**“b”**被删除，我们将插入键为**“c”**的条目'
 - en: '**Data Structures to use**'
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**使用的数据结构**'
 - en: As per the requirements, both Set and Get operations should be O(logn). **MinHeap**
     seems to be the right size for maintaining the Least Frequently Used Entry. Other
     than that we are also going to use a Map in order to ensure O(logn) Time complexity.
     Overall below data structure will be used
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据需求，Set和Get操作的时间复杂度应该是O(logn)。**最小堆（MinHeap）**似乎是维护最不常用条目的正确数据结构。除此之外，我们还将使用映射（Map）以确保时间复杂度为O(logn)。总体来说，将使用以下数据结构
 - en: '**Map**'
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**映射（Map）**'
 - en: A map can only have a key and a value where
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 映射只能有一个键和值，其中
 - en: The Key of the map will be the key of the cache entry
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 映射的键将是缓存条目的键
 - en: The value of the map will be a pointer to the Min Heap Node.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 映射的值将是指向最小堆节点的指针。
 - en: '**MinHeap**'
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**最小堆（MinHeap）**'
 - en: Each minheap node will have four entries
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个最小堆节点将包含四个条目
 - en: '**Key** of the cache entry'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缓存条目的**键（Key）**
 - en: '**Value** of the cache entry'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缓存条目的**值（Value）**
 - en: '**Index** into the Min Heap'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**最小堆的索引（Index）**'
 - en: '**Count** of how many times it has been used'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**计数（Count）**表示该条目被使用了多少次'
 - en: As an example for the below set of operations
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是这些操作的示例
 - en: '**Set (“a”, “1”)**'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set (“a”, “1”)**'
 - en: '**Set (“b”, “2”)**'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Set (“b”, “2”)**'
 - en: '**Get (“a”)**'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Get (“a”)**'
 - en: Below will be entries in these data structures
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下将是这些数据结构中的条目
 - en: '**Map**'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '**映射（Map）**'
 - en: '[PRE0]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Min Heap**'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**最小堆（Min Heap）**'
 - en: '[PRE1]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Two things
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 两件事
 - en: The count for **“a”** is 2 because it has been used twice i.e once using the
     SET operation and the other during the GET operation. The count for **“b”** is
     one as it is only used once during the SET operation
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**“a”**的计数为2，因为它被使用了两次，即一次是通过SET操作，另一次是通过GET操作。**“b”**的计数为1，因为它只在SET操作中使用过一次'
 - en: The index for **“b”** is 0 because it has the lowest count among **“a”** and
     **“b”**
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**“b”**的索引为0，因为它在**“a”**和**“b”**中具有最低的计数'
 - en: Below are the high-level things we will have in our design
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是我们设计中的一些高级内容。
 - en: We will have a **Cache** class that will act as an interface for interacting
     with the client
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们将有一个**缓存**类，作为与客户端交互的接口。
 - en: The **cache** class will be using a combination of a **Map** and a **Min Heap**
     for storing everything. Both map and Min Heap are used so that GET and SET operations
     are of  O(logn) even with evictions. How this is achieved, we will see later in
     this tutorial.
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存**类将使用**映射**和**最小堆**的组合来存储所有内容。使用映射和最小堆是为了确保即使在逐出操作时，GET和SET操作仍然是O(logn)的。如何实现这一点，我们将在本教程后面看到。'
 - en: The **Map** will have the key of type string and the value of the type pointer
     to a node in the **Min Heap** as discussed above
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**映射**将具有类型为字符串的键和指向**最小堆**中节点的指针类型的值，如上所述。'
 - en: Min Heap Node will have four entries as discussed above
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最小堆节点将有四个条目，如上所述。
 - en: There will be an **evictionAlgorithm** interface. There will be **LFU** which
     implements this **evictionAlgorithm** Interface
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将有一个**逐出算法**接口。将有一个**LFU**实现该**逐出算法**接口。
 - en: The cache class will also embed an instance of **evictionAlgorithm** interface.
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 缓存类还将嵌入一个**逐出算法**接口的实例。
 - en: Let’s see how Get and Set are going to work in O(logn) time
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看Get和Set如何在O(logn)时间内工作。
 - en: '**Set Operation (key string, value string)**'
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Set操作（key string，value string）**'
 - en: For any set operation, it is first going to check if the entry with the given
     key exists in the cache or not. It can be checked by looking at the **Map**. If
     the entry exists there we are simply going to update the count and the value in
     the Min Heap Node. Since the count is increasing we are going to Down Heapify
     that MinHeap node as the count has changed.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何set操作，它首先会检查缓存中是否存在给定键的条目。可以通过查看**映射**来检查。如果条目存在，我们将简单地更新Min Heap节点中的计数和值。由于计数增加，我们将对该MinHeap节点进行下沉堆化（Down
+    Heapify），因为计数已更改。
 - en: If the cache entry with the given key doesn’t exist,  it will first create a
     Min Heap node with the below details
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果给定键的缓存条目不存在，它将首先创建一个具有以下详细信息的Min Heap节点。
 - en: The **Key** will be the key of the cache entry
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**键**将是缓存条目的键。'
 - en: The **Value** will be the value of the cache entry
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**值**将是缓存条目的值。'
 - en: '**Index**  as the (size of MinHeap+1)'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**索引** 作为（MinHeap大小+1）。'
 - en: '**Count** as 1'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**计数**为1。'
 - en: Once the MinHeap node is created there are two cases
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦创建了MinHeap节点，就有两种情况。
 - en: '**The cache is not full** –  In this case, it will pass the control to the
     current evictionAlgorithm interface. The LFU Algo (implementor of eviction Algorithm
     Interface) is going to insert that node in the Min Heap at the end and then call
     Up Heapfiy so that the node reaches its right place in the MinHeap. Overall operation
     will be O(logn) here'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存未满** – 在这种情况下，它将把控制权交给当前的逐出算法接口。LFU算法（逐出算法接口的实现者）将把节点插入Min Heap的末尾，然后调用上浮堆化（Up
+    Heapify），使该节点达到其在MinHeap中的正确位置。整体操作在这里是O(logn)。'
 - en: '**The cache is full** – In this case, it will pass the control to the LFU algorithm.
     It is going to evict the node which has the least count. Once that node is evicted
     it will insert the new node. Overall operation is O(logn) here'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**缓存已满** – 在这种情况下，它将将控制权交给LFU算法。它将逐出计数最少的节点。一旦该节点被逐出，它将插入新的节点。整个操作在这里是O(logn)。'
 - en: '**Get(key string)**'
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**Get(key string)**'
 - en: For any Get operation, it will first check the **Map** if the given key exists.
     If it exists then it will fetch the address of the **Min Heap Node** pointed to
     by the key in the map. It will then fetch the value from that MinHeap Node. Then
     it will pass the control to the current LFU algorithm. The LFU algorithm is going
     to increase the count of that MinHeap Node by 1 and then call the Down Heapify
     so that the node reaches its right place in the MinHeap
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于任何Get操作，它将首先检查**映射**中是否存在给定的键。如果存在，它将获取映射中该键所指向的**最小堆节点**的地址。然后它将从该MinHeap节点中获取值。接着，它将把控制权交给当前的LFU算法。LFU算法将把该MinHeap节点的计数增加1，然后调用下沉堆化（Down
+    Heapify），使该节点达到其在MinHeap中的正确位置。
 - en: Let’s see the UML diagram now
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们看一下UML图。
 - en: '**UML Diagram**'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**UML图**'
 - en: '![](../Images/4b55bd526d3f13a182e3d59b43b9e868.png)'
+  id: totrans-63
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/4b55bd526d3f13a182e3d59b43b9e868.png)'
 - en: '**Low-Level Design**'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**低级设计**'
 - en: Below is the low-level design expressed in GO programming language. Later we
     will see a UML diagram as well as a working example
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是用GO编程语言表达的低级设计。稍后我们将看到一个UML图以及一个工作示例。
 - en: '**Cache Class**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**缓存类**'
 - en: '[PRE2]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Min Heap Class**'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '**最小堆类**'
 - en: '[PRE3]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Eviction Algorithm Interface**'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '**逐出算法接口**'
 - en: '[PRE4]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**LFU Algorithm** – It implements the Eviction Algorithm Interface'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**LFU 算法** – 它实现了驱逐算法接口'
 - en: '[PRE5]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Full Working Code**'
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整的工作代码**'
 - en: Here is the full working code if anyone is interested in the GO programming
     language
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果有人对 GO 编程语言感兴趣，这里是完整的工作代码
 - en: '**minHeap.go**'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**minHeap.go**'
 - en: '[PRE6]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**evictionAlgorithm.go**'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**evictionAlgorithm.go**'
 - en: '[PRE7]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**lfu.go**'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lfu.go**'
 - en: '[PRE8]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**cache.go**'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cache.go**'
 - en: '[PRE9]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**main.go**'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE10]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Output**'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE11]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**Full Working Code in one file**'
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**完整的工作代码，放在一个文件中**'
 - en: Here is the full working code in one file
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是完整的工作代码，放在一个文件中
 - en: '[PRE12]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**Output**'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE13]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**Conclusion**'
+  id: totrans-93
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about designing an LFU-based Memory Cache. Hope you have liked this
     article. Please share feedback in the comments
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于设计基于 LFU 的内存缓存的全部内容。希望你喜欢这篇文章。请在评论中分享反馈。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 请查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'

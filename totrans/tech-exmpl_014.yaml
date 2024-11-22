@@ -1,726 +1,1114 @@
 - en: Chess Game System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 国际象棋游戏系统设计
 - en: 原文：[https://techbyexample.com/chess-low-level-design/](https://techbyexample.com/chess-low-level-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/chess-low-level-design/](https://techbyexample.com/chess-low-level-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "Overview")'
 - en: '[Requirements](#Requirements "Requirements")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[需求](#Requirements "Requirements")'
 - en: '[All actors in a game of Chess](#All_actors_in_a_game_of_Chess "All actors
     in a game of Chess")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[游戏中的所有参与者](#All_actors_in_a_game_of_Chess "All actors in a game of Chess")'
 - en: '[UML Diagram](#UML_Diagram "UML Diagram")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[UML 图](#UML_Diagram "UML Diagram")'
 - en: '[Piece](#Piece "Piece")'
+  id: totrans-7
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[棋子](#Piece "Piece")'
 - en: '[Cell](#Cell "Cell")'
+  id: totrans-8
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[格子](#Cell "Cell")'
 - en: '[Move](#Move "Move")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[移动](#Move "Move")'
 - en: '[Player](#Player "Player")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[玩家](#Player "Player")'
 - en: '[Board](#Board "Board")'
+  id: totrans-11
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[棋盘](#Board "Board")'
 - en: '[Game Class](#Game_Class "Game Class")'
+  id: totrans-12
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[游戏类](#Game_Class "Game Class")'
 - en: '[Low–Level Diagram](#Low%E2%80%93Level_Diagram "Low–Level Diagram")'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低级图](#Low%E2%80%93Level_Diagram "Low–Level Diagram")'
 - en: '[Code](#Code "Code")'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[代码](#Code "Code")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "Conclusion")'
 - en: '**Overview**'
+  id: totrans-16
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: In this tutorial, we are going to design a chess game. Chess is a board game
     that is played between two players.  More information about chess is available
     here
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将设计一款国际象棋游戏。国际象棋是一种在两名玩家之间进行的棋盘游戏。关于国际象棋的更多信息可以在此处找到
 - en: '[https://en.wikipedia.org/wiki/Chess](https://en.wikipedia.org/wiki/Chess)'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Chess](https://en.wikipedia.org/wiki/Chess)'
 - en: Before we start, please note that this is Low-Level Design Problem. We are going
     to design a chess game using Object Oriented Principles.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 在开始之前，请注意这是一个低级设计问题。我们将使用面向对象原则设计一款国际象棋游戏。
 - en: Designing a Chess Game is a very common system design interview question and
     as with any other system design interview this is what the interviewer is looking
     for
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计一款国际象棋游戏是一个非常常见的系统设计面试问题，和其他任何系统设计面试一样，面试官关注的是：
 - en: Your knowledge of Object-Oriented Design
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你对面向对象设计的理解
 - en: How do you frame your design in terms of Design Patterns
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你如何在设计中框架设计模式
 - en: Also, note that this question is not a distributed system design.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 另外，请注意此问题不是分布式系统设计。
 - en: In this tutorial, we will discuss the low-level design of the Chess Game. Along
     with that, we will also see into the working code for the Chess Game. Here is
     the table of contents
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程中，我们将讨论国际象棋游戏的低级设计。与此同时，我们还将查看国际象棋游戏的工作代码。以下是目录：
 - en: Requirements
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需求
 - en: Actor in the design
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设计中的参与者
 - en: UML diagram
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: UML 图
 - en: The low-Level design represented in Go Programming Language
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用 Go 编程语言表示的低级设计
 - en: Working Code
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 工作代码
 - en: '**Requirements**'
+  id: totrans-30
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**需求**'
 - en: The requirement of this tutorial is to design a chess game as per the rules
     of chess using Object Oriented Design Principles
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 本教程的需求是根据国际象棋规则，使用面向对象设计原则设计一款国际象棋游戏。
 - en: This article can be referred to know more about the rules of chess
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章可以参考了解更多关于国际象棋规则的信息
 - en: '[https://en.wikipedia.org/wiki/Rules_of_chess](https://en.wikipedia.org/wiki/Rules_of_chess)'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://en.wikipedia.org/wiki/Rules_of_chess](https://en.wikipedia.org/wiki/Rules_of_chess)'
 - en: The next step is to identify all actors in a game of Chess
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一步是识别国际象棋游戏中的所有参与者
 - en: '**All actors in a game of Chess**'
+  id: totrans-35
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**游戏中的所有参与者**'
 - en: Board
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 棋盘
 - en: Cell
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 兵
 - en: Player
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 玩家
 - en: Human Player
+  id: totrans-39
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 人类玩家
 - en: Computer Player
+  id: totrans-40
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算机玩家
 - en: Move
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 移动
 - en: Pieces
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 棋子
 - en: King
+  id: totrans-43
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 国王
 - en: Queen
+  id: totrans-44
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后宫
 - en: Bishop
+  id: totrans-45
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 主教
 - en: Rook
+  id: totrans-46
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 车
 - en: Knight
+  id: totrans-47
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 马
 - en: Pawn
+  id: totrans-48
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 兵
 - en: Game
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 游戏
 - en: Move
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 移动
 - en: Let’s look at each of these actors
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看一下这些参与者
 - en: '**Board** – We have an 8*8 board in a game of chess. So total there are 64
     cells'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋盘** – 在国际象棋游戏中，我们有一个 8*8 的棋盘。所以总共有 64 个格子。'
 - en: '**Cell –** A cell represents one of the cells of 8*8 = 64 cells'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**格子** – 一个格子表示 8*8 = 64 个格子中的一个'
 - en: '**Player –** It represents one of the two players playing the game. A player
     can be a'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**玩家** – 它表示正在进行游戏的两名玩家之一。一个玩家可以是：'
 - en: Human Player –
+  id: totrans-55
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 人类玩家 –
 - en: Computer Player
+  id: totrans-56
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算机玩家
 - en: '**Move –** It represents a move made by one of the players'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**移动** – 它表示玩家之一所做的移动'
 - en: '**Pieces**– There are different types of pieces in a chess game namely'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋子** – 国际象棋游戏中有不同类型的棋子，分别是：'
 - en: King
+  id: totrans-59
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 国王
 - en: Queen
+  id: totrans-60
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后宫
 - en: Bishop
+  id: totrans-61
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 主教
 - en: Rook
+  id: totrans-62
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 车
 - en: Knight
+  id: totrans-63
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 马
 - en: Pawn
+  id: totrans-64
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 兵
 - en: '**Game** –  The game class controls the entire flow of the chess game. It decides
     which player turn it is, the overall result of the game, etc.'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**游戏** – 游戏类控制着整个国际象棋游戏的流程。它决定了当前是哪个玩家的回合，游戏的总体结果等等。'
 - en: '**Move** – It simply represents a move in the game.'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**移动** – 它简单地表示游戏中的一次移动。'
 - en: Other than the above actors we also have **GameStatus** Enum that has the below
     types
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了上述的参与者外，我们还有 **游戏状态** 枚举，其中包含以下类型：
 - en: FirstPlayerWin
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一玩家胜
 - en: SecondPlayerWin
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二玩家胜
 - en: GameInProgress
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 游戏进行中
 - en: GameDraw
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 和棋
 - en: Stalemate
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 和棋
 - en: '**UML Diagram**'
+  id: totrans-73
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**UML 图**'
 - en: Below is the UML diagram for the Chess Game
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是国际象棋游戏的UML图
 - en: '![](../Images/0e0214be283d36a07a402affd8c98290.png)'
+  id: totrans-75
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/0e0214be283d36a07a402affd8c98290.png)'
 - en: Let’s understand this UML diagram by looking at different components and how
     each component integrate with other components
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过查看不同的组件以及每个组件如何与其他组件集成，来理解这个UML图。
 - en: '**Piece**'
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**棋子**'
 - en: The simplest component in the above design is a **Piece**. As mentioned above
     a Piece is of 7 types namely king, queen, rook, bishop, knight, and pawn. The
     Piece class is an abstract class that has the below information
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述设计中最简单的组件是**棋子**。如上所述，棋子有七种类型，分别是国王、皇后、车、象、骑士和兵。棋子类是一个抽象类，包含以下信息
 - en: '**white** – it is set to true if the piece is white otherwise false'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**白色** – 如果棋子是白色，则设置为真，否则为假'
 - en: '**killed** – whether a piece is captured or not.'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已被捕获** – 棋子是否被吃掉。'
 - en: Other than that it also provides a function **canMove()** which returns true
     if a given piece can move from its current location on the board to a new location.
     This function has the below signature
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，它还提供了一个函数**canMove()**，如果给定的棋子可以从当前棋盘位置移动到新位置，则返回真。该函数的签名如下
 - en: '**canMove(board, location, location)**'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**canMove(board, location, location)**'
 - en: '**Cell**'
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**棋子**'
 - en: The next simplest component is a **cell**. A cell represents a cell on the board.
     A cell will have the below components
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 下一个最简单的组件是**格子**。格子代表棋盘上的一个格子。一个格子将具有以下组件
 - en: '**location** – It represents the **x** and **y** coordinate of the cell on
     the board'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**位置** – 它表示棋盘上格子的**x**和**y**坐标'
 - en: '**piece –** The piece which is present on a given cell. It will be nil if the
     piece is not present at that cell location'
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋子** – 当前在指定格子上的棋子。如果该格子没有棋子，则为nil'
 - en: '**Move**'
+  id: totrans-87
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**移动**'
 - en: It represents a move in a chess game. There are three different moves that can
     happen in chess
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 它代表棋局中的一次移动。国际象棋中有三种不同的移动方式。
 - en: Resign
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 认输
 - en: Draw Offer
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 和棋提议
 - en: Moving a piece from its current cell to a new cell
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将棋子从当前位置移动到新的格子
 - en: It has below components that represent either of the above three types of move.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 它包含以下组件，代表上述三种类型的移动。
 - en: '**Current Location** – The current location of the piece'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**当前所在位置** – 棋子当前的位置'
 - en: '**New Location** – The new location to which a piece has moved to'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**新位置** – 棋子移动到的新位置'
 - en: '**Piece** – The piece which got moved'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋子** – 被移动的棋子'
 - en: '**Resign** – The move is a resign or not'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**认输** – 这步是认输还是不是'
 - en: '**Draw Offered** – Weather a player offered a draw or not.'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**和棋提议** – 玩家是否提出和棋提议。'
 - en: '**Player**'
+  id: totrans-98
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**玩家**'
 - en: There are two different types of player
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 有两种不同类型的玩家
 - en: Human Player
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 人类玩家
 - en: Computer Player
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 计算机玩家
 - en: A player will have below fields or components
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 玩家将拥有以下字段或组件
 - en: '**isWhite** – whether the player is playing as a white or black'
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**isWhite** – 玩家是否执白棋'
 - en: '**getNextMove** – get the next move of the player'
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**getNextMove** – 获取玩家的下一步'
 - en: '**agreeDraw** – whether the player agreed to a draw offer'
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**agreeDraw** – 玩家是否同意和棋提议'
 - en: '**Board**'
+  id: totrans-106
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**棋盘**'
 - en: Next is **Board** class. It represents the board of the game. It has below components
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来是**棋盘**类。它代表游戏的棋盘。它包含以下组件
 - en: '**Square** – Two-dimensional array of **Cell**'
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**方格** – 二维数组**格子**'
 - en: '**Dimension –** The dimension of the board which will be always 8'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**维度** – 棋盘的维度，始终为8'
 - en: '**Game Class**'
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**游戏类**'
 - en: Next is the most important class in the system which is **Game** class. It has
     below components
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来是系统中最重要的类——**游戏**类。它包含以下组件
 - en: '**Board**  – It represents the board'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**棋盘** – 它代表棋盘'
 - en: '**First Player**  – The first player'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**先手玩家** – 先手玩家'
 - en: '**Second Player** – The second player'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**第二玩家** – 第二个玩家'
 - en: '**First Player Turn** – Will be true if the current turn is of the first player
     otherwise false'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**先手玩家回合** – 如果当前是先手玩家的回合则为真，否则为假'
 - en: '**Game Status  –** What is the current Game Status'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**游戏状态** – 当前游戏的状态'
 - en: '**Moves**  – List of moves that have been made till now'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**已移动** – 迄今为止所有已做出的移动'
 - en: '**Low**–**Level Diagram**'
+  id: totrans-118
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**低级**–**级别图**'
 - en: Here is the low-level diagram in the Go Programming Language
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是Go编程语言中的低级图
 - en: '**Game**'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏**'
 - en: '[PRE0]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**Game Status**'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**游戏状态**'
 - en: '[PRE1]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Board**'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**棋盘**'
 - en: '[PRE2]'
+  id: totrans-125
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Cell**'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '**格子**'
 - en: '[PRE3]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**Move**'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**移动**'
 - en: '[PRE4]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**iPlayer Interface**'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer接口**'
 - en: '[PRE5]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Human Player**'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**人类玩家**'
 - en: '[PRE6]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**Computer Player**'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算机玩家**'
 - en: '[PRE7]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Piece**'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**棋子**'
 - en: '[PRE8]'
+  id: totrans-137
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**Piece Type**'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '**棋子类型**'
 - en: '[PRE9]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**King Piece**'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '**国王棋子**'
 - en: '[PRE10]'
+  id: totrans-141
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**Queen Piece**'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '**皇后棋子**'
 - en: '[PRE11]'
+  id: totrans-143
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**Rook Piece**'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: '**车棋子**'
 - en: '[PRE12]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '**Bishop Piece**'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**象棋子**'
 - en: '[PRE13]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**Knight Piece**'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '**骑士棋子**'
 - en: '[PRE14]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**Pawn Piece**'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: '**兵棋子**'
 - en: '[PRE15]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**Location**'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '**位置**'
 - en: '[PRE16]'
+  id: totrans-153
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**Code**'
+  id: totrans-154
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**代码**'
 - en: Let’s look at the code. The below code is not fully working functional code
     as per the chess algorithm and moves, but it will give you an idea
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们来看看代码。下面的代码并不是根据国际象棋算法和规则完全可用的功能性代码，但它可以给你一个大致的概念。
 - en: '**game.go**'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: '**game.go**'
 - en: '[PRE17]'
+  id: totrans-157
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**gamestatus.go**'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gamestatus.go**'
 - en: '[PRE18]'
+  id: totrans-159
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**board.go**'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: '**board.go**'
 - en: '[PRE19]'
+  id: totrans-161
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '**cell.go**'
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cell.go**'
 - en: '[PRE20]'
+  id: totrans-163
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '**move.go**'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '**move.go**'
 - en: '[PRE21]'
+  id: totrans-165
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '**iPlayer.go**'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iPlayer.go**'
 - en: '[PRE22]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '**humanPlayer.go**'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '**humanPlayer.go**'
 - en: '[PRE23]'
+  id: totrans-169
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '**computerPlayer.go**'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '**computerPlayer.go**'
 - en: '[PRE24]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '**piece.go**'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '**piece.go**'
 - en: '[PRE25]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '**pieceType.go**'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pieceType.go**'
 - en: '[PRE26]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '**king.go**'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**king.go**'
 - en: '[PRE27]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '**queen.go**'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: '**queen.go**'
 - en: '[PRE28]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '**rook.go**'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '**rook.go**'
 - en: '[PRE29]'
+  id: totrans-181
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '**bishop.go**'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: '**bishop.go**'
 - en: '[PRE30]'
+  id: totrans-183
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '**knight.go**'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '**knight.go**'
 - en: '[PRE31]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '**pawn.go**'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pawn.go**'
 - en: '[PRE32]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '**location.go**'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '**location.go**'
 - en: '[PRE33]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '**main.go**'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '**main.go**'
 - en: '[PRE34]'
+  id: totrans-191
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '**Conclusion**'
+  id: totrans-192
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about the low-level design of the chess game. We hope you have liked
     this article. Please share feedback in the comments
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是关于国际象棋游戏的低级设计。我们希望你喜欢这篇文章。请在评论中分享反馈。

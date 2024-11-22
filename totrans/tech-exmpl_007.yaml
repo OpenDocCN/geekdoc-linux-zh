@@ -1,78 +1,123 @@
 - en: What does the set -e command do
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`set -e` 命令的作用是什么'
 - en: 原文：[https://techbyexample.com/set-e-command/](https://techbyexample.com/set-e-command/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/set-e-command/](https://techbyexample.com/set-e-command/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概览**'
 - en: If you want your shell script or shell file to exit in case any command in the
     shell file returns a non-zero value then you can use set -e at the start of the
     script.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你希望在脚本中的任何命令返回非零值时，脚本能够退出，那么可以在脚本开头使用 `set -e`。
 - en: It is sometimes annoying that one of the commands fails in your script, but
     the script continues without failing and causes unintentional output as it breaks
     the assumption in the rest of the script.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候，当脚本中的某个命令失败时，脚本依然继续执行，这会导致意外输出，因为它打破了脚本中其他部分的假设。
 - en: This is where the **set -e** comes to the rescue
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这时，**set -e** 就派上用场了
 - en: '**Example**'
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**示例**'
 - en: Let’s understand it with an example. We will first write a script without set
     -e. Below is a simple script. Let’s name it **demo.sh** In this script p is undefined
     and results in an error.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个例子来理解它。我们将首先编写一个没有使用 `set -e` 的脚本。下面是一个简单的脚本。我们把它命名为 **demo.sh**，在这个脚本中，`p`
+    未定义，导致错误。
 - en: '**demo.sh**'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**demo.sh**'
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Let’s run this script
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们运行这个脚本
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Below will the output
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是输出结果
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Even though the script fails at line 1 but the last command of echo did got
     executed.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使脚本在第1行失败，但最后的 `echo` 命令还是执行了。
 - en: Let’s now the same script with set -e
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们用 `set -e` 运行相同的脚本
 - en: '**demo.sh**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**demo.sh**'
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Run the script again. Below will be the output
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次运行脚本。下面是输出结果
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: With set -e the script exists immediately as soon as the first command fails.
     Therefore the subsequent command of echo is never executed
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `set -e` 后，脚本在第一个命令失败时立即退出。因此后续的 `echo` 命令不会被执行
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'

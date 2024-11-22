@@ -1,111 +1,176 @@
 - en: Abort or exit a shell script if any command fails
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 如果任何命令失败，终止或退出一个 Shell 脚本
 - en: 原文：[https://techbyexample.com/abort-script-command-fails/](https://techbyexample.com/abort-script-command-fails/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/abort-script-command-fails/](https://techbyexample.com/abort-script-command-fails/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: If you want your shell script or shell file to exit in case any command in the
     shell file returns a non-zero value then you can use set -e at the start of the
     script.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你希望你的 Shell 脚本或 Shell 文件在任何命令返回非零值时退出，你可以在脚本开始时使用 set -e。
 - en: It is sometimes annoying that one of the commands fails in your script, but
     the script continues without failing and causes unintentional output as it breaks
     the assumption in the rest of the script.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时脚本中的某个命令失败，但脚本继续执行并未失败，导致出现意外的输出，因为它打破了脚本其余部分的假设，这会令人烦恼。
 - en: This is where the **set -e** comes to the rescue
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是 **set -e** 发挥作用的地方
 - en: '**Example**'
+  id: totrans-6
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**示例**'
 - en: Let’s understand it with an example. We will first write a script without set
     -e. Below is a simple script. Let’s name it **demo.sh** In this script p is undefined
     and results in an error.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们通过一个例子来理解它。我们将首先编写一个没有 set -e 的脚本。下面是一个简单的脚本。我们将其命名为 **demo.sh**，在这个脚本中，p
+    是未定义的，会导致错误。
 - en: '**demo.sh**'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**demo.sh**'
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Let’s run this script
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们运行这个脚本
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Below will the output
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是输出结果
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Even though the script fails at line 1 but the last command of echo did got
     executed.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使脚本在第 1 行失败，echo 的最后一个命令仍然执行了。
 - en: Let’s now the same script with set -e
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们使用 set -e 来运行相同的脚本
 - en: '**demo.sh**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**demo.sh**'
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Run the script again. Below will be the output
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次运行脚本。以下是输出结果
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: With set -e the script exists immediately as soon as the first command fails.
     Therefore the subsequent command of echo is never executed
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 set -e 时，一旦第一个命令失败，脚本会立即退出。因此，后续的 echo 命令永远不会执行
 - en: But the set -e command won’t work in the case of using pipes. Let’s see an example
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 但是，在使用管道的情况下，set -e 命令不起作用。让我们看一个例子
 - en: '[PRE5]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: It will give the output
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将给出如下输出
 - en: '[PRE6]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: The last command did got executed as seen from the above output
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 从上面的输出可以看到，最后一个命令确实执行了
 - en: We have to additional use **“-o pipefail”** flag in addition to using the **“-e”**
     flag to tell bash that even if the command fails during pipe then also exit the
     script. Let’s see an example
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们必须额外使用 **“-o pipefail”** 标志，除了使用 **“-e”** 标志以外，还需要告诉 bash 即使命令在管道中失败，也退出脚本。让我们看一个例子
 - en: '[PRE7]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**Output**'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**输出**'
 - en: '[PRE8]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: In this case, the last command of echo did not execute and the script existed
     as expected.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，echo 的最后一个命令没有执行，脚本按预期退出。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'
