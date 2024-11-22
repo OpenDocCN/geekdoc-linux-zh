@@ -1,89 +1,139 @@
 - en: 'zsh: no matches found: HEAD^'
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 'zsh: 找不到匹配项：HEAD^'
 - en: 原文：[https://techbyexample.com/zsh-no-matches-found-head/](https://techbyexample.com/zsh-no-matches-found-head/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/zsh-no-matches-found-head/](https://techbyexample.com/zsh-no-matches-found-head/)
 - en: '**Overview**'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: ^ character is a special character in filename expansion in zsh. There are a
     couple of ways to fix it
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: ^ 字符是 zsh 中文件名扩展的特殊字符。有几种方法可以解决这个问题
 - en: '**Workaround 1**'
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**解决方法 1**'
 - en: Escape the ^ character
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 转义 ^ 字符
 - en: Eg
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: or use quotes
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 或使用引号
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**Workaround 2 (Permanent Fix)**'
+  id: totrans-10
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '**解决方法 2（永久修复）**'
 - en: It happens because of **EXTENDED_GLOB** option due to which zsh allow ^ to negate
     blobs. As quoted here
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是由于**EXTENDED_GLOB**选项，zsh 允许 ^ 否定文件模式。正如这里引用的那样
 - en: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
 - en: '**EXTENDED_GLOB**'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**EXTENDED_GLOB**'
 - en: Treat the ‘#’, ‘~’ and ‘^’ characters as part of patterns for filename generation,
     etc. (An initial unquoted ‘~’ always produces named directory expansion.)
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 将‘#’，‘~’和‘^’字符视为文件名生成等模式的一部分。（一个未加引号的初始‘~’总是会生成命名目录扩展。）
 - en: So simply **unsetopt** this option in the terminal
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以只需在终端中**取消设置**此选项
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: To fix it permanently, you can write this line on your .zshrc file. This tells
     .zsh to not print an error when pattern matching fails and to use the command
     as is
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 要永久修复，可以在 .zshrc 文件中写下这一行。这告诉 .zsh 在模式匹配失败时不要打印错误，并按原样使用命令
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'PS: It is not a good idea to **unsetopt EXTENDED_GLOB** in .zshrc otherwise
     you won’t be able to use that behavior. With NOMATCH turned off it is not simply
     printing the error when pattern matching fails'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: PS：在 .zshrc 中**取消设置 EXTENDED_GLOB** 不是一个好主意，否则你将无法使用该行为。当关闭 NOMATCH 时，它在模式匹配失败时并不会简单地打印错误。
 - en: A description of NOMATCH can be found here
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: NOMATCH 的描述可以在这里找到
 - en: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://zsh.sourceforge.io/Doc/Release/Options.html](https://zsh.sourceforge.io/Doc/Release/Options.html)'
 - en: '**NOMATCH (+3) <C> <Z>**'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**NOMATCH (+3) <C> <Z>**'
 - en: If a pattern for filename generation has no matches, print an error, instead
     of leaving it unchanged in the argument list. This also applies to file expansion
     of an initial ‘~’ or ‘=’.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果文件名生成的模式没有匹配项，则打印错误，而不是让其在参数列表中保持不变。这也适用于初始‘~’或‘=’的文件扩展。
 - en: '**Note:** Check out our system design tutorial series [System Design Questions](https://techbyexample.com/system-design-questions/)'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 查看我们的系统设计教程系列 [系统设计问题](https://techbyexample.com/system-design-questions/)'
