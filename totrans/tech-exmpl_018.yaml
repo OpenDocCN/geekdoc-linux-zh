@@ -1,617 +1,846 @@
 - en: Instagram System Design
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Instagram 系统设计
 - en: 原文：[https://techbyexample.com/instagram-system-design/](https://techbyexample.com/instagram-system-design/)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://techbyexample.com/instagram-system-design/](https://techbyexample.com/instagram-system-design/)
 - en: Table of Contents
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 目录
 - en: '[Overview](#Overview "Overview")'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[概述](#Overview "概述")'
 - en: '[Functional Requirements](#Functional_Requirements "Functional Requirements")'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[功能需求](#Functional_Requirements "功能需求")'
 - en: '[Non-Functional Requirements](#Non-Functional_Requirements "Non-Functional
     Requirements")'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能需求](#Non-Functional_Requirements "非功能需求")'
 - en: '[User APIs](#User_APIs "User APIs")'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[用户 API](#User_APIs "用户 API")'
 - en: '[Data Storage](#Data_Storage "Data Storage")'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[数据存储](#Data_Storage "数据存储")'
 - en: '[What database to use](#What_database_to_use "What database to use")'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[使用什么数据库](#What_database_to_use "使用什么数据库")'
 - en: '[How upload of photos and videos is going to be uploaded](#How_upload_of_photos_and_videos_is_going_to_be_uploaded
     "How upload of photos and videos is going to be uploaded")'
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何上传照片和视频](#How_upload_of_photos_and_videos_is_going_to_be_uploaded "如何上传照片和视频")'
 - en: '[How Likes and Comments are going to be stored](#How_Likes_and_Comments_are_going_to_be_stored
     "How Likes and Comments are going to be stored")'
+  id: totrans-10
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何存储点赞和评论](#How_Likes_and_Comments_are_going_to_be_stored "如何存储点赞和评论")'
 - en: '[Posting a Status Update](#Posting_a_Status_Update "Posting a Status Update")'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[发布状态更新](#Posting_a_Status_Update "发布状态更新")'
 - en: '[How Timeline will be generated](#How_Timeline_will_be_generated "How Timeline
     will be generated")'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何生成时间线](#How_Timeline_will_be_generated "如何生成时间线")'
 - en: '[Different Methods of Timeline Generation](#Different_Methods_of_Timeline_Generation
     "Different Methods of Timeline Generation")'
+  id: totrans-13
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[不同的时间线生成方法](#Different_Methods_of_Timeline_Generation "不同的时间线生成方法")'
 - en: '[First Method – Fetch updates at Run Time](#First_Method_%E2%80%93_Fetch_updates_at_Run_Time
     "First Method – Fetch updates at Run Time")'
+  id: totrans-14
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第一种方法 – 在运行时获取更新](#First_Method_%E2%80%93_Fetch_updates_at_Run_Time "第一种方法
+    – 在运行时获取更新")'
 - en: '[Second Method – Timeline Generation Using the Pull Method (Fetch from DB)](#Second_Method_%E2%80%93_Timeline_Generation_Using_the_Pull_Method_Fetch_from_DB
     "Second Method – Timeline Generation Using the Pull Method (Fetch from DB)")'
+  id: totrans-15
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第二种方法 – 使用拉取方式生成时间线（从数据库获取）](#Second_Method_%E2%80%93_Timeline_Generation_Using_the_Pull_Method_Fetch_from_DB
+    "第二种方法 – 使用拉取方式生成时间线（从数据库获取）")'
 - en: '[Third Method – Timeline Generation Using the Push Method](#Third_Method_%E2%80%93_Timeline_Generation_Using_the_Push_Method
     "Third Method – Timeline Generation Using the Push Method")'
+  id: totrans-16
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第三种方法 – 使用推送方式生成时间线](#Third_Method_%E2%80%93_Timeline_Generation_Using_the_Push_Method
+    "第三种方法 – 使用推送方式生成时间线")'
 - en: '[Fourth Method – Pushing updates to client as and when available](#Fourth_Method_%E2%80%93_Pushing_updates_to_client_as_and_when_available
     "Fourth Method – Pushing updates to client as and when available")'
+  id: totrans-17
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[第四种方法 – 在更新可用时将其推送到客户端](#Fourth_Method_%E2%80%93_Pushing_updates_to_client_as_and_when_available
+    "第四种方法 – 在更新可用时将其推送到客户端")'
 - en: '[Other common components](#Other_common_components "Other common components")'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[其他常见组件](#Other_common_components "其他常见组件")'
 - en: '[Non-Functional Requirements](#Non-Functional_Requirements-2 "Non-Functional
     Requirements")'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[非功能需求](#Non-Functional_Requirements-2 "非功能需求")'
 - en: '[Scalability](#Scalability "Scalability")'
+  id: totrans-20
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可扩展性](#Scalability "可扩展性")'
 - en: '[Low latency](#Low_latency "Low latency")'
+  id: totrans-21
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[低延迟](#Low_latency "低延迟")'
 - en: '[Availability](#Availability "Availability")'
+  id: totrans-22
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[可用性](#Availability "可用性")'
 - en: '[Alerting and Monitoring](#Alerting_and_Monitoring "Alerting and Monitoring")'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[警报和监控](#Alerting_and_Monitoring "警报和监控")'
 - en: '[Moving closer to user location](#Moving_closer_to_user_location "Moving closer
     to user location")'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[向用户位置靠近](#Moving_closer_to_user_location "向用户位置靠近")'
 - en: '[Avoiding Single Point of Failures](#Avoiding_Single_Point_of_Failures "Avoiding
     Single Point of Failures")'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[避免单点故障](#Avoiding_Single_Point_of_Failures "避免单点故障")'
 - en: '[Conclusion](#Conclusion "Conclusion")'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[结论](#Conclusion "结论")'
 - en: '**Overview**'
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**概述**'
 - en: Instagram is one of the most popular social media sharing apps which allows
     users to share their photos and videos with other users.  Users can like and comment
     on other users’ photos and videos. Users can follow each other and can view their
     news feed which contains updates from the users they follow
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: Instagram 是最受欢迎的社交媒体分享应用之一，允许用户与其他用户分享他们的照片和视频。用户可以点赞和评论其他用户的照片和视频。用户可以互相关注，并查看他们关注的用户的新闻动态。
 - en: '**Functional Requirements**'
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**功能需求**'
 - en: Some of the functional requirements of the Instagram design are
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: Instagram 设计的一些功能需求包括：
 - en: Users can post a status update along with an image or a video
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户可以发布带有图片或视频的状态更新
 - en: A timeline will be generated for a user which will contain the newsfeed for
     that user
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Users will be able to like or comment on a post
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: One level of comment nesting is allowed
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Users should be able to follow/unfollow each other
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**Non-Functional Requirements**'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Some of the Non-Functional requirements of the system are
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
 - en: In systems such as Instagram people will be viewing photos and new feeds more
     than uploading. So it is a read-heavy system. We need to design our system in
     such a way that latency is minimum. Read – Write ratio will be 80-20
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The system should be highly available and able to serve 500 million users
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The system should be durable. Any image, video, post uploaded to the system
     must always persist unless deleted by the user himself
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The system needs to be eventually consistent. What it means is that once the
     user uploads any photo then it will visible in the timeline of its followers in
     some time
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**User APIs**'
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Below will the APIs that will be needed
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
 - en: Create a POST with a photo or a video
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Comment on a POST
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Comment on a Comment itself
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Like a Post
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Like a Comment
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Fetch the timeline
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**Data Storage**'
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: For data storage, we have below things to store
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
 - en: Image and Video
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Post
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Comments and Likes
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Followers
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: News Feed
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**What database to use**'
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: For Instagram we will not have ACID requirements and also the data will be pretty
     large so we need a No SQL database
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The system will be read-heavy.
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: We can use the Cassandra database as it is a No SQL database, it can store large
     amounts of data and also can handle a high number of read and as well as writes.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
 - en: Now let’s see the data model for storage of each of the element
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
 - en: '**How upload of photos and videos is going to be uploaded**'
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: For storing images and videos we need cheap storage which could be a file system.
     For that, we can use Amazon S3 or HDFS.  We can further use a CDN to cache the
     images and videos.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
 - en: '**How Likes and Comments are going to be stored**'
+  id: totrans-64
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: First of all, let’s list all the requirements with respect to likes and comments
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
 - en: A post can have any number of likes
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Post can have any number of comments
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: You can like a post as well a comment
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: One level of comment nesting is allowed
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: To keep things simple we will have
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
 - en: Two tables for likes. One for **post_like** and the other for **comment_like**
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: One table for posts, and
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: One table for comment.
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Below will all the tables.
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
 - en: '**post table**'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
 - en: Below will be the fields in the **Post Table.** This table will be partitioned
     on **user_id.**
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
 - en: '**post_id**'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**title**'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**description**'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**tags –** This field will be a hash'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**thumbnail**'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**user_id**'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**created**'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**updated**'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**image_id**'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: This table will be sharded on user_id so that we are able to access all posts
     of a user from a single shard**comment table**
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
 - en: Below will be the fields in the **Comment Table.** This table will be partitioned
     based on **post_id.** This is done so that all comments related to a post is in
     a single shard
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
 - en: '**comment_id**'
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**comment –** This will be a text field'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**post_id**'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**user_id**'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**created**'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**updated**'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**parent_id –** This will take care of nesting of comments'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**parent_id –** 这个字段用于处理评论的嵌套结构。'
 - en: This table should be sharded on post_id so that we are able to fetch all comments
     belonging to a post from a single shard.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个表应该根据 post_id 进行分片，以便我们能够从一个分片中获取属于某个帖子的所有评论。
 - en: '**post_like table**'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**post_like 表**'
 - en: Instagram shows you which post you have liked or not. Also, it shows what users
     have liked a particular post. All this information will be stored in this table.
     This table will be sharded on post_id so that you are able to fetch all likes
     related to a post using a single shard.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: Instagram 会显示你是否已点赞某个帖子，同时也会显示哪些用户点赞了某个特定的帖子。所有这些信息都会存储在这个表中。这个表将根据 post_id
+    进行分片，以便你可以通过单一分片获取与某个帖子相关的所有点赞。
 - en: Below will be the fields in the
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是**Post_Like 表**中的字段。
 - en: '**Post_Like Table**'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Post_Like 表**'
 - en: '**id**'
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**id**'
 - en: '**user_id**'
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**user_id**'
 - en: '**post_id**'
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**post_id**'
 - en: '**created**'
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**created**'
 - en: '**updated**'
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**updated**'
 - en: This table should be sharded on post_id so that we are able to fetch all likes
     belonging to a post from a single shard.How we can fetch the number of likes for
     a given post. We can simply query this table to fetch this info. This count information
     can also be kept in a cache. This cache can be updated whenever a **like** is
     made on a post. The other way is to break the cache whenever a **like** is made
     on a post.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个表应该根据 post_id 进行分片，以便我们能够从一个分片中获取属于某个帖子的所有点赞。如何获取某个帖子的点赞数，我们可以直接查询这个表来获取该信息。该统计信息也可以存储在缓存中。每当对帖子进行**点赞**时，缓存就会被更新。另一种方式是每次有**点赞**时就刷新缓存。
 - en: You can have a separate service which could be a worker that listens to a topic
     on which an event is published whenever a **like** is made on a post. This worker
     will then either update the cache or invalidate the cache.**comment_like table**
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以拥有一个独立的服务，这可以是一个监听特定主题的工作者，当**点赞**事件发生时，它会被发布到该主题。该工作者将更新或失效缓存。**comment_like
+    表**
 - en: Below will be the fields in the Comment_Like Table. This table will be partitioned
     based on post_id as well. This is done so that all likes related to comments on
     a  post are in a single shard
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是 Comment_Like 表中的字段。这个表也会根据 post_id 进行分区。这样做是为了确保与某个帖子的评论相关的所有点赞都能存储在一个分片中。
 - en: '**id**'
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**id**'
 - en: '**user_id**'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**user_id**'
 - en: '**post_id**'
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**post_id**'
 - en: '**comment_id**'
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**comment_id**'
 - en: '**created**'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**created**'
 - en: '**updated**'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**updated**'
 - en: This table should be sharded on comment_id so that we are able to fetch all
     likes belonging to a comment from a single shard.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个表应该根据 comment_id 进行分片，以便我们能够从一个分片中获取属于某个评论的所有点赞。
 - en: How to fetch the number of likes for a given comment. We can simply query this
     table for the same. Similar to the **post_like** table we can also keep this information
     in one kind of cache.
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 如何获取某个评论的点赞数。我们可以直接查询这个表来获取相关信息。与**post_like**表类似，我们也可以将这些信息存储在某种缓存中。
 - en: '**How followers and the following data will be stored. **'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '**粉丝和相关数据将如何存储。**'
 - en: For that, there will be a **Follow** table. Below will be the fields in the
     **Follow** table
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 为此，将会有一个**Follow**表。以下是**Follow**表中的字段。
 - en: user_id
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: follower_user_id
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: follower_user_id
 - en: created
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: created
 - en: updated
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: updated
 - en: '**How news feed will be stored**'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**新闻推送将如何存储**'
 - en: We will talk about news feed storage when we talk about how the news feed will
     be generated
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们讨论如何生成新闻推送时，会讨论新闻推送的存储方式。
 - en: '**High-Level Design**'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**高级设计**'
 - en: On a high level let’s discuss what will be the higher flow and what all services
     would exist.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 从高层次上讨论一下更高的流程以及会存在的所有服务。
 - en: There will be an **API gateway** on which every request from all the users will
     land.
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**API 网关**，所有用户的请求都会先到达这个网关。
 - en: There will be a **User** **service** that will be storing the user profile information
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**User** **service**，它将存储用户的个人信息。
 - en: There will be a **Token** **service** that is going to generate and validate
     tokens. Basically, it is going to do everything related to token management
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**Token** **service**，它将生成并验证令牌。基本上，它会处理与令牌管理相关的所有事务。
 - en: There will be a **Post Service** on which all requests related to the post will
     be received.
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**Post Service**，所有与帖子相关的请求都会被接收。
 - en: The **Post** **service** first creates an entry into the DB for the post in
     the post table
+  id: totrans-130
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Post** **service** 首先会在数据库中为帖子在帖子表中创建一条记录。'
 - en: After the post is created in the database sends the messages to a **Kafka +
     SNS/SQS system**.
+  id: totrans-131
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 帖子在数据库中创建后，会将消息发送到**Kafka + SNS/SQS 系统**。
 - en: This message will be picked by a **Timeline_Init** **Service** which is a worker,
     this worker is going to make a call to the **Follower Service** to fetch all followers
     of the user who is the owner of the post. Then it is going to fan out the message
     for each of the followers to the **Kafka + SNS/SQS system**.
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条消息将被**时间线初始化服务（Timeline_Init Service）**处理，这个工人将向**关注者服务（Follower Service）**发起调用，以获取该帖子所有者的所有关注者。然后它将把消息分发到每个关注者的**Kafka
+    + SNS/SQS系统**。
 - en: Each fanout message will be picked by another worker which will be a **Timeline_Create
     Worker.** It will create a timeline for the user. Later in this tutorial, we will
     study different ways and scenarios in which a feed will be generated.
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个分发消息将由另一个工人处理，这个工人将是**时间线创建工人（Timeline_Create Worker）**。它将为用户创建时间线。稍后在本教程中，我们将研究生成动态的不同方式和场景。
 - en: There will be a **Follower Service**. As soon as any user follows any user,
     the call is going to come to this service. This service is going to create an
     entry in the database and push a message to the **Kafka + SNS/SQS system**.
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将会有一个**关注者服务（Follower Service）**。当任何用户关注某个用户时，调用将进入该服务。该服务将会在数据库中创建一条记录，并将消息推送到**Kafka
+    + SNS/SQS系统**。
 - en: This message will be picked by a **Notification Service** which will be a worker.
     This **Notification Worker** is going to send a notification to the user that
     was a follower
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条消息将被**通知服务（Notification Service）**处理，该服务将是一个工人。这个**通知工人（Notification Worker）**将向被关注的用户发送通知。
 - en: There will be a **Feedback Service** as well which is going to handle all API
     calls related to liking a post or comment, commenting on a post, or commenting
     on a comment itself. Again as soon as it receives any such activity it is going
     to publish a message to Kafka + SNS system.
+  id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 还将有一个**反馈服务（Feedback Service）**，该服务将处理所有与点赞帖子或评论、评论帖子或评论本身相关的API调用。同样，一旦接收到此类活动，它将发布一条消息到Kafka
+    + SNS系统。
 - en: This message will be picked by the **Notification Service** which is a worker
     that is going to send the notification to the post owner or comment owner whatever
     is applicable.
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条消息将被**通知服务（Notification Service）**处理，作为一个工人，它将向帖子所有者或评论所有者（根据适用情况）发送通知。
 - en: This message will also be picked by another worker whose name is **Feedback_Counter**
     worker. This worker is going to increment the count for the number of likes on
     a comment or a post whichever is applicable. The count will be increased in the
     cache
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这条消息也会被另一个工人处理，名为**反馈计数器工人（Feedback_Counter）**。该工人将增加评论或帖子（取决于情况）上的点赞数。计数将会在缓存中增加。
 - en: Let’s discuss each of the flows in detail and a diagram for each of them
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们详细讨论每个流程，并为每个流程绘制一个图示。
 - en: '**Posting a Status Update**'
+  id: totrans-140
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**发布状态更新**'
 - en: As mentioned earlier when someone creates a post then post service will come
     into the picture. A post might contain a photo or a video to be uploaded.  Let’s
     see how this image and videos upload would work. For images and video uploads,
@@ -620,14 +849,19 @@
     it will be uploaded. Even the low res version of any image and video would be
     of a few KBs. They can be uploaded to a storage provider directly. For eg let’s
     say that the storage provider is AWS S3 then below will be the flow
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，当有人创建帖子时，帖子服务将介入。帖子可能包含要上传的照片或视频。让我们看看这些图片和视频是如何上传的。对于图片和视频的上传，我们可以假设不会上传原始大小的图片或视频。客户端将创建一个低分辨率版本，然后上传。即使是任何图像和视频的低分辨率版本也只有几KB。它们可以直接上传到存储提供商。例如，如果存储提供商是AWS
+    S3，那么以下就是流程：
 - en: Let’s User A on its Instagram client wants to post a status that contains an
     image or video. The client will send a request to the server to send the presigned
     URL to which the client can upload the image or video
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设用户A在其Instagram客户端上想要发布一个包含图片或视频的状态。客户端将向服务器发送请求，获取一个预签名的URL，以便客户端可以上传图片或视频。
 - en: The server will respond with a pre-signed URL whose validity can be of few hours.
     You can read this article to get an idea of the pre-signed URL. Refer this doc
     to know more about presigned URL – [https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
@@ -635,215 +869,291 @@
     be used to directly upload to the storage provider which is S3 here without requiring
     any further authentication. This is also called direct upload. The server will
     also return the image_id here
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The client will upload the image to that URL. It will directly be stored in
     S3
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Now the client will request to send the request to create the POST which has
     the image or video which got uploaded in the previous steps. It will also send
     the id of the uploaded video and photo.
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: This request will be received by the **Post Service** which is going to create
     an entry in the database for the post in the post table.
+  id: totrans-146
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Then it sends the messages to a **Kafka + SNS/SQS system**.
+  id: totrans-147
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: This message will be picked by **Timeline Services** which includes the **timeline_Init**
     and **timeline_create** worker. They are going to create the timeline.
+  id: totrans-148
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: The **Post Service** is also going to cache the newly created post in Distributed
     Redis
+  id: totrans-149
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: A post might also contain a video. We can do one optimization related to videos
     streaming. For video streaming, we have two requirements
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
 - en: Video uploaded is should suitable to view across multiple devices.
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Different people around the world will have different network speeds. So Adaptive
     Bit Rate Streaming means choosing different resolutions based upon network speed
     so that there is no buffering.
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: To fulfill the above two requirements we can do the below things
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
 - en: Transcode the video into a different format
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Convert each transcoded video into different resolutions. Each of the different
     resolutions could be either 144p, 480p, 1080p
+  id: totrans-155
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: There could be separate services related to video management that does the above
     things.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
 - en: Below is the high-level diagram for the same
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
 - en: '![](../Images/14bb2825ec12c2626e79275e9c1de4de.png)'
+  id: totrans-158
   prefs: []
   type: TYPE_IMG
 - en: '**How Timeline will be generated**'
+  id: totrans-159
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Let’s see how the user timeline will be generated. A user’s timeline will be
     updated in advance in a cache.  We have already seen what happens when somebody
     posts a status. Let’s see what happens after that so that a user timeline is generated.
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
 - en: First, let’s explore the different methods of timeline generation
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
 - en: '**Different Methods of Timeline Generation**'
+  id: totrans-162
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: There are four major approaches for generating the timeline
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
 - en: Fetch updates at Run Time (Client to Server)
+  id: totrans-164
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Timeline Pre Generation Using the Pull Method (Fetch from DB and Client to Server)
+  id: totrans-165
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Timeline Pre Generation Using the Push Method (Event-Driven and Client to Server)
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Pushing updates as and when available ( Server to client)
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: We will use the combination of these methods to eventually generate the timeline
     of a user depending upon
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将结合这些方法来最终生成用户的时间线，具体取决于
 - en: If the user is an active user or an inactive user
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户是活跃用户还是非活跃用户
 - en: The user follows other celebrities who could have millions of followers
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户关注其他名人，这些名人可能有数百万粉丝。
 - en: All these methods will be dependent upon a timestamp value that will be kept
     for getting each user’s timeline. This timestamp will be used to build the timeline
     based on what updates the user has already seen. If the timestamp for the user
     is 23 Feb 2022 at 11:15 GMT then it means he has seen all updates before that
     timestamp. When the calls come to the server, then it will only return the timelines
     or updates after that timestamp
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有这些方法都将依赖于一个时间戳值，用来获取每个用户的时间线。这个时间戳将用于构建时间线，以基于用户已经看到的更新。如果用户的时间戳是2022年2月23日11:15
+    GMT，那么意味着他已经看到所有在这个时间戳之前的更新。当请求到达服务器时，它只会返回该时间戳之后的时间线或更新。
 - en: Let’s discuss these four methods now. But before we discuss all the methods,
     let’s discuss the user scenario first
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们来讨论这四种方法。但在讨论这些方法之前，先让我们了解一下用户场景。
 - en: There is user X who follows the below users
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户X关注以下用户。
 - en: '**A**'
+  id: totrans-174
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**A**'
 - en: '**B**'
+  id: totrans-175
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**B**'
 - en: '**C**'
+  id: totrans-176
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**C**'
 - en: '**D**'
+  id: totrans-177
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**D**'
 - en: '**E**'
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**E**'
 - en: '**F**'
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**F**'
 - en: '**Below is more data**'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '**下面是更多数据**'
 - en: '***   **A, B, C, D** are normal users who have followers in 100s'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: '***A、B、C、D**是拥有数百个粉丝的普通用户'
 - en: '**E** is a celebrity who has millions of followers'
+  id: totrans-182
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**E**是一个拥有数百万粉丝的名人'
 - en: '**F** is a business account that also has millions of followers'
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**F**是一个商业账户，也有数百万粉丝。'
 - en: '**First Method – Fetch updates at Run Time**'
+  id: totrans-184
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**第一种方法 – 运行时获取更新**'
 - en: In the first method, the client application will make a call to the server.
     The service will at run time fetch all updates of the customer.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第一种方法中，客户端应用程序将向服务器发起请求。服务将在运行时获取客户的所有更新。
 - en: Making a pull call to the server will fetch the current timestamp of the current
     user. Let’s that timestamp be **t1**. Then it will make a call to the POST service
     to fetch the updates of users A, B, C, D, E, and F that are created after **t1\.**
     Once it has to fetch that data then it will send it to the client. Below is the
     diagram for the same
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 向服务器发起拉取请求将获取当前用户的时间戳。假设这个时间戳为**t1**。然后，它将调用POST服务，获取在**t1**之后创建的A、B、C、D、E和F用户的更新数据。获取到这些数据后，它会将其发送给客户端。下面是相应的示意图。
 - en: '![](../Images/72440abaa420d79247bb25b150354f90.png)'
+  id: totrans-187
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/72440abaa420d79247bb25b150354f90.png)'
 - en: There are multiple problems with this approach-
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种方法存在多个问题—
 - en: First of all, it is a time-consuming approach. Why because it is going to fetch
     the up
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先，这是一种耗时的方法。为什么呢？因为它将获取
 - en: Second, it is going to fetch updates from all the users and we have already
     mentioned that the post table is shared on the user_id. Hence this query is going
     to multiple shards which has a performance cost.
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二，它将从所有用户那里获取更新，我们已经提到过，帖子表是基于user_id共享的。因此，这个查询将涉及多个分片，从而带来性能开销。
 - en: This approach is not scalable
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这种方法不可扩展
 - en: '**Second Method – Timeline Generation Using the Pull Method (Fetch from DB)**'
+  id: totrans-192
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**第二种方法 – 使用拉取方法生成时间线（从数据库获取）**'
 - en: In the second method, there will be an additional **timeline_create** service
     which is going to create the timeline of the user beforehand. This worker will
     be called for each user periodically. It will fetch the current timestamp of the
@@ -852,221 +1162,312 @@
     **t1**. Once it fetches the updates then it is going to insert them into some
     kind of database or cache. We will call this a timeline database or timeline cache.
     Below will be the schema for this database.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第二种方法中，将有一个额外的**timeline_create**服务，该服务会提前创建用户的时间线。这个任务会定期为每个用户调用。它会获取当前用户的时间戳。假设这个时间戳为**t1**。然后，它将调用数据库，获取在**t1**之后创建的A、B、C、D、E和F用户的更新数据。获取到更新后，它将把这些数据插入某种数据库或缓存中。我们将其称为时间线数据库或时间线缓存。下面是该数据库的模式。
 - en: user_id
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: user_id
 - en: post_id
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: post_id
 - en: created
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建
 - en: updated
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新
 - en: '**Below is the diagram for the same**'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**下面是相应的示意图。**'
 - en: '![](../Images/faae40ce118cd359b3b3b288611cb2b8.png)'
+  id: totrans-199
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/faae40ce118cd359b3b3b288611cb2b8.png)'
 - en: '**Some problems with this approach**'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这种方法的一些问题**'
 - en: There might not be new updates for the user. Hence even though we are trying
     to find new posts for the user but a couple of times it is just empty.
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可能用户没有新的更新。因此，即使我们尝试查找该用户的新帖子，但有几次结果为空。
 - en: We are fetching and updating the timeline of a user at regular intervals. It
     could very well be the case that the user is not active at all and we might still
     be generating the timeline of the user
+  id: totrans-202
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们定期获取并更新用户的时间线。很可能用户根本不活跃，我们可能仍在生成该用户的时间线。
 - en: '**Third Method – Timeline Generation Using the Push Method**'
+  id: totrans-203
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**第三种方法——使用推送方法生成时间线**'
 - en: In this method
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种方法中
 - en: Users  posts any status update then it publishes a message on SNS/Kafka
+  id: totrans-205
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户发布任何状态更新时，会在 SNS/Kafka 上发布一条消息。
 - en: This message is picked by the **timeline_init** service which is a worker.
+  id: totrans-206
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 该消息由 **timeline_init** 服务处理，它是一个工作者。
 - en: The **timeline_init** service fetches the first 100 batches of followers. For
     every follower, it fans out the message again to **timeline_create** service which
     is again a worker. This process is repeated for all the followers
+  id: totrans-207
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**timeline_init** 服务会获取前 100 批粉丝。对于每个粉丝，它会再次将消息分发给 **timeline_create** 服务，它也是一个工作者。此过程会对所有粉丝重复进行。'
 - en: '**timeline_create** service on receiving the message will update the timeline
     of the follower with that post_id'
+  id: totrans-208
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**timeline_create** 服务接收到消息后，会使用该 post_id 更新粉丝的时间线。'
 - en: Below is the diagram for the same
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是相同方法的示意图。
 - en: '![](../Images/b5594586b3a1ff92abd00f111f6e9fb0.png)'
+  id: totrans-210
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/b5594586b3a1ff92abd00f111f6e9fb0.png)'
 - en: '**Some problems with this approach**'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这种方法的问题**'
 - en: A celebrity or a business account could have a large number of followers. And
     when such accounts post a status then all million followers’ timeline needs to
     be updated.  This is not efficient.
+  id: totrans-212
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 名人或商业账户可能会有大量粉丝。当这些账户发布状态时，需要更新所有百万级粉丝的时间线。这种做法效率低下。
 - en: Again similar to approach 2 we might be updating the timeline of a user who
     is not active
+  id: totrans-213
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 同样，类似于方法 2，我们可能会更新一个不活跃用户的时间线。
 - en: '**Fourth Method – Pushing updates to client as and when available**'
+  id: totrans-214
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**第四种方法——在更新可用时推送到客户端**'
 - en: This is a server-to-client communication. It will be event-driven as well. Just
     that, as soon as the update is available it will be pushed to the client from
     the server. So there is no pre-generated timeline for the user since updates are
     pushed directly from the server to the client. Such server-to-client communication
     would require a different type of protocol such as web sockets.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是服务器到客户端的通信。它也是事件驱动的。只不过，一旦更新可用，它会从服务器推送到客户端。所以用户没有预先生成的时间线，因为更新是直接从服务器推送到客户端的。这种服务器到客户端的通信需要不同类型的协议，如
+    WebSockets。
 - en: Below is the diagram for this approach.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是此方法的示意图。
 - en: '![](../Images/aa879a9fcf5c8a9744faf446fc8a28ef.png)'
+  id: totrans-217
   prefs: []
   type: TYPE_IMG
+  zh: '![](../Images/aa879a9fcf5c8a9744faf446fc8a28ef.png)'
 - en: '**Some problems with this approach**'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: '**这种方法的问题**'
 - en: '***   Server-to-client communication requires sockets or any other similar
     technology. These technologies are expensive in terms of resource consumption
     and require a persistent connection to be maintained'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '*** 服务器到客户端的通信需要套接字或任何其他类似的技术。这些技术在资源消耗方面很昂贵，并且需要保持持久的连接。'
 - en: What if the client is offline. In that case, while pushing the server realizes
     that the client is offline then it can save the updates to the DB and also cache.
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果客户端处于离线状态怎么办？在这种情况下，当服务器推送更新时，如果发现客户端离线，服务器可以将更新保存到数据库并进行缓存。
 - en: Web sockets are useful for a very real-time application for example WhatsApp
     and might not be that suitable for Instagram. Hence this method can be used if
     Instagram uses web sockets
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: WebSockets 对于一些实时性要求很高的应用（例如 WhatsApp）非常有用，但可能不太适合 Instagram。因此，如果 Instagram
+    使用 WebSockets，可以采用这种方法。
 - en: '**Recommended Approach**'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '**推荐方法**'
 - en: As we can see above that each of the methods above has some disadvantages. Therefore
     timeline generation of a user will depend on weather
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所示，每种方法都有一些缺点。因此，用户的时间线生成将取决于天气。
 - en: The user is an active user
+  id: totrans-224
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户是活跃用户
 - en: The user is an inactive user
+  id: totrans-225
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户是非活跃用户
 - en: '**The user is an active user**I'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户是活跃用户**'
 - en: n this case, we can use the combination of method 1 and method 3.
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，我们可以结合使用方法 1 和方法 3。
 - en: Using method 3 we can generate the timeline for that user only for those accounts
     which have followers in 100s
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用方法 3，我们可以为该用户生成时间线，只针对那些拥有数百个粉丝的账户。
 - en: Then at run time we can fetch the updates from all the celebrities and business
     accounts and merge them with the generated timeline in step 1.
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Let’s understand the above with an example. As we already mentioned that there
     is user X who follows below users
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
 - en: '**A  – A1->A2**'
+  id: totrans-231
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**B – B1**'
+  id: totrans-232
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**C – C1**'
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**D – D1->D2**'
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**E – E1**'
+  id: totrans-235
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**F – F1->F2**'
+  id: totrans-236
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**A, B, C, D** are normal users who have followers in 100s'
+  id: totrans-237
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**E** is a celebrity who has millions of followers'
+  id: totrans-238
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**F** is a business account that also has millions of followers'
+  id: totrans-239
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: So when the user is an active user below is how the timeline will be generated.
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
 - en: '**A, B, C, D** are normal users who have followers in 100s. Hence timeline
     for X having posts of these users will generate using Method 3\. So the timeline
     for user X will be generated as below and saved in a cache'
+  id: totrans-241
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: A1->A2->B2->C1->D1-D2
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
 - en: Timeline for user **X** will not be generated having posts from user **E** and
     user **F**
+  id: totrans-243
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: When the user makes a call to fetch the timeline, then at run time it will fetch
     the updates/posts from users E and F. It will then merge it with the already generated
     timeline from users **A, B, C, D** and return it back
+  id: totrans-244
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**The user is not an active user**'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
 - en: In this case, we can only use method 1\. Since the user is not an active user
@@ -1074,6 +1475,7 @@
     timeline for the user beforehand as it is a wastage of storage.So in this case
     when the user makes a call to fetch the timeline, then at run time it will fetch
     the updates/posts from users **A, B, C, D, E, F**.
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
 - en: But this doesn’t seem efficient if a user has a large number of followers. This
@@ -1081,10 +1483,12 @@
     method 1 to fetch the updates for that user from some of its followers. Then it
     could trigger a background job to generate the remaining timeline for the user
     using method 2\. Below is an example to understand it
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
 - en: When the user makes a call to fetch the timeline, then at run time it will fetch
     the updates/posts from **A, B, C**
+  id: totrans-248
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -1092,6 +1496,7 @@
     using method 2 for updates/posts from **D, E, F**. By the time user is watching
     the first set of updates the second set of updates can be fetched from the generated
     timeline
+  id: totrans-249
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -1101,37 +1506,46 @@
     and Y is a follower of X. Y also follow other users which are celebrity user.
     In the below high-level diagram we are using a combination of Method 1 and Method
     3.**
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
 - en: '***   Using Method 1 it fetches updates from celebrity users which User Y follows'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
 - en: Using Method 3, it pre-creates the timeline for the User Y. This timeline is
     created with posts from users who are not a celebrity and which User Y follows.
+  id: totrans-252
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '![](../Images/618f3eb4ffe99883e6aa7268239e1097.png)'
+  id: totrans-253
   prefs: []
   type: TYPE_IMG
 - en: Below is the high-level flow
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
 - en: '**For User A**'
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
 - en: User A wants to create a post having an image. It calls the POST service to
     fetch the resigned URL. Using the resigned URL it uploads to tS3 directly.
+  id: totrans-256
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Then it calls the Post service directly to create the post. The post is saved
     in the DB as well as in the cache.
+  id: totrans-257
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: After the post is created in the database sends the messages to a **Kafka +
     SNS/SQS system**.
+  id: totrans-258
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -1139,95 +1553,116 @@
     this worker is going to make a call to the **Follower Service** to fetch all followers
     of the user who is the owner of the post. Then it is going to fan out the message
     for each of the followers to the **Kafka + SNS/SQS system**.
+  id: totrans-259
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Each fanout message will be picked by another worker which will be a **Timeline_Create
     Worker.** It will create the news feed for User B. This is where method 3 of Timeline
     Generation comes into the picture.
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**For User B**'
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
 - en: User B wants to fetch his timeline
+  id: totrans-262
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Instagram makes a call to the Timeline App Service. Timeline App service does
     two things
+  id: totrans-263
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: First, it makes a call follower service to fetch the celebrity users which User
     Y follows. Then it fetches the updates for those celebrity users from the POST
     service. This is where method 1 comes into the picture
+  id: totrans-264
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Second, it fetches the pre-created timeline for User Y from the cache and DB.
+  id: totrans-265
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: It merges both the results and returns back to the Instagram client for the
     User Y
+  id: totrans-266
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Instagram then uses URLs in the returned timeline to directly download the images/videos
     from S3\. We can also cache the photo/video on the CDN. This will enable faster
     retrieval of the media.
+  id: totrans-267
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: This is all about timeline generation in Instagram.
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
 - en: '**Other common components**'
+  id: totrans-269
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Other common components could be
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
 - en: User Service – It holds the user profile information.
+  id: totrans-271
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Token/Auth Service – Management of User tokens
+  id: totrans-272
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: SMS Service- It is used for sending any kind of message back to the user. For
     example – OTP
+  id: totrans-273
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: Analytics Service – This could be used to track any kind of analytics
+  id: totrans-274
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
 - en: '**Non-Functional Requirements**'
+  id: totrans-275
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
 - en: Let’s discuss some non-functional requirements now
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
 - en: '**Scalability**'
+  id: totrans-277
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
 - en: The first thing to consider with the above design is the scalability factor.
     The scalability of each of the components in the system is very important. Here
     are scalability challenges you can face and their possible resolutions
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
 - en: Each of the machines in the **Post Service**, **Timeline** **Service** etc could
     only serve a limited number of requests. Hence each service here should have proper
     autoscaling set in so that based on the number of requests we can add instances
     up and autoscale them when needed
+  id: totrans-279
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -1235,6 +1670,7 @@
     horizontally but to a limit. If that is becoming a bottleneck then depending upon
     the geography or userId we can have two or more such systems. Service discovery
     could be used to figure out which Kafka system a request needs to go to.
+  id: totrans-280
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
@@ -1242,126 +1678,180 @@
     in such a way so that none of the services is bogged with too many things to do.
     There is a separation of concerns and wherever there was too much of a responsibility
     on service, we have broken it down
+  id: totrans-281
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性的另一个重要因素是我们设计系统的方式，确保没有服务被过多任务拖慢。我们进行关注点分离，且在某个服务承担过多责任时，我们会将其拆解。
 - en: Another factor of scalability is sharding. There is a huge amount of data that
     needs to be stored and obviously, it cannot be stored on a single machine. It
     will be good to partition the data stored into different machines so that the
     overall architecture is scalability. We need to choose the number of shards based
     on our storage estimates. Also we need to choose the shard key or partition key
     smartly so that none of the queries is multi sharded
+  id: totrans-282
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可扩展性的另一个因素是分片。需要存储大量数据，而显然这些数据无法存储在单一机器上。最好将数据分区存储在不同的机器上，从而保证整体架构的可扩展性。我们需要根据存储预估选择分片的数量，并且要智能地选择分片键或分区键，以确保没有查询会跨多个分片。
 - en: '**Low latency**'
+  id: totrans-283
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**低延迟**'
 - en: We can cache the newly created posts with some expiry of course. As and when
     a post is created it is more likely to be visible in some other user timeline.
     It will reduce latency for many of the read calls.
+  id: totrans-284
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们可以缓存新创建的帖子，并设置一定的过期时间。当然，每当一个帖子被创建时，它更有可能出现在其他用户的时间线中。这将减少许多读取请求的延迟。
 - en: There is one more optimization that we are doing here to improve the latency.
     We are caching the timeline of a user other than saving it to DB. With cache the
     timeline can be returned faster
+  id: totrans-285
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们在这里做的另一个延迟优化是将用户的时间线缓存，而不是直接保存到数据库。通过缓存，时间线可以更快速地返回。
 - en: We can cache the photos and videos to a CDN. It will enable faster retrieval
     of the media
+  id: totrans-286
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们可以将照片和视频缓存到CDN中，这将加速媒体的检索。
 - en: Another area to further improve latency is optimizing video streaming.
+  id: totrans-287
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 进一步提高延迟的一个领域是优化视频流。
 - en: '**Availability**'
+  id: totrans-288
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**可用性**'
 - en: In order for the system to be highly available, it is very important to have
     redundancy/backups for almost all components in the system. Here are some of the
     things that need to be done.
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使系统具有高可用性，几乎所有系统组件都需要具备冗余和备份。以下是一些需要完成的任务。
 - en: In the case of our DB, we need to enable replication. There should be multiple
     slaves for each of the master shard nodes.
+  id: totrans-290
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于我们的数据库，我们需要启用复制。每个主分片节点应该有多个从节点。
 - en: For Redis we also need replication.
+  id: totrans-291
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于Redis，我们还需要进行复制。
 - en: For data redundancy, we could be multi-region as well. This could be one of
     the benefits if one of the regions goes down.
+  id: totrans-292
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为了确保数据冗余，我们也可以采用多区域架构。如果某个区域出现故障，这可能是其中的一个好处。
 - en: Disaster Recovery could also be set up
+  id: totrans-293
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 也可以设置灾难恢复
 - en: '**Alerting and Monitoring**'
+  id: totrans-294
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**告警与监控**'
 - en: Alerting and Monitoring is also very important non-functional requirement. We
     should monitor each of our services and set up proper alerts as well. Some of
     the things that could be monitored are
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 告警与监控是一个非常重要的非功能需求。我们应该监控每个服务并设置适当的警报。可以监控的一些内容包括：
 - en: API Response Time
+  id: totrans-296
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: API响应时间
 - en: Memory Consumption
+  id: totrans-297
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内存消耗
 - en: CPU Consumption
+  id: totrans-298
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CPU消耗
 - en: Disk Space Consumption
+  id: totrans-299
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 磁盘空间消耗
 - en: Queue Length
+  id: totrans-300
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 队列长度
 - en: ….
+  id: totrans-301
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: ….
 - en: '**Moving closer to user location**'
+  id: totrans-302
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**靠近用户位置**'
 - en: There are a couple of architectures that could be followed here. One such is
     Cell Architecture. You can read more about cell architecture here – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有几种架构可以遵循，其中一种是单元架构。你可以在这里了解更多关于单元架构的信息 – [https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md](https://github.com/wso2/reference-architecture/blob/master/reference-architecture-cell-based.md)
 - en: '**Avoiding Single Point of Failures**'
+  id: totrans-304
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**避免单点故障**'
 - en: A single point of failure is that part of a system that when stops working then
     it would lead the entire system to fail. We should try to prevent any single point
     of failure as well in our design. By redundancy and going multi-region we can
     prevent such things
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: 单点故障指的是系统中的某个部分，一旦停止工作，将导致整个系统崩溃。我们应尽量避免设计中的单点故障。通过冗余和采用多区域架构，我们可以防止这种情况发生。
 - en: '**Conclusion**'
+  id: totrans-306
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '**结论**'
 - en: This is all about the system design of Instagram.  Hoped you have liked this
     article. Please share feedback in the comments******
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 这篇文章主要讨论了Instagram的系统设计。希望你喜欢这篇文章。请在评论中分享你的反馈******
