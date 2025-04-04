@@ -1,3 +1,5 @@
 +   [ElderNode 博客中文翻译](docs/eldernode-blog/README.md)
++   [Linux 工作原理第三版](docs/hw-linux-wk-3e/README.md)
 +   [Linkedin SRE 中文教程](docs/lkin-sre/README.md)
++   [面向系统管理员的 powershell 指南](docs/pwsh-sysadm/README.md)
 +   [通过示例学习技术 2023](docs/tech-exmpl/README.md)
