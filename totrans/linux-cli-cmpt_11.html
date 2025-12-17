@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Multipurpose Text Processing Tools</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Multipurpose Text Processing Tools</h1>
+<blockquote>原文：<a href="https://learnbyexample.github.io/cli-computing/multipurpose-text-processing-tools.html">https://learnbyexample.github.io/cli-computing/multipurpose-text-processing-tools.html</a></blockquote><p>Many CLI text processing tools have been in existence for about half a century. And newer tools are being written to solve the ever expanding text processing problems. Just knowing that a particular tool exists or searching for a tool before attempting to write your own solution can be a time saver. Also, popular tools are likely to be optimized for speed, hardened against bugs due to wide usage, discussed on forums, and so on.</p><p><code>grep</code> was already covered in the <a href="./searching-files-and-filenames.html">Searching Files and Filenames</a> chapter. In addition, <code>sed</code>, <code>awk</code> and <code>perl</code> are essential tools to solve a wide variety of text processing problems from the command line. In this chapter you'll learn field processing, use regular expressions for search and replace requirements, perform operations based on multiple lines and files, etc.</p><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The examples presented in this chapter only cover some of the functionalities. I've written separate books to cover these tools with more detailed explanations, examples and exercises. See <a href="https://learnbyexample.github.io/books/">https://learnbyexample.github.io/books/</a> for links to these books.</p></blockquote><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files">example_files</a> directory has the sample input files used in this chapter.</p></blockquote><h2 id="sed"><a class="header" href="#sed">sed</a></h2><p>The command name <code>sed</code> is derived from <strong>s</strong>tream <strong>ed</strong>itor. Here, stream refers to the data being passed via shell pipes. Thus, the command's primary functionality is to act as a text editor for <strong>stdin</strong> data with <strong>stdout</strong> as the output target. You can also edit file input and save the changes back to the same file if needed.</p><h3 id="substitution"><a class="header" href="#substitution">Substitution</a></h3><p><code>sed</code> has various commands to manipulate text input. The <strong>substitute</strong> command is the most commonly used, whose syntax is <code>s/REGEXP/REPLACEMENT/FLAGS</code>. Here are some basic examples:</p><pre><code class="language-bash"># for each input line, change only the first ',' to '-'
+$ printf '1,2,3,4\na,b,c,d\n' | sed 's/,/-/'
+1-2,3,4
+a-b,c,d
+
+# change all matches by adding the 'g' flag
+$ printf '1,2,3,4\na,b,c,d\n' | sed 's/,/-/g'
+1-2-3-4
+a-b-c-d
+</code></pre><p>Here's an example with file input:</p><pre><code class="language-bash">$ cat greeting.txt
+Hi there
+Have a nice day
+
+# change 'day' to 'weekend'
+$ sed 's/day/weekend/g' greeting.txt
+Hi there
+Have a nice weekend
+</code></pre><p>What if you want to issue multiple substitute commands (or use several other <code>sed</code> commands)? It will depend on the command being used. Here's an example where you can use the <code>-e</code> option or separate the commands with a <code>;</code> character.</p><pre><code class="language-bash"># change all occurrences of 'day' to 'weekend'
+# add '.' to the end of each line
+$ sed 's/day/weekend/g; s/$/./' greeting.txt
+Hi there.
+Have a nice weekend.
+
+# same thing with the -e option
+$ sed -e 's/day/weekend/g' -e 's/$/./' greeting.txt
+Hi there.
+Have a nice weekend.
+</code></pre><h3 id="inplace-editing"><a class="header" href="#inplace-editing">Inplace editing</a></h3><p>You can use the <code>-i</code> option for inplace editing. Pass an argument to this option to save the original input as a backup.</p><pre><code class="language-bash">$ cat ip.txt
+deep blue
+light orange
+blue delight
+
+# output from sed is written back to 'ip.txt'
+# original file is preserved in 'ip.txt.bkp'
+$ sed -i.bkp 's/blue/green/g' ip.txt
+$ cat ip.txt
+deep green
+light orange
+green delight
+</code></pre><h3 id="filtering-features"><a class="header" href="#filtering-features">Filtering features</a></h3><p>The <code>sed</code> command also has features to filter lines based on a search pattern like <code>grep</code>. And you can apply other <code>sed</code> commands for these filtered lines as needed.</p><pre><code class="language-bash"># the -n option disables automatic printing
+# the 'p' command prints the contents of the pattern space
+# same as: grep 'at'
+$ printf 'sea\neat\ndrop\n' | sed -n '/at/p'
+eat
+
+# the 'd' command deletes the matching lines
+# same as: grep -v 'at'
+$ printf 'sea\neat\ndrop\n' | sed '/at/d'
+sea
+drop
+
+# change commas to hyphens only if the input line contains '2'
+$ printf '1,2,3,4\na,b,c,d\n' | sed '/2/ s/,/-/g'
+1-2-3-4
+a,b,c,d
+
+# change commas to hyphens if the input line does NOT contain '2'
+$ printf '1,2,3,4\na,b,c,d\n' | sed '/2/! s/,/-/g'
+1,2,3,4
+a-b-c-d
+</code></pre><p>You can use the <code>q</code> and <code>Q</code> commands to quit <code>sed</code> once a matching line is found:</p><pre><code class="language-bash"># quit after a line containing 'st' is found
+$ printf 'apple\nsea\neast\ndust' | sed '/st/q'
+apple
+sea
+east
+
+# the matching line won't be printed in this case
+$ printf 'apple\nsea\neast\ndust' | sed '/st/Q'
+apple
+sea
+</code></pre><p>Apart from regexp, filtering can also be done based on line numbers, address ranges, etc.</p><pre><code class="language-bash"># perform substitution only for the second line
+# use '$' instead of a number to indicate the last input line
+$ printf 'gates\nnot\nused\n' | sed '2 s/t/*/g'
+gates
+no*
+used
+
+# address range example, same as: sed -n '3,8!p'
+# you can also use regexp to construct address ranges
+$ seq 15 24 | sed '3,8d'
+15
+16
+23
+24
+</code></pre><p>If you need to issue multiple commands for filtered lines, you can group those commands within <code>{}</code> characters. Here's an example:</p><pre><code class="language-bash"># for lines containing 'e', replace 's' with '*' and 't' with '='
+# note that the second line isn't changed as there's no 'e'
+$ printf 'gates\nnot\nused\n' | sed '/e/{s/s/*/g; s/t/=/g}'
+ga=e*
+not
+u*ed
+</code></pre><h3 id="regexp-substitution"><a class="header" href="#regexp-substitution">Regexp substitution</a></h3><p>Here are some regexp based substitution examples. The <code>-E</code> option enables <strong>ERE</strong> (default is <strong>BRE</strong>). Most of the syntax discussed in the <a href="./searching-files-and-filenames.html#regular-expressions">Regular Expressions</a> section for the <code>grep</code> command applies for <code>sed</code> as well.</p><pre><code class="language-bash"># replace all sequences of non-digit characters with '-'
+$ echo 'Sample123string42with777numbers' | sed -E 's/[^0-9]+/-/g'
+-123-42-777-
+
+# replace numbers &gt;= 100 which can have optional leading zeros
+$ echo '0501 035 154 12 26 98234' | sed -E 's/\b0*[1-9][0-9]{2,}\b/X/g'
+X 035 X 12 26 X
+
+# reduce \\ to single \ and delete if it is a single \
+$ echo '\[\] and \\w and \[a-zA-Z0-9\_\]' | sed -E 's/(\\?)\\/\1/g'
+[] and \w and [a-zA-Z0-9_]
+
+# remove two or more duplicate words that are separated by a space character
+# \b prevents false matches like 'the theatre', 'sand and stone' etc
+$ echo 'aa a a a 42 f_1 f_1 f_13.14' | sed -E 's/\b(\w+)( \1)+\b/\1/g'
+aa a 42 f_1 f_13.14
+
+# &amp; backreferences the matched portion
+# \u changes the next character to uppercase
+$ echo 'hello there. how are you?' | sed 's/\b\w/\u&amp;/g'
+Hello There. How Are You?
+
+# replace only the third matching occurrence
+$ echo 'apple:123:banana:fig' | sed 's/:/-/3'
+apple:123:banana-fig
+# change all ':' to ',' only from the second occurrence
+$ echo 'apple:123:banana:fig' | sed 's/:/,/2g'
+apple:123,banana,fig
+</code></pre><p>The <code>/</code> character is idiomatically used as the regexp delimiter. But any character other than <code>\</code> and the newline character can be used instead. This helps to avoid or reduce the need for escaping delimiter characters.</p><pre><code class="language-bash">$ echo '/home/learnbyexample/reports' | sed 's#/home/learnbyexample/#~/#'
+~/reports
+
+$ echo 'home path is:' | sed 's,$, '"$HOME"','
+home path is: /home/learnbyexample
+</code></pre><h3 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h3><ul><li>My ebook <a href="https://github.com/learnbyexample/learn_gnused">CLI text processing with GNU sed</a> <ul><li>See also my blog post <a href="https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/">GNU BRE/ERE cheatsheet</a></li></ul></li><li><a href="https://unix.stackexchange.com/q/112023/109046">unix.stackexchange: common search and replace examples with sed and other tools</a></li></ul><h2 id="awk"><a class="header" href="#awk">awk</a></h2><p><code>awk</code> is a programming language and widely used for text processing tasks from the command line. <code>awk</code> provides filtering capabilities like those supported by the <code>grep</code> and <code>sed</code> commands, along with some more nifty features. And similar to many command line utilities, <code>awk</code> can accept input from both <code>stdin</code> and files.</p><h3 id="regexp-filtering"><a class="header" href="#regexp-filtering">Regexp filtering</a></h3><p>To make it easier to use programming features from the command line, there are several shortcuts, for example:</p><ul><li><code>awk '/regexp/'</code> is a shortcut for <code>awk '$0 ~ /regexp/{print $0}'</code></li><li><code>awk '!/regexp/'</code> is a shortcut for <code>awk '$0 !~ /regexp/{print $0}'</code></li></ul><pre><code class="language-bash"># same as: grep 'at' and sed -n '/at/p'
+$ printf 'gate\napple\nwhat\nkite\n' | awk '/at/'
+gate
+what
+
+# same as: grep -v 'e' and sed -n '/e/!p'
+$ printf 'gate\napple\nwhat\nkite\n' | awk '!/e/'
+what
+
+# lines containing 'e' followed by zero or more characters and then 'y'
+$ awk '/e.*y/' greeting.txt
+Have a nice day
+</code></pre><h3 id="awk-special-variables"><a class="header" href="#awk-special-variables">Awk special variables</a></h3><p>Brief description for some of the special variables are given below:</p><ul><li><code>$0</code> contains the input record content</li><li><code>$1</code> first field</li><li><code>$2</code> second field and so on</li><li><code>FS</code> input field separator</li><li><code>OFS</code> output field separator</li><li><code>NF</code> number of fields</li><li><code>RS</code> input record separator</li><li><code>ORS</code> output record separator</li><li><code>NR</code> number of records (i.e. line number) for entire input</li><li><code>FNR</code> number of records per file</li></ul><h3 id="default-field-processing"><a class="header" href="#default-field-processing">Default field processing</a></h3><p><code>awk</code> automatically splits input into fields based on one or more sequence of <strong>space</strong> or <strong>tab</strong> or <strong>newline</strong> characters. In addition, any of these three characters at the start or end of input gets trimmed and won't be part of field contents. The fields are accessible using <code>$N</code> where <code>N</code> is the field number you need. You can also pass an expression instead of numeric literals to specify the field required.</p><p>Here are some examples:</p><pre><code class="language-bash">$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+# print the second field of each input line
+$ awk '{print $2}' table.txt
+bread
+cake
+banana
+
+# print lines only if the last field is a negative number
+$ awk '$NF&amp;LT0' table.txt
+blue cake mug shirt -7
+</code></pre><p>Here's an example of applying a substitution operation for a particular field.</p><pre><code class="language-bash"># delete lowercase vowels only from the first field
+# gsub() is like the sed substitution command with the 'g' flag
+# use sub() if you need to change only the first match
+# 1 is a true condition, and thus prints the contents of $0
+$ awk '{gsub(/[aeiou]/, "", $1)} 1' table.txt
+brwn bread mat hair 42
+bl cake mug shirt -7
+yllw banana window shoes 3.14
+</code></pre><h3 id="condition-and-action"><a class="header" href="#condition-and-action">Condition and Action</a></h3><p>The examples so far have used a few different ways to construct a typical <code>awk</code> one-liner. If you haven't yet grasped the syntax, this generic structure might help:</p><pre><code class="language-bash">awk 'cond1{action1} cond2{action2} ... condN{actionN}'
+</code></pre><p>If a condition isn't provided, the action is always executed. Within a block, you can provide multiple statements separated by a semicolon character. If action isn't provided, then by default, contents of <code>$0</code> variable is printed if the condition evaluates to <em>true</em>. Idiomatically, <code>1</code> is used to denote a <code>true</code> condition in one-liners as a shortcut to print the contents of <code>$0</code> (as seen in an earlier example). When action isn't present, you can use semicolon to terminate the condition and start another <code>condX{actionX}</code> snippet.</p><p>You can use a <code>BEGIN{}</code> block when you need to execute something before the input is read and an <code>END{}</code> block to execute something after all of the input has been processed.</p><pre><code class="language-bash">$ seq 2 | awk 'BEGIN{print "---"} 1; END{print "%%%"}'
+---
+1
+2
+%%%
+</code></pre><h3 id="regexp-field-processing"><a class="header" href="#regexp-field-processing">Regexp field processing</a></h3><p>As seen earlier, <code>awk</code> automatically splits input into fields (based on space/tab/newline characters) which are accessible using <code>$N</code> where <code>N</code> is the field number you need. You can use the <code>-F</code> option or assign the <code>FS</code> variable to set a regexp based input field separator. Use the <code>OFS</code> variable to set the output field separator.</p><pre><code class="language-bash">$ echo 'goal:amazing:whistle:kwality' | awk -F: '{print $1}'
+goal
+# one or more alphabets will be considered as the input field separator
+$ echo 'Sample123string42with777numbers' | awk -F'[a-zA-Z]+' '{print $2}'
+123
+
+$ s='Sample123string42with777numbers'
+# -v option helps you set a value for the given variable
+$ echo "$s" | awk -F'[0-9]+' -v OFS=, '{print $1, $(NF-1)}'
+Sample,with
+</code></pre><p>The <code>FS</code> variable allows you to define the input field <em>separator</em>. In contrast, <code>FPAT</code> (field pattern) allows you to define what should the fields be made up of.</p><pre><code class="language-bash"># lowercase whole words starting with 'b'
+$ awk -v FPAT='\\&amp;LTb[a-z]*\\&gt;' -v OFS=, '{$1=$1} 1' table.txt
+brown,bread
+blue
+banana
+
+# fields enclosed within double quotes or made up of non-comma characters
+$ s='eagle,"fox,42",bee,frog'
+$ echo "$s" | awk -v FPAT='"[^"]*"|[^,]*' '{print $2}'
+"fox,42"
+</code></pre><h3 id="record-separators"><a class="header" href="#record-separators">Record separators</a></h3><p>By default, newline is used as the input and output record separators. You can change them using the <code>RS</code> and <code>ORS</code> variables.</p><pre><code class="language-bash"># print records containing 'i' as well as 't'
+$ printf 'Sample123string42with777numbers' | awk -v RS='[0-9]+' '/i/ &amp;&amp; /t/'
+string
+with
+
+# empty RS is paragraph mode, uses two or more newlines as the separator
+$ printf 'apple\nbanana\nfig\n\n\n123\n456' | awk -v RS= 'NR==1'
+apple
+banana
+fig
+
+# change ORS depending on some condition
+$ seq 9 | awk '{ORS = NR%3 ? "-" : "\n"} 1'
+1-2-3
+4-5-6
+7-8-9
+</code></pre><h3 id="state-machines"><a class="header" href="#state-machines">State machines</a></h3><p>The <code>condX{actionX}</code> shortcut makes it easy to code state machines concisely. This is useful to solve problems that depend on the contents of multiple records.</p><p>Here's an example of printing the matching line as well as <code>c</code> number of lines that follow:</p><pre><code class="language-bash"># same as: grep --no-group-separator -A1 'blue'
+# print matching line as well as the one that follows it
+$ printf 'red\nblue\ngreen\nteal\n' | awk -v c=1 '/blue/{n=c+1} n &amp;&amp; n--'
+blue
+green
+
+# print matching line as well as two lines that follow
+$ printf 'red\nblue\ngreen\nteal\n' | awk -v c=2 '/blue/{n=c+1} n &amp;&amp; n--'
+blue
+green
+teal
+</code></pre><p>Consider the following input file that has records bounded by distinct markers (lines containing <code>start</code> and <code>end</code>):</p><pre><code class="language-bash">$ cat uniform.txt
+mango
+icecream
+--start 1--
+1234
+6789
+**end 1**
+how are you
+have a nice day
+--start 2--
+a
+b
+c
+**end 2**
+par,far,mar,tar
+</code></pre><p>Here are some examples of processing such bounded records:</p><pre><code class="language-bash"># same as: sed -n '/start/,/end/p' uniform.txt
+$ awk '/start/{f=1} f; /end/{f=0}' uniform.txt
+--start 1--
+1234
+6789
+**end 1**
+--start 2--
+a
+b
+c
+**end 2**
+
+# you can re-arrange and invert the conditions to create other combinations
+# for example, exclude the ending match
+$ awk '/start/{f=1} /end/{f=0} f' uniform.txt
+--start 1--
+1234
+6789
+--start 2--
+a
+b
+c
+</code></pre><p>Here's an example of printing two consecutive records only if the first record contains <code>ar</code> and the second one contains <code>nice</code>:</p><pre><code class="language-bash">$ awk 'p ~ /ar/ &amp;&amp; /nice/{print p ORS $0} {p=$0}' uniform.txt
+how are you
+have a nice day
+</code></pre><h3 id="two-files-processing"><a class="header" href="#two-files-processing">Two files processing</a></h3><p>This section focuses on solving problems which depend upon the contents of two or more files. These are usually based on comparing records and fields. These two files will be used in the examples to follow:</p><pre><code class="language-bash">$ paste c1.txt c2.txt
+Blue    Black
+Brown   Blue
+Orange  Green
+Purple  Orange
+Red     Pink
+Teal    Red
+White   White
+</code></pre><p>The <em>key</em> features used to find common lines between two files:</p><ul><li>For two files as input, <code>NR==FNR</code> will be <em>true</em> only when the first file is being processed <ul><li><code>FNR</code> is record number like <code>NR</code> but resets for each input file</li></ul></li><li><code>next</code> will skip the rest of the code and fetch the next record</li><li><code>a[$0]</code> by itself is a valid statement, creates an uninitialized element in array <code>a</code> with <code>$0</code> as the key (if the key doesn't exist yet)</li><li><code>$0 in a</code> checks if the given string (<code>$0</code> here) exists as a key in the array <code>a</code></li></ul><pre><code class="language-bash"># common lines, same as: grep -Fxf c1.txt c2.txt
+$ awk 'NR==FNR{a[$0]; next} $0 in a' c1.txt c2.txt
+Blue
+Orange
+Red
+White
+
+# lines present in c2.txt but not in c1.txt
+$ awk 'NR==FNR{a[$0]; next} !($0 in a)' c1.txt c2.txt
+Black
+Green
+Pink
+</code></pre><blockquote><p><img alt="warning" src="../Images/b5314b4a0acf0f436c4bf59486793342.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/warning.svg"/> Note that the <code>NR==FNR</code> logic will fail if the first file is empty. See <a href="https://unix.stackexchange.com/a/237110/109046">this unix.stackexchange thread</a> for workarounds.</p></blockquote><h3 id="removing-duplicates"><a class="header" href="#removing-duplicates">Removing duplicates</a></h3><p><code>awk '!a[$0]++'</code> is one of the most famous <code>awk</code> one-liners. It eliminates line based duplicates while retaining the input order. The following example shows this feature in action along with an illustration of how the logic works.</p><pre><code class="language-bash">$ cat purchases.txt
+coffee
+tea
+washing powder
+coffee
+toothpaste
+tea
+soap
+tea
+
+$ awk '{print +a[$0] "\t" $0; a[$0]++}' purchases.txt
+0       coffee
+0       tea
+0       washing powder
+1       coffee
+0       toothpaste
+1       tea
+0       soap
+2       tea
+
+# only those entries with zero in the first column will be retained
+$ awk '!a[$0]++' purchases.txt
+coffee
+tea
+washing powder
+toothpaste
+soap
+</code></pre><h3 id="further-reading-1"><a class="header" href="#further-reading-1">Further Reading</a></h3><ul><li>My ebook <a href="https://github.com/learnbyexample/learn_gnuawk">CLI text processing with GNU awk</a> <ul><li>See also my blog post <a href="https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/">GNU BRE/ERE cheatsheet</a></li></ul></li><li><a href="https://www.gnu.org/software/gawk/manual/">Online gawk manual</a></li><li>My blog post <a href="https://learnbyexample.github.io/cli-computation-gnu-datamash/">CLI computation with GNU datamash</a></li></ul><h2 id="perl"><a class="header" href="#perl">perl</a></h2><p>Perl is a scripting language with plenty of builtin features and a strong ecosystem. Perl one-liners can be used for text processing, similar to <code>grep</code>, <code>sed</code>, <code>awk</code> and more. And similar to many command line utilities, <code>perl</code> can accept input from both <code>stdin</code> and file arguments.</p><h3 id="basic-one-liners"><a class="header" href="#basic-one-liners">Basic one-liners</a></h3><pre><code class="language-bash"># print all lines containing 'at'
+# same as: grep 'at' and sed -n '/at/p' and awk '/at/'
+$ printf 'gate\napple\nwhat\nkite\n' | perl -ne 'print if /at/'
+gate
+what
+
+# print all lines NOT containing 'e'
+# same as: grep -v 'e' and sed -n '/e/!p' and awk '!/e/'
+$ printf 'gate\napple\nwhat\nkite\n' | perl -ne 'print if !/e/'
+what
+</code></pre><p>The <code>-e</code> option accepts code as a command line argument. Many shortcuts are available to reduce the amount of typing needed. In the above examples, a regular expression has been used to filter the input. When the input string isn't specified, the test is performed against the special variable <code>$_</code>, which has the contents of the current input line. <code>$_</code> is also the default argument for many functions like <code>print</code> and <code>length</code>. To summarize:</p><ul><li><code>/REGEXP/FLAGS</code> is a shortcut for <code>$_ =~ m/REGEXP/FLAGS</code></li><li><code>!/REGEXP/FLAGS</code> is a shortcut for <code>$_ !~ m/REGEXP/FLAGS</code></li></ul><p>In the examples below, the <code>-p</code> option is used instead of <code>-n</code>. This helps to automatically print the value of <code>$_</code> after processing each input line.</p><pre><code class="language-bash"># same as: sed 's/:/-/' and awk '{sub(/:/, "-")} 1'
+$ printf '1:2:3:4\na:b:c:d\n' | perl -pe 's/:/-/'
+1-2:3:4
+a-b:c:d
+
+# same as: sed 's/:/-/g' and awk '{gsub(/:/, "-")} 1'
+$ printf '1:2:3:4\na:b:c:d\n' | perl -pe 's/:/-/g'
+1-2-3-4
+a-b-c-d
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Similar to <code>sed</code>, you can use the <code>-i</code> option for inplace editing.</p></blockquote><h3 id="perl-special-variables"><a class="header" href="#perl-special-variables">Perl special variables</a></h3><p>Brief description for some of the special variables are given below:</p><ul><li><code>$_</code> contains the input record content</li><li><code>@F</code> array containing the field contents (with the <code>-a</code> and <code>-F</code> options) <ul><li><code>$F[0]</code> first field</li><li><code>$F[1]</code> second field and so on</li><li><code>$F[-1]</code> last field</li><li><code>$F[-2]</code> second last field and so on</li><li><code>$#F</code> index of the last field</li></ul></li><li><code>$.</code> number of records (i.e. line number)</li><li><code>$1</code> backreference to the first capture group</li><li><code>$2</code> backreference to the second capture group and so on</li><li><code>$&amp;</code> backreference to the entire matched portion</li></ul><p>You'll see examples using such variables in the sections to follow.</p><h3 id="auto-split"><a class="header" href="#auto-split">Auto split</a></h3><p>Here are some examples based on specific fields rather than the entire line. The <code>-a</code> option will cause the input line to be split based on whitespaces and the field contents can be accessed using the <code>@F</code> special array variable. Leading and trailing whitespaces will be suppressed, so there's no possibility of empty fields.</p><pre><code class="language-bash">$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+# same as: awk '{print $2}' table.txt
+$ perl -lane 'print $F[1]' table.txt
+bread
+cake
+banana
+
+# same as: awk '$NF&amp;LT0' table.txt
+$ perl -lane 'print if $F[-1] &lt; 0' table.txt
+blue cake mug shirt -7
+
+# same as: awk '{gsub(/b/, "B", $1)} 1' table.txt
+$ perl -lane '$F[0] =~ s/b/B/g; print "@F"' table.txt
+Brown bread mat hair 42
+Blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><p>When you use an array within double quotes (like <code>"@F"</code> in the example above), the fields will be printed with a space character in between. The <code>join</code> function is one of the ways to print the contents of an array with a custom field separator. Here's an example:</p><pre><code class="language-bash"># print contents of @F array with colon as the separator
+$ perl -lane 'print join ":", @F' table.txt
+brown:bread:mat:hair:42
+blue:cake:mug:shirt:-7
+yellow:banana:window:shoes:3.14
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> In the above examples, the <code>-l</code> option has been used to remove the record separator (which is newline by default) from the input line. The record separator thus removed is added back when the <code>print</code> function is used.</p></blockquote><h3 id="regexp-field-separator"><a class="header" href="#regexp-field-separator">Regexp field separator</a></h3><p>You can use the <code>-F</code> option to specify a regexp pattern for input field separation.</p><pre><code class="language-bash">$ echo 'apple,banana,cherry' | perl -F, -lane 'print $F[1]'
+banana
+
+$ s='Sample123string42with777numbers'
+$ echo "$s" | perl -F'\d+' -lane 'print join ",", @F'
+Sample,string,with,numbers
+</code></pre><h3 id="powerful-features"><a class="header" href="#powerful-features">Powerful features</a></h3><p>I reach for Perl over <code>grep</code>, <code>sed</code> and <code>awk</code> when I need powerful regexp features and make use of the vast builtin functions and libraries.</p><p>Here are some examples showing regexp features not present in BRE/ERE:</p><pre><code class="language-bash"># reverse lowercase alphabets at the end of input lines
+# the 'e' flag allows you to use Perl code in the replacement section
+$ echo 'fig 42apples' | perl -pe 's/[a-z]+$/reverse $&amp;/e'
+fig 42selppa
+
+# replace arithmetic expressions with their results
+$ echo '42*10 200+100 22/7' | perl -pe 's|\d+[+/*-]\d+|$&amp;|gee'
+420 300 3.14285714285714
+
+# exclude terms in the search pattern
+$ s='orange apple appleseed'
+$ echo "$s" | perl -pe 's#\bapple\b(*SKIP)(*F)|\w+#($&amp;)#g'
+(orange) apple (appleseed)
+</code></pre><p>And here are some examples showing off builtin features:</p><pre><code class="language-bash"># filter fields containing 'in' or 'it' or 'is'
+$ s='goal:amazing:42:whistle:kwality:3.14'
+$ echo "$s" | perl -F: -lane 'print join ":", grep {/i[nts]/} @F'
+amazing:whistle:kwality
+
+# sort numbers in ascending order
+# use {$b &lt;=&gt; $a} for descending order
+$ echo '23 756 -983 5' | perl -lane 'print join " ", sort {$a &lt;=&gt; $b} @F'
+-983 5 23 756
+
+# sort strings in ascending order
+$ s='floor bat to dubious four'
+$ echo "$s" | perl -lane 'print join ":", sort @F'
+bat:dubious:floor:four:to
+
+# unique fields, maintains input order of elements
+# -M option helps you load modules
+$ s='3,b,a,3,c,d,1,d,c,2,2,2,3,1,b'
+$ echo "$s" | perl -MList::Util=uniq -F, -lane 'print join ",", uniq @F'
+3,b,a,c,d,1,2
+</code></pre><h3 id="further-reading-2"><a class="header" href="#further-reading-2">Further Reading</a></h3><ul><li><a href="https://perldoc.perl.org/perlintro">perldoc: Perl introduction</a></li><li><a href="https://perldoc.perl.org/perlretut">perldoc: Regexp tutorial</a></li><li>My ebook <a href="https://github.com/learnbyexample/learn_perl_oneliners">Perl One-Liners Guide</a></li></ul><h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Replace all occurrences of <code>0xA0</code> with <code>0x50</code> and <code>0xFF</code> with <code>0x7F</code> for the given input.</p><pre><code class="language-bash">$ printf 'a1:0xA0, a2:0xA0A1\nb1:0xFF, b2:0xBE\n'
+a1:0xA0, a2:0xA0A1
+b1:0xFF, b2:0xBE
+
+$ printf 'a1:0xA0, a2:0xA0A1\nb1:0xFF, b2:0xBE\n' | sed # ???
+a1:0x50, a2:0x50A1
+b1:0x7F, b2:0xBE
+</code></pre><p><strong>2)</strong> Remove only the third line from the given input.</p><pre><code class="language-bash">$ seq 34 37 | # ???
+34
+35
+37
+</code></pre><p><strong>3)</strong> For the input file <code>sample.txt</code>, display all lines that contain <code>it</code> but not <code>do</code>.</p><pre><code class="language-bash"># ???
+ 7) Believe it
+</code></pre><p><strong>4)</strong> For the input file <code>purchases.txt</code>, delete all lines containing <code>tea</code>. Also, replace all occurrences of <code>coffee</code> with <code>milk</code>. Write back the changes to the input file itself. The original contents should get saved to <code>purchases.txt.orig</code>. Afterwards, restore the contents from this backup file.</p><pre><code class="language-bash"># make the changes
+# ???
+$ ls purchases*
+purchases.txt  purchases.txt.orig
+$ cat purchases.txt
+milk
+washing powder
+milk
+toothpaste
+soap
+
+# restore the contents
+# ???
+$ ls purchases*
+purchases.txt
+$ cat purchases.txt
+coffee
+tea
+washing powder
+coffee
+toothpaste
+tea
+soap
+tea
+</code></pre><p><strong>5)</strong> For the input file <code>sample.txt</code>, display all lines from the start of the file till the first occurrence of <code>are</code>.</p><pre><code class="language-bash"># ???
+ 1) Hello World
+ 2) 
+ 3) Hi there
+ 4) How are you
+</code></pre><p><strong>6)</strong> Delete all groups of lines from a line containing <code>start</code> to a line containing <code>end</code> for the <code>uniform.txt</code> input file.</p><pre><code class="language-bash"># ???
+mango
+icecream
+how are you
+have a nice day
+par,far,mar,tar
+</code></pre><p><strong>7)</strong> Replace all occurrences of <code>42</code> with <code>[42]</code> unless it is at the edge of a word.</p><pre><code class="language-bash">$ echo 'hi42bye nice421423 bad42 cool_4242a 42c' | sed # ???
+hi[42]bye nice[42]1[42]3 bad42 cool_[42][42]a 42c
+</code></pre><p><strong>8)</strong> Replace all whole words with <code>X</code> that start and end with the same word character.</p><pre><code class="language-bash">$ echo 'oreo not a _oh_ pip RoaR took 22 Pop' | sed # ???
+X not X X X X took X Pop
+</code></pre><p><strong>9)</strong> For the input file <code>anchors.txt</code>, convert markdown anchors to hyperlinks as shown below.</p><pre><code class="language-bash">$ cat anchors.txt
+# &amp;LTa name="regular-expressions"&gt;&amp;LT/a&gt;Regular Expressions
+## &amp;LTa name="subexpression-calls"&gt;&amp;LT/a&gt;Subexpression calls
+## &amp;LTa name="the-dot-meta-character"&gt;&amp;LT/a&gt;The dot meta character
+
+$ sed # ???
+[Regular Expressions](#regular-expressions)
+[Subexpression calls](#subexpression-calls)
+[The dot meta character](#the-dot-meta-character)
+</code></pre><p><strong>10)</strong> Replace all occurrences of <code>e</code> with <code>3</code> except the first two matches.</p><pre><code class="language-bash">$ echo 'asset sets tests site' | sed # ???
+asset sets t3sts sit3
+
+$ echo 'sample item teem eel' | sed # ???
+sample item t33m 33l
+</code></pre><p><strong>11)</strong> The below sample strings use <code>,</code> as the delimiter and the field values can be empty as well. Use <code>sed</code> to replace only the third field with <code>42</code>.</p><pre><code class="language-bash">$ echo 'lion,,ant,road,neon' | sed # ???
+lion,,42,road,neon
+
+$ echo ',,,' | sed # ???
+,,42,
+</code></pre><p><strong>12)</strong> For the input file <code>table.txt</code>, calculate and display the product of numbers in the last field of each line. Consider space as the field separator for this file.</p><pre><code class="language-bash">$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+# ???
+-923.16
+</code></pre><p><strong>13)</strong> Extract the contents between <code>()</code> or <code>)(</code> from each of the input lines. Assume that the <code>()</code> characters will be present only once every line.</p><pre><code class="language-bash">$ printf 'apple(ice)pie\n(almond)pista\nyo)yoyo(yo\n'
+apple(ice)pie
+(almond)pista
+yo)yoyo(yo
+
+$ printf 'apple(ice)pie\n(almond)pista\nyo)yoyo(yo\n' | awk # ???
+ice
+almond
+yoyo
+</code></pre><p><strong>14)</strong> For the input file <code>scores.csv</code>, display the <code>Name</code> and <code>Physics</code> fields in the format shown below.</p><pre><code class="language-bash">$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Ith,100,100,100
+Cy,97,98,95
+Lin,78,83,80
+
+# ???
+Name:Physics
+Ith:100
+Cy:98
+Lin:83
+</code></pre><p><strong>15)</strong> Extract and display the third and first words in the format shown below.</p><pre><code class="language-bash">$ echo '%whole(Hello)--{doubt}==ado==' | # ???
+doubt:whole
+
+$ echo 'just,\joint*,concession_42&lt;=nice' | # ???
+concession_42:just
+</code></pre><p><strong>16)</strong> For the input file <code>scores.csv</code>, add another column named <strong>GP</strong> which is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics and Chemistry.</p><pre><code class="language-bash">$ awk # ???
+Name,Maths,Physics,Chemistry,GP
+Ith,100,100,100,100
+Cy,97,98,95,96.75
+Lin,78,83,80,79.75
+</code></pre><p><strong>17)</strong> From the <code>para.txt</code> input file, display all paragraphs containing any digit character.</p><pre><code class="language-bash">$ cat para.txt
+hi there
+how are you
+
+2 apples
+12 bananas
+
+
+blue sky
+yellow sun
+brown earth
+
+$ awk # ???
+2 apples
+12 bananas
+</code></pre><p><strong>18)</strong> Input has the ASCII NUL character as the record separator. Change it to dot and newline characters as shown below.</p><pre><code class="language-bash">$ printf 'apple\npie\0banana\ncherry\0' | awk # ???
+apple
+pie.
+banana
+cherry.
+</code></pre><p><strong>19)</strong> For the input file <code>sample.txt</code>, print a matching line containing <code>do</code> only if <code>you</code> is found two lines before. For example, if <code>do</code> is found on line number 10 and the 8th line contains <code>you</code>, then the 10th line should be printed.</p><pre><code class="language-bash"># ???
+ 6) Just do-it
+</code></pre><p><strong>20)</strong> For the input file <code>blocks.txt</code>, extract contents from a line containing exactly <code>%=%=</code> until but not including the next such line. The block to be extracted is indicated by the variable <code>n</code> passed via the <code>-v</code> option.</p><pre><code class="language-bash">$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+$ awk -v n=1 # ???
+%=%=
+apple
+banana
+$ awk -v n=2 # ???
+%=%=
+brown
+green
+</code></pre><p><strong>21)</strong> Display lines present in <code>c1.txt</code> but not in <code>c2.txt</code> using the <code>awk</code> command.</p><pre><code class="language-bash">$ awk # ???
+Brown
+Purple
+Teal
+</code></pre><p><strong>22)</strong> Display lines from <code>scores.csv</code> by matching the first field based on a list of names from the <code>names.txt</code> file.</p><pre><code class="language-bash">$ printf 'Ith\nLin\n' &gt; names.txt
+
+$ awk # ???
+Ith,100,100,100
+Lin,78,83,80
+
+$ rm names.txt
+</code></pre><p><strong>23)</strong> Retain only the first copy of duplicate lines from the <code>duplicates.txt</code> input file. Use only the contents of the last field for determining duplicates.</p><pre><code class="language-bash">$ cat duplicates.txt
+brown,toy,bread,42
+dark red,ruby,rose,111
+blue,ruby,water,333
+dark red,sky,rose,555
+yellow,toy,flower,333
+white,sky,bread,111
+light red,purse,rose,333
+
+# ???
+brown,toy,bread,42
+dark red,ruby,rose,111
+blue,ruby,water,333
+dark red,sky,rose,555
+</code></pre><p><strong>24)</strong> For the input file <code>table.txt</code>, print input lines if the second field starts with <code>b</code>. Construct solutions using <code>awk</code> and <code>perl</code>.</p><pre><code class="language-bash">$ awk # ???
+brown bread mat hair 42
+yellow banana window shoes 3.14
+
+$ perl # ???
+brown bread mat hair 42
+yellow banana window shoes 3.14
+</code></pre><p><strong>25)</strong> For the input file <code>table.txt</code>, retain only the second last field. Write back the changes to the input file itself. The original contents should get saved to <code>table.txt.bkp</code>. Afterwards, restore the contents from this backup file.</p><pre><code class="language-bash"># make the changes
+$ perl # ???
+$ ls table*
+table.txt  table.txt.bkp
+$ cat table.txt
+hair
+shirt
+shoes
+
+# restore the contents
+# ???
+$ ls table*
+table.txt
+$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><p><strong>26)</strong> Reverse the first field contents of <code>table.txt</code> input file.</p><pre><code class="language-bash"># ???
+nworb bread mat hair 42
+eulb cake mug shirt -7
+wolley banana window shoes 3.14
+</code></pre><p><strong>27)</strong> Sort the given comma separated input lexicographically. Change the output field separator to a <code>:</code> character.</p><pre><code class="language-bash">$ ip='floor,bat,to,dubious,four'
+$ echo "$ip" | perl # ???
+bat:dubious:floor:four:to
+</code></pre><p><strong>28)</strong> Filter fields containing digit characters.</p><pre><code class="language-bash">$ ip='5pearl 42 east 1337 raku_6 lion 3.14'
+$ echo "$ip" | perl # ???
+5pearl 42 1337 raku_6 3.14
+</code></pre><p><strong>29)</strong> The input shown below has several words ending with digit characters. Change the words containing <code>test</code> to match the output shown below. That is, renumber the matching portions to <code>1</code>, <code>2</code>, etc. Words not containing <code>test</code> should not be changed.</p><pre><code class="language-bash">$ ip='test_12:test123\nanother_test_4,no_42\n'
+$ printf '%b' "$ip"
+test_12:test123
+another_test_4,no_42
+
+$ printf '%b' "$ip" | perl # ???
+test_1:test2
+another_test_3,no_42
+</code></pre><p><strong>30)</strong> For the input file <code>table.txt</code>, change contents of the third field to all uppercase. Construct solutions using <code>sed</code>, <code>awk</code> and <code>perl</code>.</p><pre><code class="language-bash">$ sed # ???
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+
+$ awk # ???
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+
+$ perl # ???
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+</code></pre>    
+</body>
+</html>

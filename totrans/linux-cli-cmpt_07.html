@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Viewing Part or Whole File Contents</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Viewing Part or Whole File Contents</h1>
+<blockquote>原文：<a href="https://learnbyexample.github.io/cli-computing/viewing-part-or-whole-file-contents.html">https://learnbyexample.github.io/cli-computing/viewing-part-or-whole-file-contents.html</a></blockquote><p>In this chapter, you'll learn how to view contents of files from within the terminal. If the contents are too long, you can choose to view one screenful at a time or get only the starting/ending portions of the input. The commands used for these purposes also have other functionalities, some of which will be discussed in this chapter as well.</p><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files">example_files</a> directory has the sample input files used in this chapter.</p></blockquote><h2 id="cat"><a class="header" href="#cat">cat</a></h2><p>The <code>cat</code> command derives its name from con<strong>cat</strong>enate. It is primarily used to combine the contents of multiple files to be saved in a file or sent as input to another command.</p><p>Commonly used options are shown below:</p><ul><li><code>-n</code> prefix line number and a tab character to each input line</li><li><code>-b</code> like <code>-n</code> but doesn't number empty lines</li><li><code>-s</code> squeeze consecutive empty lines to a single empty line</li><li><code>-v</code> view special characters like NUL using the <a href="https://en.wikipedia.org/wiki/ASCII_control_characters#Control_code_chart">caret notation</a></li><li><code>-e</code> view special characters as well as mark the end of line</li><li><code>-A</code> includes <code>-e</code> and also helps to spot tab characters</li></ul><p>Here are some examples to showcase <code>cat</code>'s main utility. One or more files can be given as arguments.</p><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> As mentioned earlier, the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files">example_files</a> directory has the sample input files used in this chapter. You need to <code>cd</code> into the <code>example_files/text_files</code> directory to follow along the examples shown in this chapter.</p></blockquote><pre><code class="language-bash"># view contents of a single file
+$ cat greeting.txt
+Hi there
+Have a nice day
+
+# another example
+$ cat fruits.txt
+banana
+papaya
+mango
+
+# concatenate multiple files
+$ cat greeting.txt fruits.txt
+Hi there
+Have a nice day
+banana
+papaya
+mango
+</code></pre><p>To save the output of concatenation, use redirection:</p><pre><code class="language-bash">$ cat greeting.txt fruits.txt &gt; op.txt
+
+$ cat op.txt
+Hi there
+Have a nice day
+banana
+papaya
+mango
+</code></pre><p>You can represent <code>stdin</code> data using <code>-</code> as a file argument. If file arguments are not present, <code>cat</code> will read from <code>stdin</code> data if present or wait for interactive input. Note that <code>-</code> is also supported by many more commands to indicate <code>stdin</code> data.</p><pre><code class="language-bash"># concatenate contents of 'greeting.txt' and 'stdin' data
+$ echo 'apple banana cherry' | cat greeting.txt -
+Hi there
+Have a nice day
+apple banana cherry
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Using <code>cat</code> to view the contents of a file, to concatenate them, etc is well and good. But, using <code>cat</code> when it is not needed is a bad habit that you should avoid. See <a href="https://en.wikipedia.org/wiki/Cat_(Unix)#Useless_use_of_cat">wikipedia: UUOC</a> and <a href="https://porkmail.org/era/unix/award.html">Useless Use of Cat Award</a> for more details.</p></blockquote><p><code>cat</code> also helps you spot special characters using the <a href="https://en.wikipedia.org/wiki/ASCII_control_characters#Control_code_chart">caret notation</a>:</p><pre><code class="language-bash"># example for backspace and carriage return characters
+$ printf 'car\bd\nbike\rp\n'
+cad
+pike
+$ printf 'car\bd\nbike\rp\n' | cat -v
+car^Hd
+bike^Mp
+
+# example with tab characters and end-of-line marker
+$ printf '1 2\t3\f4\v5   \n' | cat -A
+1 2^I3^L4^K5   $
+</code></pre><h2 id="tac"><a class="header" href="#tac">tac</a></h2><p>You can concatenate files using <code>tac</code> as well, but the output will be printed in the reverse (line wise). If you pass multiple input files, each file content will be reversed separately. Here are some examples:</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry\n' | tac
+cherry
+banana
+apple
+
+# won't be same as: cat greeting.txt fruits.txt | tac
+$ tac greeting.txt fruits.txt
+Have a nice day
+Hi there
+mango
+papaya
+banana
+</code></pre><blockquote><p><img alt="warning" src="../Images/b5314b4a0acf0f436c4bf59486793342.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/warning.svg"/> If the last line of input doesn't end with a newline, the output will also not have that newline character.</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry' | tac
+cherrybanana
+apple
+</code></pre></blockquote><h2 id="less"><a class="header" href="#less">less</a></h2><p>The <code>cat</code> command is not suitable for viewing contents of large files in the terminal. The <code>less</code> command automatically fits the content to the size of the terminal, allows scrolling and has nifty features for effective viewing. Typically, the <code>man</code> command uses <code>less</code> as the <code>pager</code> to display the documentation. The navigation options are similar to the Vim text editor.</p><p>Commonly used commands are given below. You can press the <code>h</code> key for builtin help.</p><ul><li><code>↑</code> and <code>↓</code> arrow keys to move up and down by a line <ul><li>you can also use <code>k</code> and <code>j</code> keys (same keys as those used by the Vim text editor)</li></ul></li><li><code>f</code> and <code>b</code> keys to move forward and backward by a screenful of content <ul><li><code>Space</code> key also moves forward by a screen</li></ul></li><li>mouse scroll moves up and down by a few lines</li><li><code>g</code> or <code>Home</code> go to the start of the file</li><li><code>G</code> or <code>End</code> go to the end of the file</li><li><code>/pattern</code> followed by <code>Enter</code> search for the given pattern in the forward direction <ul><li>pattern refers to regular expressions and depends on the regex library in your system</li><li>the flavor is Extended Regular Expressions (ERE) on my system</li><li>see <code>man re_format</code> for more details</li></ul></li><li><code>?pattern</code> followed by <code>Enter</code> search for the given pattern in the backward direction</li><li><code>n</code> go to the next match</li><li><code>N</code> go to the previous match</li><li><code>q</code> quit</li></ul><p>As an example, use <code>less /usr/share/dict/words</code> to open a dictionary file and practice the commands discussed above. If your <code>pager</code> is set to <code>less</code> for manual pages, you can also try something like <code>man ls</code> for practice.</p><p>Similar to the <code>cat</code> command, you can use the <code>-s</code> option to squeeze consecutive blank lines. But unlike <code>cat -n</code>, you need to use <code>less -N</code> to prefix line numbers. The lowercase <code>-n</code> option will turn off numbering.</p><p><strong>Further Reading</strong></p><ul><li><code>less</code> command is an <a href="https://unix.stackexchange.com/q/604/109046">improved version</a> of the <code>more</code> command</li><li><a href="https://unix.stackexchange.com/q/81129/109046">unix.stackexchange: differences between most, more and less</a></li><li>My <a href="https://github.com/learnbyexample/vim_reference">Vim Reference Guide</a> ebook</li></ul><h2 id="tail"><a class="header" href="#tail">tail</a></h2><p>By default, <code>tail</code> displays the last 10 lines of input files. If there are less than 10 lines in the input, only those lines will be displayed. You can use the <code>-n</code> option to change the number of lines displayed. By using <code>tail -n +N</code>, you can get all the lines starting from the <code>N</code>th line.</p><p>Here's an example file that'll be used for illustration purposes:</p><pre><code class="language-bash">$ cat sample.txt 
+ 1) Hello World
+ 2) 
+ 3) Hi there
+ 4) How are you
+ 5) 
+ 6) Just do-it
+ 7) Believe it
+ 8) 
+ 9) banana
+10) papaya
+11) mango
+12) 
+13) Much ado about nothing
+14) He he he
+15) Adios amigo
+</code></pre><p>Here are some examples with the <code>-n</code> option:</p><pre><code class="language-bash"># last two lines (input has 15 lines)
+$ tail -n2 sample.txt
+14) He he he
+15) Adios amigo
+
+# all lines starting from the 11th line
+# space between -n and +N is optional
+$ tail -n +11 sample.txt
+11) mango
+12) 
+13) Much ado about nothing
+14) He he he
+15) Adios amigo
+</code></pre><p>If you pass multiple input files, each file will be processed separately. By default, the output is nicely formatted with filename headers and empty line separators which you can override with the <code>-q</code> (quiet) option.</p><pre><code class="language-bash">$ tail -n2 fruits.txt sample.txt 
+==&gt; fruits.txt &lt;==
+papaya
+banana
+
+==&gt; sample.txt &lt;==
+14) He he he
+15) Adios amigo
+</code></pre><p>The <code>-c</code> option works similar to the <code>-n</code> option, but with bytes instead of lines:</p><pre><code class="language-bash"># last three bytes
+# note that the input doesn't end with a newline character
+$ printf 'apple pie' | tail -c3
+pie
+
+# starting from the fifth byte
+$ printf 'car\njeep\nbus\n' | tail -c +5
+jeep
+bus
+</code></pre><p><strong>Further Reading</strong></p><ul><li><a href="https://en.wikipedia.org/wiki/Tail_(Unix)#File_monitoring">wikipedia: File monitoring with tail -f and -F options</a> <ul><li><a href="https://github.com/Textualize/toolong">toolong</a> — terminal application to view, tail, merge, and search log files</li></ul></li><li><a href="https://unix.stackexchange.com/q/18760/109046">unix.stackexchange: How does the tail -f option work?</a></li><li><a href="https://mywiki.wooledge.org/BashFAQ/009">How to deal with output buffering?</a></li></ul><h2 id="head"><a class="header" href="#head">head</a></h2><p>By default, <code>head</code> displays the first 10 lines of input files. If there are less than 10 lines in the input, only those lines will be displayed. You can use the <code>-n</code> option to change the number of lines displayed. By using <code>head -n -N</code>, you can get all the input lines except the last <code>N</code> lines.</p><pre><code class="language-bash"># first three lines
+$ head -n3 sample.txt
+ 1) Hello World
+ 2) 
+ 3) Hi there
+
+# except the last 11 lines
+$ head -n -11 sample.txt
+ 1) Hello World
+ 2) 
+ 3) Hi there
+ 4) How are you
+</code></pre><p>You can select a range of lines by combining both the <code>head</code> and <code>tail</code> commands.</p><pre><code class="language-bash"># 9th to 11th lines
+# same as: tail -n +9 sample.txt | head -n3
+$ head -n11 sample.txt | tail -n +9
+ 9) banana
+10) papaya
+11) mango
+</code></pre><p>If you pass multiple input files, each file will be processed separately. By default, the output is nicely formatted with filename headers and empty line separators which you can override with the <code>-q</code> (quiet) option.</p><pre><code class="language-bash">$ printf '1\n2\n' | head -n1 greeting.txt -
+==&gt; greeting.txt &lt;==
+Hi there
+
+==&gt; standard input &lt;==
+1
+</code></pre><p>The <code>-c</code> option works similar to the <code>-n</code> option, but with bytes instead of lines:</p><pre><code class="language-bash"># first three bytes
+$ printf 'apple pie' | head -c3
+app
+
+# excluding the last four bytes
+$ printf 'car\njeep\nbus\n' | head -c -4
+car
+jeep
+</code></pre><h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Which option(s) would you use to get the output shown below?</p><pre><code class="language-bash">$ printf '\n\n\ndragon\n\n\nunicorn\n\n\n' | cat # ???
+
+     1  dragon
+
+     2  unicorn
+
+</code></pre><p><strong>2)</strong> Pass appropriate arguments to the <code>cat</code> command to get the output shown below.</p><pre><code class="language-bash">$ cat greeting.txt
+Hi there
+Have a nice day
+
+$ echo '42 apples and 100 bananas' | cat # ???
+42 apples and 100 bananas
+Hi there
+Have a nice day
+</code></pre><p><strong>3)</strong> Will the two commands shown below produce the same output? If not, why not?</p><pre><code class="language-bash">$ cat fruits.txt ip.txt | tac
+
+$ tac fruits.txt ip.txt 
+</code></pre><p><strong>4)</strong> Go through the manual for the <code>tac</code> command and use appropriate options and arguments to get the output shown below.</p><pre><code class="language-bash">$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+# ???
+%=%=
+brown
+green
+%=%=
+apple
+banana
+</code></pre><p><strong>5)</strong> What is the difference between <code>less -n</code> and <code>less -N</code> options? Does <code>cat -n</code> and <code>less -n</code> have similar functionality?</p><p><strong>6)</strong> Which command would you use to open another file from within an existing <code>less</code> session? And which commands would you use to navigate between previous and next files?</p><p><strong>7)</strong> Use appropriate commands and shell features to get the output shown below.</p><pre><code class="language-bash">$ printf 'carpet\njeep\nbus\n'
+carpet
+jeep
+bus
+
+# use the above 'printf' command for input data
+$ c=# ???
+$ echo "$c"
+car
+</code></pre><p><strong>8)</strong> How would you display all the input lines except the first one?</p><pre><code class="language-bash">$ printf 'apple\nfig\ncarpet\njeep\nbus\n' | # ???
+fig
+carpet
+jeep
+bus
+</code></pre><p><strong>9)</strong> Which command(s) would you use to get the output shown below?</p><pre><code class="language-bash">$ cat fruits.txt
+banana
+papaya
+mango
+$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+# ???
+banana
+papaya
+%=%=
+apple
+</code></pre><p><strong>10)</strong> Use a combination of the <code>head</code> and <code>tail</code> commands to get the 11th to 14th characters from the given input.</p><pre><code class="language-bash">$ printf 'apple\nfig\ncarpet\njeep\nbus\n' | # ???
+carp
+</code></pre><p><strong>11)</strong> Extract the starting six bytes from the input files <code>table.txt</code> and <code>fruits.txt</code>.</p><pre><code class="language-bash"># ???
+brown banana
+</code></pre><p><strong>12)</strong> Extract the last six bytes from the input files <code>fruits.txt</code> and <code>table.txt</code>.</p><pre><code class="language-bash"># ???
+mango
+ 3.14
+</code></pre>    
+</body>
+</html>

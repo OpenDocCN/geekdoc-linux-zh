@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Sorting Stuff</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Sorting Stuff</h1>
+<blockquote>原文：<a href="https://learnbyexample.github.io/cli-computing/sorting-stuff.html">https://learnbyexample.github.io/cli-computing/sorting-stuff.html</a></blockquote><p>In this chapter, you'll learn how to sort input based on various criteria. And then, you'll learn about tools that typically require sorted input for performing operations like finding unique entries, comparing two files line wise and so on.</p><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files">example_files</a> directory has the sample input files used in this chapter.</p></blockquote><h2 id="sort"><a class="header" href="#sort">sort</a></h2><p>As the name implies, this command is used to sort the contents of input files. Alphabetic sort and numeric sort? Possible. How about sorting a particular column? Possible. Prioritized multiple sorting order? Possible. Randomize? Unique? Lots of features supported by this powerful command.</p><h3 id="common-options"><a class="header" href="#common-options">Common options</a></h3><p>Commonly used options are shown below. Examples will be discussed in the later sections.</p><ul><li><code>-n</code> sort numerically</li><li><code>-g</code> general numeric sort</li><li><code>-V</code> version sort (aware of numbers within text)</li><li><code>-h</code> sort human readable numbers (ex: 4K, 3M, 12G, etc)</li><li><code>-k</code> sort via key (column sorting)</li><li><code>-t</code> single byte character as the field separator (default is non-blank to blank transition)</li><li><code>-u</code> sort uniquely</li><li><code>-R</code> random sort</li><li><code>-r</code> reverse the sort output</li><li><code>-o</code> redirect sorted result to a specified filename (ex: for inplace sorting)</li></ul><h3 id="default-sort"><a class="header" href="#default-sort">Default sort</a></h3><p>By default, <code>sort</code> orders the input <a href="https://en.wikipedia.org/wiki/Lexicographic_order">lexicographically</a> in ascending order. You can use the <code>-r</code> option to reverse the results.</p><pre><code class="language-bash"># default sort
+$ printf 'banana\ncherry\napple' | sort
+apple
+banana
+cherry
+
+# sort and then display the results in reversed order
+$ printf 'peace\nrest\nquiet' | sort -r
+rest
+quiet
+peace
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <code>-f</code> option if you want to ignore case. See also <a href="https://www.gnu.org/software/coreutils/faq/#Sort-does-not-sort-in-normal-order_0021">coreutils FAQ: Sort does not sort in normal order!</a>.</p></blockquote><h3 id="numerical-sort"><a class="header" href="#numerical-sort">Numerical sort</a></h3><p>There are several ways to deal with input containing different kind of numbers:</p><pre><code class="language-bash">$ printf '20\n2\n-3\n111\n3.14' | sort -n
+-3
+2
+3.14
+20
+111
+
+# sorting human readable numbers
+$ sort -hr file_size.txt
+1.4G    games
+316M    projects
+746K    report.log
+104K    power.log
+20K     sample.txt
+
+# version sort
+$ sort -V timings.txt
+3m20.058s
+3m42.833s
+4m3.083s
+4m11.130s
+5m35.363s
+</code></pre><h3 id="unique-sort"><a class="header" href="#unique-sort">Unique sort</a></h3><p>The <code>-u</code> option will keep only the first copy of lines that are deemed to be equal.</p><pre><code class="language-bash"># -f option ignores case differences
+$ printf 'CAT\nbat\ncat\ncar\nbat\n' | sort -fu
+bat
+car
+CAT
+</code></pre><h3 id="column-sort"><a class="header" href="#column-sort">Column sort</a></h3><p>The <code>-k</code> option allows you to sort based on specific columns instead of the entire input line. By default, the empty string between non-blank and blank characters is considered as the separator. This option accepts arguments in various ways. You can specify starting and ending column numbers separated by a comma. If you specify only the starting column, the last column will be used as the ending column. Usually you just want to sort by a single column, in which case the same number is specified as both the starting and ending columns. Here's an example:</p><pre><code class="language-bash">$ cat shopping.txt
+apple   50
+toys    5
+Pizza   2
+mango   25
+Banana  10
+
+# sort based on the 2nd column numbers
+$ sort -k2,2n shopping.txt
+Pizza   2
+toys    5
+Banana  10
+mango   25
+apple   50
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> You can use the <code>-t</code> option to specify a single byte character as the field separator. Use <code>\0</code> to specify ASCII NUL as the separator.</p></blockquote><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <code>-s</code> option to retain the original order of input lines when two or more lines are deemed equal. You can still use multiple keys to specify your own tie breakers, <code>-s</code> only prevents the last resort comparison.</p></blockquote><h2 id="uniq"><a class="header" href="#uniq">uniq</a></h2><p>This command helps you to identify and remove duplicates. Usually used with sorted inputs as the comparison is made between adjacent lines only.</p><h3 id="common-options-1"><a class="header" href="#common-options-1">Common options</a></h3><p>Commonly used options are shown below. Examples will be discussed in the later sections.</p><ul><li><code>-u</code> display only the unique entries</li><li><code>-d</code> display only the duplicate entries</li><li><code>-D</code> display all the copies of duplicates</li><li><code>-c</code> prefix count</li><li><code>-i</code> ignore case while determining duplicates</li><li><code>-f</code> skip the first <code>N</code> fields (separator is space/tab characters)</li><li><code>-s</code> skip the first <code>N</code> characters</li><li><code>-w</code> restricts the comparison to the first <code>N</code> characters</li></ul><h3 id="default-uniq"><a class="header" href="#default-uniq">Default uniq</a></h3><p>By default, <code>uniq</code> retains only one copy of duplicate lines:</p><pre><code class="language-bash"># same as sort -u for this case
+$ printf 'brown\nbrown\nbrown\ngreen\nbrown\nblue\nblue' | sort | uniq
+blue
+brown
+green
+
+# can't use sort -n -u here
+$ printf '2 balls\n13 pens\n2 pins\n13 pens\n' | sort -n | uniq
+2 balls
+2 pins
+13 pens
+</code></pre><h3 id="unique-and-duplicate-entries"><a class="header" href="#unique-and-duplicate-entries">Unique and duplicate entries</a></h3><p>The <code>-u</code> option will display only the unique entries. That is, only if a line doesn't occur more than once.</p><pre><code class="language-bash">$ cat purchases.txt
+coffee
+tea
+washing powder
+coffee
+toothpaste
+tea
+soap
+tea
+
+$ sort purchases.txt | uniq -u
+soap
+toothpaste
+washing powder
+</code></pre><p>The <code>-d</code> option will display only the duplicate entries. That is, only if a line is seen more than once. To display all the copies of duplicates, use the <code>-D</code> option.</p><pre><code class="language-bash">$ sort purchases.txt | uniq -d
+coffee
+tea
+
+$ sort purchases.txt | uniq -D
+coffee
+coffee
+tea
+tea
+tea
+</code></pre><h3 id="prefix-count"><a class="header" href="#prefix-count">Prefix count</a></h3><p>If you want to know how many times a line has been repeated, use the <code>-c</code> option. This will be added as a prefix.</p><pre><code class="language-bash">$ sort purchases.txt | uniq -c
+      2 coffee
+      1 soap
+      3 tea
+      1 toothpaste
+      1 washing powder
+
+$ sort purchases.txt | uniq -dc
+      2 coffee
+      3 tea
+
+# sorting by number of occurrences
+$ sort purchases.txt | uniq -c | sort -nr
+      3 tea
+      2 coffee
+      1 washing powder
+      1 toothpaste
+      1 soap
+</code></pre><h3 id="partial-match"><a class="header" href="#partial-match">Partial match</a></h3><p><code>uniq</code> has three options to change the matching criteria to partial parts of the input line. These aren't as powerful as the <code>sort -k</code> option, but they do come in handy for some use cases.</p><pre><code class="language-bash"># compare only the first 2 characters
+$ printf '1) apple\n1) almond\n2) banana\n3) cherry\n3) cup' | uniq -w2
+1) apple
+2) banana
+3) cherry
+
+# -f1 skips the first field
+# -s2 then skips two characters (including the blank character)
+# -w2 uses the next two characters for comparison ('bl' and 'ch' in this example)
+$ printf '2 @blue\n10 :black\n5 :cherry\n3 @chalk' | uniq -f1 -s2 -w2
+2 @blue
+5 :cherry
+</code></pre><h2 id="comm"><a class="header" href="#comm">comm</a></h2><p>The <code>comm</code> command finds common and unique lines between two sorted files. By default, you'll get a tabular output with three columns:</p><ul><li>first column has lines unique to the first file</li><li>second column has lines unique to the second file</li><li>third column has lines common to both the files</li></ul><pre><code class="language-bash"># side by side view of already sorted sample files
+$ paste c1.txt c2.txt
+Blue    Black
+Brown   Blue
+Orange  Green
+Purple  Orange
+Red     Pink
+Teal    Red
+White   White
+
+# default three column output
+$ comm c1.txt c2.txt
+        Black
+                Blue
+Brown
+        Green
+                Orange
+        Pink
+Purple
+                Red
+Teal
+                White
+</code></pre><p>You can use one or more of the following options to suppress columns:</p><ul><li><code>-1</code> to suppress lines unique to the first file</li><li><code>-2</code> to suppress lines unique to the second file</li><li><code>-3</code> to suppress lines common to both the files</li></ul><pre><code class="language-bash"># only the common lines
+$ comm -12 c1.txt c2.txt
+Blue
+Orange
+Red
+White
+
+# lines unique to the second file
+$ comm -13 c1.txt c2.txt
+Black
+Green
+Pink
+</code></pre><h2 id="join"><a class="header" href="#join">join</a></h2><p>By default, the <code>join</code> command combines two files based on the first field content (also referred as <strong>key</strong>). Only the lines with common keys will be part of the output.</p><p>The key field will be displayed first in the output (this distinction will come into play if the first field isn't the key). Rest of the line will have the remaining fields from the first and second files, in that order. One or more blanks (space or tab) will be considered as the input field separator and a single space will be used as the output field separator. If present, blank characters at the start of the input lines will be ignored.</p><pre><code class="language-bash"># sample sorted input files
+$ cat shopping_jan.txt
+apple   10
+banana  20
+soap    3
+tshirt  3
+$ cat shopping_feb.txt
+banana  15
+fig     100
+pen     2
+soap    1
+
+# combine common lines based on the first field
+$ join shopping_jan.txt shopping_feb.txt
+banana 20 15
+soap 3 1
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Note that the collating order used for <code>join</code> should be same as the one used to <code>sort</code> the input files. Use <code>join -i</code> to ignore case, similar to <code>sort -f</code> usage.</p></blockquote><p>If a field value is present multiple times in the same input file, all possible combinations will be present in the output. As shown below, <code>join</code> will also ensure to add a final newline character even if not present in the input.</p><pre><code class="language-bash">$ join &lt;(printf 'a f1_x\na f1_y') &lt;(printf 'a f2_x\na f2_y')
+a f1_x f2_x
+a f1_x f2_y
+a f1_y f2_x
+a f1_y f2_y
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> There are many more features such as specifying field delimiter, selecting specific fields from each input file in a particular order, filling fields for non-matching lines and so on. See the <a href="https://learnbyexample.github.io/cli_text_processing_coreutils/join.html">join chapter</a> from my <a href="https://github.com/learnbyexample/cli_text_processing_coreutils">CLI text processing with GNU Coreutils</a> ebook for explanations and examples.</p></blockquote><h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Default <code>sort</code> doesn't work for numbers. Correct the command used below:</p><pre><code class="language-bash"># wrong output
+$ printf '100\n10\n20\n3000\n2.45\n' | sort
+10
+100
+20
+2.45
+3000
+
+# expected output
+$ printf '100\n10\n20\n3000\n2.45\n' | sort # ???
+2.45
+10
+20
+100
+3000
+</code></pre><p><strong>2)</strong> Which <code>sort</code> option will help you ignore case?</p><pre><code class="language-bash">$ printf 'Super\nover\nRUNE\ntea\n' | LC_ALL=C sort # ???
+over
+RUNE
+Super
+tea
+</code></pre><p><strong>3)</strong> Go through the <code>sort</code> manual and use appropriate options to get the output shown below.</p><pre><code class="language-bash"># wrong output
+$ printf '+120\n-1.53\n3.14e+4\n42.1e-2' | sort -n
+-1.53
++120
+3.14e+4
+42.1e-2
+
+# expected output
+$ printf '+120\n-1.53\n3.14e+4\n42.1e-2' | sort # ???
+-1.53
+42.1e-2
++120
+3.14e+4
+</code></pre><p><strong>4)</strong> Sort the <code>scores.csv</code> file numerically in ascending order using the contents of the second field. Header line should be preserved as the first line as shown below. <em>Hint</em>: see the <a href="./shell-features.html">Shell Features</a> chapter.</p><pre><code class="language-bash"># ???
+Name,Maths,Physics,Chemistry
+Lin,78,83,80
+Cy,97,98,95
+Ith,100,100,100
+</code></pre><p><strong>5)</strong> Sort the contents of <code>duplicates.txt</code> by the fourth column numbers in descending order. Retain only the first copy of lines with the same number.</p><pre><code class="language-bash"># ???
+dark red,sky,rose,555
+blue,ruby,water,333
+dark red,ruby,rose,111
+brown,toy,bread,42
+</code></pre><p><strong>6)</strong> Will <code>uniq</code> throw an error if the input is not sorted? What do you think will be the output for the following input?</p><pre><code class="language-bash">$ printf 'red\nred\nred\ngreen\nred\nblue\nblue' | uniq
+# ???
+</code></pre><p><strong>7)</strong> Retain only the unique entries based on the first two characters of the input lines. Sort the input if necessary.</p><pre><code class="language-bash">$ printf '3) cherry\n1) apple\n2) banana\n1) almond\n'
+3) cherry
+1) apple
+2) banana
+1) almond
+
+$ printf '3) cherry\n1) apple\n2) banana\n1) almond\n' | # ???
+2) banana
+3) cherry
+</code></pre><p><strong>8)</strong> Count the number of times input lines are repeated and display the results in the format shown below.</p><pre><code class="language-bash">$ printf 'brown\nbrown\nbrown\ngreen\nbrown\nblue\nblue' | # ???
+      1 green
+      2 blue
+      4 brown
+</code></pre><p><strong>9)</strong> Display lines present in <code>c1.txt</code> but not in <code>c2.txt</code> using the <code>comm</code> command. Assume that the input files are already sorted.</p><pre><code class="language-bash"># ???
+Brown
+Purple
+Teal
+</code></pre><p><strong>10)</strong> Use appropriate options to get the expected output shown below.</p><pre><code class="language-bash"># wrong usage, no output
+$ join &lt;(printf 'apple 2\nfig 5') &lt;(printf 'Fig 10\nmango 4')
+
+# expected output
+# ???
+fig 5 10
+</code></pre><p><strong>11)</strong> What are the differences between <code>sort -u</code> and <code>uniq -u</code> options, if any?</p>    
+</body>
+</html>

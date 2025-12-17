@@ -1,0 +1,1518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Exercise Solutions</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Exercise Solutions</h1>
+<blockquote>原文：<a href="https://learnbyexample.github.io/cli-computing/exercise-solutions.html">https://learnbyexample.github.io/cli-computing/exercise-solutions.html</a></blockquote><h2 id="command-line-overview"><a class="header" href="#command-line-overview">Command Line Overview</a></h2><p><strong>1)</strong> By default, is <code>echo</code> a shell builtin or external command on your system? What command could you use to get an answer for this question?</p><p>On my system, <code>echo</code> is both a shell builtin and an external command.</p><pre><code class="language-bash">$ type -a echo
+echo is a shell builtin
+echo is /bin/echo
+</code></pre><p>As seen in the above result, the builtin command takes priority, so that is the default version.</p><p><strong>2)</strong> What output do you get for the command shown below? Does the documentation help understand the result?</p><pre><code class="language-bash">$ echo apple     42 'banana     100'
+apple 42 banana     100
+</code></pre><p>Yes, the documentation helps to understand the above result. From <code>help echo</code> (since the builtin version is the default):</p><blockquote><p>Display the ARGs, separated by a single space character and followed by a newline, on the standard output.</p></blockquote><p>In the above command, there are three arguments passed to the <code>echo</code> command — <code>apple</code>, <code>42</code> and <code>'banana     100'</code>. The string represented by these arguments are displayed in the output separated by a single space character.</p><p><strong>3)</strong> Go through <a href="https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html">bash manual: Tilde Expansion</a>. Is <code>~/projects</code> a relative or an absolute path? See <a href="https://unix.stackexchange.com/q/221970/109046">this unix.stackexchange thread</a> for answers.</p><p>I do not much care if it is correct to call it a relative or absolute path. More importantly, I want to highlight this gotcha from the above unix.stackexchange thread:</p><blockquote><p><code>~</code> is syntax implemented by the shell (and other programs which imitate it for convenience) which expands it into a real pathname. To illustrate, <code>~/Documents</code> is approximately the same thing as <code>$HOME/Documents</code> (again, shell syntax). Since <code>$HOME</code> should be an absolute path, the value of <code>$HOME/Documents</code> is also an absolute path. But the text <code>$HOME/Documents</code> or <code>~/Documents</code> has to be expanded by the shell in order to become the path we mean.</p></blockquote><p>I spent a frustrating few hours trying to debug why one of my <a href="https://wiki.archlinux.org/title/Autostarting">autostart</a> script wasn't working. Yup, you guessed it. The issue was using <code>~</code> and changing to the full path fixed it.</p><p><strong>4)</strong> Which key would you use to get help while the <code>less</code> command is active?</p><p><code>h</code></p><p><strong>5)</strong> How would you bring the 50th line to the top of the screen while viewing a <code>man</code> page (assume <code>less</code> command is the <code>pager</code>)?</p><p><code>50g</code></p><p><strong>6)</strong> What does the <code>Ctrl+k</code> shortcut do?</p><p>Deletes from the current character to the end of the command line.</p><p><strong>7)</strong> Briefly explain the role of the following shell operators:</p><p><em>a)</em> <code>|</code> — redirects output from a command as input to another command<br/> <em>b)</em> <code>&gt;</code> — redirects output from a command to a file (overwrites if the file already exists)<br/> <em>c)</em> <code>&gt;&gt;</code> — redirects output from a command to a file (appends if the file already exists)</p><p><strong>8)</strong> The <code>whatis</code> command displays one-line descriptions about commands. But it doesn't seem to work for <code>whatis type</code>. What should you use instead?</p><pre><code class="language-bash">$ whatis cat
+cat (1)              - concatenate files and print on the standard output
+
+$ whatis type
+type: nothing appropriate.
+
+# need to use 'help -d' since 'type' is a shell builtin
+$ help -d type
+type - Display information about command type.
+</code></pre><p><strong>9)</strong> What is the role of the <code>/tmp</code> directory?</p><p>From <code>man hier</code>:</p><blockquote><p>This directory contains temporary files which may be deleted with no notice, such as by a regular job or at system boot up.</p></blockquote><p>See <a href="https://en.wikipedia.org/wiki/Temporary_folder">wikipedia: Temporary folder</a> for more details.</p><p><strong>10)</strong> Give an example each for absolute and relative paths.</p><ul><li>absolute path: <code>/usr/share/dict/words</code></li><li>relative path: <code>../../projects</code></li></ul><p><strong>11)</strong> When would you use the <code>man -k</code> command?</p><p>From <code>man man</code>:</p><blockquote><p><code>-k, --apropos</code></p><p>Equivalent to apropos. Search the short manual page descriptions for keywords and display any matches. See apropos(1) for details.</p></blockquote><p>For example:</p><pre><code class="language-bash"># same as: apropos column
+$ man -k column
+colrm (1)            - remove columns from a file
+column (1)           - columnate lists
+git-column (1)       - Display data in columns
+</code></pre><p><strong>12)</strong> Are there differences between the <code>man</code> and <code>info</code> pages?</p><p>The Linux manual pages are usually shortened version of the full documentation. You can use the <code>info</code> command to view the complete documentation for GNU tools. <code>info</code> is also a TUI application, but with different key configuration compared to the <code>man</code> command. See <a href="https://www.gnu.org/manual/manual.html">GNU Manuals Online</a> if you'd prefer to read them from a web browser. You can also download them in formats like PDF for offline usage.</p><br/><h2 id="managing-files-and-directories"><a class="header" href="#managing-files-and-directories">Managing Files and Directories</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The <code>ls.sh</code> script will be used for some of the exercises.</p></blockquote><p><strong>1)</strong> Which of these commands will always display the absolute path of the home directory?</p><p><em>a)</em> <code>pwd</code><br/> <em>b)</em> <code>echo "$PWD"</code><br/> <em>c)</em> <code>echo "$HOME"</code></p><p>Answer: <em>c)</em> <code>echo "$HOME"</code></p><p><strong>2)</strong> The current working directory has a folder named <code>-dash</code>. How would you switch to that directory?</p><p><em>a)</em> <code>cd -- -dash</code><br/> <em>b)</em> <code>cd -dash</code><br/> <em>c)</em> <code>cd ./-dash</code><br/> <em>d)</em> <code>cd \-dash</code><br/> <em>e)</em> <code>cd '-dash'</code><br/> <em>f)</em> all of the above<br/> <em>g)</em> only <em>a)</em> and <em>c)</em></p><p>Answer: <em>g)</em> only <em>a)</em> and <em>c)</em></p><p><strong>3)</strong> Given the directory structure as shown below, how would you change to the <code>todos</code> directory?</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'ls.sh' script
+$ source ls.sh
+
+$ ls -F
+backups/    hello_world.py*  ip.txt     report.log  todos/
+errors.log  hi*              projects/  scripts@
+$ cd projects
+$ pwd
+/home/learnbyexample/cli-computing/example_files/scripts/ls_examples/projects
+
+$ cd ../todos
+$ pwd
+/home/learnbyexample/cli-computing/example_files/scripts/ls_examples/todos
+</code></pre><p><strong>4)</strong> As per the scenario shown below, how would you change to the <code>cli-computing</code> directory under the user's home directory? And then, how would you go back to the previous working directory?</p><pre><code class="language-bash">$ pwd
+/home/learnbyexample/all/projects/square_tictactoe
+
+$ cd ~/cli-computing
+$ pwd
+/home/learnbyexample/cli-computing
+
+$ cd -
+$ pwd
+/home/learnbyexample/all/projects/square_tictactoe
+</code></pre><p><strong>5)</strong> How'd you list the contents of the current directory, one per line, along with the size of the entries in human readable format?</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'ls.sh' script
+$ source ls.sh
+
+$ ls -1sh
+total 7.4M
+4.0K backups
+ 16K errors.log
+4.0K hello_world.py
+4.0K hi
+4.0K ip.txt
+4.0K projects
+7.4M report.log
+   0 scripts
+4.0K todos
+</code></pre><p><strong>6)</strong> Which <code>ls</code> command option would you use for version based sorting of entries?</p><p>From <code>man ls</code>:</p><blockquote><p><code>-v</code></p><p>natural sort of (version) numbers within text</p></blockquote><p><strong>7)</strong> Which <code>ls</code> command option would you use for sorting based on entry size?</p><blockquote><p><code>-S</code></p><p>sort by file size, largest first</p></blockquote><p><strong>8)</strong> Which <code>ls</code> command option would you use for sorting based on file extension?</p><blockquote><p><code>-X</code></p><p>sort alphabetically by entry extension</p></blockquote><p><strong>9)</strong> What does the <code>-G</code> option of <code>ls</code> command do?</p><blockquote><p><code>-G, --no-group</code></p><p>in a long listing, don't print group names</p></blockquote><p><strong>10)</strong> What does the <code>-i</code> option of <code>ls</code> command do?</p><blockquote><p><code>-i, --inode</code></p><p>print the index number of each file</p></blockquote><p><strong>11)</strong> List only the directories as one entry per line.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'ls.sh' script
+$ source ls.sh
+
+$ ls -1d */
+backups/
+projects/
+scripts/
+todos/
+</code></pre><p><strong>12)</strong> Assume that a regular file named <code>notes</code> already exists. What would happen if you use the <code>mkdir -p notes</code> command?</p><pre><code class="language-bash">$ ls -1F notes
+notes
+
+# what would happen here?
+$ mkdir -p notes
+mkdir: cannot create directory ‘notes’: File exists
+</code></pre><p><strong>13)</strong> Use one or more commands to match the scenario shown below:</p><pre><code class="language-bash">$ ls -1F
+cost.txt
+
+# can also use: mkdir {gho,que,toa}st
+# brace expansion is covered in the "Shell Features" chapter
+$ mkdir ghost quest toast
+
+$ ls -1F
+cost.txt
+ghost/
+quest/
+toast/
+</code></pre><p><strong>14)</strong> Use one or more commands to match the scenario shown below:</p><pre><code class="language-bash"># start with an empty directory
+$ ls -l
+total 0
+
+# can also use: mkdir -p hobbies/{painting,trekking,writing} shopping
+# or: mkdir -p hobbies/{paint,trekk,writ}ing shopping
+$ mkdir -p hobbies/painting hobbies/trekking hobbies/writing shopping
+$ touch hobbies/painting/waterfall.bmp hobbies/trekking/himalayas.txt
+$ touch shopping/festival.xlsx
+
+$ tree -F
+.
+├── hobbies/
+│   ├── painting/
+│   │   └── waterfall.bmp
+│   ├── trekking/
+│   │   └── himalayas.txt
+│   └── writing/
+└── shopping/
+    └── festival.xlsx
+
+5 directories, 3 files
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Don't delete this directory, will be needed in a later exercise.</p></blockquote><p><strong>15)</strong> If directories to create already exist, which <code>mkdir</code> command option would you use to not show an error?</p><blockquote><p><code>-p, --parents</code></p><p>no error if existing, make parent directories as needed</p></blockquote><p><strong>16)</strong> Use one or more commands to match the scenario given below:</p><pre><code class="language-bash">$ ls -1F
+cost.txt
+ghost/
+quest/
+toast/
+
+$ rm -r cost.txt ghost toast
+
+$ ls -1F
+quest/
+</code></pre><p><strong>17)</strong> What does the <code>-f</code> option of <code>rm</code> command do?</p><blockquote><p><code>-f, --force</code></p><p>ignore nonexistent files and arguments, never prompt</p></blockquote><p>For example, it helps to remove write protected files (provided you have appropriate permissions to delete those files).</p><p><strong>18)</strong> Which option would you use to interactively delete files using the <code>rm</code> command?</p><blockquote><p><code>-i</code></p><p>prompt before every removal</p><p><code>-I</code></p><p>prompt once before removing more than three files, or when removing recursively; less intrusive than <code>-i</code>, while still giving protection against most mistakes</p></blockquote><p><strong>19)</strong> Can the files removed by <code>rm</code> easily be restored? Do you need to take some extra steps or use special commands to make the files more difficult to recover?</p><ul><li>Files removed using <code>rm</code> can still be recovered with time and skill <ul><li><a href="https://unix.stackexchange.com/q/80270/109046">unix.stackexchange: recover deleted files</a></li><li><a href="https://unix.stackexchange.com/q/2677/109046">unix.stackexchange: recovering accidentally deleted files</a></li></ul></li><li>Use commands like <code>shred</code> if you want to make it harder to recover deleted files <ul><li><a href="https://wiki.archlinux.org/title/Securely_wipe_disk">wiki.archlinux: Securely wipe disk</a></li></ul></li></ul><p><strong>20)</strong> Does your Linux distribution provide a tool to send deleted files to the trash (which would help to recover deleted files)?</p><p>On Ubuntu, you can use <code>sudo apt install trash-cli</code> to install the <code>trash</code> command. See also <a href="https://wiki.archlinux.org/title/Trash_management">wiki.archlinux: Trash management</a>.</p><p><strong>21)</strong> Which option would you use to interactively accept/prevent the <code>cp</code> command from overwriting a file of the same name? And which option would prevent overwriting without needing manual confirmation?</p><blockquote><p><code>-i, --interactive</code></p><p>prompt before overwrite (overrides a previous -n option)</p><p><code>-n, --no-clobber</code></p><p>do not overwrite an existing file (overrides a previous -i option)</p></blockquote><p><strong>22)</strong> Does the <code>cp</code> command allow you to rename the file or directory being copied? If so, can you rename multiple files/directories being copied?</p><p><code>cp</code> allows renaming single file or directory by specifying a different name in the destination path. You can't rename multiple files or directories with a single <code>cp</code> usage.</p><p><strong>23)</strong> What do the <code>-u</code>, <code>-b</code> and <code>-t</code> options of <code>cp</code> command do?</p><blockquote><p><code>-u, --update</code></p><p>copy only when the SOURCE file is newer than the destination file or when the destination file is missing</p><p><code>--backup[=CONTROL]</code></p><p>make a backup of each existing destination file</p><p><code>-b</code></p><p>like <code>--backup</code> but does not accept an argument</p><p><code>-t, --target-directory=DIRECTORY</code></p><p>copy all SOURCE arguments into DIRECTORY</p></blockquote><p><strong>24)</strong> What's the difference between the two commands shown below?</p><pre><code class="language-bash">$ cp ip.txt op.txt
+
+$ mv ip.txt op.txt
+</code></pre><ul><li><code>cp</code> makes a new copy of <code>ip.txt</code> named as <code>op.txt</code> — two files having the same content</li><li><code>mv</code> renames <code>ip.txt</code> as <code>op.txt</code> — there's only one file</li></ul><p><strong>25)</strong> Which option would you use to interactively accept/prevent the <code>mv</code> command from overwriting a file of the same name?</p><blockquote><p><code>-i, --interactive</code></p><p>prompt before overwrite</p></blockquote><p><strong>26)</strong> Use one or more commands to match the scenario shown below. You should have already created this directory structure in an earlier exercise.</p><pre><code class="language-bash">$ tree -F
+.
+├── hobbies/
+│   ├── painting/
+│   │   └── waterfall.bmp
+│   ├── trekking/
+│   │   └── himalayas.txt
+│   └── writing/
+└── shopping/
+    └── festival.xlsx
+
+5 directories, 3 files
+
+$ mv hobbies/*/* hobbies/
+$ rm -r hobbies/*/
+
+$ tree -F
+.
+├── hobbies/
+│   ├── himalayas.txt
+│   └── waterfall.bmp
+└── shopping/
+    └── festival.xlsx
+
+2 directories, 3 files
+</code></pre><p><strong>27)</strong> What does the <code>-t</code> option of <code>mv</code> command do?</p><blockquote><p><code>-t, --target-directory=DIRECTORY</code></p><p>move all SOURCE arguments into DIRECTORY</p></blockquote><p><strong>28)</strong> Determine and implement the <code>rename</code> logic based on the filenames and expected output shown below.</p><pre><code class="language-bash">$ touch '(2020) report part 1.txt' 'analysis part 3 (2018).log'
+$ ls -1
+'(2020) report part 1.txt'
+'analysis part 3 (2018).log'
+
+# can also use: rename 's/[()]//g; y/ /_/' *
+$ rename 's/ /_/g; s/[()]//g' *
+
+$ ls -1
+2020_report_part_1.txt
+analysis_part_3_2018.log
+</code></pre><p><strong>29)</strong> Does the <code>ln</code> command follow the same order to specify source and destination as the <code>cp</code> and <code>mv</code> commands?</p><p>Yes.</p><p><strong>30)</strong> Which <code>tar</code> option helps to compress archives based on filename extension? This option can be used instead of <code>-z</code> for <code>gzip</code>, <code>-j</code> for <code>bzip2</code> and <code>-J</code> for <code>xz</code>.</p><blockquote><p><code>-a, --auto-compress</code></p><p>Use archive suffix to determine the compression program.</p></blockquote><br/><h2 id="shell-features"><a class="header" href="#shell-features">Shell Features</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <code>globs.sh</code> script for wildcards related exercises, unless otherwise mentioned.</p></blockquote><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Create a temporary directory for exercises that may require you to create some files. You can delete such practice directories afterwards.</p></blockquote><p><strong>1)</strong> Use the <code>echo</code> command to display the text as shown below. Use appropriate quoting as necessary.</p><pre><code class="language-nohighlight"># can also use: echo "that's"'    great! $x = $y + $z'
+$ echo 'that'\''s    great! $x = $y + $z'
+that's    great! $x = $y + $z
+</code></pre><p><strong>2)</strong> Use the <code>echo</code> command to display the values of the three variables in the format as shown below.</p><pre><code class="language-bash">$ n1=10
+$ n2=90
+$ op=100
+
+$ echo "$n1 + $n2 = $op"
+10 + 90 = 100
+</code></pre><p><strong>3)</strong> What will be the output of the command shown below?</p><pre><code class="language-bash">$ echo $'\x22apple\x22: \x2710\x27'
+"apple": '10'
+</code></pre><p><strong>4)</strong> List filenames starting with a digit character.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'globs.sh' script
+$ source globs.sh
+
+$ ls [0-9]*
+100.sh  42.txt
+</code></pre><p><strong>5)</strong> List filenames whose extension do not begin with <code>t</code> or <code>l</code>. Assume extensions will have at least one character.</p><pre><code class="language-bash"># can also use: ls *.[!tl]*
+$ ls *.[^tl]*
+100.sh  calc.py  hello.py  hi.sh  main.c  math.h
+</code></pre><p><strong>6)</strong> List filenames whose extension only have a single character.</p><pre><code class="language-bash">$ ls *.?
+main.c  math.h
+</code></pre><p><strong>7)</strong> List filenames whose extension is not <code>txt</code>.</p><pre><code class="language-bash">$ shopt -s extglob
+$ ls *.!(txt)
+100.sh   hello.py  main.c  report-00.log  report-04.log
+calc.py  hi.sh     math.h  report-02.log  report-98.log
+</code></pre><p><strong>8)</strong> Describe the wildcard pattern used in the command shown below.</p><pre><code class="language-bash">$ ls *[^[:word:]]*.*
+report-00.log  report-02.log  report-04.log  report-98.log
+</code></pre><p>List files that have at least one non-word character (<code>-</code> for example) before a <code>.</code> character.</p><p><strong>9)</strong> List filenames having only lowercase alphabets before the extension.</p><pre><code class="language-bash">$ ls +([a-z]).*
+calc.py  hello.py  hi.sh  ip.txt  main.c  math.h  notes.txt
+</code></pre><p><strong>10)</strong> List filenames starting with <code>ma</code> or <code>he</code> or <code>hi</code>.</p><pre><code class="language-bash">$ ls ma* he* hi*
+hello.py  hi.sh  main.c  math.h
+
+# alternate solutions
+$ ls @(ma|h[ei])*
+$ ls @(ma|he|hi)*
+</code></pre><p><strong>11)</strong> What commands would you use to get the outputs shown below? Assume that you do not know the depth of sub-directories.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'ls.sh' script
+$ source ls.sh
+
+# filenames ending with '.txt'
+$ shopt -s globstar
+$ ls **/*.txt
+ip.txt  todos/books.txt  todos/outing.txt
+
+# directories starting with 'c' or 'd' or 'g' or 'r' or 't'
+$ ls -1d **/[cdgrt]*/
+backups/dot_files/
+projects/calculator/
+projects/tictactoe/
+todos/
+</code></pre><p><strong>12)</strong> Create and change to an empty directory. Then, use brace expansion along with relevant commands to get the results shown below.</p><pre><code class="language-bash">$ mkdir practice_brace &amp;&amp; cd $_
+$ touch report_202{0..2}.txt
+$ ls report*
+report_2020.txt  report_2021.txt  report_2022.txt
+
+# use the 'cp' command here
+$ cp report_2021.txt{,.bkp}
+$ ls report*
+report_2020.txt  report_2021.txt  report_2021.txt.bkp  report_2022.txt
+</code></pre><p><strong>13)</strong> What does the <code>set</code> builtin command do?</p><p>From <code>help set</code>:</p><blockquote><p>Change the value of shell attributes and positional parameters, or display the names and values of shell variables.</p></blockquote><p><strong>14)</strong> What does the <code>|</code> pipe operator do? And when would you add the <code>tee</code> command?</p><p><code>|</code> redirects the output of a command as input to another command. The <code>tee</code> command will help to save the output of a command to a file as well as display it on the terminal.</p><p><strong>15)</strong> Can you infer what the following command does? <em>Hint</em>: see <code>help printf</code>.</p><pre><code class="language-bash">$ printf '%s\n' apple car dragon
+apple
+car
+dragon
+</code></pre><p>From <code>help printf</code>:</p><blockquote><p>The format is re-used as necessary to consume all of the arguments. If there are fewer arguments than the format requires, extra format specifications behave as if a zero value or null string, as appropriate, had been supplied.</p></blockquote><p>In the above example, the format <code>%s\n</code> is applied to all the three arguments.</p><p><strong>16)</strong> Use brace expansion along with relevant commands and shell features to get the result shown below. <em>Hint</em>: see previous question.</p><pre><code class="language-bash">$ ls ip.txt
+ls: cannot access 'ip.txt': No such file or directory
+
+# can also use: printf '%s\n' item_{10..20..2} &gt; ip.txt
+$ printf 'item_%s\n' {10..20..2} &gt; ip.txt
+$ cat ip.txt
+item_10
+item_12
+item_14
+item_16
+item_18
+item_20
+</code></pre><p><strong>17)</strong> With <code>ip.txt</code> containing text as shown in the previous question, use brace expansion and relevant commands to get the result shown below.</p><pre><code class="language-bash">$ printf '%s\n' apple_{1..3}_banana_{6..8} &gt;&gt; ip.txt
+$ cat ip.txt
+item_10
+item_12
+item_14
+item_16
+item_18
+item_20
+apple_1_banana_6
+apple_1_banana_7
+apple_1_banana_8
+apple_2_banana_6
+apple_2_banana_7
+apple_2_banana_8
+apple_3_banana_6
+apple_3_banana_7
+apple_3_banana_8
+</code></pre><p><strong>18)</strong> What are the differences between <code>&lt;</code> and <code>|</code> shell operators, if any?</p><ul><li>the <code>&lt;</code> redirection operator helps you to pass data from a file as input to a command</li><li>the <code>|</code> operator redirects output of a command as input to another command</li></ul><p><strong>19)</strong> Which character is typically used to represent <code>stdin</code> data as a file argument?</p><p><code>-</code></p><p><strong>20)</strong> What do the following operators do?</p><p><em>a)</em> <code>1&gt;</code> — redirect the standard output of a command to a file<br/> <em>b)</em> <code>2&gt;</code> — redirect the standard error of a command to a file<br/> <em>c)</em> <code>&amp;&gt;</code> — redirect both <code>stdout</code> and <code>stderr</code> (overwrites an existing file)<br/> <em>d)</em> <code>&amp;&gt;&gt;</code> — redirect both <code>stdout</code> and <code>stderr</code> (appends to an existing file)<br/> <em>e)</em> <code>|&amp;</code> — pipe both <code>stdout</code> and <code>stderr</code> as input to another command</p><p><strong>21)</strong> What will be the contents of <code>op.txt</code> if you use the following <code>grep</code> command?</p><pre><code class="language-bash"># press Ctrl+d after the line containing 'histogram'
+$ grep 'hi' &gt; op.txt
+hi there
+this is a sample line
+have a nice day
+histogram
+
+# you'll get lines containing 'hi'
+$ cat op.txt
+hi there
+this is a sample line
+histogram
+</code></pre><p><strong>22)</strong> What will be the contents of <code>op.txt</code> if you use the following commands?</p><pre><code class="language-bash">$ qty=42
+$ cat &lt;&lt; end &gt; op.txt
+&gt; dragon
+&gt; unicorn
+&gt; apple $qty
+&gt; ice cream
+&gt; end
+
+$ cat op.txt
+dragon
+unicorn
+apple 42
+ice cream
+</code></pre><p>Note that the value of <code>qty</code> variable was substituted for <code>$qty</code>. You'll have to use <code>'end'</code> or <code>\end</code> to avoid shell interpolation.</p><p><strong>23)</strong> Correct the command to get the expected output shown below.</p><pre><code class="language-bash">$ books='cradle piranesi soulhome bastion'
+
+# something is wrong with this command
+$ sed 's/\b\w/\u&amp;/g' &lt;&lt;&lt; '$books'
+$Books
+
+# double quotes is needed for variable interpolation
+$ sed 's/\b\w/\u&amp;/g' &lt;&lt;&lt; "$books"
+Cradle Piranesi Soulhome Bastion
+</code></pre><p><strong>24)</strong> Correct the command to get the expected output shown below.</p><pre><code class="language-bash"># something is wrong with this command
+$ echo 'hello' ; seq 3 &gt; op.txt
+hello
+$ cat op.txt
+1
+2
+3
+
+# can also use: { echo 'hello' ; seq 3 ; } &gt; op.txt
+$ (echo 'hello' ; seq 3) &gt; op.txt
+$ cat op.txt
+hello
+1
+2
+3
+</code></pre><p><strong>25)</strong> What will be the output of the following commands?</p><pre><code class="language-bash">$ printf 'hello' | tr 'a-z' 'A-Z' &amp;&amp; echo ' there'
+HELLO there
+
+$ printf 'hello' | tr 'a-z' 'A-Z' || echo ' there'
+HELLO
+</code></pre><p>In both cases, the first command succeeds (exit status <code>0</code>). The <code>&amp;&amp;</code> and <code>||</code> are short-circuit operators. Their second operands will be executed only if the first one was success and failure respectively.</p><p><strong>26)</strong> Correct the command(s) to get the expected output shown below.</p><pre><code class="language-bash"># something is wrong with these commands
+$ nums=$(seq 3)
+$ echo $nums
+1 2 3
+
+$ echo "$nums"
+1
+2
+3
+</code></pre><p><strong>27)</strong> Will the following two commands produce equivalent output? If not, why not?</p><pre><code class="language-bash">$ paste -d, &lt;(seq 3) &lt;(printf '%s\n' item_{1..3})
+1,item_1
+2,item_2
+3,item_3
+
+$ printf '%s\n' {1..3},item_{1..3}
+1,item_1
+1,item_2
+1,item_3
+2,item_1
+2,item_2
+2,item_3
+3,item_1
+3,item_2
+3,item_3
+</code></pre><p>The outputs are not equivalent because brace expansion creates all combinations when multiple braces are used.</p><br/><h2 id="viewing-part-or-whole-file-contents"><a class="header" href="#viewing-part-or-whole-file-contents">Viewing Part or Whole File Contents</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Which option(s) would you use to get the output shown below?</p><pre><code class="language-bash">$ printf '\n\n\ndragon\n\n\nunicorn\n\n\n' | cat -bs
+
+     1  dragon
+
+     2  unicorn
+
+</code></pre><p><strong>2)</strong> Pass appropriate arguments to the <code>cat</code> command to get the output shown below.</p><pre><code class="language-bash">$ cat greeting.txt
+Hi there
+Have a nice day
+
+$ echo '42 apples and 100 bananas' | cat - greeting.txt
+42 apples and 100 bananas
+Hi there
+Have a nice day
+</code></pre><p><strong>3)</strong> Will the two commands shown below produce the same output? If not, why not?</p><pre><code class="language-bash">$ cat fruits.txt ip.txt | tac
+blue delight
+light orange
+deep blue
+mango
+papaya
+banana
+
+$ tac fruits.txt ip.txt
+mango
+papaya
+banana
+blue delight
+light orange
+deep blue
+</code></pre><p>No. The outputs are different because <code>tac</code> reverses content separately for each input file.</p><p><strong>4)</strong> Go through the manual for the <code>tac</code> command and use appropriate options and arguments to get the output shown below.</p><pre><code class="language-bash">$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+$ tac -bs '%=%=' blocks.txt
+%=%=
+brown
+green
+%=%=
+apple
+banana
+</code></pre><blockquote><p><code>-b, --before</code></p><p>attach the separator before instead of after</p><p><code>-s, --separator=STRING</code></p><p>use STRING as the separator instead of newline</p></blockquote><p><strong>5)</strong> What is the difference between <code>less -n</code> and <code>less -N</code> options? Does <code>cat -n</code> and <code>less -n</code> have similar functionality?</p><p><code>less -N</code> enables line numbering and <code>less -n</code> disables numbering. <code>cat -n</code> enables line numbering, so it doesn't function similar to <code>less -n</code>.</p><p><strong>6)</strong> Which command would you use to open another file from within an existing <code>less</code> session? And which commands would you use to navigate between previous and next files?</p><p>You can use <code>:e filename</code> to open another file (similar to the Vim text editor). You can use <code>:p</code> and <code>:n</code> to switch between the previous and next files.</p><p><strong>7)</strong> Use appropriate commands and shell features to get the output shown below.</p><pre><code class="language-bash">$ printf 'carpet\njeep\nbus\n'
+carpet
+jeep
+bus
+
+# use the above 'printf' command for input data
+$ c=$(printf 'carpet\njeep\nbus\n' | head -c3)
+$ echo "$c"
+car
+</code></pre><p><strong>8)</strong> How would you display all the input lines except the first one?</p><pre><code class="language-bash">$ printf 'apple\nfig\ncarpet\njeep\nbus\n' | tail -n +2
+fig
+carpet
+jeep
+bus
+</code></pre><p><strong>9)</strong> Which command(s) would you use to get the output shown below?</p><pre><code class="language-bash">$ cat fruits.txt
+banana
+papaya
+mango
+$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+$ head -q -n2 fruits.txt blocks.txt
+banana
+papaya
+%=%=
+apple
+</code></pre><p><strong>10)</strong> Use a combination of the <code>head</code> and <code>tail</code> commands to get the 11th to 14th characters from the given input.</p><pre><code class="language-bash"># can also use: tail -c +11 | head -c4
+$ printf 'apple\nfig\ncarpet\njeep\nbus\n' | head -c14 | tail -c +11
+carp
+</code></pre><p><strong>11)</strong> Extract the starting six bytes from the input files <code>table.txt</code> and <code>fruits.txt</code>.</p><pre><code class="language-bash">$ head -q -c6 table.txt fruits.txt
+brown banana
+</code></pre><p><strong>12)</strong> Extract the last six bytes from the input files <code>fruits.txt</code> and <code>table.txt</code>.</p><pre><code class="language-bash">$ tail -q -c6 fruits.txt table.txt
+mango
+ 3.14
+</code></pre><br/><h2 id="searching-files-and-filenames"><a class="header" href="#searching-files-and-filenames">Searching Files and Filenames</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> For <code>grep</code> exercises, use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files, unless otherwise specified.</p></blockquote><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> For <code>find</code> exercises, use the <code>find.sh</code> script, unless otherwise specified.</p></blockquote><p><strong>1)</strong> Display lines containing <code>an</code> from the input files <code>blocks.txt</code>, <code>ip.txt</code> and <code>uniform.txt</code>. Show the results with and without filename prefix.</p><pre><code class="language-bash">$ grep 'an' blocks.txt ip.txt uniform.txt
+blocks.txt:banana
+ip.txt:light orange
+uniform.txt:mango
+
+$ grep -h 'an' blocks.txt ip.txt uniform.txt
+banana
+light orange
+mango
+</code></pre><p><strong>2)</strong> Display lines containing the whole word <code>he</code> from the <code>sample.txt</code> input file.</p><pre><code class="language-bash">$ grep -w 'he' sample.txt
+14) He he he
+</code></pre><p><strong>3)</strong> Match only whole lines containing <code>car</code> irrespective of case. The matching lines should be displayed with line number prefix as well.</p><pre><code class="language-bash">$ printf 'car\nscared\ntar car par\nCar\n' | grep -nix 'car'
+1:car
+4:Car
+</code></pre><p><strong>4)</strong> Display all lines from <code>purchases.txt</code> except those that contain <code>tea</code>.</p><pre><code class="language-bash">$ grep -v 'tea' purchases.txt
+coffee
+washing powder
+coffee
+toothpaste
+soap
+</code></pre><p><strong>5)</strong> Display all lines from <code>sample.txt</code> that contain <code>do</code> but not <code>it</code>.</p><pre><code class="language-bash"># can also use: grep -P '^(?!.*it).*do' sample.txt
+$ grep 'do' sample.txt | grep -v 'it'
+13) Much ado about nothing
+</code></pre><p><strong>6)</strong> For the input file <code>sample.txt</code>, filter lines containing <code>do</code> and also display the line that comes after such a matching line.</p><pre><code class="language-bash">$ grep -A1 'do' sample.txt
+ 6) Just do-it
+ 7) Believe it
+--
+13) Much ado about nothing
+14) He he he
+</code></pre><p><strong>7)</strong> For the input file <code>sample.txt</code>, filter lines containing <code>are</code> or <code>he</code> as whole words as well as the line that comes before such a matching line. Go through <code>info grep</code> or the <a href="https://www.gnu.org/software/grep/manual/grep.html">online manual</a> and use appropriate options such that there's no separator between the groups of matching lines in the output.</p><pre><code class="language-bash">$ grep --no-group-separator -B1 -wE 'are|he' sample.txt
+ 3) Hi there
+ 4) How are you
+13) Much ado about nothing
+14) He he he
+</code></pre><blockquote><p><code>--no-group-separator</code></p><p>When <code>-A</code>, <code>-B</code> or <code>-C</code> are in use, do not print a separator between groups of lines.</p></blockquote><p><strong>8)</strong> Extract all pairs of <code>()</code> with/without text inside them, provided they do not contain <code>()</code> characters inside.</p><pre><code class="language-bash">$ echo 'I got (12) apples' | grep -o '([^()]*)'
+(12)
+
+$ echo '((2 +3)*5)=25 and (4.3/2*()' | grep -o '([^()]*)'
+(2 +3)
+()
+</code></pre><p><strong>9)</strong> For the given input, match all lines that start with <code>den</code> or end with <code>ly</code>.</p><pre><code class="language-bash">$ lines='reply\n1 dentist\n2 lonely\neden\nfly away\ndent\n'
+
+$ printf '%b' "$lines" | grep -E '^den|ly$'
+reply
+2 lonely
+dent
+</code></pre><p><strong>10)</strong> Extract words starting with <code>s</code> and containing both <code>e</code> and <code>t</code> in any order.</p><pre><code class="language-bash">$ words='sequoia subtle exhibit sets tests sit store_2'
+
+$ echo "$words" | grep -owP 's(?=\w*t)(?=\w*e)\w+'
+subtle
+sets
+store_2
+
+# alternate solutions, but these won't scale well with more conditions
+$ echo "$words" | grep -ow 's\w*t\w*' | grep 'e'
+$ echo "$words" | grep -owE 's\w*(t\w*e|e\w*t)\w*'
+</code></pre><p><strong>11)</strong> Extract all whole words having the same first and last word character.</p><pre><code class="language-bash"># can also use: grep -owE '(\w)(\w*\1)?'
+$ echo 'oreo not a _oh_ pip RoaR took 22 Pop' | grep -owE '\w|(\w)\w*\1'
+oreo
+a
+_oh_
+pip
+RoaR
+22
+</code></pre><p><strong>12)</strong> Match all input lines containing <code>*[5]</code> literally.</p><pre><code class="language-bash">$ printf '4*5]\n(9-2)*[5]\n[5]*3\nr*[5\n' | grep -F '*[5]'
+(9-2)*[5]
+</code></pre><p><strong>13)</strong> Match whole lines that start with <code>hand</code> and immediately followed by <code>s</code> or <code>y</code> or <code>le</code> or no further character.</p><pre><code class="language-bash">$ lines='handed\nhand\nhandy\nunhand\nhands\nhandle\nhandss\n'
+
+$ printf '%b' "$lines" | grep -xE 'hand([sy]|le)?'
+hand
+handy
+hands
+handle
+</code></pre><p><strong>14)</strong> Input lines have three or more fields separated by a <code>,</code> delimiter. Extract from the second field to the second last field. In other words, extract fields other than the first and last.</p><pre><code class="language-bash">$ printf 'apple,fig,cherry\ncat,dog,bat\n' | grep -oP ',\K.+(?=,)'
+fig
+dog
+
+$ echo 'dragon,42,unicorn,3.14,shapeshifter\n' | grep -oP ',\K.+(?=,)'
+42,unicorn,3.14
+</code></pre><p><strong>15)</strong> Recursively search for files containing <code>ello</code>.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'grep.sh' script
+$ source grep.sh
+
+$ grep -rl 'ello'
+projects/python/hello.py
+projects/shell/hello.sh
+colors_1
+colors_2
+</code></pre><p><strong>16)</strong> Search for files containing <code>blue</code> recursively, but do not search within the <code>backups</code> directory.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'grep.sh' script
+$ source grep.sh
+
+$ grep -rl --exclude-dir='backups' 'blue'
+.hidden
+colors_1
+colors_2
+</code></pre><p><strong>17)</strong> Search for files containing <code>blue</code> recursively, but not if the file also contains <code>teal</code>.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'grep.sh' script
+$ source grep.sh
+
+$ grep -rlZ 'blue' | xargs -r0 grep -L 'teal'
+.hidden
+colors_2
+backups/color list.txt
+</code></pre><p><strong>18)</strong> Find all regular files within the <code>backups</code> directory.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'find.sh' script
+$ source find.sh
+
+$ find backups -type f
+backups/dot_files/.bashrc
+backups/dot_files/.inputrc
+backups/dot_files/.vimrc
+backups/aug.log
+backups/bookmarks.html
+backups/jan.log
+</code></pre><p><strong>19)</strong> Find all regular files whose extension starts with <code>p</code> or <code>s</code> or <code>v</code>.</p><pre><code class="language-bash">$ find -type f -name '*.[psv]*'
+./projects/tictactoe/game.py
+./projects/calculator/calc.sh
+./hi.sh
+./backups/dot_files/.vimrc
+./hello_world.py
+</code></pre><p><strong>20)</strong> Find all regular files whose name do <em>not</em> have the lowercase letters <code>g</code> to <code>l</code>.</p><pre><code class="language-bash"># can also use: find -type f ! -name '*[g-l]*'
+$ find -type f -not -name '*[g-l]*'
+./todos/TRIP.txt
+./todos/wow.txt
+</code></pre><p><strong>21)</strong> Find all regular files whose path has at least one directory name starting with <code>p</code> or <code>d</code>.</p><pre><code class="language-bash"># can also use: find -type f -regex '.*/[pd].*/.*'
+$ find -type f -path '*/[pd]*/*'
+./projects/tictactoe/game.py
+./projects/calculator/calc.sh
+./backups/dot_files/.bashrc
+./backups/dot_files/.inputrc
+./backups/dot_files/.vimrc
+</code></pre><p><strong>22)</strong> Find all directories whose name contains <code>b</code> or <code>d</code>.</p><pre><code class="language-bash">$ find -type d -name '*[bd]*'
+./todos
+./backups
+./backups/dot_files
+</code></pre><p><strong>23)</strong> Find all hidden directories.</p><pre><code class="language-bash"># can also use: find -mindepth 1 -type d -name '.*'
+$ find -type d -name '.?*'
+./projects/.venv
+</code></pre><p><strong>24)</strong> Find all regular files at the exact depth of <code>2</code>.</p><pre><code class="language-bash">$ find -mindepth 2 -maxdepth 2 -type f
+./todos/books.txt
+./todos/TRIP.txt
+./todos/wow.txt
+./backups/aug.log
+./backups/bookmarks.html
+./backups/jan.log
+</code></pre><p><strong>25)</strong> What's the difference between <code>find -mtime</code> and <code>find -atime</code>? And, what is the time period these options work with?</p><p><code>m</code> is for modified timestamp and <code>a</code> is for accessed timestamp. These options work with <code>24</code> hour periods.</p><blockquote><p><code>-atime n</code></p><p>File was last accessed <code>n*24</code> hours ago. When find figures out how many 24-hour periods ago the file was last accessed, any fractional part is ignored, so to match <code>-atime +1</code>, a file has to have been accessed at least two days ago.</p><p><code>-mtime n</code></p><p>File's data was last modified <code>n*24</code> hours ago. See the comments for <code>-atime</code> to understand how rounding affects the interpretation of file modification times.</p></blockquote><p><strong>26)</strong> Find all empty regular files.</p><pre><code class="language-bash"># can also use: find -type f -size 0
+$ find -type f -empty
+./projects/tictactoe/game.py
+./projects/calculator/calc.sh
+./todos/books.txt
+./todos/TRIP.txt
+./todos/wow.txt
+./backups/dot_files/.bashrc
+./backups/dot_files/.inputrc
+./backups/dot_files/.vimrc
+./backups/aug.log
+./backups/bookmarks.html
+./backups/jan.log
+</code></pre><p><strong>27)</strong> Create a directory named <code>filtered_files</code>. Then, copy all regular files that are greater than <code>1</code> byte in size but whose name don't end with <code>.log</code> to this directory.</p><pre><code class="language-bash">$ mkdir filtered_files
+$ find -type f -size +1c -not -name '*.log' -exec cp -t filtered_files {} +
+$ ls -A filtered_files
+hello_world.py  .hidden  hi.sh  ip.txt
+</code></pre><p><strong>28)</strong> Find all hidden files, but not if they are part of the <code>filtered_files</code> directory created earlier.</p><pre><code class="language-bash">$ find -type f -not -path './filtered_files/*' -prune -name '.*'
+./.hidden
+./backups/dot_files/.bashrc
+./backups/dot_files/.inputrc
+./backups/dot_files/.vimrc
+</code></pre><p><strong>29)</strong> Delete the <code>filtered_files</code> directory created earlier. Then, go through the <code>find</code> manual and figure out how to list only executable files.</p><pre><code class="language-bash">$ rm -r filtered_files
+$ find -type f -executable
+./hi.sh
+./hello_world.py
+</code></pre><blockquote><p><code>-executable</code></p><p>Matches files which are executable and directories which are searchable (in a file name resolution sense) by the current user.</p></blockquote><p><strong>30)</strong> List at least one use case for piping the <code>find</code> output to the <code>xargs</code> command instead of using the <code>find -exec</code> option.</p><p><code>xargs -P</code> (or the <a href="https://www.gnu.org/software/parallel/">parallel</a> command) can be handy if you need parallel execution for performance reasons.</p><p><strong>31)</strong> How does the <code>locate</code> command work faster than the equivalent <code>find</code> command?</p><p>From <a href="https://unix.stackexchange.com/q/60205/109046">unix.stackexchange: pros and cons of find and locate</a>:</p><blockquote><p><code>locate</code> uses a prebuilt database, which should be regularly updated, while <code>find</code> iterates over a filesystem to locate files.</p><p>Thus, <code>locate</code> is much faster than <code>find</code>, but can be inaccurate if the database -can be seen as a cache- is not updated (see <code>updatedb</code> command).</p></blockquote><br/><h2 id="file-properties"><a class="header" href="#file-properties">File Properties</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises, unless otherwise specified.</p></blockquote><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Create a temporary directory for exercises that may require you to create some files and directories. You can delete such practice directories afterwards.</p></blockquote><p><strong>1)</strong> Save the number of lines in the <code>greeting.txt</code> input file to the <code>lines</code> shell variable.</p><pre><code class="language-bash">$ lines=$(wc -l &amp;LTgreeting.txt)
+$ echo "$lines"
+2
+</code></pre><p><strong>2)</strong> What do you think will be the output of the following command?</p><pre><code class="language-bash">$ echo 'dragons:2 ; unicorns:10' | wc -w
+3
+</code></pre><p><strong>3)</strong> Use appropriate options and arguments to get the output shown below.</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry' | wc -lc sample.txt -
+     15     183 sample.txt
+      2      19 -
+     17     202 total
+</code></pre><p><strong>4)</strong> Go through the <code>wc</code> manual and use appropriate options and arguments to get the output shown below.</p><pre><code class="language-bash">$ printf 'greeting.txt\0scores.csv' | wc --files0-from=-
+2 6 25 greeting.txt
+4 4 70 scores.csv
+6 10 95 total
+</code></pre><blockquote><p><code>--files0-from=F</code></p><p>read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input</p></blockquote><p><strong>5)</strong> What is the difference between the <code>wc -c</code> and <code>wc -m</code> options? And which option would you use to get the longest line length?</p><blockquote><p><code>-c, --bytes</code></p><p>print the byte counts</p><p><code>-m, --chars</code></p><p>print the character counts</p><p><code>-L, --max-line-length</code></p><p>print the maximum display width</p></blockquote><p><strong>6)</strong> Find filenames ending with <code>.log</code> and report their sizes in human readable format. Use the <code>find+du</code> combination for the first case and the <code>ls</code> command (with appropriate shell features) for the second case.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'du.sh' script
+$ source du.sh
+
+$ find -type f -name '*.log' -exec du -h {} +
+16K     ./projects/errors.log
+7.4M    ./report.log
+
+$ shopt -s globstar
+$ ls -1sh **/*.log
+ 16K projects/errors.log
+7.4M report.log
+</code></pre><p><strong>7)</strong> Report sizes of files/directories in the current path in powers of <code>1000</code> without descending into sub-directories. Also, show a total at the end.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'du.sh' script
+$ source du.sh
+
+$ du -sc --si *
+50k     projects
+7.7M    report.log
+8.2k    todos
+7.8M    total
+</code></pre><p><strong>8)</strong> What does the <code>du --apparent-size</code> option do?</p><blockquote><p><code>--apparent-size</code></p><p>print apparent sizes, rather than disk usage; although the apparent size is usually smaller, it may be larger due to holes in ('sparse') files, internal fragmentation, indirect blocks, and the like</p></blockquote><p><strong>9)</strong> When will you use the <code>df</code> command instead of <code>du</code>? Which <code>df</code> command option will help you to report only the specific fields of interest?</p><p><code>df</code> gives space usage for the entire file system whereas <code>du</code> is useful to get space estimate for specific files and directories.</p><pre><code class="language-bash">$ whatis du df
+du (1)               - estimate file space usage
+df (1)               - report file system disk space usage
+</code></pre><p>To get only specific fields of interest:</p><blockquote><p><code>--output[=FIELD_LIST]</code></p><p>use the output format defined by FIELD_LIST, or print all fields if FIELD_LIST is omitted.</p></blockquote><p><strong>10)</strong> Display the size of <code>scores.csv</code> and <code>timings.txt</code> files in the format shown below.</p><pre><code class="language-bash">$ stat -c '%n: %s' scores.csv timings.txt
+scores.csv: 70
+timings.txt: 49
+</code></pre><p><strong>11)</strong> Which <code>touch</code> option will help you prevent file creation if it doesn't exist yet?</p><blockquote><p><code>-c, --no-create</code></p><p>do not create any files</p></blockquote><p><strong>12)</strong> Assume <code>new_file.txt</code> doesn't exist in the current working directory. What would be the output of the <code>stat</code> command shown below?</p><pre><code class="language-bash">$ touch -t '202010052010.05' new_file.txt
+$ stat -c '%y' new_file.txt
+2020-10-05 20:10:05.000000000 +0530
+</code></pre><blockquote><p><code>-t STAMP</code></p><p>use [[CC]YY]MMDDhhmm[.ss] instead of current time</p></blockquote><p><strong>13)</strong> Is the following <code>touch</code> command valid? If so, what would be the output of the <code>stat</code> command that follows?</p><p>Yes, it is valid as multiple file arguments are allowed. The <code>-r</code> option helps to copy the timestamp details from the given file to the target files.</p><pre><code class="language-bash"># change to the 'scripts' directory and source the 'touch.sh' script
+$ source touch.sh
+
+$ stat -c '%n: %y' fruits.txt
+fruits.txt: 2017-07-13 13:54:03.576055933 +0530
+
+$ touch -r fruits.txt f{1..3}.txt
+$ stat -c '%n: %y' f*.txt
+f1.txt: 2017-07-13 13:54:03.576055933 +0530
+f2.txt: 2017-07-13 13:54:03.576055933 +0530
+f3.txt: 2017-07-13 13:54:03.576055933 +0530
+fruits.txt: 2017-07-13 13:54:03.576055933 +0530
+</code></pre><p><strong>14)</strong> Use appropriate option(s) to get the output shown below.</p><pre><code class="language-bash">$ printf 'αλεπού\n' | file -
+/dev/stdin: UTF-8 Unicode text
+
+$ printf 'αλεπού\n' | file -b -
+UTF-8 Unicode text
+</code></pre><p><strong>15)</strong> Is the following command valid? If so, what would be the output?</p><p>Yes, it is valid. Multiple slashes will be considered as a single slash. Any trailing slashes will be removed before determining the portion to be extracted.</p><pre><code class="language-bash">$ basename -s.txt ~///test.txt///
+test
+</code></pre><p><strong>16)</strong> Given the file path in the shell variable <code>p</code>, how'd you obtain the output shown below?</p><pre><code class="language-bash">$ p='~/projects/square_tictactoe/python/game.py'
+$ dirname $(dirname "$p")
+~/projects/square_tictactoe
+</code></pre><p><strong>17)</strong> Explain what each of the characters mean in the following <code>stat</code> command's output.</p><pre><code class="language-bash">$ stat -c '%A' ../scripts/
+drwxrwxr-x
+</code></pre><p>The 10 characters displayed are related to file type and permissions. First character indicates the <strong>file type</strong>. The most common ones are:</p><ul><li><code>-</code> regular file</li><li><code>d</code> directory</li><li><code>l</code> symbolic link</li></ul><p>The other nine characters represent three sets of <strong>file permissions</strong> for <em>user</em> (<code>u</code>), <em>group</em> (<code>g</code>) and <em>others</em> (<code>o</code>), in that order.</p><ul><li><em>user</em> — file owner</li><li><em>group</em> — users having file access as part of a group</li><li><em>others</em> — everyone else</li></ul><p><strong>Permission reference table:</strong></p><div class="table-wrapper"><table><thead><tr><th>Character</th><th>Meaning</th><th>Value</th></tr></thead><tbody><tr><td><code>r</code></td><td>read</td><td><code>4</code></td></tr><tr><td><code>w</code></td><td>write</td><td><code>2</code></td></tr><tr><td><code>x</code></td><td>execute</td><td><code>1</code></td></tr><tr><td><code>-</code></td><td>no permission</td><td><code>0</code></td></tr></tbody></table></div><p><strong>18)</strong> What would be the output of the second <code>stat</code> command shown below?</p><pre><code class="language-bash">$ touch new_file.txt
+$ stat -c '%a %A' new_file.txt
+664 -rw-rw-r--
+
+$ chmod 546 new_file.txt
+$ stat -c '%a %A' new_file.txt
+546 -r-xr--rw-
+</code></pre><p><strong>19)</strong> How would you specify directory permissions using the <code>mkdir</code> command?</p><pre><code class="language-bash"># instead of this
+$ mkdir back_up
+$ chmod 750 back_up
+$ stat -c '%a %A' back_up
+750 drwxr-x---
+$ rm -r back_up
+
+# do this
+$ mkdir -m 750 back_up
+$ stat -c '%a %A' back_up
+750 drwxr-x---
+</code></pre><p><strong>20)</strong> Change the file permission of <code>book_list.txt</code> to match the output of the second <code>stat</code> command shown below. Don't use the number <code>220</code>, specify the changes in terms of <code>rwx</code> characters.</p><pre><code class="language-bash">$ touch book_list.txt
+$ stat -c '%a %A' book_list.txt
+664 -rw-rw-r--
+
+# can also use: chmod -r book_list.txt
+$ chmod =w book_list.txt
+$ stat -c '%a %A' book_list.txt
+220 --w--w----
+</code></pre><p><strong>21)</strong> Change the permissions of <code>test_dir</code> to match the output of the second <code>stat</code> command shown below. Don't use the number <code>757</code>, specify the changes in terms of <code>rwx</code> characters.</p><pre><code class="language-bash">$ mkdir test_dir
+$ stat -c '%a %A' test_dir
+775 drwxrwxr-x
+
+$ chmod g-w,o+w test_dir
+$ stat -c '%a %A' test_dir
+757 drwxr-xrwx
+</code></pre><br/><h2 id="managing-processes"><a class="header" href="#managing-processes">Managing Processes</a></h2><p><strong>1)</strong> How would you invoke a command to be executed in the background? And what would you do to push a job to the background after it has already been launched? What commands can you use to track active jobs?</p><ul><li>appending an <code>&amp;</code> character to the command will execute it in the background</li><li><code>Ctrl+z</code> (suspend the current running job) followed by <code>bg</code> (push the recently suspended job to the background)</li><li><code>jobs</code> or <code>ps</code> will help to track active jobs</li></ul><p><strong>2)</strong> What do the <code>+</code> and <code>-</code> symbols next to job numbers indicate?</p><p>From <code>info bash</code> (section <em>Job Control Basics</em>):</p><blockquote><p>In output pertaining to jobs (e.g., the output of the <code>jobs</code> command), the current job is always flagged with a <code>+</code>, and the previous job with a <code>-</code>.</p></blockquote><p><strong>3)</strong> When would you use <code>fg %n</code> and <code>bg %n</code> instead of just <code>fg</code> and <code>bg</code> respectively?</p><p>From <code>info bash</code> (section <em>Job Control Basics</em>):</p><blockquote><p>There are a number of ways to refer to a job in the shell. The character <code>%</code> introduces a job specification (JOBSPEC).</p><p>Job number <code>n</code> may be referred to as <code>%n</code>.</p></blockquote><p><strong>4)</strong> Which option will help you customize the output fields needed for the <code>ps</code> command?</p><blockquote><p><code>-o format</code></p><p>User-defined format. format is a single argument in the form of a blank-separated or comma-separated list, which offers a way to specify individual output columns.</p></blockquote><p><strong>5)</strong> What's the difference between <code>pgrep -a</code> and <code>pgrep -l</code> options?</p><blockquote><p><code>-a, --list-full</code></p><p>List the full command line as well as the process ID.</p><p><code>-l, --list-name</code></p><p>List the process name as well as the process ID.</p></blockquote><p><strong>6)</strong> If the job number is <code>2</code>, would you use <code>kill %2</code> or <code>kill 2</code> to send <code>SIGTERM</code> to that process?</p><p><code>kill %2</code></p><p><strong>7)</strong> Which signal does the <code>Ctrl+c</code> shortcut send to the currently running process?</p><p>Pressing <code>Ctrl+c</code> sends the <code>SIGINT</code> (<code>2</code>) signal, usually used to abort a process.</p><p><strong>8)</strong> Which command helps you to continuously monitor processes, along with details like PID, memory usage, etc?</p><p><code>top</code> (or alternatives like <code>btop</code> and <code>htop</code>)</p><p><strong>9)</strong> Which key will help you manipulate kill tasks from within the <code>top</code> session?</p><p><code>k</code></p><p><strong>10)</strong> What does the <code>free</code> command do?</p><pre><code class="language-bash">$ whatis free
+free (1)             - Display amount of free and used memory in the system
+</code></pre><br/><h2 id="multipurpose-text-processing-tools"><a class="header" href="#multipurpose-text-processing-tools">Multipurpose Text Processing Tools</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Replace all occurrences of <code>0xA0</code> with <code>0x50</code> and <code>0xFF</code> with <code>0x7F</code> for the given input.</p><pre><code class="language-bash">$ printf 'a1:0xA0, a2:0xA0A1\nb1:0xFF, b2:0xBE\n'
+a1:0xA0, a2:0xA0A1
+b1:0xFF, b2:0xBE
+
+$ printf 'a1:0xA0, a2:0xA0A1\nb1:0xFF, b2:0xBE\n' | sed 's/0xA0/0x50/g; s/0xFF/0x7F/g'
+a1:0x50, a2:0x50A1
+b1:0x7F, b2:0xBE
+</code></pre><p><strong>2)</strong> Remove only the third line from the given input.</p><pre><code class="language-bash">$ seq 34 37 | sed '3d'
+34
+35
+37
+
+# alternate solutions
+$ seq 34 37 | awk 'NR!=3'
+$ seq 34 37 | perl -ne 'print if $.!=3'
+</code></pre><p><strong>3)</strong> For the input file <code>sample.txt</code>, display all lines that contain <code>it</code> but not <code>do</code>.</p><pre><code class="language-bash">$ sed -n '/it/{/do/!p}' sample.txt
+ 7) Believe it
+
+# alternate solutions
+$ awk '/it/ &amp;&amp; !/do/' sample.txt
+$ perl -ne 'print if /it/ &amp;&amp; !/do/' sample.txt
+</code></pre><p><strong>4)</strong> For the input file <code>purchases.txt</code>, delete all lines containing <code>tea</code>. Also, replace all occurrences of <code>coffee</code> with <code>milk</code>. Write back the changes to the input file itself. The original contents should get saved to <code>purchases.txt.orig</code>. Afterwards, restore the contents from this backup file.</p><pre><code class="language-bash"># make the changes
+$ sed -i.orig '/tea/d; s/coffee/milk/g' purchases.txt
+
+$ ls purchases*
+purchases.txt  purchases.txt.orig
+$ cat purchases.txt
+milk
+washing powder
+milk
+toothpaste
+soap
+
+# restore the contents
+$ mv purchases.txt.orig purchases.txt
+$ ls purchases*
+purchases.txt
+$ cat purchases.txt
+coffee
+tea
+washing powder
+coffee
+toothpaste
+tea
+soap
+tea
+
+# alternate solutions
+$ sed -i.orig -n '/tea/b; s/coffee/milk/g; p' purchases.txt
+$ perl -i.orig -pe '$_="" if /tea/; s/coffee/milk/g' purchases.txt
+$ perl -i.orig -ne 'next if /tea/; s/coffee/milk/g; print' purchases.txt
+</code></pre><p><strong>5)</strong> For the input file <code>sample.txt</code>, display all lines from the start of the file till the first occurrence of <code>are</code>.</p><pre><code class="language-bash">$ sed '/are/q' sample.txt
+ 1) Hello World
+ 2) 
+ 3) Hi there
+ 4) How are you
+
+# alternate solutions
+$ awk '1; /are/{exit}' sample.txt
+$ perl -ne 'print; exit if /are/' sample.txt
+</code></pre><p><strong>6)</strong> Delete all groups of lines from a line containing <code>start</code> to a line containing <code>end</code> for the <code>uniform.txt</code> input file.</p><pre><code class="language-bash">$ sed '/start/,/end/d' uniform.txt
+mango
+icecream
+how are you
+have a nice day
+par,far,mar,tar
+
+# alternate solutions
+$ awk '/start/{f=1} !f; /end/{f=0}' uniform.txt
+$ perl -ne '$f=1 if /start/; print if !$f; $f=0 if /end/' uniform.txt
+</code></pre><p><strong>7)</strong> Replace all occurrences of <code>42</code> with <code>[42]</code> unless it is at the edge of a word.</p><pre><code class="language-bash">$ echo 'hi42bye nice421423 bad42 cool_4242a 42c' | sed 's/\B42\B/[&amp;]/g'
+hi[42]bye nice[42]1[42]3 bad42 cool_[42][42]a 42c
+</code></pre><p><strong>8)</strong> Replace all whole words with <code>X</code> that start and end with the same word character.</p><pre><code class="language-bash"># can also use: sed -E 's/\b(\w|(\w)\w*\2)\b/X/g'
+$ echo 'oreo not a _oh_ pip RoaR took 22 Pop' | sed -E 's/\b(\w)(\w*\1)?\b/X/g'
+X not X X X X took X Pop
+</code></pre><p><strong>9)</strong> For the input file <code>anchors.txt</code>, convert markdown anchors to hyperlinks as shown below.</p><pre><code class="language-bash">$ cat anchors.txt
+# &amp;LTa name="regular-expressions"&gt;&amp;LT/a&gt;Regular Expressions
+## &amp;LTa name="subexpression-calls"&gt;&amp;LT/a&gt;Subexpression calls
+## &amp;LTa name="the-dot-meta-character"&gt;&amp;LT/a&gt;The dot meta character
+
+$ sed -E 's|[^"]+"([^"]+)"&gt;&amp;LT/a&gt;(.+)|[\2](#\1)|' anchors.txt
+[Regular Expressions](#regular-expressions)
+[Subexpression calls](#subexpression-calls)
+[The dot meta character](#the-dot-meta-character)
+</code></pre><p><strong>10)</strong> Replace all occurrences of <code>e</code> with <code>3</code> except the first two matches.</p><pre><code class="language-bash">$ echo 'asset sets tests site' | sed 's/e/3/3g'
+asset sets t3sts sit3
+
+$ echo 'sample item teem eel' | sed 's/e/3/3g'
+sample item t33m 33l
+</code></pre><p><strong>11)</strong> The below sample strings use <code>,</code> as the delimiter and the field values can be empty as well. Use <code>sed</code> to replace only the third field with <code>42</code>.</p><pre><code class="language-bash">$ echo 'lion,,ant,road,neon' | sed 's/[^,]*/42/3'
+lion,,42,road,neon
+
+$ echo ',,,' | sed 's/[^,]*/42/3'
+,,42,
+</code></pre><p><strong>12)</strong> For the input file <code>table.txt</code>, calculate and display the product of numbers in the last field of each line. Consider space as the field separator for this file.</p><pre><code class="language-bash">$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+$ awk 'BEGIN{p = 1} {p *= $NF} END{print p}' table.txt
+-923.16
+
+# alternate solutions
+$ perl -lane 'BEGIN{$p = 1} {$p *= $F[-1]} END{print $p}' table.txt
+</code></pre><p><strong>13)</strong> Extract the contents between <code>()</code> or <code>)(</code> from each of the input lines. Assume that the <code>()</code> characters will be present only once every line.</p><pre><code class="language-bash">$ printf 'apple(ice)pie\n(almond)pista\nyo)yoyo(yo\n'
+apple(ice)pie
+(almond)pista
+yo)yoyo(yo
+
+$ printf 'apple(ice)pie\n(almond)pista\nyo)yoyo(yo\n' | awk -F'[()]' '{print $2}'
+ice
+almond
+yoyo
+</code></pre><p><strong>14)</strong> For the input file <code>scores.csv</code>, display the <code>Name</code> and <code>Physics</code> fields in the format shown below.</p><pre><code class="language-bash">$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Ith,100,100,100
+Cy,97,98,95
+Lin,78,83,80
+
+$ awk -F, '{print $1 ":" $3}' scores.csv
+Name:Physics
+Ith:100
+Cy:98
+Lin:83
+
+# alternate solutions
+$ awk -F, -v OFS=: '{print $1, $3}' scores.csv
+$ perl -F, -lane 'print "$F[0]:$F[2]"' scores.csv
+$ perl -F, -lane 'print join ":", @F[0,2]' scores.csv
+</code></pre><p><strong>15)</strong> Extract and display the third and first words in the format shown below.</p><pre><code class="language-bash">$ echo '%whole(Hello)--{doubt}==ado==' | awk -v FPAT='\\w+' '{print $3 ":" $1}'
+doubt:whole
+
+$ echo 'just,\joint*,concession_42&lt;=nice' | awk -v FPAT='\\w+' '{print $3 ":" $1}'
+concession_42:just
+
+# alternate solutions
+$ echo '%whole(Hello)--{doubt}==ado==' | perl -lne '@F = /\w+/g; print "$F[2]:$F[0]"'
+$ echo 'just,\joint*,concession_42&lt;=nice' | perl -lne '@F = /\w+/g; print "$F[2]:$F[0]"'
+</code></pre><p><strong>16)</strong> For the input file <code>scores.csv</code>, add another column named <strong>GP</strong> which is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics and Chemistry.</p><pre><code class="language-bash">$ awk -F, -v OFS=, '{$(NF+1) = NR==1 ? "GP" : ($2/2 + ($3+$4)/4)} 1' scores.csv
+Name,Maths,Physics,Chemistry,GP
+Ith,100,100,100,100
+Cy,97,98,95,96.75
+Lin,78,83,80,79.75
+</code></pre><p><strong>17)</strong> From the <code>para.txt</code> input file, display all paragraphs containing any digit character.</p><pre><code class="language-bash">$ cat para.txt
+hi there
+how are you
+
+2 apples
+12 bananas
+
+
+blue sky
+yellow sun
+brown earth
+
+$ awk -v RS= '/[0-9]/' para.txt
+2 apples
+12 bananas
+</code></pre><p><strong>18)</strong> Input has the ASCII NUL character as the record separator. Change it to dot and newline characters as shown below.</p><pre><code class="language-bash">$ printf 'apple\npie\0banana\ncherry\0' | awk -v RS='\0' -v ORS='.\n' '1'
+apple
+pie.
+banana
+cherry.
+</code></pre><p><strong>19)</strong> For the input file <code>sample.txt</code>, print a matching line containing <code>do</code> only if <code>you</code> is found two lines before. For example, if <code>do</code> is found on line number 10 and the 8th line contains <code>you</code>, then the 10th line should be printed.</p><pre><code class="language-bash">$ awk 'p2 ~ /you/ &amp;&amp; /do/; {p2=p1; p1=$0}' sample.txt
+ 6) Just do-it
+
+# alternate solutions
+$ perl -ne 'print if $p2 =~ /you/ &amp;&amp; /do/; $p2=$p1; $p1=$_' sample.txt
+</code></pre><p><strong>20)</strong> For the input file <code>blocks.txt</code>, extract contents from a line containing exactly <code>%=%=</code> until but not including the next such line. The block to be extracted is indicated by the variable <code>n</code> passed via the <code>-v</code> option.</p><pre><code class="language-bash">$ cat blocks.txt
+%=%=
+apple
+banana
+%=%=
+brown
+green
+
+$ awk -v n=1 '$0 == "%=%="{c++} c==n' blocks.txt
+%=%=
+apple
+banana
+$ awk -v n=2 '$0 == "%=%="{c++} c==n' blocks.txt
+%=%=
+brown
+green
+</code></pre><p><strong>21)</strong> Display lines present in <code>c1.txt</code> but not in <code>c2.txt</code> using the <code>awk</code> command.</p><pre><code class="language-bash">$ awk 'NR==FNR{a[$0]; next} !($0 in a)' c2.txt c1.txt
+Brown
+Purple
+Teal
+</code></pre><p><strong>22)</strong> Display lines from <code>scores.csv</code> by matching the first field based on a list of names from the <code>names.txt</code> file.</p><pre><code class="language-bash">$ printf 'Ith\nLin\n' &gt; names.txt
+
+$ awk -F, 'NR==FNR{a[$1]; next} $1 in a' names.txt scores.csv
+Ith,100,100,100
+Lin,78,83,80
+
+$ rm names.txt
+</code></pre><p><strong>23)</strong> Retain only the first copy of duplicate lines from the <code>duplicates.txt</code> input file. Use only the contents of the last field for determining duplicates.</p><pre><code class="language-bash">$ cat duplicates.txt
+brown,toy,bread,42
+dark red,ruby,rose,111
+blue,ruby,water,333
+dark red,sky,rose,555
+yellow,toy,flower,333
+white,sky,bread,111
+light red,purse,rose,333
+
+$ awk -F, '!seen[$NF]++' duplicates.txt
+brown,toy,bread,42
+dark red,ruby,rose,111
+blue,ruby,water,333
+dark red,sky,rose,555
+
+# alternate solutions
+$ perl -F, -lane 'print if !$seen{$F[-1]}++' duplicates.txt
+</code></pre><p><strong>24)</strong> For the input file <code>table.txt</code>, print input lines if the second field starts with <code>b</code>. Construct solutions using <code>awk</code> and <code>perl</code>.</p><pre><code class="language-bash">$ awk '$2 ~ /^b/' table.txt
+brown bread mat hair 42
+yellow banana window shoes 3.14
+
+$ perl -lane 'print if $F[1] =~ /^b/' table.txt
+brown bread mat hair 42
+yellow banana window shoes 3.14
+</code></pre><p><strong>25)</strong> For the input file <code>table.txt</code>, retain only the second last field. Write back the changes to the input file itself. The original contents should get saved to <code>table.txt.bkp</code>. Afterwards, restore the contents from this backup file.</p><pre><code class="language-bash"># make the changes
+$ perl -i.bkp -lane 'print $F[-2]' table.txt
+$ ls table*
+table.txt  table.txt.bkp
+$ cat table.txt
+hair
+shirt
+shoes
+
+# restore the contents
+$ mv table.txt.bkp table.txt
+$ ls table*
+table.txt
+$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><p><strong>26)</strong> Reverse the first field contents of <code>table.txt</code> input file.</p><pre><code class="language-bash">$ perl -lane '$F[0] = reverse $F[0]; print "@F"' table.txt
+nworb bread mat hair 42
+eulb cake mug shirt -7
+wolley banana window shoes 3.14
+</code></pre><p><strong>27)</strong> Sort the given comma separated input lexicographically. Change the output field separator to a <code>:</code> character.</p><pre><code class="language-bash">$ ip='floor,bat,to,dubious,four'
+$ echo "$ip" | perl -F, -lane 'print join ":", sort @F'
+bat:dubious:floor:four:to
+</code></pre><p><strong>28)</strong> Filter fields containing digit characters.</p><pre><code class="language-bash">$ ip='5pearl 42 east 1337 raku_6 lion 3.14'
+$ echo "$ip" | perl -lane 'print join " ", grep {/\d/} @F'
+5pearl 42 1337 raku_6 3.14
+</code></pre><p><strong>29)</strong> The input shown below has several words ending with digit characters. Change the words containing <code>test</code> to match the output shown below. That is, renumber the matching portions to <code>1</code>, <code>2</code>, etc. Words not containing <code>test</code> should not be changed.</p><pre><code class="language-bash">$ ip='test_12:test123\nanother_test_4,no_42\n'
+$ printf '%b' "$ip"
+test_12:test123
+another_test_4,no_42
+
+$ printf '%b' "$ip" | perl -pe 's/test\w*?\K\d+/++$i/ge'
+test_1:test2
+another_test_3,no_42
+</code></pre><p><strong>30)</strong> For the input file <code>table.txt</code>, change contents of the third field to all uppercase. Construct solutions using <code>sed</code>, <code>awk</code> and <code>perl</code>.</p><pre><code class="language-bash">$ sed 's/[^ ]*/\U&amp;/3' table.txt
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+
+$ awk '{$3 = toupper($3)} 1' table.txt
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+
+$ perl -lane '$F[2] = uc $F[2]; print "@F"' table.txt
+brown bread MAT hair 42
+blue cake MUG shirt -7
+yellow banana WINDOW shoes 3.14
+</code></pre><br/><h2 id="sorting-stuff"><a class="header" href="#sorting-stuff">Sorting Stuff</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Default <code>sort</code> doesn't work for numbers. Correct the command used below:</p><pre><code class="language-bash"># wrong output
+$ printf '100\n10\n20\n3000\n2.45\n' | sort
+10
+100
+20
+2.45
+3000
+
+# expected output
+$ printf '100\n10\n20\n3000\n2.45\n' | sort -n
+2.45
+10
+20
+100
+3000
+</code></pre><p><strong>2)</strong> Which <code>sort</code> option will help you ignore case?</p><pre><code class="language-bash">$ printf 'Super\nover\nRUNE\ntea\n' | LC_ALL=C sort -f
+over
+RUNE
+Super
+tea
+</code></pre><p><strong>3)</strong> Go through the <code>sort</code> manual and use appropriate options to get the output shown below.</p><pre><code class="language-bash"># wrong output
+$ printf '+120\n-1.53\n3.14e+4\n42.1e-2' | sort -n
+-1.53
++120
+3.14e+4
+42.1e-2
+
+# expected output
+$ printf '+120\n-1.53\n3.14e+4\n42.1e-2' | sort -g
+-1.53
+42.1e-2
++120
+3.14e+4
+</code></pre><blockquote><p><code>-g, --general-numeric-sort</code></p><p>compare according to general numerical value</p></blockquote><p><strong>4)</strong> Sort the <code>scores.csv</code> file numerically in ascending order using the contents of the second field. Header line should be preserved as the first line as shown below. <em>Hint</em>: see the <a href="./shell-features.html">Shell Features</a> chapter.</p><pre><code class="language-bash">$ (sed -u '1q' ; sort -t, -k2,2n) &lt; scores.csv
+Name,Maths,Physics,Chemistry
+Lin,78,83,80
+Cy,97,98,95
+Ith,100,100,100
+</code></pre><p><strong>5)</strong> Sort the contents of <code>duplicates.txt</code> by the fourth column numbers in descending order. Retain only the first copy of lines with the same number.</p><pre><code class="language-bash">$ sort -t, -k4,4nr -u duplicates.txt
+dark red,sky,rose,555
+blue,ruby,water,333
+dark red,ruby,rose,111
+brown,toy,bread,42
+</code></pre><p><strong>6)</strong> Will <code>uniq</code> throw an error if the input is not sorted? What do you think will be the output for the following input?</p><p><code>uniq</code> doesn't necessarily require the input to be sorted. Adjacent lines are used for comparison purposes.</p><pre><code class="language-bash">$ printf 'red\nred\nred\ngreen\nred\nblue\nblue' | uniq
+red
+green
+red
+blue
+</code></pre><p><strong>7)</strong> Retain only the unique entries based on the first two characters of the input lines. Sort the input if necessary.</p><pre><code class="language-bash">$ printf '3) cherry\n1) apple\n2) banana\n1) almond\n'
+3) cherry
+1) apple
+2) banana
+1) almond
+
+$ printf '3) cherry\n1) apple\n2) banana\n1) almond\n' | sort | uniq -u -w2
+2) banana
+3) cherry
+</code></pre><p><strong>8)</strong> Count the number of times input lines are repeated and display the results in the format shown below.</p><pre><code class="language-bash">$ printf 'brown\nbrown\nbrown\ngreen\nbrown\nblue\nblue' | sort | uniq -c | sort -n
+      1 green
+      2 blue
+      4 brown
+</code></pre><p><strong>9)</strong> Display lines present in <code>c1.txt</code> but not in <code>c2.txt</code> using the <code>comm</code> command. Assume that the input files are already sorted.</p><pre><code class="language-bash"># can also use: comm -13 c2.txt c1.txt
+$ comm -23 c1.txt c2.txt
+Brown
+Purple
+Teal
+</code></pre><p><strong>10)</strong> Use appropriate options to get the expected output shown below.</p><pre><code class="language-bash"># wrong usage, no output
+$ join &lt;(printf 'apple 2\nfig 5') &lt;(printf 'Fig 10\nmango 4')
+
+# expected output
+$ join -i &lt;(printf 'apple 2\nfig 5') &lt;(printf 'Fig 10\nmango 4')
+fig 5 10
+</code></pre><p><strong>11)</strong> What are the differences between <code>sort -u</code> and <code>uniq -u</code> options, if any?</p><p><code>sort -u</code> retains first copy of duplicates deemed to be equal. <code>uniq -u</code> retains only the unique copies (i.e. not even a single copy of the duplicates will be part of the output).</p><br/><h2 id="comparing-files"><a class="header" href="#comparing-files">Comparing Files</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Which <code>cmp</code> option would you use if you just need the exit status reflecting whether the given inputs are same or not?</p><blockquote><p><code>-s, --quiet, --silent</code></p><p>suppress all normal output</p></blockquote><p><strong>2)</strong> Which <code>cmp</code> option would you use to skip the initial bytes for comparison purposes? The below example requires you to skip the first two bytes.</p><pre><code class="language-bash">$ echo '1) apple' &gt; x1.txt
+$ echo '2. apple' &gt; x2.txt
+$ cmp x1.txt x2.txt
+x1.txt x2.txt differ: byte 1, line 1
+
+$ cmp -i2 x1.txt x2.txt
+$ echo $?
+0
+
+$ rm x[12].txt
+</code></pre><blockquote><p><code>-i, --ignore-initial=SKIP</code></p><p>skip first SKIP bytes of both inputs</p></blockquote><p><strong>3)</strong> What does the <code>diff -d</code> option do?</p><blockquote><p><code>-d, --minimal</code></p><p>try hard to find a smaller set of changes</p></blockquote><p><strong>4)</strong> Which option will help you get colored output with <code>diff</code>?</p><blockquote><p><code>--color[=WHEN]</code></p><p>colorize the output; WHEN can be <code>never</code>, <code>always</code>, or <code>auto</code> (the default)</p></blockquote><p><strong>5)</strong> Use appropriate options to get the desired output shown below.</p><pre><code class="language-bash"># instead of this output
+$ diff -W 40 --suppress-common-lines -y f1.txt f2.txt
+2                  |    hello
+world              |    4
+
+# get this output
+$ diff -W 40 --left-column -y f1.txt f2.txt
+1                  (
+2                  |    hello
+3                  (
+world              |    4
+</code></pre><blockquote><p><code>--left-column</code></p><p>output only the left column of common lines</p></blockquote><p><strong>6)</strong> Use appropriate options to get the desired output shown below.</p><pre><code class="language-bash">$ echo 'hello' &gt; d1.txt
+$ echo 'Hello' &gt; d2.txt
+
+# instead of this output
+$ diff d1.txt d2.txt
+1c1
+&lt; hello
+---
+&gt; Hello
+
+# get this output
+$ diff -si d1.txt d2.txt
+Files d1.txt and d2.txt are identical
+
+$ rm d[12].txt
+</code></pre><br/><h2 id="assorted-text-processing-tools"><a class="header" href="#assorted-text-processing-tools">Assorted Text Processing Tools</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Generate the following sequence.</p><pre><code class="language-bash">$ seq 100 -5 80
+100
+95
+90
+85
+80
+</code></pre><p><strong>2)</strong> Is the sequence shown below possible to generate with <code>seq</code>? If so, how?</p><pre><code class="language-bash">$ seq -w -s, 01.5 6
+01.5,02.5,03.5,04.5,05.5
+</code></pre><p><strong>3)</strong> Display three random words from <code>/usr/share/dict/words</code> (or an equivalent dictionary word file) containing <code>s</code> and <code>e</code> and <code>t</code> in any order. The output shown below is just an example.</p><pre><code class="language-bash"># can also use: grep 's' /usr/share/dict/words | grep 'e' | grep 't' | shuf -n3
+$ grep -P '^(?=.*s)(?=.*e).*t' /usr/share/dict/words | shuf -n3
+supplemental
+foresight
+underestimates
+</code></pre><p><strong>4)</strong> Briefly describe the purpose of the <code>shuf</code> command options <code>-i</code>, <code>-e</code> and <code>-r</code>.</p><blockquote><p><code>-i, --input-range=LO-HI</code></p><p>treat each number LO through HI as an input line</p><p><code>-e, --echo</code></p><p>treat each ARG as an input line</p><p><code>-r, --repeat</code></p><p>output lines can be repeated</p></blockquote><p><strong>5)</strong> Why does the below command not work as expected? What other tools can you use in such cases?</p><p><code>cut</code> ignores all repeated fields and output field order always follows the same order as input fields.</p><pre><code class="language-bash"># not working as expected
+$ echo 'apple,banana,cherry,dates' | cut -d, -f3,1,3
+apple,cherry
+
+# expected output
+$ echo 'apple,banana,cherry,dates' | awk -F, -v OFS=, '{print $3, $1, $3}'
+cherry,apple,cherry
+
+# alternate solutions
+$ echo 'apple,banana,cherry,dates' | perl -F, -lane 'print join ",", @F[2,0,2]'
+</code></pre><p><strong>6)</strong> Display except the second field in the format shown below. Can you construct two different solutions?</p><pre><code class="language-bash">$ echo 'apple,banana,cherry,dates' | cut -d, --output-delimiter=' ' -f1,3-
+apple cherry dates
+
+$ echo '2,3,4,5,6,7,8' | cut -d, --output-delimiter=' ' --complement -f2
+2 4 5 6 7 8
+</code></pre><p><strong>7)</strong> Extract the first three characters from the input lines as shown below. Can you also use the <code>head</code> command for this purpose? If not, why not?</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry\ndates\n' | cut -c-3
+app
+ban
+che
+dat
+</code></pre><p><code>head</code> cannot be used because it acts on the input as a whole, whereas <code>cut</code> works line wise.</p><p><strong>8)</strong> Display only the first and third columns of the <code>scores.csv</code> input file in the format as shown below. Note that only space characters are present between the two columns, not tab.</p><pre><code class="language-bash">$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Ith,100,100,100
+Cy,97,98,95
+Lin,78,83,80
+
+$ cut -d, -f1,3 scores.csv | column -s, -t
+Name  Physics
+Ith   100
+Cy    98
+Lin   83
+</code></pre><p><strong>9)</strong> Display the contents of <code>table.txt</code> in the format shown below.</p><pre><code class="language-bash">$ column -t table.txt
+brown   bread   mat     hair   42
+blue    cake    mug     shirt  -7
+yellow  banana  window  shoes  3.14
+</code></pre><p><strong>10)</strong> Implement <a href="https://en.wikipedia.org/wiki/ROT13">ROT13</a> cipher using the <code>tr</code> command.</p><pre><code class="language-bash">$ echo 'Hello World' | tr 'a-zA-Z' 'n-za-mN-ZA-M'
+Uryyb Jbeyq
+
+$ echo 'Uryyb Jbeyq' | tr 'a-zA-Z' 'n-za-mN-ZA-M'
+Hello World
+</code></pre><p><strong>11)</strong> Retain only alphabets, digits and whitespace characters.</p><pre><code class="language-bash">$ echo 'Apple_42 cool,blue Dragon:army' | tr -dc '[:alnum:][:space:]'
+Apple42 coolblue Dragonarmy
+</code></pre><p><strong>12)</strong> Use <code>tr</code> to get the output shown below.</p><pre><code class="language-bash">$ echo '!!hhoowwww !!aaaaaareeeeee!! yyouuuu!!' | tr -sd '!' 'a-z'
+how are you
+</code></pre><p><strong>13)</strong> <code>paste -s</code> works separately for multiple input files. How would you workaround this if you needed to treat all the input files as a single source?</p><pre><code class="language-bash"># this works individually for each input file
+$ paste -sd, fruits.txt ip.txt
+banana,papaya,mango
+deep blue,light orange,blue delight
+
+# expected output
+$ cat fruits.txt ip.txt | paste -sd,
+banana,papaya,mango,deep blue,light orange,blue delight
+
+# alternate solutions
+$ awk '{printf s $0; s=","} END{print ""}' fruits.txt ip.txt
+</code></pre><p><strong>14)</strong> Use appropriate options to get the expected output shown below.</p><pre><code class="language-bash"># default output
+$ paste fruits.txt ip.txt
+banana  deep blue
+papaya  light orange
+mango   blue delight
+
+# expected output
+$ paste -d'\n' fruits.txt ip.txt
+banana
+deep blue
+papaya
+light orange
+mango
+blue delight
+</code></pre><p><strong>15)</strong> Use the <code>pr</code> command to get the expected output shown below.</p><pre><code class="language-bash">$ seq -w 16 | pr -4ats,
+01,02,03,04
+05,06,07,08
+09,10,11,12
+13,14,15,16
+
+$ seq -w 16 | pr -4ts,
+01,05,09,13
+02,06,10,14
+03,07,11,15
+04,08,12,16
+</code></pre><p><strong>16)</strong> Use the <code>pr</code> command to join the input files <code>fruits.txt</code> and <code>ip.txt</code> as shown below.</p><pre><code class="language-bash">$ pr -mts' : ' fruits.txt ip.txt
+banana : deep blue
+papaya : light orange
+mango : blue delight
+</code></pre><p><strong>17)</strong> The <code>cut</code> command doesn't support a way to choose the last <code>N</code> fields. Which tool presented in this chapter can be combined to work with <code>cut</code> to get the output shown below?</p><pre><code class="language-bash"># last two characters from each line
+$ printf 'apple\nbanana\ncherry\ndates\n' | rev | cut -c-2 | rev
+le
+na
+ry
+es
+
+# alternate solutions
+$ printf 'apple\nbanana\ncherry\ndates\n' | grep -o '..$'
+</code></pre><p><strong>18)</strong> Go through the <code>split</code> documentation and use appropriate options to get the output shown below for the input file <code>purchases.txt</code>.</p><pre><code class="language-bash"># split input by 3 lines (max) at a time
+$ split -l3 purchases.txt
+
+$ head xa?
+==&gt; xaa &lt;==
+coffee
+tea
+washing powder
+
+==&gt; xab &lt;==
+coffee
+toothpaste
+tea
+
+==&gt; xac &lt;==
+soap
+tea
+
+$ rm xa?
+</code></pre><blockquote><p><code>-l, --lines=NUMBER</code></p><p>put NUMBER lines/records per output file</p></blockquote><p><strong>19)</strong> Go through the <code>split</code> documentation and use appropriate options to get the output shown below.</p><pre><code class="language-bash">$ echo 'apple,banana,cherry,dates' | split -t, -l1
+
+$ head xa?
+==&gt; xaa &lt;==
+apple,
+==&gt; xab &lt;==
+banana,
+==&gt; xac &lt;==
+cherry,
+==&gt; xad &lt;==
+dates
+
+$ rm xa?
+</code></pre><blockquote><p><code>-t, --separator=SEP</code></p><p>use SEP instead of newline as the record separator; <code>\0</code> (zero) specifies the NUL character</p></blockquote><p><strong>20)</strong> Split the input file <code>purchases.txt</code> such that the text before a line containing <code>powder</code> is part of the first file and the rest are part of the second file as shown below.</p><pre><code class="language-bash">$ csplit -q purchases.txt '/powder/'
+
+$ head xx0?
+==&gt; xx00 &lt;==
+coffee
+tea
+
+==&gt; xx01 &lt;==
+washing powder
+coffee
+toothpaste
+tea
+soap
+tea
+
+$ rm xx0?
+</code></pre><p><strong>21)</strong> Write a generic solution that transposes comma delimited data. Example input/output is shown below. You can use any tool(s) presented in this book.</p><pre><code class="language-bash">$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Ith,100,100,100
+Cy,97,98,95
+Lin,78,83,80
+
+$ tr ',' '\n' &amp;LTscores.csv | pr -$(wc -l &amp;LTscores.csv)ts,
+Name,Ith,Cy,Lin
+Maths,100,97,78
+Physics,100,98,83
+Chemistry,100,95,80
+
+# alternate solution if you have GNU datamash installed
+$ datamash -t, transpose &amp;LTscores.csv
+</code></pre><p>See also my blog post <a href="https://learnbyexample.github.io/cli-computation-gnu-datamash/">CLI computation with GNU datamash</a>.</p><p><strong>22)</strong> Reshape the contents of <code>table.txt</code> to the expected output shown below.</p><pre><code class="language-bash">$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+$ xargs -a table.txt -n4 | column -t
+brown   bread  mat     hair
+42      blue   cake    mug
+shirt   -7     yellow  banana
+window  shoes  3.14
+</code></pre><br/><h2 id="shell-scripting"><a class="header" href="#shell-scripting">Shell Scripting</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use a temporary working directory before attempting the exercises. You can delete such practice directories afterwards.</p></blockquote><p><strong>1)</strong> What's wrong with the script shown below? Also, will the error go away if you use <code>bash try.sh</code> instead?</p><p><code>!#</code> should be <code>#!</code>. If you get confused which one should be used, remember that shebang is a <strong>comment</strong> that is treated specially at the start of the script. And no, the error won't go away if you call the script using the <code>bash</code> command.</p><pre><code class="language-bash">$ printf '    \n!#/bin/bash\n\necho hello\n' &gt; try.sh
+$ chmod +x try.sh
+$ ./try.sh
+./try.sh: line 2: !#/bin/bash: No such file or directory
+hello
+
+# expected output
+$ printf '    \n#!/bin/bash\n\necho hello\n' &gt; try.sh
+$ ./try.sh
+hello
+</code></pre><p><strong>2)</strong> Will the command shown below work? If so, what would be the output?</p><p>Yes, it will work. <code>echo hello</code> is being passed as the script to be executed by the <code>bash</code> command.</p><pre><code class="language-bash">$ echo echo hello | bash
+hello
+</code></pre><p><strong>3)</strong> When would you <code>source</code> a script instead of using <code>bash</code> or creating an executable using shebang?</p><p>Using <code>source</code> to execute scripts helps when you want to work within the current shell environment instead of a sub-shell.</p><p><strong>4)</strong> How would you display the contents of a variable with <code>shake</code> appended?</p><pre><code class="language-bash">$ fruit='banana'
+
+$ echo "${fruit}shake"
+bananashake
+</code></pre><p><strong>5)</strong> What changes would you make to the code shown below to get the expected output?</p><pre><code class="language-bash"># default behavior
+$ n=100
+$ n+=100
+$ echo "$n"
+100100
+
+# expected output
+$ declare -i n=100
+$ n+=100
+$ echo "$n"
+200
+</code></pre><p><strong>6)</strong> Is the following code valid? If so, what would be the output of the <code>echo</code> command?</p><p>Yes, it is valid. Array index can be arbitrarily used, they do not have to be contiguous.</p><pre><code class="language-bash">$ declare -a colors
+$ colors[3]='green'
+$ colors[1]='blue'
+
+$ echo "${colors[@]}"
+blue green
+</code></pre><p><strong>7)</strong> How would you get the last three characters of a variable's contents?</p><pre><code class="language-bash">$ fruit='banana'
+
+$ echo "${fruit: -3}"
+ana
+</code></pre><p><strong>8)</strong> Will the second <code>echo</code> command give an error? If not, what will be the output?</p><p>No error. It will give the length of the element at index <code>0</code>.</p><pre><code class="language-bash">$ fruits=('apple' 'fig' 'mango')
+$ echo "${#fruits[@]}"
+3
+
+$ echo "${#fruits}"
+5
+</code></pre><p><strong>9)</strong> For the given array, use parameter expansion to remove characters until the first/last space.</p><pre><code class="language-bash">$ colors=('green' 'dark brown' 'deep sky blue white')
+
+# remove till the first space
+$ printf '%s\n' "${colors[@]#* }"
+green
+brown
+sky blue white
+
+# remove till the last space
+$ printf '%s\n' "${colors[@]##* }"
+green
+brown
+white
+</code></pre><p><strong>10)</strong> Use parameter expansion to get the expected outputs shown below.</p><pre><code class="language-bash">$ ip='apple:banana:cherry:dragon'
+
+$ echo "${ip%:*}"
+apple:banana:cherry
+
+$ echo "${ip%%:*}"
+apple
+</code></pre><p><strong>11)</strong> Is it possible to achieve the expected outputs shown below using parameter expansion? If so, how?</p><p>Yes it is possible. For the second and third cases, <code>extglob</code> has to be enabled.</p><pre><code class="language-bash">$ ip1='apple:banana:cherry:dragon'
+$ ip2='Cradle:Mistborn:Piranesi'
+
+$ echo "${ip1/:*:/ 42 }"
+apple 42 dragon
+$ echo "${ip2/:*:/ 42 }"
+Cradle 42 Piranesi
+
+$ shopt -s extglob
+$ echo "${ip1/#+([^:])/fig}"
+fig:banana:cherry:dragon
+$ echo "${ip2/#+([^:])/fig}"
+fig:Mistborn:Piranesi
+
+$ echo "${ip1/%+([^:])/end}"
+apple:banana:cherry:end
+$ echo "${ip2/%+([^:])/end}"
+Cradle:Mistborn:end
+</code></pre><p><strong>12)</strong> For the given input, change case as per the expected outputs shown below.</p><pre><code class="language-bash">$ ip='This is a Sample STRING'
+
+$ echo "${ip^^}"
+THIS IS A SAMPLE STRING
+
+$ echo "${ip,,}"
+this is a sample string
+
+$ echo "${ip~~}"
+tHIS IS A sAMPLE string
+</code></pre><p><strong>13)</strong> Why does the conditional expression shown below fail?</p><pre><code class="language-bash">$ touch ip.txt
+$ [[-f ip.txt]] &amp;&amp; echo 'file exists'
+[[-f: command not found
+
+# need to use space after [[ and before ]]
+$ [[ -f ip.txt ]] &amp;&amp; echo 'file exists'
+file exists
+</code></pre><p><strong>14)</strong> What is the difference between the <code>==</code> and <code>=~</code> string comparison operators?</p><ul><li><code>s1 = s2</code> or <code>s1 == s2</code> checks if two strings are equal <ul><li>unquoted portions of <code>s2</code> will be treated as a wildcard while testing against <code>s1</code></li></ul></li><li><code>s1 =~ s2</code> checks if <code>s1</code> matches the POSIX extended regular expression provided by <code>s2</code></li></ul><p><strong>15)</strong> Why does the conditional expression used below show <code>failed</code> both times? Modify the expressions such that the first one correctly says <code>matched</code> instead of <code>failed</code>.</p><p>Quoted portions will be treated as literal strings. Wildcards should be unquoted.</p><pre><code class="language-bash">$ f1='1234.txt'
+$ f2='report_2.txt'
+
+$ [[ $f1 == '+([0-9]).txt' ]] &amp;&amp; echo 'matched' || echo 'failed'
+failed
+$ [[ $f2 == '+([0-9]).txt' ]] &amp;&amp; echo 'matched' || echo 'failed'
+failed
+
+# corrected code
+$ [[ $f1 == +([0-9]).txt ]] &amp;&amp; echo 'matched' || echo 'failed'
+matched
+$ [[ $f2 == +([0-9]).txt ]] &amp;&amp; echo 'matched' || echo 'failed'
+failed
+</code></pre><p><strong>16)</strong> Extract the digits that follow a <code>:</code> character for the given variable contents.</p><pre><code class="language-bash">$ item='chocolate:50'
+$ [[ $item =~ :([0-9]+) ]] &amp;&amp; echo "${BASH_REMATCH[1]}"
+50
+
+$ item='50 apples, fig:100, books-12'
+$ [[ $item =~ :([0-9]+) ]] &amp;&amp; echo "${BASH_REMATCH[1]}"
+100
+</code></pre><p><strong>17)</strong> Modify the expression shown below to correctly report <code>true</code> instead of <code>false</code>.</p><pre><code class="language-bash">$ num=12345
+$ [[ $num &gt; 3 ]] &amp;&amp; echo 'true' || echo 'false'
+false
+
+# corrected code
+$ [[ $num -gt 3 ]] &amp;&amp; echo 'true' || echo 'false'
+true
+
+# alternate solutions
+$ (( num &gt; 3 )) &amp;&amp; echo 'true' || echo 'false'
+</code></pre><p><strong>18)</strong> Write a shell script named <code>array.sh</code> that accepts array input from the user followed by another input as index. Display the corresponding value at that index. Couple of examples are shown below.</p><pre><code class="language-bash">$ cat array.sh
+read -p 'enter array elements: ' -a arr
+read -p 'enter array index: ' idx
+echo "element at index '$idx' is: ${arr[$idx]}"
+
+$ bash array.sh
+enter array elements: apple banana cherry
+enter array index: 1
+element at index '1' is: banana
+
+$ bash array.sh
+enter array elements: dragon unicorn centaur
+enter array index: -1
+element at index '-1' is: centaur
+</code></pre><p><strong>19)</strong> Write a shell script named <code>case.sh</code> that accepts exactly two command line arguments. The first argument can be <code>lower</code>, <code>upper</code> or <code>swap</code> and this should be used to transform the contents of the second argument. Examples script invocations are shown below, including what should happen if the command line arguments do not meet the script expectations.</p><pre><code class="language-bash">$ cat case.sh
+if (( $# != 2 )) ; then
+    echo 'Error! Two arguments expected.' 1&gt;&amp;2
+    exit 1
+else
+    if [[ $1 == 'upper' ]] ; then
+        echo "${2^^}"
+    elif [[ $1 == 'lower' ]] ; then
+        echo "${2,,}"
+    elif [[ $1 == 'swap' ]] ; then
+        echo "${2~~}"
+    else
+        echo "Error! '$1' command not recognized." 1&gt;&amp;2
+        exit 1
+    fi
+fi
+
+$ chmod +x case.sh
+
+$ ./case.sh upper 'how are you?'
+HOW ARE YOU?
+
+$ ./case.sh lower PineAPPLE
+pineapple
+
+$ ./case.sh swap 'HeLlo WoRlD'
+hElLO wOrLd
+
+$ ./case.sh lower
+Error! Two arguments expected.
+$ echo $?
+1
+
+$ ./case.sh upper apple fig
+Error! Two arguments expected.
+
+$ ./case.sh lowercase DRAGON
+Error! 'lowercase' command not recognized.
+$ echo $?
+1
+
+$ ./case.sh apple lower 2&gt; /dev/null
+$ echo $?
+1
+</code></pre><p><strong>20)</strong> Write a shell script named <code>loop.sh</code> that displays the number of lines for each of the files passed as command line arguments.</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry\n' &gt; items_1.txt
+$ printf 'dragon\nowl\nunicorn\ntroll\ncentaur\n' &gt; items_2.txt
+
+$ cat loop.sh
+for file in "$@"; do
+    echo "number of lines in '$file' is:" $(wc -l &lt; "$file")
+done
+
+$ bash loop.sh items_1.txt
+number of lines in 'items_1.txt' is: 3
+
+$ bash loop.sh items_1.txt items_2.txt
+number of lines in 'items_1.txt' is: 3
+number of lines in 'items_2.txt' is: 5
+</code></pre><p><strong>21)</strong> Write a shell script named <code>read_file.sh</code> that reads a file line by line to be passed as an argument to the <code>paste -sd,</code> command. Can you also write a solution using the <code>xargs</code> command instead of a script?</p><pre><code class="language-bash">$ printf 'apple\nbanana\ncherry\n' &gt; items_1.txt
+$ printf 'dragon\nowl\nunicorn\ntroll\ncentaur\n' &gt; items_2.txt
+$ printf 'items_1.txt\nitems_2.txt\n' &gt; list.txt
+
+$ cat read_file.sh
+while IFS= read -r line; do
+    paste -sd, "$line"
+done &lt; "$1"
+
+$ bash read_file.sh list.txt
+apple,banana,cherry
+dragon,owl,unicorn,troll,centaur
+
+# note that -n1 is not necessary here due to how paste works for multiple files
+# but -n1 is necessary to be equivalent to the shell script shown above
+$ xargs -a list.txt -d'\n' -n1 paste -sd,
+apple,banana,cherry
+dragon,owl,unicorn,troll,centaur
+</code></pre><p><strong>22)</strong> Write a function named <code>add_path</code> which prefixes the path of the current working directory to the arguments it receives and displays the results. Examples are shown below.</p><pre><code class="language-bash">$ add_path() { echo "${@/#/$PWD/}" ; }
+
+$ cd
+$ pwd
+/home/learnbyexample
+$ add_path ip.txt report.log
+/home/learnbyexample/ip.txt /home/learnbyexample/report.log
+
+$ cd cli-computing
+$ pwd
+/home/learnbyexample/cli-computing
+$ add_path f1
+/home/learnbyexample/cli-computing/f1
+</code></pre><p><strong>23)</strong> What do the options <code>bash -x</code> and <code>bash -v</code> do?</p><blockquote><p><code>-x</code></p><p>Print commands and their arguments as they are executed.</p><p><code>-v</code></p><p>Print shell input lines as they are read.</p></blockquote><p><strong>24)</strong> What is <code>shellcheck</code> and when would you use it?</p><p><a href="https://www.shellcheck.net/">shellcheck</a> is a static analysis tool that gives warnings and suggestions for scripts.</p><p>From <code>man shellcheck</code>:</p><blockquote><p>ShellCheck is a static analysis and linting tool for sh/bash scripts. It’s mainly focused on handling typical beginner and intermediate level syntax errors and pitfalls where the shell just gives a cryptic error message or strange behavior, but it also reports on a few more advanced issues where corner cases can cause delayed failures.</p></blockquote><br/><h2 id="shell-customization"><a class="header" href="#shell-customization">Shell Customization</a></h2><p><strong>1)</strong> Which command would you use to display the name and value of all or specific environment variables?</p><pre><code class="language-bash">$ whatis printenv
+printenv (1)         - print all or part of environment
+</code></pre><p><strong>2)</strong> If you add an alias for an already existing command (<code>ls</code> for example), how would you invoke the original command instead of the alias?</p><p>By prefixing <code>\</code> or using the <code>command</code> builtin. For example, <code>\ls</code> or <code>command ls</code>.</p><p><strong>3)</strong> Why doesn't the alias shown below work? What would you use instead?</p><p>You cannot pass arguments to aliases, need to use functions instead.</p><pre><code class="language-bash"># doesn't work as expected
+$ alias ext='echo "${1##*.}"'
+$ ext ip.txt
+ ip.txt
+
+# expected output
+$ ext() { echo "${1##*.}" ; }
+$ ext ip.txt
+txt
+$ ext scores.csv
+csv
+$ ext file.txt.txt
+txt
+</code></pre><p><strong>4)</strong> How would you remove a particular alias/function definition for the current shell session?</p><pre><code class="language-bash">$ alias hw='echo hello world'
+$ hw
+hello world
+$ unalias hw
+$ hw
+hw: command not found
+
+$ hw() { echo hello there ; }
+$ hw
+hello there
+$ unset -f hw
+$ hw
+hw: command not found
+</code></pre><p><strong>5)</strong> Write an alias and a function to display the contents of the <code>PATH</code> environment variable on separate lines by changing <code>:</code> to the newline character. Sample output is shown below.</p><pre><code class="language-bash">$ echo "$PATH"
+/usr/local/bin:/usr/bin:/bin:/usr/games
+
+# alias
+$ alias a_p='echo "$PATH" | tr ":" "\n"'
+$ a_p
+/usr/local/bin
+/usr/bin
+/bin
+/usr/games
+
+# function
+$ f_p() { echo "${PATH//:/$'\n'}" ; }
+$ f_p
+/usr/local/bin
+/usr/bin
+/bin
+/usr/games
+</code></pre><p><strong>6)</strong> Will a login shell read and execute <code>~/.bashrc</code> automatically?</p><p>No. From <code>info bash</code>:</p><blockquote><p>When an interactive shell that is not a login shell is started, Bash reads and executes commands from '~/.bashrc', if that file exists.</p></blockquote><p>See also <a href="https://unix.stackexchange.com/q/257571/109046">unix.stackexchange: why does bashrc check whether the current shell is interactive?</a></p><p><strong>7)</strong> What should be the value assigned to <code>HISTSIZE</code> if you wish to have unlimited history entries?</p><p>Any negative number.</p><blockquote><p><code>HISTSIZE</code></p><p>The maximum number of commands to remember on the history list. If the value is 0, commands are not saved in the history list. Numeric values less than zero result in every command being saved on the history list (there is no limit). The shell sets the default value to 500 after reading any startup files.</p></blockquote><p><strong>8)</strong> What does the binding <code>set completion-ignore-case on</code> do?</p><blockquote><p><code>completion-ignore-case</code></p><p>If set to <code>on</code>, Readline performs filename matching and completion in a case-insensitive fashion. The default value is <code>off</code>.</p></blockquote><p><strong>9)</strong> Which shortcut helps you interactively search the command history?</p><blockquote><p>To search backward in the history for a particular string, type <code>C-r</code>. Typing <code>C-s</code> searches forward through the history.</p></blockquote><p><strong>10)</strong> What do the shortcuts <code>Alt+b</code> and <code>Alt+f</code> do?</p><blockquote><p><code>forward-word (M-f)</code></p><p>Move forward to the end of the next word. Words are composed of letters and digits.</p><p><code>backward-word (M-b)</code></p><p>Move back to the start of the current or previous word. Words are composed of letters and digits.</p></blockquote><p><strong>11)</strong> Are there differences between the <code>Ctrl+l</code> shortcut and the <code>clear</code> command?</p><p><code>Ctrl+l</code> retains whatever is typed so far and doesn't try to remove the scrollback buffer altogether. You can use the <code>clear</code> command for that purpose.</p><p><strong>12)</strong> Which shortcut will you use to delete characters before the cursor till the start of the line?</p><blockquote><p><code>unix-line-discard (C-u)</code></p><p>Kill backward from the cursor to the beginning of the current line.</p></blockquote><p><strong>13)</strong> What do the shortcuts <code>Alt+t</code> and <code>Ctrl+t</code> do?</p><blockquote><p><code>transpose-chars (C-t)</code></p><p>Drag the character before the cursor forward over the character at the cursor, moving the cursor forward as well. If the insertion point is at the end of the line, then this transposes the last two characters of the line. Negative arguments have no effect.</p><p><code>transpose-words (M-t)</code></p><p>Drag the word before point past the word after point, moving point past that word as well. If the insertion point is at the end of the line, this transposes the last two words on the line.</p></blockquote><p><strong>14)</strong> Is there a difference between the <code>Shift+Insert</code> and <code>Shift+Ctrl+v</code> shortcuts?</p><ul><li><code>Shift+Ctrl+v</code> pastes clipboard contents</li><li><code>Shift+Insert</code> pastes the last highlighted portion (not necessarily the clipboard contents)</li></ul>    
+</body>
+</html>

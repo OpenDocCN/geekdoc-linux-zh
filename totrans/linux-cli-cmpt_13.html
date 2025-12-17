@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Comparing Files</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Comparing Files</h1>
+<blockquote>原文：<a href="https://learnbyexample.github.io/cli-computing/comparing-files.html">https://learnbyexample.github.io/cli-computing/comparing-files.html</a></blockquote><p>In this chapter, you'll learn how to find and report differences between the contents of two files.</p><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> The <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files">example_files</a> directory has the sample input files used in this chapter.</p></blockquote><h2 id="cmp"><a class="header" href="#cmp">cmp</a></h2><p>The <code>cmp</code> command is useful to compare text and binary files. If the two input files have the same content, no output is displayed and exit status is <code>0</code>. If there is a difference, it prints the first difference with details like line number and byte location and the exit status will be <code>1</code>.</p><pre><code class="language-bash">$ mkdir practice_cmp
+$ cd practice_cmp
+$ echo 'hello' &gt; x1.txt
+$ cp x{1,2}.txt
+$ echo 'hello.' &gt; x3.txt
+
+# files with the same content
+$ cmp x1.txt x2.txt
+$ echo $?
+0
+
+# files with differences
+$ cmp x1.txt x3.txt
+x1.txt x3.txt differ: byte 6, line 1
+$ echo $?
+1
+</code></pre><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <code>-s</code> option to suppress the output when you just need the exit status. The <code>-i</code> option will allow you to skip initial bytes from the input.</p></blockquote><h2 id="diff"><a class="header" href="#diff">diff</a></h2><p>Useful to find differences between text files. All the differences are printed, which might not be desirable for long files.</p><h3 id="common-options"><a class="header" href="#common-options">Common options</a></h3><p>Commonly used options are shown below. Examples will be discussed in the later sections.</p><ul><li><code>-i</code> ignore case</li><li><code>-w</code> ignore whitespaces</li><li><code>-b</code> ignore changes in the amount of whitespace</li><li><code>-B</code> ignore only blank lines</li><li><code>-E</code> ignore changes due to tab expansion</li><li><code>-z</code> ignore trailing whitespaces at the end of lines</li><li><code>-y</code> two column output</li><li><code>-r</code> recursively compare files between the two directories specified</li><li><code>-s</code> convey message when two files are same</li><li><code>-q</code> report if files differ, not the details of differences</li></ul><h3 id="default-diff"><a class="header" href="#default-diff">Default diff</a></h3><p>By default, the <code>diff</code> output shows lines from the first input file prefixed with <code>&lt;</code> and lines from the second file prefixed with <code>&gt;</code>. A line containing <code>---</code> is used as the group separator. Each difference is prefixed by a command that indicates the differences (these commands are understood by tools like <code>patch</code>).</p><pre><code class="language-bash"># change to the 'example_files/text_files' directory
+# side-by-side view of sample input files
+$ paste f1.txt f2.txt
+1       1
+2       hello
+3       3
+world   4
+
+$ diff f1.txt f2.txt
+2c2
+&lt; 2
+---
+&gt; hello
+4c4
+&lt; world
+---
+&gt; 4
+
+$ diff &lt;(seq 4) &lt;(seq 5)
+4a5
+&gt; 5
+</code></pre><h3 id="ignoring-whitespaces"><a class="header" href="#ignoring-whitespaces">Ignoring whitespaces</a></h3><p>There are several options to ignore specific whitespace characters during comparison. Here are some examples:</p><pre><code class="language-bash"># ignore changes in the amount of whitespace
+$ diff -b &lt;(echo 'good day') &lt;(echo 'good    day')
+$ echo $?
+0
+
+# ignore all whitespaces
+$ diff -w &lt;(echo 'hi    there ') &lt;(echo ' hi there')
+$ echo $?
+0
+$ diff -w &lt;(echo 'hi    there ') &lt;(echo 'hithere')
+$ echo $?
+0
+</code></pre><h3 id="side-by-side-output"><a class="header" href="#side-by-side-output">Side-by-side output</a></h3><p>The <code>-y</code> option is handy to view the differences side-by-side. By default, all the input lines will be present in the output and the line width is 130 print columns. You can use the <code>-W</code> option to change the width when dealing with short input lines. The <code>--suppress-common-lines</code> helps to focus only on the differences.</p><pre><code class="language-bash">$ diff -y f1.txt f2.txt
+1                                                               1
+2                                                             | hello
+3                                                               3
+world                                                         | 4
+
+$ diff -W 60 --suppress-common-lines -y f1.txt f2.txt
+2                            |  hello
+world                        |  4
+</code></pre><h3 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h3><ul><li><code>gvimdiff</code> edit two, three or four versions of a file with GVim and show differences</li><li><a href="http://askubuntu.com/questions/2946/what-are-some-good-gui-diff-and-merge-applications-available-for-ubuntu">GUI diff and merge tools</a></li><li><a href="https://github.com/Wilfred/difftastic">difftastic</a> — structural diff tool that understands syntax</li><li><a href="https://github.com/jeffkaufman/icdiff">icdiff</a> — improved colored diff</li></ul><h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2><blockquote><p><img alt="info" src="../Images/147d5d96e6e103c258c8b5f99e9505a9.png" data-original-src="https://learnbyexample.github.io/cli-computing/images/info.svg"/> Use the <a href="https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files">example_files/text_files</a> directory for input files used in the following exercises.</p></blockquote><p><strong>1)</strong> Which <code>cmp</code> option would you use if you just need the exit status reflecting whether the given inputs are same or not?</p><p><strong>2)</strong> Which <code>cmp</code> option would you use to skip the initial bytes for comparison purposes? The below example requires you to skip the first two bytes.</p><pre><code class="language-bash">$ echo '1) apple' &gt; x1.txt
+$ echo '2. apple' &gt; x2.txt
+$ cmp x1.txt x2.txt
+x1.txt x2.txt differ: byte 1, line 1
+
+$ cmp # ???
+$ echo $?
+0
+
+$ rm x[12].txt
+</code></pre><p><strong>3)</strong> What does the <code>diff -d</code> option do?</p><p><strong>4)</strong> Which option will help you get colored output with <code>diff</code>?</p><p><strong>5)</strong> Use appropriate options to get the desired output shown below.</p><pre><code class="language-bash"># instead of this output
+$ diff -W 40 --suppress-common-lines -y f1.txt f2.txt
+2                  |    hello
+world              |    4
+
+# get this output
+$ diff # ???
+1                  (
+2                  |    hello
+3                  (
+world              |    4
+</code></pre><p><strong>6)</strong> Use appropriate options to get the desired output shown below.</p><pre><code class="language-bash">$ echo 'hello' &gt; d1.txt
+$ echo 'Hello' &gt; d2.txt
+
+# instead of this output
+$ diff d1.txt d2.txt
+1c1
+&lt; hello
+---
+&gt; Hello
+
+# get this output
+$ diff # ???
+Files d1.txt and d2.txt are identical
+
+$ rm d[12].txt
+</code></pre>    
+</body>
+</html>
