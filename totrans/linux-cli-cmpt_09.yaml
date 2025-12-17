@@ -1,0 +1,589 @@
+- en: File Properties
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/file-properties.html](https://learnbyexample.github.io/cli-computing/file-properties.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In this chapter, you'll learn how to view file details like line and word counts,
+    file and disk sizes, file types, extract parts of a file path, etc. You'll also
+    learn how to change file properties like timestamps and permissions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the scripts and sample input files used in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[wc](#wc)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `wc` command is typically used to count the number of lines, words and
+    characters for the given inputs. Here are some basic examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Filename won't be printed for stdin data. This is helpful to save the results
+    in a variable for scripting purposes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Word count is based on whitespace separation. You can pre-process the input
+    to prevent certain non-whitespace characters to influence the results. `tr` can
+    be used to remove a particular set of characters (this command will be discussed
+    in the [Assorted Text Processing Tools](./assorted-text-processing-tools.html)
+    chapter).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you pass multiple files to the `wc` command, the count values will be displayed
+    separately for each file. You'll also get a summary at the end, which sums the
+    respective count of all the input files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use the `-L` option to report the length of the longest line in the
+    input (excluding the newline character of a line). Note that `-L` won't count
+    non-printable characters and tabs are converted to equivalent spaces. Multibyte
+    characters and [grapheme clusters](https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries)
+    will each be counted as `1` (depending on the locale, they might become non-printable
+    too).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use the `-m` option instead of `-c` if the input has multibyte characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[du](#du)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `du` command helps you estimate the size of files and directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By default, size is given in terms of 1024 bytes. All directories and sub-directories
+    are recursively reported, but files are ignored. You can use the `-a` option if
+    files should also be reported. `du` is one of the commands that require an explicit
+    option (`-L` in this case) if you want symbolic links to be followed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use the `-s` option to show the total directory size without descending into
+    sub-directories. Add the `-c` option to also show the total size at the end.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are some examples to illustrate the size formatting options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `-h` option reports size in human readable format (uses power of 1024).
+    Use the `--si` option to get results in powers of 1000 instead. If you use `du
+    -h`, you can pipe the output to `sort -h` for sorting purposes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[df](#df)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `df` command gives you the space usage of file systems. `df` without path
+    arguments will give information about all the currently mounted file systems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use the `-h` option for human readable sizes. The `-B` option allows you to
+    scale sizes by the specified amount. Use `--si` for size in powers of 1000 instead
+    of 1024.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Use the `--output` option to report only the specific fields of interest:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[stat](#stat)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `stat` command is useful to get details like file type, size, inode, permissions,
+    last accessed and modified timestamps, etc. You'll get all of these details by
+    default. The `-c` and `--printf` options can be used to display only the required
+    details in a particular format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can also pass multiple file arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    The `stat` command should be preferred instead of parsing the `ls -l` output for
+    file details. See [mywiki.wooledge: avoid parsing output of ls](https://mywiki.wooledge.org/ParsingLs)
+    and [unix.stackexchange: why not parse ls?](https://unix.stackexchange.com/q/128985/109046)
+    for explanation and other alternatives.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[touch](#touch)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As mentioned earlier, the `touch` command helps you change the timestamps of
+    files. You can do so based on the current timestamp, passing an argument, copying
+    the value from another file and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By default, `touch` updates both the access and modification timestamps to the
+    current time. You can use the `-a` option to change only the access timestamp
+    and `-m` to change only the modification timestamp.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use the `-r` option to copy timestamp information from one file to another.
+    The `-d` and `-t` options will allow you to specify timestamps directly as part
+    of the command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: As seen in the [Managing Files and Directories](./managing-files-directories.html)
+    chapter, `touch` creates a new file if the target file doesn't exist yet. You
+    can use the `-c` option to prevent this behavior.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[file](#file)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `file` command helps you identify text encoding (ASCII, UTF-8, etc), whether
+    the file is executable and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some examples to show how the `file` command behaves for different
+    types:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example for image files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-b` option to avoid filenames in the output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here's how you can find particular type of files, images for example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also the `identify`
+    command which "describes the format and characteristics of one or more image files".'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[basename](#basename)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: By default, the `basename` command will remove the leading directory component
+    from the given path argument. Any trailing slashes will be removed before determining
+    the portion to be extracted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use the `-s` option to remove a suffix from the filename. Usually used
+    to remove the file extension.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `basename` command requires `-a` or `-s` (which implies `-a`) to work with
+    multiple arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[dirname](#dirname)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: By default, the `dirname` command removes the trailing path component (after
+    removing any trailing slashes).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use shell features like command substitution to combine the effects
+    of the `basename` and `dirname` commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[chmod](#chmod)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can use the `chmod` command to change permissions. Consider this example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In the above output, the 10 characters displayed in the last line are related
+    to file type and permissions. First character indicates the **file type**. The
+    most common ones are shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-` regular file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`d` directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`l` symbolic link'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other nine characters represent three sets of **file permissions** for *user*
+    (`u`), *group* (`g`) and *others* (`o`), in that order.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*user* — file owner'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*group* — users having file access as part of a group'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*others* — everyone else'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Only `rwx` file properties will be discussed in this section. For other types
+    of properties, refer to the [coreutils manual: File permissions](https://www.gnu.org/software/coreutils/manual/coreutils.html#File-permissions).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Permission reference table for files:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Character | Meaning | Value |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `r` | read | `4` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `w` | write | `2` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `x` | execute | `1` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-` | no permission | `0` |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Here''s an example showing both `rwx` and numerical representations of a file''s
+    permissions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that the permissions
+    are not straightforward to understand for directories. If a directory only has
+    the `x` permission, you can `cd` into it but you cannot read the contents (using
+    `ls` for example). If a directory only has the `r` permission, you cannot `cd`
+    into it, but you''ll be able to read the contents (along with "cannot access"
+    error). For this reason, the `rx` permissions are almost always enabled/disabled
+    together. The `w` permission allows you to add or remove contents, provided `x`
+    is active.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Changing permissions for all three categories**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can provide numbers for `ugo` (in that order) to change permissions. This
+    is best understood with examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example for a directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can also use `mkdir -m` instead of the `mkdir+chmod` combination seen above.
+    The argument to the `-m` option accepts the same syntax as `chmod` (including
+    the format that'll be discussed next).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `chmod
+    -R` to recursively change permissions. Use `find+exec` if you want to apply changes
+    only for files filtered by some criteria.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Changing permissions for specific categories**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can assign (`=`), add (`+`) or remove (`-`) permissions by using those
+    symbols followed by one or more `rwx` permissions. This depends on the `umask`
+    value:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`umask` value of `0002` means:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: read and execute permissions without `ugo` prefix affects all the three categories
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: write permissions without `ugo` prefix affects only the `user` and `group` categories
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here are some examples without `ugo` prefixes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here are some examples with `ugo` prefixes. You can use `a` to refer to all
+    the three categories. For example, `a+w` is same as `ugo+w`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use `,` to separate multiple permissions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Linux Permissions Primer](https://web.archive.org/web/20220930214830/https://danielmiessler.com/study/unixlinux_permissions/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: why chmod +w filename not giving write permission to other](https://unix.stackexchange.com/q/429421/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
+    directory for exercises that may require you to create some files and directories.
+    You can delete such practice directories afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Save the number of lines in the `greeting.txt` input file to the `lines`
+    shell variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** What do you think will be the output of the following command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Use appropriate options and arguments to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** Go through the `wc` manual and use appropriate options and arguments
+    to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** What is the difference between the `wc -c` and `wc -m` options? And
+    which option would you use to get the longest line length?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**6)** Find filenames ending with `.log` and report their sizes in human readable
+    format. Use the `find+du` combination for the first case and the `ls` command
+    (with appropriate shell features) for the second case.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Report sizes of files/directories in the current path in powers of `1000`
+    without descending into sub-directories. Also, show a total at the end.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** What does the `du --apparent-size` option do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** When will you use the `df` command instead of `du`? Which `df` command
+    option will help you to report only the specific fields of interest?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** Display the size of `scores.csv` and `timings.txt` files in the format
+    shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Which `touch` option will help you prevent file creation if it doesn''t
+    exist yet?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**12)** Assume `new_file.txt` doesn''t exist in the current working directory.
+    What would be the output of the `stat` command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Is the following `touch` command valid? If so, what would be the output
+    of the `stat` command that follows?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Use appropriate option(s) to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Is the following command valid? If so, what would be the output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Given the file path in the shell variable `p`, how''d you obtain the
+    output shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Explain what each of the characters mean in the following `stat` command''s
+    output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** What would be the output of the second `stat` command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** How would you specify directory permissions using the `mkdir` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Change the file permission of `book_list.txt` to match the output of
+    the second `stat` command shown below. Don''t use the number `220`, specify the
+    changes in terms of `rwx` characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Change the permissions of `test_dir` to match the output of the second
+    `stat` command shown below. Don''t use the number `757`, specify the changes in
+    terms of `rwx` characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE

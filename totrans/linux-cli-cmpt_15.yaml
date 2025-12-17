@@ -1,0 +1,1120 @@
+- en: Shell Scripting
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/shell-scripting.html](https://learnbyexample.github.io/cli-computing/shell-scripting.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This chapter will cover the basics of shell scripting with `bash`. You'll learn
+    about declaring variables, control structures, working with arguments passed to
+    a script, getting user input and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has all the shell scripts discussed in this chapter. However, it is
+    recommended that you type the scripts manually using your favorite text editor
+    and refer to the `example_files/shell_scripting` directory only when necessary.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Need for scripting](#need-for-scripting)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [wikipedia: Scripting language](https://en.wikipedia.org/wiki/Scripting_language):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A scripting language or script language is a programming language for a runtime
+    system that automates the execution of tasks that would otherwise be performed
+    individually by a human operator. Scripting languages are usually interpreted
+    at runtime rather than compiled.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Typical scripting languages are intended to be very fast to learn and write
+    in, either as short source code files or interactively in a read–eval–print loop
+    (REPL, language shell). This generally implies relatively simple syntax and semantics;
+    typically a "script" (code written in the scripting language) is executed from
+    start to finish, as a "script", with no explicit entry point.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'From [wikipedia: Shell script](https://en.wikipedia.org/wiki/Shell_script):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A shell script is a computer program designed to be run by the Unix shell, a
+    command-line interpreter. The various dialects of shell scripts are considered
+    to be scripting languages. Typical operations performed by shell scripts include
+    file manipulation, program execution, and printing text. A script which sets up
+    the environment, runs the program, and does any necessary cleanup or logging,
+    is called a wrapper.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: See also [Difference between scripting and programming languages](https://stackoverflow.com/q/17253545/4082052).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Executable script](#executable-script)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are several ways you can execute commands from a file. This section shows
+    an example of creating an executable script. Consider this sample script saved
+    in a file named `hello.sh`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The first line in the above script has two parts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`/bin/bash` is the path of the `bash` interpreter'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can use `type bash` to get the path on your system
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`#!` is known as [shebang or hashbang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+    which directs the program loader to use the interpreter path provided'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'see also [stackoverflow: comparison between #!/usr/bin/env and #!/bin/bash?](https://stackoverflow.com/q/21612980/4082052)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: the `#` character starts a comment, `#!` is only special at the start of the
+    script
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Use `chmod` to add executable permission to the file and then run the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you want to use just the script name to execute it, the file has to be located
+    in one of the `PATH` folders. Otherwise, you'll have to provide the script's path
+    (absolute or relative) in order to execute it (as shown in the above illustration).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `.sh` is typically
+    used as the file extension for shell scripts. It is also common to *not* have
+    an extension at all, especially for executable scripts.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Passing file argument to bash](#passing-file-argument-to-bash)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can also just pass a regular file as an argument to the `bash` command.
+    In this case, the shebang isn't needed (though it wouldn't cause any issues either,
+    since it will be treated as a comment).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Sourcing script](#sourcing-script)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Yet another way to execute a script is to *source* it using the `source` (or
+    `.`) builtin command. A major difference from the previous methods is that the
+    script is executed in the current shell environment context instead of a sub-shell.
+    A common use case is sourcing `~/.bashrc` and alias/functions (if they are saved
+    in a separate file).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `fc` is a builtin command
+    to manipulate the history of commands you''ve used from the terminal. See [bash
+    manual: History Builtins](https://www.gnu.org/software/bash/manual/bash.html#Bash-History-Builtins)
+    for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Comments](#comments)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Single line comments can be inserted after the `#` character, either at the
+    start of a line or after an instruction.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See this [unix.stackexchange
+    thread](https://unix.stackexchange.com/q/37411/109046) for emulating multiline
+    comments.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Variables](#variables)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here''s a basic example of assigning a variable and accessing its value:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: As seen above, you need to use the `$` prefix while accessing the value stored
+    in a variable. You can use the `${variable}` syntax to distinguish between the
+    variable and other parts of the string. Using appropriate quotes is recommended,
+    unless otherwise necessary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can append to a variable by using the `+=` operator. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `declare` builtin to add attributes to variables. For example,
+    the `-i` option for treating the variable as an integer, `-r` option for readonly,
+    etc. These attributes can change the behavior of operators like `=` and `+=` for
+    those variables. See [bash manual: Shell-Parameters](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters)
+    and [bash manual: declare](https://www.gnu.org/software/bash/manual/bash.html#index-declare)
+    for more details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Assigning variables is one of the most common source for errors. Unlike most programming
+    languages, spaces are *not* allowed around the `=` sign. That is because space
+    is a shell metacharacter. Another common issue is using quotes (or not) around
+    the value. Here are some examples:'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '[Arrays](#arrays)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [bash manual: Arrays](https://www.gnu.org/software/bash/manual/bash.html#Arrays):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash provides one-dimensional indexed and associative array variables. Any variable
+    may be used as an indexed array; the `declare` builtin will explicitly declare
+    an array. There is no maximum limit on the size of an array, nor any requirement
+    that members be indexed or assigned contiguously. Indexed arrays are referenced
+    using integers and are zero-based; associative arrays use arbitrary strings.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Here''s an example of assigning an indexed array and various ways of accessing
+    the elements:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Parameter Expansion](#parameter-expansion)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Bash provides several useful ways to extract and modify the contents of parameters
+    and variables (including arrays). Some of these features will be discussed in
+    this section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*1)* Substring extraction using `${parameter:offset}` syntax to get all characters
+    from the given index:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When applied to arrays, substring extraction will give you those elements:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*2)* Substring extraction using `${parameter:offset:length}` syntax to get
+    specific number of characters from the given index:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*3)* `${#parameter}` will give you the length of the string and `${#array[@]}`
+    will give you the number of elements in the array:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*4)* `${parameter#glob}` will remove the shortest match from the start of the
+    string. You can also use extended globs if enabled via the `shopt` builtin. `${parameter##glob}`
+    will remove the longest match from the start of the string. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*5)* You can use `${parameter%glob}` to remove the shortest match from the
+    end of the string. `${parameter%%glob}` will remove the longest match from the
+    end of the string.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*6)* `${parameter/glob/string}` replaces the first matching occurrence with
+    the given replacement string and `${parameter//glob/string}` will replace all
+    the matching occurrences. You can leave out the `/string` portion when you want
+    to delete the matching occurrences. The `glob` will match the longest portion,
+    similar to greedy behavior in regular expressions. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*7)* You can use `${parameter/#glob/string}` to match only at the start of
+    the string and `${parameter/%glob/string}` to match only at the end of the string.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*8)* `${parameter^glob}` can change only the first character to uppercase if
+    matched by the glob. `${parameter^^glob}` changes all the matching characters
+    to uppercase (anywhere in the input string). You should provide a glob that only
+    matches one character in length. If the glob is omitted, entire parameter will
+    be matched. These rules also apply to the lowercase and swap case versions discussed
+    later.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*9)* To change the characters to lowercase, use `,` and `,,` as shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*10)* To swap case, use `~` and `~~` as shown below. Note that this seems to
+    be deprecated, since it is no longer mentioned in the `bash` manual.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [bash manual: Shell
+    Parameter Expansion](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion)
+    for more details and other types of expansions.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Command Line Arguments](#command-line-arguments)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Command line arguments passed to a script (or a function) are saved in positional
+    parameters starting with `1`, `2`, `3` etc. `0` contains the name of the shell
+    or shell script. `@` contains all the positional parameters starting from `1`.
+    Use `#` to get the number of positional parameters. Similar to variables, you
+    need to use a `$` prefix to get the value stored in these parameters. If the parameter
+    number requires more than a single digit, you have to necessarily enclose them
+    in `{}` (for example, `${12}` to get the value of the twelfth parameter).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an example script that accepts two arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: shell script choking on whitespace or other special characters](https://unix.stackexchange.com/q/131766/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bash manual: Special Parameters](https://www.gnu.org/software/bash/manual/bash.html#Special-Parameters)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Conditional Expressions](#conditional-expressions)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can test a condition within `[[` and `]]` to get a success (`0`) or failure
+    (`1` or higher) exit status and take action accordingly. Bash provides several
+    options and operators that you can use. Space is required after `[[` and before
+    `]]` for this compound command to function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Operators `;`, `&&`
+    and `||` will be used in this section to keep the examples terser. `if-else` and
+    other control structures will be discussed later.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Options](#options)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-e` option checks if the given path argument exists or not. Add a `!` prefix
+    to negate the condition.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-d` and `-f` options to check if the path is a valid directory
+    and file respectively. The `-s` option checks if the file exists and its size
+    is greater than zero. The `-x` option checks if the file exists and is executable.
+    See `help test` and [bash manual: Conditional Expressions](https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions)
+    for a complete list of such options.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[String comparisons](#string-comparisons)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`s1 = s2` or `s1 == s2` checks if two strings are equal'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: unquoted portions of `s2` will be treated as a wildcard while testing against
+    `s1`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`extglob` would be considered as enabled for such comparisons'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`s1 != s2` checks if strings are *not* equal'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: unquoted portions of `s2` will be treated as a wildcard while testing against
+    `s1`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`extglob` would be considered as enabled for such comparisons'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`s1 < s2` checks if `s1` sorts before `s2` lexicographically'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`s1 > s2` checks if `s1` sorts after `s2` lexicographically'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`s1 =~ s2` checks if `s1` matches the POSIX extended regular expression provided
+    by `s2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: exit status will be `2` if `s2` is not a valid regexp
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here are some examples for equal and not-equal comparisons:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are some examples for greater-than and less-than comparisons:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here are some examples for regexp comparison. You can use the special array
+    `BASH_REMATCH` to retrieve specific portions of the string that was matched. Index
+    `0` gives entire matched portion, `1` gives the portion matched by the first capture
+    group and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Numeric comparisons](#numeric-comparisons)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`n1 -eq n2` checks if two numbers are equal'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`n1 -ne n2` checks if two numbers are *not* equal'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`n1 -gt n2` checks if `n1` is greater than `n2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`n1 -ge n2` checks if `n1` is greater than or equal to `n2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`n1 -lt n2` checks if `n1` is less than `n2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`n1 -le n2` checks if `n1` is less than or equal to `n2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: These operators support only integer comparisons.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Numeric arithmetic operations and comparisons can also be performed within
+    the `((` and `))` compound command. Here are some sample comparisons:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that the `$` prefix
+    was *not* used for variables in the above examples. See [bash manual: Shell Arithmetic](https://www.gnu.org/software/bash/manual/bash.html#Shell-Arithmetic)
+    for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Accepting user input interactively](#accepting-user-input-interactively)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can use the `read` builtin command to accept input from the user interactively.
+    If multiple variables are given as arguments to the `read` command, values will
+    be assigned based on whitespace separation by default. Any pending values will
+    be assigned to the last variable. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-p` option helps you to add a user prompt. Here is an example of getting
+    two arguments from the user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use the `-a`
+    option to assign an array, the `-d` option to specify a custom delimiter instead
+    of newline for terminating user input and so on. See `help read` and [bash manual:
+    Builtins](https://www.gnu.org/software/bash/manual/bash.html#Bash-Builtins) for
+    more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[if then else](#if-then-else)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The keywords needed to construct an `if` control structure are `if`, `then`,
+    `fi` and optionally `else` and `elif`. You can use compound commands like `[[`
+    and `((` to provide the test condition. You can also directly use a command''s
+    exit status. Here''s an example script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`1>&2` is used in the above script to redirect error messages to the `stderr`
+    stream. Sample script invocations are shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: Sometimes you just need to know if the intended command operation was successful
+    or not and then take an action depending on the outcome. In such cases, you can
+    provide the command directly after the `if` keyword. Note that `stdout` and `stderr`
+    of the command will still be active unless redirected or suppressed using appropriate
+    options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, the `grep` command supports the `-q` option to suppress `stdout`.
+    Here''s a script using that feature:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Sample invocations for the above script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[for loop](#for-loop)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To construct a `for` loop, you''ll need the `for`, `do` and `done` keywords.
+    Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: As seen in the above examples, the space separated arguments provided after
+    the `in` keyword are automatically assigned to the variable provided after the
+    `for` keyword during each iteration.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s a modified example of the last example that accepts user provided command
+    line arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example of iterating over an array:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `continue`
+    and `break` to alter the loop flow depending on specific conditions. See [bash
+    manual: Bourne Shell Builtins](https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins)
+    for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `for file;` is same
+    as `for file in "$@";` since `in "$@"` is the default. I''d recommend using the
+    explicit version.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[while loop](#while-loop)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Here's a simple `while` loop construct. You'll see a more practical example
+    later in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Reading a file](#reading-a-file)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `while` loop in combination with the `read` builtin can be used to process
+    the content of a file. Here''s an example of reading input contents line by line:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: The intention in the above script is to treat each input line literally. So,
+    the `IFS` (input field separator) special variable is set to an empty string to
+    prevent stripping of leading and trailing whitespaces. The `-r` option to the
+    `read` builtin allows `\` in the input to be treated literally. Note that the
+    input filename is accepted as the first command line argument and redirected as
+    `stdin` to the `while` loop. You also need to make sure that the last line of
+    the input ends with a newline character, otherwise the last line won't be processed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can change `IFS` to split the input line into different fields and specify
+    appropriate number of variables to the `read` builtin. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can pass a number to the `-n` option for the `read` builtin to process
+    the input that many characters at a time. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `xargs` command
+    can also be used for some of the cases discussed above. See [unix.stackexchange:
+    parse each line of a text file as a command argument](https://unix.stackexchange.com/q/149726/109046)
+    for examples.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Functions](#functions)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [bash manual: Shell Functions](https://www.gnu.org/software/bash/manual/bash.html#Shell-Functions):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Shell functions are a way to group commands for later execution using a single
+    name for the group. They are executed just like a "regular" command. When the
+    name of a shell function is used as a simple command name, the list of commands
+    associated with that function name is executed. Shell functions are executed in
+    the current shell context; no new process is created to interpret them.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'You can use either of the syntax shown below to declare functions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Arguments to functions are passed in the same manner as those discussed earlier
+    for shell scripts. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In the above example, `echo` is used to display the command that will be executed.
+    Remove `echo` if you want this script to actually create new images with the given
+    parameters. The function accepts one to three arguments and uses default values
+    when some of the arguments are not passed. Here''s the output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use `mogrify` instead
+    of `convert` if you want to modify the input image inplace instead of creating
+    a new image. These image manipulation commands are part of the [ImageMagick](https://imagemagick.org/)
+    suite. As an exercise, modify the above function to generate an error if the arguments
+    passed do not match the expected usage. You can also accept an output image name
+    (or perhaps a different suffix) as an additional argument.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: The shell script and user defined functions (which in turn might call itself
+    or another function) can both have positional arguments. In such cases, the shell
+    takes cares of restoring positional arguments to the earlier state once a function
+    completes its tasks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Functions have exit status as well, which is based on the last executed command
+    by default. You can use the `return` builtin to provide your own custom exit status.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Debugging](#debugging)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can use the following `bash` options for debugging purposes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-x` print commands and their arguments as they are executed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-v` verbose option, print shell input lines as they are read'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here''s an example with the `bash -x` option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The lines starting with `+` show the command being executed with expanded values
+    if applicable (the `search` variable to `grep -q` for example). Multiple `+` will
+    be used if there are multiple expansions. Here''s how `bash -xv` would behave
+    for the same script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can also use `set
+    -x` or `set -v` or `set -xv` from within the script to debug from a particular
+    point onwards. You can turn off such debugging by using `+` instead of `-` as
+    the option prefix (for example, `set +x`).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[shellcheck](#shellcheck)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[shellcheck](https://www.shellcheck.net/) is a static analysis tool that gives
+    warnings and suggestions for scripts. You can use it online or install the tool
+    for offline use. Given the various `bash` gotchas, this tool is highly recommended
+    for both beginners and advanced users.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Consider this script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s how `shellcheck` reports the issue:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) If the script doesn''t
+    have a shebang, you can use the `-s` option (`shellcheck -s bash` for example)
+    to specify the shell application.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Note that `shellcheck` will not catch all types of issues. And suggestions should
+    not be blindly accepted without understanding if it makes sense in the given context.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Resource lists](#resource-lists)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here are some more learning resources:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Shell Scripting**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Bash Guide](https://mywiki.wooledge.org/BashGuide) — aspires to teach good
+    practice techniques for using Bash, and writing simple scripts'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash Scripting Tutorial](https://ryanstutorials.net/bash-scripting-tutorial/)
+    — solid foundation in how to write Bash scripts, to get the computer to do complex,
+    repetitive tasks for you'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bash-handbook](https://github.com/denysdovhan/bash-handbook) — for those who
+    want to learn Bash without diving in too deeply'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Serious Shell Programming](https://freebsdfrau.gitbook.io/serious-shell-programming/)
+    — focuses on POSIX-compliant Bourne Shell for portability'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Handy tools, tips and reference**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[shellcheck](https://www.shellcheck.net/) — linting tool to avoid common mistakes
+    and improve your script'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash reference cheatsheet](https://devmanual.gentoo.org/tools-reference/bash/index.html)
+    — nicely formatted and explained well'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash scripting cheatsheet](https://devhints.io/bash) — quick reference to
+    getting started with Bash scripting'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Comprehensive lists on the `mywiki.wooledge.org` website:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash FAQ](https://mywiki.wooledge.org/BashFAQ)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash Practices](https://mywiki.wooledge.org/BashGuide/Practices)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash Pitfalls](https://mywiki.wooledge.org/BashPitfalls)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Google shell style guide](https://google.github.io/styleguide/shellguide.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Reliability and robustness
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[safe ways to do things in bash](https://github.com/anordal/shellharden/blob/master/how_to_do_things_safely_in_bash.md)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[better scripting](https://robertmuth.blogspot.com/2012/08/better-bash-scripting-in-15-minutes.html)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[robust scripting](https://www.davidpashley.com/articles/writing-robust-shell-scripts/)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Specific topics**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Reading files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Robust way to read files for various use cases](https://mywiki.wooledge.org/BashFAQ/001)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Loop through the lines of two files in parallel](https://unix.stackexchange.com/q/82541/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[arrays](https://mywiki.wooledge.org/BashGuide/Arrays)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nameref](https://unix.stackexchange.com/q/288886/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: also see this [FAQ](https://mywiki.wooledge.org/BashFAQ/006)
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: getopts
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[getopts tutorial](https://web.archive.org/web/20221226035414/https://wiki.bash-hackers.org/howto/getopts_tutorial)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[handling command-line arguments](https://mywiki.wooledge.org/BashFAQ/035)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[stackoverflow: getopts example](https://stackoverflow.com/q/16483119/4082052)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Sending and Trapping Signals](https://mywiki.wooledge.org/SignalTrap)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use a temporary working
+    directory before attempting the exercises. You can delete such practice directories
+    afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** What''s wrong with the script shown below? Also, will the error go away
+    if you use `bash try.sh` instead?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Will the command shown below work? If so, what would be the output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** When would you `source` a script instead of using `bash` or creating
+    an executable using shebang?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** How would you display the contents of a variable with `shake` appended?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** What changes would you make to the code shown below to get the expected
+    output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Is the following code valid? If so, what would be the output of the
+    `echo` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** How would you get the last three characters of a variable''s contents?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Will the second `echo` command give an error? If not, what will be the
+    output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the given array, use parameter expansion to remove characters until
+    the first/last space.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Use parameter expansion to get the expected outputs shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Is it possible to achieve the expected outputs shown below using parameter
+    expansion? If so, how?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** For the given input, change case as per the expected outputs shown
+    below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Why does the conditional expression shown below fail?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** What is the difference between the `==` and `=~` string comparison
+    operators?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**15)** Why does the conditional expression used below show `failed` both times?
+    Modify the expressions such that the first one correctly says `matched` instead
+    of `failed`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Extract the digits that follow a `:` character for the given variable
+    contents.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Modify the expression shown below to correctly report `true` instead
+    of `false`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Write a shell script named `array.sh` that accepts array input from
+    the user followed by another input as index. Display the corresponding value at
+    that index. Couple of examples are shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** Write a shell script named `case.sh` that accepts exactly two command
+    line arguments. The first argument can be `lower`, `upper` or `swap` and this
+    should be used to transform the contents of the second argument. Examples script
+    invocations are shown below, including what should happen if the command line
+    arguments do not meet the script expectations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Write a shell script named `loop.sh` that displays the number of lines
+    for each of the files passed as command line arguments.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE65]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Write a shell script named `read_file.sh` that reads a file line by
+    line to be passed as an argument to the `paste -sd,` command. Can you also write
+    a solution using the `xargs` command instead of a script?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE66]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Write a function named `add_path` which prefixes the path of the current
+    working directory to the arguments it receives and displays the results. Examples
+    are shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE67]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** What do the options `bash -x` and `bash -v` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**24)** What is `shellcheck` and when would you use it?'
+  prefs: []
+  type: TYPE_NORMAL

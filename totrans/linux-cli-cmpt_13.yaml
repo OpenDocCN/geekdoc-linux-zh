@@ -1,0 +1,188 @@
+- en: Comparing Files
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/comparing-files.html](https://learnbyexample.github.io/cli-computing/comparing-files.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In this chapter, you'll learn how to find and report differences between the
+    contents of two files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the sample input files used in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[cmp](#cmp)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `cmp` command is useful to compare text and binary files. If the two input
+    files have the same content, no output is displayed and exit status is `0`. If
+    there is a difference, it prints the first difference with details like line number
+    and byte location and the exit status will be `1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `-s` option
+    to suppress the output when you just need the exit status. The `-i` option will
+    allow you to skip initial bytes from the input.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[diff](#diff)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Useful to find differences between text files. All the differences are printed,
+    which might not be desirable for long files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Common options](#common-options)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Commonly used options are shown below. Examples will be discussed in the later
+    sections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i` ignore case'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-w` ignore whitespaces'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-b` ignore changes in the amount of whitespace'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-B` ignore only blank lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-E` ignore changes due to tab expansion'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-z` ignore trailing whitespaces at the end of lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-y` two column output'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-r` recursively compare files between the two directories specified'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-s` convey message when two files are same'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-q` report if files differ, not the details of differences'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Default diff](#default-diff)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: By default, the `diff` output shows lines from the first input file prefixed
+    with `<` and lines from the second file prefixed with `>`. A line containing `---`
+    is used as the group separator. Each difference is prefixed by a command that
+    indicates the differences (these commands are understood by tools like `patch`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Ignoring whitespaces](#ignoring-whitespaces)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'There are several options to ignore specific whitespace characters during comparison.
+    Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Side-by-side output](#side-by-side-output)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-y` option is handy to view the differences side-by-side. By default, all
+    the input lines will be present in the output and the line width is 130 print
+    columns. You can use the `-W` option to change the width when dealing with short
+    input lines. The `--suppress-common-lines` helps to focus only on the differences.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`gvimdiff` edit two, three or four versions of a file with GVim and show differences'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[GUI diff and merge tools](http://askubuntu.com/questions/2946/what-are-some-good-gui-diff-and-merge-applications-available-for-ubuntu)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[difftastic](https://github.com/Wilfred/difftastic) — structural diff tool
+    that understands syntax'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[icdiff](https://github.com/jeffkaufman/icdiff) — improved colored diff'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Which `cmp` option would you use if you just need the exit status reflecting
+    whether the given inputs are same or not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** Which `cmp` option would you use to skip the initial bytes for comparison
+    purposes? The below example requires you to skip the first two bytes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** What does the `diff -d` option do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** Which option will help you get colored output with `diff`?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**5)** Use appropriate options to get the desired output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Use appropriate options to get the desired output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE

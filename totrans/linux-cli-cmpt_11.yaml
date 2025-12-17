@@ -1,0 +1,835 @@
+- en: Multipurpose Text Processing Tools
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/multipurpose-text-processing-tools.html](https://learnbyexample.github.io/cli-computing/multipurpose-text-processing-tools.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Many CLI text processing tools have been in existence for about half a century.
+    And newer tools are being written to solve the ever expanding text processing
+    problems. Just knowing that a particular tool exists or searching for a tool before
+    attempting to write your own solution can be a time saver. Also, popular tools
+    are likely to be optimized for speed, hardened against bugs due to wide usage,
+    discussed on forums, and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`grep` was already covered in the [Searching Files and Filenames](./searching-files-and-filenames.html)
+    chapter. In addition, `sed`, `awk` and `perl` are essential tools to solve a wide
+    variety of text processing problems from the command line. In this chapter you''ll
+    learn field processing, use regular expressions for search and replace requirements,
+    perform operations based on multiple lines and files, etc.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The examples presented
+    in this chapter only cover some of the functionalities. I''ve written separate
+    books to cover these tools with more detailed explanations, examples and exercises.
+    See [https://learnbyexample.github.io/books/](https://learnbyexample.github.io/books/)
+    for links to these books.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the sample input files used in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[sed](#sed)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The command name `sed` is derived from **s**tream **ed**itor. Here, stream refers
+    to the data being passed via shell pipes. Thus, the command's primary functionality
+    is to act as a text editor for **stdin** data with **stdout** as the output target.
+    You can also edit file input and save the changes back to the same file if needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Substitution](#substitution)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`sed` has various commands to manipulate text input. The **substitute** command
+    is the most commonly used, whose syntax is `s/REGEXP/REPLACEMENT/FLAGS`. Here
+    are some basic examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example with file input:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: What if you want to issue multiple substitute commands (or use several other
+    `sed` commands)? It will depend on the command being used. Here's an example where
+    you can use the `-e` option or separate the commands with a `;` character.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Inplace editing](#inplace-editing)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use the `-i` option for inplace editing. Pass an argument to this option
+    to save the original input as a backup.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Filtering features](#filtering-features)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `sed` command also has features to filter lines based on a search pattern
+    like `grep`. And you can apply other `sed` commands for these filtered lines as
+    needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `q` and `Q` commands to quit `sed` once a matching line is
+    found:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Apart from regexp, filtering can also be done based on line numbers, address
+    ranges, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you need to issue multiple commands for filtered lines, you can group those
+    commands within `{}` characters. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Regexp substitution](#regexp-substitution)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Here are some regexp based substitution examples. The `-E` option enables **ERE**
+    (default is **BRE**). Most of the syntax discussed in the [Regular Expressions](./searching-files-and-filenames.html#regular-expressions)
+    section for the `grep` command applies for `sed` as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `/` character is idiomatically used as the regexp delimiter. But any character
+    other than `\` and the newline character can be used instead. This helps to avoid
+    or reduce the need for escaping delimiter characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: My ebook [CLI text processing with GNU sed](https://github.com/learnbyexample/learn_gnused)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: See also my blog post [GNU BRE/ERE cheatsheet](https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/)
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: common search and replace examples with sed and other
+    tools](https://unix.stackexchange.com/q/112023/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[awk](#awk)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`awk` is a programming language and widely used for text processing tasks from
+    the command line. `awk` provides filtering capabilities like those supported by
+    the `grep` and `sed` commands, along with some more nifty features. And similar
+    to many command line utilities, `awk` can accept input from both `stdin` and files.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Regexp filtering](#regexp-filtering)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To make it easier to use programming features from the command line, there
+    are several shortcuts, for example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`awk ''/regexp/''` is a shortcut for `awk ''$0 ~ /regexp/{print $0}''`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`awk ''!/regexp/''` is a shortcut for `awk ''$0 !~ /regexp/{print $0}''`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Awk special variables](#awk-special-variables)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Brief description for some of the special variables are given below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`$0` contains the input record content'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$1` first field'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$2` second field and so on'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`FS` input field separator'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`OFS` output field separator'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`NF` number of fields'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`RS` input record separator'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`ORS` output record separator'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`NR` number of records (i.e. line number) for entire input'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`FNR` number of records per file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Default field processing](#default-field-processing)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`awk` automatically splits input into fields based on one or more sequence
+    of **space** or **tab** or **newline** characters. In addition, any of these three
+    characters at the start or end of input gets trimmed and won''t be part of field
+    contents. The fields are accessible using `$N` where `N` is the field number you
+    need. You can also pass an expression instead of numeric literals to specify the
+    field required.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here's an example of applying a substitution operation for a particular field.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Condition and Action](#condition-and-action)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The examples so far have used a few different ways to construct a typical `awk`
+    one-liner. If you haven''t yet grasped the syntax, this generic structure might
+    help:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: If a condition isn't provided, the action is always executed. Within a block,
+    you can provide multiple statements separated by a semicolon character. If action
+    isn't provided, then by default, contents of `$0` variable is printed if the condition
+    evaluates to *true*. Idiomatically, `1` is used to denote a `true` condition in
+    one-liners as a shortcut to print the contents of `$0` (as seen in an earlier
+    example). When action isn't present, you can use semicolon to terminate the condition
+    and start another `condX{actionX}` snippet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can use a `BEGIN{}` block when you need to execute something before the
+    input is read and an `END{}` block to execute something after all of the input
+    has been processed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Regexp field processing](#regexp-field-processing)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: As seen earlier, `awk` automatically splits input into fields (based on space/tab/newline
+    characters) which are accessible using `$N` where `N` is the field number you
+    need. You can use the `-F` option or assign the `FS` variable to set a regexp
+    based input field separator. Use the `OFS` variable to set the output field separator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `FS` variable allows you to define the input field *separator*. In contrast,
+    `FPAT` (field pattern) allows you to define what should the fields be made up
+    of.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Record separators](#record-separators)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: By default, newline is used as the input and output record separators. You can
+    change them using the `RS` and `ORS` variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[State machines](#state-machines)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `condX{actionX}` shortcut makes it easy to code state machines concisely.
+    This is useful to solve problems that depend on the contents of multiple records.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an example of printing the matching line as well as `c` number of lines
+    that follow:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Consider the following input file that has records bounded by distinct markers
+    (lines containing `start` and `end`):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are some examples of processing such bounded records:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example of printing two consecutive records only if the first record
+    contains `ar` and the second one contains `nice`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Two files processing](#two-files-processing)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'This section focuses on solving problems which depend upon the contents of
+    two or more files. These are usually based on comparing records and fields. These
+    two files will be used in the examples to follow:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The *key* features used to find common lines between two files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For two files as input, `NR==FNR` will be *true* only when the first file is
+    being processed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`FNR` is record number like `NR` but resets for each input file'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`next` will skip the rest of the code and fetch the next record'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`a[$0]` by itself is a valid statement, creates an uninitialized element in
+    array `a` with `$0` as the key (if the key doesn''t exist yet)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$0 in a` checks if the given string (`$0` here) exists as a key in the array
+    `a`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png) Note that the `NR==FNR`
+    logic will fail if the first file is empty. See [this unix.stackexchange thread](https://unix.stackexchange.com/a/237110/109046)
+    for workarounds.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Removing duplicates](#removing-duplicates)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`awk ''!a[$0]++''` is one of the most famous `awk` one-liners. It eliminates
+    line based duplicates while retaining the input order. The following example shows
+    this feature in action along with an illustration of how the logic works.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading-1)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: My ebook [CLI text processing with GNU awk](https://github.com/learnbyexample/learn_gnuawk)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: See also my blog post [GNU BRE/ERE cheatsheet](https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/)
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Online gawk manual](https://www.gnu.org/software/gawk/manual/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: My blog post [CLI computation with GNU datamash](https://learnbyexample.github.io/cli-computation-gnu-datamash/)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[perl](#perl)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Perl is a scripting language with plenty of builtin features and a strong ecosystem.
+    Perl one-liners can be used for text processing, similar to `grep`, `sed`, `awk`
+    and more. And similar to many command line utilities, `perl` can accept input
+    from both `stdin` and file arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Basic one-liners](#basic-one-liners)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-e` option accepts code as a command line argument. Many shortcuts are
+    available to reduce the amount of typing needed. In the above examples, a regular
+    expression has been used to filter the input. When the input string isn''t specified,
+    the test is performed against the special variable `$_`, which has the contents
+    of the current input line. `$_` is also the default argument for many functions
+    like `print` and `length`. To summarize:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`/REGEXP/FLAGS` is a shortcut for `$_ =~ m/REGEXP/FLAGS`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`!/REGEXP/FLAGS` is a shortcut for `$_ !~ m/REGEXP/FLAGS`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In the examples below, the `-p` option is used instead of `-n`. This helps to
+    automatically print the value of `$_` after processing each input line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Similar to `sed`, you
+    can use the `-i` option for inplace editing.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Perl special variables](#perl-special-variables)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Brief description for some of the special variables are given below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`$_` contains the input record content'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`@F` array containing the field contents (with the `-a` and `-F` options)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$F[0]` first field'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$F[1]` second field and so on'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$F[-1]` last field'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$F[-2]` second last field and so on'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$#F` index of the last field'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$.` number of records (i.e. line number)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$1` backreference to the first capture group'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$2` backreference to the second capture group and so on'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$&` backreference to the entire matched portion'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You'll see examples using such variables in the sections to follow.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Auto split](#auto-split)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Here are some examples based on specific fields rather than the entire line.
+    The `-a` option will cause the input line to be split based on whitespaces and
+    the field contents can be accessed using the `@F` special array variable. Leading
+    and trailing whitespaces will be suppressed, so there's no possibility of empty
+    fields.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When you use an array within double quotes (like `"@F"` in the example above),
+    the fields will be printed with a space character in between. The `join` function
+    is one of the ways to print the contents of an array with a custom field separator.
+    Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) In the above examples,
+    the `-l` option has been used to remove the record separator (which is newline
+    by default) from the input line. The record separator thus removed is added back
+    when the `print` function is used.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Regexp field separator](#regexp-field-separator)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use the `-F` option to specify a regexp pattern for input field separation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Powerful features](#powerful-features)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: I reach for Perl over `grep`, `sed` and `awk` when I need powerful regexp features
+    and make use of the vast builtin functions and libraries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some examples showing regexp features not present in BRE/ERE:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And here are some examples showing off builtin features:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading-2)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[perldoc: Perl introduction](https://perldoc.perl.org/perlintro)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[perldoc: Regexp tutorial](https://perldoc.perl.org/perlretut)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: My ebook [Perl One-Liners Guide](https://github.com/learnbyexample/learn_perl_oneliners)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Replace all occurrences of `0xA0` with `0x50` and `0xFF` with `0x7F`
+    for the given input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Remove only the third line from the given input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** For the input file `sample.txt`, display all lines that contain `it`
+    but not `do`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** For the input file `purchases.txt`, delete all lines containing `tea`.
+    Also, replace all occurrences of `coffee` with `milk`. Write back the changes
+    to the input file itself. The original contents should get saved to `purchases.txt.orig`.
+    Afterwards, restore the contents from this backup file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** For the input file `sample.txt`, display all lines from the start of
+    the file till the first occurrence of `are`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Delete all groups of lines from a line containing `start` to a line
+    containing `end` for the `uniform.txt` input file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Replace all occurrences of `42` with `[42]` unless it is at the edge
+    of a word.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Replace all whole words with `X` that start and end with the same word
+    character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the input file `anchors.txt`, convert markdown anchors to hyperlinks
+    as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Replace all occurrences of `e` with `3` except the first two matches.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** The below sample strings use `,` as the delimiter and the field values
+    can be empty as well. Use `sed` to replace only the third field with `42`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** For the input file `table.txt`, calculate and display the product of
+    numbers in the last field of each line. Consider space as the field separator
+    for this file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Extract the contents between `()` or `)(` from each of the input lines.
+    Assume that the `()` characters will be present only once every line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** For the input file `scores.csv`, display the `Name` and `Physics` fields
+    in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Extract and display the third and first words in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** For the input file `scores.csv`, add another column named **GP** which
+    is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics
+    and Chemistry.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** From the `para.txt` input file, display all paragraphs containing any
+    digit character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Input has the ASCII NUL character as the record separator. Change it
+    to dot and newline characters as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** For the input file `sample.txt`, print a matching line containing `do`
+    only if `you` is found two lines before. For example, if `do` is found on line
+    number 10 and the 8th line contains `you`, then the 10th line should be printed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** For the input file `blocks.txt`, extract contents from a line containing
+    exactly `%=%=` until but not including the next such line. The block to be extracted
+    is indicated by the variable `n` passed via the `-v` option.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Display lines present in `c1.txt` but not in `c2.txt` using the `awk`
+    command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Display lines from `scores.csv` by matching the first field based on
+    a list of names from the `names.txt` file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** Retain only the first copy of duplicate lines from the `duplicates.txt`
+    input file. Use only the contents of the last field for determining duplicates.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** For the input file `table.txt`, print input lines if the second field
+    starts with `b`. Construct solutions using `awk` and `perl`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** For the input file `table.txt`, retain only the second last field.
+    Write back the changes to the input file itself. The original contents should
+    get saved to `table.txt.bkp`. Afterwards, restore the contents from this backup
+    file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**26)** Reverse the first field contents of `table.txt` input file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Sort the given comma separated input lexicographically. Change the
+    output field separator to a `:` character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**28)** Filter fields containing digit characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** The input shown below has several words ending with digit characters.
+    Change the words containing `test` to match the output shown below. That is, renumber
+    the matching portions to `1`, `2`, etc. Words not containing `test` should not
+    be changed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**30)** For the input file `table.txt`, change contents of the third field
+    to all uppercase. Construct solutions using `sed`, `awk` and `perl`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE

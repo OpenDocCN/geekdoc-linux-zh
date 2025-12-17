@@ -1,0 +1,372 @@
+- en: Introduction and Setup
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/introduction-setup.html](https://learnbyexample.github.io/cli-computing/introduction-setup.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Back in 2007, I had a rough beginning as a design engineer at a semiconductor
+    company in terms of utilizing software tools. Linux command line, Vim and Perl
+    were all new to me. In addition to learning about command line tools from colleagues
+    and supervisors, I remember going through and making notes in a photocopied book
+    (unable to recall the title now).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The biggest pain points were not knowing about handy options (for example, `grep
+    --color` to highlight matching portions, `find -exec` to apply commands on filtered
+    files, etc) and tools (for example, `xargs` to workaround limitations of too many
+    command line arguments). And then there were tools like `sed` and `awk` with intimidating
+    syntax. I'm at a loss to reason out why I didn't utilize shell scripts much. I
+    stuck to Perl and Vim instead of learning such handy tools. I also did not know
+    about forums like [stackoverflow](https://stackoverflow.com/) and [unix.stackexchange](https://unix.stackexchange.com/)
+    until after I left my job in 2014.
+  prefs: []
+  type: TYPE_NORMAL
+- en: I started collating what I knew about Linux command line tools when I got chances
+    to conduct scripting course workshops for college students. From 2016 to 2018,
+    I started maintaining my tutorials on Linux command line, Vim and scripting languages
+    as GitHub repos. As you might guess, I then started polishing these materials
+    and [published them as ebooks](https://learnbyexample.github.io/books/). This
+    is an ongoing process, with **Linux Command Line Computing** being the thirteenth
+    ebook.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This book aims to teach Linux command line tools and Shell Scripting for beginner
+    to intermediate level users. Plenty of examples are provided to make it easier
+    to understand a particular tool and its various features. External links are provided
+    for further reading. Important notes and warnings are formatted to stand out from
+    normal text.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Writing a book always has a few pleasant surprises for me. This time I learned
+    handy options like `mkdir -m` and `chmod =`, got better understanding of many
+    shell features and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This chapter will give a brief introduction to Linux. You'll also see suggestions
+    and instructions for setting up a command line environment to follow along the
+    contents presented in this book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Linux overview](#linux-overview)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Quoting selective parts from [wikipedia](https://en.wikipedia.org/wiki/Linux):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Linux is a family of open-source Unix-like operating systems based on the Linux
+    kernel, an operating system kernel first released on September 17, 1991, by Linus
+    Torvalds. Linux is typically packaged in a Linux distribution.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Linux was originally developed for personal computers based on the Intel x86
+    architecture, but has since been ported to more platforms than any other operating
+    system. Because of the dominance of the Linux-based Android on smartphones, Linux
+    also has the largest installed base of all general-purpose operating systems.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Linux is one of the most prominent examples of free and open-source software
+    collaboration. The source code may be used, modified and distributed commercially
+    or non-commercially by anyone under the terms of its respective licenses, such
+    as the GNU General Public License.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Apart from Linux exposure during my previous job, I've been using Linux since
+    2014 and it is very well suited for my needs. Compared to Windows, Linux is light
+    weight, secure, stable, fast and more importantly doesn't force you to upgrade
+    hardware. Read the wikipedia article linked above for a more comprehensive coverage
+    about Linux, where it is used and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Linux Distros](#linux-distros)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Quoting again from [wikipedia](https://en.wikipedia.org/wiki/Linux_distribution):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A Linux distribution (often abbreviated as distro) is an operating system made
+    from a software collection that is based upon the Linux kernel and, often, a package
+    management system. Linux users usually obtain their operating system by downloading
+    one of the Linux distributions, which are available for a wide variety of systems
+    ranging from embedded devices (for example, OpenWrt) and personal computers (for
+    example, Linux Mint) to powerful supercomputers (for example, Rocks Cluster Distribution).
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'I use Ubuntu, which is beginner friendly. Here are some resources to help you
+    choose a distro:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[/r/linux4noobs wiki](https://old.reddit.com/r/linux4noobs/wiki/distro_selection)
+    — selection guide for noobs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[List of Linux distributions](https://en.wikipedia.org/wiki/List_of_Linux_distributions)
+    — general information about notable Linux distributions in the form of a categorized
+    list'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[DistroWatch](https://distrowatch.com/) — website dedicated to talking about,
+    reviewing and keeping up to date with open source operating systems. This site
+    particularly focuses on Linux distributions and flavours of BSD, though other
+    open source operating systems are sometimes discussed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Light Weight Linux Distros](https://en.wikipedia.org/wiki/Light-weight_Linux_distribution)
+    — uses lower memory and/or has less processor-speed requirements than a more "feature-rich"
+    Linux distribution'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Access to Linux environment](#access-to-linux-environment)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You''ll usually find installation instructions from the respective distro website
+    you wish to install. Alternatively, you can install Linux on a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine)
+    or try it online. Here are some resources to get you started:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Install Ubuntu desktop](https://ubuntu.com/tutorials/install-ubuntu-desktop)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[How to run Ubuntu Desktop on a virtual machine using VirtualBox](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[DistroSea](https://distrosea.com/) — explore and test Linux distributions
+    online'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'If you are already on Windows or macOS, the following options can be used to
+    get access to Linux tools:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Git for Windows](https://git-scm.com/downloads) — provides a Bash emulation
+    used to run Git from the command line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
+    — compatibility layer for running Linux binary executables natively on Windows'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[brew](https://brew.sh/) — Package Manager for macOS (or Linux)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    If you are completely new to command line usage, I''d recommend setting up a virtual
+    machine. Or perhaps, a secondary computer that you are free to experiment with.
+    Mistakes in command line can be more destructive compared to the graphical interface.
+    For example, a single space typo can result in data loss, make your machine unusable,
+    etc.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Setup](#setup)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To follow along the contents presented in this book, you'll need files from
+    my [cli-computing repo](https://github.com/learnbyexample/cli-computing). Once
+    you have access to a Linux environment, follow the instructions shown below. If
+    the commands used below seem alien to you, wait until you reach the [ls](./managing-files-directories.html#ls)
+    section (you'll get a link back to these instructions at that point).
+  prefs: []
+  type: TYPE_NORMAL
+- en: To get the files, you can clone the cli-computing repo using the `git` command
+    or download a `zip` version. You may have to install the `git` command if you
+    don't already have it, for example `sudo apt install git` on Debian-like systems.
+    See [https://git-scm.com/downloads](https://git-scm.com/downloads) for other installation
+    choices.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Once you have the files, you'll be able to follow along the commands presented
+    in this book. For example, you'll need to execute the `ls.sh` script for the [ls](./managing-files-directories.html#ls)
+    section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: For sections like the [cat](./viewing-part-or-whole-file-contents.html#cat)
+    command, you'll need to use the sample input files provided in the `text_files`
+    directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Command Line Interface](#command-line-interface)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Command Line Interface (CLI) allows you to interact with the computer using
+    text commands. For example, the `cd` command helps you navigate to a particular
+    directory. The `ls` command shows the contents of a directory. In a graphical
+    environment, you'd use an explorer (file manager) for navigation and directory
+    contents are shown by default. Some tasks can be accomplished in both CLI and
+    GUI environments, while some are suitable and effective only in one of them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some advantages of using CLI tools over GUI programs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: automation
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: faster execution
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: command invocations are repeatable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: easy to save solutions and share with others
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: single environment compared to different UI/UX with graphical solutions
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: common text interface allows tools to easily communicate with each other
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'And here are some disadvantages:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: steep learning curve
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: syntax can get very complicated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: need to get comfortable with plenty of tools
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: typos have a tendency to be more destructive
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can make use of features like command history, shortcuts and autocompletion
+    to help with the plethora of commands and syntax issues. Consistent practice will
+    help to get familiar with the quirks of the command line environment. Commands
+    with destructive potential will usually include options to allow manual confirmation
+    and interactive usage, thus reducing or entirely avoiding the impact of typos.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Chapters](#chapters)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here''s a list of remaining chapters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Command Line Overview](./command-line-overview.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Managing Files and Directories](./managing-files-directories.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Shell Features](./shell-features.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Viewing Part or Whole File Contents](./viewing-part-or-whole-file-contents.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Searching Files and Filenames](./searching-files-and-filenames.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[File Properties](./file-properties.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Managing Processes](./managing-processes.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Multipurpose Text Processing Tools](./multipurpose-text-processing-tools.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Sorting Stuff](./sorting-stuff.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Comparing Files](./comparing-files.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Assorted Text Processing Tools](./assorted-text-processing-tools.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Shell Scripting](./shell-scripting.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Shell Customization](./shell-customization.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Resource lists](#resource-lists)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This book covers but a tiny portion of Linux command line usage. Topics like
+    system administration and networking aren''t discussed at all. Check out the following
+    lists to learn about such topics and discover cool tools:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Linux curated resources](https://learnbyexample.github.io/curated_resources/linux_cli_scripting.html)
+    — my collection of resources for Linux command line, shell scripting and other
+    related topics'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Awesome Linux](https://github.com/inputsh/awesome-linux) — list of awesome
+    projects and resources that make Linux even more awesome'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Arch wiki: list of applications](https://wiki.archlinux.org/title/List_of_applications)
+    — sorted by category, helps as a reference for those looking for packages'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

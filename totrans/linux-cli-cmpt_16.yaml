@@ -1,0 +1,530 @@
+- en: Shell Customization
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/shell-customization.html](https://learnbyexample.github.io/cli-computing/shell-customization.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This chapter will discuss some of the `bash` features that you can use to customize
+    the command line environment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Environment Variables](#environment-variables)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [wikipedia: Environment variable](https://en.wikipedia.org/wiki/Environment_variable):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: An environment variable is a dynamic-named value that can affect the way running
+    processes will behave on a computer. They are part of the environment in which
+    a process runs. For example, a running process can query the value of the TEMP
+    environment variable to discover a suitable location to store temporary files,
+    or the HOME or USERPROFILE variable to find the directory structure owned by the
+    user running the process.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'See [bash manual: Shell Variables](https://www.gnu.org/software/bash/manual/bash.html#Shell-Variables)
+    for the complete list of `bash` variables. Some of them are presented below and
+    some (`HISTCONTROL` for example) will be discussed later in this chapter.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`HOME` The current user''s home directory; the default for the `cd` builtin
+    command. The value of this variable is also used by tilde expansion'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`PS1` The primary prompt string. The default value is `\s-\v\$`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`PS2` The secondary prompt string. The default value is `>`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`PATH` A colon-separated list of directories in which the shell looks for commands.
+    A zero-length (null) directory name in the value of `PATH` indicates the current
+    directory. A null directory name may appear as two adjacent colons, or as an initial
+    or trailing colon'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`PWD` The current working directory as set by the `cd` builtin'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`OLDPWD` The previous working directory as set by the `cd` builtin'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`SHELL` This environment variable expands to the full pathname of the shell'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can use the `printenv` command to display the name and value of all the
+    environment variables. Providing arguments will display the values only for those
+    variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    It is recommended to use lowercase for user defined variable names to avoid potential
+    conflict with environment variables. You might have noticed that I used only lowercase
+    names in the [Shell Scripting](./shell-scripting.html) chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
+    How to correctly add a path to PATH?](https://unix.stackexchange.com/q/26047/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Aliases and Functions](#aliases-and-functions)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To create an alias, use the appropriately named `alias` command. Without any
+    arguments, it will list all the currently defined aliases. If you want to know
+    what an existing alias does, provide one or more names as arguments. To actually
+    create an alias, give a name, followed by `=` and then the command to be aliased.
+    There should be no spaces around the `=` operator. Use `type name` to check if
+    that name is already taken by some command. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s how you can check what the above aliases do:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) As seen above, aliases
+    have higher precedence compared to commands in the PATH. You can use a `\` prefix
+    (for example `\ls`) if you want to avoid an alias and use the original command.
+    You can also use `command ls` instead of the escape character.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'If you need to pass arguments to your custom commands, use a function (or write
+    a shell script). Here''s an example function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The aliases and functions
+    created above will be valid only for that particular shell session. To load these
+    shortcuts automatically, you need to add them to special files. See the next section
+    for details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: You can use the `unalias` command to remove an alias. For functions, use the
+    `unset -f` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Config files](#config-files)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can add customizations to special configuration files so that those settings
+    are automatically loaded when you start an interactive shell session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[.bashrc](#bashrc)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'From [bash manual: Startup Files](https://www.gnu.org/software/bash/manual/bash.html#Bash-Startup-Files):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When an interactive shell that is not a login shell is started, Bash reads and
+    executes commands from `~/.bashrc`, if that file exists.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: You'll likely have a `~/.bashrc` file provided by the Linux distro you've installed,
+    with useful settings like enabling `bash` programmable completion features, aliases
+    and so on. I leave the distro provided settings alone, unless they are related
+    to aliases and shell options that I want to customize.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Some of the `shopt` customizations I use are shown below. `shopt` was discussed
+    briefly in the [Shell Features](./shell-features.html) chapter. See [bash manual:
+    Shopt Builtin](https://www.gnu.org/software/bash/manual/bash.html#The-Shopt-Builtin)
+    for more details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'I prefer a simple prompt `PS1=''$ ''` instead of fancy colors. See [bash manual:
+    Controlling the Prompt](https://www.gnu.org/software/bash/manual/bash.html#Controlling-the-Prompt)
+    for customization options. See also [starship](https://starship.rs/) which is
+    a minimal, blazing-fast, and infinitely customizable prompt for any shell.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Some history customizations are shown below. See [bash manual: History Facilities](https://www.gnu.org/software/bash/manual/bash.html#Bash-History-Facilities)
+    for more details. See also [unix.stackexchange: common history across sessions](https://unix.stackexchange.com/q/18212/109046).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: For aliases and functions, I use a separate file named `~/.bash_aliases` to
+    reduce clutter in the `.bashrc` file. This is not a file that is loaded automatically,
+    so you need to add `source ~/.bash_aliases` command in the `.bashrc` file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some of my favorite aliases and functions are shown below. See my [.bash_aliases
+    file](https://github.com/learnbyexample/scripting_course/blob/master/.bash_aliases)
+    for more.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `source`
+    with `.bashrc` or `.bash_aliases` files as arguments to apply changes from such
+    files to the current shell session.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[.inputrc](#inputrc)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can add custom key bindings to the `~/.inputrc` file. See [bash manual:
+    Readline Init File](https://www.gnu.org/software/bash/manual/bash.html#Readline-Init-File)
+    for more details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A few examples from my `~/.inputrc` file are shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `bind -f
+    ~/.inputrc` or press `Ctrl+x Ctrl+r` to apply changes from the `.inputrc` file
+    to the current shell session.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[Sensible bash customizations](https://mrzool.cc/writing/sensible-bash/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Shell config subfiles](https://blog.sanctum.geek.nz/shell-config-subfiles/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: when to use alias, functions and scripts](https://unix.stackexchange.com/q/30925/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: what does rc in bashrc stand for](https://unix.stackexchange.com/q/3467/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sxhkd hotkey daemon](https://github.com/baskerville/sxhkd)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Readline shortcuts](#readline-shortcuts)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Quoting from [bash manual: Readline Interaction](https://www.gnu.org/software/bash/manual/bash.html#Readline-Interaction):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Often during an interactive session you type in a long line of text, only to
+    notice that the first word on the line is misspelled. The Readline library gives
+    you a set of commands for manipulating the text as you type it in, allowing you
+    to just fix your typo, and not forcing you to retype the majority of the line.
+    Using these editing commands, you move the cursor to the place that needs correction,
+    and delete or insert the text of the corrections.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: By default, the command line editing bindings are styled after [Emacs](https://www.gnu.org/software/emacs/)
+    (a text editor). You can switch to Vi mode (another text editor) if you wish.
+    This section will discuss some of the often used Emacs-style key bindings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Tab completion](#tab-completion)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The tab key helps you complete commands, aliases, filenames and so on, depending
+    on the context. If there is only one possible completion, it will be done on single
+    tab press. Otherwise, you can press the tab key twice to get a list of possible
+    matches (if there are any).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Use `set show-all-if-ambiguous on` as seen earlier in the [.inputrc](#inputrc)
+    section to combine the single and double tab presses into a single action.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [bash manual: Programmable
+    Completion](https://www.gnu.org/software/bash/manual/bash.html#Programmable-Completion)
+    for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Searching history](#searching-history)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use `Ctrl+r` to search through the command history. After pressing this
+    key sequence, type characters you wish to match from history, then press the `Esc`
+    key to return to the command prompt or press `Enter` to execute the command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can press `Ctrl+r` repeatedly to move backwards through matching entries
+    and `Ctrl+s` to move forwards. If `Ctrl+s` is not working as expected, see [unix.stackexchange:
+    disable ctrl-s](https://unix.stackexchange.com/q/332791/109046).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As discussed in the [.inputrc](#inputrc) section, you can use custom key mappings
+    instead of the default offerings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Moving the cursor](#moving-the-cursor)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The documentation uses **Meta** (`M-` prefix) and notes that this key is labeled
+    as `Alt` on many keyboards. The documentation also mentions that you can also
+    use the `Esc` key for such combinations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`Alt+b` move the cursor to the start of the current or previous word'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Alt+f` move the cursor to the end of the next word'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+a` or `Home` move the cursor to the beginning of the command line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+e` or `End` move the cursor to the end of the command line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) One difference between
+    `Alt` and `Esc` combinations is that you can keep pressing `b` or `f` while holding
+    the `Alt` key down. The `Esc` combinations are two different key presses, whereas
+    `Alt` has to be kept pressed down for the shortcut to take effect.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Deleting characters](#deleting-characters)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`Alt+Backspace` (or `Esc+Backspace`) delete backwards up to word boundary'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+w` delete backwards up to whitespace boundary'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+u` delete from the character before the cursor till the start of the
+    line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+k` delete from the cursor location to the end of the command line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Clear screen](#clear-screen)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`Ctrl+l` preserve whatever is typed and clear the terminal screen'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that `Ctrl+l`
+    doesn''t try to remove the scrollback buffer altogether. Use the `clear` command
+    for that purpose.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Swap words and characters](#swap-words-and-characters)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`Alt+t` (or `Esc+t`) swap the previous two words'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+t` swap the previous two characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: for example, if you typed `sp` instead of `ps`, press `Ctrl+t` when the cursor
+    is to the right of `sp`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Insert arguments](#insert-arguments)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`Alt+.` (or `Esc+.`) insert the last argument from the previous command, multiple
+    presses will traverse through second last command and so on'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: for example, if `cat temp.txt` was the last command used, pressing `Alt+.` will
+    insert `temp.txt`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can also use `!$` to represent the last argument from the previous command
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Further Reading](#further-reading-1)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[bash manual: Bindable Readline Commands](https://www.gnu.org/software/bash/manual/bash.html#Bindable-Readline-Commands)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wiki.archlinux: Simpler introduction to Readline](https://wiki.archlinux.org/title/readline)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Efficient command line navigation](https://cupfullofcode.com/blog/2013/07/03/efficient-command-line-navigation/index.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Bash the interface and Bash the language](https://ratfactor.com/slackware/pkgblog/bash)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Copy and paste](#copy-and-paste)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Shortcuts for copy-paste operations in the terminal are shown below. You might
+    be able to customize these shortcuts in the terminal preferences.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`Shift+Ctrl+c` copy the highlighted portion to the clipboard'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Shift+Ctrl+v` paste clipboard contents'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Shift+Insert` paste the last highlighted portion (not necessarily the clipboard
+    contents)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'You can also press the middle mouse button instead of the `Shift+Insert` shortcut.
+    This is not limited to the terminal, works in many other applications too. You
+    can use the `xinput` command to enable/disable mouse button clicks. First, use
+    `xinput` without any arguments and spot the number corresponding to your mouse.
+    As an example, assuming the device number is `11`, you can use the following commands:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`xinput set-button-map 11 1 0 3` to disable middle button click'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`xinput set-button-map 11 1 2 3` to enable middle button click'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**1)** Which command would you use to display the name and value of all or
+    specific environment variables?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** If you add an alias for an already existing command (`ls` for example),
+    how would you invoke the original command instead of the alias?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** Why doesn''t the alias shown below work? What would you use instead?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** How would you remove a particular alias/function definition for the
+    current shell session?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** Write an alias and a function to display the contents of the `PATH`
+    environment variable on separate lines by changing `:` to the newline character.
+    Sample output is shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Will a login shell read and execute `~/.bashrc` automatically?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** What should be the value assigned to `HISTSIZE` if you wish to have
+    unlimited history entries?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** What does the binding `set completion-ignore-case on` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** Which shortcut helps you interactively search the command history?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** What do the shortcuts `Alt+b` and `Alt+f` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**11)** Are there differences between the `Ctrl+l` shortcut and the `clear`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**12)** Which shortcut will you use to delete characters before the cursor
+    till the start of the line?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**13)** What do the shortcuts `Alt+t` and `Ctrl+t` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**14)** Is there a difference between the `Shift+Insert` and `Shift+Ctrl+v`
+    shortcuts?'
+  prefs: []
+  type: TYPE_NORMAL

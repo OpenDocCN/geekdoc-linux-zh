@@ -1,0 +1,345 @@
+- en: Managing Processes
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/managing-processes.html](https://learnbyexample.github.io/cli-computing/managing-processes.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'This chapter gives a basic overview of process management for interactive usage
+    only. Handling processes for other use cases, such as system administration, requires
+    a more robust solution (see [mywiki.wooledge: Process Management](https://mywiki.wooledge.org/ProcessManagement)
+    to get started for such use cases).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Definitions](#definitions)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here are some definitions that will be handy to know for this chapter''s contents:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Program** is a set of instructions written to perform a task'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Process** is any running program'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Daemon** are background processes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Job** is a process that is not a daemon'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: i.e. jobs are interactive programs under user control
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Running jobs in background](#running-jobs-in-background)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some commands and scripts can take more than few minutes to complete, and you
+    might still need to continue using the shell. If you are not dependent on the
+    current shell environment, you could just open another shell instance and continue
+    working.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Another option is to push the job to the background, either at the time of command
+    invocation itself or after the fact. Make sure to redirect standard output and
+    error to avoid interfering with your continued interactive usage. Appending `&`
+    to the command will execute it in the background.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In the above example, `[1]` refers to the job number and `12726` is the PID
+    (process ID). You can use the `jobs` and `ps` commands to track active jobs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'But what if you forgot to append `&` to the command? You can follow these steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`Ctrl+z` — suspend the current running job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`bg` — push the recently suspended job to the background'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: continue using shell
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`fg` — bring the recently pushed background job to the foreground'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can use `fg %n` to bring the `n`th job number to the foreground
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here''s a demo that you can try:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `jobs`, `bg` and `fg`
+    are shell builtins. See [bash manual: Job Control](https://www.gnu.org/software/bash/manual/bash.html#Job-Control)
+    for more details. See also [this tutorial on job control](https://www.digitalocean.com/community/tutorials/how-to-use-bash-s-job-control-to-manage-foreground-and-background-processes).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [I want to
+    run something in the background and then log out](https://mywiki.wooledge.org/ProcessManagement#I_want_to_run_something_in_the_background_and_then_log_out.)
+    — `screen`, `tmux`, `nohup`, `disown`, etc.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[ps](#ps)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `ps` command gives a snapshot of the current processes. A few examples
+    were already seen earlier in this chapter. Here''s an example with the `-f` option
+    (full-format listing):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The fields in the above example are effective user ID (UID), process ID (PID),
+    parent process ID (PPID), processor utilization (C), starting time (STIME), controlling
+    terminal (TTY), cumulative CPU time (TIME) and command with all its arguments
+    (CMD). You can use the `-o` option to customize the fields you want. The `--sort`
+    option will help you to sort based on specific fields. See [ps manual: Standard
+    Format Specifiers](https://www.mankier.com/1/ps#Standard_Format_Specifiers) for
+    complete list of formats available.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `-e` (or `-A`) option selects all processes. This option is typically used
+    in combination with `grep` for filtering:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [linuxjourney:
+    ps tutorial](https://linuxjourney.com/lesson/monitor-processes-ps-command).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[pgrep](#pgrep)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `pgrep` command helps you filter processes based on their name and attributes.
+    By default, it matches against the process name, for example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use the `-l` option to display the process name as well (PID is shown
+    by default).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: To match the process name exactly (instead of matching anywhere), use the `-x`
+    option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `-a` option will list the full command line (the `-l` option seen earlier
+    gives only the name, not the arguments).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) There are several more
+    options like filtering based on effective UID, PPID, etc. See [pgrep manual](https://www.mankier.com/1/pgrep)
+    for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[kill](#kill)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Sometimes, a process might not be responding to your interaction attempts, might
+    be taking too long, accidentally uses too much memory, and so on. You can use
+    the `kill` command to manage such processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As mentioned at the beginning of this chapter, these examples are suggested
+    for interactive processes initiated by you (shell scripts, for example, will require
+    different strategies). Be 100% sure before you attempt to send signals to manage
+    processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can pass signals by name or by their associated number. Use `kill -l` to
+    get a full list of signals. See also [unix.stackexchange: List of Signals](https://unix.stackexchange.com/q/317492/109046)
+    and [unix.stackexchange: What causes various signals to be sent?](https://unix.stackexchange.com/q/6332/109046).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the PID or job number to specify the process to which the signal
+    has to be sent. By default, `SIGTERM` (`15`) is sent, which is a polite way to
+    ask the program to terminate. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note that in the above example, pressing `Ctrl+z` actually sends the `SIGTSTP`
+    (`20`) signal. Programs usually handle such signals to find a safer spot to suspend.
+    Pressing `Ctrl+c` sends the `SIGINT` (`2`) signal, usually used to abort a process
+    (depends on how the program handles it). You can use `Ctrl+\` to send `SIGQUIT`
+    (`3`), typically used to ask the program to quit and give a [core dump](https://en.wikipedia.org/wiki/Core_dump).
+    See also [stackoverflow: gracefully shutdown processes](https://stackoverflow.com/q/690415/4082052).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an illustration to show how to pass signals by their names and numerical
+    values:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    If you need to terminate a process at all costs, you can use `SIGKILL` (`9`).
+    This is a signal that cannot be blocked by programs. Use `Ctrl+z` to suspend a
+    runaway job and then apply `kill -9` instead of trying to abort such jobs using
+    `Ctrl+c`. See also [unix.stackexchange: why kill -9 should be avoided](https://unix.stackexchange.com/q/8916/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that your system
+    will likely have several different implementations of the `kill` command. The
+    shell builtin version was discussed in this section.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[top](#top)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `top` command displays processes in a tabular format along with information
+    like PID, process name, memory usage and so on. Here''s a sample screenshot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![sample screenshot for the top command](../Images/f5b01783dbf406f68a37befbd1efa1f7.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: This command opens an interactive session, and automatically updates the information
+    being displayed as well. You can press `M` (uppercase) to sort the processes by
+    memory usage. Press `e` repeatedly to display memory sizes in terms of mega/giga/etc.
+    Press `h` for help and press `q` to quit the session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Press `W` (uppercase)
+    to write the current settings to the `toprc` configuration file and quit. The
+    next time you use the `top` command, it will be displayed in the format that was
+    saved.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also alternative
+    implementations like [htop](https://github.com/htop-dev/htop/) and [btop](https://github.com/aristocratos/btop).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[free](#free)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `free` command displays information about your system memory. Here''s an
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[mywiki.wooledge: Process Management](https://mywiki.wooledge.org/ProcessManagement)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ryanstutorials: Process Management](https://ryanstutorials.net/linuxtutorial/processes.php)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[digitalocean: Managing Linux Processes](https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Linux ate my ram](https://www.linuxatemyram.com/) — Linux is borrowing unused
+    memory for disk caching. This makes it look like you are low on memory, but you
+    are not! Everything is fine!'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**1)** How would you invoke a command to be executed in the background? And
+    what would you do to push a job to the background after it has already been launched?
+    What commands can you use to track active jobs?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** What do the `+` and `-` symbols next to job numbers indicate?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** When would you use `fg %n` and `bg %n` instead of just `fg` and `bg`
+    respectively?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** Which option will help you customize the output fields needed for the
+    `ps` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**5)** What''s the difference between `pgrep -a` and `pgrep -l` options?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**6)** If the job number is `2`, would you use `kill %2` or `kill 2` to send
+    `SIGTERM` to that process?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** Which signal does the `Ctrl+c` shortcut send to the currently running
+    process?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** Which command helps you to continuously monitor processes, along with
+    details like PID, memory usage, etc?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** Which key will help you manipulate kill tasks from within the `top`
+    session?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** What does the `free` command do?'
+  prefs: []
+  type: TYPE_NORMAL

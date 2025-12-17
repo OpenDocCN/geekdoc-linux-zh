@@ -1,0 +1,1172 @@
+- en: Managing Files and Directories
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/managing-files-directories.html](https://learnbyexample.github.io/cli-computing/managing-files-directories.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This chapter presents commands to do things that are typically handled by a
+    file manager in GUI (also known as file explorer). For example, viewing contents
+    of a directory, navigating to other directories, cut/copy/paste files, renaming
+    files and so on. Some of the commands used for these purposes are provided by
+    the shell itself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As a good practice, make it a habit to go through the documentation of the commands
+    you encounter. Getting used to looking up documentation from the command line
+    will come in handy whenever you are stuck. You can also learn and experiment with
+    options you haven't used yet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the scripts used in this chapter. See the [Setup](./introduction-setup.html#setup)
+    section for instructions to create the working environment.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Builtin and External commands](#builtin-and-external-commands)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [bash manual: What is a shell?](https://www.gnu.org/software/bash/manual/bash.html#What-is-a-shell_003f)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Shells also provide a small set of built-in commands (builtins) implementing
+    functionality impossible or inconvenient to obtain via separate utilities. For
+    example, `cd`, `break`, `continue`, and `exec` cannot be implemented outside of
+    the shell because they directly manipulate the shell itself. The `history`, `getopts`,
+    `kill`, or `pwd` builtins, among others, could be implemented in separate utilities,
+    but they are more convenient to use as builtin commands.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Many of the commands needed for everyday use are external commands, i.e. not
+    part of the shell. Some builtins, `pwd` for example, might also be available as
+    external command on your system (and these might have differences in features
+    too). In such cases the builtin version will be executed by default, which you
+    can override by using the path of the external version.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can use the `type` command to check if the tool you are using is a builtin
+    or an external command. The `type` command is a shell builtin, and provides other
+    features too (which will be discussed later). You can use the `-a` option to get
+    *all* details about the given command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) To look up documentation,
+    use the `help` command for builtins and `man` for external commands (or `info`
+    for complete documentation, where applicable). Use `help help` and `man man` for
+    their own documentation.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Typing just `help`
+    will give the list of builtins, along with the command''s syntax.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[pwd](#pwd)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`pwd` is a shell builtin command to get the current working directory. This
+    helps to orient yourself with respect to the filesystem. The absolute path printed
+    is often handy to copy-paste elsewhere, in a script for example. Some users prefer
+    their terminal emulators and/or shell prompt to always display the current working
+    directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[cd](#cd)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`cd` is another shell builtin. This helps to change the current working directory.
+    Here''s an example of changing the current working directory using an absolute
+    path:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use `-` as an argument to go back to the previous working directory.
+    Continuing from the previous example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Most commands will
+    treat strings starting with `-` as a command option. You can use `--` to tell
+    commands that all the following arguments should *not* be treated as options even
+    if they start with `-`. For example, if you have a folder named `-oops` in the
+    current working directory, you can use `cd -- -oops` to switch to that directory.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Relative paths are well, relative to the current working directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`.` refers to the current directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`..` refers to the directory one hierarchy above (i.e. the parent directory)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`../..` refers to the directory two hierarchies above and so on'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`cd ./-` will help you to switch to a directory named `-` in the current location'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you cannot use `cd -` since that'll take you to the previous working directory
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can switch to the home directory using `cd` or `cd ~` or `cd ~/` from anywhere
+    in the filesystem. This is determined by the value stored in the `HOME` shell
+    variable. See also [bash manual: Tilde Expansion](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[clear](#clear)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can use this command to clear the terminal screen. By default, the `clear`
+    command will move the prompt to the top of the terminal as well as try to remove
+    the contents of the scrollback buffer. You can use the `-x` option if you want
+    to retain the scrollback buffer contents.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `Ctrl+l` shortcut
+    will also move the prompt line to the top of the terminal. It will retain any
+    text you''ve typed on the prompt line and scrollback buffer contents won''t be
+    cleared.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[ls](#ls)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When you use a file explorer GUI application, you'll automatically see the directory
+    contents. And such GUI apps typically have features to show file size, differentiate
+    between files and folders and so on. `ls` is the equivalent command line tool
+    with a plethora of options and functionality related to viewing the contents of
+    directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) As mentioned earlier,
+    the [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the scripts used in this chapter. You can source the `ls.sh` script
+    to follow along the examples shown in this section. See the [Setup](./introduction-setup.html#setup)
+    section if you haven''t yet created the working environment.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: 'By default, the current directory contents are displayed. You can pass one
+    or more paths as arguments. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-1` option (`1` as in numeric one, not the letter `l` which
+    does something else) to list the contents in a single column:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-F` option appends a character to each filename indicating the file type
+    (if it is other than a regular file):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`/` directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`*` executable file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`@` symbolic link'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`|` FIFO'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`=` socket'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`>` door'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you just need to distinguish between files and directories, you can use
+    the `-p` option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can also use the `--color` option to visually distinguish file types:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![example with --color option](../Images/a6116ee6f319066c4c2a48019a3c88c2.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: The `-l` option displays the contents using a long listing format. You'll get
+    details like file permissions, ownership, size, timestamp and so on. The first
+    character of the first column distinguishes file types as `d` for directories,
+    `-` for regular files, `l` for symbolic links, etc. Under each directory listing,
+    the first line will display the total size of the entries (in terms of KB).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Note that the timestamps showing hours and minutes instead of year depends on
+    the relative difference with respect to the current time. So, for example, you
+    might get `Feb 4 2022` instead of `Feb 4 09:23`.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Use the `-h` option to show file sizes in human readable format (default is
+    byte count).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-s` option instead of long listing if you only need allocated
+    file sizes and names:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'There are several options for changing the order of listing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-t` sorts by timestamp'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-S` sorts by file size (not suitable for directories)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-v` version sorting (suitable for filenames with numbers in them)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-X` sorts by file extension (i.e. characters after the last `.` in the filename)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-r` reverse the listing order'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Filenames starting with `.` are considered as hidden files and these are NOT
+    shown by default. You can use the `-a` option to view them. The `-A` option is
+    similar, but doesn't show the special `.` and `..` entries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-R` option recursively lists sub-directories as well:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Often you'd want to list only specific files or directories based on some criteria,
+    file extension for example. The shell provides a matching technique called **globs**
+    or **wildcards**. Some simple examples are shown below (see the [wildcards](./shell-features.html#wildcards)
+    section for more details).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*` is a placeholder for zero or more characters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`[]` helps you specify a set of characters to be matched once. For example,
+    `[ad]` matches `a` or `d` once. `[c-i]` matches a range of characters from `c`
+    to `i`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
+    As shown in the above examples, globs are expanded by the shell. Beginners often
+    associate globs as something specific to the `ls` command, which is why I''ve
+    deliberately used `echo` as well in the above examples.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'You can use the `-d` option to *not* show directory contents:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) I hope you have been
+    judiciously taking notes, since there are just too many commands and features.
+    For example, note down all the options discussed in this section. And then explore
+    the output from the `ls --help` command.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[mywiki.wooledge: avoid parsing output of ls](https://mywiki.wooledge.org/ParsingLs)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: why not parse ls?](https://unix.stackexchange.com/q/128985/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: What are ./ and ../ directories?](https://unix.stackexchange.com/q/63081/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tree](#tree)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `tree` command displays the contents of a directory recursively, in a hierarchical
+    manner. Here's a screenshot of using `tree -a` from the `ls_examples` sample directory
+    seen in the previous section. The `-a` option is used to show the hidden files
+    as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![example for tree command](../Images/496b16f19bc7368e400fbb267dbd20b9.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You might have to install
+    this command. `sudo apt install tree` can be used to get this command on Debian-like
+    distributions.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[mkdir](#mkdir)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `mkdir` command helps you to create new directories. You can pass one or
+    more paths along with the name of the directories you want to create. Quote the
+    names if it can contain shell special characters like space, `*` and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a practice directory
+    for this section:'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: 'Here''s an example of creating multiple directories:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-p` option will help you to create multiple directory hierarchies in one
+    shot:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `-p` option has another functionality too. It will not complain if the directory
+    you are trying to create already exists. This is especially helpful in shell scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: As seen in the examples above, you can check the exit status of the last executed
+    command using the `$?` special variable. `0` means everything went well and higher
+    numbers indicate some sort of failure has occurred (the details of which you can
+    look up in the command's manual).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Linux filenames can use any character other than `/` and the ASCII NUL character.
+    Quote the arguments if it contains characters like space, `*`, etc to prevent
+    shell expansion. Shell considers space as the argument separator, `*` is a wildcard
+    character and so on. As a good practice, use only alphabets, numbers and underscores
+    for filenames, unless you have some specific requirements. See also [unix.stackexchange:
+    Characters best avoided in filenames](https://unix.stackexchange.com/q/269093/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can delete the
+    practice directory if you wish:'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '[touch](#touch)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You'll usually create files using a text editor or by redirecting the output
+    of a command to a file. For some cases, empty files are needed for testing purposes
+    or to satisfy a particular build process. A real world use case is the empty `.nojekyll`
+    file for [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#static-site-generators).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `touch` command's main functionality is altering timestamps (which will
+    be discussed in the [File Properties](./file-properties.html) chapter). If a file
+    doesn't exist, `touch` will create an empty file using the current timestamp.
+    You can also pass more than one file argument if needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can create an empty
+    file using `> ip.txt` as well, but the redirection operator will overwrite the
+    file if it already exists.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[rm](#rm)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `rm` command will help you to delete files and directories. You can pass
+    one or more paths as arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: You'll need to add the `-r` option to recursively delete directory contents.
+    You can use `rm -d` or the `rmdir` command to delete only empty directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Typos like misplaced space, wrong glob, etc could wipe out files not intended
+    for deletion. Apart from having backups and snapshots, you could also take some
+    mitigating steps:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: using `-i` option to interactively delete each file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can also use `-I` option for lesser number of prompts
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: using `echo` as a dry run to see how the glob expands
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: using a trash command (see links below) instead of `rm`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Use `y` for confirmation and `n` to cancel deletion with the `-i` or `-I` options.
+    Here''s an example of cancelling deletion:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And here''s an example of providing confirmation at each step of the deletion
+    process:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `-f` option can be used to ignore complaints about non-existing files (somewhat
+    similar to the `mkdir -p` feature). It also helps to remove write protected files
+    (provided you have appropriate permissions to delete those files). This option
+    is especially useful for recursive deletion of directories that have write protected
+    files, `.git/objects` for example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Use a trash command (for example, `trash-cli` on Ubuntu) so that deleted files
+    can be recovered later if needed
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'see also [unix.stackexchange: creating a simple trash command](https://unix.stackexchange.com/q/452496/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Files removed using `rm` can still be recovered with time and skill
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: recover deleted files](https://unix.stackexchange.com/q/80270/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: recovering accidentally deleted files](https://unix.stackexchange.com/q/2677/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use commands like `shred` if you want to make it harder to recover deleted files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wiki.archlinux: Securely wipe disk](https://wiki.archlinux.org/title/Securely_wipe_disk)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[My curated list](https://learnbyexample.github.io/curated_resources/git_and_github.html)
+    for `git` and related resources'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cp](#cp)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can use the `cp` command to make copies of files and directories. With default
+    syntax, you have to specify the source first followed by the destination. To copy
+    multiple items, the last argument as destination can only be a directory. You'll
+    also need to use the `-r` option to copy directories (similar to `rm -r` seen
+    earlier).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    By default, `cp` will overwrite an existing file of the same name in the destination
+    directory. You can use the `-i` option to interactively confirm or deny overwriting
+    existing files. The `-n` option will prevent overwriting existing files without
+    asking for confirmation.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: If there's a folder in the destination path with the same name as a folder being
+    copied, the contents will be merged. If there are files of identical names in
+    such directories, the same rules discussed above will apply.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: Often, you'd want to copy a file (or a directory) under a different name. In
+    such cases, you can simply use a new name while specifying the destination.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: As mentioned earlier, to copy multiple files and directories, you'll have to
+    specify the destination directory as the last argument.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-t` option to specify the destination before the source paths
+    (helpful with the `find` command for example, will be discussed later). Here are
+    some more notable options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-u` copy files from source only if they are newer or don''t exist in the destination'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-b` and `--backup` options will allow you to create backup copies of files
+    already existing in the destination'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`--preserve` option will help you to copy files along with source file attributes
+    like ownership, timestamp, etc'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`rsync` a fast, versatile, remote (and local) file-copying tool'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rsync tutorial and examples](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[syncthing](https://github.com/syncthing/syncthing) — continuous file synchronization
+    program'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mv](#mv)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You can use the `mv` command to move one or more files and directories from
+    one location to another. Unlike `rm` and `cp`, you do not need the `-r` option
+    for directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax for specifying the source and destination is same as seen earlier with
+    `cp`. Here''s an example of moving a directory into another directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example for moving multiple files and directories to another directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When you are dealing with a single file or directory, you can also *rename*
+    them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are some more notable options, some of which behave similar to those seen
+    with the `cp` command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i` interactively confirm or deny when the destination already has a file
+    of the same name'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-n` always deny overwriting of files'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-f` always overwrite files'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-t` specify the destination elsewhere instead of final argument'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-u` move only if the files are newer or don''t exist in the destination'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-b` and `--backup` options will allow you to create backup copies of files
+    already existing in the destination'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-v` verbose option'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rename](#rename)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `mv` command is useful for simple file renaming. `rename` helps when you
+    need to modify one or more filenames based on a pattern. There are different implementations
+    of the `rename` command, with wildly different set of features. See [askubuntu:
+    What''s the difference between the different "rename" commands?](https://askubuntu.com/questions/956010/whats-the-difference-between-the-different-rename-commands)
+    for details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Perl implementation of the `rename` command will be discussed in this section.
+    You''d need to know regular expressions to use this command. Basic explanations
+    will be given here and more details can be found in the links mentioned at the
+    end of this section. Here''s an example to change the file extensions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: As a good practice, use the `-n` option to see how the files will be renamed
+    before actually renaming the files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: If the new filename already exists, you'll get an error, which you can override
+    with the `-f` option if you wish. If you are passing filenames with path components
+    in them, you can use the `-d` option to affect only the filename portion. Otherwise,
+    the logic you are using might affect directory names as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[perldoc: Regexp tutorial](https://perldoc.perl.org/perlretut)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: See my [Perl one-liners](https://github.com/learnbyexample/learn_perl_oneliners)
+    ebook for examples and more details about the Perl substitution and `rename` commands
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ln](#ln)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `ln` command helps you create a link to another file or directory within
+    the same or different location. There are two types of links — **symbolic** links
+    and **hard** links. Symbolic links can point to both files and directories. Here
+    are some characteristics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: if the original file is deleted or moved to another location, then the symbolic
+    link will no longer work
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: if the symbolic link is moved to another location, it will still work if the
+    link was done using absolute path (for relative path, it will depend on whether
+    or not there's another file with the same name in that location)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: a symbolic link file has its own inode, permissions, timestamps, etc
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: some commands will work the same when original file or the symbolic file is
+    given as the command line argument, while some require additional options (`du
+    -L` for example)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Usage is similar to the `cp` command. You have to specify the source first followed
+    by the destination (which is optional if it is the current working directory).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: Long listing with `ls -l` will show the path connected to links. You can also
+    use the `readlink` command, which has features like resolving recursively to the
+    canonical file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Hard links can only point to another file. You cannot use them for directories
+    and the usage is also restricted to within the same filesystem. The `.` and `..`
+    directories are exceptions, these special purpose hard links are automatically
+    created. Here are some more details about hard links:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: once a hard link is created, there is no distinction between the two files other
+    than their paths. They have same inode, permissions, timestamps, etc
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: hard links will continue working even if all the other hard links are deleted
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: if a hard link is moved to another location, the links will still be in sync.
+    Any change in one of them will be reflected in all the other links
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `unlink`
+    or `rm` commands to delete links.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[askubuntu: What is the difference between a hard link and a symbolic link?](https://askubuntu.com/questions/108771/what-is-the-difference-between-a-hard-link-and-a-symbolic-link)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: What is the difference between symbolic and hard links?](https://unix.stackexchange.com/q/9575/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: What is a Superblock, Inode, Dentry and a File?](https://unix.stackexchange.com/q/4402/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tar and gzip](#tar-and-gzip)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`tar` is an archiving utility. Depending on the implementation, you can also
+    use options to compress the archive.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an example that creates a single archive file from multiple input files
+    and directories:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: Once you have an archive file, you can then compress it using tools like `gzip`,
+    `bzip2`, `xz`, etc. In the below example, the command replaces the archive file
+    with the compressed version and adds a `.gz` suffix to indicate that `gzip` was
+    the technique used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use the `-t` option if you want to check the contents of the compressed file.
+    This will work with the uncompressed `.tar` version as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To uncompress `.gz` files, you can use `gunzip` or `gzip -d`. This will replace
+    the compressed version with the uncompressed archive file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To extract the files from an archive, use `tar` along with the `-x` option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: With `GNU tar`, you can compress/uncompress along with the `tar` command instead
+    of having to use tools like `gzip` separately. For example, the `-z` option will
+    use `gzip`, `-j` will use `bzip2` and `-J` will use `xz`. Use the `-a` option
+    if you want `tar` to automatically select the compression technique based on the
+    extension provided.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`tar` has lots and lots of options for various needs. Some are listed below,
+    see documentation for complete details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-v` verbose option'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-r` to append files to an existing archive'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`--exclude=` specify files to be ignored from archiving'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'There are also commands starting with `z` to work with compressed files, for
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`zcat` to display file contents of a compressed file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`zless` to display file contents of a compressed file one screenful at a time'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`zgrep` to search compressed files'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) If you need to work
+    with `.zip` files, use the `zip` and `unzip` commands.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Further Reading**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: tar files with a sorted order](https://unix.stackexchange.com/q/178127/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[superuser: gzip without tar? Why are they used together?](https://superuser.com/questions/252065/gzip-without-tar-why-are-they-used-together)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: xz a directory with tar using maximum compression?](https://unix.stackexchange.com/q/28976/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `ls.sh` script
+    will be used for some of the exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Which of these commands will always display the absolute path of the
+    home directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `pwd`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `echo "$PWD"`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `echo "$HOME"`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** The current working directory has a folder named `-dash`. How would
+    you switch to that directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `cd -- -dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `cd -dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `cd ./-dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*d)* `cd \-dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*e)* `cd ''-dash''`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*f)* all of the above'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*g)* only *a)* and *c)*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** Given the directory structure as shown below, how would you change to
+    the `todos` directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** As per the scenario shown below, how would you change to the `cli-computing`
+    directory under the user''s home directory? And then, how would you go back to
+    the previous working directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** How''d you list the contents of the current directory, one per line,
+    along with the size of the entries in human readable format?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Which `ls` command option would you use for version based sorting of
+    entries?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** Which `ls` command option would you use for sorting based on entry size?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** Which `ls` command option would you use for sorting based on file extension?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** What does the `-G` option of `ls` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** What does the `-i` option of `ls` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**11)** List only the directories as one entry per line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Assume that a regular file named `notes` already exists. What would
+    happen if you use the `mkdir -p notes` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Use one or more commands to match the scenario shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Use one or more commands to match the scenario shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Don''t delete this
+    directory, will be needed in a later exercise.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**15)** If directories to create already exist, which `mkdir` command option
+    would you use to not show an error?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**16)** Use one or more commands to match the scenario given below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** What does the `-f` option of `rm` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18)** Which option would you use to interactively delete files using the
+    `rm` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**19)** Can the files removed by `rm` easily be restored? Do you need to take
+    some extra steps or use special commands to make the files more difficult to recover?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**20)** Does your Linux distribution provide a tool to send deleted files to
+    the trash (which would help to recover deleted files)?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**21)** Which option would you use to interactively accept/prevent the `cp`
+    command from overwriting a file of the same name? And which option would prevent
+    overwriting without needing manual confirmation?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**22)** Does the `cp` command allow you to rename the file or directory being
+    copied? If so, can you rename multiple files/directories being copied?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**23)** What do the `-u`, `-b` and `-t` options of `cp` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**24)** What''s the difference between the two commands shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** Which option would you use to interactively accept/prevent the `mv`
+    command from overwriting a file of the same name?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**26)** Use one or more commands to match the scenario shown below. You should
+    have already created this directory structure in an earlier exercise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** What does the `-t` option of `mv` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**28)** Determine and implement the `rename` logic based on the filenames and
+    expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** Does the `ln` command follow the same order to specify source and destination
+    as the `cp` and `mv` commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**30)** Which `tar` option helps to compress archives based on filename extension?
+    This option can be used instead of `-z` for `gzip`, `-j` for `bzip2` and `-J`
+    for `xz`.'
+  prefs: []
+  type: TYPE_NORMAL

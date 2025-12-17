@@ -1,0 +1,1109 @@
+- en: Shell Features
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/shell-features.html](https://learnbyexample.github.io/cli-computing/shell-features.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This chapter focuses on Bash shell features like quoting mechanisms, wildcards,
+    redirections, command grouping, process substitution, command substitution, etc.
+    Others will be discussed in later chapters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the scripts and sample input files used in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Some of the examples
+    in this chapter use commands that will be discussed in later chapters. Basic description
+    of what such commands do have been added here and you''ll also see more examples
+    in the rest of the chapters.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Quoting mechanisms](#quoting-mechanisms)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section will quote (*heh*) the relevant definitions from the [bash manual](https://www.gnu.org/software/bash/manual/bash.html#Quoting)
+    and provide some examples for each of the four mechanisms.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*1)* **Escape Character**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A non-quoted backslash `\` is the Bash escape character. It preserves the literal
+    value of the next character that follows, with the exception of newline.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**metacharacter**: A character that, when unquoted, separates words. A metacharacter
+    is a space, tab, newline, or one of the following characters: `|`, `&`, `;`, `(`,
+    `)`, `<`, or `>`.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Here''s an example where unquoted shell metacharacter causes an error:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And here''s an example where the subtler issue might not be apparent at first
+    glance:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*2)* **Single Quotes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Enclosing characters in single quotes (`'`) preserves the literal value of each
+    character within the quotes. A single quote may not occur between single quotes,
+    even when preceded by a backslash.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'No character is special within single quoted strings. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can place strings represented by different quoting mechanisms next to each
+    other to concatenate them together. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*3)* **Double Quotes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Enclosing characters in double quotes (`"`) preserves the literal value of all
+    characters within the quotes, with the exception of `$`, `` ` ``, `\`, and, when
+    history expansion is enabled, `!`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Here''s an example showing variable interpolation within double quotes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Unless you specifically want the shell to interpret the contents of a variable,
+    you should always quote the variable to avoid issues due to the presence of shell
+    metacharacters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
+    Why does my shell script choke on whitespace or other special characters?](https://unix.stackexchange.com/q/131766/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '*4)* **ANSI-C Quoting**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Words of the form `$'string'` are treated specially. The word expands to string,
+    with backslash-escaped characters replaced as specified by the ANSI C standard.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This form of quoting helps you use escape sequences like `\t` for tab, `\n`
+    for newline and so on. You can also represent characters using their codepoint
+    values in octal and hexadecimal formats.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`printf` is a shell builtin which you can use to format arguments (similar
+    to the `printf()` function from the `C` programming language). This command will
+    be used in many more examples to come.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [bash manual: ANSI-C
+    Quoting](https://www.gnu.org/software/bash/manual/bash.html#ANSI_002dC-Quoting)
+    for complete list of supported escape sequences. See `man ascii` for a table of
+    ASCII characters and their numerical representations.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Wildcards](#wildcards)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is relatively easy to specify complete filenames as command arguments when
+    they are few in number. And you could use features like tab completion and middle
+    mouse button click (which pastes the last highlighted text) to assist in such
+    cases.
+  prefs: []
+  type: TYPE_NORMAL
+- en: But what to do if you have to deal with tens and hundreds of files (or even
+    more)? If applicable, one way is to match all the files based on a common pattern
+    in their filenames, for example extensions like `.py`, `.txt` and so on. Wildcards
+    (globs) will help in such cases. This feature is provided by the shell, and thus
+    individual commands need not worry about implementing them. Pattern matching supported
+    by wildcards are somewhat similar to regular expressions, but there are fundamental
+    and syntactical differences between them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Some of the commonly used wildcards are listed below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*` match any character, zero or more times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: as a special case, `*` won't match the starting `.` of hidden files unless the
+    `dotglob` shell option is set
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`?` match any character exactly once'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[set149]` match any of these characters once'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[^set149]` match any characters *except* the given set of characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can also use `[!set149]` to negate the character class
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[a-z]` match a range of characters from `a` to `z`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[0-9a-fA-F]` match any hexadecimal character'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'And here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Since some characters are special inside the character class, you need special
+    placement to treat them as ordinary characters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-` should be the first or the last character in the set'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`^` should be other than the first character'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`]` should be the first character'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: A **named character set** is defined by a name enclosed between `[:` and `:]`
+    and has to be used within a character class `[]`, along with any other characters
+    as needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Named set | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:digit:]` | `[0-9]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:lower:]` | `[a-z]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:upper:]` | `[A-Z]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:alpha:]` | `[a-zA-Z]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:alnum:]` | `[0-9a-zA-Z]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:word:]` | `[0-9a-zA-Z_]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:xdigit:]` | `[0-9a-fA-F]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:cntrl:]` | control characters — first 32 ASCII characters and 127th (DEL)
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:punct:]` | all the punctuation characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:graph:]` | `[:alnum:]` and `[:punct:]` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:print:]` | `[:alnum:]`, `[:punct:]` and space |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:ascii:]` | all the ASCII characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:blank:]` | space and tab characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[:space:]` | whitespace characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) As mentioned before,
+    you can use `echo` to test how the wildcards will expand before using a command
+    to act upon the matching files. For example, `echo *.txt` before using commands
+    like `rm *.txt`. One difference compared to `ls` is that `echo` will display the
+    wildcard as is instead of showing an error if there''s no match.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [bash manual: Pattern
+    Matching](https://www.gnu.org/software/bash/manual/bash.html#Pattern-Matching)
+    for more details, information on locale stuff and so on.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Brace Expansion](#brace-expansion)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This is not a wildcard feature, you just get expanded strings. Brace expansion
+    has two mechanisms for reducing typing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: taking out common portions among multiple strings
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: generating a range of characters
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Say you want to create two files named `test_x.txt` and `test_y.txt`. These
+    two strings have something in common at the start and the end. You can specify
+    the unique portions as comma separated strings within a pair of curly braces and
+    put the common parts around the braces. Multiple braces can be used as needed.
+    Use `echo` for testing purposes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To generate a range, specify numbers or single characters separated by `..`
+    and an optional third argument as the step value. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If the use of braces doesn''t match the expansion syntax, it will be left as
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Extended and Recursive globs](#extended-and-recursive-globs)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From `man bash`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Extended glob | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `?(pattern-list)` | Matches zero or one occurrence of the given patterns
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `*(pattern-list)` | Matches zero or more occurrences of the given patterns
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `+(pattern-list)` | Matches one or more occurrences of the given patterns
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `@(pattern-list)` | Matches one of the given patterns |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `!(pattern-list)` | Matches anything except one of the given patterns |'
+  prefs: []
+  type: TYPE_TB
+- en: Extended globs are disabled by default. You can use the `shopt` builtin to set/unset
+    **sh**ell **opt**ions like `extglob`, `globstar`, etc. You can also check what
+    is the current status of such options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here are some examples, assuming `extglob` option has already been set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you enable the `globstar` option, you can recursively match filenames within
+    a specified path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Add the `shopt` invocations
+    to `~/.bashrc` if you want these settings applied at terminal startup. This will
+    be discussed in the [Shell Customization](./shell-customization.html) chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[set](#set)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The `set` builtin command helps you to set or unset values of shell options
+    and positional parameters. Here are some examples for shell options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You''ll see more examples (for example, `set -x`) in later chapters. See [bash
+    manual: Set Builtin](https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin)
+    for documentation.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Pipelines](#pipelines)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The pipe control operator `|` helps you connect the output of a command as
+    the input of another command. This operator vastly reduces the need for temporary
+    intermediate files. As discussed previously in the [Unix Philosophy](./command-line-overview.html#unix-philosophy)
+    section, command line tools usually specialize in a single task. If you can break
+    down a problem into smaller tasks, the pipe operator will come in handy often.
+    Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above examples, `ls` and `du` perform their own tasks of displaying list
+    of files and showing file sizes respectively. After that, the `wc` and `sort`
+    commands take care of counting and sorting the lines respectively. In such cases,
+    the pipe operator saves you the trouble of dealing with temporary data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that the `%q` format specifier in `printf` helps you quote the arguments
+    in a way that is recognizable by the shell. The `-q` option for `ls` substitutes
+    nongraphic characters in the filenames with a `?` character. Both of these are
+    workarounds to prevent the counting process from getting sidetracked due to characters
+    like newline in the filenames.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The pipe control operator
+    `|&` will be discussed later in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[tee](#tee)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Sometimes, you might want to display the command output on the terminal as
+    well as require the results for later use. In such cases, you can use the `tee`
+    command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Redirection](#redirection)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'From [bash manual: Redirections](https://www.gnu.org/software/bash/manual/bash.html#Redirections):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Before a command is executed, its input and output may be *redirected* using
+    a special notation interpreted by the shell. Redirection allows commands' file
+    handles to be duplicated, opened, closed, made to refer to different files, and
+    can change the files the command reads from and writes to. Redirection may also
+    be used to modify file handles in the current shell execution environment.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'There are three standard data streams:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**standard input** (`stdin` — file descriptor 0)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**standard output** (`stdout` — file descriptor 1)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**standard error** (`stderr` — file descriptor 2)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Both the standard output and error streams are displayed on the terminal by
+    default. The `stderr` stream is used when something goes wrong with the command
+    usage. Each of these three streams have a predefined [file descriptor](https://en.wikipedia.org/wiki/File_descriptor)
+    as mentioned above. In this section, you'll see how to redirect these three streams.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Redirections can be
+    placed anywhere, but they are usually used at the start or end of a command. For
+    example, the following two commands are equivalent:'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Space characters between
+    the redirection operators and the filename are optional.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Redirecting output](#redirecting-output)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use the `>` operator to redirect the standard output of a command to
+    a file. A number prefix can be added to the `>` operator to work with that particular
+    file descriptor. Default is `1` (recall that the file descriptor for `stdout`
+    is `1`), so `1>` and `>` perform the same operation. Use `>>` to append the output
+    to a file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The filename provided to the `>` and `>>` operators will be created if a regular
+    file of that name doesn't exist yet. If the file already exists, `>` will overwrite
+    that file whereas `>>` will append the contents.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `/dev/null`
+    as a filename to discard the output, to provide an empty file as input for a command,
+    etc.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `set noclobber`
+    to prevent overwriting if a file already exists. When the `noclobber` option is
+    set, you can still overwrite a file by using `>|` instead of the `>` operator.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Redirecting input](#redirecting-input)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Some commands like `tr` and `datamash` can only work with data from the standard
+    input. This isn''t an issue when you are piping data from another command, for
+    example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `<` redirection operator if you want to pass data from a file
+    to such commands. The default prefix here is `0`, which is the file descriptor
+    for `stdin` data. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In some cases, a tool behaves differently when processing `stdin` data compared
+    to file input. Here''s an example with `wc -l` to report the total number of lines
+    in the input:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Sometimes, you need to pass `stdin` data as well as other file inputs to a
+    command. In such cases, you can use `-` to represent data from the standard input.
+    Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Even though a command accepts file input directly as an argument, redirecting
+    can help for interactive usage. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Don''t use `cat filename | cmd` for passing file content as `stdin` data, unless
+    you need to concatenate data from multiple input files. See [wikipedia: UUOC](https://en.wikipedia.org/wiki/Cat_(Unix)#Useless_use_of_cat)
+    and [Useless Use of Cat Award](https://porkmail.org/era/unix/award.html) for more
+    details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Redirecting error](#redirecting-error)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Recall that the file descriptor for `stderr` is `2`. So, you can use `2>` to
+    redirect standard error to a file. Use `2>>` if you need to append the contents.
+    Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use `/dev/null` as
+    a filename if you need to discard the results.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Combining stdout and stderr](#combining-stdout-and-stderr)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Newer versions of Bash provide these handy shortcuts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`&>` redirect both `stdout` and `stderr` (overwrite if file already exists)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`&>>` redirect both `stdout` and `stderr` (append if file already exists)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`|&` pipe both `stdout` and `stderr` as input to another command'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here''s an example which assumes `xyz.txt` doesn''t exist, thus leading to
+    errors:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And here''s an example with the `|&` operator:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For earlier Bash versions, you''ll have to manually redirect the streams:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`1>&2` redirects file descriptor `1` (`stdout`) to the file descriptor `2`
+    (`stderr`)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`2>&1` redirects file descriptor `2` (`stderr`) to the file descriptor `1`
+    (`stdout`)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Waiting for stdin](#waiting-for-stdin)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Sometimes, you might mistype a command without providing input. And instead
+    of getting an error, you'll see the cursor patiently waiting for something. This
+    isn't the shell hanging up on you. The command is waiting for you to type data,
+    so that it can perform its task.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Say, you typed `cat` and pressed the Enter key. Seeing the blinking cursor,
+    you type some text and press the Enter key again. You'll see the text you just
+    typed echoed back to you as `stdout` (which is the functionality of the `cat`
+    command). This will continue again and again, until you tell the shell that you
+    are done. How to do that? Press `Ctrl+d` on a fresh line or press `Ctrl+d` twice
+    at the end of a line. In the latter case, you'll not get a newline character at
+    the end of the data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Getting output immediately
+    after each input line depends on the command''s functionality. Commands like `sort`
+    and `shuf` will wait for the entire input data before producing the output.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: 'Here''s an example which has output redirection as well:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
+    difference between Ctrl+c and Ctrl+d](https://unix.stackexchange.com/q/16333/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Here Documents](#here-documents)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Here Documents is another way to provide `stdin` data. In this case, the termination
+    condition is a line matching a predefined string which is specified after the
+    `<<` redirection operator. This is especially helpful for automation, since pressing
+    `Ctrl+d` interactively isn''t desirable. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above example, the termination string was enclosed in single quotes as
+    a good practice. Doing so prevents parameter expansion, command substitution,
+    etc. You can also use `\string` for this purpose. If you use `<&LT-` instead of
+    `<<`, leading tab characters can be added at the start of input lines without
+    being part of the actual data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Just like `$` and a
+    space represents the primary prompt (`PS1` shell variable), `>` and a space at
+    the start of lines represents the secondary prompt `PS2` (applicable for multiline
+    commands). Don''t type these characters when you use Here Documents in a shell
+    script.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [bash manual: Here
+    Documents](https://www.gnu.org/software/bash/manual/bash.html#Here-Documents)
+    and [stackoverflow: here documents](https://stackoverflow.com/q/2953081/4082052)
+    for more examples and details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Here Strings](#here-strings)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'This is similar to Here Documents, but the string is passed as an argument
+    after the `<<<` redirection operator. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[Short introduction to shell redirection](https://mywiki.wooledge.org/BashGuide/InputAndOutput#Redirection)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Illustrated Redirection Tutorial](https://web.archive.org/web/20221231120128/https://wiki.bash-hackers.org/howto/redirection_tutorial)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[stackoverflow: Redirect a stream to another file descriptor using >&](https://stackoverflow.com/q/818255/4082052)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Difference between 2>&1 >foo and >foo 2>&1](https://mywiki.wooledge.org/BashFAQ/055)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[stackoverflow: Redirect and append both stdout and stderr to a file](https://stackoverflow.com/q/876239/4082052)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: Examples for <> redirection](https://unix.stackexchange.com/q/164391/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Grouping commands](#grouping-commands)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can use the `(list)` and `{ list; }` compound commands to redirect content
+    for several commands. The former is executed in a subshell whereas the latter
+    is executed in the current shell context. Spaces around `()` are optional but
+    necessary for the `{}` version. From [bash manual: Lists of Commands](https://www.gnu.org/software/bash/manual/bash.html#Lists):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A `list` is a sequence of one or more pipelines separated by one of the operators
+    `;`, `&`, `&&`, or `||`, and optionally terminated by one of `;`, `&`, or a newline.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Here are some examples of command groupings:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You might wonder why the second command did not use `< sample.txt` instead
+    of repeating the filename twice. The reason is that some commands might read more
+    than what is required (for buffering purposes) and thus cause issues for the remaining
+    commands. In the `sed+sort` example, the `-u` option guarantees that `sed` will
+    not to read more than the required data. See [unix.stackexchange: sort but keep
+    header line at the top](https://unix.stackexchange.com/q/11856/109046) for more
+    examples and details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You don''t need the
+    `()` or `{}` groups to see the results of multiple commands on the terminal. Just
+    the `;` separator between the commands would be enough. See also [bash manual:
+    Command Execution Environment](https://www.gnu.org/software/bash/manual/bash.html#Command-Execution-Environment).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '[List control operators](#list-control-operators)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can use these operators to control the execution of the subsequent command
+    depending on the exit status of the first command. From [bash manual: Lists of
+    Commands](https://www.gnu.org/software/bash/manual/bash.html#Lists):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: AND and OR lists are sequences of one or more pipelines separated by the control
+    operators `&&` and `||`, respectively. AND and OR lists are executed with left
+    associativity.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: For AND list, the second command will be executed if and only if the first command
+    exits with `0` status.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: For OR list, the second command will be executed if and only if the first command
+    does *not* exit with `0` status.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Command substitution](#command-substitution)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Command substitution allows you to use the standard output of a command as
+    part of another command. Trailing newlines, if any, will be removed. You can use
+    the newer and preferred syntax `$(command)` or the older syntax `` `command` ``.
+    Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example with nested substitutions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Difference between the two types of syntax is quoted below from [bash manual:
+    Command Substitution](https://www.gnu.org/software/bash/manual/bash.html#Command-Substitution):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When the old-style backquote form of substitution is used, backslash retains
+    its literal meaning except when followed by `$`, `` ` ``, or `\`. The first backquote
+    not preceded by a backslash terminates the command substitution. When using the
+    $(command) form, all characters between the parentheses make up the command; none
+    are treated specially.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Command substitutions may be nested. To nest when using the backquoted form,
+    escape the inner backquotes with backslashes.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Process substitution](#process-substitution)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Instead of a file argument, you can use command output with process substitution.
+    The syntax is `<(list)`. The shell will take care of passing a filename with the
+    standard output of those commands. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: For the above example, you could also have used `-` to represent `stdin` piped
+    data as seen in an earlier section. Here's an example where two substitutions
+    are used. This essentially helps you to avoid managing multiple temporary files,
+    similar to how the `|` pipe operator helps for single temporary file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See [this unix.stackexchange
+    thread](https://unix.stackexchange.com/q/609375/109046) for examples with the
+    `>(list)` form.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `globs.sh`
+    script for wildcards related exercises, unless otherwise mentioned.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
+    directory for exercises that may require you to create some files. You can delete
+    such practice directories afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Use the `echo` command to display the text as shown below. Use appropriate
+    quoting as necessary.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Use the `echo` command to display the values of the three variables
+    in the format as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** What will be the output of the command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** List filenames starting with a digit character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** List filenames whose extension do not begin with `t` or `l`. Assume
+    extensions will have at least one character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** List filenames whose extension only have a single character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** List filenames whose extension is not `txt`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Describe the wildcard pattern used in the command shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** List filenames having only lowercase alphabets before the extension.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** List filenames starting with `ma` or `he` or `hi`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** What commands would you use to get the outputs shown below? Assume
+    that you do not know the depth of sub-directories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Create and change to an empty directory. Then, use brace expansion
+    along with relevant commands to get the results shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** What does the `set` builtin command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**14)** What does the `|` pipe operator do? And when would you add the `tee`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**15)** Can you infer what the following command does? *Hint*: see `help printf`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Use brace expansion along with relevant commands and shell features
+    to get the result shown below. *Hint*: see previous question.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** With `ip.txt` containing text as shown in the previous question, use
+    brace expansion and relevant commands to get the result shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** What are the differences between `<` and `|` shell operators, if any?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**19)** Which character is typically used to represent `stdin` data as a file
+    argument?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**20)** What do the following operators do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `1>`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `2>`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `&>`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*d)* `&>>`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*e)* `|&`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**21)** What will be the contents of `op.txt` if you use the following `grep`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** What will be the contents of `op.txt` if you use the following commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** Correct the command to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** Correct the command to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** What will be the output of the following commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**26)** Correct the command(s) to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Will the following two commands produce equivalent output? If not,
+    why not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE

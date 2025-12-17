@@ -1,0 +1,2902 @@
+- en: Exercise Solutions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/exercise-solutions.html](https://learnbyexample.github.io/cli-computing/exercise-solutions.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Command Line Overview](#command-line-overview)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**1)** By default, is `echo` a shell builtin or external command on your system?
+    What command could you use to get an answer for this question?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: On my system, `echo` is both a shell builtin and an external command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: As seen in the above result, the builtin command takes priority, so that is
+    the default version.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** What output do you get for the command shown below? Does the documentation
+    help understand the result?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Yes, the documentation helps to understand the above result. From `help echo`
+    (since the builtin version is the default):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Display the ARGs, separated by a single space character and followed by a newline,
+    on the standard output.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In the above command, there are three arguments passed to the `echo` command
+    — `apple`, `42` and `'banana 100'`. The string represented by these arguments
+    are displayed in the output separated by a single space character.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** Go through [bash manual: Tilde Expansion](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html).
+    Is `~/projects` a relative or an absolute path? See [this unix.stackexchange thread](https://unix.stackexchange.com/q/221970/109046)
+    for answers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'I do not much care if it is correct to call it a relative or absolute path.
+    More importantly, I want to highlight this gotcha from the above unix.stackexchange
+    thread:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`~` is syntax implemented by the shell (and other programs which imitate it
+    for convenience) which expands it into a real pathname. To illustrate, `~/Documents`
+    is approximately the same thing as `$HOME/Documents` (again, shell syntax). Since
+    `$HOME` should be an absolute path, the value of `$HOME/Documents` is also an
+    absolute path. But the text `$HOME/Documents` or `~/Documents` has to be expanded
+    by the shell in order to become the path we mean.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: I spent a frustrating few hours trying to debug why one of my [autostart](https://wiki.archlinux.org/title/Autostarting)
+    script wasn't working. Yup, you guessed it. The issue was using `~` and changing
+    to the full path fixed it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** Which key would you use to get help while the `less` command is active?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`h`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**5)** How would you bring the 50th line to the top of the screen while viewing
+    a `man` page (assume `less` command is the `pager`)?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`50g`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**6)** What does the `Ctrl+k` shortcut do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Deletes from the current character to the end of the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** Briefly explain the role of the following shell operators:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `|` — redirects output from a command as input to another command'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `>` — redirects output from a command to a file (overwrites if the file
+    already exists)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `>>` — redirects output from a command to a file (appends if the file
+    already exists)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** The `whatis` command displays one-line descriptions about commands.
+    But it doesn''t seem to work for `whatis type`. What should you use instead?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** What is the role of the `/tmp` directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `man hier`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This directory contains temporary files which may be deleted with no notice,
+    such as by a regular job or at system boot up.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'See [wikipedia: Temporary folder](https://en.wikipedia.org/wiki/Temporary_folder)
+    for more details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** Give an example each for absolute and relative paths.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'absolute path: `/usr/share/dict/words`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'relative path: `../../projects`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**11)** When would you use the `man -k` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `man man`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-k, --apropos`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Equivalent to apropos. Search the short manual page descriptions for keywords
+    and display any matches. See apropos(1) for details.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Are there differences between the `man` and `info` pages?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Linux manual pages are usually shortened version of the full documentation.
+    You can use the `info` command to view the complete documentation for GNU tools.
+    `info` is also a TUI application, but with different key configuration compared
+    to the `man` command. See [GNU Manuals Online](https://www.gnu.org/manual/manual.html)
+    if you'd prefer to read them from a web browser. You can also download them in
+    formats like PDF for offline usage.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Managing Files and Directories](#managing-files-and-directories)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `ls.sh` script
+    will be used for some of the exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Which of these commands will always display the absolute path of the
+    home directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `pwd`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `echo "$PWD"`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `echo "$HOME"`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Answer: *c)* `echo "$HOME"`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**2)** The current working directory has a folder named `-dash`. How would
+    you switch to that directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `cd -- -dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `cd -dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `cd ./-dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*d)* `cd \-dash`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*e)* `cd ''-dash''`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*f)* all of the above'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*g)* only *a)* and *c)*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Answer: *g)* only *a)* and *c)*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** Given the directory structure as shown below, how would you change to
+    the `todos` directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** As per the scenario shown below, how would you change to the `cli-computing`
+    directory under the user''s home directory? And then, how would you go back to
+    the previous working directory?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** How''d you list the contents of the current directory, one per line,
+    along with the size of the entries in human readable format?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Which `ls` command option would you use for version based sorting of
+    entries?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `man ls`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-v`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: natural sort of (version) numbers within text
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**7)** Which `ls` command option would you use for sorting based on entry size?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-S`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: sort by file size, largest first
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**8)** Which `ls` command option would you use for sorting based on file extension?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-X`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: sort alphabetically by entry extension
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**9)** What does the `-G` option of `ls` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-G, --no-group`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: in a long listing, don't print group names
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**10)** What does the `-i` option of `ls` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i, --inode`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: print the index number of each file
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**11)** List only the directories as one entry per line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Assume that a regular file named `notes` already exists. What would
+    happen if you use the `mkdir -p notes` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Use one or more commands to match the scenario shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Use one or more commands to match the scenario shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Don''t delete this
+    directory, will be needed in a later exercise.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**15)** If directories to create already exist, which `mkdir` command option
+    would you use to not show an error?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-p, --parents`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: no error if existing, make parent directories as needed
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**16)** Use one or more commands to match the scenario given below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** What does the `-f` option of `rm` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-f, --force`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ignore nonexistent files and arguments, never prompt
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: For example, it helps to remove write protected files (provided you have appropriate
+    permissions to delete those files).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**18)** Which option would you use to interactively delete files using the
+    `rm` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: prompt before every removal
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-I`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: prompt once before removing more than three files, or when removing recursively;
+    less intrusive than `-i`, while still giving protection against most mistakes
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**19)** Can the files removed by `rm` easily be restored? Do you need to take
+    some extra steps or use special commands to make the files more difficult to recover?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Files removed using `rm` can still be recovered with time and skill
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: recover deleted files](https://unix.stackexchange.com/q/80270/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: recovering accidentally deleted files](https://unix.stackexchange.com/q/2677/109046)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use commands like `shred` if you want to make it harder to recover deleted files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wiki.archlinux: Securely wipe disk](https://wiki.archlinux.org/title/Securely_wipe_disk)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**20)** Does your Linux distribution provide a tool to send deleted files to
+    the trash (which would help to recover deleted files)?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'On Ubuntu, you can use `sudo apt install trash-cli` to install the `trash`
+    command. See also [wiki.archlinux: Trash management](https://wiki.archlinux.org/title/Trash_management).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**21)** Which option would you use to interactively accept/prevent the `cp`
+    command from overwriting a file of the same name? And which option would prevent
+    overwriting without needing manual confirmation?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i, --interactive`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: prompt before overwrite (overrides a previous -n option)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-n, --no-clobber`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: do not overwrite an existing file (overrides a previous -i option)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**22)** Does the `cp` command allow you to rename the file or directory being
+    copied? If so, can you rename multiple files/directories being copied?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`cp` allows renaming single file or directory by specifying a different name
+    in the destination path. You can''t rename multiple files or directories with
+    a single `cp` usage.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**23)** What do the `-u`, `-b` and `-t` options of `cp` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-u, --update`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: copy only when the SOURCE file is newer than the destination file or when the
+    destination file is missing
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`--backup[=CONTROL]`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: make a backup of each existing destination file
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-b`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: like `--backup` but does not accept an argument
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-t, --target-directory=DIRECTORY`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: copy all SOURCE arguments into DIRECTORY
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**24)** What''s the difference between the two commands shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`cp` makes a new copy of `ip.txt` named as `op.txt` — two files having the
+    same content'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`mv` renames `ip.txt` as `op.txt` — there''s only one file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**25)** Which option would you use to interactively accept/prevent the `mv`
+    command from overwriting a file of the same name?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i, --interactive`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: prompt before overwrite
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**26)** Use one or more commands to match the scenario shown below. You should
+    have already created this directory structure in an earlier exercise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** What does the `-t` option of `mv` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-t, --target-directory=DIRECTORY`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: move all SOURCE arguments into DIRECTORY
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**28)** Determine and implement the `rename` logic based on the filenames and
+    expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** Does the `ln` command follow the same order to specify source and destination
+    as the `cp` and `mv` commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**30)** Which `tar` option helps to compress archives based on filename extension?
+    This option can be used instead of `-z` for `gzip`, `-j` for `bzip2` and `-J`
+    for `xz`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-a, --auto-compress`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Use archive suffix to determine the compression program.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Shell Features](#shell-features)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `globs.sh`
+    script for wildcards related exercises, unless otherwise mentioned.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
+    directory for exercises that may require you to create some files. You can delete
+    such practice directories afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Use the `echo` command to display the text as shown below. Use appropriate
+    quoting as necessary.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Use the `echo` command to display the values of the three variables
+    in the format as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** What will be the output of the command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** List filenames starting with a digit character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** List filenames whose extension do not begin with `t` or `l`. Assume
+    extensions will have at least one character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** List filenames whose extension only have a single character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** List filenames whose extension is not `txt`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Describe the wildcard pattern used in the command shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: List files that have at least one non-word character (`-` for example) before
+    a `.` character.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** List filenames having only lowercase alphabets before the extension.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** List filenames starting with `ma` or `he` or `hi`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** What commands would you use to get the outputs shown below? Assume
+    that you do not know the depth of sub-directories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Create and change to an empty directory. Then, use brace expansion
+    along with relevant commands to get the results shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** What does the `set` builtin command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `help set`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Change the value of shell attributes and positional parameters, or display the
+    names and values of shell variables.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**14)** What does the `|` pipe operator do? And when would you add the `tee`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`|` redirects the output of a command as input to another command. The `tee`
+    command will help to save the output of a command to a file as well as display
+    it on the terminal.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**15)** Can you infer what the following command does? *Hint*: see `help printf`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'From `help printf`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The format is re-used as necessary to consume all of the arguments. If there
+    are fewer arguments than the format requires, extra format specifications behave
+    as if a zero value or null string, as appropriate, had been supplied.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: In the above example, the format `%s\n` is applied to all the three arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**16)** Use brace expansion along with relevant commands and shell features
+    to get the result shown below. *Hint*: see previous question.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** With `ip.txt` containing text as shown in the previous question, use
+    brace expansion and relevant commands to get the result shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** What are the differences between `<` and `|` shell operators, if any?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: the `<` redirection operator helps you to pass data from a file as input to
+    a command
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: the `|` operator redirects output of a command as input to another command
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**19)** Which character is typically used to represent `stdin` data as a file
+    argument?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**20)** What do the following operators do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*a)* `1>` — redirect the standard output of a command to a file'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*b)* `2>` — redirect the standard error of a command to a file'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*c)* `&>` — redirect both `stdout` and `stderr` (overwrites an existing file)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*d)* `&>>` — redirect both `stdout` and `stderr` (appends to an existing file)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*e)* `|&` — pipe both `stdout` and `stderr` as input to another command'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**21)** What will be the contents of `op.txt` if you use the following `grep`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** What will be the contents of `op.txt` if you use the following commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that the value of `qty` variable was substituted for `$qty`. You'll have
+    to use `'end'` or `\end` to avoid shell interpolation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**23)** Correct the command to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** Correct the command to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** What will be the output of the following commands?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: In both cases, the first command succeeds (exit status `0`). The `&&` and `||`
+    are short-circuit operators. Their second operands will be executed only if the
+    first one was success and failure respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**26)** Correct the command(s) to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Will the following two commands produce equivalent output? If not,
+    why not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: The outputs are not equivalent because brace expansion creates all combinations
+    when multiple braces are used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Viewing Part or Whole File Contents](#viewing-part-or-whole-file-contents)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Which option(s) would you use to get the output shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Pass appropriate arguments to the `cat` command to get the output shown
+    below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Will the two commands shown below produce the same output? If not, why
+    not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: No. The outputs are different because `tac` reverses content separately for
+    each input file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** Go through the manual for the `tac` command and use appropriate options
+    and arguments to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-b, --before`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: attach the separator before instead of after
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-s, --separator=STRING`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: use STRING as the separator instead of newline
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**5)** What is the difference between `less -n` and `less -N` options? Does
+    `cat -n` and `less -n` have similar functionality?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`less -N` enables line numbering and `less -n` disables numbering. `cat -n`
+    enables line numbering, so it doesn''t function similar to `less -n`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**6)** Which command would you use to open another file from within an existing
+    `less` session? And which commands would you use to navigate between previous
+    and next files?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can use `:e filename` to open another file (similar to the Vim text editor).
+    You can use `:p` and `:n` to switch between the previous and next files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** Use appropriate commands and shell features to get the output shown
+    below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** How would you display all the input lines except the first one?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** Which command(s) would you use to get the output shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Use a combination of the `head` and `tail` commands to get the 11th
+    to 14th characters from the given input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Extract the starting six bytes from the input files `table.txt` and
+    `fruits.txt`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Extract the last six bytes from the input files `fruits.txt` and `table.txt`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Searching Files and Filenames](#searching-files-and-filenames)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `grep` exercises,
+    use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `find` exercises,
+    use the `find.sh` script, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Display lines containing `an` from the input files `blocks.txt`, `ip.txt`
+    and `uniform.txt`. Show the results with and without filename prefix.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Display lines containing the whole word `he` from the `sample.txt` input
+    file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Match only whole lines containing `car` irrespective of case. The matching
+    lines should be displayed with line number prefix as well.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** Display all lines from `purchases.txt` except those that contain `tea`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** Display all lines from `sample.txt` that contain `do` but not `it`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** For the input file `sample.txt`, filter lines containing `do` and also
+    display the line that comes after such a matching line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** For the input file `sample.txt`, filter lines containing `are` or `he`
+    as whole words as well as the line that comes before such a matching line. Go
+    through `info grep` or the [online manual](https://www.gnu.org/software/grep/manual/grep.html)
+    and use appropriate options such that there''s no separator between the groups
+    of matching lines in the output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`--no-group-separator`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: When `-A`, `-B` or `-C` are in use, do not print a separator between groups
+    of lines.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**8)** Extract all pairs of `()` with/without text inside them, provided they
+    do not contain `()` characters inside.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the given input, match all lines that start with `den` or end with
+    `ly`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Extract words starting with `s` and containing both `e` and `t` in
+    any order.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Extract all whole words having the same first and last word character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Match all input lines containing `*[5]` literally.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Match whole lines that start with `hand` and immediately followed by
+    `s` or `y` or `le` or no further character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Input lines have three or more fields separated by a `,` delimiter.
+    Extract from the second field to the second last field. In other words, extract
+    fields other than the first and last.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Recursively search for files containing `ello`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Search for files containing `blue` recursively, but do not search within
+    the `backups` directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Search for files containing `blue` recursively, but not if the file
+    also contains `teal`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Find all regular files within the `backups` directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** Find all regular files whose extension starts with `p` or `s` or `v`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE65]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Find all regular files whose name do *not* have the lowercase letters
+    `g` to `l`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE66]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Find all regular files whose path has at least one directory name starting
+    with `p` or `d`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE67]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Find all directories whose name contains `b` or `d`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE68]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** Find all hidden directories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE69]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** Find all regular files at the exact depth of `2`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE70]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** What''s the difference between `find -mtime` and `find -atime`? And,
+    what is the time period these options work with?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`m` is for modified timestamp and `a` is for accessed timestamp. These options
+    work with `24` hour periods.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-atime n`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: File was last accessed `n*24` hours ago. When find figures out how many 24-hour
+    periods ago the file was last accessed, any fractional part is ignored, so to
+    match `-atime +1`, a file has to have been accessed at least two days ago.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-mtime n`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: File's data was last modified `n*24` hours ago. See the comments for `-atime`
+    to understand how rounding affects the interpretation of file modification times.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**26)** Find all empty regular files.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE71]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Create a directory named `filtered_files`. Then, copy all regular files
+    that are greater than `1` byte in size but whose name don''t end with `.log` to
+    this directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE72]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**28)** Find all hidden files, but not if they are part of the `filtered_files`
+    directory created earlier.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE73]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** Delete the `filtered_files` directory created earlier. Then, go through
+    the `find` manual and figure out how to list only executable files.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE74]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-executable`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Matches files which are executable and directories which are searchable (in
+    a file name resolution sense) by the current user.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**30)** List at least one use case for piping the `find` output to the `xargs`
+    command instead of using the `find -exec` option.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`xargs -P` (or the [parallel](https://www.gnu.org/software/parallel/) command)
+    can be handy if you need parallel execution for performance reasons.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**31)** How does the `locate` command work faster than the equivalent `find`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From [unix.stackexchange: pros and cons of find and locate](https://unix.stackexchange.com/q/60205/109046):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`locate` uses a prebuilt database, which should be regularly updated, while
+    `find` iterates over a filesystem to locate files.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Thus, `locate` is much faster than `find`, but can be inaccurate if the database
+    -can be seen as a cache- is not updated (see `updatedb` command).
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[File Properties](#file-properties)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
+    directory for exercises that may require you to create some files and directories.
+    You can delete such practice directories afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Save the number of lines in the `greeting.txt` input file to the `lines`
+    shell variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE75]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** What do you think will be the output of the following command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE76]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Use appropriate options and arguments to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE77]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** Go through the `wc` manual and use appropriate options and arguments
+    to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE78]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`--files0-from=F`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: read input from the files specified by NUL-terminated names in file F; If F
+    is - then read names from standard input
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**5)** What is the difference between the `wc -c` and `wc -m` options? And
+    which option would you use to get the longest line length?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-c, --bytes`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: print the byte counts
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-m, --chars`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: print the character counts
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-L, --max-line-length`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: print the maximum display width
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**6)** Find filenames ending with `.log` and report their sizes in human readable
+    format. Use the `find+du` combination for the first case and the `ls` command
+    (with appropriate shell features) for the second case.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE79]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Report sizes of files/directories in the current path in powers of `1000`
+    without descending into sub-directories. Also, show a total at the end.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE80]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** What does the `du --apparent-size` option do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`--apparent-size`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: print apparent sizes, rather than disk usage; although the apparent size is
+    usually smaller, it may be larger due to holes in ('sparse') files, internal fragmentation,
+    indirect blocks, and the like
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**9)** When will you use the `df` command instead of `du`? Which `df` command
+    option will help you to report only the specific fields of interest?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`df` gives space usage for the entire file system whereas `du` is useful to
+    get space estimate for specific files and directories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE81]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To get only specific fields of interest:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`--output[=FIELD_LIST]`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: use the output format defined by FIELD_LIST, or print all fields if FIELD_LIST
+    is omitted.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**10)** Display the size of `scores.csv` and `timings.txt` files in the format
+    shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE82]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Which `touch` option will help you prevent file creation if it doesn''t
+    exist yet?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-c, --no-create`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: do not create any files
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**12)** Assume `new_file.txt` doesn''t exist in the current working directory.
+    What would be the output of the `stat` command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE83]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-t STAMP`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: use [[CC]YY]MMDDhhmm[.ss] instead of current time
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**13)** Is the following `touch` command valid? If so, what would be the output
+    of the `stat` command that follows?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes, it is valid as multiple file arguments are allowed. The `-r` option helps
+    to copy the timestamp details from the given file to the target files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE84]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Use appropriate option(s) to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE85]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Is the following command valid? If so, what would be the output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes, it is valid. Multiple slashes will be considered as a single slash. Any
+    trailing slashes will be removed before determining the portion to be extracted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE86]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Given the file path in the shell variable `p`, how''d you obtain the
+    output shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE87]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Explain what each of the characters mean in the following `stat` command''s
+    output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE88]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The 10 characters displayed are related to file type and permissions. First
+    character indicates the **file type**. The most common ones are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-` regular file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`d` directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`l` symbolic link'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The other nine characters represent three sets of **file permissions** for *user*
+    (`u`), *group* (`g`) and *others* (`o`), in that order.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*user* — file owner'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*group* — users having file access as part of a group'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*others* — everyone else'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Permission reference table:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Character | Meaning | Value |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `r` | read | `4` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `w` | write | `2` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `x` | execute | `1` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-` | no permission | `0` |'
+  prefs: []
+  type: TYPE_TB
+- en: '**18)** What would be the output of the second `stat` command shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE89]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** How would you specify directory permissions using the `mkdir` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE90]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Change the file permission of `book_list.txt` to match the output of
+    the second `stat` command shown below. Don''t use the number `220`, specify the
+    changes in terms of `rwx` characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE91]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Change the permissions of `test_dir` to match the output of the second
+    `stat` command shown below. Don''t use the number `757`, specify the changes in
+    terms of `rwx` characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE92]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Managing Processes](#managing-processes)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**1)** How would you invoke a command to be executed in the background? And
+    what would you do to push a job to the background after it has already been launched?
+    What commands can you use to track active jobs?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: appending an `&` character to the command will execute it in the background
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+z` (suspend the current running job) followed by `bg` (push the recently
+    suspended job to the background)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`jobs` or `ps` will help to track active jobs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**2)** What do the `+` and `-` symbols next to job numbers indicate?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `info bash` (section *Job Control Basics*):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In output pertaining to jobs (e.g., the output of the `jobs` command), the current
+    job is always flagged with a `+`, and the previous job with a `-`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**3)** When would you use `fg %n` and `bg %n` instead of just `fg` and `bg`
+    respectively?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `info bash` (section *Job Control Basics*):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are a number of ways to refer to a job in the shell. The character `%`
+    introduces a job specification (JOBSPEC).
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Job number `n` may be referred to as `%n`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**4)** Which option will help you customize the output fields needed for the
+    `ps` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-o format`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: User-defined format. format is a single argument in the form of a blank-separated
+    or comma-separated list, which offers a way to specify individual output columns.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**5)** What''s the difference between `pgrep -a` and `pgrep -l` options?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-a, --list-full`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: List the full command line as well as the process ID.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-l, --list-name`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: List the process name as well as the process ID.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**6)** If the job number is `2`, would you use `kill %2` or `kill 2` to send
+    `SIGTERM` to that process?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`kill %2`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** Which signal does the `Ctrl+c` shortcut send to the currently running
+    process?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Pressing `Ctrl+c` sends the `SIGINT` (`2`) signal, usually used to abort a process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** Which command helps you to continuously monitor processes, along with
+    details like PID, memory usage, etc?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`top` (or alternatives like `btop` and `htop`)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**9)** Which key will help you manipulate kill tasks from within the `top`
+    session?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`k`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**10)** What does the `free` command do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE93]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Multipurpose Text Processing Tools](#multipurpose-text-processing-tools)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Replace all occurrences of `0xA0` with `0x50` and `0xFF` with `0x7F`
+    for the given input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE94]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Remove only the third line from the given input.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE95]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** For the input file `sample.txt`, display all lines that contain `it`
+    but not `do`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE96]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** For the input file `purchases.txt`, delete all lines containing `tea`.
+    Also, replace all occurrences of `coffee` with `milk`. Write back the changes
+    to the input file itself. The original contents should get saved to `purchases.txt.orig`.
+    Afterwards, restore the contents from this backup file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE97]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** For the input file `sample.txt`, display all lines from the start of
+    the file till the first occurrence of `are`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE98]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Delete all groups of lines from a line containing `start` to a line
+    containing `end` for the `uniform.txt` input file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE99]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Replace all occurrences of `42` with `[42]` unless it is at the edge
+    of a word.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE100]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Replace all whole words with `X` that start and end with the same word
+    character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE101]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the input file `anchors.txt`, convert markdown anchors to hyperlinks
+    as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE102]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Replace all occurrences of `e` with `3` except the first two matches.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE103]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** The below sample strings use `,` as the delimiter and the field values
+    can be empty as well. Use `sed` to replace only the third field with `42`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE104]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** For the input file `table.txt`, calculate and display the product of
+    numbers in the last field of each line. Consider space as the field separator
+    for this file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE105]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Extract the contents between `()` or `)(` from each of the input lines.
+    Assume that the `()` characters will be present only once every line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE106]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** For the input file `scores.csv`, display the `Name` and `Physics` fields
+    in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE107]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Extract and display the third and first words in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE108]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** For the input file `scores.csv`, add another column named **GP** which
+    is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics
+    and Chemistry.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE109]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** From the `para.txt` input file, display all paragraphs containing any
+    digit character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE110]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Input has the ASCII NUL character as the record separator. Change it
+    to dot and newline characters as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE111]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** For the input file `sample.txt`, print a matching line containing `do`
+    only if `you` is found two lines before. For example, if `do` is found on line
+    number 10 and the 8th line contains `you`, then the 10th line should be printed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE112]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** For the input file `blocks.txt`, extract contents from a line containing
+    exactly `%=%=` until but not including the next such line. The block to be extracted
+    is indicated by the variable `n` passed via the `-v` option.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE113]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Display lines present in `c1.txt` but not in `c2.txt` using the `awk`
+    command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE114]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Display lines from `scores.csv` by matching the first field based on
+    a list of names from the `names.txt` file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE115]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** Retain only the first copy of duplicate lines from the `duplicates.txt`
+    input file. Use only the contents of the last field for determining duplicates.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE116]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** For the input file `table.txt`, print input lines if the second field
+    starts with `b`. Construct solutions using `awk` and `perl`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE117]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** For the input file `table.txt`, retain only the second last field.
+    Write back the changes to the input file itself. The original contents should
+    get saved to `table.txt.bkp`. Afterwards, restore the contents from this backup
+    file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE118]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**26)** Reverse the first field contents of `table.txt` input file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE119]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Sort the given comma separated input lexicographically. Change the
+    output field separator to a `:` character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE120]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**28)** Filter fields containing digit characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE121]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** The input shown below has several words ending with digit characters.
+    Change the words containing `test` to match the output shown below. That is, renumber
+    the matching portions to `1`, `2`, etc. Words not containing `test` should not
+    be changed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE122]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**30)** For the input file `table.txt`, change contents of the third field
+    to all uppercase. Construct solutions using `sed`, `awk` and `perl`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE123]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Sorting Stuff](#sorting-stuff)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Default `sort` doesn''t work for numbers. Correct the command used below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE124]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Which `sort` option will help you ignore case?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE125]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Go through the `sort` manual and use appropriate options to get the
+    output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE126]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-g, --general-numeric-sort`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: compare according to general numerical value
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**4)** Sort the `scores.csv` file numerically in ascending order using the
+    contents of the second field. Header line should be preserved as the first line
+    as shown below. *Hint*: see the [Shell Features](./shell-features.html) chapter.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE127]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** Sort the contents of `duplicates.txt` by the fourth column numbers in
+    descending order. Retain only the first copy of lines with the same number.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE128]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Will `uniq` throw an error if the input is not sorted? What do you think
+    will be the output for the following input?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`uniq` doesn''t necessarily require the input to be sorted. Adjacent lines
+    are used for comparison purposes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE129]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Retain only the unique entries based on the first two characters of
+    the input lines. Sort the input if necessary.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE130]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Count the number of times input lines are repeated and display the results
+    in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE131]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** Display lines present in `c1.txt` but not in `c2.txt` using the `comm`
+    command. Assume that the input files are already sorted.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE132]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Use appropriate options to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE133]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** What are the differences between `sort -u` and `uniq -u` options, if
+    any?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`sort -u` retains first copy of duplicates deemed to be equal. `uniq -u` retains
+    only the unique copies (i.e. not even a single copy of the duplicates will be
+    part of the output).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Comparing Files](#comparing-files)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Which `cmp` option would you use if you just need the exit status reflecting
+    whether the given inputs are same or not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-s, --quiet, --silent`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: suppress all normal output
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**2)** Which `cmp` option would you use to skip the initial bytes for comparison
+    purposes? The below example requires you to skip the first two bytes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE134]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-i, --ignore-initial=SKIP`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: skip first SKIP bytes of both inputs
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**3)** What does the `diff -d` option do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-d, --minimal`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: try hard to find a smaller set of changes
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**4)** Which option will help you get colored output with `diff`?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`--color[=WHEN]`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: colorize the output; WHEN can be `never`, `always`, or `auto` (the default)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**5)** Use appropriate options to get the desired output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE135]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`--left-column`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: output only the left column of common lines
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**6)** Use appropriate options to get the desired output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE136]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Assorted Text Processing Tools](#assorted-text-processing-tools)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files used in the following exercises.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Generate the following sequence.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE137]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Is the sequence shown below possible to generate with `seq`? If so,
+    how?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE138]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Display three random words from `/usr/share/dict/words` (or an equivalent
+    dictionary word file) containing `s` and `e` and `t` in any order. The output
+    shown below is just an example.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE139]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** Briefly describe the purpose of the `shuf` command options `-i`, `-e`
+    and `-r`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-i, --input-range=LO-HI`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: treat each number LO through HI as an input line
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-e, --echo`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: treat each ARG as an input line
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-r, --repeat`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: output lines can be repeated
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**5)** Why does the below command not work as expected? What other tools can
+    you use in such cases?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`cut` ignores all repeated fields and output field order always follows the
+    same order as input fields.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE140]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Display except the second field in the format shown below. Can you construct
+    two different solutions?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE141]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** Extract the first three characters from the input lines as shown below.
+    Can you also use the `head` command for this purpose? If not, why not?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE142]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`head` cannot be used because it acts on the input as a whole, whereas `cut`
+    works line wise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**8)** Display only the first and third columns of the `scores.csv` input file
+    in the format as shown below. Note that only space characters are present between
+    the two columns, not tab.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE143]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** Display the contents of `table.txt` in the format shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE144]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Implement [ROT13](https://en.wikipedia.org/wiki/ROT13) cipher using
+    the `tr` command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE145]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Retain only alphabets, digits and whitespace characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE146]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Use `tr` to get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE147]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** `paste -s` works separately for multiple input files. How would you
+    workaround this if you needed to treat all the input files as a single source?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE148]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Use appropriate options to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE149]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Use the `pr` command to get the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE150]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Use the `pr` command to join the input files `fruits.txt` and `ip.txt`
+    as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE151]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** The `cut` command doesn''t support a way to choose the last `N` fields.
+    Which tool presented in this chapter can be combined to work with `cut` to get
+    the output shown below?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE152]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Go through the `split` documentation and use appropriate options to
+    get the output shown below for the input file `purchases.txt`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE153]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-l, --lines=NUMBER`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: put NUMBER lines/records per output file
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**19)** Go through the `split` documentation and use appropriate options to
+    get the output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE154]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-t, --separator=SEP`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: use SEP instead of newline as the record separator; `\0` (zero) specifies the
+    NUL character
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**20)** Split the input file `purchases.txt` such that the text before a line
+    containing `powder` is part of the first file and the rest are part of the second
+    file as shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE155]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Write a generic solution that transposes comma delimited data. Example
+    input/output is shown below. You can use any tool(s) presented in this book.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE156]'
+  prefs: []
+  type: TYPE_PRE
+- en: See also my blog post [CLI computation with GNU datamash](https://learnbyexample.github.io/cli-computation-gnu-datamash/).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**22)** Reshape the contents of `table.txt` to the expected output shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE157]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Shell Scripting](#shell-scripting)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use a temporary working
+    directory before attempting the exercises. You can delete such practice directories
+    afterwards.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** What''s wrong with the script shown below? Also, will the error go away
+    if you use `bash try.sh` instead?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`!#` should be `#!`. If you get confused which one should be used, remember
+    that shebang is a **comment** that is treated specially at the start of the script.
+    And no, the error won''t go away if you call the script using the `bash` command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE158]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Will the command shown below work? If so, what would be the output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes, it will work. `echo hello` is being passed as the script to be executed
+    by the `bash` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE159]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** When would you `source` a script instead of using `bash` or creating
+    an executable using shebang?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using `source` to execute scripts helps when you want to work within the current
+    shell environment instead of a sub-shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**4)** How would you display the contents of a variable with `shake` appended?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE160]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** What changes would you make to the code shown below to get the expected
+    output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE161]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Is the following code valid? If so, what would be the output of the
+    `echo` command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes, it is valid. Array index can be arbitrarily used, they do not have to be
+    contiguous.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE162]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** How would you get the last three characters of a variable''s contents?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE163]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Will the second `echo` command give an error? If not, what will be the
+    output?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: No error. It will give the length of the element at index `0`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE164]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the given array, use parameter expansion to remove characters until
+    the first/last space.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE165]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Use parameter expansion to get the expected outputs shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE166]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Is it possible to achieve the expected outputs shown below using parameter
+    expansion? If so, how?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Yes it is possible. For the second and third cases, `extglob` has to be enabled.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE167]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** For the given input, change case as per the expected outputs shown
+    below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE168]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Why does the conditional expression shown below fail?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE169]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** What is the difference between the `==` and `=~` string comparison
+    operators?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`s1 = s2` or `s1 == s2` checks if two strings are equal'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: unquoted portions of `s2` will be treated as a wildcard while testing against
+    `s1`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`s1 =~ s2` checks if `s1` matches the POSIX extended regular expression provided
+    by `s2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**15)** Why does the conditional expression used below show `failed` both times?
+    Modify the expressions such that the first one correctly says `matched` instead
+    of `failed`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Quoted portions will be treated as literal strings. Wildcards should be unquoted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE170]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Extract the digits that follow a `:` character for the given variable
+    contents.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE171]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Modify the expression shown below to correctly report `true` instead
+    of `false`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE172]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Write a shell script named `array.sh` that accepts array input from
+    the user followed by another input as index. Display the corresponding value at
+    that index. Couple of examples are shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE173]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** Write a shell script named `case.sh` that accepts exactly two command
+    line arguments. The first argument can be `lower`, `upper` or `swap` and this
+    should be used to transform the contents of the second argument. Examples script
+    invocations are shown below, including what should happen if the command line
+    arguments do not meet the script expectations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE174]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Write a shell script named `loop.sh` that displays the number of lines
+    for each of the files passed as command line arguments.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE175]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Write a shell script named `read_file.sh` that reads a file line by
+    line to be passed as an argument to the `paste -sd,` command. Can you also write
+    a solution using the `xargs` command instead of a script?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE176]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Write a function named `add_path` which prefixes the path of the current
+    working directory to the arguments it receives and displays the results. Examples
+    are shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE177]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** What do the options `bash -x` and `bash -v` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-x`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Print commands and their arguments as they are executed.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`-v`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Print shell input lines as they are read.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**24)** What is `shellcheck` and when would you use it?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[shellcheck](https://www.shellcheck.net/) is a static analysis tool that gives
+    warnings and suggestions for scripts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'From `man shellcheck`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ShellCheck is a static analysis and linting tool for sh/bash scripts. It’s mainly
+    focused on handling typical beginner and intermediate level syntax errors and
+    pitfalls where the shell just gives a cryptic error message or strange behavior,
+    but it also reports on a few more advanced issues where corner cases can cause
+    delayed failures.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Shell Customization](#shell-customization)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**1)** Which command would you use to display the name and value of all or
+    specific environment variables?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE178]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** If you add an alias for an already existing command (`ls` for example),
+    how would you invoke the original command instead of the alias?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: By prefixing `\` or using the `command` builtin. For example, `\ls` or `command
+    ls`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**3)** Why doesn''t the alias shown below work? What would you use instead?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: You cannot pass arguments to aliases, need to use functions instead.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE179]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** How would you remove a particular alias/function definition for the
+    current shell session?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE180]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** Write an alias and a function to display the contents of the `PATH`
+    environment variable on separate lines by changing `:` to the newline character.
+    Sample output is shown below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE181]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** Will a login shell read and execute `~/.bashrc` automatically?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'No. From `info bash`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When an interactive shell that is not a login shell is started, Bash reads and
+    executes commands from '~/.bashrc', if that file exists.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'See also [unix.stackexchange: why does bashrc check whether the current shell
+    is interactive?](https://unix.stackexchange.com/q/257571/109046)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**7)** What should be the value assigned to `HISTSIZE` if you wish to have
+    unlimited history entries?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Any negative number.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`HISTSIZE`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: The maximum number of commands to remember on the history list. If the value
+    is 0, commands are not saved in the history list. Numeric values less than zero
+    result in every command being saved on the history list (there is no limit). The
+    shell sets the default value to 500 after reading any startup files.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**8)** What does the binding `set completion-ignore-case on` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`completion-ignore-case`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: If set to `on`, Readline performs filename matching and completion in a case-insensitive
+    fashion. The default value is `off`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**9)** Which shortcut helps you interactively search the command history?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To search backward in the history for a particular string, type `C-r`. Typing
+    `C-s` searches forward through the history.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**10)** What do the shortcuts `Alt+b` and `Alt+f` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`forward-word (M-f)`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Move forward to the end of the next word. Words are composed of letters and
+    digits.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`backward-word (M-b)`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Move back to the start of the current or previous word. Words are composed of
+    letters and digits.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**11)** Are there differences between the `Ctrl+l` shortcut and the `clear`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`Ctrl+l` retains whatever is typed so far and doesn''t try to remove the scrollback
+    buffer altogether. You can use the `clear` command for that purpose.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**12)** Which shortcut will you use to delete characters before the cursor
+    till the start of the line?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`unix-line-discard (C-u)`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Kill backward from the cursor to the beginning of the current line.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**13)** What do the shortcuts `Alt+t` and `Ctrl+t` do?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`transpose-chars (C-t)`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Drag the character before the cursor forward over the character at the cursor,
+    moving the cursor forward as well. If the insertion point is at the end of the
+    line, then this transposes the last two characters of the line. Negative arguments
+    have no effect.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '`transpose-words (M-t)`'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Drag the word before point past the word after point, moving point past that
+    word as well. If the insertion point is at the end of the line, this transposes
+    the last two words on the line.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**14)** Is there a difference between the `Shift+Insert` and `Shift+Ctrl+v`
+    shortcuts?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`Shift+Ctrl+v` pastes clipboard contents'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Shift+Insert` pastes the last highlighted portion (not necessarily the clipboard
+    contents)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

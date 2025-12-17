@@ -1,0 +1,1058 @@
+- en: Searching Files and Filenames
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html](https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: This chapter will show how to search file contents based on literal strings
+    or regular expressions. After that, you'll learn how to locate files based on
+    their names and other properties like size, last modified timestamp and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    directory has the scripts used in this chapter.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[grep](#grep)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Quoting from [wikipedia](https://en.wikipedia.org/wiki/Grep):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**`grep`** is a command-line utility for searching plain-text data sets for
+    lines that match a regular expression. Its name comes from the `ed` command `g/re/p`
+    (**g**lobally search a **r**egular **e**xpression and **p**rint), which has the
+    same effect.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: The `grep` command has lots and lots of features, so much so that I wrote [a
+    book](https://github.com/learnbyexample/learn_gnugrep_ripgrep) with hundreds of
+    examples and exercises. The most common usage is filtering lines from the input
+    using a regular expression (regexp).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Common options](#common-options)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Commonly used options are listed below. Examples will be discussed in later
+    sections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`--color=auto` highlight the matching portions, filenames, line numbers, etc
+    using colors'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-i` ignore case'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-v` print only the non-matching lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-n` prefix line numbers for output lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-c` display only the count of output lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-l` print only the filenames matching the given expression'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-L` print filenames *not* matching the pattern'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-w` match pattern only as whole words'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-x` match pattern only as whole lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-F` interpret pattern as a fixed string (i.e. not as a regular expression)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-o` print only the matching portions'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-A N` print the matching line and `N` number of lines after the matched line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-B N` print the matching line and `N` number of lines before the matched line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-C N` print the matching line and `N` number of lines before and after the
+    matched line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-m N` print a maximum of `N` matching lines'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-q` no standard output, quit immediately if match found, useful in scripts'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-s` suppress error messages, useful in scripts'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-r` recursively search all files in the specified input folders (by default
+    searches the current directory)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-R` like `-r`, but follows symbolic links as well'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-h` do not prefix filename for matching lines (default behavior for single
+    input file)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-H` prefix filename for matching lines (default behavior for multiple input
+    files)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Literal search](#literal-search)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The following examples would all be suited for the `-F` option as these do not
+    use regular expressions. `grep` is smart enough to do the right thing in such
+    cases.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here''s an example where the line numbers and matched portions are highlighted
+    in color:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![example with --color option](../Images/b636834e79fd5c1be8f83f7d8d2bc404.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: '[Regular Expressions](#regular-expressions)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'By default, `grep` treats the search pattern as Basic Regular Expression (BRE).
+    Here are the various options related to regexp:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-G` option can be used to specify explicitly that BRE is needed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-E` option will enable Extended Regular Expression (ERE)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: in `GNU grep`, BRE and ERE only differ in how metacharacters are specified,
+    no difference in features
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-F` option will cause the search patterns to be treated literally'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-P` if available, this option will enable Perl Compatible Regular Expression
+    (PCRE)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The following reference is for **Extended Regular Expressions**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Anchors**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`^` restricts the match to the start of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$` restricts the match to the end of the string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\<` restricts the match to the start of word'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\>` restricts the match to the end of word'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\b` restricts the match to both the start/end of words'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\B` matches wherever `\b` doesn''t match'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Dot metacharacter and Quantifiers**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`.` match any character, including the newline character'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`?` match `0` or `1` times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`*` match `0` or more times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`+` match `1` or more times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`{m,n}` match `m` to `n` times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`{m,}` match at least `m` times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`{,n}` match up to `n` times (including `0` times)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`{n}` match exactly `n` times'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Character classes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[set123]` match any of these characters once'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[^set123]` match except any of these characters once'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[3-7AM-X]` range of characters from `3` to `7`, `A`, another range from `M`
+    to `X`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\w` similar to `[a-zA-Z0-9_]` for matching word characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\s` similar to `[ \t\n\r\f\v]` for matching whitespace characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\W` match non-word characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\S` match non-whitespace characters'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[[:digit:]]` similar to `[0-9]`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[[:alnum:]_]` similar to `\w`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: see [grep manual](https://www.gnu.org/software/grep/manual/grep.html#Character-Classes-and-Bracket-Expressions)
+    for full list
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Alternation and Grouping**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`pat1|pat2|pat3` match `pat1` or `pat2` or `pat3`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`()` group patterns, `a(b|c)d` is same as `abd|acd`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: also serves as a capture group
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\N` backreference, gives the matched portion of the `N`th capture group'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\1` backreference to the first capture group'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`\2` backreference to the second capture group and so on up to `\9`'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Quoting from the manual for BRE vs ERE differences:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In basic regular expressions the meta-characters `?`, `+`, `{`, `|`, `(`, and
+    `)` lose their special meaning; instead use the backslashed versions `\?`, `\+`,
+    `\{`, `\|`, `\(`, and `\)`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Regexp examples](#regexp-examples)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Line comparisons between files](#line-comparisons-between-files)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-f` and `-x` options can be combined to get the common lines between two
+    files or the difference when `-v` is used as well. Add `-F` if you want to treat
+    the search strings literally (recall that regexp is the default).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Perl Compatible Regular Expression](#perl-compatible-regular-expression)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'PCRE has many advanced features compared to BRE/ERE. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: See `man pcrepattern` or [PCRE online manual](https://www.pcre.org/original/doc/html/pcrepattern.html)
+    for documentation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Recursive search](#recursive-search)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use the `-r` option to search recursively within the specified directories.
+    By default, the current directory will be searched. Use `-R` if you want symbolic
+    links found within the input directories to be followed as well. You do not need
+    the `-R` option for specifying symbolic links as arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here are some basic examples. Recursive search will work as if `-H` option was
+    specified as well, even if only one file was matched. Also, hidden files are included
+    by default.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can further prune the files to be searched using the *include/exclude* options.
+    Note that these options will work even if recursive search is not active.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Option | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--include=GLOB` | search only files that match GLOB |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--exclude=GLOB` | skip files that match GLOB |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--exclude-from=FILE` | skip files that match any file pattern from FILE
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--exclude-dir=GLOB` | skip directories that match GLOB |'
+  prefs: []
+  type: TYPE_TB
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [ripgrep](https://github.com/BurntSushi/ripgrep)
+    is a recommended alternative to `GNU grep` with a highly optimized regexp engine,
+    parallel search, ignoring files based on `.gitignore` and so on.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[grep and xargs](#grep-and-xargs)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can use the shell `|` operator to pass the output of a command as input
+    to another command. Suppose a command gives you a list of filenames and you want
+    to pass this list as input *arguments* to another command, what would you do?
+    One solution is to use the `xargs` command. Here''s a basic example (assuming
+    filenames won''t conflict with shell metacharacters):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Characters like space, newline, semicolon, etc are special to the shell. So,
+    filenames containing these characters have to be properly quoted. Or, where applicable,
+    you can use a list of filenames separated by the ASCII NUL character (since filenames
+    cannot have the NUL character). You can use `grep -Z` to separate the output with
+    NUL and `xargs -0` to treat the input as NUL separated. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note that the command passed to `xargs` doesn''t accept custom made aliases
+    and functions. So, if you had aliased `grep` to `grep --color=auto`, don''t be
+    surprised if the output isn''t colorized. See [unix.stackexchange: have xargs
+    use alias instead of binary](https://unix.stackexchange.com/q/141367/109046) for
+    details and workarounds.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `xargs
+    -r` to avoid running the command when the filename list doesn''t have any non-blank
+    character (i.e. when the list is empty).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Do not use `xargs -P` to combine the output of parallel runs, as you are likely
+    to get a mangled result. The [parallel](https://www.gnu.org/software/parallel/)
+    command would be a better option. See [unix.stackexchange: xargs vs parallel](https://unix.stackexchange.com/q/104778/109046)
+    for more details. See also [unix.stackexchange: when to use xargs](https://unix.stackexchange.com/q/24954/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Further Reading](#further-reading)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: My ebook [CLI text processing with GNU grep and ripgrep](https://github.com/learnbyexample/learn_gnugrep_ripgrep)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: See also my blog post [GNU BRE/ERE cheatsheet](https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/)
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Why GNU grep is fast](https://lists.freebsd.org/pipermail/freebsd-current/2010-August/019310.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: grep -r vs find+grep](https://unix.stackexchange.com/q/131535/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[find](#find)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `find` command has comprehensive features to filter files and directories
+    based on their name, size, timestamp and so on. And more importantly, `find` helps
+    you to perform actions on such filtered files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Filenames](#filenames)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: By default, you'll get every entry (including hidden ones) in the current directory
+    and sub-directories when you use `find` without any options or paths. To search
+    within specific paths, they should be immediately mentioned after `find`, i.e.
+    before any options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that symbolic
+    links won''t be followed by default. You can use the `-L` option for such cases.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: To match filenames based on a particular criteria, you can use wildcards or
+    regular expressions. For wildcards, you can use the `-name` option or the case-insensitive
+    version `-iname`. These will match only the basename, so you'll get a warning
+    if you use `/` as part of the pattern. You can use `-path` and `-ipath` if you
+    need to include `/` as well in the pattern. Unlike `grep`, the glob pattern is
+    matched against the entire basename (as there are no start/end anchors in globs).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the `-not` (or `!`) operator to invert the matching condition:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use the `-regex` and `-iregex` (case-insensitive) options to match filenames
+    based on regular expressions. In this case, the pattern will match the entire
+    path, so `/` can be used without requiring special options. The default regexp
+    flavor is `emacs` which you can change by using the `-regextype` option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[File type](#file-type)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-type` option helps to filter files based on their types like regular file,
+    directory, symbolic link, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `,` to
+    separate multiple file types. For example, `-type f,l` will match both regular
+    files and symbolic links.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: ''
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs:
+  - PREF_BQ
+  type: TYPE_PRE
+- en: '[Depth](#depth)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The path being searched is considered as depth `0`, files within the search
+    path are at depth `1`, files within a sub-directory are at depth `2` and so on.
+    Note that these global options should be specified before other kind of options
+    like `-type`, `-name`, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The `-maxdepth` option restricts the search to the specified maximum depth:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-mindepth` option specifies the minimum depth:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Age](#age)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Consider the following file properties:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`a` accessed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`c` status changed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`m` modified'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The above prefixes need to be combined with `time` (based on 24 hour periods)
+    or `min` (based on minutes) options. For example, the `-mtime` (24 hour) option
+    checks for the last modified timestamp and `-amin` (minute) checks for the last
+    accessed timestamp. These options accept a number (integer or fractional) argument,
+    that can be further prefixed by the `+` or `-` symbols. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `-daystart` qualifier
+    will measure time only from the beginning of the day. For example, `-daystart
+    -mtime 1` will check the files that were modified yesterday.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Size](#size)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use the `-size` option to filter based on file sizes. By default, the
+    number argument will be considered as 512-byte blocks. You can use the suffix
+    `c` to specify the size in bytes. The suffixes `k` (kilo), `M` (mega) and `G`
+    (giga) are calculated in powers of 1024.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can also use the
+    `-empty` option instead of `-size 0`.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Acting on matched files](#acting-on-matched-files)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-exec` option helps you pass the matching files to another command. You
+    can choose to execute the command once for every file (by using `\;`) or just
+    once for all the matching files (by using `+`). However, if the number of files
+    are too many, `find` will use more command invocations as necessary. The `;` character
+    is escaped since it is a shell metacharacter (you can also quote it as an alternative
+    to escaping).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You need to use `{}` to represent the files passed as arguments to the command
+    being executed. Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'As mentioned in the [Managing Files and Directories](./managing-files-directories.html)
+    chapter, the `-t` option for `cp` and `mv` commands will help you specify the
+    target directory before the source files. Here''s an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use the `-delete`
+    option instead of calling the `rm` command to delete the matching files. However,
+    it cannot remove non-empty directories and there are other gotchas to be considered.
+    See the manual for more details.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Multiple criteria](#multiple-criteria)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Filenames can be matched against multiple criteria such as `-name`, `-size`,
+    `-mtime`, etc. You can use operators between them and group them within `\(` and
+    `\)` to construct complex expressions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`-a` or `-and` or absence of an operator means both expressions have to be
+    satisfied'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: second expression won't be evaluated if the first one is false
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-o` or `-or` means either of the expressions have to be satisfied'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: second expression won't be evaluated if the first one is true
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`-not` inverts the result of the expression'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: you can also use `!` but that might need escaping or quoting depending on the
+    shell
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[Prune](#prune)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `-prune` option is helpful when you want to prevent `find` from descending
+    into specific directories. By default, `find` will traverse all the files even
+    if the given conditions will result in throwing away those results from the output.
+    So, using `-prune` not only helps in speeding up the process, it could also help
+    in cases where trying to access a file within the exclusion path would've resulted
+    in an error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Using `-not -path '*/.git/*' -prune` can be handy when dealing with Git based
+    version control projects.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[find and xargs](#find-and-xargs)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Similar to the `grep -Z` and `xargs -0` combination seen earlier, you can use
+    the `find -print0` and `xargs -0` combination. The `-exec` option is sufficient
+    for most use cases, but `xargs -P` (or the [parallel](https://www.gnu.org/software/parallel/)
+    command) can be handy if you need parallel execution for performance reasons.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here''s an example of passing filtered files to `sed` (**s**tream **ed**itor,
+    will be discussed in the [Multipurpose Text Processing Tools](./multipurpose-text-processing-tools.html)
+    chapter):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above example, `-P2` is used to allow `xargs` to run two processes at
+    a time (default is one process). You can use `-P0` to allow `xargs` to launch
+    as many processes as possible. The `-n2` option is used to limit the number of
+    file arguments passed to each `sed` call to `2`, otherwise `xargs` is likely to
+    pass as many arguments as possible and thus reduce/negate the effect of parallelism.
+    Note that the values used for `-n` and `-P` in the above illustration are just
+    random examples, you'll have to fine tune them for your particular use case.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Further Reading](#further-reading-1)'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[mywiki.wooledge: using find](https://mywiki.wooledge.org/UsingFind)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: find and tar example](https://unix.stackexchange.com/q/282762/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unix.stackexchange: Why is looping over find''s output bad practice?](https://unix.stackexchange.com/q/321697/109046)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[locate](#locate)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`locate` is a faster alternative to the `find` command for searching files
+    by name. It is based on a database, which gets updated by a [cron](https://en.wikipedia.org/wiki/Cron)
+    job. So, newer files may be not present in results unless you update the database.
+    Use this command if it is available in your distro (for example, `sudo apt install
+    mlocate` on Debian-like systems) and you remember some part of filename. Very
+    useful if you have to search the entire filesystem in which case `find` command
+    will take a very long time compared to `locate`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here are some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`locate ''power''` print path of filenames containing `power` in the whole
+    filesystem'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: implicitly, `locate` would change the string to `*power*` as no globbing characters
+    are present in the string specified
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`locate -b ''\power.log''` print path matching the string `power.log` exactly
+    at the end of the path'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`/home/learnbyexample/power.log` matches'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`/home/learnbyexample/lowpower.log''` will not match since there are other
+    characters at the start of the filename'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: use of `\` prevents the search string from implicitly being replaced by `*power.log*`
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`locate -b ''\proj_adder''` the `-b` option is also handy to print only the
+    matching directory name, otherwise every file under that folder would also be
+    displayed'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
+    pros and cons of find and locate](https://unix.stackexchange.com/q/60205/109046).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Exercises](#exercises)'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `grep` exercises,
+    use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    directory for input files, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `find` exercises,
+    use the `find.sh` script, unless otherwise specified.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**1)** Display lines containing `an` from the input files `blocks.txt`, `ip.txt`
+    and `uniform.txt`. Show the results with and without filename prefix.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2)** Display lines containing the whole word `he` from the `sample.txt` input
+    file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3)** Match only whole lines containing `car` irrespective of case. The matching
+    lines should be displayed with line number prefix as well.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4)** Display all lines from `purchases.txt` except those that contain `tea`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**5)** Display all lines from `sample.txt` that contain `do` but not `it`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**6)** For the input file `sample.txt`, filter lines containing `do` and also
+    display the line that comes after such a matching line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7)** For the input file `sample.txt`, filter lines containing `are` or `he`
+    as whole words as well as the line that comes before such a matching line. Go
+    through `info grep` or the [online manual](https://www.gnu.org/software/grep/manual/grep.html)
+    and use appropriate options such that there''s no separator between the groups
+    of matching lines in the output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8)** Extract all pairs of `()` with/without text inside them, provided they
+    do not contain `()` characters inside.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9)** For the given input, match all lines that start with `den` or end with
+    `ly`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10)** Extract words starting with `s` and containing both `e` and `t` in
+    any order.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**11)** Extract all whole words having the same first and last word character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**12)** Match all input lines containing `*[5]` literally.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**13)** Match whole lines that start with `hand` and immediately followed by
+    `s` or `y` or `le` or no further character.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**14)** Input lines have three or more fields separated by a `,` delimiter.
+    Extract from the second field to the second last field. In other words, extract
+    fields other than the first and last.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**15)** Recursively search for files containing `ello`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**16)** Search for files containing `blue` recursively, but do not search within
+    the `backups` directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**17)** Search for files containing `blue` recursively, but not if the file
+    also contains `teal`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**18)** Find all regular files within the `backups` directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**19)** Find all regular files whose extension starts with `p` or `s` or `v`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**20)** Find all regular files whose name do *not* have the lowercase letters
+    `g` to `l`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**21)** Find all regular files whose path has at least one directory name starting
+    with `p` or `d`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**22)** Find all directories whose name contains `b` or `d`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**23)** Find all hidden directories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**24)** Find all regular files at the exact depth of `2`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**25)** What''s the difference between `find -mtime` and `find -atime`? And,
+    what is the time period these options work with?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**26)** Find all empty regular files.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**27)** Create a directory named `filtered_files`. Then, copy all regular files
+    that are greater than `1` byte in size but whose name don''t end with `.log` to
+    this directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**28)** Find all hidden files, but not if they are part of the `filtered_files`
+    directory created earlier.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**29)** Delete the `filtered_files` directory created earlier. Then, go through
+    the `find` manual and figure out how to list only executable files.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**30)** List at least one use case for piping the `find` output to the `xargs`
+    command instead of using the `find -exec` option.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**31)** How does the `locate` command work faster than the equivalent `find`
+    command?'
+  prefs: []
+  type: TYPE_NORMAL
