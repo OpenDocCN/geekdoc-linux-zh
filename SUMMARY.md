@@ -6,6 +6,7 @@
 +   [Linux 101 Hacks](docs/linux-101-hack/README.md)
 +   [Linux From Scratch](docs/linux-bd-gd/README.md)
 +   [Linux 命令行](docs/linux-cli/README.md)
++   [Linux 命令行计算指南](docs/linux-cli-cmpt/README.md)
 +   [Linux 内部原理](docs/linux-inside/README.md)
 +   [Linux 工具快速教程](docs/linux-tool-qkgd/README.md)
 +   [Linkedin SRE 中文教程](docs/lkin-sre/README.md)
