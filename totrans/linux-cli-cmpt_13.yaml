@@ -1,188 +1,288 @@
 - en: Comparing Files
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 比较文件
 - en: 原文：[https://learnbyexample.github.io/cli-computing/comparing-files.html](https://learnbyexample.github.io/cli-computing/comparing-files.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/comparing-files.html](https://learnbyexample.github.io/cli-computing/comparing-files.html)
 - en: In this chapter, you'll learn how to find and report differences between the
     contents of two files.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，你将学习如何查找和报告两个文件内容之间的差异。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the sample input files used in this chapter.'
+  id: totrans-3
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的示例输入文件。'
 - en: '[cmp](#cmp)'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[cmp](#cmp)'
 - en: The `cmp` command is useful to compare text and binary files. If the two input
     files have the same content, no output is displayed and exit status is `0`. If
     there is a difference, it prints the first difference with details like line number
     and byte location and the exit status will be `1`.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cmp` 命令用于比较文本和二进制文件。如果两个输入文件内容相同，则不显示输出并退出状态为 `0`。如果有差异，则打印第一个差异的详细信息，如行号和字节位置，退出状态将为
+    `1`。'
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `-s` option
     to suppress the output when you just need the exit status. The `-i` option will
     allow you to skip initial bytes from the input.'
+  id: totrans-7
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 `-s` 选项来抑制输出，当你只需要退出状态时。`-i`
+    选项将允许你跳过输入的初始字节。 '
 - en: '[diff](#diff)'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[diff](#diff)'
 - en: Useful to find differences between text files. All the differences are printed,
     which might not be desirable for long files.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 有助于查找文本文件之间的差异。所有差异都会打印出来，这可能不适合长文件。
 - en: '[Common options](#common-options)'
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[常用选项](#common-options)'
 - en: Commonly used options are shown below. Examples will be discussed in the later
     sections.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 常用选项如下。示例将在后续章节中讨论。
 - en: '`-i` ignore case'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-i` 忽略大小写'
 - en: '`-w` ignore whitespaces'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-w` 忽略空白字符'
 - en: '`-b` ignore changes in the amount of whitespace'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-b` 忽略空白数量的变化'
 - en: '`-B` ignore only blank lines'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-B` 忽略空白行'
 - en: '`-E` ignore changes due to tab expansion'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-E` 忽略由于制表符扩展引起的变化'
 - en: '`-z` ignore trailing whitespaces at the end of lines'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-z` 忽略行尾的空白字符'
 - en: '`-y` two column output'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-y` 两列输出'
 - en: '`-r` recursively compare files between the two directories specified'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-r` 递归地比较两个指定目录之间的文件'
 - en: '`-s` convey message when two files are same'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-s` 当两个文件相同时代码显示消息'
 - en: '`-q` report if files differ, not the details of differences'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-q` 报告文件是否不同，而不是差异的详细信息'
 - en: '[Default diff](#default-diff)'
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[默认 diff](#default-diff)'
 - en: By default, the `diff` output shows lines from the first input file prefixed
     with `<` and lines from the second file prefixed with `>`. A line containing `---`
     is used as the group separator. Each difference is prefixed by a command that
     indicates the differences (these commands are understood by tools like `patch`).
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`diff` 输出显示以 `<` 为前缀的第一输入文件的行，以及以 `>` 为前缀的第二文件的行。使用 `---` 作为分组分隔符。每个差异都由一个表示差异的命令前缀，这些命令被像
+    `patch` 这样的工具所理解。
 - en: '[PRE1]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[Ignoring whitespaces](#ignoring-whitespaces)'
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[忽略空白字符](#ignoring-whitespaces)'
 - en: 'There are several options to ignore specific whitespace characters during comparison.
     Here are some examples:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在比较过程中有几种选项可以忽略特定的空白字符。以下是一些示例：
 - en: '[PRE2]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[Side-by-side output](#side-by-side-output)'
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[并排输出](#side-by-side-output)'
 - en: The `-y` option is handy to view the differences side-by-side. By default, all
     the input lines will be present in the output and the line width is 130 print
     columns. You can use the `-W` option to change the width when dealing with short
     input lines. The `--suppress-common-lines` helps to focus only on the differences.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-y` 选项方便查看并排的差异。默认情况下，所有输入行都会出现在输出中，行宽为 130 个打印列。当处理短输入行时，你可以使用 `-W` 选项来更改宽度。`--suppress-common-lines`
+    帮助你只关注差异。'
 - en: '[PRE3]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '[Further Reading](#further-reading)'
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[进一步阅读](#further-reading)'
 - en: '`gvimdiff` edit two, three or four versions of a file with GVim and show differences'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`gvimdiff` 使用 GVim 编辑两个、三个或四个版本的文件并显示差异'
 - en: '[GUI diff and merge tools](http://askubuntu.com/questions/2946/what-are-some-good-gui-diff-and-merge-applications-available-for-ubuntu)'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[GUI diff 和合并工具](http://askubuntu.com/questions/2946/what-are-some-good-gui-diff-and-merge-applications-available-for-ubuntu)'
 - en: '[difftastic](https://github.com/Wilfred/difftastic) — structural diff tool
     that understands syntax'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[difftastic](https://github.com/Wilfred/difftastic) — 理解语法的结构化差异工具'
 - en: '[icdiff](https://github.com/jeffkaufman/icdiff) — improved colored diff'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[icdiff](https://github.com/jeffkaufman/icdiff) — 改进的彩色差异'
 - en: '[Exercises](#exercises)'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-37
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录中的输入文件进行以下练习。'
 - en: '**1)** Which `cmp` option would you use if you just need the exit status reflecting
     whether the given inputs are same or not?'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 如果你只需要反映给定输入是否相同的退出状态，你会使用哪个 `cmp` 选项？'
 - en: '**2)** Which `cmp` option would you use to skip the initial bytes for comparison
     purposes? The below example requires you to skip the first two bytes.'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 你会使用哪个 `cmp` 选项来跳过比较目的的初始字节？以下示例需要你跳过前两个字节。'
 - en: '[PRE4]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**3)** What does the `diff -d` option do?'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** `diff -d` 选项的作用是什么？'
 - en: '**4)** Which option will help you get colored output with `diff`?'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 哪个选项可以帮助你使用 `diff` 获得彩色输出？'
 - en: '**5)** Use appropriate options to get the desired output shown below.'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 使用适当的选项以获得以下所示所需的输出。'
 - en: '[PRE5]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**6)** Use appropriate options to get the desired output shown below.'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 使用适当的选项以获得以下所示所需的输出。'
 - en: '[PRE6]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'

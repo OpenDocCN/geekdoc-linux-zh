@@ -1,122 +1,182 @@
 - en: Sorting Stuff
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 排序内容
 - en: 原文：[https://learnbyexample.github.io/cli-computing/sorting-stuff.html](https://learnbyexample.github.io/cli-computing/sorting-stuff.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/sorting-stuff.html](https://learnbyexample.github.io/cli-computing/sorting-stuff.html)
 - en: In this chapter, you'll learn how to sort input based on various criteria. And
     then, you'll learn about tools that typically require sorted input for performing
     operations like finding unique entries, comparing two files line wise and so on.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，你将学习如何根据各种标准对输入进行排序。然后，你将了解通常需要排序输入来执行查找唯一条目、逐行比较两个文件等操作的工具。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the sample input files used in this chapter.'
+  id: totrans-3
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的示例输入文件。'
 - en: '[sort](#sort)'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[sort](#sort)'
 - en: As the name implies, this command is used to sort the contents of input files.
     Alphabetic sort and numeric sort? Possible. How about sorting a particular column?
     Possible. Prioritized multiple sorting order? Possible. Randomize? Unique? Lots
     of features supported by this powerful command.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如其名所示，此命令用于对输入文件的内容进行排序。字母排序和数字排序？可能。按特定列排序？可能。优先排序多个排序顺序？可能。随机化？唯一？此强大命令支持许多功能。
 - en: '[Common options](#common-options)'
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[常用选项](#common-options)'
 - en: Commonly used options are shown below. Examples will be discussed in the later
     sections.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面显示了常用选项。示例将在后面的章节中讨论。
 - en: '`-n` sort numerically'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-n` 数字排序'
 - en: '`-g` general numeric sort'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-g` 通用数字排序'
 - en: '`-V` version sort (aware of numbers within text)'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-V` 版本排序（了解文本中的数字）'
 - en: '`-h` sort human readable numbers (ex: 4K, 3M, 12G, etc)'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-h` 排序人类可读的数字（例如：4K、3M、12G等）'
 - en: '`-k` sort via key (column sorting)'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-k` 通过键（列排序）'
 - en: '`-t` single byte character as the field separator (default is non-blank to
     blank transition)'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-t` 单字节字符作为字段分隔符（默认是非空白到空白的转换）'
 - en: '`-u` sort uniquely'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-u` 唯一排序'
 - en: '`-R` random sort'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-R` 随机排序'
 - en: '`-r` reverse the sort output'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-r` 反转排序输出'
 - en: '`-o` redirect sorted result to a specified filename (ex: for inplace sorting)'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-o` 将排序结果重定向到指定的文件名（例如：用于原地排序）'
 - en: '[Default sort](#default-sort)'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[默认排序](#default-sort)'
 - en: By default, `sort` orders the input [lexicographically](https://en.wikipedia.org/wiki/Lexicographic_order)
     in ascending order. You can use the `-r` option to reverse the results.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`sort` 按字典顺序以升序对输入进行排序。你可以使用 `-r` 选项来反转结果。
 - en: '[PRE0]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `-f` option
     if you want to ignore case. See also [coreutils FAQ: Sort does not sort in normal
     order!](https://www.gnu.org/software/coreutils/faq/#Sort-does-not-sort-in-normal-order_0021).'
+  id: totrans-21
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 如果你想忽略大小写，请使用 `-f` 选项。另请参阅[coreutils
+    FAQ：排序不按正常顺序排序！](https://www.gnu.org/software/coreutils/faq/#Sort-does-not-sort-in-normal-order_0021)。'
 - en: '[Numerical sort](#numerical-sort)'
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[数字排序](#numerical-sort)'
 - en: 'There are several ways to deal with input containing different kind of numbers:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 处理包含不同类型数字的输入有几种方法：
 - en: '[PRE1]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[Unique sort](#unique-sort)'
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[唯一排序](#unique-sort)'
 - en: The `-u` option will keep only the first copy of lines that are deemed to be
     equal.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-u` 选项将仅保留被认为是相等的行的第一个副本。'
 - en: '[PRE2]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[Column sort](#column-sort)'
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[列排序](#column-sort)'
 - en: 'The `-k` option allows you to sort based on specific columns instead of the
     entire input line. By default, the empty string between non-blank and blank characters
     is considered as the separator. This option accepts arguments in various ways.
@@ -124,286 +184,438 @@
     specify only the starting column, the last column will be used as the ending column.
     Usually you just want to sort by a single column, in which case the same number
     is specified as both the starting and ending columns. Here''s an example:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-k` 选项允许你根据特定列而不是整个输入行进行排序。默认情况下，非空白字符和空白字符之间的空字符串被视为分隔符。此选项接受各种形式的参数。你可以指定由逗号分隔的起始和结束列号。如果你只指定起始列，则最后一个列将用作结束列。通常你只想按单个列排序，在这种情况下，起始和结束列都指定为相同的数字。以下是一个示例：'
 - en: '[PRE3]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use the `-t`
     option to specify a single byte character as the field separator. Use `\0` to
     specify ASCII NUL as the separator.'
+  id: totrans-31
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你可以使用 `-t` 选项指定单个字节字符作为字段分隔符。使用
+    `\0` 指定ASCII NUL作为分隔符。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `-s` option
     to retain the original order of input lines when two or more lines are deemed
     equal. You can still use multiple keys to specify your own tie breakers, `-s`
     only prevents the last resort comparison.'
+  id: totrans-32
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 `-s` 选项在认为两行或多行相等时保留输入行的原始顺序。您仍然可以使用多个键来指定自己的解决冲突的方法，`-s`
+    只能防止最后的比较手段。'
 - en: '[uniq](#uniq)'
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[uniq](#uniq)'
 - en: This command helps you to identify and remove duplicates. Usually used with
     sorted inputs as the comparison is made between adjacent lines only.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令帮助您识别和删除重复项。通常与排序输入一起使用，因为比较仅限于相邻行。
 - en: '[Common options](#common-options-1)'
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[常见选项](#common-options-1)'
 - en: Commonly used options are shown below. Examples will be discussed in the later
     sections.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 常用选项如下。示例将在后面的章节中讨论。
 - en: '`-u` display only the unique entries'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-u` 仅显示唯一条目'
 - en: '`-d` display only the duplicate entries'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-d` 仅显示重复条目'
 - en: '`-D` display all the copies of duplicates'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-D` 显示所有重复条目的副本'
 - en: '`-c` prefix count'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-c` 前缀计数'
 - en: '`-i` ignore case while determining duplicates'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-i` 在确定重复项时忽略大小写'
 - en: '`-f` skip the first `N` fields (separator is space/tab characters)'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-f` 跳过前`N`个字段（分隔符是空格/制表符字符）'
 - en: '`-s` skip the first `N` characters'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-s` 跳过前`N`个字符'
 - en: '`-w` restricts the comparison to the first `N` characters'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-w` 限制比较到前`N`个字符'
 - en: '[Default uniq](#default-uniq)'
+  id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[默认唯一值](#default-uniq)'
 - en: 'By default, `uniq` retains only one copy of duplicate lines:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`uniq` 只保留重复行的单个副本：
 - en: '[PRE4]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '[Unique and duplicate entries](#unique-and-duplicate-entries)'
+  id: totrans-48
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[唯一和重复条目](#unique-and-duplicate-entries)'
 - en: The `-u` option will display only the unique entries. That is, only if a line
     doesn't occur more than once.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-u` 选项将仅显示唯一条目。也就是说，只有当一行不出现多次时。'
 - en: '[PRE5]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: The `-d` option will display only the duplicate entries. That is, only if a
     line is seen more than once. To display all the copies of duplicates, use the
     `-D` option.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-d` 选项将仅显示重复条目。也就是说，只有当一行被看到多次时。要显示所有重复条目的副本，请使用 `-D` 选项。'
 - en: '[PRE6]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '[Prefix count](#prefix-count)'
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[前缀计数](#prefix-count)'
 - en: If you want to know how many times a line has been repeated, use the `-c` option.
     This will be added as a prefix.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想知道一行重复了多少次，请使用 `-c` 选项。这将作为前缀添加。
 - en: '[PRE7]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '[Partial match](#partial-match)'
+  id: totrans-56
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[部分匹配](#partial-match)'
 - en: '`uniq` has three options to change the matching criteria to partial parts of
     the input line. These aren''t as powerful as the `sort -k` option, but they do
     come in handy for some use cases.'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '`uniq` 有三个选项可以更改匹配标准为输入行的部分。这些选项不如 `sort -k` 选项强大，但在某些用例中很有用。'
 - en: '[PRE8]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '[comm](#comm)'
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[comm](#comm)'
 - en: 'The `comm` command finds common and unique lines between two sorted files.
     By default, you''ll get a tabular output with three columns:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '`comm` 命令在两个排序文件之间查找公共和唯一的行。默认情况下，您将得到一个包含三列的表格输出：'
 - en: first column has lines unique to the first file
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一列包含第一个文件中唯一的行
 - en: second column has lines unique to the second file
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二列包含第二个文件中唯一的行
 - en: third column has lines common to both the files
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第三列包含两个文件都有的行
 - en: '[PRE9]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'You can use one or more of the following options to suppress columns:'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下选项之一来抑制列：
 - en: '`-1` to suppress lines unique to the first file'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-1` 抑制第一个文件中唯一的行'
 - en: '`-2` to suppress lines unique to the second file'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-2` 抑制第二个文件中唯一的行'
 - en: '`-3` to suppress lines common to both the files'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-3` 抑制两个文件都有的行'
 - en: '[PRE10]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '[join](#join)'
+  id: totrans-70
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[join](#join)'
 - en: By default, the `join` command combines two files based on the first field content
     (also referred as **key**). Only the lines with common keys will be part of the
     output.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`join` 命令根据第一个字段的内容（也称为**键**）组合两个文件。只有具有公共键的行才会成为输出的一部分。
 - en: The key field will be displayed first in the output (this distinction will come
     into play if the first field isn't the key). Rest of the line will have the remaining
     fields from the first and second files, in that order. One or more blanks (space
     or tab) will be considered as the input field separator and a single space will
     be used as the output field separator. If present, blank characters at the start
     of the input lines will be ignored.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 关键字段将首先在输出中显示（如果第一个字段不是键，这种区别将发挥作用）。其余行将按顺序显示来自第一个和第二个文件的剩余字段。一个或多个空白（空格或制表符）将被视为输入字段分隔符，单个空格将用作输出字段分隔符。如果存在，输入行开头的空白字符将被忽略。
 - en: '[PRE11]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that the collating
     order used for `join` should be same as the one used to `sort` the input files.
     Use `join -i` to ignore case, similar to `sort -f` usage.'
+  id: totrans-74
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 注意，用于 `join` 的排序顺序应与用于
+    `sort` 输入文件的顺序相同。使用 `join -i` 忽略大小写，类似于 `sort -f` 的用法。'
 - en: If a field value is present multiple times in the same input file, all possible
     combinations will be present in the output. As shown below, `join` will also ensure
     to add a final newline character even if not present in the input.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果同一输入文件中存在多个字段值，则所有可能的组合都将出现在输出中。如下所示，`join` 还会确保即使输入中没有，也会添加一个最后的换行符。
 - en: '[PRE12]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) There are many more
     features such as specifying field delimiter, selecting specific fields from each
     input file in a particular order, filling fields for non-matching lines and so
     on. See the [join chapter](https://learnbyexample.github.io/cli_text_processing_coreutils/join.html)
     from my [CLI text processing with GNU Coreutils](https://github.com/learnbyexample/cli_text_processing_coreutils)
     ebook for explanations and examples.'
+  id: totrans-77
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 还有许多其他功能，例如指定字段分隔符、从每个输入文件中选择特定顺序的字段、为不匹配的行填充字段等。请参阅
+    [join 章节](https://learnbyexample.github.io/cli_text_processing_coreutils/join.html)
+    以及我的 [使用 GNU Coreutils 的 CLI 文本处理](https://github.com/learnbyexample/cli_text_processing_coreutils)
+    电子书中的解释和示例。'
 - en: '[Exercises](#exercises)'
+  id: totrans-78
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-79
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录中的输入文件进行以下练习。'
 - en: '**1)** Default `sort` doesn''t work for numbers. Correct the command used below:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 默认的 `sort` 不适用于数字。更正以下命令：'
 - en: '[PRE13]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**2)** Which `sort` option will help you ignore case?'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 哪个 `sort` 选项可以帮助你忽略大小写？'
 - en: '[PRE14]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**3)** Go through the `sort` manual and use appropriate options to get the
     output shown below.'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 阅读排序手册，并使用适当的选项以获得以下所示输出。'
 - en: '[PRE15]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**4)** Sort the `scores.csv` file numerically in ascending order using the
     contents of the second field. Header line should be preserved as the first line
     as shown below. *Hint*: see the [Shell Features](./shell-features.html) chapter.'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 使用第二字段的内容按数值升序排序 `scores.csv` 文件。应保留标题行作为第一行，如下所示。*提示*：参见 [Shell 特性](./shell-features.html)
+    章节。'
 - en: '[PRE16]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**5)** Sort the contents of `duplicates.txt` by the fourth column numbers in
     descending order. Retain only the first copy of lines with the same number.'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 按第四列数字降序排序 `duplicates.txt` 的内容。仅保留具有相同数字的第一行副本。'
 - en: '[PRE17]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**6)** Will `uniq` throw an error if the input is not sorted? What do you think
     will be the output for the following input?'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 如果输入未排序，`uniq` 会抛出错误吗？你认为以下输入的输出会是什么？'
 - en: '[PRE18]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**7)** Retain only the unique entries based on the first two characters of
     the input lines. Sort the input if necessary.'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 仅保留基于输入行前两个字符的唯一条目。如有必要，对输入进行排序。'
 - en: '[PRE19]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '**8)** Count the number of times input lines are repeated and display the results
     in the format shown below.'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 计算输入行重复的次数，并按以下格式显示结果。'
 - en: '[PRE20]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '**9)** Display lines present in `c1.txt` but not in `c2.txt` using the `comm`
     command. Assume that the input files are already sorted.'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 使用 `comm` 命令显示 `c1.txt` 中存在但不在 `c2.txt` 中的行。假设输入文件已经排序。'
 - en: '[PRE21]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '**10)** Use appropriate options to get the expected output shown below.'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用适当的选项以获得以下所示预期输出。'
 - en: '[PRE22]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: '**11)** What are the differences between `sort -u` and `uniq -u` options, if
     any?'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 如果有的话，`sort -u` 和 `uniq -u` 选项之间有什么区别？'

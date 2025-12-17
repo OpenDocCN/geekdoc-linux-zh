@@ -1,353 +1,543 @@
 - en: File Properties
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 文件属性
 - en: 原文：[https://learnbyexample.github.io/cli-computing/file-properties.html](https://learnbyexample.github.io/cli-computing/file-properties.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/file-properties.html](https://learnbyexample.github.io/cli-computing/file-properties.html)
 - en: In this chapter, you'll learn how to view file details like line and word counts,
     file and disk sizes, file types, extract parts of a file path, etc. You'll also
     learn how to change file properties like timestamps and permissions.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章中，您将学习如何查看文件详情，如行数和单词数、文件和磁盘大小、文件类型、提取文件路径的一部分等。您还将学习如何更改文件属性，如时间戳和权限。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the scripts and sample input files used in this chapter.'
+  id: totrans-3
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的脚本和示例输入文件。'
 - en: '[wc](#wc)'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[wc](#wc)'
 - en: 'The `wc` command is typically used to count the number of lines, words and
     characters for the given inputs. Here are some basic examples:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`wc` 命令通常用于计算给定输入的行数、单词数和字符数。以下是一些基本示例：'
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Filename won't be printed for stdin data. This is helpful to save the results
     in a variable for scripting purposes.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 stdin 数据，不会打印文件名。这对于将结果保存到变量中以供脚本使用很有帮助。
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Word count is based on whitespace separation. You can pre-process the input
     to prevent certain non-whitespace characters to influence the results. `tr` can
     be used to remove a particular set of characters (this command will be discussed
     in the [Assorted Text Processing Tools](./assorted-text-processing-tools.html)
     chapter).
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 单词计数基于空白字符分隔。您可以在预处理输入时防止某些非空白字符影响结果。`tr` 命令可以用来删除特定的字符集（此命令将在[杂项文本处理工具](./assorted-text-processing-tools.html)章节中讨论）。
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If you pass multiple files to the `wc` command, the count values will be displayed
     separately for each file. You'll also get a summary at the end, which sums the
     respective count of all the input files.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您向 `wc` 命令传递多个文件，则每个文件的计数值将分别显示。您还会在最后得到一个总结，它汇总了所有输入文件的相应计数。
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: You can use the `-L` option to report the length of the longest line in the
     input (excluding the newline character of a line). Note that `-L` won't count
     non-printable characters and tabs are converted to equivalent spaces. Multibyte
     characters and [grapheme clusters](https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries)
     will each be counted as `1` (depending on the locale, they might become non-printable
     too).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-L` 选项来报告输入中最长行的长度（不包括行的换行符）。请注意，`-L` 不会计算不可打印字符，制表符会被转换为等价的空格。多字节字符和[图形群组](https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries)将被各自计为
+    `1`（根据区域设置，它们也可能成为不可打印的）。
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Use the `-m` option instead of `-c` if the input has multibyte characters.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果输入包含多字节字符，请使用 `-m` 选项而不是 `-c`。
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '[du](#du)'
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[du](#du)'
 - en: The `du` command helps you estimate the size of files and directories.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`du` 命令帮助您估计文件和目录的大小。'
 - en: By default, size is given in terms of 1024 bytes. All directories and sub-directories
     are recursively reported, but files are ignored. You can use the `-a` option if
     files should also be reported. `du` is one of the commands that require an explicit
     option (`-L` in this case) if you want symbolic links to be followed.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，大小以1024字节为单位给出。所有目录和子目录都会递归报告，但文件会被忽略。如果您希望也报告文件，可以使用 `-a` 选项。`du` 是需要显式选项（在这种情况下为
+    `-L`）的命令之一，如果您想跟随符号链接。
 - en: '[PRE6]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Use the `-s` option to show the total directory size without descending into
     sub-directories. Add the `-c` option to also show the total size at the end.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-s` 选项来显示总目录大小，而不进入子目录。添加 `-c` 选项也可以在最后显示总大小。
 - en: '[PRE7]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Here are some examples to illustrate the size formatting options:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一些示例，说明大小格式化选项：
 - en: '[PRE8]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The `-h` option reports size in human readable format (uses power of 1024).
     Use the `--si` option to get results in powers of 1000 instead. If you use `du
     -h`, you can pipe the output to `sort -h` for sorting purposes.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-h` 选项以人类可读的格式报告大小（使用1024的幂）。使用 `--si` 选项以1000的幂获取结果。如果您使用 `du -h`，可以将输出通过
+    `sort -h` 进行排序以进行排序。'
 - en: '[PRE9]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '[df](#df)'
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[df](#df)'
 - en: The `df` command gives you the space usage of file systems. `df` without path
     arguments will give information about all the currently mounted file systems.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '`df` 命令为您提供文件系统的空间使用情况。没有路径参数的 `df` 将提供有关所有当前挂载的文件系统的信息。'
 - en: '[PRE10]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Use the `-h` option for human readable sizes. The `-B` option allows you to
     scale sizes by the specified amount. Use `--si` for size in powers of 1000 instead
     of 1024.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`-h`选项以人类可读的尺寸显示。`-B`选项允许您按指定量缩放尺寸。使用`--si`以1000的幂次表示尺寸，而不是1024。
 - en: '[PRE11]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Use the `--output` option to report only the specific fields of interest:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`--output`选项仅报告感兴趣的特定字段：
 - en: '[PRE12]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[stat](#stat)'
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[stat](#stat)'
 - en: The `stat` command is useful to get details like file type, size, inode, permissions,
     last accessed and modified timestamps, etc. You'll get all of these details by
     default. The `-c` and `--printf` options can be used to display only the required
     details in a particular format.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '`stat`命令非常有用，可以获取诸如文件类型、大小、inode、权限、最后访问和修改时间戳等详细信息。默认情况下，您将获得所有这些详细信息。可以使用`-c`和`--printf`选项仅以特定格式显示所需详细信息。'
 - en: '[PRE13]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'You can also pass multiple file arguments:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以传递多个文件参数：
 - en: '[PRE14]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     The `stat` command should be preferred instead of parsing the `ls -l` output for
     file details. See [mywiki.wooledge: avoid parsing output of ls](https://mywiki.wooledge.org/ParsingLs)
     and [unix.stackexchange: why not parse ls?](https://unix.stackexchange.com/q/128985/109046)
     for explanation and other alternatives.'
+  id: totrans-39
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    应优先使用`stat`命令，而不是解析`ls -l`输出的文件详细信息。请参阅[mywiki.wooledge: 避免解析ls输出](https://mywiki.wooledge.org/ParsingLs)和[unix.stackexchange:
+    为什么不解析ls?](https://unix.stackexchange.com/q/128985/109046)以获取解释和其他替代方案。'
 - en: '[touch](#touch)'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[touch](#touch)'
 - en: As mentioned earlier, the `touch` command helps you change the timestamps of
     files. You can do so based on the current timestamp, passing an argument, copying
     the value from another file and so on.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，`touch`命令可以帮助您更改文件的时间戳。您可以根据当前时间戳、传递参数、从另一个文件复制值等方式进行操作。
 - en: By default, `touch` updates both the access and modification timestamps to the
     current time. You can use the `-a` option to change only the access timestamp
     and `-m` to change only the modification timestamp.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`touch`更新访问和修改时间戳到当前时间。您可以使用`-a`选项仅更改访问时间戳，使用`-m`仅更改修改时间戳。
 - en: '[PRE15]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: You can use the `-r` option to copy timestamp information from one file to another.
     The `-d` and `-t` options will allow you to specify timestamps directly as part
     of the command.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`-r`选项将时间戳信息从一个文件复制到另一个文件。`-d`和`-t`选项将允许您直接在命令中指定时间戳。
 - en: '[PRE16]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: As seen in the [Managing Files and Directories](./managing-files-directories.html)
     chapter, `touch` creates a new file if the target file doesn't exist yet. You
     can use the `-c` option to prevent this behavior.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 如[管理文件和目录](./managing-files-directories.html)章节中所述，`touch`命令在目标文件不存在时创建新文件。您可以使用`-c`选项防止此行为。
 - en: '[PRE17]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '[file](#file)'
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[file](#file)'
 - en: The `file` command helps you identify text encoding (ASCII, UTF-8, etc), whether
     the file is executable and so on.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '`file`命令可以帮助您识别文本编码（ASCII、UTF-8等），文件是否可执行等。'
 - en: 'Here are some examples to show how the `file` command behaves for different
     types:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一些示例，说明`file`命令对不同类型的处理方式：
 - en: '[PRE18]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 'Here''s an example for image files:'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个关于图像文件的示例：
 - en: '[PRE19]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'You can use the `-b` option to avoid filenames in the output:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`-b`选项避免在输出中包含文件名：
 - en: '[PRE20]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: Here's how you can find particular type of files, images for example.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是如何查找特定类型的文件，例如图像文件的方法：
 - en: '[PRE21]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also the `identify`
     command which "describes the format and characteristics of one or more image files".'
+  id: totrans-58
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 还可参阅`identify`命令，该命令“描述一个或多个图像文件的格式和特性”。'
 - en: '[basename](#basename)'
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[basename](#basename)'
 - en: By default, the `basename` command will remove the leading directory component
     from the given path argument. Any trailing slashes will be removed before determining
     the portion to be extracted.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`basename`命令将从给定的路径参数中删除前导目录组件。在确定要提取的部分之前，任何尾随斜杠都将被删除。
 - en: '[PRE22]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: You can use the `-s` option to remove a suffix from the filename. Usually used
     to remove the file extension.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`-s`选项从文件名中删除后缀。通常用于删除文件扩展名。
 - en: '[PRE23]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: The `basename` command requires `-a` or `-s` (which implies `-a`) to work with
     multiple arguments.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '`basename`命令需要`-a`或`-s`（这隐含了`-a`）才能与多个参数一起使用。'
 - en: '[PRE24]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '[dirname](#dirname)'
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[dirname](#dirname)'
 - en: By default, the `dirname` command removes the trailing path component (after
     removing any trailing slashes).
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`dirname`命令将删除尾随路径组件（在删除任何尾随斜杠之后）。
 - en: '[PRE25]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: You can use shell features like command substitution to combine the effects
     of the `basename` and `dirname` commands.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 shell 功能，如命令替换，来组合 `basename` 和 `dirname` 命令的效果。
 - en: '[PRE26]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '[chmod](#chmod)'
+  id: totrans-71
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[chmod](#chmod)'
 - en: 'You can use the `chmod` command to change permissions. Consider this example:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `chmod` 命令来更改权限。考虑以下示例：
 - en: '[PRE27]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'In the above output, the 10 characters displayed in the last line are related
     to file type and permissions. First character indicates the **file type**. The
     most common ones are shown below:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述输出中，最后一行显示的 10 个字符与文件类型和权限相关。第一个字符表示 **文件类型**。下面列出了最常见的类型：
 - en: '`-` regular file'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-` 普通文件'
 - en: '`d` directory'
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`d` 目录'
 - en: '`l` symbolic link'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`l` 符号链接'
 - en: The other nine characters represent three sets of **file permissions** for *user*
     (`u`), *group* (`g`) and *others* (`o`), in that order.
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 其他九个字符代表三组 **文件权限**，分别对应于 *用户* (`u`)、*组* (`g`) 和 *其他人* (`o`)，顺序如下。
 - en: '*user* — file owner'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*用户* — 文件所有者'
 - en: '*group* — users having file access as part of a group'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*组* — 作为组的一部分具有文件访问权限的用户'
 - en: '*others* — everyone else'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*其他人* — 除了所有者、组和其他人之外的所有人'
 - en: 'Only `rwx` file properties will be discussed in this section. For other types
     of properties, refer to the [coreutils manual: File permissions](https://www.gnu.org/software/coreutils/manual/coreutils.html#File-permissions).'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节只讨论 `rwx` 文件属性。对于其他类型的属性，请参阅 [coreutils 手册：文件权限](https://www.gnu.org/software/coreutils/manual/coreutils.html#File-permissions)。
 - en: '**Permission reference table for files:**'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '**文件权限参考表：**'
 - en: '| Character | Meaning | Value |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| 字符 | 含义 | 值 |'
 - en: '| --- | --- | --- |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `r` | read | `4` |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `r` | 读取 | `4` |'
 - en: '| `w` | write | `2` |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| `w` | 写入 | `2` |'
 - en: '| `x` | execute | `1` |'
+  id: totrans-88
   prefs: []
   type: TYPE_TB
+  zh: '| `x` | 执行 | `1` |'
 - en: '| `-` | no permission | `0` |'
+  id: totrans-89
   prefs: []
   type: TYPE_TB
+  zh: '| `-` | 无权限 | `0` |'
 - en: 'Here''s an example showing both `rwx` and numerical representations of a file''s
     permissions:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个示例，显示了文件权限的 `rwx` 和数值表示：
 - en: '[PRE28]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that the permissions
     are not straightforward to understand for directories. If a directory only has
     the `x` permission, you can `cd` into it but you cannot read the contents (using
@@ -356,234 +546,367 @@
     error). For this reason, the `rx` permissions are almost always enabled/disabled
     together. The `w` permission allows you to add or remove contents, provided `x`
     is active.'
+  id: totrans-92
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 注意，目录的权限并不容易理解。如果一个目录只有
+    `x` 权限，您可以使用 `cd` 进入它，但不能读取内容（例如使用 `ls`）。如果一个目录只有 `r` 权限，您不能进入它，但您将能够读取内容（包括“无法访问”错误）。因此，`rx`
+    权限几乎总是同时启用/禁用。`w` 权限允许您添加或删除内容，前提是 `x` 是激活的。'
 - en: '**Changing permissions for all three categories**'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '**为所有三个类别更改权限**'
 - en: 'You can provide numbers for `ugo` (in that order) to change permissions. This
     is best understood with examples:'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以为 `ugo` 提供数字（按此顺序）以更改权限。以下是一些示例，以更好地理解：
 - en: '[PRE29]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 'Here''s an example for a directory:'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个目录的示例：
 - en: '[PRE30]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: You can also use `mkdir -m` instead of the `mkdir+chmod` combination seen above.
     The argument to the `-m` option accepts the same syntax as `chmod` (including
     the format that'll be discussed next).
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以使用 `mkdir -m` 而不是上面看到的 `mkdir+chmod` 组合。`-m` 选项的参数接受与 `chmod` 相同的语法（包括将要讨论的格式）。
 - en: '[PRE31]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `chmod
     -R` to recursively change permissions. Use `find+exec` if you want to apply changes
     only for files filtered by some criteria.'
+  id: totrans-100
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 您可以使用 `chmod -R` 递归地更改权限。如果您只想对满足某些条件的文件应用更改，请使用
+    `find+exec`。'
 - en: '**Changing permissions for specific categories**'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: '**为特定类别更改权限**'
 - en: 'You can assign (`=`), add (`+`) or remove (`-`) permissions by using those
     symbols followed by one or more `rwx` permissions. This depends on the `umask`
     value:'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过使用这些符号后跟一个或多个 `rwx` 权限来分配（`=`）、添加（`+`）或删除（`-`）权限。这取决于 `umask` 的值：
 - en: '[PRE32]'
+  id: totrans-103
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '`umask` value of `0002` means:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '`umask` 值为 `0002` 表示：'
 - en: read and execute permissions without `ugo` prefix affects all the three categories
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: read and execute permissions without `ugo` prefix affects all three categories
 - en: write permissions without `ugo` prefix affects only the `user` and `group` categories
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: write permissions without `ugo` prefix affects only the `user` and `group` categories
 - en: 'Here are some examples without `ugo` prefixes:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一些不带 `ugo` 前缀的例子：
 - en: '[PRE33]'
+  id: totrans-108
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: Here are some examples with `ugo` prefixes. You can use `a` to refer to all
     the three categories. For example, `a+w` is same as `ugo+w`.
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一些带有 `ugo` 前缀的例子。您可以使用 `a` 来指代所有三个类别。例如，`a+w` 与 `ugo+w` 相同。
 - en: '[PRE34]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: 'You can use `,` to separate multiple permissions:'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`,`分隔多个权限：
 - en: '[PRE35]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '**Further Reading**'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[Linux Permissions Primer](https://web.archive.org/web/20220930214830/https://danielmiessler.com/study/unixlinux_permissions/)'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Linux权限入门](https://web.archive.org/web/20220930214830/https://danielmiessler.com/study/unixlinux_permissions/)'
 - en: '[unix.stackexchange: why chmod +w filename not giving write permission to other](https://unix.stackexchange.com/q/429421/109046)'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: why chmod +w filename not giving write permission to other](https://unix.stackexchange.com/q/429421/109046)'
 - en: '[Exercises](#exercises)'
+  id: totrans-116
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises, unless otherwise specified.'
+  id: totrans-117
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用[example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)目录中的输入文件，除非另有说明。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
     directory for exercises that may require you to create some files and directories.
     You can delete such practice directories afterwards.'
+  id: totrans-118
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 为可能需要创建一些文件和目录的练习创建一个临时目录。之后您可以删除这样的练习目录。'
 - en: '**1)** Save the number of lines in the `greeting.txt` input file to the `lines`
     shell variable.'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 将`greeting.txt`输入文件的行数保存到`lines`shell变量中。'
 - en: '[PRE36]'
+  id: totrans-120
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '**2)** What do you think will be the output of the following command?'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 您认为以下命令的输出会是什么？'
 - en: '[PRE37]'
+  id: totrans-122
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '**3)** Use appropriate options and arguments to get the output shown below.'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 使用适当的选项和参数来获取以下输出。'
 - en: '[PRE38]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '**4)** Go through the `wc` manual and use appropriate options and arguments
     to get the output shown below.'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 阅读`wc`手册，并使用适当的选项和参数来获取以下输出。'
 - en: '[PRE39]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '**5)** What is the difference between the `wc -c` and `wc -m` options? And
     which option would you use to get the longest line length?'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** `wc -c`和`wc -m`选项之间的区别是什么？您会使用哪个选项来获取最长行长度？'
 - en: '**6)** Find filenames ending with `.log` and report their sizes in human readable
     format. Use the `find+du` combination for the first case and the `ls` command
     (with appropriate shell features) for the second case.'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 查找以`.log`结尾的文件名，并以可读格式报告它们的大小。对于第一种情况，使用`find+du`组合，对于第二种情况，使用`ls`命令（带有适当的shell功能）。'
 - en: '[PRE40]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '**7)** Report sizes of files/directories in the current path in powers of `1000`
     without descending into sub-directories. Also, show a total at the end.'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 在当前路径中报告文件/目录的大小，以`1000`的幂次表示，不进入子目录。最后显示总数。'
 - en: '[PRE41]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '**8)** What does the `du --apparent-size` option do?'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** `du --apparent-size`选项的作用是什么？'
 - en: '**9)** When will you use the `df` command instead of `du`? Which `df` command
     option will help you to report only the specific fields of interest?'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 在什么情况下您会使用`df`命令而不是`du`？哪个`df`命令选项将帮助您仅报告感兴趣的特定字段？'
 - en: '**10)** Display the size of `scores.csv` and `timings.txt` files in the format
     shown below.'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 按以下格式显示`scores.csv`和`timings.txt`文件的大小。'
 - en: '[PRE42]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '**11)** Which `touch` option will help you prevent file creation if it doesn''t
     exist yet?'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 哪个`touch`选项可以帮助您防止文件不存在时创建文件？'
 - en: '**12)** Assume `new_file.txt` doesn''t exist in the current working directory.
     What would be the output of the `stat` command shown below?'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 假设`new_file.txt`在当前工作目录中不存在。下面显示的`stat`命令的输出会是什么？'
 - en: '[PRE43]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '**13)** Is the following `touch` command valid? If so, what would be the output
     of the `stat` command that follows?'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 以下`touch`命令是否有效？如果是，随后的`stat`命令的输出会是什么？'
 - en: '[PRE44]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '**14)** Use appropriate option(s) to get the output shown below.'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用适当的选项来获取以下输出。'
 - en: '[PRE45]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: '**15)** Is the following command valid? If so, what would be the output?'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 以下命令是否有效？如果是，输出会是什么？'
 - en: '[PRE46]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: '**16)** Given the file path in the shell variable `p`, how''d you obtain the
     output shown below?'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 给定shell变量`p`中的文件路径，您如何获得以下输出？'
 - en: '[PRE47]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '**17)** Explain what each of the characters mean in the following `stat` command''s
     output.'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 解释以下`stat`命令输出中的每个字符的含义。'
 - en: '[PRE48]'
+  id: totrans-148
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: '**18)** What would be the output of the second `stat` command shown below?'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 下面的第二个`stat`命令的输出会是什么？'
 - en: '[PRE49]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: '**19)** How would you specify directory permissions using the `mkdir` command?'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 您将如何使用`mkdir`命令指定目录权限？'
 - en: '[PRE50]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '**20)** Change the file permission of `book_list.txt` to match the output of
     the second `stat` command shown below. Don''t use the number `220`, specify the
     changes in terms of `rwx` characters.'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 将`book_list.txt`的文件权限更改为与下面显示的第二个`stat`命令的输出相匹配。不要使用数字`220`，用`rwx`字符指定更改。'
 - en: '[PRE51]'
+  id: totrans-154
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '**21)** Change the permissions of `test_dir` to match the output of the second
     `stat` command shown below. Don''t use the number `757`, specify the changes in
     terms of `rwx` characters.'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 将`test_dir`的权限更改为与下面显示的第二个`stat`命令的输出相匹配。不要使用数字`757`，而要用`rwx`字符来指定更改。'
 - en: '[PRE52]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'

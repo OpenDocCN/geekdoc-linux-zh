@@ -1,445 +1,662 @@
 - en: Managing Files and Directories
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 管理文件和目录
 - en: 原文：[https://learnbyexample.github.io/cli-computing/managing-files-directories.html](https://learnbyexample.github.io/cli-computing/managing-files-directories.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/managing-files-directories.html](https://learnbyexample.github.io/cli-computing/managing-files-directories.html)
 - en: This chapter presents commands to do things that are typically handled by a
     file manager in GUI (also known as file explorer). For example, viewing contents
     of a directory, navigating to other directories, cut/copy/paste files, renaming
     files and so on. Some of the commands used for these purposes are provided by
     the shell itself.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章介绍了通常由图形用户界面（GUI）中的文件管理器（也称为文件资源管理器）处理的命令。例如，查看目录内容、导航到其他目录、剪切/复制/粘贴文件、重命名文件等。一些用于这些目的的命令是由
+    shell 本身提供的。
 - en: As a good practice, make it a habit to go through the documentation of the commands
     you encounter. Getting used to looking up documentation from the command line
     will come in handy whenever you are stuck. You can also learn and experiment with
     options you haven't used yet.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为一种良好的实践，养成习惯，查看你所遇到命令的文档。习惯于从命令行查找文档，当你遇到困难时将会非常有用。你还可以学习和尝试尚未使用的选项。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the scripts used in this chapter. See the [Setup](./introduction-setup.html#setup)
     section for instructions to create the working environment.'
+  id: totrans-4
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的脚本。请参阅 [设置](./introduction-setup.html#setup) 部分，了解创建工作环境的说明。'
 - en: '[Builtin and External commands](#builtin-and-external-commands)'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[内置和外部命令](#builtin-and-external-commands)'
 - en: 'From [bash manual: What is a shell?](https://www.gnu.org/software/bash/manual/bash.html#What-is-a-shell_003f)'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 来自 [bash 手册：什么是 shell？](https://www.gnu.org/software/bash/manual/bash.html#What-is-a-shell_003f)
 - en: Shells also provide a small set of built-in commands (builtins) implementing
     functionality impossible or inconvenient to obtain via separate utilities. For
     example, `cd`, `break`, `continue`, and `exec` cannot be implemented outside of
     the shell because they directly manipulate the shell itself. The `history`, `getopts`,
     `kill`, or `pwd` builtins, among others, could be implemented in separate utilities,
     but they are more convenient to use as builtin commands.
+  id: totrans-7
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: Shell 还提供了一组内置命令（内置命令），这些命令通过单独的实用程序无法实现或使用不便。例如，`cd`、`break`、`continue` 和 `exec`
+    不能在 shell 之外实现，因为它们直接操作 shell 本身。`history`、`getopts`、`kill` 或 `pwd` 等内置命令，以及其他一些命令，虽然可以在单独的实用程序中实现，但作为内置命令使用更为方便。
 - en: Many of the commands needed for everyday use are external commands, i.e. not
     part of the shell. Some builtins, `pwd` for example, might also be available as
     external command on your system (and these might have differences in features
     too). In such cases the builtin version will be executed by default, which you
     can override by using the path of the external version.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多日常使用所需的命令都是外部命令，即不是 shell 的一部分。一些内置命令，例如 `pwd`，也可能作为外部命令在你的系统中可用（这些命令在功能上也可能有所不同）。在这种情况下，默认将执行内置版本，你可以通过使用外部版本的路径来覆盖它。
 - en: You can use the `type` command to check if the tool you are using is a builtin
     or an external command. The `type` command is a shell builtin, and provides other
     features too (which will be discussed later). You can use the `-a` option to get
     *all* details about the given command.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `type` 命令来检查你正在使用的工具是内置命令还是外部命令。`type` 命令是一个 shell 内置命令，还提供了其他功能（稍后将会讨论）。你可以使用
+    `-a` 选项来获取给定命令的所有详细信息。
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) To look up documentation,
     use the `help` command for builtins and `man` for external commands (or `info`
     for complete documentation, where applicable). Use `help help` and `man man` for
     their own documentation.'
+  id: totrans-11
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 要查找文档，请使用内置命令的 `help`
+    命令和外部命令的 `man` 命令（或者适用于完整文档的 `info` 命令）。使用 `help help` 和 `man man` 来查看它们的文档。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Typing just `help`
     will give the list of builtins, along with the command''s syntax.'
+  id: totrans-12
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 只需输入 `help`，就会列出内置命令列表，以及命令的语法。'
 - en: '[pwd](#pwd)'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[pwd](#pwd)'
 - en: '`pwd` is a shell builtin command to get the current working directory. This
     helps to orient yourself with respect to the filesystem. The absolute path printed
     is often handy to copy-paste elsewhere, in a script for example. Some users prefer
     their terminal emulators and/or shell prompt to always display the current working
     directory.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pwd`是shell内建命令，用于获取当前工作目录。这有助于你在文件系统中定位自己。打印的绝对路径通常很方便，可以复制粘贴到其他地方，例如脚本中。一些用户更喜欢他们的终端模拟器和/或shell提示符始终显示当前工作目录。'
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[cd](#cd)'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[cd](#cd)'
 - en: '`cd` is another shell builtin. This helps to change the current working directory.
     Here''s an example of changing the current working directory using an absolute
     path:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cd`是另一个shell内建命令。这有助于更改当前工作目录。以下是一个使用绝对路径更改当前工作目录的示例：'
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You can use `-` as an argument to go back to the previous working directory.
     Continuing from the previous example:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用`-`作为参数返回到上一个工作目录。继续上一个示例：
 - en: '[PRE3]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Most commands will
     treat strings starting with `-` as a command option. You can use `--` to tell
     commands that all the following arguments should *not* be treated as options even
     if they start with `-`. For example, if you have a folder named `-oops` in the
     current working directory, you can use `cd -- -oops` to switch to that directory.'
+  id: totrans-21
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 大多数命令会将以`-`开头的字符串视为命令选项。你可以使用`--`来告诉命令，所有随后的参数都不应被视为选项，即使它们以`-`开头。例如，如果你在当前工作目录中有一个名为`-oops`的文件夹，你可以使用`cd
+    -- -oops`来切换到该目录。'
 - en: 'Relative paths are well, relative to the current working directory:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 相对路径是相对于当前工作目录的：
 - en: '`.` refers to the current directory'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`.`代表当前目录'
 - en: '`..` refers to the directory one hierarchy above (i.e. the parent directory)'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`..`代表一个目录层以上的目录（即父目录）'
 - en: '`../..` refers to the directory two hierarchies above and so on'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`../..`代表两个目录层以上的目录，依此类推'
 - en: '`cd ./-` will help you to switch to a directory named `-` in the current location'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`cd ./-`将帮助你切换到当前位置名为`-`的目录'
 - en: you cannot use `cd -` since that'll take you to the previous working directory
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你不能使用`cd -`，因为这会带你回到上一个工作目录
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'You can switch to the home directory using `cd` or `cd ~` or `cd ~/` from anywhere
     in the filesystem. This is determined by the value stored in the `HOME` shell
     variable. See also [bash manual: Tilde Expansion](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html).'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用`cd`或`cd ~`或`cd ~/`在任何文件系统位置切换到主目录。这由存储在`HOME` shell变量中的值决定。参见[bash手册：波浪号扩展](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html)。
 - en: '[PRE5]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '[clear](#clear)'
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[clear](#clear)'
 - en: You can use this command to clear the terminal screen. By default, the `clear`
     command will move the prompt to the top of the terminal as well as try to remove
     the contents of the scrollback buffer. You can use the `-x` option if you want
     to retain the scrollback buffer contents.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用此命令清除终端屏幕。默认情况下，`clear`命令会将提示符移动到终端顶部，并尝试删除滚动缓冲区的内容。如果你想保留滚动缓冲区的内容，可以使用`-x`选项。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `Ctrl+l` shortcut
     will also move the prompt line to the top of the terminal. It will retain any
     text you''ve typed on the prompt line and scrollback buffer contents won''t be
     cleared.'
+  id: totrans-33
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `Ctrl+l`快捷键也会将提示行移动到终端顶部。它将保留你在提示行上输入的任何文本，并且滚动缓冲区的内容不会被清除。'
 - en: '[ls](#ls)'
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[ls](#ls)'
 - en: When you use a file explorer GUI application, you'll automatically see the directory
     contents. And such GUI apps typically have features to show file size, differentiate
     between files and folders and so on. `ls` is the equivalent command line tool
     with a plethora of options and functionality related to viewing the contents of
     directories.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用文件资源管理器图形用户界面应用程序时，你会自动看到目录内容。此类GUI应用程序通常具有显示文件大小、区分文件和文件夹等功能。`ls`是具有众多选项和与查看目录内容相关的功能的命令行工具。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) As mentioned earlier,
     the [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the scripts used in this chapter. You can source the `ls.sh` script
     to follow along the examples shown in this section. See the [Setup](./introduction-setup.html#setup)
     section if you haven''t yet created the working environment.'
+  id: totrans-36
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 如前所述，[example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的脚本。你可以使用 `ls.sh` 脚本来跟随本节中显示的示例。如果你尚未创建工作环境，请参阅 [设置](./introduction-setup.html#setup)
+    部分。'
 - en: ''
+  id: totrans-37
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE6]'
+  id: totrans-38
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'By default, the current directory contents are displayed. You can pass one
     or more paths as arguments. Here are some examples:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，显示当前目录的内容。你可以传递一个或多个路径作为参数。以下是一些示例：
 - en: '[PRE7]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'You can use the `-1` option (`1` as in numeric one, not the letter `l` which
     does something else) to list the contents in a single column:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `-1` 选项（数字 `1`，不是字母 `l`，它执行其他操作）以单列形式列出内容：
 - en: '[PRE8]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'The `-F` option appends a character to each filename indicating the file type
     (if it is other than a regular file):'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-F` 选项在每个文件名后附加一个字符，以指示文件类型（如果不是常规文件）：'
 - en: '`/` directory'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/` 目录'
 - en: '`*` executable file'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`*` 可执行文件'
 - en: '`@` symbolic link'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`@` 符号链接'
 - en: '`|` FIFO'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`|` FIFO'
 - en: '`=` socket'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`=` 套接字'
 - en: '`>` door'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`>` 门'
 - en: '[PRE9]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'If you just need to distinguish between files and directories, you can use
     the `-p` option:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只需要区分文件和目录，可以使用 `-p` 选项：
 - en: '[PRE10]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You can also use the `--color` option to visually distinguish file types:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 你还可以使用 `--color` 选项来视觉上区分文件类型：
 - en: '![example with --color option](../Images/a6116ee6f319066c4c2a48019a3c88c2.png)'
+  id: totrans-54
   prefs: []
   type: TYPE_IMG
+  zh: '![使用 --color 选项的示例](../Images/a6116ee6f319066c4c2a48019a3c88c2.png)'
 - en: The `-l` option displays the contents using a long listing format. You'll get
     details like file permissions, ownership, size, timestamp and so on. The first
     character of the first column distinguishes file types as `d` for directories,
     `-` for regular files, `l` for symbolic links, etc. Under each directory listing,
     the first line will display the total size of the entries (in terms of KB).
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-l` 选项使用长列表格式显示内容。你将获得诸如文件权限、所有者、大小、时间戳等详细信息。第一列的第一个字符区分文件类型，如 `d` 代表目录，`-`
+    代表常规文件，`l` 代表符号链接等。在每个目录列表下，第一行将显示条目的总大小（以KB计）。'
 - en: '[PRE11]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     Note that the timestamps showing hours and minutes instead of year depends on
     the relative difference with respect to the current time. So, for example, you
     might get `Feb 4 2022` instead of `Feb 4 09:23`.'
+  id: totrans-57
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![警告](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    注意，显示小时和分钟而不是年份的时间戳取决于与当前时间的相对差异。因此，例如，你可能会得到 `Feb 4 2022` 而不是 `Feb 4 09:23`。'
 - en: Use the `-h` option to show file sizes in human readable format (default is
     byte count).
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-h` 选项以可读格式显示文件大小（默认为字节计数）。
 - en: '[PRE12]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'You can use the `-s` option instead of long listing if you only need allocated
     file sizes and names:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只需要分配的文件大小和名称，可以使用 `-s` 选项代替长列表：
 - en: '[PRE13]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'There are several options for changing the order of listing:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 改变列表顺序的选项有几个：
 - en: '`-t` sorts by timestamp'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-t` 按时间戳排序'
 - en: '`-S` sorts by file size (not suitable for directories)'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-S` 按文件大小排序（不适用于目录）'
 - en: '`-v` version sorting (suitable for filenames with numbers in them)'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-v` 版本排序（适用于包含数字的文件名）'
 - en: '`-X` sorts by file extension (i.e. characters after the last `.` in the filename)'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-X` 按文件扩展名排序（即文件名中最后一个 `.` 之后的所有字符）'
 - en: '`-r` reverse the listing order'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-r` 逆转列表顺序'
 - en: '[PRE14]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Filenames starting with `.` are considered as hidden files and these are NOT
     shown by default. You can use the `-a` option to view them. The `-A` option is
     similar, but doesn't show the special `.` and `..` entries.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 以 `.` 开头的文件被视为隐藏文件，默认情况下不会显示。你可以使用 `-a` 选项来查看它们。`-A` 选项类似，但不会显示特殊的 `.` 和 `..`
+    条目。
 - en: '[PRE15]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'The `-R` option recursively lists sub-directories as well:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-R` 选项递归地列出子目录：'
 - en: '[PRE16]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Often you'd want to list only specific files or directories based on some criteria,
     file extension for example. The shell provides a matching technique called **globs**
     or **wildcards**. Some simple examples are shown below (see the [wildcards](./shell-features.html#wildcards)
     section for more details).
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，你只想根据某些标准列出特定的文件或目录，例如文件扩展名。shell 提供了一种称为 **globs** 或 **通配符** 的匹配技术。以下是一些简单的示例（有关更多详细信息，请参阅
+    [通配符](./shell-features.html#wildcards) 部分）。
 - en: '`*` is a placeholder for zero or more characters:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*` 是零个或多个字符的占位符：'
 - en: '[PRE17]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '`[]` helps you specify a set of characters to be matched once. For example,
     `[ad]` matches `a` or `d` once. `[c-i]` matches a range of characters from `c`
     to `i`.'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[]`帮助你指定一组要匹配一次的字符。例如，`[ad]`匹配`a`或`d`一次。`[c-i]`匹配从`c`到`i`的字符范围。'
 - en: '[PRE18]'
+  id: totrans-77
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
     As shown in the above examples, globs are expanded by the shell. Beginners often
     associate globs as something specific to the `ls` command, which is why I''ve
     deliberately used `echo` as well in the above examples.'
+  id: totrans-78
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
+    如上述示例所示，通配符是由shell展开的。初学者常常将通配符与`ls`命令相关联，这就是为什么我在上述示例中故意也使用了`echo`。'
 - en: 'You can use the `-d` option to *not* show directory contents:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用`-d`选项来**不**显示目录内容：
 - en: '[PRE19]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) I hope you have been
     judiciously taking notes, since there are just too many commands and features.
     For example, note down all the options discussed in this section. And then explore
     the output from the `ls --help` command.'
+  id: totrans-81
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 我希望你已经明智地做了笔记，因为命令和功能实在太多了。例如，记下本节中讨论的所有选项。然后探索`ls
+    --help`命令的输出。'
 - en: '**Further Reading**'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[mywiki.wooledge: avoid parsing output of ls](https://mywiki.wooledge.org/ParsingLs)'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mywiki.wooledge: avoid parsing output of ls](https://mywiki.wooledge.org/ParsingLs)'
 - en: '[unix.stackexchange: why not parse ls?](https://unix.stackexchange.com/q/128985/109046)'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: why not parse ls?](https://unix.stackexchange.com/q/128985/109046)'
 - en: '[unix.stackexchange: What are ./ and ../ directories?](https://unix.stackexchange.com/q/63081/109046)'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: What are ./ and ../ directories?](https://unix.stackexchange.com/q/63081/109046)'
 - en: '[tree](#tree)'
+  id: totrans-86
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[tree](#tree)'
 - en: The `tree` command displays the contents of a directory recursively, in a hierarchical
     manner. Here's a screenshot of using `tree -a` from the `ls_examples` sample directory
     seen in the previous section. The `-a` option is used to show the hidden files
     as well.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tree`命令以分层的方式递归显示目录内容。这是使用`tree -a`从上一节中看到的`ls_examples`示例目录的截图。`-a`选项用于显示隐藏文件。'
 - en: '![example for tree command](../Images/496b16f19bc7368e400fbb267dbd20b9.png)'
+  id: totrans-88
   prefs: []
   type: TYPE_IMG
+  zh: '![tree命令示例](../Images/496b16f19bc7368e400fbb267dbd20b9.png)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You might have to install
     this command. `sudo apt install tree` can be used to get this command on Debian-like
     distributions.'
+  id: totrans-89
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你可能需要安装这个命令。`sudo apt
+    install tree`可以用于在类似Debian的发行版上获取这个命令。'
 - en: '[mkdir](#mkdir)'
+  id: totrans-90
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[mkdir](#mkdir)'
 - en: The `mkdir` command helps you to create new directories. You can pass one or
     more paths along with the name of the directories you want to create. Quote the
     names if it can contain shell special characters like space, `*` and so on.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '`mkdir`命令帮助你创建新的目录。你可以传递一个或多个路径以及你想要创建的目录名称。如果目录名称可能包含shell特殊字符，如空格、`*`等，请引用名称。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a practice directory
     for this section:'
+  id: totrans-92
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 为本节创建一个练习目录：'
 - en: ''
+  id: totrans-93
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE20]'
+  id: totrans-94
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 'Here''s an example of creating multiple directories:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个创建多个目录的示例：
 - en: '[PRE21]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 'The `-p` option will help you to create multiple directory hierarchies in one
     shot:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-p`选项将帮助你一次性创建多个目录层次结构：'
 - en: '[PRE22]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: The `-p` option has another functionality too. It will not complain if the directory
     you are trying to create already exists. This is especially helpful in shell scripts.
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-p`选项还有另一个功能。它不会对试图创建已存在的目录进行抱怨。这在shell脚本中特别有用。'
 - en: '[PRE23]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: As seen in the examples above, you can check the exit status of the last executed
     command using the `$?` special variable. `0` means everything went well and higher
     numbers indicate some sort of failure has occurred (the details of which you can
     look up in the command's manual).
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上述示例所示，你可以使用特殊变量`$?`检查最后执行的命令的退出状态。`0`表示一切顺利，更高的数字表示发生了某种类型的失败（你可以查阅命令的手册以获取详细信息）。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     Linux filenames can use any character other than `/` and the ASCII NUL character.
     Quote the arguments if it contains characters like space, `*`, etc to prevent
@@ -447,726 +664,1101 @@
     character and so on. As a good practice, use only alphabets, numbers and underscores
     for filenames, unless you have some specific requirements. See also [unix.stackexchange:
     Characters best avoided in filenames](https://unix.stackexchange.com/q/269093/109046).'
+  id: totrans-102
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    Linux 文件名可以使用除 `/` 和 ASCII NUL 字符之外的任何字符。如果参数包含空格、`*` 等字符，请引用它们以防止 shell 展开。Shell
+    将空格视为参数分隔符，`*` 是通配符，等等。作为良好习惯，除非有特定要求，否则请仅使用字母、数字和下划线作为文件名。有关更多信息，请参阅 [unix.stackexchange:
+    Characters best avoided in filenames](https://unix.stackexchange.com/q/269093/109046)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can delete the
     practice directory if you wish:'
+  id: totrans-103
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 如果你愿意，可以删除练习目录：'
 - en: ''
+  id: totrans-104
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE24]'
+  id: totrans-105
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '[touch](#touch)'
+  id: totrans-106
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[touch](#touch)'
 - en: You'll usually create files using a text editor or by redirecting the output
     of a command to a file. For some cases, empty files are needed for testing purposes
     or to satisfy a particular build process. A real world use case is the empty `.nojekyll`
     file for [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#static-site-generators).
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 你通常使用文本编辑器或通过将命令的输出重定向到文件来创建文件。在某些情况下，需要空文件进行测试或满足特定的构建过程。一个现实世界的用例是用于 [GitHub
+    Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#static-site-generators)
+    的空 `.nojekyll` 文件。
 - en: The `touch` command's main functionality is altering timestamps (which will
     be discussed in the [File Properties](./file-properties.html) chapter). If a file
     doesn't exist, `touch` will create an empty file using the current timestamp.
     You can also pass more than one file argument if needed.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: '`touch` 命令的主要功能是更改时间戳（将在 [文件属性](./file-properties.html) 章节中讨论）。如果文件不存在，`touch`
+    将使用当前时间戳创建一个空文件。如果需要，你也可以传递多个文件参数。'
 - en: '[PRE25]'
+  id: totrans-109
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can create an empty
     file using `> ip.txt` as well, but the redirection operator will overwrite the
     file if it already exists.'
+  id: totrans-110
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你也可以使用 `> ip.txt` 创建一个空文件，但重定向操作符会覆盖已存在的文件。'
 - en: '[rm](#rm)'
+  id: totrans-111
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[rm](#rm)'
 - en: The `rm` command will help you to delete files and directories. You can pass
     one or more paths as arguments.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rm` 命令可以帮助你删除文件和目录。你可以传递一个或多个路径作为参数。'
 - en: '[PRE26]'
+  id: totrans-113
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: You'll need to add the `-r` option to recursively delete directory contents.
     You can use `rm -d` or the `rmdir` command to delete only empty directories.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 你需要添加 `-r` 选项来递归删除目录内容。你可以使用 `rm -d` 或 `rmdir` 命令来删除空目录。
 - en: '[PRE27]'
+  id: totrans-115
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'Typos like misplaced space, wrong glob, etc could wipe out files not intended
     for deletion. Apart from having backups and snapshots, you could also take some
     mitigating steps:'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 错误如多余的空格、错误的通配符等可能会导致删除非预期删除的文件。除了备份和快照之外，你还可以采取一些缓解措施：
 - en: using `-i` option to interactively delete each file
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `-i` 选项交互式删除每个文件
 - en: you can also use `-I` option for lesser number of prompts
+  id: totrans-118
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你也可以使用 `-I` 选项来减少提示次数
 - en: using `echo` as a dry run to see how the glob expands
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `echo` 作为干运行来查看通配符如何展开
 - en: using a trash command (see links below) instead of `rm`
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用垃圾命令（见下文链接）而不是 `rm`
 - en: 'Use `y` for confirmation and `n` to cancel deletion with the `-i` or `-I` options.
     Here''s an example of cancelling deletion:'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `y` 进行确认，使用 `-i` 或 `-I` 选项取消删除。以下是一个取消删除的例子：
 - en: '[PRE28]'
+  id: totrans-122
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: 'And here''s an example of providing confirmation at each step of the deletion
     process:'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个在删除过程中每一步提供确认的例子：
 - en: '[PRE29]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: The `-f` option can be used to ignore complaints about non-existing files (somewhat
     similar to the `mkdir -p` feature). It also helps to remove write protected files
     (provided you have appropriate permissions to delete those files). This option
     is especially useful for recursive deletion of directories that have write protected
     files, `.git/objects` for example.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-f` 选项可以用来忽略关于不存在文件的抱怨（与 `mkdir -p` 功能有些类似）。它还有助于删除写保护的文件（前提是你有适当的权限删除这些文件）。此选项对于递归删除包含写保护文件的目录特别有用，例如
+    `.git/objects`。'
 - en: '[PRE30]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '**Further Reading**'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: Use a trash command (for example, `trash-cli` on Ubuntu) so that deleted files
     can be recovered later if needed
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用垃圾命令（例如，Ubuntu 上的 `trash-cli`）以便在需要时可以恢复已删除的文件
 - en: 'see also [unix.stackexchange: creating a simple trash command](https://unix.stackexchange.com/q/452496/109046)'
+  id: totrans-129
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '参见 [unix.stackexchange: 创建简单的回收站命令](https://unix.stackexchange.com/q/452496/109046)'
 - en: Files removed using `rm` can still be recovered with time and skill
+  id: totrans-130
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `rm` 删除的文件仍然可以通过时间和技巧恢复
 - en: '[unix.stackexchange: recover deleted files](https://unix.stackexchange.com/q/80270/109046)'
+  id: totrans-131
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 恢复已删除文件](https://unix.stackexchange.com/q/80270/109046)'
 - en: '[unix.stackexchange: recovering accidentally deleted files](https://unix.stackexchange.com/q/2677/109046)'
+  id: totrans-132
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 恢复意外删除的文件](https://unix.stackexchange.com/q/2677/109046)'
 - en: Use commands like `shred` if you want to make it harder to recover deleted files
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果您想使已删除的文件更难恢复，请使用 `shred` 命令
 - en: '[wiki.archlinux: Securely wipe disk](https://wiki.archlinux.org/title/Securely_wipe_disk)'
+  id: totrans-134
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wiki.archlinux: 安全擦除磁盘](https://wiki.archlinux.org/title/Securely_wipe_disk)'
 - en: '[My curated list](https://learnbyexample.github.io/curated_resources/git_and_github.html)
     for `git` and related resources'
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[我的精选列表](https://learnbyexample.github.io/curated_resources/git_and_github.html)
+    用于 `git` 及相关资源'
 - en: '[cp](#cp)'
+  id: totrans-136
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[cp](#cp)'
 - en: You can use the `cp` command to make copies of files and directories. With default
     syntax, you have to specify the source first followed by the destination. To copy
     multiple items, the last argument as destination can only be a directory. You'll
     also need to use the `-r` option to copy directories (similar to `rm -r` seen
     earlier).
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `cp` 命令复制文件和目录。使用默认语法，您必须先指定源，然后指定目标。要复制多个项目，最后一个参数作为目标只能是一个目录。您还需要使用
+    `-r` 选项来复制目录（类似于前面看到的 `rm -r`）。
 - en: '[PRE31]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     By default, `cp` will overwrite an existing file of the same name in the destination
     directory. You can use the `-i` option to interactively confirm or deny overwriting
     existing files. The `-n` option will prevent overwriting existing files without
     asking for confirmation.'
+  id: totrans-139
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    默认情况下，`cp` 命令会覆盖目标目录中同名已存在的文件。您可以使用 `-i` 选项来交互式地确认或拒绝覆盖现有文件。使用 `-n` 选项将防止覆盖现有文件而不进行确认。'
 - en: '[PRE32]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: If there's a folder in the destination path with the same name as a folder being
     copied, the contents will be merged. If there are files of identical names in
     such directories, the same rules discussed above will apply.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果目标路径中有一个与正在复制的文件夹同名文件夹，则内容将被合并。如果这些目录中有同名文件，则将应用上面讨论的相同规则。
 - en: '[PRE33]'
+  id: totrans-142
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: Often, you'd want to copy a file (or a directory) under a different name. In
     such cases, you can simply use a new name while specifying the destination.
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，您可能希望以不同的名称复制一个文件（或目录）。在这种情况下，您只需在指定目标时使用新名称即可。
 - en: '[PRE34]'
+  id: totrans-144
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: As mentioned earlier, to copy multiple files and directories, you'll have to
     specify the destination directory as the last argument.
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，要复制多个文件和目录，您必须将目标目录作为最后一个参数指定。
 - en: '[PRE35]'
+  id: totrans-146
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'You can use the `-t` option to specify the destination before the source paths
     (helpful with the `find` command for example, will be discussed later). Here are
     some more notable options:'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-t` 选项在指定源路径之前指定目标路径（例如，与 `find` 命令一起使用时很有帮助，稍后将讨论）。以下是一些其他值得注意的选项：
 - en: '`-u` copy files from source only if they are newer or don''t exist in the destination'
+  id: totrans-148
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-u` 仅在文件较新或不存在于目标中时从源复制文件'
 - en: '`-b` and `--backup` options will allow you to create backup copies of files
     already existing in the destination'
+  id: totrans-149
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-b` 和 `--backup` 选项将允许您创建目标中已存在的文件的备份副本'
 - en: '`--preserve` option will help you to copy files along with source file attributes
     like ownership, timestamp, etc'
+  id: totrans-150
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`--preserve` 选项将帮助您复制文件，同时保留源文件属性，如所有权、时间戳等'
 - en: '**Further Reading**'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '`rsync` a fast, versatile, remote (and local) file-copying tool'
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rsync` 是一个快速、多功能的远程（和本地）文件复制工具'
 - en: '[rsync tutorial and examples](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)'
+  id: totrans-153
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rsync 教程和示例](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories)'
 - en: '[syncthing](https://github.com/syncthing/syncthing) — continuous file synchronization
     program'
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[syncthing](https://github.com/syncthing/syncthing) — 持续文件同步程序'
 - en: '[mv](#mv)'
+  id: totrans-155
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[mv](#mv)'
 - en: You can use the `mv` command to move one or more files and directories from
     one location to another. Unlike `rm` and `cp`, you do not need the `-r` option
     for directories.
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `mv` 命令将一个或多个文件和目录从一个位置移动到另一个位置。与 `rm` 和 `cp` 不同，对于目录，您不需要 `-r` 选项。
 - en: 'Syntax for specifying the source and destination is same as seen earlier with
     `cp`. Here''s an example of moving a directory into another directory:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 指定源和目标语法与之前看到的 `cp` 命令相同。以下是将目录移动到另一个目录的示例：
 - en: '[PRE36]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: 'Here''s an example for moving multiple files and directories to another directory:'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是将多个文件和目录移动到另一个目录的示例：
 - en: '[PRE37]'
+  id: totrans-160
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'When you are dealing with a single file or directory, you can also *rename*
     them:'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您处理单个文件或目录时，您也可以**重命名**它们：
 - en: '[PRE38]'
+  id: totrans-162
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: 'Here are some more notable options, some of which behave similar to those seen
     with the `cp` command:'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些值得注意的选项，其中一些与 `cp` 命令中看到的选项行为相似：
 - en: '`-i` interactively confirm or deny when the destination already has a file
     of the same name'
+  id: totrans-164
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-i` 当目标已存在同名文件时，交互式确认或拒绝'
 - en: '`-n` always deny overwriting of files'
+  id: totrans-165
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-n` 总是拒绝覆盖文件'
 - en: '`-f` always overwrite files'
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-f` 总是覆盖文件'
 - en: '`-t` specify the destination elsewhere instead of final argument'
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-t` 在最终参数之外指定目标位置'
 - en: '`-u` move only if the files are newer or don''t exist in the destination'
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-u` 仅在文件较新或不存在于目标位置时移动'
 - en: '`-b` and `--backup` options will allow you to create backup copies of files
     already existing in the destination'
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-b` 和 `--backup` 选项将允许您在目标位置创建现有文件的备份副本'
 - en: '`-v` verbose option'
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-v` 详细选项'
 - en: '[rename](#rename)'
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[重命名](#rename)'
 - en: 'The `mv` command is useful for simple file renaming. `rename` helps when you
     need to modify one or more filenames based on a pattern. There are different implementations
     of the `rename` command, with wildly different set of features. See [askubuntu:
     What''s the difference between the different "rename" commands?](https://askubuntu.com/questions/956010/whats-the-difference-between-the-different-rename-commands)
     for details.'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '`mv` 命令对于简单的文件重命名很有用。当您需要根据模式修改一个或多个文件名时，`rename` 命令很有帮助。`rename` 命令有不同的实现，具有截然不同的功能集。有关详细信息，请参阅
+    [askubuntu: 不同 "rename" 命令之间的区别是什么？](https://askubuntu.com/questions/956010/whats-the-difference-between-the-different-rename-commands)'
 - en: 'Perl implementation of the `rename` command will be discussed in this section.
     You''d need to know regular expressions to use this command. Basic explanations
     will be given here and more details can be found in the links mentioned at the
     end of this section. Here''s an example to change the file extensions:'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节将讨论 `rename` 命令的 Perl 实现。您需要了解正则表达式才能使用此命令。这里将给出基本解释，更多详细信息可以在本节末尾提到的链接中找到。以下是一个更改文件扩展名的示例：
 - en: '[PRE39]'
+  id: totrans-174
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: As a good practice, use the `-n` option to see how the files will be renamed
     before actually renaming the files.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为一种良好的实践，使用 `-n` 选项在实际上对文件进行重命名之前查看文件将如何被重命名。
 - en: '[PRE40]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: If the new filename already exists, you'll get an error, which you can override
     with the `-f` option if you wish. If you are passing filenames with path components
     in them, you can use the `-d` option to affect only the filename portion. Otherwise,
     the logic you are using might affect directory names as well.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果新文件名已存在，您将收到一个错误，如果您愿意，可以使用 `-f` 选项来覆盖它。如果您正在传递包含路径组件的文件名，您可以使用 `-d` 选项仅影响文件名部分。否则，您使用的逻辑可能会影响目录名。
 - en: '[PRE41]'
+  id: totrans-178
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '**Further Reading**'
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[perldoc: Regexp tutorial](https://perldoc.perl.org/perlretut)'
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[perldoc: 正则表达式教程](https://perldoc.perl.org/perlretut)'
 - en: See my [Perl one-liners](https://github.com/learnbyexample/learn_perl_oneliners)
     ebook for examples and more details about the Perl substitution and `rename` commands
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 请参阅我的 [Perl 单行脚本](https://github.com/learnbyexample/learn_perl_oneliners) 电子书，其中包含示例以及有关
+    Perl 替换和 `rename` 命令的更多详细信息
 - en: '[ln](#ln)'
+  id: totrans-182
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[ln](#ln)'
 - en: 'The `ln` command helps you create a link to another file or directory within
     the same or different location. There are two types of links — **symbolic** links
     and **hard** links. Symbolic links can point to both files and directories. Here
     are some characteristics:'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ln` 命令可以帮助您在同一位置或不同位置创建指向另一个文件或目录的链接。有两种类型的链接——**符号链接**和**硬链接**。符号链接可以指向文件和目录。以下是某些特性：'
 - en: if the original file is deleted or moved to another location, then the symbolic
     link will no longer work
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果原始文件被删除或移动到另一个位置，则符号链接将不再工作
 - en: if the symbolic link is moved to another location, it will still work if the
     link was done using absolute path (for relative path, it will depend on whether
     or not there's another file with the same name in that location)
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果符号链接被移动到另一个位置，如果使用绝对路径创建链接，它仍然可以工作（对于相对路径，它将取决于该位置是否还有另一个同名文件）
 - en: a symbolic link file has its own inode, permissions, timestamps, etc
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 符号链接文件有自己的inode、权限、时间戳等
 - en: some commands will work the same when original file or the symbolic file is
     given as the command line argument, while some require additional options (`du
     -L` for example)
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一些命令在原始文件或符号文件作为命令行参数时工作方式相同，而一些则需要额外的选项（例如`du -L`）
 - en: Usage is similar to the `cp` command. You have to specify the source first followed
     by the destination (which is optional if it is the current working directory).
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用方法与`cp`命令类似。你必须首先指定源，然后是目的地（如果它是当前工作目录，则目的地是可选的）。
 - en: '[PRE42]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: Long listing with `ls -l` will show the path connected to links. You can also
     use the `readlink` command, which has features like resolving recursively to the
     canonical file.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`ls -l`进行长列表显示将显示链接的路径。你也可以使用`readlink`命令，它具有递归解析到规范文件等特性。
 - en: '[PRE43]'
+  id: totrans-191
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: 'Hard links can only point to another file. You cannot use them for directories
     and the usage is also restricted to within the same filesystem. The `.` and `..`
     directories are exceptions, these special purpose hard links are automatically
     created. Here are some more details about hard links:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 硬链接只能指向另一个文件。你不能用它们来处理目录，并且使用也仅限于同一文件系统内。`.`和`..`目录是例外，这些特殊用途的硬链接会自动创建。以下是关于硬链接的一些更多详细信息：
 - en: once a hard link is created, there is no distinction between the two files other
     than their paths. They have same inode, permissions, timestamps, etc
+  id: totrans-193
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦创建了硬链接，两个文件之间除了路径之外没有区别。它们有相同的inode、权限、时间戳等。
 - en: hard links will continue working even if all the other hard links are deleted
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 即使所有其他硬链接都被删除，硬链接仍然会继续工作。
 - en: if a hard link is moved to another location, the links will still be in sync.
     Any change in one of them will be reflected in all the other links
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个硬链接被移动到另一个位置，链接仍然会保持同步。任何一个链接的变化都会反映在所有其他链接上
 - en: '[PRE44]'
+  id: totrans-196
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `unlink`
     or `rm` commands to delete links.'
+  id: totrans-197
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你可以使用`unlink`或`rm`命令来删除链接。'
 - en: '**Further Reading**'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[askubuntu: What is the difference between a hard link and a symbolic link?](https://askubuntu.com/questions/108771/what-is-the-difference-between-a-hard-link-and-a-symbolic-link)'
+  id: totrans-199
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[askubuntu: 硬链接和符号链接之间有什么区别？](https://askubuntu.com/questions/108771/what-is-the-difference-between-a-hard-link-and-a-symbolic-link)'
 - en: '[unix.stackexchange: What is the difference between symbolic and hard links?](https://unix.stackexchange.com/q/9575/109046)'
+  id: totrans-200
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 符号链接和硬链接之间有什么区别？](https://unix.stackexchange.com/q/9575/109046)'
 - en: '[unix.stackexchange: What is a Superblock, Inode, Dentry and a File?](https://unix.stackexchange.com/q/4402/109046)'
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 什么是超级块、inode、dentry和文件？](https://unix.stackexchange.com/q/4402/109046)'
 - en: '[tar and gzip](#tar-and-gzip)'
+  id: totrans-202
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[tar和gzip](#tar-and-gzip)'
 - en: '`tar` is an archiving utility. Depending on the implementation, you can also
     use options to compress the archive.'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tar`是一个存档工具。根据实现方式，你还可以使用选项来压缩存档。'
 - en: 'Here''s an example that creates a single archive file from multiple input files
     and directories:'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个示例，它从一个或多个输入文件和目录创建单个存档文件：
 - en: '[PRE45]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: Once you have an archive file, you can then compress it using tools like `gzip`,
     `bzip2`, `xz`, etc. In the below example, the command replaces the archive file
     with the compressed version and adds a `.gz` suffix to indicate that `gzip` was
     the technique used.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你有了存档文件，你可以使用像`gzip`、`bzip2`、`xz`等工具对其进行压缩。在下面的示例中，命令将存档文件替换为压缩版本，并添加`.gz`后缀以表明使用了`gzip`技术。
 - en: '[PRE46]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: Use the `-t` option if you want to check the contents of the compressed file.
     This will work with the uncompressed `.tar` version as well.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要检查压缩文件的目录，请使用`-t`选项。这同样适用于未压缩的`.tar`版本。
 - en: '[PRE47]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: 'To uncompress `.gz` files, you can use `gunzip` or `gzip -d`. This will replace
     the compressed version with the uncompressed archive file:'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 要解压缩`.gz`文件，你可以使用`gunzip`或`gzip -d`。这将用未压缩的存档文件替换压缩版本：
 - en: '[PRE48]'
+  id: totrans-211
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: 'To extract the files from an archive, use `tar` along with the `-x` option:'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 从存档中提取文件时，请使用`tar`命令并带上`-x`选项：
 - en: '[PRE49]'
+  id: totrans-213
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: With `GNU tar`, you can compress/uncompress along with the `tar` command instead
     of having to use tools like `gzip` separately. For example, the `-z` option will
     use `gzip`, `-j` will use `bzip2` and `-J` will use `xz`. Use the `-a` option
     if you want `tar` to automatically select the compression technique based on the
     extension provided.
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`GNU tar`，你可以在`tar`命令中压缩/解压缩，而无需单独使用像`gzip`这样的工具。例如，`-z`选项将使用`gzip`，`-j`将使用`bzip2`，`-J`将使用`xz`。如果你想让`tar`根据提供的扩展名自动选择压缩技术，请使用`-a`选项。
 - en: '[PRE50]'
+  id: totrans-215
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '`tar` has lots and lots of options for various needs. Some are listed below,
     see documentation for complete details.'
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tar` 有很多选项，用于满足各种需求。以下列出了一些，完整详情请参阅文档。'
 - en: '`-v` verbose option'
+  id: totrans-217
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-v` 详细选项'
 - en: '`-r` to append files to an existing archive'
+  id: totrans-218
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-r` 用于将文件追加到现有归档中'
 - en: '`--exclude=` specify files to be ignored from archiving'
+  id: totrans-219
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`--exclude=` 指定要排除的文件以进行归档'
 - en: 'There are also commands starting with `z` to work with compressed files, for
     example:'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样也有以 `z` 开头的命令用于处理压缩文件，例如：
 - en: '`zcat` to display file contents of a compressed file'
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`zcat` 用于显示压缩文件的文件内容'
 - en: '`zless` to display file contents of a compressed file one screenful at a time'
+  id: totrans-222
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`zless` 用于分屏显示压缩文件的文件内容'
 - en: '`zgrep` to search compressed files'
+  id: totrans-223
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`zgrep` 用于搜索压缩文件'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) If you need to work
     with `.zip` files, use the `zip` and `unzip` commands.'
+  id: totrans-224
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 如果你需要处理 `.zip` 文件，请使用
+    `zip` 和 `unzip` 命令。'
 - en: '**Further Reading**'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[unix.stackexchange: tar files with a sorted order](https://unix.stackexchange.com/q/178127/109046)'
+  id: totrans-226
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 以排序顺序的 tar 文件](https://unix.stackexchange.com/q/178127/109046)'
 - en: '[superuser: gzip without tar? Why are they used together?](https://superuser.com/questions/252065/gzip-without-tar-why-are-they-used-together)'
+  id: totrans-227
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[superuser: 不使用 tar 的 gzip？为什么它们一起使用？](https://superuser.com/questions/252065/gzip-without-tar-why-are-they-used-together)'
 - en: '[unix.stackexchange: xz a directory with tar using maximum compression?](https://unix.stackexchange.com/q/28976/109046)'
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 使用 tar 以最大压缩率压缩目录](https://unix.stackexchange.com/q/28976/109046)'
 - en: '[Exercises](#exercises)'
+  id: totrans-229
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `ls.sh` script
     will be used for some of the exercises.'
+  id: totrans-230
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `ls.sh` 脚本将被用于一些练习。'
 - en: '**1)** Which of these commands will always display the absolute path of the
     home directory?'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 哪个命令将始终显示家目录的绝对路径？'
 - en: '*a)* `pwd`'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `pwd`'
 - en: '*b)* `echo "$PWD"`'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `echo "$PWD"`'
 - en: '*c)* `echo "$HOME"`'
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `echo "$HOME"`'
 - en: '**2)** The current working directory has a folder named `-dash`. How would
     you switch to that directory?'
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 当前工作目录有一个名为 `-dash` 的文件夹。你将如何切换到该目录？'
 - en: '*a)* `cd -- -dash`'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `cd -- -dash`'
 - en: '*b)* `cd -dash`'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `cd -dash`'
 - en: '*c)* `cd ./-dash`'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `cd ./-dash`'
 - en: '*d)* `cd \-dash`'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: '*d)* `cd \-dash`'
 - en: '*e)* `cd ''-dash''`'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: '*e)* `cd ''-dash''`'
 - en: '*f)* all of the above'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: '*f)* 以上所有'
 - en: '*g)* only *a)* and *c)*'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: '*g)* 只有 *a)* 和 *c)*'
 - en: '**3)** Given the directory structure as shown below, how would you change to
     the `todos` directory?'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 给定以下目录结构，你将如何切换到 `todos` 目录？'
 - en: '[PRE51]'
+  id: totrans-244
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '**4)** As per the scenario shown below, how would you change to the `cli-computing`
     directory under the user''s home directory? And then, how would you go back to
     the previous working directory?'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 根据以下场景，你将如何切换到用户家目录下的 `cli-computing` 目录？然后，你将如何返回到上一个工作目录？'
 - en: '[PRE52]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '**5)** How''d you list the contents of the current directory, one per line,
     along with the size of the entries in human readable format?'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 你会如何列出当前目录的内容，每行一个条目，并附带以人类可读格式显示的条目大小？'
 - en: '[PRE53]'
+  id: totrans-248
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: '**6)** Which `ls` command option would you use for version based sorting of
     entries?'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 你会使用哪个 `ls` 命令选项来进行基于版本的条目排序？'
 - en: '**7)** Which `ls` command option would you use for sorting based on entry size?'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 你会使用哪个 `ls` 命令选项来根据条目大小进行排序？'
 - en: '**8)** Which `ls` command option would you use for sorting based on file extension?'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 你会使用哪个 `ls` 命令选项来根据文件扩展名进行排序？'
 - en: '**9)** What does the `-G` option of `ls` command do?'
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** `ls` 命令的 `-G` 选项做什么？'
 - en: '**10)** What does the `-i` option of `ls` command do?'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** `ls` 命令的 `-i` 选项做什么？'
 - en: '**11)** List only the directories as one entry per line.'
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 每行只列出目录。'
 - en: '[PRE54]'
+  id: totrans-255
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: '**12)** Assume that a regular file named `notes` already exists. What would
     happen if you use the `mkdir -p notes` command?'
+  id: totrans-256
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 假设已经存在一个名为 `notes` 的常规文件。如果你使用 `mkdir -p notes` 命令会发生什么？'
 - en: '[PRE55]'
+  id: totrans-257
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: '**13)** Use one or more commands to match the scenario shown below:'
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE56]'
+  id: totrans-259
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: '**14)** Use one or more commands to match the scenario shown below:'
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE57]'
+  id: totrans-261
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Don''t delete this
     directory, will be needed in a later exercise.'
+  id: totrans-262
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 不要删除此目录，将在后续练习中使用。'
 - en: '**15)** If directories to create already exist, which `mkdir` command option
     would you use to not show an error?'
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 如果要创建的目录已经存在，你会使用哪个 `mkdir` 命令选项来避免显示错误？'
 - en: '**16)** Use one or more commands to match the scenario given below:'
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE58]'
+  id: totrans-265
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: '**17)** What does the `-f` option of `rm` command do?'
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** `rm` 命令的 `-f` 选项做什么？'
 - en: '**18)** Which option would you use to interactively delete files using the
     `rm` command?'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 你会使用哪个选项来通过 `rm` 命令交互式地删除文件？'
 - en: '**19)** Can the files removed by `rm` easily be restored? Do you need to take
     some extra steps or use special commands to make the files more difficult to recover?'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 被 `rm` 删除的文件是否可以轻松恢复？你需要采取一些额外步骤或使用特殊命令来使文件更难恢复吗？'
 - en: '**20)** Does your Linux distribution provide a tool to send deleted files to
     the trash (which would help to recover deleted files)?'
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 你的 Linux 发行版是否提供了一个工具，可以将删除的文件发送到回收站（这有助于恢复已删除的文件）？'
 - en: '**21)** Which option would you use to interactively accept/prevent the `cp`
     command from overwriting a file of the same name? And which option would prevent
     overwriting without needing manual confirmation?'
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 你会使用哪个选项来交互式地接受/防止 `cp` 命令覆盖同名文件？以及哪个选项可以在无需手动确认的情况下防止覆盖？'
 - en: '**22)** Does the `cp` command allow you to rename the file or directory being
     copied? If so, can you rename multiple files/directories being copied?'
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** `cp` 命令是否允许你重命名正在复制文件或目录？如果是，是否可以重命名正在复制的多个文件或目录？'
 - en: '**23)** What do the `-u`, `-b` and `-t` options of `cp` command do?'
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** `cp` 命令的 `-u`，`-b` 和 `-t` 选项分别做什么？'
 - en: '**24)** What''s the difference between the two commands shown below?'
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 下面两个命令之间的区别是什么？'
 - en: '[PRE59]'
+  id: totrans-274
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: '**25)** Which option would you use to interactively accept/prevent the `mv`
     command from overwriting a file of the same name?'
+  id: totrans-275
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** 你会使用哪个选项来交互式地接受/防止 `mv` 命令覆盖同名文件？'
 - en: '**26)** Use one or more commands to match the scenario shown below. You should
     have already created this directory structure in an earlier exercise.'
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 使用一个或多个命令来匹配以下场景。你应该已经在之前的练习中创建了此目录结构。'
 - en: '[PRE60]'
+  id: totrans-277
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: '**27)** What does the `-t` option of `mv` command do?'
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** `mv` 命令的 `-t` 选项做什么？'
 - en: '**28)** Determine and implement the `rename` logic based on the filenames and
     expected output shown below.'
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: '**28)** 根据以下文件名和预期输出确定并实现 `rename` 逻辑。'
 - en: '[PRE61]'
+  id: totrans-280
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: '**29)** Does the `ln` command follow the same order to specify source and destination
     as the `cp` and `mv` commands?'
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: '**29)** `ln` 命令指定源和目标的方式是否与 `cp` 和 `mv` 命令相同？'
 - en: '**30)** Which `tar` option helps to compress archives based on filename extension?
     This option can be used instead of `-z` for `gzip`, `-j` for `bzip2` and `-J`
     for `xz`.'
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: '**30)** 哪个 `tar` 选项有助于根据文件名扩展名压缩存档？此选项可以用作代替 `-z` 用于 `gzip`，`-j` 用于 `bzip2`
+    和 `-J` 用于 `xz`。'

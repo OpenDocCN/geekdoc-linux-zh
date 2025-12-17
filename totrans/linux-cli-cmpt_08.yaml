@@ -1,760 +1,1139 @@
 - en: Searching Files and Filenames
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 搜索文件和文件名
 - en: 原文：[https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html](https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html](https://learnbyexample.github.io/cli-computing/searching-files-and-filenames.html)
 - en: This chapter will show how to search file contents based on literal strings
     or regular expressions. After that, you'll learn how to locate files based on
     their names and other properties like size, last modified timestamp and so on.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章将展示如何根据文字字符串或正则表达式搜索文件内容。之后，你将学习如何根据文件名和其他属性（如大小、最后修改时间戳等）定位文件。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the scripts used in this chapter.'
+  id: totrans-3
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章使用的脚本。'
 - en: '[grep](#grep)'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[grep](#grep)'
 - en: 'Quoting from [wikipedia](https://en.wikipedia.org/wiki/Grep):'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 引自 [wikipedia](https://en.wikipedia.org/wiki/Grep)：
 - en: '**`grep`** is a command-line utility for searching plain-text data sets for
     lines that match a regular expression. Its name comes from the `ed` command `g/re/p`
     (**g**lobally search a **r**egular **e**xpression and **p**rint), which has the
     same effect.'
+  id: totrans-6
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**`grep`** 是一个用于在纯文本数据集中搜索匹配正则表达式的行的命令行实用程序。其名称来自 `ed` 命令 `g/re/p`（**g**lobally
+    search a **r**egular **e**xpression and **p**rint），具有相同的效果。'
 - en: The `grep` command has lots and lots of features, so much so that I wrote [a
     book](https://github.com/learnbyexample/learn_gnugrep_ripgrep) with hundreds of
     examples and exercises. The most common usage is filtering lines from the input
     using a regular expression (regexp).
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '`grep` 命令有很多很多的功能，以至于我写了一本 [书](https://github.com/learnbyexample/learn_gnugrep_ripgrep)
+    ，里面有数百个示例和练习。最常用的用法是使用正则表达式（regexp）从输入中过滤行。'
 - en: '[Common options](#common-options)'
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[常用选项](#常用选项)'
 - en: Commonly used options are listed below. Examples will be discussed in later
     sections.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 常用选项如下。示例将在后面的章节中讨论。
 - en: '`--color=auto` highlight the matching portions, filenames, line numbers, etc
     using colors'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`--color=auto` 使用颜色突出显示匹配的部分、文件名、行号等'
 - en: '`-i` ignore case'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-i` 忽略大小写'
 - en: '`-v` print only the non-matching lines'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-v` 仅打印非匹配行'
 - en: '`-n` prefix line numbers for output lines'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-n` 为输出行添加行号前缀'
 - en: '`-c` display only the count of output lines'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-c` 仅显示输出行的计数'
 - en: '`-l` print only the filenames matching the given expression'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-l` 仅打印匹配给定表达式的文件名'
 - en: '`-L` print filenames *not* matching the pattern'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-L` 打印不匹配模式的文件名'
 - en: '`-w` match pattern only as whole words'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-w` 仅匹配整个单词的模式'
 - en: '`-x` match pattern only as whole lines'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-x` 仅匹配整个行的模式'
 - en: '`-F` interpret pattern as a fixed string (i.e. not as a regular expression)'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-F` 将模式解释为固定字符串（即不作为正则表达式）'
 - en: '`-o` print only the matching portions'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-o` 仅打印匹配的部分'
 - en: '`-A N` print the matching line and `N` number of lines after the matched line'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-A N` 打印匹配的行以及匹配行之后的 `N` 行'
 - en: '`-B N` print the matching line and `N` number of lines before the matched line'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-B N` 打印匹配的行以及匹配行之前的 `N` 行'
 - en: '`-C N` print the matching line and `N` number of lines before and after the
     matched line'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-C N` 打印匹配的行以及匹配行之前和之后的 `N` 行'
 - en: '`-m N` print a maximum of `N` matching lines'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-m N` 打印最多 `N` 行匹配行'
 - en: '`-q` no standard output, quit immediately if match found, useful in scripts'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-q` 无标准输出，如果找到匹配项则立即退出，在脚本中很有用'
 - en: '`-s` suppress error messages, useful in scripts'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-s` 抑制错误消息，在脚本中很有用'
 - en: '`-r` recursively search all files in the specified input folders (by default
     searches the current directory)'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-r` 递归搜索指定输入文件夹中的所有文件（默认搜索当前目录）'
 - en: '`-R` like `-r`, but follows symbolic links as well'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-R` 类似于 `-r`，但也会跟随符号链接'
 - en: '`-h` do not prefix filename for matching lines (default behavior for single
     input file)'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-h` 不要为匹配行添加文件名前缀（对于单个输入文件是默认行为）'
 - en: '`-H` prefix filename for matching lines (default behavior for multiple input
     files)'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-H` 为匹配行添加文件名前缀（对于多个输入文件是默认行为）'
 - en: '[Literal search](#literal-search)'
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[文字搜索](#文字搜索)'
 - en: The following examples would all be suited for the `-F` option as these do not
     use regular expressions. `grep` is smart enough to do the right thing in such
     cases.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下示例都适合使用 `-F` 选项，因为这些示例不使用正则表达式。`grep` 在这种情况下足够智能，能够正确处理。
 - en: '[PRE0]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Here''s an example where the line numbers and matched portions are highlighted
     in color:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个示例，其中行号和匹配的部分以颜色突出显示：
 - en: '![example with --color option](../Images/b636834e79fd5c1be8f83f7d8d2bc404.png)'
+  id: totrans-35
   prefs: []
   type: TYPE_IMG
+  zh: '![带有 --color 选项的示例](../Images/b636834e79fd5c1be8f83f7d8d2bc404.png)'
 - en: '[Regular Expressions](#regular-expressions)'
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[正则表达式](#regular-expressions)'
 - en: 'By default, `grep` treats the search pattern as Basic Regular Expression (BRE).
     Here are the various options related to regexp:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`grep`将搜索模式视为基本正则表达式（BRE）。以下是与正则表达式相关的各种选项：
 - en: '`-G` option can be used to specify explicitly that BRE is needed'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-G`选项可以用来明确指定需要BRE'
 - en: '`-E` option will enable Extended Regular Expression (ERE)'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-E`选项将启用扩展正则表达式（ERE）'
 - en: in `GNU grep`, BRE and ERE only differ in how metacharacters are specified,
     no difference in features
+  id: totrans-40
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在`GNU grep`中，基本正则表达式（BRE）和扩展正则表达式（ERE）的区别仅在于元字符的指定方式，功能上没有差异
 - en: '`-F` option will cause the search patterns to be treated literally'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-F`选项将导致搜索模式被当作字面量处理'
 - en: '`-P` if available, this option will enable Perl Compatible Regular Expression
     (PCRE)'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-P`如果可用，此选项将启用Perl兼容正则表达式（PCRE）'
 - en: The following reference is for **Extended Regular Expressions**.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下参考内容是关于**扩展正则表达式**。
 - en: '**Anchors**'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**锚点**'
 - en: '`^` restricts the match to the start of the string'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`^`将匹配限制在字符串的开始处'
 - en: '`$` restricts the match to the end of the string'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`$`将匹配限制在字符串的末尾'
 - en: '`\<` restricts the match to the start of word'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\<`将匹配限制在单词的开始处'
 - en: '`\>` restricts the match to the end of word'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\>`将匹配限制在单词的末尾'
 - en: '`\b` restricts the match to both the start/end of words'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\b`将匹配限制在单词的开始/结束处'
 - en: '`\B` matches wherever `\b` doesn''t match'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\B`匹配`\b`不匹配的地方'
 - en: '**Dot metacharacter and Quantifiers**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**点元字符和量词**'
 - en: '`.` match any character, including the newline character'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`.`匹配任何字符，包括换行符'
 - en: '`?` match `0` or `1` times'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`?`匹配0次或1次'
 - en: '`*` match `0` or more times'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`*`匹配0次或多次'
 - en: '`+` match `1` or more times'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`+`匹配1次或更多次'
 - en: '`{m,n}` match `m` to `n` times'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`{m,n}`匹配m到n次'
 - en: '`{m,}` match at least `m` times'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`{m,}`至少匹配m次'
 - en: '`{,n}` match up to `n` times (including `0` times)'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`{,n}`匹配最多n次（包括0次）'
 - en: '`{n}` match exactly `n` times'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`{n}`匹配恰好n次'
 - en: '**Character classes**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**字符类**'
 - en: '`[set123]` match any of these characters once'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[set123]`匹配这些字符中的任意一个一次'
 - en: '`[^set123]` match except any of these characters once'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[^set123]`匹配除了这些字符之外的任意字符一次'
 - en: '`[3-7AM-X]` range of characters from `3` to `7`, `A`, another range from `M`
     to `X`'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[3-7AM-X]`字符范围从`3`到`7`，`A`，另一个范围从`M`到`X`'
 - en: '`\w` similar to `[a-zA-Z0-9_]` for matching word characters'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\w`类似于`[a-zA-Z0-9_]`，用于匹配单词字符'
 - en: '`\s` similar to `[ \t\n\r\f\v]` for matching whitespace characters'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\s`类似于`[ \t\n\r\f\v]`，用于匹配空白字符'
 - en: '`\W` match non-word characters'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\W`匹配非单词字符'
 - en: '`\S` match non-whitespace characters'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\S`匹配非空白字符'
 - en: '`[[:digit:]]` similar to `[0-9]`'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[[:digit:]]`类似于`[0-9]`'
 - en: '`[[:alnum:]_]` similar to `\w`'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[[:alnum:]_]`类似于`\w`'
 - en: see [grep manual](https://www.gnu.org/software/grep/manual/grep.html#Character-Classes-and-Bracket-Expressions)
     for full list
+  id: totrans-70
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有关完整列表，请参阅[grep手册](https://www.gnu.org/software/grep/manual/grep.html#Character-Classes-and-Bracket-Expressions)
 - en: '**Alternation and Grouping**'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**交替和分组**'
 - en: '`pat1|pat2|pat3` match `pat1` or `pat2` or `pat3`'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`pat1|pat2|pat3`匹配`pat1`或`pat2`或`pat3`'
 - en: '`()` group patterns, `a(b|c)d` is same as `abd|acd`'
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`()`分组模式，`a(b|c)d`等同于`abd|acd`'
 - en: also serves as a capture group
+  id: totrans-74
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 也用作捕获组
 - en: '`\N` backreference, gives the matched portion of the `N`th capture group'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\N`反向引用，给出第N个捕获组匹配的部分'
 - en: '`\1` backreference to the first capture group'
+  id: totrans-76
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\1`反向引用第一个捕获组'
 - en: '`\2` backreference to the second capture group and so on up to `\9`'
+  id: totrans-77
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`\2`反向引用第二个捕获组，以此类推，直到`\9`'
 - en: 'Quoting from the manual for BRE vs ERE differences:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: 引用手册中关于BRE与ERE差异的说明：
 - en: In basic regular expressions the meta-characters `?`, `+`, `{`, `|`, `(`, and
     `)` lose their special meaning; instead use the backslashed versions `\?`, `\+`,
     `\{`, `\|`, `\(`, and `\)`.
+  id: totrans-79
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在基本正则表达式中，元字符`?`、`+`、`{`、`|`、`(`和`)`失去了它们的特殊意义；相反，使用转义版本`\?`、`\+`、`\{`、`\|`、`\(`和`\)`。
 - en: '[Regexp examples](#regexp-examples)'
+  id: totrans-80
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[正则表达式示例](#regexp-examples)'
 - en: '[PRE1]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[Line comparisons between files](#line-comparisons-between-files)'
+  id: totrans-82
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[文件之间的行比较](#line-comparisons-between-files)'
 - en: The `-f` and `-x` options can be combined to get the common lines between two
     files or the difference when `-v` is used as well. Add `-F` if you want to treat
     the search strings literally (recall that regexp is the default).
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-f`和`-x`选项可以组合使用，以获取两个文件之间的公共行或使用`-v`时的差异。如果想要将搜索字符串当作字面量处理，请添加`-F`（回想一下，正则表达式是默认设置）。'
 - en: '[PRE2]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[Perl Compatible Regular Expression](#perl-compatible-regular-expression)'
+  id: totrans-85
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[Perl 兼容正则表达式](#perl-compatible-regular-expression)'
 - en: 'PCRE has many advanced features compared to BRE/ERE. Here are some examples:'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 与BRE/ERE相比，PCRE具有许多高级功能。以下是一些示例：
 - en: '[PRE3]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: See `man pcrepattern` or [PCRE online manual](https://www.pcre.org/original/doc/html/pcrepattern.html)
     for documentation.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看 `man pcrepattern` 或 [PCRE 在线手册](https://www.pcre.org/original/doc/html/pcrepattern.html)
+    以获取文档。
 - en: '[Recursive search](#recursive-search)'
+  id: totrans-89
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[递归搜索](#recursive-search)'
 - en: You can use the `-r` option to search recursively within the specified directories.
     By default, the current directory will be searched. Use `-R` if you want symbolic
     links found within the input directories to be followed as well. You do not need
     the `-R` option for specifying symbolic links as arguments.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-r` 选项在指定的目录中进行递归搜索。默认情况下，将搜索当前目录。如果想要跟随输入目录中的符号链接，请使用 `-R`。指定符号链接作为参数时不需要
+    `-R` 选项。
 - en: Here are some basic examples. Recursive search will work as if `-H` option was
     specified as well, even if only one file was matched. Also, hidden files are included
     by default.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些基本示例。即使只匹配了一个文件，递归搜索也会像指定了 `-H` 选项一样工作。此外，默认情况下也包括隐藏文件。
 - en: '[PRE4]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: You can further prune the files to be searched using the *include/exclude* options.
     Note that these options will work even if recursive search is not active.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 *包含/排除* 选项进一步修剪要搜索的文件。请注意，即使递归搜索未激活，这些选项也会生效。
 - en: '| Option | Description |'
+  id: totrans-94
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-95
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `--include=GLOB` | search only files that match GLOB |'
+  id: totrans-96
   prefs: []
   type: TYPE_TB
+  zh: '| `--include=GLOB` | 仅搜索与 GLOB 匹配的文件 |'
 - en: '| `--exclude=GLOB` | skip files that match GLOB |'
+  id: totrans-97
   prefs: []
   type: TYPE_TB
+  zh: '| `--exclude=GLOB` | 跳过与 GLOB 匹配的文件 |'
 - en: '| `--exclude-from=FILE` | skip files that match any file pattern from FILE
     |'
+  id: totrans-98
   prefs: []
   type: TYPE_TB
+  zh: '| `--exclude-from=FILE` | 跳过与 FILE 中任何文件模式匹配的文件 |'
 - en: '| `--exclude-dir=GLOB` | skip directories that match GLOB |'
+  id: totrans-99
   prefs: []
   type: TYPE_TB
+  zh: '| `--exclude-dir=GLOB` | 跳过与 GLOB 匹配的目录 |'
 - en: '[PRE5]'
+  id: totrans-100
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [ripgrep](https://github.com/BurntSushi/ripgrep)
     is a recommended alternative to `GNU grep` with a highly optimized regexp engine,
     parallel search, ignoring files based on `.gitignore` and so on.'
+  id: totrans-101
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [ripgrep](https://github.com/BurntSushi/ripgrep)
+    是 `GNU grep` 的推荐替代品，具有高度优化的正则表达式引擎、并行搜索、基于 `.gitignore` 忽略文件等功能。'
 - en: '[grep and xargs](#grep-and-xargs)'
+  id: totrans-102
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[grep 和 xargs](#grep-and-xargs)'
 - en: 'You can use the shell `|` operator to pass the output of a command as input
     to another command. Suppose a command gives you a list of filenames and you want
     to pass this list as input *arguments* to another command, what would you do?
     One solution is to use the `xargs` command. Here''s a basic example (assuming
     filenames won''t conflict with shell metacharacters):'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 shell `|` 操作符将一个命令的输出作为另一个命令的输入。假设一个命令给您一个文件名列表，并且您想将此列表作为输入 *参数* 传递给另一个命令，您会怎么做？一个解决方案是使用
+    `xargs` 命令。以下是一个基本示例（假设文件名不会与 shell 元字符冲突）：
 - en: '[PRE6]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Characters like space, newline, semicolon, etc are special to the shell. So,
     filenames containing these characters have to be properly quoted. Or, where applicable,
     you can use a list of filenames separated by the ASCII NUL character (since filenames
     cannot have the NUL character). You can use `grep -Z` to separate the output with
     NUL and `xargs -0` to treat the input as NUL separated. Here''s an example:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 空格、换行符、分号等字符对 shell 来说是特殊的。因此，包含这些字符的文件名必须正确引用。或者，在适用的情况下，您可以使用由 ASCII NUL 字符分隔的文件名列表（因为文件名不能包含
+    NUL 字符）。您可以使用 `grep -Z` 来用 NUL 分隔输出，并使用 `xargs -0` 将输入视为 NUL 分隔。以下是一个示例：
 - en: '[PRE7]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Note that the command passed to `xargs` doesn''t accept custom made aliases
     and functions. So, if you had aliased `grep` to `grep --color=auto`, don''t be
     surprised if the output isn''t colorized. See [unix.stackexchange: have xargs
     use alias instead of binary](https://unix.stackexchange.com/q/141367/109046) for
     details and workarounds.'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '注意，传递给 `xargs` 的命令不接受自定义的别名和函数。所以，如果您将 `grep` 别名为 `grep --color=auto`，如果输出没有被着色，请不要感到惊讶。有关详细信息和工作方案，请参阅
+    [unix.stackexchange: have xargs use alias instead of binary](https://unix.stackexchange.com/q/141367/109046)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `xargs
     -r` to avoid running the command when the filename list doesn''t have any non-blank
     character (i.e. when the list is empty).'
+  id: totrans-108
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 您可以使用 `xargs -r` 来避免在文件名列表没有任何非空白字符（即列表为空）时运行命令。'
 - en: ''
+  id: totrans-109
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE8]'
+  id: totrans-110
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     Do not use `xargs -P` to combine the output of parallel runs, as you are likely
     to get a mangled result. The [parallel](https://www.gnu.org/software/parallel/)
     command would be a better option. See [unix.stackexchange: xargs vs parallel](https://unix.stackexchange.com/q/104778/109046)
     for more details. See also [unix.stackexchange: when to use xargs](https://unix.stackexchange.com/q/24954/109046).'
+  id: totrans-111
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    不要使用 `xargs -P` 来组合并行运行的输出，因为您可能会得到一个混乱的结果。`[parallel](https://www.gnu.org/software/parallel/)`
+    命令将是一个更好的选择。有关更多详细信息，请参阅 [unix.stackexchange: xargs 与 parallel](https://unix.stackexchange.com/q/104778/109046)。另请参阅
+    [unix.stackexchange: 何时使用 xargs](https://unix.stackexchange.com/q/24954/109046)。'
 - en: '[Further Reading](#further-reading)'
+  id: totrans-112
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[进一步阅读](#further-reading)'
 - en: My ebook [CLI text processing with GNU grep and ripgrep](https://github.com/learnbyexample/learn_gnugrep_ripgrep)
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我的电子书 [使用 GNU grep 和 ripgrep 进行 CLI 文本处理](https://github.com/learnbyexample/learn_gnugrep_ripgrep)
 - en: See also my blog post [GNU BRE/ERE cheatsheet](https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/)
+  id: totrans-114
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 参见我的博客文章 [GNU BRE/ERE 技巧表](https://learnbyexample.github.io/gnu-bre-ere-cheatsheet/)
 - en: '[Why GNU grep is fast](https://lists.freebsd.org/pipermail/freebsd-current/2010-August/019310.html)'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[为什么 GNU grep 很快](https://lists.freebsd.org/pipermail/freebsd-current/2010-August/019310.html)'
 - en: '[unix.stackexchange: grep -r vs find+grep](https://unix.stackexchange.com/q/131535/109046)'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: grep -r 与 find+grep](https://unix.stackexchange.com/q/131535/109046)'
 - en: '[find](#find)'
+  id: totrans-117
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[find](#find)'
 - en: The `find` command has comprehensive features to filter files and directories
     based on their name, size, timestamp and so on. And more importantly, `find` helps
     you to perform actions on such filtered files.
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '`find` 命令具有综合功能，可以根据文件和目录的名称、大小、时间戳等过滤文件和目录。更重要的是，`find` 帮助您对这样的过滤文件执行操作。'
 - en: '[Filenames](#filenames)'
+  id: totrans-119
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[文件名](#filenames)'
 - en: By default, you'll get every entry (including hidden ones) in the current directory
     and sub-directories when you use `find` without any options or paths. To search
     within specific paths, they should be immediately mentioned after `find`, i.e.
     before any options.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，当你使用不带任何选项或路径的 `find` 命令时，你将获得当前目录及其子目录中的所有条目（包括隐藏的条目）。要搜索特定路径，它们应立即在
+    `find` 之后提及，即在任何选项之前。
 - en: '[PRE9]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that symbolic
     links won''t be followed by default. You can use the `-L` option for such cases.'
+  id: totrans-122
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 注意，默认情况下不会跟随符号链接。在这种情况下，您可以使用
+    `-L` 选项。'
 - en: To match filenames based on a particular criteria, you can use wildcards or
     regular expressions. For wildcards, you can use the `-name` option or the case-insensitive
     version `-iname`. These will match only the basename, so you'll get a warning
     if you use `/` as part of the pattern. You can use `-path` and `-ipath` if you
     need to include `/` as well in the pattern. Unlike `grep`, the glob pattern is
     matched against the entire basename (as there are no start/end anchors in globs).
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 要根据特定标准匹配文件名，您可以使用通配符或正则表达式。对于通配符，您可以使用 `-name` 选项或不区分大小写的版本 `-iname`。这些将仅匹配基本名称，因此如果您将
+    `/` 作为模式的一部分使用，您将收到警告。如果您需要在模式中包含 `/`，则可以使用 `-path` 和 `-ipath`。与 `grep` 不同，全局模式与整个基本名称匹配（因为全局模式中没有开始/结束锚点）。
 - en: '[PRE10]'
+  id: totrans-124
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You can use the `-not` (or `!`) operator to invert the matching condition:'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-not`（或 `!`）运算符来反转匹配条件：
 - en: '[PRE11]'
+  id: totrans-126
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: You can use the `-regex` and `-iregex` (case-insensitive) options to match filenames
     based on regular expressions. In this case, the pattern will match the entire
     path, so `/` can be used without requiring special options. The default regexp
     flavor is `emacs` which you can change by using the `-regextype` option.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-regex` 和 `-iregex`（不区分大小写）选项根据正则表达式匹配文件名。在这种情况下，模式将匹配整个路径，因此 `/` 可以使用，无需特殊选项。默认正则表达式风味是
+    `emacs`，您可以通过使用 `-regextype` 选项来更改它。
 - en: '[PRE12]'
+  id: totrans-128
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[File type](#file-type)'
+  id: totrans-129
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[文件类型](#file-type)'
 - en: The `-type` option helps to filter files based on their types like regular file,
     directory, symbolic link, etc.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-type` 选项有助于根据文件类型过滤文件，如常规文件、目录、符号链接等。'
 - en: '[PRE13]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use `,` to
     separate multiple file types. For example, `-type f,l` will match both regular
     files and symbolic links.'
+  id: totrans-132
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 您可以使用 `,` 来分隔多个文件类型。例如，`-type
+    f,l` 将匹配常规文件和符号链接。'
 - en: ''
+  id: totrans-133
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE14]'
+  id: totrans-134
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '[Depth](#depth)'
+  id: totrans-135
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[深度](#depth)'
 - en: The path being searched is considered as depth `0`, files within the search
     path are at depth `1`, files within a sub-directory are at depth `2` and so on.
     Note that these global options should be specified before other kind of options
     like `-type`, `-name`, etc.
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 被搜索的路径被认为是深度 `0`，搜索路径内的文件位于深度 `1`，子目录内的文件位于深度 `2`，依此类推。请注意，这些全局选项应该在 `-type`、`-name`
+    等其他类型的选项之前指定。
 - en: 'The `-maxdepth` option restricts the search to the specified maximum depth:'
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-maxdepth` 选项将搜索限制在指定的最大深度：'
 - en: '[PRE15]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'The `-mindepth` option specifies the minimum depth:'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-mindepth` 选项指定最小深度：'
 - en: '[PRE16]'
+  id: totrans-140
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '[Age](#age)'
+  id: totrans-141
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[年龄](#age)'
 - en: 'Consider the following file properties:'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下文件属性：
 - en: '`a` accessed'
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`a` 访问'
 - en: '`c` status changed'
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`c` 状态改变'
 - en: '`m` modified'
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`m` 修改'
 - en: 'The above prefixes need to be combined with `time` (based on 24 hour periods)
     or `min` (based on minutes) options. For example, the `-mtime` (24 hour) option
     checks for the last modified timestamp and `-amin` (minute) checks for the last
     accessed timestamp. These options accept a number (integer or fractional) argument,
     that can be further prefixed by the `+` or `-` symbols. Here are some examples:'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述前缀需要与 `time`（基于24小时周期）或 `min`（基于分钟）选项结合使用。例如，`-mtime`（24小时）选项检查最后修改的时间戳，而
+    `-amin`（分钟）检查最后访问的时间戳。这些选项接受一个数字（整数或分数）参数，该参数可以进一步由 `+` 或 `-` 符号前缀。以下是一些示例：
 - en: '[PRE17]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `-daystart` qualifier
     will measure time only from the beginning of the day. For example, `-daystart
     -mtime 1` will check the files that were modified yesterday.'
+  id: totrans-148
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `-daystart` 限定符将时间仅从一天的开始计算。例如，`-daystart
+    -mtime 1` 将检查昨天修改的文件。'
 - en: '[Size](#size)'
+  id: totrans-149
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[大小](#size)'
 - en: You can use the `-size` option to filter based on file sizes. By default, the
     number argument will be considered as 512-byte blocks. You can use the suffix
     `c` to specify the size in bytes. The suffixes `k` (kilo), `M` (mega) and `G`
     (giga) are calculated in powers of 1024.
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `-size` 选项根据文件大小进行筛选。默认情况下，数字参数将被视为512字节块。你可以使用后缀 `c` 来指定字节数。后缀 `k`（千字节）、`M`（兆字节）和
+    `G`（吉字节）是按照1024的幂来计算的。
 - en: '[PRE18]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can also use the
     `-empty` option instead of `-size 0`.'
+  id: totrans-152
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你也可以使用 `-empty` 选项代替
+    `-size 0`。'
 - en: '[Acting on matched files](#acting-on-matched-files)'
+  id: totrans-153
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[对匹配的文件执行操作](#acting-on-matched-files)'
 - en: The `-exec` option helps you pass the matching files to another command. You
     can choose to execute the command once for every file (by using `\;`) or just
     once for all the matching files (by using `+`). However, if the number of files
     are too many, `find` will use more command invocations as necessary. The `;` character
     is escaped since it is a shell metacharacter (you can also quote it as an alternative
     to escaping).
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-exec` 选项可以帮助你将匹配的文件传递给另一个命令。你可以选择为每个文件执行一次命令（通过使用 `\;`）或者只为所有匹配的文件执行一次（通过使用
+    `+`）。然而，如果文件数量太多，`find` 将根据需要使用更多的命令调用。由于分号字符是一个shell元字符（你也可以通过转义来代替转义），所以它被转义了。'
 - en: 'You need to use `{}` to represent the files passed as arguments to the command
     being executed. Here are some examples:'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 你需要使用 `{}` 来表示传递给正在执行的命令的文件参数。以下是一些示例：
 - en: '[PRE19]'
+  id: totrans-156
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 'As mentioned in the [Managing Files and Directories](./managing-files-directories.html)
     chapter, the `-t` option for `cp` and `mv` commands will help you specify the
     target directory before the source files. Here''s an example:'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: 如在[管理文件和目录](./managing-files-directories.html)章节中提到的，`cp` 和 `mv` 命令的 `-t` 选项可以帮助你在指定源文件之前指定目标目录。以下是一个示例：
 - en: '[PRE20]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can use the `-delete`
     option instead of calling the `rm` command to delete the matching files. However,
     it cannot remove non-empty directories and there are other gotchas to be considered.
     See the manual for more details.'
+  id: totrans-159
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你可以使用 `-delete` 选项代替调用
+    `rm` 命令来删除匹配的文件。然而，它不能删除非空目录，并且还有其他需要注意的问题。请参阅手册以获取更多详细信息。'
 - en: '[Multiple criteria](#multiple-criteria)'
+  id: totrans-160
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[多个标准](#multiple-criteria)'
 - en: Filenames can be matched against multiple criteria such as `-name`, `-size`,
     `-mtime`, etc. You can use operators between them and group them within `\(` and
     `\)` to construct complex expressions.
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件名可以与多个标准匹配，如 `-name`、`-size`、`-mtime` 等。你可以在它们之间使用运算符，并在 `\(` 和 `\)` 内分组，以构建复杂的表达式。
 - en: '`-a` or `-and` or absence of an operator means both expressions have to be
     satisfied'
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-a` 或 `-and` 或没有运算符意味着两个表达式都必须满足'
 - en: second expression won't be evaluated if the first one is false
+  id: totrans-163
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果第一个表达式为假，则第二个表达式不会被评估
 - en: '`-o` or `-or` means either of the expressions have to be satisfied'
+  id: totrans-164
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-o` 或 `-or` 表示表达式中的任何一个都必须满足'
 - en: second expression won't be evaluated if the first one is true
+  id: totrans-165
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果第一个表达式为真，则第二个表达式不会被评估
 - en: '`-not` inverts the result of the expression'
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-not` 取反表达式的结果'
 - en: you can also use `!` but that might need escaping or quoting depending on the
     shell
+  id: totrans-167
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 您也可以使用 `!`，但这可能需要转义或引用，具体取决于 shell
 - en: '[PRE21]'
+  id: totrans-168
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '[Prune](#prune)'
+  id: totrans-169
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[Prune](#prune)'
 - en: The `-prune` option is helpful when you want to prevent `find` from descending
     into specific directories. By default, `find` will traverse all the files even
     if the given conditions will result in throwing away those results from the output.
     So, using `-prune` not only helps in speeding up the process, it could also help
     in cases where trying to access a file within the exclusion path would've resulted
     in an error.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你想阻止 `find` 进入特定的目录时，`-prune` 选项很有帮助。默认情况下，`find` 会遍历所有文件，即使给定的条件会导致丢弃输出中的那些结果。因此，使用
+    `-prune` 不仅有助于加快处理速度，还可能在尝试访问排除路径中的文件时导致错误的情况下有所帮助。
 - en: '[PRE22]'
+  id: totrans-171
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Using `-not -path '*/.git/*' -prune` can be handy when dealing with Git based
     version control projects.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 在处理基于 Git 的版本控制项目时，使用 `-not -path '*/.git/*' -prune` 可以很有用。
 - en: '[find and xargs](#find-and-xargs)'
+  id: totrans-173
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[find 和 xargs](#find-and-xargs)'
 - en: Similar to the `grep -Z` and `xargs -0` combination seen earlier, you can use
     the `find -print0` and `xargs -0` combination. The `-exec` option is sufficient
     for most use cases, but `xargs -P` (or the [parallel](https://www.gnu.org/software/parallel/)
     command) can be handy if you need parallel execution for performance reasons.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 与前面看到的 `grep -Z` 和 `xargs -0` 组合类似，您可以使用 `find -print0` 和 `xargs -0` 的组合。`-exec`
+    选项对于大多数用例来说已经足够了，但如果您需要出于性能原因进行并行执行，那么 `xargs -P`（或 [parallel](https://www.gnu.org/software/parallel/)
+    命令）可能很有用。
 - en: 'Here''s an example of passing filtered files to `sed` (**s**tream **ed**itor,
     will be discussed in the [Multipurpose Text Processing Tools](./multipurpose-text-processing-tools.html)
     chapter):'
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个将过滤后的文件传递给 `sed`（**s**tream **ed**itor，将在[多用途文本处理工具](./multipurpose-text-processing-tools.html)章节中讨论）的例子：
 - en: '[PRE23]'
+  id: totrans-176
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: In the above example, `-P2` is used to allow `xargs` to run two processes at
     a time (default is one process). You can use `-P0` to allow `xargs` to launch
     as many processes as possible. The `-n2` option is used to limit the number of
@@ -762,28 +1141,42 @@
     pass as many arguments as possible and thus reduce/negate the effect of parallelism.
     Note that the values used for `-n` and `-P` in the above illustration are just
     random examples, you'll have to fine tune them for your particular use case.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述例子中，`-P2` 用于允许 `xargs` 同时运行两个进程（默认为一个进程）。你可以使用 `-P0` 允许 `xargs` 尽可能多地启动进程。`-n2`
+    选项用于将传递给每个 `sed` 调用的文件参数数量限制为 `2`，否则 `xargs` 很可能传递尽可能多的参数，从而减少/抵消并行化的效果。请注意，上述说明中使用的
+    `-n` 和 `-P` 的值只是随机示例，你需要根据你的特定用例进行微调。
 - en: '[Further Reading](#further-reading-1)'
+  id: totrans-178
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[进一步阅读](#further-reading-1)'
 - en: '[mywiki.wooledge: using find](https://mywiki.wooledge.org/UsingFind)'
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mywiki.wooledge: 使用 find](https://mywiki.wooledge.org/UsingFind)'
 - en: '[unix.stackexchange: find and tar example](https://unix.stackexchange.com/q/282762/109046)'
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: find 和 tar 示例](https://unix.stackexchange.com/q/282762/109046)'
 - en: '[unix.stackexchange: Why is looping over find''s output bad practice?](https://unix.stackexchange.com/q/321697/109046)'
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 为什么在 find 的输出上循环是坏做法？](https://unix.stackexchange.com/q/321697/109046)'
 - en: '[locate](#locate)'
+  id: totrans-182
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[locate](#locate)'
 - en: '`locate` is a faster alternative to the `find` command for searching files
     by name. It is based on a database, which gets updated by a [cron](https://en.wikipedia.org/wiki/Cron)
     job. So, newer files may be not present in results unless you update the database.
@@ -791,268 +1184,416 @@
     mlocate` on Debian-like systems) and you remember some part of filename. Very
     useful if you have to search the entire filesystem in which case `find` command
     will take a very long time compared to `locate`.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '`locate` 是一个比 `find` 命令更快的按名称搜索文件的替代方案。它基于数据库，由 [cron](https://en.wikipedia.org/wiki/Cron)
+    任务更新。因此，除非更新数据库，否则新文件可能不会出现在结果中。如果您的发行版中可用（例如，在类似 Debian 的系统上使用 `sudo apt install
+    mlocate`）并且您记得文件名的一部分，则此命令非常有用。如果您必须搜索整个文件系统，那么与 `find` 命令相比，`locate` 命令将花费很长时间。'
 - en: 'Here are some examples:'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些例子：
 - en: '`locate ''power''` print path of filenames containing `power` in the whole
     filesystem'
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`locate ''power''` 打印包含 `power` 的文件名的路径'
 - en: implicitly, `locate` would change the string to `*power*` as no globbing characters
     are present in the string specified
+  id: totrans-186
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 隐式地，`locate`会将字符串改为`*power*`，因为指定的字符串中没有通配符字符
 - en: '`locate -b ''\power.log''` print path matching the string `power.log` exactly
     at the end of the path'
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`locate -b ''\power.log''` 打印路径匹配字符串`power.log`正好位于路径末尾'
 - en: '`/home/learnbyexample/power.log` matches'
+  id: totrans-188
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/home/learnbyexample/power.log` 匹配'
 - en: '`/home/learnbyexample/lowpower.log''` will not match since there are other
     characters at the start of the filename'
+  id: totrans-189
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/home/learnbyexample/lowpower.log''` 不会匹配，因为文件名开头有其他字符'
 - en: use of `\` prevents the search string from implicitly being replaced by `*power.log*`
+  id: totrans-190
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`\`防止搜索字符串被隐式替换为`*power.log*`
 - en: '`locate -b ''\proj_adder''` the `-b` option is also handy to print only the
     matching directory name, otherwise every file under that folder would also be
     displayed'
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`locate -b ''\proj_adder''` `-b`选项也很有用，可以只打印匹配的目录名，否则该文件夹下的所有文件也会被显示'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
     pros and cons of find and locate](https://unix.stackexchange.com/q/60205/109046).'
+  id: totrans-192
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 参见[unix.stackexchange:
+    find和locate的优缺点](https://unix.stackexchange.com/q/60205/109046)。'
 - en: '[Exercises](#exercises)'
+  id: totrans-193
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `grep` exercises,
     use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files, unless otherwise specified.'
+  id: totrans-194
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 对于`grep`练习，使用[example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)目录作为输入文件，除非另有说明。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `find` exercises,
     use the `find.sh` script, unless otherwise specified.'
+  id: totrans-195
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 对于`find`练习，使用`find.sh`脚本，除非另有说明。'
 - en: '**1)** Display lines containing `an` from the input files `blocks.txt`, `ip.txt`
     and `uniform.txt`. Show the results with and without filename prefix.'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 显示来自输入文件`blocks.txt`、`ip.txt`和`uniform.txt`包含`an`的行。显示带有和没有文件名前缀的结果。'
 - en: '[PRE24]'
+  id: totrans-197
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '**2)** Display lines containing the whole word `he` from the `sample.txt` input
     file.'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 显示来自`sample.txt`输入文件的包含完整单词`he`的行。'
 - en: '[PRE25]'
+  id: totrans-199
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '**3)** Match only whole lines containing `car` irrespective of case. The matching
     lines should be displayed with line number prefix as well.'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 匹配只包含`car`的完整行，不考虑大小写。匹配行应显示带有行号前缀。'
 - en: '[PRE26]'
+  id: totrans-201
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '**4)** Display all lines from `purchases.txt` except those that contain `tea`.'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 显示`purchases.txt`中除包含`tea`的行之外的所有行。'
 - en: '[PRE27]'
+  id: totrans-203
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: '**5)** Display all lines from `sample.txt` that contain `do` but not `it`.'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 显示`sample.txt`中包含`do`但不包含`it`的所有行。'
 - en: '[PRE28]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '**6)** For the input file `sample.txt`, filter lines containing `do` and also
     display the line that comes after such a matching line.'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 对于输入文件`sample.txt`，过滤包含`do`的行，并显示这样的匹配行之后的行。'
 - en: '[PRE29]'
+  id: totrans-207
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '**7)** For the input file `sample.txt`, filter lines containing `are` or `he`
     as whole words as well as the line that comes before such a matching line. Go
     through `info grep` or the [online manual](https://www.gnu.org/software/grep/manual/grep.html)
     and use appropriate options such that there''s no separator between the groups
     of matching lines in the output.'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 对于输入文件`sample.txt`，过滤包含`are`或`he`作为完整单词的行以及这样的匹配行之前的行。查阅`info grep`或[在线手册](https://www.gnu.org/software/grep/manual/grep.html)，并使用适当的选项，以确保输出中匹配行的组之间没有分隔符。'
 - en: '[PRE30]'
+  id: totrans-209
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '**8)** Extract all pairs of `()` with/without text inside them, provided they
     do not contain `()` characters inside.'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 提取所有包含或不包含文本的`()`对，前提是它们内部不包含`()`字符。'
 - en: '[PRE31]'
+  id: totrans-211
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: '**9)** For the given input, match all lines that start with `den` or end with
     `ly`.'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 对于给定的输入，匹配所有以`den`开头或以`ly`结尾的行。'
 - en: '[PRE32]'
+  id: totrans-213
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '**10)** Extract words starting with `s` and containing both `e` and `t` in
     any order.'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 提取以`s`开头并包含`e`和`t`（顺序不限）的单词。'
 - en: '[PRE33]'
+  id: totrans-215
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '**11)** Extract all whole words having the same first and last word character.'
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 提取所有首尾字符相同的完整单词。'
 - en: '[PRE34]'
+  id: totrans-217
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '**12)** Match all input lines containing `*[5]` literally.'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 匹配所有包含`*[5]`的输入行。'
 - en: '[PRE35]'
+  id: totrans-219
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '**13)** Match whole lines that start with `hand` and immediately followed by
     `s` or `y` or `le` or no further character.'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 匹配以`hand`开头并立即跟随着`s`或`y`或`le`或没有其他字符的完整行。'
 - en: '[PRE36]'
+  id: totrans-221
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '**14)** Input lines have three or more fields separated by a `,` delimiter.
     Extract from the second field to the second last field. In other words, extract
     fields other than the first and last.'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 输入行有三个或更多由逗号`,`分隔的字段。从第二个字段提取到倒数第二个字段。换句话说，提取除了第一个和最后一个字段之外的字段。'
 - en: '[PRE37]'
+  id: totrans-223
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '**15)** Recursively search for files containing `ello`.'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 递归搜索包含 `ello` 的文件。'
 - en: '[PRE38]'
+  id: totrans-225
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '**16)** Search for files containing `blue` recursively, but do not search within
     the `backups` directory.'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 递归搜索包含 `blue` 的文件，但不要在 `backups` 目录内搜索。'
 - en: '[PRE39]'
+  id: totrans-227
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '**17)** Search for files containing `blue` recursively, but not if the file
     also contains `teal`.'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 递归搜索包含 `blue` 的文件，但文件同时包含 `teal` 时不搜索。'
 - en: '[PRE40]'
+  id: totrans-229
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '**18)** Find all regular files within the `backups` directory.'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 查找 `backups` 目录内的所有常规文件。'
 - en: '[PRE41]'
+  id: totrans-231
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '**19)** Find all regular files whose extension starts with `p` or `s` or `v`.'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 查找所有扩展名以 `p` 或 `s` 或 `v` 开头的常规文件。'
 - en: '[PRE42]'
+  id: totrans-233
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '**20)** Find all regular files whose name do *not* have the lowercase letters
     `g` to `l`.'
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 查找所有文件名中不包含小写字母 `g` 到 `l` 的常规文件。'
 - en: '[PRE43]'
+  id: totrans-235
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '**21)** Find all regular files whose path has at least one directory name starting
     with `p` or `d`.'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 查找所有路径中至少有一个目录名以 `p` 或 `d` 开头的常规文件。'
 - en: '[PRE44]'
+  id: totrans-237
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '**22)** Find all directories whose name contains `b` or `d`.'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 查找所有名称包含 `b` 或 `d` 的目录。'
 - en: '[PRE45]'
+  id: totrans-239
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: '**23)** Find all hidden directories.'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** 查找所有隐藏目录。'
 - en: '[PRE46]'
+  id: totrans-241
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: '**24)** Find all regular files at the exact depth of `2`.'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 查找深度恰好为 `2` 的所有常规文件。'
 - en: '[PRE47]'
+  id: totrans-243
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '**25)** What''s the difference between `find -mtime` and `find -atime`? And,
     what is the time period these options work with?'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** `find -mtime` 和 `find -atime` 之间的区别是什么？这些选项与哪个时间周期相关？'
 - en: '**26)** Find all empty regular files.'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 查找所有空常规文件。'
 - en: '[PRE48]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: '**27)** Create a directory named `filtered_files`. Then, copy all regular files
     that are greater than `1` byte in size but whose name don''t end with `.log` to
     this directory.'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** 创建一个名为 `filtered_files` 的目录。然后，将所有大于 `1` 字节大小的常规文件复制到该目录，但文件名不以 `.log`
+    结尾。'
 - en: '[PRE49]'
+  id: totrans-248
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: '**28)** Find all hidden files, but not if they are part of the `filtered_files`
     directory created earlier.'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: '**28)** 查找所有隐藏文件，但不要查找它们是之前创建的 `filtered_files` 目录的一部分。'
 - en: '[PRE50]'
+  id: totrans-250
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '**29)** Delete the `filtered_files` directory created earlier. Then, go through
     the `find` manual and figure out how to list only executable files.'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: '**29)** 删除之前创建的 `filtered_files` 目录。然后，阅读 `find` 手册，找出如何仅列出可执行文件的方法。'
 - en: '[PRE51]'
+  id: totrans-252
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '**30)** List at least one use case for piping the `find` output to the `xargs`
     command instead of using the `find -exec` option.'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '**30)** 至少列出一种将 `find` 输出通过管道传递到 `xargs` 命令而不是使用 `find -exec` 选项的使用场景。'
 - en: '**31)** How does the `locate` command work faster than the equivalent `find`
     command?'
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: '**31)** `locate` 命令是如何比等效的 `find` 命令运行得更快？'

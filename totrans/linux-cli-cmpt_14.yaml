@@ -1,332 +1,501 @@
 - en: Assorted Text Processing Tools
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 各式各样的文本处理工具
 - en: 原文：[https://learnbyexample.github.io/cli-computing/assorted-text-processing-tools.html](https://learnbyexample.github.io/cli-computing/assorted-text-processing-tools.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://learnbyexample.github.io/cli-computing/assorted-text-processing-tools.html](https://learnbyexample.github.io/cli-computing/assorted-text-processing-tools.html)'
 - en: There are way too many specialized text processing tools. This chapter will
     discuss some of the commands that haven't been covered in the previous chapters.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 专业的文本处理工具实在太多了。本章将讨论一些在前几章中没有涉及到的命令。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     directory has the sample input files used in this chapter.'
+  id: totrans-3
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) [example_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
+    目录包含本章中使用的示例输入文件。'
 - en: '[seq](#seq)'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[seq](#seq)'
 - en: The `seq` command is a handy tool to generate a sequence of numbers in ascending
     or descending order. Both integer and floating-point numbers are supported. You
     can also customize the formatting for numbers and the separator between them.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`seq` 命令是一个便捷的工具，可以生成升序或降序的数字序列。支持整数和浮点数。您还可以自定义数字的格式和它们之间的分隔符。'
 - en: You need three numbers to generate an arithmetic progression — **start**, **step**
     and **stop**. When you pass only a single number as the stop value, the default
     start and step values are assumed to be `1`. Passing two numbers are considered
     as start and stop values (in that order).
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您需要三个数字来生成等差数列——**起始值**、**步长**和**结束值**。当您只传递一个数字作为结束值时，默认的起始值和步长值是 `1`。传递两个数字被视为起始值和结束值（按此顺序）。
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: By using a negative step value, you can generate sequences in descending order.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用负步长值，您可以生成降序序列。
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: You can use the `-s` option to change the separator *between* the numbers of
     a sequence. A single newline character is always the character added after the
     final number.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-s` 选项更改序列数字之间的分隔符。始终在最后一个数字之后添加单个换行符。
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The `-w` option will equalize the width of the output numbers using leading
     zeros. The largest width between the start and stop values will be used.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-w` 选项将使用前导零使输出数字的宽度相等。起始和结束值之间的最大宽度将被使用。'
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: You can use the `-f` option for `printf` style floating-point number formatting.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-f` 选项为 `printf` 风格的浮点数格式化。
 - en: '[PRE4]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '[shuf](#shuf)'
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[shuf](#shuf)'
 - en: By default, `shuf` will randomize the order of input lines. You can use the
     `-n` option to limit the number of output lines.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`shuf` 将随机化输入行的顺序。您可以使用 `-n` 选项来限制输出行的数量。
 - en: '[PRE5]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: You can use the `-e` option to specify multiple input lines as arguments to
     the command. The `-r` option helps if you want to allow input lines to be repeated.
     This option is usually paired with `-n` to limit the number of lines in the output.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-e` 选项将多个输入行指定为命令的参数。如果您想允许输入行重复，则 `-r` 选项很有帮助。此选项通常与 `-n` 配对，以限制输出中的行数。
 - en: '[PRE6]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: The `-i` option will help you generate random positive integers.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-i` 选项可以帮助您生成随机正整数。'
 - en: '[PRE7]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '[cut](#cut)'
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[cut](#cut)'
 - en: '`cut` is a handy tool for many field processing use cases. The features are
     limited compared to the `awk` and `perl` commands, but the reduced scope also
     leads to faster processing.'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cut` 是许多字段处理用例的便捷工具。与 `awk` 和 `perl` 命令相比，其功能有限，但较小的范围也导致处理速度更快。'
 - en: By default, `cut` splits the input content into fields based on the tab character,
     which you can change using the `-d` option. The `-f` option allows you to select
     a desired field from each input line. To extract multiple fields, specify the
     selections separated by the comma character. By default, lines not containing
     the input delimiter will still be part of the output. You can use the `-s` option
     to suppress such lines.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`cut` 根据制表符将输入内容拆分为字段，您可以使用 `-d` 选项来更改它。`-f` 选项允许您从每行输入中选择所需的字段。要提取多个字段，请指定由逗号字符分隔的选择。默认情况下，不包含输入分隔符的行仍然是输出的一部分。您可以使用
+    `-s` 选项来抑制此类行。
 - en: '[PRE8]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: You can use the `-` character to specify field ranges. The starting or ending
     field number can be skipped, but not both.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-` 字符来指定字段范围。起始或结束字段编号可以跳过，但不能同时跳过。
 - en: '[PRE9]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Use the `--output-delimiter` option to customize the output separator to any
     string of your choice.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `--output-delimiter` 选项可以自定义输出分隔符为任何您选择的字符串。
 - en: '[PRE10]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: The `--complement` option allows you to invert the field selections.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--complement` 选项允许您反转字段选择。'
 - en: '[PRE11]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: You can use the `-b` or `-c` options to select specified bytes from each input
     line. The syntax is same as the `-f` option. The `-c` option is intended for multibyte
     character selection, but for now it works exactly as the `-b` option.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-b` 或 `-c` 选项从每行输入中选择指定的字节。语法与 `-f` 选项相同。`-c` 选项旨在用于多字节字符选择，但到目前为止它的工作方式与
+    `-b` 选项完全相同。
 - en: '[PRE12]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[column](#column)'
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[column](#column)'
 - en: The `column` command is a nifty tool to align the input data column wise. By
     default, whitespace is used as the input delimiter. Space character is used to
     align the output columns, so whitespace characters like tab will get converted
     to spaces.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '`column` 命令是一个巧妙的工具，可以按列对齐输入数据。默认情况下，使用空白字符作为输入分隔符。空格字符用于对齐输出列，因此制表符等空白字符将被转换为空格。'
 - en: '[PRE13]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: You can use the `-s` option to customize the input delimiter. Note that the
     output delimiter will still be made up of spaces only.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-s` 选项自定义输入分隔符。请注意，输出分隔符仍然仅由空格组成。
 - en: '[PRE14]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png) Input should have
     a newline at the end, otherwise you''ll get an error:'
+  id: totrans-40
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![警告](../Images/b5314b4a0acf0f436c4bf59486793342.png) 输入应在末尾包含换行符，否则您将得到错误：'
 - en: ''
+  id: totrans-41
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE15]'
+  id: totrans-42
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '[tr](#tr)'
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[tr](#tr)'
 - en: '`tr` helps you to map one set of characters to another set of characters. Features
     like range, repeats, character sets, squeeze, complement, etc makes it a must
     know text processing tool.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tr` 帮助您将一组字符映射到另一组字符。诸如范围、重复、字符集、压缩、补集等功能使其成为必须了解的文本处理工具。'
 - en: '`tr` works only on `stdin` data, so you''ll need to use shell input redirection
     for file input. Here are some basic examples:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tr` 仅在 `stdin` 数据上工作，因此您需要使用shell输入重定向来进行文件输入。以下是一些基本示例：'
 - en: '[PRE16]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'You can use the `-d` option to specify a set of characters to be deleted. The
     `-c` option will invert the first set of characters. Here are some examples:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-d` 选项指定要删除的一组字符。`-c` 选项将反转第一组字符。以下是一些示例：
 - en: '[PRE17]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: The `-s` option changes consecutive repeated characters to a single copy of
     that character.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-s` 选项将连续重复的字符更改为该字符的单个副本。'
 - en: '[PRE18]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '[paste](#paste)'
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[paste](#paste)'
 - en: '`paste` is typically used to merge two or more files column wise. It also has
     a handy feature for serializing data. By default, `paste` adds a tab character
     between the corresponding lines of input files.'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '`paste` 通常用于按列合并两个或多个文件。它还具有序列化数据的有用功能。默认情况下，`paste` 在输入文件的对应行之间添加制表符。'
 - en: '[PRE19]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: You can use the `-d` option to change the delimiter between the columns. The
     separator is added even if the data has been exhausted for some of the input files.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-d` 选项更改列之间的分隔符。即使某些输入文件的数据已耗尽，也会添加分隔符。
 - en: '[PRE20]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: You can use empty files to get multicharacter separation between the columns.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用空文件来在列之间获得多字符分隔。
 - en: '[PRE21]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: If you use `-` multiple times, `paste` will consume a line from `stdin` data
     every time `-` is encountered. This is different from using the same filename
     multiple times, in which case they are treated as separate inputs.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您多次使用 `-`，每次遇到 `-` 时 `paste` 都会从 `stdin` 数据中消耗一行。这与多次使用相同文件名不同，在这种情况下，它们被视为单独的输入。
 - en: '[PRE22]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: The `-s` option allows you to combine all the input lines from a file into a
     single line using the given delimiter. Multiple input files are treated separately.
     `paste` will ensure to add a final newline character even if it isn't present
     in the input.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-s` 选项允许您使用给定的分隔符将文件中的所有输入行合并为单行。多个输入文件被视为单独处理。`paste` 将确保添加一个最后的换行符，即使输入中不存在也是如此。'
 - en: '[PRE23]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '[pr](#pr)'
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[pr](#pr)'
 - en: Paginate or columnate FILE(s) for printing.
+  id: totrans-63
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 分页或按列打印文件。
 - en: As stated in the above quote from the manual, the `pr` command is mainly used
     for those two tasks. This section will discuss only the columnate features and
     some miscellaneous tasks. Here's a pagination example if you are interested in
     exploring further. The `pr` command will add blank lines, a header and so on to
     make it suitable for printing.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所述的手册中的引言中所述，`pr` 命令主要用于两项任务。本节将仅讨论列对齐功能和一些杂项任务。如果您想进一步探索，这里有一个分页示例。`pr` 命令将添加空白行、标题等，使其适合打印。
 - en: '[PRE24]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 'The `--columns` and `-a` options can be used to merge the input lines in two
     different ways:'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--columns` 和 `-a` 选项可以用来以两种不同的方式合并输入行：'
 - en: split the input file and then merge them as columns
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 分割输入文件，然后按列合并它们
 - en: merge consecutive lines, similar to the `paste` command
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 合并连续行，类似于 `paste` 命令
 - en: Here's an example to get started. Note that `-N` is same as using `--columns=N`
     where `N` is the number of columns you want in the output. The default page width
     is `72`, which means each column can only have a maximum of `72/N` characters
     (including the separator). Tab and space characters will be used to fill the columns
     as needed. You can use the `-J` option to prevent `pr` from truncating longer
     columns. The `-t` option is used here to turn off the pagination features.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个开始示例。请注意，`-N` 与使用 `--columns=N` 相同，其中 `N` 是你希望在输出中拥有的列数。默认页面宽度是 `72`，这意味着每列只能有最多
+    `72/N` 个字符（包括分隔符）。制表符和空格字符将按需用于填充列。你可以使用 `-J` 选项来防止 `pr` 截断较长的列。这里使用 `-t` 选项来关闭分页功能。
 - en: '[PRE25]'
+  id: totrans-70
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: You can customize the separator using the `-s` option. The default is a tab
     character which you can change to any other string value. The `-s` option also
     turns off line truncation, so the `-J` option isn't needed. Use the `-a` option
     to merge consecutive lines, similar to the `paste` command example seen earlier.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `-s` 选项来自定义分隔符。默认是制表符，你可以将其更改为任何其他字符串值。`-s` 选项还关闭行截断，因此不需要 `-J` 选项。使用
+    `-a` 选项合并连续行，类似于前面看到的 `paste` 命令示例。
 - en: '[PRE26]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: However, the default page width of `72` can still cause issues, which you can
     prevent by using the `-w` option. The `-w` option overrides the effect of the
     `-s` option on line truncation, so use the `-J` option as well unless you really
     need truncation.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，默认页面宽度 `72` 仍然可能引起问题，你可以通过使用 `-w` 选项来防止这些问题。`-w` 选项覆盖了 `-s` 选项对行截断的影响，所以除非你真的需要截断，否则也要使用
+    `-J` 选项。
 - en: '[PRE27]'
+  id: totrans-74
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: Two or more input files can be merged column wise using the `-m` option. As
     seen before, the `-t` option is needed to ignore pagination features and `-s`
     can be used to customize the separator.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用 `-m` 选项按列合并两个或更多输入文件。如前所述，需要 `-t` 选项来忽略分页功能，而 `-s` 可以用来自定义分隔符。
 - en: '[PRE28]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '[rev](#rev)'
+  id: totrans-77
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[rev](#rev)'
 - en: 'The `rev` command reverses each input line character wise. The newline character
     *won''t* be added to the end if it wasn''t present in the input. Here are some
     examples:'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rev` 命令按字符逐行反转每个输入行。如果输入中没有换行符，则不会添加到末尾。以下是一些示例：'
 - en: '[PRE29]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '[split](#split)'
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[split](#split)'
 - en: The `split` command is useful to divide the input into smaller parts based on
     the number of lines, bytes, file size, etc. You can also execute another command
     on the divided parts before saving the results. An example use case is sending
     a large file as multiple parts as a workaround for online transfer size limits.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '`split` 命令根据行数、字节、文件大小等将输入分割成更小的部分。你还可以在保存结果之前对分割的部分执行另一个命令。一个示例用法是将大文件作为多个部分发送，作为在线传输大小限制的解决方案。'
 - en: By default, the `split` command divides the input `1000` lines at a time. Newline
     character is the default line separator. You can pass a single file or `stdin`
     data as the input. Use `cat` if you need to concatenate multiple input sources.
@@ -334,268 +503,417 @@
     `x` is the prefix). If the filenames are exhausted, two more letters will be appended
     and the pattern will continue as needed. If the number of input lines is not evenly
     divisible, the last file will contain less than `1000` lines.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`split` 命令每次将输入的 `1000` 行分割。换行符是默认的行分隔符。你可以传递单个文件或 `stdin` 数据作为输入。如果你需要连接多个输入源，请使用
+    `cat`。默认情况下，输出文件将被命名为 `xaa`、`xab`、`xac` 等等（其中 `x` 是前缀）。如果文件名用尽，将附加两个更多字母，并按需继续该模式。如果输入行数不能被均匀分割，最后一个文件将包含少于
+    `1000` 行。
 - en: '[PRE30]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For more examples,
     customization options and other details, see the [split chapter](https://learnbyexample.github.io/cli_text_processing_coreutils/split.html)
     from my [CLI text processing with GNU Coreutils](https://github.com/learnbyexample/cli_text_processing_coreutils)
     ebook.'
+  id: totrans-84
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 更多示例、自定义选项和其他详细信息，请参阅我的
+    [CLI text processing with GNU Coreutils](https://github.com/learnbyexample/cli_text_processing_coreutils)
+    电子书中的 [split 章节](https://learnbyexample.github.io/cli_text_processing_coreutils/split.html)。'
 - en: '[csplit](#csplit)'
+  id: totrans-85
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[csplit](#csplit)'
 - en: The `csplit` command is useful to divide the input into smaller parts based
     on line numbers and regular expression patterns.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '`csplit` 命令可以根据行号和正则表达式模式将输入分割成更小的部分。'
 - en: You can split the input into two based on a particular line number. To do so,
     specify the line number after the input source (filename or `stdin` data). The
     first output file will have the input lines *before* the given line number and
     the second output file will have the rest of the contents. By default, the output
     files will be named `xx00`, `xx01`, `xx02` and so on (where `xx` is the prefix).
     The numerical suffix will automatically use more digits if needed.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以根据特定的行号将输入分割成两部分。为此，指定输入源（文件名或 `stdin` 数据）之后的行号。第一个输出文件将包含给定行号之前的输入行，第二个输出文件将包含其余内容。默认情况下，输出文件将被命名为
+    `xx00`、`xx01`、`xx02` 等等（其中 `xx` 是前缀）。如果需要，数值后缀将自动使用更多数字。
 - en: '[PRE31]'
+  id: totrans-88
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: You can also split the input based on a line matching the given regular expression.
     The output produced will vary based on the `//` or `%%` delimiters being used
     to surround the regexp. When `/regexp/` is used, output is similar to the line
     number based splitting. The first output file will have the input lines *before*
     the first occurrence of a line matching the given regexp and the second output
     file will have the rest of the contents.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以根据匹配给定正则表达式的行来分割输入。生成的输出将根据用于包围正则表达式的 `//` 或 `%%` 分隔符而变化。当使用 `/regexp/`
+    时，输出类似于基于行号分割。第一个输出文件将包含匹配给定正则表达式的第一个出现之前的输入行，第二个输出文件将包含其余内容。
 - en: 'Consider this sample input file:'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下示例输入文件：
 - en: '[PRE32]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 'Here''s an example of splitting the input file using the `/regexp/` syntax:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个使用 `/regexp/` 语法分割输入文件的示例：
 - en: '[PRE33]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: When `%regexp%` is used, the lines occurring before the matching line won't
     be part of the output. Only the line matching the given regexp and the rest of
     the contents will be part of the single output file.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 `%regexp%` 时，匹配行之前的行不会是输出的一部分。只有匹配给定正则表达式的行及其余内容将是单个输出文件的一部分。
 - en: '[PRE34]'
+  id: totrans-95
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For more examples,
     customization options and other details, see the [csplit chapter](https://learnbyexample.github.io/cli_text_processing_coreutils/csplit.html)
     from my [CLI text processing with GNU Coreutils](https://github.com/learnbyexample/cli_text_processing_coreutils)
     ebook.'
+  id: totrans-96
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 对于更多示例、自定义选项和其他细节，请参阅我的
+    [CLI text processing with GNU Coreutils](https://github.com/learnbyexample/cli_text_processing_coreutils)
+    电子书中的 [csplit 章节](https://learnbyexample.github.io/cli_text_processing_coreutils/csplit.html)。'
 - en: '[xargs](#xargs)'
+  id: totrans-97
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[xargs](#xargs)'
 - en: 'By default, `xargs` executes the `echo` command for the arguments extracted
     from `stdin` data (or file input via the `-a` option). The `-n` option helps to
     customize how many arguments should be passed at a time. Together, these features
     can be used to reshape whitespace separated data as shown in the examples below:'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，`xargs` 会执行从 `stdin` 数据（或通过 `-a` 选项的文件输入）提取的 `echo` 命令。`-n` 选项有助于自定义每次应该传递多少个参数。结合这些功能，可以像以下示例中所示的那样重新塑造由空格分隔的数据：
 - en: '[PRE35]'
+  id: totrans-99
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: 'You can use the `-L` option to specify how many input lines should be combined
     at a time:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-L` 选项来指定每次应组合多少输入行：
 - en: '[PRE36]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that `xargs -L1`
     is not the same as `awk ''{$1=$1} 1''` since `xargs` will discard blank lines.
     Also, trailing blank characters will cause the next line to be considered as part
     of the current line. For example:'
+  id: totrans-102
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 注意，`xargs -L1` 与 `awk
+    ''{$1=$1} 1''` 不相同，因为 `xargs` 会忽略空白行。此外，尾随的空白字符会导致下一行被视为当前行的一部分。例如：'
 - en: ''
+  id: totrans-103
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '[PRE37]'
+  id: totrans-104
   prefs:
   - PREF_BQ
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: 'You can use the `-d` option to specify a custom single character input delimiter.
     For example:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-d` 选项来指定一个自定义的单字符输入分隔符。例如：
 - en: '[PRE38]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '[Exercises](#exercises)'
+  id: totrans-107
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-108
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录作为以下练习中使用的输入文件。'
 - en: '**1)** Generate the following sequence.'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 生成以下序列。'
 - en: '[PRE39]'
+  id: totrans-110
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: '**2)** Is the sequence shown below possible to generate with `seq`? If so,
     how?'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 以下序列是否可以用 `seq` 生成？如果是，如何生成？'
 - en: '[PRE40]'
+  id: totrans-112
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '**3)** Display three random words from `/usr/share/dict/words` (or an equivalent
     dictionary word file) containing `s` and `e` and `t` in any order. The output
     shown below is just an example.'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 显示 `/usr/share/dict/words`（或等效的词典单词文件）中包含 `s`、`e` 和 `t` 的三个随机单词，这些单词的顺序可以是任意的。下面的输出只是一个示例。'
 - en: '[PRE41]'
+  id: totrans-114
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '**4)** Briefly describe the purpose of the `shuf` command options `-i`, `-e`
     and `-r`.'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 简要描述`shuf`命令选项`-i`、`-e`和`-r`的目的。'
 - en: '**5)** Why does the below command not work as expected? What other tools can
     you use in such cases?'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 为什么以下命令没有按预期工作？在这种情况下，你可以使用哪些其他工具？'
 - en: '[PRE42]'
+  id: totrans-117
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '**6)** Display except the second field in the format shown below. Can you construct
     two different solutions?'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 显示除第二个字段外的格式，如下所示。你能构造两种不同的解决方案吗？'
 - en: '[PRE43]'
+  id: totrans-119
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '**7)** Extract the first three characters from the input lines as shown below.
     Can you also use the `head` command for this purpose? If not, why not?'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 从输入行中提取前三个字符，如下所示。你也能使用`head`命令来完成这个任务吗？如果不能，为什么？'
 - en: '[PRE44]'
+  id: totrans-121
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '**8)** Display only the first and third columns of the `scores.csv` input file
     in the format as shown below. Note that only space characters are present between
     the two columns, not tab.'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 仅显示`scores.csv`输入文件的前两列和第三列，格式如下所示。注意，两列之间只有空格字符，没有制表符。'
 - en: '[PRE45]'
+  id: totrans-123
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: '**9)** Display the contents of `table.txt` in the format shown below.'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 以以下格式显示`table.txt`的内容。'
 - en: '[PRE46]'
+  id: totrans-125
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: '**10)** Implement [ROT13](https://en.wikipedia.org/wiki/ROT13) cipher using
     the `tr` command.'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用`tr`命令实现[ROT13](https://en.wikipedia.org/wiki/ROT13)密码。'
 - en: '[PRE47]'
+  id: totrans-127
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '**11)** Retain only alphabets, digits and whitespace characters.'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 仅保留字母、数字和空白字符。'
 - en: '[PRE48]'
+  id: totrans-129
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: '**12)** Use `tr` to get the output shown below.'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 使用`tr`命令获取以下输出。'
 - en: '[PRE49]'
+  id: totrans-131
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: '**13)** `paste -s` works separately for multiple input files. How would you
     workaround this if you needed to treat all the input files as a single source?'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** `paste -s`对多个输入文件分别工作。如果你需要将所有输入文件视为单个源，你会如何解决这个问题？'
 - en: '[PRE50]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '**14)** Use appropriate options to get the expected output shown below.'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用适当的选项获取以下预期的输出。'
 - en: '[PRE51]'
+  id: totrans-135
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '**15)** Use the `pr` command to get the expected output shown below.'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 使用`pr`命令获取以下预期的输出。'
 - en: '[PRE52]'
+  id: totrans-137
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '**16)** Use the `pr` command to join the input files `fruits.txt` and `ip.txt`
     as shown below.'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 使用`pr`命令将输入文件`fruits.txt`和`ip.txt`连接起来，如下所示。'
 - en: '[PRE53]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: '**17)** The `cut` command doesn''t support a way to choose the last `N` fields.
     Which tool presented in this chapter can be combined to work with `cut` to get
     the output shown below?'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** `cut`命令不支持选择最后`N`个字段的方法。本章中介绍的哪个工具可以与`cut`结合使用以获取以下输出？'
 - en: '[PRE54]'
+  id: totrans-141
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: '**18)** Go through the `split` documentation and use appropriate options to
     get the output shown below for the input file `purchases.txt`.'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 阅读`split`文档，并使用适当的选项获取以下输出，对于输入文件`purchases.txt`。'
 - en: '[PRE55]'
+  id: totrans-143
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: '**19)** Go through the `split` documentation and use appropriate options to
     get the output shown below.'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 阅读文档`split`，并使用适当的选项获取以下输出。'
 - en: '[PRE56]'
+  id: totrans-145
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: '**20)** Split the input file `purchases.txt` such that the text before a line
     containing `powder` is part of the first file and the rest are part of the second
     file as shown below.'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 将输入文件`purchases.txt`分割，使得包含`powder`行的文本是第一个文件的一部分，其余的是第二个文件的一部分，如下所示。'
 - en: '[PRE57]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: '**21)** Write a generic solution that transposes comma delimited data. Example
     input/output is shown below. You can use any tool(s) presented in this book.'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 编写一个通用的解决方案，用于转换逗号分隔的数据。以下是一个示例输入/输出。你可以使用本书中介绍的任何工具。'
 - en: '[PRE58]'
+  id: totrans-149
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: '**22)** Reshape the contents of `table.txt` to the expected output shown below.'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 将`table.txt`的内容重塑为以下预期的输出。'
 - en: '[PRE59]'
+  id: totrans-151
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'

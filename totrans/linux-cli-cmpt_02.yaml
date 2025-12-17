@@ -1,169 +1,240 @@
 - en: Preface
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 前言
 - en: 原文：[https://learnbyexample.github.io/cli-computing/preface.html](https://learnbyexample.github.io/cli-computing/preface.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/preface.html](https://learnbyexample.github.io/cli-computing/preface.html)
 - en: This book aims to teach Linux command line tools and Shell Scripting for beginner
     to intermediate level users. The main focus is towards managing your files and
     performing text processing tasks. Topics like system administration and networking
     won't be discussed.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本书旨在教授Linux命令行工具和Shell Scripting，面向初学者到中级用户。主要重点是管理您的文件和执行文本处理任务。系统管理和网络等主题将不会讨论。
 - en: '[Prerequisites](#prerequisites)'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[先决条件](#prerequisites)'
 - en: You should be familiar with basic computer usage, know fundamental terms like
     files and directories, how to install programs and so on. You should also be already
     comfortable with programming basics like variables, loops and functions.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 您应该熟悉基本的计算机使用，了解诸如文件和目录等基本术语，以及如何安装程序等。您还应该对编程基础，如变量、循环和函数等，感到舒适。
 - en: In terms of software, you should have access to the `GNU bash` shell and commonly
     used Linux command line tools. This could be as part of a Linux distribution or
     via other means such as a Virtual Machine, WSL (Windows Subsystem for Linux) and
     so on. More details about the expected working environment will be discussed in
     the introductory chapters.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在软件方面，您应该能够访问`GNU bash`外壳和常用的Linux命令行工具。这可能是Linux发行版的一部分，或者通过其他方式，例如虚拟机、WSL（Windows
+    Subsystem for Linux）等。有关预期工作环境的更多详细信息将在引言章节中讨论。
 - en: You are also expected to get comfortable with reading manuals, searching online,
     visiting external links provided for further reading, tinkering with the illustrated
     examples, asking for help when you are stuck and so on. In other words, be proactive
     and curious instead of just consuming the content passively.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还应该熟悉阅读手册、在线搜索、访问提供的进一步阅读的外部链接、尝试示例代码、在遇到困难时寻求帮助等。换句话说，要积极主动和好奇，而不仅仅是被动地消费内容。
 - en: See my curated list on [Linux CLI and Shell Scripting](https://learnbyexample.github.io/curated_resources/linux_cli_scripting.html)
     for more learning resources.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看我整理的[Linux CLI和Shell Scripting](https://learnbyexample.github.io/curated_resources/linux_cli_scripting.html)学习资源列表。
 - en: '[Conventions](#conventions)'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[约定](#conventions)'
 - en: Code snippets shown are copy pasted from the `bash` shell (version **5.0.17**)
     and modified for presentation purposes. Some commands are preceded by comments
     to provide context and explanations, blank lines have been added to improve readability
     and so on.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 展示的代码片段是从`bash`外壳（版本**5.0.17**）复制粘贴的，并为了展示目的进行了修改。一些命令前面有注释，以提供上下文和解释，添加了空行以提高可读性等。
 - en: External links are provided throughout the book for you to explore certain topics
     in more depth.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本书提供了外部链接，供您深入了解某些主题。
 - en: The [cli-computing repo](https://github.com/learnbyexample/cli-computing) has
     all the [example files and scripts](https://github.com/learnbyexample/cli-computing/tree/master/example_files)
     used in the book. The repo also includes all the [exercises](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercises.md)
     as a single file, along with a separate [solutions](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercise-solutions.md)
     file. If you are not familiar with the `git` command, click the **Code** button
     on the webpage to get the files.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cli-computing仓库](https://github.com/learnbyexample/cli-computing)包含了书中使用的所有[示例文件和脚本](https://github.com/learnbyexample/cli-computing/tree/master/example_files)。仓库还包括所有[练习](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercises.md)作为一个单独的文件，以及一个单独的[解决方案](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercise-solutions.md)文件。如果您不熟悉`git`命令，请点击网页上的**代码**按钮以获取文件。'
 - en: See the [Setup](./introduction-setup.html#setup) section for instructions to
     create a working environment for following along the contents presented in this
     book.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 请参阅[设置](./introduction-setup.html#setup)部分，了解创建用于跟随本书内容的操作环境的说明。
 - en: '[Acknowledgements](#acknowledgements)'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[致谢](#acknowledgements)'
 - en: '[GNU Manuals](https://www.gnu.org/manual/manual.html) — documentation for command
     line tools and the `bash` shell'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[GNU手册](https://www.gnu.org/manual/manual.html) — 命令行工具和`bash`外壳的文档'
 - en: '[stackoverflow](https://stackoverflow.com/) and [unix.stackexchange](https://unix.stackexchange.com/)
     — for getting answers on pertinent questions related to CLI tools'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Stack Overflow](https://stackoverflow.com/) 和 [Unix Stack Exchange](https://unix.stackexchange.com/)
+    — 用于获取有关CLI工具的相关问题的答案'
 - en: '[tex.stackexchange](https://tex.stackexchange.com/) — for help on [pandoc](https://github.com/jgm/pandoc/)
     and `tex` related questions'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tex.stackexchange](https://tex.stackexchange.com/) — 用于帮助解决[pandoc](https://github.com/jgm/pandoc/)和`tex`相关问题的网站'
 - en: '[/r/commandline/](https://old.reddit.com/r/commandline), [/r/linux4noobs/](https://old.reddit.com/r/linux4noobs/),
     [/r/linuxquestions/](https://old.reddit.com/r/linuxquestions/) and [/r/linux/](https://old.reddit.com/r/linux/)
     — helpful forums'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[/r/commandline/](https://old.reddit.com/r/commandline), [/r/linux4noobs/](https://old.reddit.com/r/linux4noobs/),
+    [/r/linuxquestions/](https://old.reddit.com/r/linuxquestions/)和[/r/linux/](https://old.reddit.com/r/linux/)
+    — 有用的论坛'
 - en: '[canva](https://www.canva.com/) — cover image'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[canva](https://www.canva.com/) — 封面图片'
 - en: '[Warning](https://commons.wikimedia.org/wiki/File:Warning_icon.svg) and [Info](https://commons.wikimedia.org/wiki/File:Info_icon_002.svg)
     icons by [Amada44](https://commons.wikimedia.org/wiki/User:Amada44) under public
     domain'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[警告](https://commons.wikimedia.org/wiki/File:Warning_icon.svg)和[信息](https://commons.wikimedia.org/wiki/File:Info_icon_002.svg)图标由[Amada44](https://commons.wikimedia.org/wiki/User:Amada44)在公共领域下提供'
 - en: '[carbon](https://carbon.now.sh/) — for creating terminal screenshots with highlighted
     text'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[carbon](https://carbon.now.sh/) — 用于创建带有高亮文本的终端截图'
 - en: '[oxipng](https://github.com/shssoichiro/oxipng), [pngquant](https://pngquant.org/)
     and [svgcleaner](https://github.com/RazrFalcon/svgcleaner) — optimizing images'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[oxipng](https://github.com/shssoichiro/oxipng), [pngquant](https://pngquant.org/)和[svgcleaner](https://github.com/RazrFalcon/svgcleaner)
+    — 优化图片'
 - en: '[Inkscape](https://inkscape.org/) — favicon'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Inkscape](https://inkscape.org/) — 网站图标'
 - en: '[mdBook](https://github.com/rust-lang/mdBook) — for web version of the book
     that you are currently reading'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mdBook](https://github.com/rust-lang/mdBook) — 用于您目前正在阅读的书的网络版本'
 - en: '[mdBook-pagetoc](https://github.com/JorelAli/mdBook-pagetoc) — for adding table
     of contents for each page'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mdBook-pagetoc](https://github.com/JorelAli/mdBook-pagetoc) — 用于为每一页添加目录'
 - en: '[minify-html](https://github.com/wilsonzlin/minify-html) — for minifying html
     files'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[minify-html](https://github.com/wilsonzlin/minify-html) — 用于压缩html文件'
 - en: '[Feedback and Errata](#feedback-and-errata)'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[反馈和勘误](#feedback-and-errata)'
 - en: I would highly appreciate it if you'd let me know how you felt about this book.
     It could be anything from a simple thank you, pointing out a typo, mistakes in
     code snippets, which aspects of the book worked for you (or didn't!) and so on.
     Reader feedback is essential and especially so for self-published authors.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您能告诉我您对这本书的感受，我将不胜感激。这可以是简单的感谢，指出一个错误，代码片段中的错误，哪些方面对您有用（或没有用！）等等。读者反馈至关重要，尤其是对于自出版作者。
 - en: 'You can reach me via:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过以下方式联系我：
 - en: 'Issue Manager: [https://github.com/learnbyexample/cli-computing/issues](https://github.com/learnbyexample/cli-computing/issues)'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 问题管理器：[https://github.com/learnbyexample/cli-computing/issues](https://github.com/learnbyexample/cli-computing/issues)
 - en: 'E-mail: learnbyexample.net@gmail.com'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 电子邮件：learnbyexample.net@gmail.com
 - en: 'Twitter: [https://twitter.com/learn_byexample](https://twitter.com/learn_byexample)'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'Twitter: [https://twitter.com/learn_byexample](https://twitter.com/learn_byexample)'
 - en: '[Author info](#author-info)'
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[作者信息](#author-info)'
 - en: Sundeep Agarwal is a lazy being who prefers to work just enough to support his
     modest lifestyle. He accumulated vast wealth working as a Design Engineer at Analog
     Devices and retired from the corporate world at the ripe age of twenty-eight.
@@ -171,42 +242,62 @@
     trying to earn a living. Against all odds, selling programming ebooks saved his
     lazy self from having to look for a job again. He can now afford all the fantasy
     ebooks he wants to read and spends unhealthy amount of time browsing the internet.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 苏尼普·阿加瓦尔是一个懒惰的人，他更喜欢只工作到足以维持他简朴的生活方式。他在模拟器件公司担任设计工程师时积累了大量财富，并在二十八岁时从商界退休。不幸的是，他在几年内挥霍了积蓄，不得不挣扎着谋生。面对所有困难，销售编程电子书救了他的懒惰自我，使他不必再次找工作。现在他可以负担得起他想要阅读的所有幻想电子书，并且花费了不健康的时间浏览互联网。
 - en: When the creative muse strikes, he can be found working on yet another programming
     ebook (which invariably ends up having at least one example with regular expressions).
     Researching materials for his ebooks and everyday social media usage drowned his
     bookmarks, so he maintains curated resource lists for sanity sake. He is thankful
     for free learning resources and open source tools. His own contributions can be
     found at [https://github.com/learnbyexample](https://github.com/learnbyexample).
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 当创作灵感来临时，他可以被发现正在编写另一本编程电子书（通常至少有一个包含正则表达式的示例）。为他的电子书研究材料和日常社交媒体使用淹没了他的书签，所以他为了保持理智，维护了精选的资源列表。他对免费学习资源和开源工具表示感激。他的个人贡献可以在[https://github.com/learnbyexample](https://github.com/learnbyexample)找到。
 - en: '**List of books:** [https://learnbyexample.github.io/books/](https://learnbyexample.github.io/books/)'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '**书籍列表**：[https://learnbyexample.github.io/books/](https://learnbyexample.github.io/books/)'
 - en: '[License](#license)'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[许可](#license)'
 - en: This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike
     4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 本作品受[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/)许可。
 - en: Code snippets are available under [MIT License](https://github.com/learnbyexample/cli-computing/blob/master/LICENSE).
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 代码片段可在[MIT 许可证](https://github.com/learnbyexample/cli-computing/blob/master/LICENSE)下获取。
 - en: Resources mentioned in the Acknowledgements section above are available under
     original licenses.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 上文中提到的资源均可在原始许可下获取。
 - en: '[Book version](#book-version)'
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[书籍版本](#book-version)'
 - en: '1.1'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '1.1'
 - en: See [Version_changes.md](https://github.com/learnbyexample/cli-computing/blob/master/Version_changes.md)
     to track changes across book versions.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看以跟踪书籍版本之间的变更[Version_changes.md](https://github.com/learnbyexample/cli-computing/blob/master/Version_changes.md)。

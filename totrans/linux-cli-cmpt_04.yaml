@@ -1,24 +1,33 @@
 - en: Command Line Overview
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 命令行概述
 - en: 原文：[https://learnbyexample.github.io/cli-computing/command-line-overview.html](https://learnbyexample.github.io/cli-computing/command-line-overview.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/command-line-overview.html](https://learnbyexample.github.io/cli-computing/command-line-overview.html)
 - en: This chapter will help you take the first steps in the command line world. Apart
     from command examples that you can try out, you'll also learn a few essential
     things about working in a text environment.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章将帮助你迈出命令行世界的第一步。除了你可以尝试的命令示例之外，你还将了解一些关于在文本环境中工作的基本知识。
 - en: For newbies, the sudden paradigm shift to interacting with the computer using
     just text commands can be overwhelming, especially for those accustomed to the
     graphical user interface (GUI). After regular usage, things will start to look
     systematic and you might realize that GUI is ill suited for repetitive tasks.
     With continuous use, recalling various commands will become easier. Features like
     command line history, aliases, tab-completion and shortcuts will help too.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于新手来说，突然从使用文本命令与计算机交互的范式转变可能会感到不知所措，尤其是对于那些习惯于图形用户界面（GUI）的人来说。经过常规使用后，事情将开始看起来更有条理，你可能会意识到
+    GUI 不适合重复性任务。随着持续使用，回忆各种命令将变得更加容易。命令行历史、别名、自动补全和快捷键等功能也会有所帮助。
 - en: If you've used a scientific calculator, you'd know that it is handy with too
     many functionalities cramped into a tiny screen and a plethora of multipurpose
     buttons. Command line environment is something like that, but not limited to just
@@ -27,153 +36,219 @@
     you can imagine. Always remember that command line tools appeared long before
     the graphical ones did. The rich history shows its weight in the form of robust
     tools and the availability of wide variety of applications.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用过科学计算器，你会知道它很方便，因为许多功能都挤在一个小屏幕和许多多功能按钮中。命令行环境就像那样，但不仅限于计算数字。从管理文件到处理数据，从图像处理到视频工作，你可能会发现几乎任何可以想象的计算任务都有相应的工具。始终记住，命令行工具在图形工具之前就已经出现。丰富的历史证明了它在强大工具和广泛应用程序可用性方面的重量级地位。
 - en: '[Hello Command Line](#hello-command-line)'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[你好，命令行](#hello-command-line)'
 - en: Open a [Terminal Emulator](https://en.wikipedia.org/wiki/Terminal_emulator)
     and type the command as shown below. The `$` followed by a space character at
     the start is the simple command prompt that I use. It might be different for you.
     The actual command to type is `echo` followed by a space, then the argument `'Hello
     Command Line'` and finally press the `Enter` key to execute it. You should get
     the argument echoed back to you as the command output.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 打开一个 [终端模拟器](https://en.wikipedia.org/wiki/Terminal_emulator) 并按照以下所示输入命令。在开始处跟随一个空格字符的
+    `$` 是我使用的简单命令提示符。它可能对您来说不同。实际要输入的命令是 `echo` 后跟一个空格，然后是参数 `'Hello Command Line'`，最后按
+    `Enter` 键执行它。你应该会得到作为命令输出的参数回显。
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Here's another simple illustration. This time, the command `pwd` is entered
     by itself (i.e. no arguments). You should get *your* current location as the output.
     The `/` character separates different parts of the location (more details in the
     upcoming sections).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个简单的说明。这次，命令 `pwd` 是单独输入的（即没有参数）。你应该会得到 *你的* 当前位置作为输出。`/` 字符分隔位置的不同部分（更多细节将在后续章节中介绍）。
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Next, enter the `exit` command to quit the Terminal session.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，输入 `exit` 命令以退出终端会话。
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If you are completely new to the command line world, try out the above steps
     a few more times until you feel comfortable with opening a Terminal Emulator,
     executing commands and quitting the session. More details about the command structure,
     customizing command prompt, etc will be discussed later.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你完全不了解命令行世界，尝试多次执行上述步骤，直到你感到舒适地打开终端模拟器、执行命令并退出会话。关于命令结构、自定义命令提示符等更多细节将在稍后讨论。
 - en: '[File System](#file-system)'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[文件系统](#file-system)'
 - en: 'In Linux, the directory structure starts with the `/` symbol, referred to as
     the **root** directory. The `man hier` command gives description of the file system
     hierarchy. Here are some selected examples:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Linux 中，目录结构以 `/` 符号开始，被称为 **根** 目录。`man hier` 命令提供了文件系统层次结构的描述。以下是一些选定的示例：
 - en: '`/` This is the root directory. This is where the whole tree starts.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/` 这是根目录。这是整个树结构开始的地方。'
 - en: '`/bin` This directory contains executable programs which are needed in single
     user mode and to bring the system up or repair it.'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/bin` 此目录包含在单用户模式下需要以及用于启动或修复系统的可执行程序。'
 - en: '`/home` On machines with home directories for users, these are usually beneath
     this directory, directly or not. The structure of this directory depends on local
     administration decisions (optional).'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/home` 在为用户设置家目录的机器上，这些目录通常位于此目录之下，直接或间接。此目录的结构取决于本地管理决策（可选）。'
 - en: '`/tmp` This directory contains temporary files which may be deleted with no
     notice, such as by a regular job or at system boot up.'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/tmp` 此目录包含可能被无通知删除的临时文件，例如由常规作业或系统启动时删除。'
 - en: '`/usr` This directory is usually mounted from a separate partition. It should
     hold only shareable, read-only data, so that it can be mounted by various machines
     running Linux.'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/usr` 此目录通常从单独的分区挂载。它应该只包含可共享的只读数据，这样它就可以被运行Linux的各种机器挂载。'
 - en: '`/usr/bin` This is the primary directory for executable programs. Most programs
     executed by normal users which are not needed for booting or for repairing the
     system and which are not installed locally should be placed in this directory.'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/usr/bin` 这是可执行程序的主要目录。大多数由普通用户执行的可执行程序，这些程序对于启动或修复系统不是必需的，并且不是本地安装的，应该放在这个目录中。'
 - en: '`/usr/share` This directory contains subdirectories with specific application
     data, that can be shared among different architectures of the same OS.'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`/usr/share` 此目录包含具有特定应用程序数据的子目录，这些数据可以在同一操作系统的不同架构之间共享。'
 - en: '[Absolute and Relative paths](#absolute-and-relative-paths)'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[绝对和相对路径](#absolute-and-relative-paths)'
 - en: 'Quoting [wikipedia](https://en.wikipedia.org/wiki/Path_%28computing%29#Absolute_and_relative_paths):'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '引用 [wikipedia](https://en.wikipedia.org/wiki/Path_%28computing%29#Absolute_and_relative_paths):'
 - en: An **absolute** or **full** path points to the same location in a file system
     regardless of the current working directory. To do that, it must contain the root
     directory.
+  id: totrans-24
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**绝对**或**完整**路径指向文件系统中相同的位置，无论当前工作目录如何。要做到这一点，它必须包含根目录。'
 - en: By contrast, a **relative** path starts from some given working directory, avoiding
     the need to provide the full absolute path. A filename can be considered as a
     relative path based at the current working directory. If the working directory
     is not the file's parent directory, a file not found error will result if the
     file is addressed by its name.
+  id: totrans-25
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 相比之下，一个**相对**路径从某个给定的工作目录开始，避免了提供完整绝对路径的需要。一个文件名可以被视为基于当前工作目录的相对路径。如果工作目录不是文件的父目录，如果通过文件名来引用文件，将会出现文件未找到错误。
 - en: For example, `/home/learnbyexample` is an absolute path and `../design` is a
     relative path. You'll learn how paths are used for performing tasks in the coming
     chapters.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，`/home/learnbyexample` 是一个绝对路径，而 `../design` 是一个相对路径。你将在接下来的章节中学习路径是如何用于执行任务的。
 - en: '[Shells and Terminal Emulators](#shells-and-terminal-emulators)'
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Shell和终端仿真器](#shells-and-terminal-emulators)'
 - en: 'These terms are often used to interchangeably mean the same thing — a prompt
     to allow the user to execute commands. However, they are quite different:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些术语通常可以互换使用，意思相同——一个提示，允许用户执行命令。然而，它们相当不同：
 - en: '**Shell** is a command line interpreter. Sets the syntax rules for invoking
     commands, provides operators to connect commands and redirect data, has scripting
     features like loops, functions and so on'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Shell** 是一个命令行解释器。设定调用命令的语法规则，提供连接命令和重定向数据的操作符，具有循环、函数等脚本功能。'
 - en: '**Terminal** is a text input/output environment. Responsible for visual details
     like font size, color, etc'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**终端**是一个文本输入/输出环境。负责字体大小、颜色等视觉细节。'
 - en: Some of the popular shells are `bash`, `zsh` and `fish`. This book will discuss
     only the [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) shell. Some of
     the popular terminal emulators are [GNOME Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal),
     [konsole](https://en.wikipedia.org/wiki/Konsole), [xterm](https://en.wikipedia.org/wiki/Xterm)
     and [alacritty](https://github.com/alacritty/alacritty).
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些流行的Shell有 `bash`、`zsh` 和 `fish`。本书将仅讨论 [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
+    Shell。一些流行的终端仿真器有 [GNOME Terminal](https://en.wikipedia.org/wiki/GNOME_Terminal)、[konsole](https://en.wikipedia.org/wiki/Konsole)、[xterm](https://en.wikipedia.org/wiki/Xterm)
+    和 [alacritty](https://github.com/alacritty/alacritty)。
 - en: 'Quoting from [wikipedia: Unix shell](https://en.wikipedia.org/wiki/Unix_shell):'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '引用自 [wikipedia: Unix shell](https://en.wikipedia.org/wiki/Unix_shell):'
 - en: A Unix shell is a command-line interpreter or shell that provides a command
     line user interface for Unix-like operating systems. The shell is both an interactive
     command language and a scripting language, and is used by the operating system
     to control the execution of the system using shell scripts.
+  id: totrans-33
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: Unix shell 是一种命令行解释器或 shell，它为类 Unix 操作系统提供命令行用户界面。shell 既是交互式命令语言，也是脚本语言，操作系统通过
+    shell 脚本来控制系统的执行。
 - en: ''
+  id: totrans-34
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -182,419 +257,610 @@
     server systems. All Unix shells provide filename wildcarding, piping, here documents,
     command substitution, variables and control structures for condition-testing and
     iteration.
+  id: totrans-35
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 用户通常通过终端模拟器与 Unix shell 交互；然而，对于服务器系统，通过串行硬件连接或 Secure Shell 进行直接操作是常见的。所有 Unix
+    shell 都提供文件名通配符、管道、here 文档、命令替换、变量和控制结构，用于条件测试和迭代。
 - en: 'Shell features will be discussed in later sections and chapters. For now, open
     a terminal and try out the following commands:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: Shell 特性将在后面的章节中讨论。现在，打开终端并尝试以下命令：
 - en: '[PRE3]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: In the above example, the `cat` command is used to display the contents of a
     file and the `echo` command is used to display the contents of a variable. `SHELL`
     is an environment variable containing the full path to the shell.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述示例中，`cat` 命令用于显示文件内容，而 `echo` 命令用于显示变量的内容。`SHELL` 是一个环境变量，包含 shell 的完整路径。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The output of the above
     commands might be different for you. And as mentioned earlier, your command prompt
     might be different than `$` . For now, you can ignore it. Or, you could type `PS1=''$
     ''` and press the `Enter` key to set the prompt for the current session.'
+  id: totrans-39
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 以上命令的输出可能因你而异。如前所述，你的命令提示符可能与
+    `$` 不同。目前，你可以忽略它。或者，你可以输入 `PS1=''$ ''` 并按 `Enter` 键来设置当前会话的提示符。'
 - en: '**Further Reading**'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进一步阅读**'
 - en: '[unix.stackexchange: What is the exact difference between a ''terminal'', a
     ''shell'', a ''tty'' and a ''console''?](https://unix.stackexchange.com/q/4126/109046)'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange：''终端''、''shell''、''tty'' 和 ''控制台'' 之间的确切区别是什么？](https://unix.stackexchange.com/q/4126/109046)'
 - en: '[wikipedia: Comparison of command shells](https://en.wikipedia.org/wiki/Comparison_of_command_shells)'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wikipedia：命令壳的比较](https://en.wikipedia.org/wiki/Comparison_of_command_shells)'
 - en: '[unix.stackexchange: Difference between login shell and non-login shell](https://unix.stackexchange.com/q/38175/109046)'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange：登录 shell 和非登录 shell 的区别](https://unix.stackexchange.com/q/38175/109046)'
 - en: '[Features and differences between various shells](http://www.faqs.org/faqs/unix-faq/shell/shell-differences/)'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[各种 shell 的功能和区别](http://www.faqs.org/faqs/unix-faq/shell/shell-differences/)'
 - en: '[Syntax comparison on different shells with examples](https://hyperpolyglot.org/unix-shells)'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[不同 shell 的语法比较示例](https://hyperpolyglot.org/unix-shells)'
 - en: '[Shell, choosing shell and changing default shells](https://wiki.ubuntu.com/ChangingShells)'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Shell，选择 shell 和更改默认 shell](https://wiki.ubuntu.com/ChangingShells)'
 - en: '[Unix Philosophy](#unix-philosophy)'
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Unix 哲学](#unix-philosophy)'
 - en: 'Quoting from [wikipedia: Unix Philosophy](https://en.wikipedia.org/wiki/Unix_philosophy):'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 引自 [wikipedia：Unix 哲学](https://en.wikipedia.org/wiki/Unix_philosophy)：
 - en: Write programs that do one thing and do it well.
+  id: totrans-49
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 编写只做一件事并且做得好的程序。
 - en: ''
+  id: totrans-50
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-51
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: Write programs to work together.
+  id: totrans-52
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 编写可以协同工作的程序。
 - en: ''
+  id: totrans-53
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-54
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: Write programs to handle text streams, because that is a universal interface.
+  id: totrans-55
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 编写处理文本流的程序，因为这是一个通用的接口。
 - en: These principles do not strictly apply to all the command line tools, but it
     is good to be aware of them. As you get familiar with working from the command
     line, you'll be able to appreciate these guidelines better.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些原则并不严格适用于所有命令行工具，但了解它们是好的。随着你对命令行工作的熟悉，你会更好地欣赏这些指南。
 - en: '[Command Structure](#command-structure)'
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[命令结构](#command-structure)'
 - en: It is not necessary to fully understand the commands used in this chapter, just
     the broad strokes. The examples are intended to help you get a feel for the basics
     of using command options and arguments.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 不必完全理解本章中使用的命令，只需了解大致情况即可。这些示例旨在帮助你了解使用命令选项和参数的基本方法。
 - en: '**Command invocation without any options or arguments**:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**无选项或参数的命令调用**：'
 - en: '`clear` clear the terminal screen'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`clear` 清除终端屏幕'
 - en: '`date` show the current date and time'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`date` 显示当前日期和时间'
 - en: '**Command with options (flags)**:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**带选项（标志）的命令**：'
 - en: '`ls -l` list directory contents in a long listing format'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ls -l` 以长列表格式列出目录内容'
 - en: '`ls -la` list directory contents including hidden files in long listing format'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ls -la` 以长列表格式列出目录内容，包括隐藏文件'
 - en: two short options `-l` and `-a` are combined together here as `-la`
+  id: totrans-65
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这里将两个短选项 `-l` 和 `-a` 合并为 `-la`
 - en: '`df -h` report file system disk space usage sizes in human readable format'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`df -h` 以可读格式报告文件系统磁盘空间使用大小'
 - en: '`df --human-readable` same as `df -h` but using long option'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`df --human-readable` 与 `df -h` 相同，但使用长选项'
 - en: '**Command with arguments**:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '**带参数的命令**:'
 - en: '`mkdir project` create a directory named `project` in the current working directory'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`mkdir project` 在当前工作目录中创建名为 `project` 的目录'
 - en: '`man sort` manual page for the `sort` command'
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man sort` `sort` 命令的手册页面'
 - en: '`diff file1.txt file2.txt` display differences between the two input files'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`diff file1.txt file2.txt` 显示两个输入文件之间的差异'
 - en: '`wget https://s.ntnu.no/bashguide.pdf` download a file from the internet'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`wget https://s.ntnu.no/bashguide.pdf` 从互联网下载文件'
 - en: the link passed to `wget` in the above example is real, visit [BashGuide](https://mywiki.wooledge.org/BashGuide)
     for details
+  id: totrans-73
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 上例中传递给 `wget` 的链接是真实的，访问 [BashGuide](https://mywiki.wooledge.org/BashGuide)
+    获取详细信息
 - en: '**Command with both options and arguments**:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**带选项和参数的命令**:'
 - en: '`rm -r project` remove (delete) the `project` directory recursively'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rm -r project` 递归地删除（删除）`project` 目录'
 - en: '`paste -sd, ip.txt` serialize all lines from the input file to a single line
     using `,` as the delimiter'
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`paste -sd, ip.txt` 使用 `,` 作为分隔符将输入文件的所有行序列化成一行'
 - en: '**Single quotes vs Double quotes**:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**单引号与双引号**:'
 - en: '**Single quotes** preserves the literal value of each character within the
     quotes'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**单引号**保留引号内每个字符的原始值'
 - en: '**Double quotes** preserves the literal value of all characters within the
     quotes, with the exception of `$`, `` ` ``, `\`, and, when history expansion is
     enabled, `!`'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**双引号**保留引号内所有字符的原始值，除了 `$`、`` ` ``、`\` 以及当启用历史扩展时，`!`'
 - en: '[PRE4]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: More details and other types of quoting will be discussed in the [Shell Features](./shell-features.html)
     chapter.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多细节和其他类型的引号将在[Shell特性](./shell-features.html)章节中讨论。
 - en: '[Command Network](#command-network)'
+  id: totrans-82
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[命令网络](#command-network)'
 - en: One of the *Unix Philosophy* seen earlier mentioned commands working together.
     The shell provides several ways to do so. A commonly used feature is redirecting
     the output of a command — as input of another command, to be saved in a file and
     so on.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是之前提到的Unix哲学中的一些命令协同工作的例子。shell提供了多种方式来实现这一点。常用的功能之一是将一个命令的输出重定向为另一个命令的输入，保存到文件中等。
 - en: to another command
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将输出传递给另一个命令
 - en: '`du -sh * | sort -h` calculate size of files and folders in human-readable
     format using `du` and then sort them using a tool specialized for that task'
+  id: totrans-85
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`du -sh * | sort -h` 使用 `du` 计算文件和文件夹的大小，并以可读格式显示，然后使用专门用于此任务的工具进行排序'
 - en: to a file
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将输出保存到文件
 - en: '`grep ''pass'' *.log > pass_list.txt` write the results to a file instead of
     displaying on the terminal (if the file already exists, it gets overwritten)'
+  id: totrans-87
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`grep ''pass'' *.log > pass_list.txt` 将结果写入文件而不是在终端显示（如果文件已存在，则被覆盖）'
 - en: '`grep ''error'' *.log >> errors.txt` append the results to the given file (creates
     a new file if necessary)'
+  id: totrans-88
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`grep ''error'' *.log >> errors.txt` 将结果追加到指定的文件中（如果需要，则创建新文件）'
 - en: to a variable
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将输出保存到变量
 - en: '`d=$(date)` save command output in a variable named `d`'
+  id: totrans-90
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`d=$(date)` 将命令输出保存到名为 `d` 的变量中'
 - en: Many more of such shell features will be discussed in later chapters.
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: 后续章节将讨论更多此类shell特性。
 - en: '[Scripting](#scripting)'
+  id: totrans-92
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[脚本编程](#scripting)'
 - en: 'Not all operations can be completed using a one-liner from the terminal. In
     such cases, you can save the instructions in a text file and then execute them.
     Open your favorite text editor and write the three lines shown below:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 并非所有操作都可以通过终端中的一行命令完成。在这种情况下，您可以将指令保存到文本文件中，然后执行它们。打开您喜欢的文本编辑器，并写下以下三行：
 - en: '[PRE5]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: As an alternate to using a text editor, you can use either of the commands shown
     below to create this file.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为使用文本编辑器的替代方案，您可以使用以下命令中的任何一个来创建此文件。
 - en: '[PRE6]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The script file is named `cmds.sh` and has three commands in three separate
     lines. One way to execute the contents of this file is by using the `source` command:'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本文件命名为 `cmds.sh`，并在三行中包含三个命令。执行此文件内容的一种方法是通过使用 `source` 命令：
 - en: '[PRE7]'
+  id: totrans-98
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Your Linux distro is
     likely to have an easy to use graphical text editor such as the `GNOME Text Editor`
     and `mousepad`. See [wiki.archlinux: text editors](https://wiki.archlinux.org/title/List_of_applications/Documents#Text_editors)
     for a huge list of editors to choose from.'
+  id: totrans-99
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你的 Linux 发行版可能有一个易于使用的图形文本编辑器，例如
+    `GNOME 文本编辑器` 和 `mousepad`。有关可选择的编辑器列表，请参阅 [wiki.archlinux: 文本编辑器](https://wiki.archlinux.org/title/List_of_applications/Documents#Text_editors)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The [Shell Scripting](./shell-scripting.html)
     chapter will discuss scripting in more detail.'
+  id: totrans-100
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 《Shell 脚本编程》章节将更详细地讨论脚本。'
 - en: '[Command Help](#command-help)'
+  id: totrans-101
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[命令帮助](#command-help)'
 - en: Most distros for personal use come with documentation for commands already installed.
     Learning how to use manuals from the terminal is handy and there are ways to get
     specific information as well.
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数个人使用的发行版都自带了命令的文档安装。学习如何在终端使用手册很方便，并且有方法获取特定信息。
 - en: '[man](#man)'
+  id: totrans-103
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[man](#man)'
 - en: 'The `man` command is an interface to view manuals from within the terminal
     itself. This uses a `pager` (which is usually the `less` command) to display the
     contents. You could categorize these commands as terminal user interface (TUI)
     applications. As an example, type `man cat` and you should see something like
     the screenshot shown below:'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '`man` 命令是用于在终端本身中查看手册的界面。它使用 `pager`（通常是 `less` 命令）来显示内容。你可以将这些命令分类为终端用户界面（TUI）应用程序。例如，输入
+    `man cat`，你应该会看到下面的截图所示的内容：'
 - en: '![manual page for the cat command](../Images/c79556bf798ade9c7470aa3e2567a1bf.png)'
+  id: totrans-105
   prefs: []
   type: TYPE_IMG
+  zh: '![cat 命令的手册页](../Images/c79556bf798ade9c7470aa3e2567a1bf.png)'
 - en: 'Since the documentation has several lines that doesn''t completely fit within
     the terminal window, you will get only the starting part of the manual. You have
     several options to navigate:'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于文档的行数较多，可能无法完全适应终端窗口，你将只能看到手册的部分内容。你有几个选项可以导航：
 - en: '`↑` and `↓` arrow keys to move up and down by a line'
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `↑` 和 `↓` 光标键可以向上和向下移动一行
 - en: you can also use `k` and `j` keys (same keys as those used by the Vim text editor)
+  id: totrans-108
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你也可以使用 `k` 和 `j` 键（与 Vim 文本编辑器中使用的键相同）
 - en: '`f` and `b` keys to move forward and backward by a screenful of content'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `f` 和 `b` 键可以向前和向后移动一屏内容
 - en: '`Space` key also moves forward by a screen'
+  id: totrans-110
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `Space` 键也可以向前移动一屏
 - en: mouse scroll moves up and down by a few lines
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 鼠标滚动可以上下移动几行
 - en: '`g` or `Home` go to the start of the manual'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `g` 或 `Home` 键跳转到手册的开始
 - en: '`G` or `End` go to the end of the manual'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `G` 或 `End` 键跳转到手册的末尾
 - en: '`/pattern` followed by `Enter` search for the given pattern in the forward
     direction'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 输入 `/pattern` 后按 `Enter` 键在正向方向搜索给定的模式
 - en: '`?pattern` followed by `Enter` search for the given pattern in the backward
     direction'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 输入 `?pattern` 后按 `Enter` 键在反向方向搜索给定的模式
 - en: '`n` go to the next match'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `n` 键跳转到下一个匹配项
 - en: '`N` go to the previous match'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `N` 键跳转到上一个匹配项
 - en: '`q` quit'
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按 `q` 键退出
 - en: 'As you might have noticed in the screenshot above, you can use `h` for help
     about the `less` command itself. Here are some useful tips related to documentation:'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上图所示，你可以使用 `h` 来获取 `less` 命令的帮助。以下是一些与文档相关的有用提示：
 - en: '`man man` gives information about the `man` command itself'
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man man` 提供关于 `man` 命令本身的信息'
 - en: '`man bash` will give you the manual page for the `bash` shell'
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man bash` 将为你提供 `bash` shell 的手册页'
 - en: since this is very long, I'd recommend using the [online GNU Bash manual](https://www.gnu.org/software/bash/manual/)
+  id: totrans-122
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 由于内容非常长，我建议使用 [在线 GNU Bash 手册](https://www.gnu.org/software/bash/manual/)
 - en: '`man find | gvim -` open the manual page in your favorite text editor'
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man find | gvim -` 在你喜欢的文本编辑器中打开手册页'
 - en: '`man -k printf` search the short descriptions in all of the manual pages for
     the string `printf`'
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man -k printf` 在所有手册页的简短描述中搜索字符串 `printf`'
 - en: you can also use the `apropos` command instead of `man -k`
+  id: totrans-125
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你也可以使用 `apropos` 命令代替 `man -k`
 - en: '`wc --help` many commands support the `--help` option to give succinct details
     like options and syntax'
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`wc --help` 许多命令支持 `--help` 选项，以提供简洁的详细信息，如选项和语法'
 - en: also, these details will be displayed on the terminal itself, no need to deal
     with the `pager` interface
+  id: totrans-127
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 此外，这些详细信息也会在终端本身上显示，无需处理 `pager` 界面
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
     How do I use man pages to learn how to use commands?](https://unix.stackexchange.com/q/193815/109046)
     and [unix.stackexchange: colors in man pages](https://unix.stackexchange.com/q/119/109046).'
+  id: totrans-128
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 参见 [unix.stackexchange：如何使用
+    man 页面来学习如何使用命令？](https://unix.stackexchange.com/q/193815/109046) 和 [unix.stackexchange：man
+    页面中的颜色](https://unix.stackexchange.com/q/119/109046)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
     ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The Linux manual pages
     are usually shortened version of the full documentation. You can use the `info`
@@ -603,249 +869,369 @@
     See [GNU Manuals Online](https://www.gnu.org/manual/manual.html) if you''d prefer
     to read them from a web browser. You can also download them in formats like PDF
     for offline usage.'
+  id: totrans-129
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
+    ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Linux 手册页通常是完整文档的简短版本。你可以使用
+    `info` 命令查看 GNU 工具的完整文档。`info` 也是一个 TUI 应用程序，但与 `man` 命令相比，其键配置不同。如果你更喜欢在网页浏览器中阅读，请参阅
+    [GNU 手册在线](https://www.gnu.org/manual/manual.html)。你也可以下载为 PDF 等格式的离线版本。'
 - en: '[type](#type)'
+  id: totrans-130
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[type](#type)'
 - en: For certain operations, the shell provides its own set of commands, known as
     builtin commands. The `type` command displays information about a command like
     its path, whether it is a builtin, alias, function and so on.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于某些操作，shell 提供了自己的命令集，这些命令被称为内置命令。`type` 命令显示有关命令的信息，例如其路径、是否为内置命令、别名、函数等。
 - en: '[PRE8]'
+  id: totrans-132
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'As will be discussed in the [Shell Customization](./shell-customization.html)
     chapter, you can create aliases to customize command invocations. You can use
     the `type` command to reveal the nature of such aliases. Here are some examples
     based on aliases I use:'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 如将在 [Shell 定制](./shell-customization.html) 章节中讨论的，你可以创建别名来定制命令调用。你可以使用 `type`
+    命令来揭示此类别名的本质。以下是一些基于我使用的别名的示例：
 - en: '[PRE9]'
+  id: totrans-134
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: The `type` command formats the command output with a backtick at the start and
     a single quotes at the end. That doesn't play well with syntax highlighting, so
     I've changed the backtick to single quotes in the above illustration.
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '`type` 命令以反引号开头和单引号结尾的格式来格式化命令输出。这不利于语法高亮，因此我在上面的说明中已将反引号更改为单引号。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [unix.stackexchange:
     What is the difference between a builtin command and one that is not?](https://unix.stackexchange.com/q/11454/109046)'
+  id: totrans-136
   prefs:
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 参见 [unix.stackexchange：内置命令和非内置命令之间的区别是什么？](https://unix.stackexchange.com/q/11454/109046)'
 - en: '[help](#help)'
+  id: totrans-137
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[help](#help)'
 - en: The `help` command provides documentation for builtin commands. Unlike the `man`
     command, the entire text is displayed as the command output. A help page in the
     default format is shown below. You can add `-m` option if you want the help content
     in a pseudo-manpage format.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '`help` 命令为内置命令提供文档。与 `man` 命令不同，整个文本都显示为命令输出。以下是一个默认格式的帮助页面示例。如果你想以伪 man 页面格式显示帮助内容，可以添加
+    `-m` 选项。'
 - en: '[PRE10]'
+  id: totrans-139
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You can use the `-d` option to get a short description of the command:'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `-d` 选项来获取命令的简短描述：
 - en: '[PRE11]'
+  id: totrans-141
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use `help help` for
     documentation on the `help` command. If you use `help` without any argument, it
     will display all the internally defined shell commands.'
+  id: totrans-142
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 `help help` 命令获取关于
+    `help` 命令的文档。如果你不带任何参数使用 `help`，它将显示所有内部定义的 shell 命令。'
 - en: '[whatis and whereis](#whatis-and-whereis)'
+  id: totrans-143
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[whatis 和 whereis](#whatis-and-whereis)'
 - en: 'Here are some more ways to get specific information about commands:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些获取关于命令的特定信息的方法：
 - en: '`whatis` displays one-line manual page descriptions'
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`whatis` 显示一行手册页描述'
 - en: '`whereis` locates the binary, source, and manual page files for a command'
+  id: totrans-146
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`whereis` 定位命令的二进制文件、源文件和手册页文件'
 - en: '[PRE12]'
+  id: totrans-147
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[ch](#ch)'
+  id: totrans-148
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[ch](#ch)'
 - en: '[explainshell](https://explainshell.com/) is a web app that shows the help
     text that matches each argument of the command you type in the app. For example,
     a screenshot for [tar -xzvf archive.tar.gz](https://explainshell.com/explain?cmd=tar+-xzvf+archive.tar.gz)
     is shown below:'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '[explainshell](https://explainshell.com/) 是一个网络应用程序，它显示与你在应用程序中输入的每个命令参数匹配的帮助文本。例如，以下是一个
+    [tar -xzvf archive.tar.gz](https://explainshell.com/explain?cmd=tar+-xzvf+archive.tar.gz)
+    的截图：'
 - en: '![explainshell example for the tar command](../Images/31983438e8f97f6a8e2f562b1dccc4dd.png)'
+  id: totrans-150
   prefs: []
   type: TYPE_IMG
+  zh: '![explainshell 的 tar 命令示例](../Images/31983438e8f97f6a8e2f562b1dccc4dd.png)'
 - en: 'Inspired by this app, I wrote a [Bash script ch](https://github.com/learnbyexample/command_help)
     to extract information from `man` and `help` pages. Here are some examples:'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 受此应用启发，我编写了一个 [Bash 脚本 ch](https://github.com/learnbyexample/command_help) 来从
+    `man` 和 `help` 页面中提取信息。以下是一些示例：
 - en: '[PRE13]'
+  id: totrans-152
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '[Further Reading](#further-reading)'
+  id: totrans-153
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '[进一步阅读](#further-reading)'
 - en: '[Linux man pages](https://www.mankier.com/) — one of several websites that
     host man pages online'
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Linux man 页面](https://www.mankier.com/) — 提供在线 man 页面的几个网站之一'
 - en: '[ArchWiki](https://wiki.archlinux.org/title/Table_of_contents) — comprehensive
     documentation for Arch Linux and other distributions'
+  id: totrans-155
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ArchWiki](https://wiki.archlinux.org/title/Table_of_contents) — Arch Linux
+    和其他发行版的综合文档'
 - en: '[Debian Reference](https://www.debian.org/doc/manuals/debian-reference/) —
     broad overview of the Debian system, covers many aspects of system administration
     through shell-command examples'
+  id: totrans-156
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Debian 参考](https://www.debian.org/doc/manuals/debian-reference/) — 对 Debian
+    系统的广泛概述，通过 shell 命令示例涵盖了系统管理的许多方面'
 - en: '[Shortcuts and Autocompletion](#shortcuts-and-autocompletion)'
+  id: totrans-157
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[快捷键和自动补全](#shortcuts-and-autocompletion)'
 - en: 'There are several shortcuts you can use to be productive at the command line.
     These will be discussed in the [Shell Customization](./shell-customization.html)
     chapter. Here are some examples to give an idea:'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用几个快捷键在命令行中提高效率。这些将在 [Shell 自定义](./shell-customization.html) 章节中讨论。以下是一些示例，以提供一个大致的概念：
 - en: '`Ctrl+u` delete everything to the left of the cursor'
+  id: totrans-159
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+u` 删除光标左侧的所有内容'
 - en: '`Ctrl+k` delete from the current character to the end of the line'
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+k` 从当前字符删除到行尾'
 - en: '`Ctrl+c` abort the currently typed command'
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+c` 中断当前输入的命令'
 - en: '`Ctrl+l` clear the terminal screen and move the prompt to the top, any characters
     typed as part of the current command will be retained'
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+l` 清除终端屏幕并将提示符移动到顶部，任何作为当前命令一部分输入的字符将被保留'
 - en: '`↑` and `↓` arrow keys to navigate previously used commands from the history'
+  id: totrans-163
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `↑` 和 `↓` 光标键导航历史记录中的先前使用的命令
 - en: '`Ctrl+p` and `Ctrl+n` can also be used instead of arrow keys'
+  id: totrans-164
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+p` 和 `Ctrl+n` 也可以用来代替箭头键'
 - en: you can modify the command before executing such lines from the history
+  id: totrans-165
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你可以修改历史记录中的这些行之前的命令
 - en: The tab key helps you autocomplete commands, aliases, filenames and so on, depending
     on the context. If there is only one possible completion, it will be done on single
     tab press. Otherwise, you can press the tab key twice to get a list of possible
     matches (if there are any). Here's an example of completing a file path with multiple
     tab key presses at various stages. Not only does it saves time, it also helps
     to avoid typos since you are simultaneously verifying the path.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 制表键可以帮助你根据上下文自动补全命令、别名、文件名等。如果只有一个可能的补全，它将在单次制表键按下时完成。否则，你可以按两次制表键来获取可能的匹配列表（如果有）。以下是一个在多个阶段使用多次制表键完成文件路径的示例。这不仅节省了时间，还帮助你避免输入错误，因为你同时正在验证路径。
 - en: '[PRE14]'
+  id: totrans-167
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: The character at which the tab key is pressed in the above example has been
     cherry picked for illustration purposes. The number of steps would increase if
     you try pressing tab after each character. With experience, using the tab key
     for autocompletion will become a natural part of your command line usage.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的例子中，按下制表键的字符是为了说明目的而精心挑选的。如果你尝试在每个字符后按下制表键，步骤数量会增加。随着经验的积累，使用制表键进行自动补全将成为你命令行使用中自然的一部分。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) You can set an option
     to combine the features of single and double tab presses into a single tab press.
     This will be discussed in the [Shell Customization](./shell-customization.html)
     chapter.'
+  id: totrans-169
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 你可以设置一个选项，将单次和双次制表键的功能合并为单次制表键。这将在
+    [Shell 自定义](./shell-customization.html) 章节中讨论。'
 - en: '[Real world use cases](#real-world-use-cases)'
+  id: totrans-170
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[实际应用案例](#real-world-use-cases)'
 - en: 'If the command line environment only had file managing features, I''d still
     use it. Given the wide variety of applications available, I can''t imagine going
     back to using a different GUI application for each use case. My primary work is
     writing ebooks, blog posts and recording videos. Here are the major CLI tools
     I use:'
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果命令行环境只有文件管理功能，我仍然会使用它。鉴于有各种各样的应用程序可用，我无法想象回到为每个用例使用不同的 GUI 应用程序。我的主要工作是编写电子书、博客文章和录制视频。以下是我在
+    CLI 中使用的几个主要工具：
 - en: text processing using `head`, `tail`, `sort`, `grep`, `sed`, `awk` and so on
     (you'll learn about these commands in later chapters)
+  id: totrans-172
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`head`、`tail`、`sort`、`grep`、`sed`、`awk`等命令进行文本处理（你将在后面的章节中了解这些命令）
 - en: '[git](https://git-scm.com/) — version control'
+  id: totrans-173
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[git](https://git-scm.com/) — 版本控制'
 - en: '[pandoc](https://github.com/jgm/pandoc/) — generating PDF/EPUB book versions
     from markdown files'
+  id: totrans-174
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pandoc](https://github.com/jgm/pandoc/) — 从Markdown文件生成PDF/EPUB书籍版本'
 - en: '[mdBook](https://github.com/rust-lang/mdBook) — web version of the books from
     markdown files'
+  id: totrans-175
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mdBook](https://github.com/rust-lang/mdBook) — 从Markdown文件生成的书籍的网页版本'
 - en: '[zola](https://github.com/getzola/zola) — static site generator'
+  id: totrans-176
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zola](https://github.com/getzola/zola) — 静态网站生成器'
 - en: '[ImageMagick](https://imagemagick.org/index.php) — image processing like resizing,
     adding borders, etc'
+  id: totrans-177
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ImageMagick](https://imagemagick.org/index.php) — 进行图像处理，如调整大小、添加边框等'
 - en: '[oxipng](https://github.com/shssoichiro/oxipng), [pngquant](https://pngquant.org/)
     and [svgcleaner](https://github.com/RazrFalcon/svgcleaner) — optimizing images'
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[oxipng](https://github.com/shssoichiro/oxipng)，[pngquant](https://pngquant.org/)和[svgcleaner](https://github.com/RazrFalcon/svgcleaner)
+    — 优化图像'
 - en: '[auto-editor](https://github.com/WyattBlue/auto-editor) — removing silent portions
     from video recordings'
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[auto-editor](https://github.com/WyattBlue/auto-editor) — 从视频录制中移除静音部分'
 - en: '[FFmpeg](https://github.com/FFmpeg/FFmpeg) — video processing, padding for
     example (`FFmpeg` is also a major part of the `auto-editor` solution)'
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[FFmpeg](https://github.com/FFmpeg/FFmpeg) — 视频处理，例如填充（`FFmpeg`也是`auto-editor`解决方案的主要部分）'
 - en: Some of these workflows require additional management, for which I write shell
     functions or scripts. I do need GUI tools as well, for example, web browser, image
     viewer, PDF/EPUB viewers, [SimpleScreenRecorder](https://github.com/MaartenBaert/ssr)
     and so on. Some of these can be handled from within the terminal too, but I prefer
     GUI for such cases. I do launch some of them from the terminal, primarily for
     providing the file or url to be opened.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中一些工作流程需要额外的管理，为此我编写了shell函数或脚本。我确实也需要GUI工具，例如，网页浏览器、图片查看器、PDF/EPUB查看器、[SimpleScreenRecorder](https://github.com/MaartenBaert/ssr)等等。其中一些也可以在终端内处理，但我更倾向于在这种情况下使用GUI。我确实从终端启动了一些工具，主要是为了提供要打开的文件或URL。
 - en: You might wonder what advantage does the command line provide for processing
     images and videos? Apart from being faster, the custom parameters (like border
     color, border size, quality percentage, etc) are automatically saved as part of
@@ -854,72 +1240,113 @@
     custom parameters, saving them after all the required processing is done, closing
     the application, etc. Also, that single script can use as many tools as needed,
     whereas with GUI you'll have to repeat such steps with different applications.
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可能会想知道命令行在处理图像和视频方面提供了什么优势？除了更快之外，自定义参数（如边框颜色、边框大小、质量百分比等）会自动保存为我创建的脚本的一部分。之后，我只需调用一次脚本，而不是等待GUI应用程序打开、导航到所需文件、应用自定义参数、在所有必要的处理完成后保存它们、关闭应用程序等等。此外，那个单一的脚本可以使用所需的所有工具，而使用GUI，您将不得不在不同的应用程序中重复这些步骤。
 - en: '[Exercises](#exercises)'
+  id: totrans-183
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
     All the exercises are also collated together in one place at [exercises.md](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercises.md).
     For solutions, see [exercise-solutions.md](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercise-solutions.md).'
+  id: totrans-184
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png)
+    所有练习都汇总在[exercises.md](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercises.md)的一个地方。对于解决方案，请参阅[exercise-solutions.md](https://github.com/learnbyexample/cli-computing/blob/master/exercises/exercise-solutions.md)。'
 - en: '**1)** By default, is `echo` a shell builtin or external command on your system?
     What command could you use to get an answer for this question?'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 默认情况下，在您的系统中`echo`是shell内建命令还是外部命令？您可以使用什么命令来得到这个问题的答案？'
 - en: '**2)** What output do you get for the command shown below? Does the documentation
     help understand the result?'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 下面命令的输出是什么？文档是否有助于理解结果？'
 - en: '[PRE15]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**3)** Go through [bash manual: Tilde Expansion](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html).
     Is `~/projects` a relative or an absolute path? See [this unix.stackexchange thread](https://unix.stackexchange.com/q/221970/109046)
     for answers.'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 阅读[bash手册：波浪号扩展](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html)。`~/projects`是相对路径还是绝对路径？参见[这个unix.stackexchange线程](https://unix.stackexchange.com/q/221970/109046)以获取答案。'
 - en: '**4)** Which key would you use to get help while the `less` command is active?'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 当 `less` 命令处于活动状态时，你会使用哪个键来获取帮助？'
 - en: '**5)** How would you bring the 50th line to the top of the screen while viewing
     a `man` page (assume `less` command is the `pager`)?'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 在查看 `man` 页面时，如何将第50行移动到屏幕顶部（假设 `less` 命令是分页器）？'
 - en: '**6)** What does the `Ctrl+k` shortcut do?'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** `Ctrl+k` 快捷键的作用是什么？'
 - en: '**7)** Briefly explain the role of the following shell operators:'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 简要解释以下shell操作符的作用：'
 - en: '*a)* `|`'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `|`'
 - en: '*b)* `>`'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `>`'
 - en: '*c)* `>>`'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `>>`'
 - en: '**8)** The `whatis` command displays one-line descriptions about commands.
     But it doesn''t seem to work for `whatis type`. What should you use instead?'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** `whatis` 命令显示关于命令的一行描述。但它似乎对 `whatis type` 不起作用。你应该使用什么代替？'
 - en: '[PRE16]'
+  id: totrans-197
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**9)** What is the role of the `/tmp` directory?'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** `/tmp` 目录的作用是什么？'
 - en: '**10)** Give an example each for absolute and relative paths.'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 分别给出绝对路径和相对路径的示例。'
 - en: '**11)** When would you use the `man -k` command?'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 你会在什么情况下使用 `man -k` 命令？'
 - en: '**12)** Are there differences between the `man` and `info` pages?'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** `man` 页面和 `info` 页面之间有区别吗？'

@@ -1,2765 +1,4217 @@
 - en: Exercise Solutions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 练习解答
 - en: 原文：[https://learnbyexample.github.io/cli-computing/exercise-solutions.html](https://learnbyexample.github.io/cli-computing/exercise-solutions.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/exercise-solutions.html](https://learnbyexample.github.io/cli-computing/exercise-solutions.html)
 - en: '[Command Line Overview](#command-line-overview)'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[命令行概述](#command-line-overview)'
 - en: '**1)** By default, is `echo` a shell builtin or external command on your system?
     What command could you use to get an answer for this question?'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 在你的系统中，`echo` 默认是shell内建命令还是外部命令？你可以使用什么命令来回答这个问题？'
 - en: On my system, `echo` is both a shell builtin and an external command.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在我的系统中，`echo` 既是shell内建命令也是外部命令。
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: As seen in the above result, the builtin command takes priority, so that is
     the default version.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所示的结果，内建命令具有优先级，因此这是默认版本。
 - en: '**2)** What output do you get for the command shown below? Does the documentation
     help understand the result?'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 对于下面的命令，你会得到什么输出？文档是否有助于理解结果？'
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Yes, the documentation helps to understand the above result. From `help echo`
     (since the builtin version is the default):'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的，文档有助于理解上述结果。从 `help echo`（因为内建版本是默认版本）：
 - en: Display the ARGs, separated by a single space character and followed by a newline,
     on the standard output.
+  id: totrans-10
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在标准输出上显示 ARGs，由单个空格字符分隔，后跟换行符。
 - en: In the above command, there are three arguments passed to the `echo` command
     — `apple`, `42` and `'banana 100'`. The string represented by these arguments
     are displayed in the output separated by a single space character.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述命令中，有三个参数传递给 `echo` 命令 — `apple`、`42` 和 `'banana 100'`。这些参数所表示的字符串以单个空格字符分隔显示在输出中。
 - en: '**3)** Go through [bash manual: Tilde Expansion](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html).
     Is `~/projects` a relative or an absolute path? See [this unix.stackexchange thread](https://unix.stackexchange.com/q/221970/109046)
     for answers.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 阅读 [bash手册：波浪号展开](https://www.gnu.org/software/bash/manual/html_node/Tilde-Expansion.html)。`~/projects`
+    是相对路径还是绝对路径？参见 [这个unix.stackexchange线程](https://unix.stackexchange.com/q/221970/109046)
+    以获取答案。'
 - en: 'I do not much care if it is correct to call it a relative or absolute path.
     More importantly, I want to highlight this gotcha from the above unix.stackexchange
     thread:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我并不关心它是否正确地称为相对路径或绝对路径。更重要的是，我想强调上述unix.stackexchange线程中的这个陷阱：
 - en: '`~` is syntax implemented by the shell (and other programs which imitate it
     for convenience) which expands it into a real pathname. To illustrate, `~/Documents`
     is approximately the same thing as `$HOME/Documents` (again, shell syntax). Since
     `$HOME` should be an absolute path, the value of `$HOME/Documents` is also an
     absolute path. But the text `$HOME/Documents` or `~/Documents` has to be expanded
     by the shell in order to become the path we mean.'
+  id: totrans-14
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`~` 是shell（以及其他为了方便而模仿它的程序）实现的一种语法，它将其展开为实际的路径名。为了说明，`~/Documents` 大约等同于 `$HOME/Documents`（再次是shell语法）。由于
+    `$HOME` 应该是一个绝对路径，因此 `$HOME/Documents` 的值也是一个绝对路径。但是文本 `$HOME/Documents` 或 `~/Documents`
+    必须由shell展开，才能成为我们想要的路径。'
 - en: I spent a frustrating few hours trying to debug why one of my [autostart](https://wiki.archlinux.org/title/Autostarting)
     script wasn't working. Yup, you guessed it. The issue was using `~` and changing
     to the full path fixed it.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 我花了几小时试图调试为什么我的一个 [自动启动](https://wiki.archlinux.org/title/Autostarting) 脚本不起作用。没错，你猜对了。问题在于使用了
+    `~` 并将其更改为完整路径后解决了问题。
 - en: '**4)** Which key would you use to get help while the `less` command is active?'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 当 `less` 命令激活时，你会使用哪个键来获取帮助？'
 - en: '`h`'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '`h`'
 - en: '**5)** How would you bring the 50th line to the top of the screen while viewing
     a `man` page (assume `less` command is the `pager`)?'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 在查看 `man` 页面时，如何将第50行移动到屏幕顶部（假设 `less` 命令是分页器）？'
 - en: '`50g`'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`50g`'
 - en: '**6)** What does the `Ctrl+k` shortcut do?'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** `Ctrl+k` 快捷键的作用是什么？'
 - en: Deletes from the current character to the end of the command line.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 从当前字符删除到命令行末尾。
 - en: '**7)** Briefly explain the role of the following shell operators:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 简要解释以下shell操作符的作用：'
 - en: '*a)* `|` — redirects output from a command as input to another command'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `|` — 将一个命令的输出作为输入重定向到另一个命令'
 - en: '*b)* `>` — redirects output from a command to a file (overwrites if the file
     already exists)'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `>` — 将一个命令的输出重定向到文件（如果文件已存在则覆盖）'
 - en: '*c)* `>>` — redirects output from a command to a file (appends if the file
     already exists)'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `>>` — 将一个命令的输出重定向到文件（如果文件已存在则追加）'
 - en: '**8)** The `whatis` command displays one-line descriptions about commands.
     But it doesn''t seem to work for `whatis type`. What should you use instead?'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** `whatis` 命令显示关于命令的一行描述。但它似乎不适用于 `whatis type`。你应该使用什么代替？'
 - en: '[PRE2]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**9)** What is the role of the `/tmp` directory?'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** `/tmp` 目录的作用是什么？'
 - en: 'From `man hier`:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `man hier`：
 - en: This directory contains temporary files which may be deleted with no notice,
     such as by a regular job or at system boot up.
+  id: totrans-30
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 此目录包含可能没有通知就被删除的临时文件，例如由常规作业或系统启动时删除。
 - en: 'See [wikipedia: Temporary folder](https://en.wikipedia.org/wiki/Temporary_folder)
     for more details.'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '查看 [wikipedia: 临时文件夹](https://en.wikipedia.org/wiki/Temporary_folder) 获取更多详细信息。'
 - en: '**10)** Give an example each for absolute and relative paths.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 请分别给出绝对路径和相对路径的示例。'
 - en: 'absolute path: `/usr/share/dict/words`'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 绝对路径：`/usr/share/dict/words`
 - en: 'relative path: `../../projects`'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 相对路径：`../../projects`
 - en: '**11)** When would you use the `man -k` command?'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 你会在什么情况下使用 `man -k` 命令？'
 - en: 'From `man man`:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `man man`：
 - en: '`-k, --apropos`'
+  id: totrans-37
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-k, --apropos`'
 - en: ''
+  id: totrans-38
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Equivalent to apropos. Search the short manual page descriptions for keywords
     and display any matches. See apropos(1) for details.
+  id: totrans-39
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 等同于 apropos。搜索简短的手册页描述中的关键字并显示任何匹配项。有关详细信息，请参阅 apropos(1)。
 - en: 'For example:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：
 - en: '[PRE3]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**12)** Are there differences between the `man` and `info` pages?'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** `man` 页面和 `info` 页面之间有区别吗？'
 - en: The Linux manual pages are usually shortened version of the full documentation.
     You can use the `info` command to view the complete documentation for GNU tools.
     `info` is also a TUI application, but with different key configuration compared
     to the `man` command. See [GNU Manuals Online](https://www.gnu.org/manual/manual.html)
     if you'd prefer to read them from a web browser. You can also download them in
     formats like PDF for offline usage.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 手册页通常是完整文档的简短版本。你可以使用 `info` 命令查看 GNU 工具的完整文档。`info` 也是一个 TUI 应用程序，但与
+    `man` 命令相比，键配置不同。如果你更喜欢在网页浏览器中阅读，请参阅 [GNU 手册在线](https://www.gnu.org/manual/manual.html)。你也可以下载为
+    PDF 等格式的离线使用。
 - en: '[Managing Files and Directories](#managing-files-and-directories)'
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[管理文件和目录](#managing-files-and-directories)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) The `ls.sh` script
     will be used for some of the exercises.'
+  id: totrans-45
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `ls.sh` 脚本将被用于一些练习。'
 - en: '**1)** Which of these commands will always display the absolute path of the
     home directory?'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 哪个命令将始终显示主目录的绝对路径？'
 - en: '*a)* `pwd`'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `pwd`'
 - en: '*b)* `echo "$PWD"`'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `echo "$PWD"`'
 - en: '*c)* `echo "$HOME"`'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `echo "$HOME"`'
 - en: 'Answer: *c)* `echo "$HOME"`'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 答案：*c)* `echo "$HOME"`
 - en: '**2)** The current working directory has a folder named `-dash`. How would
     you switch to that directory?'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 当前工作目录有一个名为 `-dash` 的文件夹。你将如何切换到该目录？'
 - en: '*a)* `cd -- -dash`'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `cd -- -dash`'
 - en: '*b)* `cd -dash`'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `cd -dash`'
 - en: '*c)* `cd ./-dash`'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `cd ./-dash`'
 - en: '*d)* `cd \-dash`'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '*d)* `cd \-dash`'
 - en: '*e)* `cd ''-dash''`'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '*e)* `cd ''-dash''`'
 - en: '*f)* all of the above'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '*f)* 所有以上选项'
 - en: '*g)* only *a)* and *c)*'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '*g)* 只有 *a)* 和 *c)*'
 - en: 'Answer: *g)* only *a)* and *c)*'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 答案：*g)* 只有 *a)* 和 *c)*
 - en: '**3)** Given the directory structure as shown below, how would you change to
     the `todos` directory?'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 给定以下目录结构，你将如何切换到 `todos` 目录？'
 - en: '[PRE4]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**4)** As per the scenario shown below, how would you change to the `cli-computing`
     directory under the user''s home directory? And then, how would you go back to
     the previous working directory?'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 根据以下场景，你将如何切换到用户主目录下的 `cli-computing` 目录？然后，你将如何返回到上一个工作目录？'
 - en: '[PRE5]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**5)** How''d you list the contents of the current directory, one per line,
     along with the size of the entries in human readable format?'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 你会如何列出当前目录的内容，每行一个，同时以可读的格式显示条目的大小？'
 - en: '[PRE6]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**6)** Which `ls` command option would you use for version based sorting of
     entries?'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 你会使用哪个 `ls` 命令选项来进行基于版本的条目排序？'
 - en: 'From `man ls`:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `man ls`：
 - en: '`-v`'
+  id: totrans-68
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-v`'
 - en: ''
+  id: totrans-69
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: natural sort of (version) numbers within text
+  id: totrans-70
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 文本中（版本）数字的自然排序
 - en: '**7)** Which `ls` command option would you use for sorting based on entry size?'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 你会使用哪个 `ls` 命令选项来根据条目大小进行排序？'
 - en: '`-S`'
+  id: totrans-72
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-S`'
 - en: ''
+  id: totrans-73
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: sort by file size, largest first
+  id: totrans-74
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 按文件大小排序，从大到小
 - en: '**8)** Which `ls` command option would you use for sorting based on file extension?'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 你会使用哪个 `ls` 命令选项来根据文件扩展名进行排序？'
 - en: '`-X`'
+  id: totrans-76
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-X`'
 - en: ''
+  id: totrans-77
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: sort alphabetically by entry extension
+  id: totrans-78
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 按条目扩展名字母顺序排序
 - en: '**9)** What does the `-G` option of `ls` command do?'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** `ls` 命令的 `-G` 选项做什么？'
 - en: '`-G, --no-group`'
+  id: totrans-80
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-G, --no-group`'
 - en: ''
+  id: totrans-81
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: in a long listing, don't print group names
+  id: totrans-82
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在长列表中，不打印组名
 - en: '**10)** What does the `-i` option of `ls` command do?'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** `ls` 命令的 `-i` 选项做什么？'
 - en: '`-i, --inode`'
+  id: totrans-84
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i, --inode`'
 - en: ''
+  id: totrans-85
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: print the index number of each file
+  id: totrans-86
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印每个文件的索引号
 - en: '**11)** List only the directories as one entry per line.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 每行只列出目录。'
 - en: '[PRE7]'
+  id: totrans-88
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**12)** Assume that a regular file named `notes` already exists. What would
     happen if you use the `mkdir -p notes` command?'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 假设已经存在一个名为 `notes` 的常规文件。如果你使用 `mkdir -p notes` 命令会发生什么？'
 - en: '[PRE8]'
+  id: totrans-90
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**13)** Use one or more commands to match the scenario shown below:'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE9]'
+  id: totrans-92
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**14)** Use one or more commands to match the scenario shown below:'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE10]'
+  id: totrans-94
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Don''t delete this
     directory, will be needed in a later exercise.'
+  id: totrans-95
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 不要删除此目录，稍后练习中需要使用。'
 - en: '**15)** If directories to create already exist, which `mkdir` command option
     would you use to not show an error?'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 如果要创建的目录已经存在，你会使用哪个 `mkdir` 命令选项来不显示错误？'
 - en: '`-p, --parents`'
+  id: totrans-97
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-p, --parents`'
 - en: ''
+  id: totrans-98
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: no error if existing, make parent directories as needed
+  id: totrans-99
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 如果存在，则不报错，按需创建父目录
 - en: '**16)** Use one or more commands to match the scenario given below:'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 使用一个或多个命令来匹配以下场景：'
 - en: '[PRE11]'
+  id: totrans-101
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '**17)** What does the `-f` option of `rm` command do?'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** `rm` 命令的 `-f` 选项做什么？'
 - en: '`-f, --force`'
+  id: totrans-103
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-f, --force`'
 - en: ''
+  id: totrans-104
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: ignore nonexistent files and arguments, never prompt
+  id: totrans-105
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 忽略不存在的文件和参数，永不提示
 - en: For example, it helps to remove write protected files (provided you have appropriate
     permissions to delete those files).
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，它有助于删除写保护的文件（前提是你有删除这些文件的适当权限）。
 - en: '**18)** Which option would you use to interactively delete files using the
     `rm` command?'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 你会使用哪个选项来交互式地使用 `rm` 命令删除文件？'
 - en: '`-i`'
+  id: totrans-108
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i`'
 - en: ''
+  id: totrans-109
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: prompt before every removal
+  id: totrans-110
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在每次删除前提示
 - en: ''
+  id: totrans-111
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-I`'
+  id: totrans-112
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-I`'
 - en: ''
+  id: totrans-113
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: prompt once before removing more than three files, or when removing recursively;
     less intrusive than `-i`, while still giving protection against most mistakes
+  id: totrans-114
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在删除超过三个文件之前或递归删除时提示一次；比 `-i` 更不侵入，同时仍然提供对大多数错误的保护
 - en: '**19)** Can the files removed by `rm` easily be restored? Do you need to take
     some extra steps or use special commands to make the files more difficult to recover?'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 使用 `rm` 删除的文件是否可以轻松恢复？你需要采取一些额外步骤或使用特殊命令来使文件更难恢复？'
 - en: Files removed using `rm` can still be recovered with time and skill
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `rm` 删除的文件仍然可以通过时间和技巧恢复
 - en: '[unix.stackexchange: recover deleted files](https://unix.stackexchange.com/q/80270/109046)'
+  id: totrans-117
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 恢复已删除的文件](https://unix.stackexchange.com/q/80270/109046)'
 - en: '[unix.stackexchange: recovering accidentally deleted files](https://unix.stackexchange.com/q/2677/109046)'
+  id: totrans-118
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unix.stackexchange: 恢复意外删除的文件](https://unix.stackexchange.com/q/2677/109046)'
 - en: Use commands like `shred` if you want to make it harder to recover deleted files
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果你想使删除的文件更难恢复，可以使用 `shred` 等命令
 - en: '[wiki.archlinux: Securely wipe disk](https://wiki.archlinux.org/title/Securely_wipe_disk)'
+  id: totrans-120
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wiki.archlinux: 安全擦除磁盘](https://wiki.archlinux.org/title/Securely_wipe_disk)'
 - en: '**20)** Does your Linux distribution provide a tool to send deleted files to
     the trash (which would help to recover deleted files)?'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 你的 Linux 发行版是否提供将删除的文件发送到垃圾箱的工具（这有助于恢复删除的文件）？'
 - en: 'On Ubuntu, you can use `sudo apt install trash-cli` to install the `trash`
     command. See also [wiki.archlinux: Trash management](https://wiki.archlinux.org/title/Trash_management).'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '在 Ubuntu 上，你可以使用 `sudo apt install trash-cli` 来安装 `trash` 命令。另请参阅 [wiki.archlinux:
+    垃圾箱管理](https://wiki.archlinux.org/title/Trash_management)。'
 - en: '**21)** Which option would you use to interactively accept/prevent the `cp`
     command from overwriting a file of the same name? And which option would prevent
     overwriting without needing manual confirmation?'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 你会使用哪个选项来交互式地接受/防止 `cp` 命令覆盖同名文件？以及哪个选项可以防止覆盖而无需手动确认？'
 - en: '`-i, --interactive`'
+  id: totrans-124
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i, --interactive`'
 - en: ''
+  id: totrans-125
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: prompt before overwrite (overrides a previous -n option)
+  id: totrans-126
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在覆盖前提示（覆盖了之前的 -n 选项）
 - en: ''
+  id: totrans-127
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-n, --no-clobber`'
+  id: totrans-128
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-n, --no-clobber`'
 - en: ''
+  id: totrans-129
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: do not overwrite an existing file (overrides a previous -i option)
+  id: totrans-130
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 不要覆盖现有文件（覆盖了之前的 -i 选项）
 - en: '**22)** Does the `cp` command allow you to rename the file or directory being
     copied? If so, can you rename multiple files/directories being copied?'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** `cp` 命令是否允许你重命名正在复制的文件或目录？如果是，能否重命名多个正在复制的文件/目录？'
 - en: '`cp` allows renaming single file or directory by specifying a different name
     in the destination path. You can''t rename multiple files or directories with
     a single `cp` usage.'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cp` 允许通过在目标路径中指定不同的名称来重命名单个文件或目录。你不能通过单个 `cp` 使用来重命名多个文件或目录。'
 - en: '**23)** What do the `-u`, `-b` and `-t` options of `cp` command do?'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** `cp` 命令的 `-u`、`-b` 和 `-t` 选项做什么？'
 - en: '`-u, --update`'
+  id: totrans-134
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-u, --update`'
 - en: ''
+  id: totrans-135
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: copy only when the SOURCE file is newer than the destination file or when the
     destination file is missing
+  id: totrans-136
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 仅当源文件比目标文件新或目标文件缺失时才复制
 - en: ''
+  id: totrans-137
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`--backup[=CONTROL]`'
+  id: totrans-138
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--backup[=CONTROL]`'
 - en: ''
+  id: totrans-139
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: make a backup of each existing destination file
+  id: totrans-140
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 为每个现有目标文件创建备份
 - en: ''
+  id: totrans-141
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-b`'
+  id: totrans-142
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-b`'
 - en: ''
+  id: totrans-143
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: like `--backup` but does not accept an argument
+  id: totrans-144
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 与 `--backup` 类似，但不接受参数
 - en: ''
+  id: totrans-145
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-t, --target-directory=DIRECTORY`'
+  id: totrans-146
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-t, --target-directory=DIRECTORY`'
 - en: ''
+  id: totrans-147
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: copy all SOURCE arguments into DIRECTORY
+  id: totrans-148
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将所有源参数复制到目录中
 - en: '**24)** What''s the difference between the two commands shown below?'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 下面两个命令之间的区别是什么？'
 - en: '[PRE12]'
+  id: totrans-150
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '`cp` makes a new copy of `ip.txt` named as `op.txt` — two files having the
     same content'
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`cp` 创建 `ip.txt` 的新副本，命名为 `op.txt` — 两个具有相同内容的文件'
 - en: '`mv` renames `ip.txt` as `op.txt` — there''s only one file'
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`mv` 将 `ip.txt` 重命名为 `op.txt` — 只有一个文件'
 - en: '**25)** Which option would you use to interactively accept/prevent the `mv`
     command from overwriting a file of the same name?'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** 你会使用哪个选项来交互式地接受/阻止 `mv` 命令覆盖同名文件？'
 - en: '`-i, --interactive`'
+  id: totrans-154
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i, --interactive`'
 - en: ''
+  id: totrans-155
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: prompt before overwrite
+  id: totrans-156
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在覆盖前提示
 - en: '**26)** Use one or more commands to match the scenario shown below. You should
     have already created this directory structure in an earlier exercise.'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 使用一个或多个命令来匹配以下场景。你应该已经在之前的练习中创建了此目录结构。'
 - en: '[PRE13]'
+  id: totrans-158
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**27)** What does the `-t` option of `mv` command do?'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** `mv` 命令的 `-t` 选项做什么？'
 - en: '`-t, --target-directory=DIRECTORY`'
+  id: totrans-160
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-t, --target-directory=DIRECTORY`'
 - en: ''
+  id: totrans-161
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: move all SOURCE arguments into DIRECTORY
+  id: totrans-162
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将所有源参数移动到目录中
 - en: '**28)** Determine and implement the `rename` logic based on the filenames and
     expected output shown below.'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '**28)** 根据下面的文件名和预期输出确定并实现 `rename` 逻辑。'
 - en: '[PRE14]'
+  id: totrans-164
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**29)** Does the `ln` command follow the same order to specify source and destination
     as the `cp` and `mv` commands?'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '**29)** `ln` 命令指定源和目标的方式是否与 `cp` 和 `mv` 命令相同？'
 - en: Yes.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的。
 - en: '**30)** Which `tar` option helps to compress archives based on filename extension?
     This option can be used instead of `-z` for `gzip`, `-j` for `bzip2` and `-J`
     for `xz`.'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: '**30)** 哪个 `tar` 选项有助于根据文件扩展名压缩归档？此选项可以用作代替 `-z`（用于 `gzip`），`-j`（用于 `bzip2`）和
+    `-J`（用于 `xz`）。'
 - en: '`-a, --auto-compress`'
+  id: totrans-168
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-a, --auto-compress`'
 - en: ''
+  id: totrans-169
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Use archive suffix to determine the compression program.
+  id: totrans-170
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 使用归档后缀来确定压缩程序。
 - en: '[Shell Features](#shell-features)'
+  id: totrans-171
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Shell 特性](#shell-features)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the `globs.sh`
     script for wildcards related exercises, unless otherwise mentioned.'
+  id: totrans-172
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 `globs.sh` 脚本进行与通配符相关的练习，除非另有说明。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
     directory for exercises that may require you to create some files. You can delete
     such practice directories afterwards.'
+  id: totrans-173
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![信息](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 为可能需要创建一些文件的练习创建一个临时目录。之后可以删除这样的练习目录。'
 - en: '**1)** Use the `echo` command to display the text as shown below. Use appropriate
     quoting as necessary.'
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 使用 `echo` 命令以如下所示显示文本。根据需要使用适当的引号。'
 - en: '[PRE15]'
+  id: totrans-175
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**2)** Use the `echo` command to display the values of the three variables
     in the format as shown below.'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 使用 `echo` 命令以如下格式显示三个变量的值。'
 - en: '[PRE16]'
+  id: totrans-177
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**3)** What will be the output of the command shown below?'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 下面命令的输出将是什么？'
 - en: '[PRE17]'
+  id: totrans-179
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: '**4)** List filenames starting with a digit character.'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 列出以数字字符开头的文件名。'
 - en: '[PRE18]'
+  id: totrans-181
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**5)** List filenames whose extension do not begin with `t` or `l`. Assume
     extensions will have at least one character.'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 列出扩展名不以 `t` 或 `l` 开头的文件名。假设扩展名至少有一个字符。'
 - en: '[PRE19]'
+  id: totrans-183
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: '**6)** List filenames whose extension only have a single character.'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 列出扩展名只有一个字符的文件名。'
 - en: '[PRE20]'
+  id: totrans-185
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '**7)** List filenames whose extension is not `txt`.'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 列出扩展名不是 `txt` 的文件名。'
 - en: '[PRE21]'
+  id: totrans-187
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: '**8)** Describe the wildcard pattern used in the command shown below.'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 描述下面命令中使用的通配符模式。'
 - en: '[PRE22]'
+  id: totrans-189
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: List files that have at least one non-word character (`-` for example) before
     a `.` character.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出在 `.` 字符之前至少有一个非单词字符（例如 `-`）的文件。
 - en: '**9)** List filenames having only lowercase alphabets before the extension.'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 列出扩展名前只有小写字母的文件名。'
 - en: '[PRE23]'
+  id: totrans-192
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: '**10)** List filenames starting with `ma` or `he` or `hi`.'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 列出以 `ma` 或 `he` 或 `hi` 开头的文件名。'
 - en: '[PRE24]'
+  id: totrans-194
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: '**11)** What commands would you use to get the outputs shown below? Assume
     that you do not know the depth of sub-directories.'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 你会使用哪些命令来获取以下输出？假设你不知道子目录的深度。'
 - en: '[PRE25]'
+  id: totrans-196
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: '**12)** Create and change to an empty directory. Then, use brace expansion
     along with relevant commands to get the results shown below.'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 创建并切换到一个空目录。然后，使用大括号展开和相关的命令来获取以下结果。'
 - en: '[PRE26]'
+  id: totrans-198
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: '**13)** What does the `set` builtin command do?'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 内置的 `set` 命令做什么？'
 - en: 'From `help set`:'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `help set` 的说明：
 - en: Change the value of shell attributes and positional parameters, or display the
     names and values of shell variables.
+  id: totrans-201
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 更改shell属性和位置参数的值，或显示shell变量的名称和值。
 - en: '**14)** What does the `|` pipe operator do? And when would you add the `tee`
     command?'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** `|` 管道运算符的作用是什么？你会在什么情况下添加 `tee` 命令？'
 - en: '`|` redirects the output of a command as input to another command. The `tee`
     command will help to save the output of a command to a file as well as display
     it on the terminal.'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: '`|` 将一个命令的输出作为输入传递给另一个命令。`tee` 命令可以帮助将命令的输出保存到文件中，并在终端上显示。'
 - en: '**15)** Can you infer what the following command does? *Hint*: see `help printf`.'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 你能推断出以下命令的作用吗？*提示*：参见 `help printf`。'
 - en: '[PRE27]'
+  id: totrans-205
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 'From `help printf`:'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `help printf` 的说明：
 - en: The format is re-used as necessary to consume all of the arguments. If there
     are fewer arguments than the format requires, extra format specifications behave
     as if a zero value or null string, as appropriate, had been supplied.
+  id: totrans-207
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 格式根据需要重复使用，以消耗所有参数。如果参数的数量少于格式要求的数量，额外的格式说明符将表现得像提供了零值或空字符串，具体取决于情况。
 - en: In the above example, the format `%s\n` is applied to all the three arguments.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述示例中，格式 `%s\n` 被应用于所有三个参数。
 - en: '**16)** Use brace expansion along with relevant commands and shell features
     to get the result shown below. *Hint*: see previous question.'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 使用大括号展开以及相关的命令和shell特性来得到以下结果。*提示*：参见前一个问题。'
 - en: '[PRE28]'
+  id: totrans-210
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: '**17)** With `ip.txt` containing text as shown in the previous question, use
     brace expansion and relevant commands to get the result shown below.'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 在 `ip.txt` 包含的文本如前一个问题所示的情况下，使用大括号展开和相关的命令来得到以下结果。'
 - en: '[PRE29]'
+  id: totrans-212
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: '**18)** What are the differences between `<` and `|` shell operators, if any?'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 如果有的话，`<` 和 `|` shell运算符之间的区别是什么？'
 - en: the `<` redirection operator helps you to pass data from a file as input to
     a command
+  id: totrans-214
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`<` 重定向运算符可以帮助您将文件数据作为输入传递给命令'
 - en: the `|` operator redirects output of a command as input to another command
+  id: totrans-215
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`|` 运算符将一个命令的输出作为输入传递给另一个命令'
 - en: '**19)** Which character is typically used to represent `stdin` data as a file
     argument?'
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 通常用哪个字符来表示 `stdin` 数据作为文件参数？'
 - en: '`-`'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-`'
 - en: '**20)** What do the following operators do?'
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 以下运算符的作用是什么？'
 - en: '*a)* `1>` — redirect the standard output of a command to a file'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '*a)* `1>` — 将命令的标准输出重定向到文件'
 - en: '*b)* `2>` — redirect the standard error of a command to a file'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: '*b)* `2>` — 将命令的标准错误重定向到文件'
 - en: '*c)* `&>` — redirect both `stdout` and `stderr` (overwrites an existing file)'
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: '*c)* `&>` — 同时重定向 `stdout` 和 `stderr`（覆盖现有文件）'
 - en: '*d)* `&>>` — redirect both `stdout` and `stderr` (appends to an existing file)'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '*d)* `&>>` — 同时重定向 `stdout` 和 `stderr`（追加到现有文件）'
 - en: '*e)* `|&` — pipe both `stdout` and `stderr` as input to another command'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: '*e)* `|&` — 将 `stdout` 和 `stderr` 作为输入传递给另一个命令'
 - en: '**21)** What will be the contents of `op.txt` if you use the following `grep`
     command?'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 如果你使用以下 `grep` 命令，`op.txt` 的内容将是什么？'
 - en: '[PRE30]'
+  id: totrans-225
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: '**22)** What will be the contents of `op.txt` if you use the following commands?'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 如果你使用以下命令，`op.txt` 的内容将是什么？'
 - en: '[PRE31]'
+  id: totrans-227
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: Note that the value of `qty` variable was substituted for `$qty`. You'll have
     to use `'end'` or `\end` to avoid shell interpolation.
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，`qty` 变量的值被替换为 `$qty`。您必须使用 `'end'` 或 `\end` 来避免shell替换。
 - en: '**23)** Correct the command to get the expected output shown below.'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** 修正以下命令以获得以下预期的输出。'
 - en: '[PRE32]'
+  id: totrans-230
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: '**24)** Correct the command to get the expected output shown below.'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 修正以下命令以获得以下预期的输出。'
 - en: '[PRE33]'
+  id: totrans-232
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: '**25)** What will be the output of the following commands?'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** 以下命令的输出将是什么？'
 - en: '[PRE34]'
+  id: totrans-234
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: In both cases, the first command succeeds (exit status `0`). The `&&` and `||`
     are short-circuit operators. Their second operands will be executed only if the
     first one was success and failure respectively.
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这两种情况下，第一个命令成功（退出状态 `0`）。`&&` 和 `||` 是短路运算符。它们的第二个操作数只有在第一个操作数成功或失败时才会执行。
 - en: '**26)** Correct the command(s) to get the expected output shown below.'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 修正以下命令以获得以下预期的输出。'
 - en: '[PRE35]'
+  id: totrans-237
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE35]'
 - en: '**27)** Will the following two commands produce equivalent output? If not,
     why not?'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** 以下两个命令会产生等效的输出吗？如果不，为什么？'
 - en: '[PRE36]'
+  id: totrans-239
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE36]'
 - en: The outputs are not equivalent because brace expansion creates all combinations
     when multiple braces are used.
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出不相等，因为当使用多个大括号时，大括号展开会创建所有组合。
 - en: '[Viewing Part or Whole File Contents](#viewing-part-or-whole-file-contents)'
+  id: totrans-241
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[查看部分或整个文件内容](#viewing-part-or-whole-file-contents)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-242
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 在以下练习中使用的输入文件请使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录。'
 - en: '**1)** Which option(s) would you use to get the output shown below?'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 您会使用哪个选项（些）来获取以下输出？'
 - en: '[PRE37]'
+  id: totrans-244
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE37]'
 - en: '**2)** Pass appropriate arguments to the `cat` command to get the output shown
     below.'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 向 `cat` 命令传递适当的参数以获取以下输出。'
 - en: '[PRE38]'
+  id: totrans-246
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE38]'
 - en: '**3)** Will the two commands shown below produce the same output? If not, why
     not?'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 以下两个命令会产生相同的输出吗？如果不，为什么？'
 - en: '[PRE39]'
+  id: totrans-248
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE39]'
 - en: No. The outputs are different because `tac` reverses content separately for
     each input file.
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 不。输出不同是因为 `tac` 分别为每个输入文件反转内容。
 - en: '**4)** Go through the manual for the `tac` command and use appropriate options
     and arguments to get the output shown below.'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 阅读关于 `tac` 命令的手册，并使用适当的选项和参数以获取以下输出。'
 - en: '[PRE40]'
+  id: totrans-251
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE40]'
 - en: '`-b, --before`'
+  id: totrans-252
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-b, --before`'
 - en: ''
+  id: totrans-253
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: attach the separator before instead of after
+  id: totrans-254
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在前面而不是后面附加分隔符
 - en: ''
+  id: totrans-255
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-s, --separator=STRING`'
+  id: totrans-256
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-s, --separator=STRING`'
 - en: ''
+  id: totrans-257
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: use STRING as the separator instead of newline
+  id: totrans-258
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 使用 STRING 作为分隔符而不是换行符
 - en: '**5)** What is the difference between `less -n` and `less -N` options? Does
     `cat -n` and `less -n` have similar functionality?'
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** `less -n` 和 `less -N` 选项之间的区别是什么？`cat -n` 和 `less -n` 是否具有类似的功能？'
 - en: '`less -N` enables line numbering and `less -n` disables numbering. `cat -n`
     enables line numbering, so it doesn''t function similar to `less -n`.'
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: '`less -N` 启用行号，而 `less -n` 禁用行号。`cat -n` 启用行号，因此它不与 `less -n` 功能类似。'
 - en: '**6)** Which command would you use to open another file from within an existing
     `less` session? And which commands would you use to navigate between previous
     and next files?'
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 您会使用哪个命令在现有的 `less` 会话中打开另一个文件？您会使用哪些命令在先前和下一个文件之间导航？'
 - en: You can use `:e filename` to open another file (similar to the Vim text editor).
     You can use `:p` and `:n` to switch between the previous and next files.
+  id: totrans-262
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `:e filename` 打开另一个文件（类似于 Vim 文本编辑器）。您可以使用 `:p` 和 `:n` 在上一个文件和下一个文件之间切换。
 - en: '**7)** Use appropriate commands and shell features to get the output shown
     below.'
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 使用适当的命令和 shell 功能以获取以下输出。'
 - en: '[PRE41]'
+  id: totrans-264
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE41]'
 - en: '**8)** How would you display all the input lines except the first one?'
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 如何显示除第一行之外的所有输入行？'
 - en: '[PRE42]'
+  id: totrans-266
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE42]'
 - en: '**9)** Which command(s) would you use to get the output shown below?'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 您会使用哪个命令（些）来获取以下输出？'
 - en: '[PRE43]'
+  id: totrans-268
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE43]'
 - en: '**10)** Use a combination of the `head` and `tail` commands to get the 11th
     to 14th characters from the given input.'
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用 `head` 和 `tail` 命令的组合从给定输入中获取第 11 到 14 个字符。'
 - en: '[PRE44]'
+  id: totrans-270
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE44]'
 - en: '**11)** Extract the starting six bytes from the input files `table.txt` and
     `fruits.txt`.'
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 从输入文件 `table.txt` 和 `fruits.txt` 中提取前六个字节。'
 - en: '[PRE45]'
+  id: totrans-272
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE45]'
 - en: '**12)** Extract the last six bytes from the input files `fruits.txt` and `table.txt`.'
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 从输入文件 `fruits.txt` 和 `table.txt` 中提取最后六个字节。'
 - en: '[PRE46]'
+  id: totrans-274
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE46]'
 - en: '[Searching Files and Filenames](#searching-files-and-filenames)'
+  id: totrans-275
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[搜索文件和文件名](#searching-files-and-filenames)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `grep` exercises,
     use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files, unless otherwise specified.'
+  id: totrans-276
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 对于 `grep` 练习，除非另有说明，请使用
+    [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录作为输入文件。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) For `find` exercises,
     use the `find.sh` script, unless otherwise specified.'
+  id: totrans-277
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 对于 `find` 练习，除非另有说明，请使用
+    `find.sh` 脚本。'
 - en: '**1)** Display lines containing `an` from the input files `blocks.txt`, `ip.txt`
     and `uniform.txt`. Show the results with and without filename prefix.'
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 显示来自输入文件 `blocks.txt`、`ip.txt` 和 `uniform.txt` 包含 `an` 的行。显示带有和没有文件名前缀的结果。'
 - en: '[PRE47]'
+  id: totrans-279
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE47]'
 - en: '**2)** Display lines containing the whole word `he` from the `sample.txt` input
     file.'
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 显示 `sample.txt` 输入文件中包含整个单词 `he` 的行。'
 - en: '[PRE48]'
+  id: totrans-281
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE48]'
 - en: '**3)** Match only whole lines containing `car` irrespective of case. The matching
     lines should be displayed with line number prefix as well.'
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 仅匹配包含 `car` 的整行，不考虑大小写。匹配的行应显示带有行号前缀。'
 - en: '[PRE49]'
+  id: totrans-283
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE49]'
 - en: '**4)** Display all lines from `purchases.txt` except those that contain `tea`.'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 显示 `purchases.txt` 中除包含 `tea` 的行之外的所有行。'
 - en: '[PRE50]'
+  id: totrans-285
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE50]'
 - en: '**5)** Display all lines from `sample.txt` that contain `do` but not `it`.'
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 显示 `sample.txt` 中包含 `do` 但不包含 `it` 的所有行。'
 - en: '[PRE51]'
+  id: totrans-287
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE51]'
 - en: '**6)** For the input file `sample.txt`, filter lines containing `do` and also
     display the line that comes after such a matching line.'
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 对于输入文件`sample.txt`，过滤包含`do`的行，并显示匹配行之后的行。'
 - en: '[PRE52]'
+  id: totrans-289
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE52]'
 - en: '**7)** For the input file `sample.txt`, filter lines containing `are` or `he`
     as whole words as well as the line that comes before such a matching line. Go
     through `info grep` or the [online manual](https://www.gnu.org/software/grep/manual/grep.html)
     and use appropriate options such that there''s no separator between the groups
     of matching lines in the output.'
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 对于输入文件`sample.txt`，过滤包含`are`或`he`作为完整单词的行以及匹配行之前的行。通过`info grep`或[在线手册](https://www.gnu.org/software/grep/manual/grep.html)了解适当的选项，以确保输出中匹配行组之间没有分隔符。'
 - en: '[PRE53]'
+  id: totrans-291
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE53]'
 - en: '`--no-group-separator`'
+  id: totrans-292
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--no-group-separator`'
 - en: ''
+  id: totrans-293
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: When `-A`, `-B` or `-C` are in use, do not print a separator between groups
     of lines.
+  id: totrans-294
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 当使用`-A`、`-B`或`-C`时，不要在行组之间打印分隔符。
 - en: '**8)** Extract all pairs of `()` with/without text inside them, provided they
     do not contain `()` characters inside.'
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 提取所有包含或不包含文本的`()`对，前提是它们内部不包含`()`字符。'
 - en: '[PRE54]'
+  id: totrans-296
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE54]'
 - en: '**9)** For the given input, match all lines that start with `den` or end with
     `ly`.'
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 对于给定的输入，匹配所有以`den`开头或以`ly`结尾的行。'
 - en: '[PRE55]'
+  id: totrans-298
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE55]'
 - en: '**10)** Extract words starting with `s` and containing both `e` and `t` in
     any order.'
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 提取以`s`开头且包含`e`和`t`（顺序不限）的单词。'
 - en: '[PRE56]'
+  id: totrans-300
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE56]'
 - en: '**11)** Extract all whole words having the same first and last word character.'
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 提取所有首尾字符相同的完整单词。'
 - en: '[PRE57]'
+  id: totrans-302
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE57]'
 - en: '**12)** Match all input lines containing `*[5]` literally.'
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 匹配所有包含`*[5]`字面量的输入行。'
 - en: '[PRE58]'
+  id: totrans-304
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE58]'
 - en: '**13)** Match whole lines that start with `hand` and immediately followed by
     `s` or `y` or `le` or no further character.'
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 匹配以`hand`开头并立即跟随着`s`、`y`、`le`或没有其他字符的完整行。'
 - en: '[PRE59]'
+  id: totrans-306
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE59]'
 - en: '**14)** Input lines have three or more fields separated by a `,` delimiter.
     Extract from the second field to the second last field. In other words, extract
     fields other than the first and last.'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 输入行有三个或更多由`,`分隔的字段。从第二个字段提取到倒数第二个字段。换句话说，提取除了第一个和最后一个字段之外的字段。'
 - en: '[PRE60]'
+  id: totrans-308
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE60]'
 - en: '**15)** Recursively search for files containing `ello`.'
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 递归搜索包含`ello`的文件。'
 - en: '[PRE61]'
+  id: totrans-310
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE61]'
 - en: '**16)** Search for files containing `blue` recursively, but do not search within
     the `backups` directory.'
+  id: totrans-311
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 递归搜索包含`blue`的文件，但不要在`backups`目录内搜索。'
 - en: '[PRE62]'
+  id: totrans-312
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE62]'
 - en: '**17)** Search for files containing `blue` recursively, but not if the file
     also contains `teal`.'
+  id: totrans-313
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 递归搜索包含`blue`的文件，但文件同时包含`teal`时不搜索。'
 - en: '[PRE63]'
+  id: totrans-314
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE63]'
 - en: '**18)** Find all regular files within the `backups` directory.'
+  id: totrans-315
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 在`backups`目录中查找所有常规文件。'
 - en: '[PRE64]'
+  id: totrans-316
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE64]'
 - en: '**19)** Find all regular files whose extension starts with `p` or `s` or `v`.'
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 找出扩展名以`p`、`s`或`v`开头的所有常规文件。'
 - en: '[PRE65]'
+  id: totrans-318
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE65]'
 - en: '**20)** Find all regular files whose name do *not* have the lowercase letters
     `g` to `l`.'
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 找出所有名称中不包含小写字母`g`到`l`的常规文件。'
 - en: '[PRE66]'
+  id: totrans-320
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE66]'
 - en: '**21)** Find all regular files whose path has at least one directory name starting
     with `p` or `d`.'
+  id: totrans-321
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 找出所有路径中至少有一个目录名以`p`或`d`开头的常规文件。'
 - en: '[PRE67]'
+  id: totrans-322
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE67]'
 - en: '**22)** Find all directories whose name contains `b` or `d`.'
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 找出所有名称包含`b`或`d`的目录。'
 - en: '[PRE68]'
+  id: totrans-324
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE68]'
 - en: '**23)** Find all hidden directories.'
+  id: totrans-325
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** 找出所有隐藏目录。'
 - en: '[PRE69]'
+  id: totrans-326
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE69]'
 - en: '**24)** Find all regular files at the exact depth of `2`.'
+  id: totrans-327
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 找出深度恰好为`2`的所有常规文件。'
 - en: '[PRE70]'
+  id: totrans-328
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE70]'
 - en: '**25)** What''s the difference between `find -mtime` and `find -atime`? And,
     what is the time period these options work with?'
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** `find -mtime`和`find -atime`之间的区别是什么？这些选项使用的时间周期是什么？'
 - en: '`m` is for modified timestamp and `a` is for accessed timestamp. These options
     work with `24` hour periods.'
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: '`m`代表修改时间戳，`a`代表访问时间戳。这些选项与`24`小时周期一起使用。'
 - en: '`-atime n`'
+  id: totrans-331
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-atime n`'
 - en: ''
+  id: totrans-332
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: File was last accessed `n*24` hours ago. When find figures out how many 24-hour
     periods ago the file was last accessed, any fractional part is ignored, so to
     match `-atime +1`, a file has to have been accessed at least two days ago.
+  id: totrans-333
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 文件最后访问时间为`n*24`小时前。当`find`确定文件上次访问的24小时周期数时，任何小数部分将被忽略，因此要匹配`-atime +1`，文件至少需要被访问两天。
 - en: ''
+  id: totrans-334
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-mtime n`'
+  id: totrans-335
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-mtime n`'
 - en: ''
+  id: totrans-336
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: File's data was last modified `n*24` hours ago. See the comments for `-atime`
     to understand how rounding affects the interpretation of file modification times.
+  id: totrans-337
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 文件数据最后修改时间为`n*24`小时前。参见注释了解`-atime`如何影响文件修改时间的解释。
 - en: '**26)** Find all empty regular files.'
+  id: totrans-338
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 找出所有空常规文件。'
 - en: '[PRE71]'
+  id: totrans-339
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE71]'
 - en: '**27)** Create a directory named `filtered_files`. Then, copy all regular files
     that are greater than `1` byte in size but whose name don''t end with `.log` to
     this directory.'
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** 创建名为`filtered_files`的目录。然后，将所有大于`1`字节但名称不以`.log`结尾的常规文件复制到该目录。'
 - en: '[PRE72]'
+  id: totrans-341
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE72]'
 - en: '**28)** Find all hidden files, but not if they are part of the `filtered_files`
     directory created earlier.'
+  id: totrans-342
   prefs: []
   type: TYPE_NORMAL
+  zh: '**28)** 查找所有隐藏文件，但如果它们是之前创建的`filtered_files`目录的一部分，则不查找。'
 - en: '[PRE73]'
+  id: totrans-343
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE73]'
 - en: '**29)** Delete the `filtered_files` directory created earlier. Then, go through
     the `find` manual and figure out how to list only executable files.'
+  id: totrans-344
   prefs: []
   type: TYPE_NORMAL
+  zh: '**29)** 删除之前创建的`filtered_files`目录。然后，阅读`find`手册，找出如何仅列出可执行文件。'
 - en: '[PRE74]'
+  id: totrans-345
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE74]'
 - en: '`-executable`'
+  id: totrans-346
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-可执行`'
 - en: ''
+  id: totrans-347
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Matches files which are executable and directories which are searchable (in
     a file name resolution sense) by the current user.
+  id: totrans-348
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 匹配当前用户可执行的可执行文件和可搜索的目录（在文件名解析意义上）。
 - en: '**30)** List at least one use case for piping the `find` output to the `xargs`
     command instead of using the `find -exec` option.'
+  id: totrans-349
   prefs: []
   type: TYPE_NORMAL
+  zh: '**30)** 列出至少一个将`find`输出通过管道传递到`xargs`命令而不是使用`find -exec`选项的使用案例。'
 - en: '`xargs -P` (or the [parallel](https://www.gnu.org/software/parallel/) command)
     can be handy if you need parallel execution for performance reasons.'
+  id: totrans-350
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果需要出于性能原因进行并行执行，`xargs -P`（或[parallel](https://www.gnu.org/software/parallel/)命令）可能很有用。
 - en: '**31)** How does the `locate` command work faster than the equivalent `find`
     command?'
+  id: totrans-351
   prefs: []
   type: TYPE_NORMAL
+  zh: '**31)** `locate`命令是如何比等效的`find`命令运行得更快？'
 - en: 'From [unix.stackexchange: pros and cons of find and locate](https://unix.stackexchange.com/q/60205/109046):'
+  id: totrans-352
   prefs: []
   type: TYPE_NORMAL
+  zh: '来自[unix.stackexchange: find和locate的优缺点](https://unix.stackexchange.com/q/60205/109046)：'
 - en: '`locate` uses a prebuilt database, which should be regularly updated, while
     `find` iterates over a filesystem to locate files.'
+  id: totrans-353
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`locate`使用预构建的数据库，该数据库应定期更新，而`find`则遍历文件系统以定位文件。'
 - en: ''
+  id: totrans-354
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Thus, `locate` is much faster than `find`, but can be inaccurate if the database
     -can be seen as a cache- is not updated (see `updatedb` command).
+  id: totrans-355
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 因此，`locate`比`find`快得多，但如果数据库（可以看作是一个缓存）没有更新，则可能不准确（参见`updatedb`命令）。
 - en: '[File Properties](#file-properties)'
+  id: totrans-356
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[文件属性](#file-properties)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises, unless otherwise specified.'
+  id: totrans-357
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用[example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)目录作为以下练习中使用的输入文件，除非另有说明。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Create a temporary
     directory for exercises that may require you to create some files and directories.
     You can delete such practice directories afterwards.'
+  id: totrans-358
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 为可能需要您创建一些文件和目录的练习创建一个临时目录。您可以在之后删除此类练习目录。'
 - en: '**1)** Save the number of lines in the `greeting.txt` input file to the `lines`
     shell variable.'
+  id: totrans-359
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 将`greeting.txt`输入文件中的行数保存到`lines` shell变量中。'
 - en: '[PRE75]'
+  id: totrans-360
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE75]'
 - en: '**2)** What do you think will be the output of the following command?'
+  id: totrans-361
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 您认为以下命令的输出会是什么？'
 - en: '[PRE76]'
+  id: totrans-362
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE76]'
 - en: '**3)** Use appropriate options and arguments to get the output shown below.'
+  id: totrans-363
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 使用适当的选项和参数来获取以下输出。'
 - en: '[PRE77]'
+  id: totrans-364
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE77]'
 - en: '**4)** Go through the `wc` manual and use appropriate options and arguments
     to get the output shown below.'
+  id: totrans-365
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 阅读`wc`手册，并使用适当的选项和参数来获取以下输出。'
 - en: '[PRE78]'
+  id: totrans-366
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE78]'
 - en: '`--files0-from=F`'
+  id: totrans-367
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--files0-from=F`'
 - en: ''
+  id: totrans-368
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: read input from the files specified by NUL-terminated names in file F; If F
     is - then read names from standard input
+  id: totrans-369
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 从文件F中读取由NUL终止的名称指定的文件中的输入；如果F是-，则从标准输入读取名称
 - en: '**5)** What is the difference between the `wc -c` and `wc -m` options? And
     which option would you use to get the longest line length?'
+  id: totrans-370
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** `wc -c`和`wc -m`选项之间的区别是什么？以及您会使用哪个选项来获取最长行长度？'
 - en: '`-c, --bytes`'
+  id: totrans-371
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-c, --bytes`'
 - en: ''
+  id: totrans-372
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: print the byte counts
+  id: totrans-373
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印字节数
 - en: ''
+  id: totrans-374
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-m, --chars`'
+  id: totrans-375
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-m, --chars`'
 - en: ''
+  id: totrans-376
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: print the character counts
+  id: totrans-377
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印字符数
 - en: ''
+  id: totrans-378
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-L, --max-line-length`'
+  id: totrans-379
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-L, --max-line-length`'
 - en: ''
+  id: totrans-380
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: print the maximum display width
+  id: totrans-381
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印最大显示宽度
 - en: '**6)** Find filenames ending with `.log` and report their sizes in human readable
     format. Use the `find+du` combination for the first case and the `ls` command
     (with appropriate shell features) for the second case.'
+  id: totrans-382
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 查找以`.log`结尾的文件名，并以可读格式报告它们的大小。对于第一种情况，使用`find+du`组合，对于第二种情况，使用`ls`命令（带有适当的shell功能）。'
 - en: '[PRE79]'
+  id: totrans-383
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE79]'
 - en: '**7)** Report sizes of files/directories in the current path in powers of `1000`
     without descending into sub-directories. Also, show a total at the end.'
+  id: totrans-384
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 在当前路径中按`1000`的幂次报告文件/目录的大小，不进入子目录。最后也显示总数。'
 - en: '[PRE80]'
+  id: totrans-385
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE80]'
 - en: '**8)** What does the `du --apparent-size` option do?'
+  id: totrans-386
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** `du --apparent-size`选项的作用是什么？'
 - en: '`--apparent-size`'
+  id: totrans-387
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--apparent-size`'
 - en: ''
+  id: totrans-388
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: print apparent sizes, rather than disk usage; although the apparent size is
     usually smaller, it may be larger due to holes in ('sparse') files, internal fragmentation,
     indirect blocks, and the like
+  id: totrans-389
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印明显大小，而不是磁盘使用情况；尽管明显大小通常较小，但由于文件中的空洞（稀疏文件）、内部碎片、间接块等，它可能更大
 - en: '**9)** When will you use the `df` command instead of `du`? Which `df` command
     option will help you to report only the specific fields of interest?'
+  id: totrans-390
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 你将在什么情况下使用 `df` 命令而不是 `du`？哪个 `df` 命令选项将帮助你仅报告感兴趣的特定字段？'
 - en: '`df` gives space usage for the entire file system whereas `du` is useful to
     get space estimate for specific files and directories.'
+  id: totrans-391
   prefs: []
   type: TYPE_NORMAL
+  zh: '`df` 命令提供整个文件系统的空间使用情况，而 `du` 命令对于获取特定文件和目录的空间估计很有用。'
 - en: '[PRE81]'
+  id: totrans-392
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE81]'
 - en: 'To get only specific fields of interest:'
+  id: totrans-393
   prefs: []
   type: TYPE_NORMAL
+  zh: 要仅获取感兴趣的特定字段：
 - en: '`--output[=FIELD_LIST]`'
+  id: totrans-394
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--output[=FIELD_LIST]`'
 - en: ''
+  id: totrans-395
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: use the output format defined by FIELD_LIST, or print all fields if FIELD_LIST
     is omitted.
+  id: totrans-396
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 使用由 FIELD_LIST 定义的输出格式，或者如果省略 FIELD_LIST，则打印所有字段。
 - en: '**10)** Display the size of `scores.csv` and `timings.txt` files in the format
     shown below.'
+  id: totrans-397
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 按照以下格式显示 `scores.csv` 和 `timings.txt` 文件的大小。'
 - en: '[PRE82]'
+  id: totrans-398
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE82]'
 - en: '**11)** Which `touch` option will help you prevent file creation if it doesn''t
     exist yet?'
+  id: totrans-399
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 哪个 `touch` 选项可以帮助你在文件尚不存在时防止文件创建？'
 - en: '`-c, --no-create`'
+  id: totrans-400
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-c, --no-create`'
 - en: ''
+  id: totrans-401
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: do not create any files
+  id: totrans-402
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 不创建任何文件
 - en: '**12)** Assume `new_file.txt` doesn''t exist in the current working directory.
     What would be the output of the `stat` command shown below?'
+  id: totrans-403
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 假设 `new_file.txt` 在当前工作目录中不存在。下面显示的 `stat` 命令的输出将会是什么？'
 - en: '[PRE83]'
+  id: totrans-404
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE83]'
 - en: '`-t STAMP`'
+  id: totrans-405
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-t STAMP`'
 - en: ''
+  id: totrans-406
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: use [[CC]YY]MMDDhhmm[.ss] instead of current time
+  id: totrans-407
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 使用 [[CC]YY]MMDDhhmm[.ss] 而不是当前时间
 - en: '**13)** Is the following `touch` command valid? If so, what would be the output
     of the `stat` command that follows?'
+  id: totrans-408
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 以下 `touch` 命令是否有效？如果是，随后的 `stat` 命令的输出将会是什么？'
 - en: Yes, it is valid as multiple file arguments are allowed. The `-r` option helps
     to copy the timestamp details from the given file to the target files.
+  id: totrans-409
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的，这是有效的，因为允许多个文件参数。`-r` 选项有助于将给定文件的时间戳详细信息复制到目标文件。
 - en: '[PRE84]'
+  id: totrans-410
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE84]'
 - en: '**14)** Use appropriate option(s) to get the output shown below.'
+  id: totrans-411
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用适当的选项（s）以获得以下输出。'
 - en: '[PRE85]'
+  id: totrans-412
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE85]'
 - en: '**15)** Is the following command valid? If so, what would be the output?'
+  id: totrans-413
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 以下命令是否有效？如果是，输出将会是什么？'
 - en: Yes, it is valid. Multiple slashes will be considered as a single slash. Any
     trailing slashes will be removed before determining the portion to be extracted.
+  id: totrans-414
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的，这是有效的。多个斜杠将被视为单个斜杠。在确定要提取的部分之前，任何尾随的斜杠都将被删除。
 - en: '[PRE86]'
+  id: totrans-415
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE86]'
 - en: '**16)** Given the file path in the shell variable `p`, how''d you obtain the
     output shown below?'
+  id: totrans-416
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 给定 shell 变量 `p` 中的文件路径，你将如何获得下面显示的输出？'
 - en: '[PRE87]'
+  id: totrans-417
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE87]'
 - en: '**17)** Explain what each of the characters mean in the following `stat` command''s
     output.'
+  id: totrans-418
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 解释以下 `stat` 命令输出中的每个字符的含义。'
 - en: '[PRE88]'
+  id: totrans-419
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE88]'
 - en: 'The 10 characters displayed are related to file type and permissions. First
     character indicates the **file type**. The most common ones are:'
+  id: totrans-420
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示的 10 个字符与文件类型和权限相关。第一个字符表示 **文件类型**。最常见的是：
 - en: '`-` regular file'
+  id: totrans-421
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-` 普通文件'
 - en: '`d` directory'
+  id: totrans-422
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`d` 目录'
 - en: '`l` symbolic link'
+  id: totrans-423
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`l` 符号链接'
 - en: The other nine characters represent three sets of **file permissions** for *user*
     (`u`), *group* (`g`) and *others* (`o`), in that order.
+  id: totrans-424
   prefs: []
   type: TYPE_NORMAL
+  zh: 其余九个字符代表三组 **文件权限**，分别为 *用户* (`u`)、*组* (`g`) 和 *其他人* (`o`)，顺序如下。
 - en: '*user* — file owner'
+  id: totrans-425
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*用户* — 文件所有者'
 - en: '*group* — users having file access as part of a group'
+  id: totrans-426
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*组* — 作为组的一部分具有文件访问权限的用户'
 - en: '*others* — everyone else'
+  id: totrans-427
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*其他人* — 除了所有者之外的其他人'
 - en: '**Permission reference table:**'
+  id: totrans-428
   prefs: []
   type: TYPE_NORMAL
+  zh: '**权限参考表：**'
 - en: '| Character | Meaning | Value |'
+  id: totrans-429
   prefs: []
   type: TYPE_TB
+  zh: '| 字符 | 含义 | 值 |'
 - en: '| --- | --- | --- |'
+  id: totrans-430
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `r` | read | `4` |'
+  id: totrans-431
   prefs: []
   type: TYPE_TB
+  zh: '| `r` | 读取 | `4` |'
 - en: '| `w` | write | `2` |'
+  id: totrans-432
   prefs: []
   type: TYPE_TB
+  zh: '| `w` | 写入 | `2` |'
 - en: '| `x` | execute | `1` |'
+  id: totrans-433
   prefs: []
   type: TYPE_TB
+  zh: '| `x` | 执行 | `1` |'
 - en: '| `-` | no permission | `0` |'
+  id: totrans-434
   prefs: []
   type: TYPE_TB
+  zh: '| `-` | 没有权限 | `0` |'
 - en: '**18)** What would be the output of the second `stat` command shown below?'
+  id: totrans-435
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 下面显示的第二个 `stat` 命令的输出将会是什么？'
 - en: '[PRE89]'
+  id: totrans-436
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE89]'
 - en: '**19)** How would you specify directory permissions using the `mkdir` command?'
+  id: totrans-437
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 你将如何使用 `mkdir` 命令指定目录权限？'
 - en: '[PRE90]'
+  id: totrans-438
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE90]'
 - en: '**20)** Change the file permission of `book_list.txt` to match the output of
     the second `stat` command shown below. Don''t use the number `220`, specify the
     changes in terms of `rwx` characters.'
+  id: totrans-439
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 将 `book_list.txt` 的文件权限更改为与下面显示的第二个 `stat` 命令的输出相匹配。不要使用数字 `220`，而要用
+    `rwx` 字符指定更改。'
 - en: '[PRE91]'
+  id: totrans-440
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE91]'
 - en: '**21)** Change the permissions of `test_dir` to match the output of the second
     `stat` command shown below. Don''t use the number `757`, specify the changes in
     terms of `rwx` characters.'
+  id: totrans-441
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 将 `test_dir` 的权限更改为与下面显示的第二个 `stat` 命令的输出相匹配。不要使用数字 `757`，而要用 `rwx`
+    字符指定更改。'
 - en: '[PRE92]'
+  id: totrans-442
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE92]'
 - en: '[Managing Processes](#managing-processes)'
+  id: totrans-443
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[管理进程](#managing-processes)'
 - en: '**1)** How would you invoke a command to be executed in the background? And
     what would you do to push a job to the background after it has already been launched?
     What commands can you use to track active jobs?'
+  id: totrans-444
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 你如何调用一个在后台执行的命令？在作业启动后，你会做什么来将其推送到后台？你可以使用哪些命令来跟踪活动作业？'
 - en: appending an `&` character to the command will execute it in the background
+  id: totrans-445
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在命令后添加一个 `&` 字符将在后台执行它
 - en: '`Ctrl+z` (suspend the current running job) followed by `bg` (push the recently
     suspended job to the background)'
+  id: totrans-446
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+z`（挂起当前运行作业）后跟 `bg`（将最近挂起的作业推送到后台）'
 - en: '`jobs` or `ps` will help to track active jobs'
+  id: totrans-447
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`jobs` 或 `ps` 命令有助于跟踪活动作业'
 - en: '**2)** What do the `+` and `-` symbols next to job numbers indicate?'
+  id: totrans-448
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 作业编号旁边的 `+` 和 `-` 符号表示什么？'
 - en: 'From `info bash` (section *Job Control Basics*):'
+  id: totrans-449
   prefs: []
   type: TYPE_NORMAL
+  zh: 从 `info bash`（章节 *作业控制基础*）：
 - en: In output pertaining to jobs (e.g., the output of the `jobs` command), the current
     job is always flagged with a `+`, and the previous job with a `-`.
+  id: totrans-450
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在与作业相关的输出中（例如，`jobs` 命令的输出），当前作业总是用 `+` 标记，上一个作业用 `-` 标记。
 - en: '**3)** When would you use `fg %n` and `bg %n` instead of just `fg` and `bg`
     respectively?'
+  id: totrans-451
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 在什么情况下你会使用 `fg %n` 和 `bg %n` 而不是分别使用 `fg` 和 `bg`？'
 - en: 'From `info bash` (section *Job Control Basics*):'
+  id: totrans-452
   prefs: []
   type: TYPE_NORMAL
+  zh: 从 `info bash`（章节 *作业控制基础*）：
 - en: There are a number of ways to refer to a job in the shell. The character `%`
     introduces a job specification (JOBSPEC).
+  id: totrans-453
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在 shell 中有许多引用作业的方法。字符 `%` 引入作业规范（JOBSPEC）。
 - en: ''
+  id: totrans-454
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Job number `n` may be referred to as `%n`.
+  id: totrans-455
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 作业编号 `n` 可以称为 `%n`。
 - en: '**4)** Which option will help you customize the output fields needed for the
     `ps` command?'
+  id: totrans-456
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 哪个选项可以帮助你自定义 `ps` 命令所需的输出字段？'
 - en: '`-o format`'
+  id: totrans-457
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-o format`'
 - en: ''
+  id: totrans-458
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: User-defined format. format is a single argument in the form of a blank-separated
     or comma-separated list, which offers a way to specify individual output columns.
+  id: totrans-459
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 用户定义的格式。格式是一个空白分隔或逗号分隔的列表，它提供了一种指定单个输出列的方法。
 - en: '**5)** What''s the difference between `pgrep -a` and `pgrep -l` options?'
+  id: totrans-460
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** `pgrep -a` 和 `pgrep -l` 选项之间的区别是什么？'
 - en: '`-a, --list-full`'
+  id: totrans-461
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-a, --list-full`'
 - en: ''
+  id: totrans-462
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: List the full command line as well as the process ID.
+  id: totrans-463
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 列出完整的命令行以及进程 ID。
 - en: ''
+  id: totrans-464
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-l, --list-name`'
+  id: totrans-465
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-l, --list-name`'
 - en: ''
+  id: totrans-466
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: List the process name as well as the process ID.
+  id: totrans-467
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 列出进程名称以及进程 ID。
 - en: '**6)** If the job number is `2`, would you use `kill %2` or `kill 2` to send
     `SIGTERM` to that process?'
+  id: totrans-468
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 如果作业编号是 `2`，你会使用 `kill %2` 还是 `kill 2` 来向该进程发送 `SIGTERM`？'
 - en: '`kill %2`'
+  id: totrans-469
   prefs: []
   type: TYPE_NORMAL
+  zh: '`kill %2`'
 - en: '**7)** Which signal does the `Ctrl+c` shortcut send to the currently running
     process?'
+  id: totrans-470
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** `Ctrl+c` 快捷键向当前运行进程发送哪个信号？'
 - en: Pressing `Ctrl+c` sends the `SIGINT` (`2`) signal, usually used to abort a process.
+  id: totrans-471
   prefs: []
   type: TYPE_NORMAL
+  zh: 按 `Ctrl+c` 发送 `SIGINT`（`2`）信号，通常用于终止进程。
 - en: '**8)** Which command helps you to continuously monitor processes, along with
     details like PID, memory usage, etc?'
+  id: totrans-472
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 哪个命令可以帮助你持续监控进程，包括 PID、内存使用等详细信息？'
 - en: '`top` (or alternatives like `btop` and `htop`)'
+  id: totrans-473
   prefs: []
   type: TYPE_NORMAL
+  zh: '`top`（或类似 `btop` 和 `htop` 的替代品）'
 - en: '**9)** Which key will help you manipulate kill tasks from within the `top`
     session?'
+  id: totrans-474
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 哪个键可以帮助你在 `top` 会话中操作终止任务？'
 - en: '`k`'
+  id: totrans-475
   prefs: []
   type: TYPE_NORMAL
+  zh: '`k`'
 - en: '**10)** What does the `free` command do?'
+  id: totrans-476
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** `free` 命令做什么？'
 - en: '[PRE93]'
+  id: totrans-477
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE93]'
 - en: '[Multipurpose Text Processing Tools](#multipurpose-text-processing-tools)'
+  id: totrans-478
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[多功能文本处理工具](#multipurpose-text-processing-tools)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-479
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录中的输入文件进行以下练习。'
 - en: '**1)** Replace all occurrences of `0xA0` with `0x50` and `0xFF` with `0x7F`
     for the given input.'
+  id: totrans-480
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 对于给定的输入，将所有 `0xA0` 替换为 `0x50`，将 `0xFF` 替换为 `0x7F`。'
 - en: '[PRE94]'
+  id: totrans-481
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE94]'
 - en: '**2)** Remove only the third line from the given input.'
+  id: totrans-482
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 仅从给定输入中删除第三行。'
 - en: '[PRE95]'
+  id: totrans-483
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE95]'
 - en: '**3)** For the input file `sample.txt`, display all lines that contain `it`
     but not `do`.'
+  id: totrans-484
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 对于输入文件 `sample.txt`，显示包含 `it` 但不包含 `do` 的所有行。'
 - en: '[PRE96]'
+  id: totrans-485
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE96]'
 - en: '**4)** For the input file `purchases.txt`, delete all lines containing `tea`.
     Also, replace all occurrences of `coffee` with `milk`. Write back the changes
     to the input file itself. The original contents should get saved to `purchases.txt.orig`.
     Afterwards, restore the contents from this backup file.'
+  id: totrans-486
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 对于输入文件 `purchases.txt`，删除包含 `tea` 的所有行。同时，将所有 `coffee` 的出现替换为 `milk`。将更改写回输入文件本身。原始内容应保存到
+    `purchases.txt.orig`。之后，从该备份文件恢复内容。'
 - en: '[PRE97]'
+  id: totrans-487
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE97]'
 - en: '**5)** For the input file `sample.txt`, display all lines from the start of
     the file till the first occurrence of `are`.'
+  id: totrans-488
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 对于输入文件 `sample.txt`，显示从文件开始到第一次出现 `are` 的所有行。'
 - en: '[PRE98]'
+  id: totrans-489
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE98]'
 - en: '**6)** Delete all groups of lines from a line containing `start` to a line
     containing `end` for the `uniform.txt` input file.'
+  id: totrans-490
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 删除 `uniform.txt` 输入文件中从包含 `start` 的行到包含 `end` 的行的所有行组。'
 - en: '[PRE99]'
+  id: totrans-491
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE99]'
 - en: '**7)** Replace all occurrences of `42` with `[42]` unless it is at the edge
     of a word.'
+  id: totrans-492
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 将 `42` 替换为 `[42]`，除非它在单词的边缘。'
 - en: '[PRE100]'
+  id: totrans-493
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE100]'
 - en: '**8)** Replace all whole words with `X` that start and end with the same word
     character.'
+  id: totrans-494
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 用 `X` 替换所有以相同单词字符开头和结尾的整个单词。'
 - en: '[PRE101]'
+  id: totrans-495
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE101]'
 - en: '**9)** For the input file `anchors.txt`, convert markdown anchors to hyperlinks
     as shown below.'
+  id: totrans-496
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 对于输入文件 `anchors.txt`，将 markdown 锚点转换为以下所示的超级链接。'
 - en: '[PRE102]'
+  id: totrans-497
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE102]'
 - en: '**10)** Replace all occurrences of `e` with `3` except the first two matches.'
+  id: totrans-498
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 将所有 `e` 替换为 `3`，除了前两个匹配项。'
 - en: '[PRE103]'
+  id: totrans-499
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE103]'
 - en: '**11)** The below sample strings use `,` as the delimiter and the field values
     can be empty as well. Use `sed` to replace only the third field with `42`.'
+  id: totrans-500
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 以下示例字符串使用 `,` 作为分隔符，字段值也可以为空。使用 `sed` 仅替换第三个字段为 `42`。'
 - en: '[PRE104]'
+  id: totrans-501
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE104]'
 - en: '**12)** For the input file `table.txt`, calculate and display the product of
     numbers in the last field of each line. Consider space as the field separator
     for this file.'
+  id: totrans-502
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 对于输入文件 `table.txt`，计算并显示每行最后字段的数字乘积。考虑空格为该文件的字段分隔符。'
 - en: '[PRE105]'
+  id: totrans-503
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE105]'
 - en: '**13)** Extract the contents between `()` or `)(` from each of the input lines.
     Assume that the `()` characters will be present only once every line.'
+  id: totrans-504
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 从每条输入行中提取 `()` 或 `)(` 之间的内容。假设每行中 `()` 字符只会出现一次。'
 - en: '[PRE106]'
+  id: totrans-505
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE106]'
 - en: '**14)** For the input file `scores.csv`, display the `Name` and `Physics` fields
     in the format shown below.'
+  id: totrans-506
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 对于输入文件 `scores.csv`，以下格式显示 `Name` 和 `Physics` 字段。'
 - en: '[PRE107]'
+  id: totrans-507
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE107]'
 - en: '**15)** Extract and display the third and first words in the format shown below.'
+  id: totrans-508
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 按以下格式提取并显示第三和第一个单词。'
 - en: '[PRE108]'
+  id: totrans-509
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE108]'
 - en: '**16)** For the input file `scores.csv`, add another column named **GP** which
     is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics
     and Chemistry.'
+  id: totrans-510
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 对于输入文件 `scores.csv`，添加一个名为 **GP** 的列，该列通过将 50% 的权重分配给数学，以及 25% 分别分配给物理和化学来计算。'
 - en: '[PRE109]'
+  id: totrans-511
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE109]'
 - en: '**17)** From the `para.txt` input file, display all paragraphs containing any
     digit character.'
+  id: totrans-512
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 从 `para.txt` 输入文件中显示包含任何数字字符的所有段落。'
 - en: '[PRE110]'
+  id: totrans-513
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE110]'
 - en: '**18)** Input has the ASCII NUL character as the record separator. Change it
     to dot and newline characters as shown below.'
+  id: totrans-514
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 输入具有 ASCII NUL 字符作为记录分隔符。将其更改为以下所示的点和新行字符。'
 - en: '[PRE111]'
+  id: totrans-515
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE111]'
 - en: '**19)** For the input file `sample.txt`, print a matching line containing `do`
     only if `you` is found two lines before. For example, if `do` is found on line
     number 10 and the 8th line contains `you`, then the 10th line should be printed.'
+  id: totrans-516
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 对于输入文件 `sample.txt`，只有当在两行之前找到 `you` 时，才打印包含 `do` 的匹配行。例如，如果 `do` 在第
+    10 行，而第 8 行包含 `you`，则应打印第 10 行。'
 - en: '[PRE112]'
+  id: totrans-517
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE112]'
 - en: '**20)** For the input file `blocks.txt`, extract contents from a line containing
     exactly `%=%=` until but not including the next such line. The block to be extracted
     is indicated by the variable `n` passed via the `-v` option.'
+  id: totrans-518
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 对于输入文件 `blocks.txt`，从包含 `%=%=` 的行提取内容，直到但不包括下一个这样的行。要提取的块由通过 `-v` 选项传递的变量
+    `n` 指示。'
 - en: '[PRE113]'
+  id: totrans-519
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE113]'
 - en: '**21)** Display lines present in `c1.txt` but not in `c2.txt` using the `awk`
     command.'
+  id: totrans-520
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 使用 `awk` 命令显示 `c1.txt` 中存在但不在 `c2.txt` 中的行。'
 - en: '[PRE114]'
+  id: totrans-521
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE114]'
 - en: '**22)** Display lines from `scores.csv` by matching the first field based on
     a list of names from the `names.txt` file.'
+  id: totrans-522
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 通过根据 `names.txt` 文件中的名称列表匹配第一个字段来显示 `scores.csv` 中的行。'
 - en: '[PRE115]'
+  id: totrans-523
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE115]'
 - en: '**23)** Retain only the first copy of duplicate lines from the `duplicates.txt`
     input file. Use only the contents of the last field for determining duplicates.'
+  id: totrans-524
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** 仅保留 `duplicates.txt` 输入文件中重复行的第一个副本。仅使用最后字段的内容来确定重复项。'
 - en: '[PRE116]'
+  id: totrans-525
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE116]'
 - en: '**24)** For the input file `table.txt`, print input lines if the second field
     starts with `b`. Construct solutions using `awk` and `perl`.'
+  id: totrans-526
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** 对于输入文件 `table.txt`，如果第二个字段以 `b` 开头，则打印输入行。使用 `awk` 和 `perl` 构建解决方案。'
 - en: '[PRE117]'
+  id: totrans-527
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE117]'
 - en: '**25)** For the input file `table.txt`, retain only the second last field.
     Write back the changes to the input file itself. The original contents should
     get saved to `table.txt.bkp`. Afterwards, restore the contents from this backup
     file.'
+  id: totrans-528
   prefs: []
   type: TYPE_NORMAL
+  zh: '**25)** 对于输入文件 `table.txt`，仅保留倒数第二个字段。将更改写回输入文件本身。原始内容应保存到 `table.txt.bkp`。之后，从该备份文件恢复内容。'
 - en: '[PRE118]'
+  id: totrans-529
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE118]'
 - en: '**26)** Reverse the first field contents of `table.txt` input file.'
+  id: totrans-530
   prefs: []
   type: TYPE_NORMAL
+  zh: '**26)** 反转 `table.txt` 输入文件的第一字段内容。'
 - en: '[PRE119]'
+  id: totrans-531
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE119]'
 - en: '**27)** Sort the given comma separated input lexicographically. Change the
     output field separator to a `:` character.'
+  id: totrans-532
   prefs: []
   type: TYPE_NORMAL
+  zh: '**27)** 按字典顺序对给定的逗号分隔输入进行排序。将输出字段分隔符更改为冒号字符。'
 - en: '[PRE120]'
+  id: totrans-533
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE120]'
 - en: '**28)** Filter fields containing digit characters.'
+  id: totrans-534
   prefs: []
   type: TYPE_NORMAL
+  zh: '**28)** 过滤包含数字字符的字段。'
 - en: '[PRE121]'
+  id: totrans-535
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE121]'
 - en: '**29)** The input shown below has several words ending with digit characters.
     Change the words containing `test` to match the output shown below. That is, renumber
     the matching portions to `1`, `2`, etc. Words not containing `test` should not
     be changed.'
+  id: totrans-536
   prefs: []
   type: TYPE_NORMAL
+  zh: '**29)** 以下输入中有几个以数字字符结尾的单词。将包含 `test` 的单词更改为以下输出所示。也就是说，将匹配部分重新编号为 `1`、`2`
+    等。不包含 `test` 的单词不应更改。'
 - en: '[PRE122]'
+  id: totrans-537
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE122]'
 - en: '**30)** For the input file `table.txt`, change contents of the third field
     to all uppercase. Construct solutions using `sed`, `awk` and `perl`.'
+  id: totrans-538
   prefs: []
   type: TYPE_NORMAL
+  zh: '**30)** 对于输入文件 `table.txt`，将第三字段的内容更改为全部大写。使用 `sed`、`awk` 和 `perl` 构建解决方案。'
 - en: '[PRE123]'
+  id: totrans-539
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE123]'
 - en: '[Sorting Stuff](#sorting-stuff)'
+  id: totrans-540
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[排序内容](#sorting-stuff)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-541
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用以下练习中使用的输入文件所在的 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录。'
 - en: '**1)** Default `sort` doesn''t work for numbers. Correct the command used below:'
+  id: totrans-542
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 默认的 `sort` 不适用于数字。更正以下使用的命令：'
 - en: '[PRE124]'
+  id: totrans-543
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE124]'
 - en: '**2)** Which `sort` option will help you ignore case?'
+  id: totrans-544
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 哪个 `sort` 选项可以帮助你忽略大小写？'
 - en: '[PRE125]'
+  id: totrans-545
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE125]'
 - en: '**3)** Go through the `sort` manual and use appropriate options to get the
     output shown below.'
+  id: totrans-546
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 阅读`sort`手册，并使用适当的选项来获取以下输出。'
 - en: '[PRE126]'
+  id: totrans-547
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE126]'
 - en: '`-g, --general-numeric-sort`'
+  id: totrans-548
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-g, --general-numeric-sort`'
 - en: ''
+  id: totrans-549
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: compare according to general numerical value
+  id: totrans-550
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 根据一般数值进行比较
 - en: '**4)** Sort the `scores.csv` file numerically in ascending order using the
     contents of the second field. Header line should be preserved as the first line
     as shown below. *Hint*: see the [Shell Features](./shell-features.html) chapter.'
+  id: totrans-551
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 使用第二字段的内容按数值升序排序 `scores.csv` 文件。应保留标题行作为第一行，如下所示。*提示*：参见[Shell特性](./shell-features.html)章节。'
 - en: '[PRE127]'
+  id: totrans-552
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE127]'
 - en: '**5)** Sort the contents of `duplicates.txt` by the fourth column numbers in
     descending order. Retain only the first copy of lines with the same number.'
+  id: totrans-553
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 按第四列数字降序排序 `duplicates.txt` 的内容。仅保留具有相同数字的第一行副本。'
 - en: '[PRE128]'
+  id: totrans-554
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE128]'
 - en: '**6)** Will `uniq` throw an error if the input is not sorted? What do you think
     will be the output for the following input?'
+  id: totrans-555
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 如果输入未排序，`uniq` 会抛出错误吗？你认为以下输入的输出会是什么？'
 - en: '`uniq` doesn''t necessarily require the input to be sorted. Adjacent lines
     are used for comparison purposes.'
+  id: totrans-556
   prefs: []
   type: TYPE_NORMAL
+  zh: '`uniq` 不一定需要输入已排序。相邻行用于比较目的。'
 - en: '[PRE129]'
+  id: totrans-557
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE129]'
 - en: '**7)** Retain only the unique entries based on the first two characters of
     the input lines. Sort the input if necessary.'
+  id: totrans-558
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 仅保留基于输入行前两个字符的唯一条目。如有必要，对输入进行排序。'
 - en: '[PRE130]'
+  id: totrans-559
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE130]'
 - en: '**8)** Count the number of times input lines are repeated and display the results
     in the format shown below.'
+  id: totrans-560
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 计算输入行重复的次数，并按以下格式显示结果。'
 - en: '[PRE131]'
+  id: totrans-561
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE131]'
 - en: '**9)** Display lines present in `c1.txt` but not in `c2.txt` using the `comm`
     command. Assume that the input files are already sorted.'
+  id: totrans-562
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 使用 `comm` 命令显示 `c1.txt` 中存在但不在 `c2.txt` 中的行。假设输入文件已经排序。'
 - en: '[PRE132]'
+  id: totrans-563
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE132]'
 - en: '**10)** Use appropriate options to get the expected output shown below.'
+  id: totrans-564
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用适当的选项来获取以下预期的输出。'
 - en: '[PRE133]'
+  id: totrans-565
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE133]'
 - en: '**11)** What are the differences between `sort -u` and `uniq -u` options, if
     any?'
+  id: totrans-566
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 如果有的话，`sort -u` 和 `uniq -u` 选项之间有什么区别？'
 - en: '`sort -u` retains first copy of duplicates deemed to be equal. `uniq -u` retains
     only the unique copies (i.e. not even a single copy of the duplicates will be
     part of the output).'
+  id: totrans-567
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sort -u` 保留被认为是重复的第一份副本。`uniq -u` 仅保留唯一副本（即，重复的副本甚至不会成为输出的一部分）。'
 - en: '[Comparing Files](#comparing-files)'
+  id: totrans-568
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[比较文件](#comparing-files)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-569
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用以下练习中使用的输入文件所在的 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录。'
 - en: '**1)** Which `cmp` option would you use if you just need the exit status reflecting
     whether the given inputs are same or not?'
+  id: totrans-570
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 如果你只需要退出状态来反映给定的输入是否相同，你会使用哪个 `cmp` 选项？'
 - en: '`-s, --quiet, --silent`'
+  id: totrans-571
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-s, --quiet, --silent`'
 - en: ''
+  id: totrans-572
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: suppress all normal output
+  id: totrans-573
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 抑制所有正常输出
 - en: '**2)** Which `cmp` option would you use to skip the initial bytes for comparison
     purposes? The below example requires you to skip the first two bytes.'
+  id: totrans-574
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 你会使用哪个 `cmp` 选项来跳过比较目的的初始字节？以下示例需要跳过前两个字节。'
 - en: '[PRE134]'
+  id: totrans-575
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE134]'
 - en: '`-i, --ignore-initial=SKIP`'
+  id: totrans-576
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i, --ignore-initial=SKIP`'
 - en: ''
+  id: totrans-577
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: skip first SKIP bytes of both inputs
+  id: totrans-578
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 跳过两个输入的前 SKIP 个字节
 - en: '**3)** What does the `diff -d` option do?'
+  id: totrans-579
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** `diff -d` 选项的作用是什么？'
 - en: '`-d, --minimal`'
+  id: totrans-580
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-d, --minimal`'
 - en: ''
+  id: totrans-581
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: try hard to find a smaller set of changes
+  id: totrans-582
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 努力寻找一组更小的更改
 - en: '**4)** Which option will help you get colored output with `diff`?'
+  id: totrans-583
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 哪个选项可以帮助你使用 `diff` 获取彩色输出？'
 - en: '`--color[=WHEN]`'
+  id: totrans-584
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--color[=WHEN]`'
 - en: ''
+  id: totrans-585
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: colorize the output; WHEN can be `never`, `always`, or `auto` (the default)
+  id: totrans-586
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 着色输出；WHEN 可以是 `never`、`always` 或 `auto`（默认值）
 - en: '**5)** Use appropriate options to get the desired output shown below.'
+  id: totrans-587
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 使用适当的选项获取以下预期的输出。'
 - en: '[PRE135]'
+  id: totrans-588
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE135]'
 - en: '`--left-column`'
+  id: totrans-589
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`--left-column`'
 - en: ''
+  id: totrans-590
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: output only the left column of common lines
+  id: totrans-591
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 仅输出公共行的左侧列
 - en: '**6)** Use appropriate options to get the desired output shown below.'
+  id: totrans-592
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 使用适当的选项获取以下预期的输出。'
 - en: '[PRE136]'
+  id: totrans-593
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE136]'
 - en: '[Assorted Text Processing Tools](#assorted-text-processing-tools)'
+  id: totrans-594
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[各种文本处理工具](#assorted-text-processing-tools)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use the [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
     directory for input files used in the following exercises.'
+  id: totrans-595
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 使用 [example_files/text_files](https://github.com/learnbyexample/cli-computing/tree/master/example_files/text_files)
+    目录中的输入文件进行以下练习。'
 - en: '**1)** Generate the following sequence.'
+  id: totrans-596
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 生成以下序列。'
 - en: '[PRE137]'
+  id: totrans-597
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE137]'
 - en: '**2)** Is the sequence shown below possible to generate with `seq`? If so,
     how?'
+  id: totrans-598
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 下面的序列可以用 `seq` 生成吗？如果是，怎么做？'
 - en: '[PRE138]'
+  id: totrans-599
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE138]'
 - en: '**3)** Display three random words from `/usr/share/dict/words` (or an equivalent
     dictionary word file) containing `s` and `e` and `t` in any order. The output
     shown below is just an example.'
+  id: totrans-600
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 显示来自 `/usr/share/dict/words`（或等效的词典单词文件）中包含 `s`、`e` 和 `t` 的任意顺序的三个随机单词。下面的输出只是一个示例。'
 - en: '[PRE139]'
+  id: totrans-601
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE139]'
 - en: '**4)** Briefly describe the purpose of the `shuf` command options `-i`, `-e`
     and `-r`.'
+  id: totrans-602
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 简要描述 `shuf` 命令选项 `-i`、`-e` 和 `-r` 的用途。'
 - en: '`-i, --input-range=LO-HI`'
+  id: totrans-603
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-i, --input-range=LO-HI`'
 - en: ''
+  id: totrans-604
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: treat each number LO through HI as an input line
+  id: totrans-605
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将 LO 到 HI 之间的每个数字视为一个输入行
 - en: ''
+  id: totrans-606
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-e, --echo`'
+  id: totrans-607
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-e, --echo`'
 - en: ''
+  id: totrans-608
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: treat each ARG as an input line
+  id: totrans-609
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将每个 ARG 视为一个输入行
 - en: ''
+  id: totrans-610
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-r, --repeat`'
+  id: totrans-611
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-r, --repeat`'
 - en: ''
+  id: totrans-612
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: output lines can be repeated
+  id: totrans-613
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 输出行可以重复
 - en: '**5)** Why does the below command not work as expected? What other tools can
     you use in such cases?'
+  id: totrans-614
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 为什么以下命令没有按预期工作？在这种情况下，你可以使用哪些其他工具？'
 - en: '`cut` ignores all repeated fields and output field order always follows the
     same order as input fields.'
+  id: totrans-615
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cut` 忽略所有重复字段，输出字段顺序始终与输入字段顺序相同。'
 - en: '[PRE140]'
+  id: totrans-616
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE140]'
 - en: '**6)** Display except the second field in the format shown below. Can you construct
     two different solutions?'
+  id: totrans-617
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 显示除了第二个字段之外的内容，格式如下。你能构造两种不同的解决方案吗？'
 - en: '[PRE141]'
+  id: totrans-618
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE141]'
 - en: '**7)** Extract the first three characters from the input lines as shown below.
     Can you also use the `head` command for this purpose? If not, why not?'
+  id: totrans-619
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 从输入行中提取前三个字符，如下所示。你也能使用 `head` 命令来完成这个任务吗？如果不能，为什么？'
 - en: '[PRE142]'
+  id: totrans-620
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE142]'
 - en: '`head` cannot be used because it acts on the input as a whole, whereas `cut`
     works line wise.'
+  id: totrans-621
   prefs: []
   type: TYPE_NORMAL
+  zh: '`head` 不能使用，因为它作用于整个输入，而 `cut` 是按行工作的。'
 - en: '**8)** Display only the first and third columns of the `scores.csv` input file
     in the format as shown below. Note that only space characters are present between
     the two columns, not tab.'
+  id: totrans-622
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 显示 `scores.csv` 输入文件的第一列和第三列，格式如下。注意，两个列之间只有空格字符，没有制表符。'
 - en: '[PRE143]'
+  id: totrans-623
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE143]'
 - en: '**9)** Display the contents of `table.txt` in the format shown below.'
+  id: totrans-624
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 以以下格式显示 `table.txt` 的内容。'
 - en: '[PRE144]'
+  id: totrans-625
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE144]'
 - en: '**10)** Implement [ROT13](https://en.wikipedia.org/wiki/ROT13) cipher using
     the `tr` command.'
+  id: totrans-626
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用 `tr` 命令实现 [ROT13](https://en.wikipedia.org/wiki/ROT13) 密码。'
 - en: '[PRE145]'
+  id: totrans-627
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE145]'
 - en: '**11)** Retain only alphabets, digits and whitespace characters.'
+  id: totrans-628
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 仅保留字母、数字和空白字符。'
 - en: '[PRE146]'
+  id: totrans-629
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE146]'
 - en: '**12)** Use `tr` to get the output shown below.'
+  id: totrans-630
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 使用 `tr` 获取以下输出。'
 - en: '[PRE147]'
+  id: totrans-631
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE147]'
 - en: '**13)** `paste -s` works separately for multiple input files. How would you
     workaround this if you needed to treat all the input files as a single source?'
+  id: totrans-632
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** `paste -s` 对多个输入文件分别工作。如果你需要将所有输入文件视为单个源，你会如何解决这个问题？'
 - en: '[PRE148]'
+  id: totrans-633
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE148]'
 - en: '**14)** Use appropriate options to get the expected output shown below.'
+  id: totrans-634
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** 使用适当的选项获取以下预期的输出。'
 - en: '[PRE149]'
+  id: totrans-635
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE149]'
 - en: '**15)** Use the `pr` command to get the expected output shown below.'
+  id: totrans-636
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 使用 `pr` 命令获取以下预期的输出。'
 - en: '[PRE150]'
+  id: totrans-637
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE150]'
 - en: '**16)** Use the `pr` command to join the input files `fruits.txt` and `ip.txt`
     as shown below.'
+  id: totrans-638
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 使用 `pr` 命令将输入文件 `fruits.txt` 和 `ip.txt` 连接起来，如下所示。'
 - en: '[PRE151]'
+  id: totrans-639
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE151]'
 - en: '**17)** The `cut` command doesn''t support a way to choose the last `N` fields.
     Which tool presented in this chapter can be combined to work with `cut` to get
     the output shown below?'
+  id: totrans-640
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** `cut` 命令不支持选择最后 `N` 个字段的方法。本章中介绍的哪个工具可以与 `cut` 结合使用以获得以下输出？'
 - en: '[PRE152]'
+  id: totrans-641
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE152]'
 - en: '**18)** Go through the `split` documentation and use appropriate options to
     get the output shown below for the input file `purchases.txt`.'
+  id: totrans-642
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 阅读关于 `split` 的文档，并使用适当的选项来获取以下输入文件 `purchases.txt` 的输出。'
 - en: '[PRE153]'
+  id: totrans-643
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE153]'
 - en: '`-l, --lines=NUMBER`'
+  id: totrans-644
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-l, --lines=NUMBER`'
 - en: ''
+  id: totrans-645
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: put NUMBER lines/records per output file
+  id: totrans-646
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 每个输出文件中放置 NUMBER 行/记录
 - en: '**19)** Go through the `split` documentation and use appropriate options to
     get the output shown below.'
+  id: totrans-647
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 阅读关于 `split` 的文档，并使用适当的选项来获取以下输出。'
 - en: '[PRE154]'
+  id: totrans-648
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE154]'
 - en: '`-t, --separator=SEP`'
+  id: totrans-649
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-t, --separator=SEP`'
 - en: ''
+  id: totrans-650
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: use SEP instead of newline as the record separator; `\0` (zero) specifies the
     NUL character
+  id: totrans-651
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 使用 SEP 而不是换行符作为记录分隔符；`\0`（零）指定了空字符
 - en: '**20)** Split the input file `purchases.txt` such that the text before a line
     containing `powder` is part of the first file and the rest are part of the second
     file as shown below.'
+  id: totrans-652
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 将输入文件 `purchases.txt` 分割，使得包含 `powder` 行之前的文本是第一个文件的一部分，其余的是第二个文件的一部分，如下所示。'
 - en: '[PRE155]'
+  id: totrans-653
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE155]'
 - en: '**21)** Write a generic solution that transposes comma delimited data. Example
     input/output is shown below. You can use any tool(s) presented in this book.'
+  id: totrans-654
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 编写一个通用的解决方案，用于转换逗号分隔的数据。以下是一个示例输入/输出。你可以使用本书中介绍的任何工具。'
 - en: '[PRE156]'
+  id: totrans-655
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE156]'
 - en: See also my blog post [CLI computation with GNU datamash](https://learnbyexample.github.io/cli-computation-gnu-datamash/).
+  id: totrans-656
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见我的博客文章 [使用 GNU datamash 进行 CLI 计算](https://learnbyexample.github.io/cli-computation-gnu-datamash/)。
 - en: '**22)** Reshape the contents of `table.txt` to the expected output shown below.'
+  id: totrans-657
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 将 `table.txt` 的内容重塑为以下预期的输出。'
 - en: '[PRE157]'
+  id: totrans-658
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE157]'
 - en: '[Shell Scripting](#shell-scripting)'
+  id: totrans-659
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Shell 脚本](#shell-scripting)'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Use a temporary working
     directory before attempting the exercises. You can delete such practice directories
     afterwards.'
+  id: totrans-660
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 在尝试练习之前，请使用临时工作目录。之后你可以删除这样的练习目录。'
 - en: '**1)** What''s wrong with the script shown below? Also, will the error go away
     if you use `bash try.sh` instead?'
+  id: totrans-661
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 以下脚本有什么问题？另外，如果你使用 `bash try.sh` 调用脚本，错误会消失吗？'
 - en: '`!#` should be `#!`. If you get confused which one should be used, remember
     that shebang is a **comment** that is treated specially at the start of the script.
     And no, the error won''t go away if you call the script using the `bash` command.'
+  id: totrans-662
   prefs: []
   type: TYPE_NORMAL
+  zh: '`!#` 应该是 `#!`。如果你不确定应该使用哪一个，请记住，shebang 是一个在脚本开头被特别处理的 **注释**。而且，如果你使用 `bash`
+    命令调用脚本，错误不会消失。'
 - en: '[PRE158]'
+  id: totrans-663
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE158]'
 - en: '**2)** Will the command shown below work? If so, what would be the output?'
+  id: totrans-664
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 以下命令会工作吗？如果是，输出会是什么？'
 - en: Yes, it will work. `echo hello` is being passed as the script to be executed
     by the `bash` command.
+  id: totrans-665
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的，它会工作。`echo hello` 正在被作为要由 `bash` 命令执行的脚本传递。
 - en: '[PRE159]'
+  id: totrans-666
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE159]'
 - en: '**3)** When would you `source` a script instead of using `bash` or creating
     an executable using shebang?'
+  id: totrans-667
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 你会在什么情况下使用 `source` 脚本而不是使用 `bash` 或通过 shebang 创建可执行文件？'
 - en: Using `source` to execute scripts helps when you want to work within the current
     shell environment instead of a sub-shell.
+  id: totrans-668
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `source` 执行脚本有助于你希望在当前 shell 环境中工作，而不是在子 shell 中。
 - en: '**4)** How would you display the contents of a variable with `shake` appended?'
+  id: totrans-669
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 你会如何显示带有 `shake` 后缀的变量的内容？'
 - en: '[PRE160]'
+  id: totrans-670
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE160]'
 - en: '**5)** What changes would you make to the code shown below to get the expected
     output?'
+  id: totrans-671
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 你会对以下代码进行哪些修改以获得预期的输出？'
 - en: '[PRE161]'
+  id: totrans-672
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE161]'
 - en: '**6)** Is the following code valid? If so, what would be the output of the
     `echo` command?'
+  id: totrans-673
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 以下代码是否有效？如果是，`echo` 命令的输出会是什么？'
 - en: Yes, it is valid. Array index can be arbitrarily used, they do not have to be
     contiguous.
+  id: totrans-674
   prefs: []
   type: TYPE_NORMAL
+  zh: 是的，这是有效的。数组索引可以任意使用，它们不必是连续的。
 - en: '[PRE162]'
+  id: totrans-675
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE162]'
 - en: '**7)** How would you get the last three characters of a variable''s contents?'
+  id: totrans-676
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 你会如何获取变量内容的最后三个字符？'
 - en: '[PRE163]'
+  id: totrans-677
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE163]'
 - en: '**8)** Will the second `echo` command give an error? If not, what will be the
     output?'
+  id: totrans-678
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 第二个 `echo` 命令会出错吗？如果不，输出会是什么？'
 - en: No error. It will give the length of the element at index `0`.
+  id: totrans-679
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有错误。它会给出索引 `0` 处元素的长度。
 - en: '[PRE164]'
+  id: totrans-680
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE164]'
 - en: '**9)** For the given array, use parameter expansion to remove characters until
     the first/last space.'
+  id: totrans-681
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 对于给定的数组，使用参数扩展来删除直到第一个/最后一个空格的字符。'
 - en: '[PRE165]'
+  id: totrans-682
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE165]'
 - en: '**10)** Use parameter expansion to get the expected outputs shown below.'
+  id: totrans-683
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 使用参数扩展来获取以下预期的输出。'
 - en: '[PRE166]'
+  id: totrans-684
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE166]'
 - en: '**11)** Is it possible to achieve the expected outputs shown below using parameter
     expansion? If so, how?'
+  id: totrans-685
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** 是否可以使用参数扩展来实现以下预期的输出？如果是，如何？'
 - en: Yes it is possible. For the second and third cases, `extglob` has to be enabled.
+  id: totrans-686
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是可能的。对于第二和第三种情况，必须启用 `extglob`。
 - en: '[PRE167]'
+  id: totrans-687
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE167]'
 - en: '**12)** For the given input, change case as per the expected outputs shown
     below.'
+  id: totrans-688
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 对于给定的输入，按照以下显示的预期输出更改大小写。'
 - en: '[PRE168]'
+  id: totrans-689
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE168]'
 - en: '**13)** Why does the conditional expression shown below fail?'
+  id: totrans-690
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 为什么以下显示的条件表达式失败？'
 - en: '[PRE169]'
+  id: totrans-691
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE169]'
 - en: '**14)** What is the difference between the `==` and `=~` string comparison
     operators?'
+  id: totrans-692
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** `==` 和 `=~` 字符串比较操作符之间的区别是什么？'
 - en: '`s1 = s2` or `s1 == s2` checks if two strings are equal'
+  id: totrans-693
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`s1 = s2` 或 `s1 == s2` 检查两个字符串是否相等'
 - en: unquoted portions of `s2` will be treated as a wildcard while testing against
     `s1`
+  id: totrans-694
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在测试 `s1` 时，`s2` 的未引用部分将被视为通配符
 - en: '`s1 =~ s2` checks if `s1` matches the POSIX extended regular expression provided
     by `s2`'
+  id: totrans-695
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`s1 =~ s2` 检查 `s1` 是否与 `s2` 提供的 POSIX 扩展正则表达式匹配'
 - en: '**15)** Why does the conditional expression used below show `failed` both times?
     Modify the expressions such that the first one correctly says `matched` instead
     of `failed`.'
+  id: totrans-696
   prefs: []
   type: TYPE_NORMAL
+  zh: '**15)** 为什么以下使用的条件表达式两次都显示 `failed`？修改表达式，使第一个正确地说 `matched` 而不是 `failed`。'
 - en: Quoted portions will be treated as literal strings. Wildcards should be unquoted.
+  id: totrans-697
   prefs: []
   type: TYPE_NORMAL
+  zh: 引用部分将被视为字面字符串。通配符应未引用。
 - en: '[PRE170]'
+  id: totrans-698
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE170]'
 - en: '**16)** Extract the digits that follow a `:` character for the given variable
     contents.'
+  id: totrans-699
   prefs: []
   type: TYPE_NORMAL
+  zh: '**16)** 提取给定变量内容中 `:` 字符后面的数字。'
 - en: '[PRE171]'
+  id: totrans-700
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE171]'
 - en: '**17)** Modify the expression shown below to correctly report `true` instead
     of `false`.'
+  id: totrans-701
   prefs: []
   type: TYPE_NORMAL
+  zh: '**17)** 修改以下表达式，使其正确报告 `true` 而不是 `false`。'
 - en: '[PRE172]'
+  id: totrans-702
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE172]'
 - en: '**18)** Write a shell script named `array.sh` that accepts array input from
     the user followed by another input as index. Display the corresponding value at
     that index. Couple of examples are shown below.'
+  id: totrans-703
   prefs: []
   type: TYPE_NORMAL
+  zh: '**18)** 编写一个名为 `array.sh` 的shell脚本，该脚本接受用户输入的数组，然后是另一个输入作为索引。显示该索引处的相应值。以下是一些示例。'
 - en: '[PRE173]'
+  id: totrans-704
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE173]'
 - en: '**19)** Write a shell script named `case.sh` that accepts exactly two command
     line arguments. The first argument can be `lower`, `upper` or `swap` and this
     should be used to transform the contents of the second argument. Examples script
     invocations are shown below, including what should happen if the command line
     arguments do not meet the script expectations.'
+  id: totrans-705
   prefs: []
   type: TYPE_NORMAL
+  zh: '**19)** 编写一个名为 `case.sh` 的shell脚本，该脚本接受恰好两个命令行参数。第一个参数可以是 `lower`、`upper` 或
+    `swap`，并应用于转换第二个参数的内容。以下是一些脚本调用示例，包括如果命令行参数不符合脚本预期会发生什么。'
 - en: '[PRE174]'
+  id: totrans-706
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE174]'
 - en: '**20)** Write a shell script named `loop.sh` that displays the number of lines
     for each of the files passed as command line arguments.'
+  id: totrans-707
   prefs: []
   type: TYPE_NORMAL
+  zh: '**20)** 编写一个名为 `loop.sh` 的shell脚本，该脚本显示每个作为命令行参数传递的文件的行数。'
 - en: '[PRE175]'
+  id: totrans-708
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE175]'
 - en: '**21)** Write a shell script named `read_file.sh` that reads a file line by
     line to be passed as an argument to the `paste -sd,` command. Can you also write
     a solution using the `xargs` command instead of a script?'
+  id: totrans-709
   prefs: []
   type: TYPE_NORMAL
+  zh: '**21)** 编写一个名为 `read_file.sh` 的shell脚本，该脚本逐行读取文件并将其作为参数传递给 `paste -sd,` 命令。你能否使用
+    `xargs` 命令而不是脚本编写一个解决方案？'
 - en: '[PRE176]'
+  id: totrans-710
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE176]'
 - en: '**22)** Write a function named `add_path` which prefixes the path of the current
     working directory to the arguments it receives and displays the results. Examples
     are shown below.'
+  id: totrans-711
   prefs: []
   type: TYPE_NORMAL
+  zh: '**22)** 编写一个名为 `add_path` 的函数，该函数将当前工作目录的路径添加到它接收的参数之前，并显示结果。以下是一些示例。'
 - en: '[PRE177]'
+  id: totrans-712
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE177]'
 - en: '**23)** What do the options `bash -x` and `bash -v` do?'
+  id: totrans-713
   prefs: []
   type: TYPE_NORMAL
+  zh: '**23)** `bash -x` 和 `bash -v` 选项的作用是什么？'
 - en: '`-x`'
+  id: totrans-714
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-x`'
 - en: ''
+  id: totrans-715
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Print commands and their arguments as they are executed.
+  id: totrans-716
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印执行的命令及其参数。
 - en: ''
+  id: totrans-717
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`-v`'
+  id: totrans-718
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`-v`'
 - en: ''
+  id: totrans-719
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Print shell input lines as they are read.
+  id: totrans-720
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 打印读取的shell输入行。
 - en: '**24)** What is `shellcheck` and when would you use it?'
+  id: totrans-721
   prefs: []
   type: TYPE_NORMAL
+  zh: '**24)** `shellcheck` 是什么，你会在什么情况下使用它？'
 - en: '[shellcheck](https://www.shellcheck.net/) is a static analysis tool that gives
     warnings and suggestions for scripts.'
+  id: totrans-722
   prefs: []
   type: TYPE_NORMAL
+  zh: '[shellcheck](https://www.shellcheck.net/) 是一个静态分析工具，它为脚本提供警告和建议。'
 - en: 'From `man shellcheck`:'
+  id: totrans-723
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据 `man shellcheck`：
 - en: ShellCheck is a static analysis and linting tool for sh/bash scripts. It’s mainly
     focused on handling typical beginner and intermediate level syntax errors and
     pitfalls where the shell just gives a cryptic error message or strange behavior,
     but it also reports on a few more advanced issues where corner cases can cause
     delayed failures.
+  id: totrans-724
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: ShellCheck 是用于 sh/bash 脚本的静态分析和linting工具。它主要关注处理典型的初学者和中级语法错误和陷阱，在这些情况下，shell
+    只会给出神秘的错误消息或奇怪的行为，但它也会报告一些更高级的问题，在这些情况下，边缘情况可能导致延迟失败。
 - en: '[Shell Customization](#shell-customization)'
+  id: totrans-725
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[Shell Customization](#shell-customization)'
 - en: '**1)** Which command would you use to display the name and value of all or
     specific environment variables?'
+  id: totrans-726
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 你会使用哪个命令来显示所有或特定环境变量的名称和值？'
 - en: '[PRE178]'
+  id: totrans-727
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE178]'
 - en: '**2)** If you add an alias for an already existing command (`ls` for example),
     how would you invoke the original command instead of the alias?'
+  id: totrans-728
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 如果你为已存在的命令（例如`ls`）添加了一个别名，你将如何调用原始命令而不是别名？'
 - en: By prefixing `\` or using the `command` builtin. For example, `\ls` or `command
     ls`.
+  id: totrans-729
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过在前面加`\`或使用`command`内建命令。例如，`\ls`或`command ls`。
 - en: '**3)** Why doesn''t the alias shown below work? What would you use instead?'
+  id: totrans-730
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 为什么下面的别名不起作用？你会用什么呢？'
 - en: You cannot pass arguments to aliases, need to use functions instead.
+  id: totrans-731
   prefs: []
   type: TYPE_NORMAL
+  zh: 你不能向别名传递参数，需要使用函数。
 - en: '[PRE179]'
+  id: totrans-732
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE179]'
 - en: '**4)** How would you remove a particular alias/function definition for the
     current shell session?'
+  id: totrans-733
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 你会如何移除当前shell会话中的特定别名/函数定义？'
 - en: '[PRE180]'
+  id: totrans-734
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE180]'
 - en: '**5)** Write an alias and a function to display the contents of the `PATH`
     environment variable on separate lines by changing `:` to the newline character.
     Sample output is shown below.'
+  id: totrans-735
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** 编写一个别名和一个函数，通过将`:`转换为换行符，在单独的行上显示`PATH`环境变量的内容。以下是一个示例输出。'
 - en: '[PRE181]'
+  id: totrans-736
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE181]'
 - en: '**6)** Will a login shell read and execute `~/.bashrc` automatically?'
+  id: totrans-737
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 登录shell是否会自动读取并执行`~/.bashrc`？'
 - en: 'No. From `info bash`:'
+  id: totrans-738
   prefs: []
   type: TYPE_NORMAL
+  zh: 不。从`info bash`中得知：
 - en: When an interactive shell that is not a login shell is started, Bash reads and
     executes commands from '~/.bashrc', if that file exists.
+  id: totrans-739
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 当启动一个不是登录shell的交互式shell时，如果存在`~/.bashrc`文件，Bash会读取并执行该文件中的命令。
 - en: 'See also [unix.stackexchange: why does bashrc check whether the current shell
     is interactive?](https://unix.stackexchange.com/q/257571/109046)'
+  id: totrans-740
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见[unix.stackexchange：为什么bashrc检查当前shell是否是交互式的？](https://unix.stackexchange.com/q/257571/109046)
 - en: '**7)** What should be the value assigned to `HISTSIZE` if you wish to have
     unlimited history entries?'
+  id: totrans-741
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** 如果你希望有无限的历史条目，应该将`HISTSIZE`赋值为多少？'
 - en: Any negative number.
+  id: totrans-742
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何负数。
 - en: '`HISTSIZE`'
+  id: totrans-743
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`HISTSIZE`'
 - en: ''
+  id: totrans-744
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -2767,98 +4219,140 @@
     is 0, commands are not saved in the history list. Numeric values less than zero
     result in every command being saved on the history list (there is no limit). The
     shell sets the default value to 500 after reading any startup files.
+  id: totrans-745
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 历史列表中需要记住的最大命令数。如果值为0，则命令不会保存在历史列表中。数值小于0会导致每个命令都保存在历史列表中（没有限制）。在读取任何启动文件后，shell将默认值设置为500。
 - en: '**8)** What does the binding `set completion-ignore-case on` do?'
+  id: totrans-746
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 绑定`set completion-ignore-case on`的作用是什么？'
 - en: '`completion-ignore-case`'
+  id: totrans-747
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`completion-ignore-case`'
 - en: ''
+  id: totrans-748
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: If set to `on`, Readline performs filename matching and completion in a case-insensitive
     fashion. The default value is `off`.
+  id: totrans-749
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 如果设置为`on`，Readline将以不区分大小写的方式执行文件名匹配和完成。默认值是`off`。
 - en: '**9)** Which shortcut helps you interactively search the command history?'
+  id: totrans-750
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 哪个快捷键可以帮助你交互式地搜索命令历史？'
 - en: To search backward in the history for a particular string, type `C-r`. Typing
     `C-s` searches forward through the history.
+  id: totrans-751
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 要在历史中向后搜索特定字符串，请输入`C-r`。输入`C-s`则通过历史向前搜索。
 - en: '**10)** What do the shortcuts `Alt+b` and `Alt+f` do?'
+  id: totrans-752
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** 短路键`Alt+b`和`Alt+f`的作用是什么？'
 - en: '`forward-word (M-f)`'
+  id: totrans-753
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`forward-word (M-f)`'
 - en: ''
+  id: totrans-754
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Move forward to the end of the next word. Words are composed of letters and
     digits.
+  id: totrans-755
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 向前移动到下一个单词的末尾。单词由字母和数字组成。
 - en: ''
+  id: totrans-756
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`backward-word (M-b)`'
+  id: totrans-757
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`backward-word (M-b)`'
 - en: ''
+  id: totrans-758
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Move back to the start of the current or previous word. Words are composed of
     letters and digits.
+  id: totrans-759
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 返回到当前或上一个单词的开头。单词由字母和数字组成。
 - en: '**11)** Are there differences between the `Ctrl+l` shortcut and the `clear`
     command?'
+  id: totrans-760
   prefs: []
   type: TYPE_NORMAL
+  zh: '**11)** `Ctrl+l`快捷键和`clear`命令之间有区别吗？'
 - en: '`Ctrl+l` retains whatever is typed so far and doesn''t try to remove the scrollback
     buffer altogether. You can use the `clear` command for that purpose.'
+  id: totrans-761
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Ctrl+l`保留已输入的内容，不会尝试完全删除回滚缓冲区。你可以使用`clear`命令来达到这个目的。'
 - en: '**12)** Which shortcut will you use to delete characters before the cursor
     till the start of the line?'
+  id: totrans-762
   prefs: []
   type: TYPE_NORMAL
+  zh: '**12)** 你会使用哪个快捷键来删除光标前的字符直到行首？'
 - en: '`unix-line-discard (C-u)`'
+  id: totrans-763
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`unix-line-discard (C-u)`'
 - en: ''
+  id: totrans-764
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Kill backward from the cursor to the beginning of the current line.
+  id: totrans-765
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 从光标处向后删除到当前行的开头。
 - en: '**13)** What do the shortcuts `Alt+t` and `Ctrl+t` do?'
+  id: totrans-766
   prefs: []
   type: TYPE_NORMAL
+  zh: '**13)** 短路键`Alt+t`和`Ctrl+t`的作用是什么？'
 - en: '`transpose-chars (C-t)`'
+  id: totrans-767
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`transpose-chars (C-t)`'
 - en: ''
+  id: totrans-768
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
@@ -2866,37 +4360,51 @@
     moving the cursor forward as well. If the insertion point is at the end of the
     line, then this transposes the last two characters of the line. Negative arguments
     have no effect.
+  id: totrans-769
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将光标前的字符向前拖动到光标处的字符上，同时将光标也向前移动。如果插入点位于行尾，则交换该行的最后两个字符。负数参数没有效果。
 - en: ''
+  id: totrans-770
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: '`transpose-words (M-t)`'
+  id: totrans-771
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '`transpose-words (M-t)`'
 - en: ''
+  id: totrans-772
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Drag the word before point past the word after point, moving point past that
     word as well. If the insertion point is at the end of the line, this transposes
     the last two words on the line.
+  id: totrans-773
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 将点之前的单词拖过点，同时将点也移动过那个单词。如果插入点位于行尾，则交换该行最后两个单词。
 - en: '**14)** Is there a difference between the `Shift+Insert` and `Shift+Ctrl+v`
     shortcuts?'
+  id: totrans-774
   prefs: []
   type: TYPE_NORMAL
+  zh: '**14)** `Shift+Insert` 和 `Shift+Ctrl+v` 快捷键之间有区别吗？'
 - en: '`Shift+Ctrl+v` pastes clipboard contents'
+  id: totrans-775
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Shift+Ctrl+v` 粘贴剪贴板内容'
 - en: '`Shift+Insert` pastes the last highlighted portion (not necessarily the clipboard
     contents)'
+  id: totrans-776
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Shift+Insert` 粘贴最后高亮的文本部分（不一定是剪贴板内容）'

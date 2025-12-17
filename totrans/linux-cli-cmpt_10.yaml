@@ -1,125 +1,185 @@
 - en: Managing Processes
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 管理进程
 - en: 原文：[https://learnbyexample.github.io/cli-computing/managing-processes.html](https://learnbyexample.github.io/cli-computing/managing-processes.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://learnbyexample.github.io/cli-computing/managing-processes.html](https://learnbyexample.github.io/cli-computing/managing-processes.html)
 - en: 'This chapter gives a basic overview of process management for interactive usage
     only. Handling processes for other use cases, such as system administration, requires
     a more robust solution (see [mywiki.wooledge: Process Management](https://mywiki.wooledge.org/ProcessManagement)
     to get started for such use cases).'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '本章仅提供交互式使用的基本进程管理概述。处理其他用例（如系统管理）的进程需要更健壮的解决方案（参见[mywiki.wooledge: Process
+    Management](https://mywiki.wooledge.org/ProcessManagement)以获取此类用例的入门信息）。'
 - en: '[Definitions](#definitions)'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[定义](#definitions)'
 - en: 'Here are some definitions that will be handy to know for this chapter''s contents:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一些定义，这些定义对于本章的内容将很有用：
 - en: '**Program** is a set of instructions written to perform a task'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**程序**是一组编写来执行任务的指令'
 - en: '**Process** is any running program'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**进程**是任何正在运行的程序'
 - en: '**Daemon** are background processes'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**守护进程**是后台进程'
 - en: '**Job** is a process that is not a daemon'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**作业**是指不是守护进程的进程'
 - en: i.e. jobs are interactive programs under user control
+  id: totrans-9
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 即作业是在用户控制下的交互程序
 - en: '[Running jobs in background](#running-jobs-in-background)'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[在后台运行作业](#running-jobs-in-background)'
 - en: Some commands and scripts can take more than few minutes to complete, and you
     might still need to continue using the shell. If you are not dependent on the
     current shell environment, you could just open another shell instance and continue
     working.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些命令和脚本可能需要几分钟才能完成，你可能仍然需要继续使用shell。如果你不依赖于当前的shell环境，你可以打开另一个shell实例并继续工作。
 - en: Another option is to push the job to the background, either at the time of command
     invocation itself or after the fact. Make sure to redirect standard output and
     error to avoid interfering with your continued interactive usage. Appending `&`
     to the command will execute it in the background.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个选项是在命令调用时或将事实之后将作业推送到后台。确保重定向标准输出和错误，以避免干扰你的持续交互使用。在命令后添加`&`将在后台执行它。
 - en: '[PRE0]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'In the above example, `[1]` refers to the job number and `12726` is the PID
     (process ID). You can use the `jobs` and `ps` commands to track active jobs:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的例子中，`[1]`指的是作业号，`12726`是PID（进程ID）。你可以使用`jobs`和`ps`命令来跟踪活动作业：
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'But what if you forgot to append `&` to the command? You can follow these steps:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 但如果你忘记在命令后添加`&`，你可以按照以下步骤操作：
 - en: '`Ctrl+z` — suspend the current running job'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+z` — 暂停当前正在运行的作业'
 - en: '`bg` — push the recently suspended job to the background'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`bg` — 将最近挂起的作业推送到后台'
 - en: continue using shell
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 继续使用shell
 - en: '`fg` — bring the recently pushed background job to the foreground'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`fg` — 将最近推送到后台的作业带到前台'
 - en: you can use `fg %n` to bring the `n`th job number to the foreground
+  id: totrans-21
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你可以使用`fg %n`将第`n`个作业号带到前台
 - en: 'Here''s a demo that you can try:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个你可以尝试的演示：
 - en: '[PRE2]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `jobs`, `bg` and `fg`
     are shell builtins. See [bash manual: Job Control](https://www.gnu.org/software/bash/manual/bash.html#Job-Control)
     for more details. See also [this tutorial on job control](https://www.digitalocean.com/community/tutorials/how-to-use-bash-s-job-control-to-manage-foreground-and-background-processes).'
+  id: totrans-24
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) `jobs`、`bg`和`fg`是shell内建命令。有关更多详细信息，请参阅[bash手册：作业控制](https://www.gnu.org/software/bash/manual/bash.html#Job-Control)。另请参阅[关于作业控制的教程](https://www.digitalocean.com/community/tutorials/how-to-use-bash-s-job-control-to-manage-foreground-and-background-processes)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [I want to
     run something in the background and then log out](https://mywiki.wooledge.org/ProcessManagement#I_want_to_run_something_in_the_background_and_then_log_out.)
     — `screen`, `tmux`, `nohup`, `disown`, etc.'
+  id: totrans-25
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 参见[我想在后台运行某些内容然后注销](https://mywiki.wooledge.org/ProcessManagement#I_want_to_run_something_in_the_background_and_then_log_out.)
+    — `screen`、`tmux`、`nohup`、`disown`等。'
 - en: '[ps](#ps)'
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[ps](#ps)'
 - en: 'The `ps` command gives a snapshot of the current processes. A few examples
     were already seen earlier in this chapter. Here''s an example with the `-f` option
     (full-format listing):'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ps`命令提供了当前进程的快照。本章前面已经看到了一些例子。以下是一个使用`-f`选项（完整格式列表）的例子：'
 - en: '[PRE3]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The fields in the above example are effective user ID (UID), process ID (PID),
     parent process ID (PPID), processor utilization (C), starting time (STIME), controlling
     terminal (TTY), cumulative CPU time (TIME) and command with all its arguments
@@ -127,219 +187,331 @@
     option will help you to sort based on specific fields. See [ps manual: Standard
     Format Specifiers](https://www.mankier.com/1/ps#Standard_Format_Specifiers) for
     complete list of formats available.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的示例中包含的字段有有效用户ID (UID)、进程ID (PID)、父进程ID (PPID)、处理器利用率 (C)、启动时间 (STIME)、控制终端
+    (TTY)、累计CPU时间 (TIME) 以及所有参数的命令 (CMD)。您可以使用 `-o` 选项自定义您想要的字段。`--sort` 选项可以帮助您根据特定字段进行排序。有关可用的完整格式列表，请参阅[ps手册：标准格式说明符](https://www.mankier.com/1/ps#Standard_Format_Specifiers)。
 - en: 'The `-e` (or `-A`) option selects all processes. This option is typically used
     in combination with `grep` for filtering:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-e`（或 `-A`）选项选择所有进程。此选项通常与 `grep` 结合使用进行过滤：'
 - en: '[PRE4]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also [linuxjourney:
     ps tutorial](https://linuxjourney.com/lesson/monitor-processes-ps-command).'
+  id: totrans-32
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 另请参阅 [linuxjourney：ps教程](https://linuxjourney.com/lesson/monitor-processes-ps-command)。'
 - en: '[pgrep](#pgrep)'
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[pgrep](#pgrep)'
 - en: 'The `pgrep` command helps you filter processes based on their name and attributes.
     By default, it matches against the process name, for example:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pgrep` 命令可以帮助您根据进程的名称和属性进行过滤。默认情况下，它匹配进程名称，例如：'
 - en: '[PRE5]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: You can use the `-l` option to display the process name as well (PID is shown
     by default).
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-l` 选项显示进程名称（默认情况下显示PID）。
 - en: '[PRE6]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: To match the process name exactly (instead of matching anywhere), use the `-x`
     option.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 要精确匹配进程名称（而不是匹配任何位置），请使用 `-x` 选项。
 - en: '[PRE7]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The `-a` option will list the full command line (the `-l` option seen earlier
     gives only the name, not the arguments).
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-a` 选项将列出完整的命令行（之前看到的 `-l` 选项只提供名称，不提供参数）。'
 - en: '[PRE8]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) There are several more
     options like filtering based on effective UID, PPID, etc. See [pgrep manual](https://www.mankier.com/1/pgrep)
     for more details.'
+  id: totrans-42
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 有更多选项，例如根据有效UID、PPID等进行过滤。有关更多详细信息，请参阅[pgrep手册](https://www.mankier.com/1/pgrep)。'
 - en: '[kill](#kill)'
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[kill](#kill)'
 - en: Sometimes, a process might not be responding to your interaction attempts, might
     be taking too long, accidentally uses too much memory, and so on. You can use
     the `kill` command to manage such processes.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，一个进程可能不会对您的交互尝试做出响应，可能运行时间过长，意外使用过多内存，等等。您可以使用 `kill` 命令来管理此类进程。
 - en: As mentioned at the beginning of this chapter, these examples are suggested
     for interactive processes initiated by you (shell scripts, for example, will require
     different strategies). Be 100% sure before you attempt to send signals to manage
     processes.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 如本章开头所述，这些示例建议用于您启动的交互式进程（例如，shell脚本将需要不同的策略）。在尝试向进程发送信号进行管理之前，请务必确保100%准确。
 - en: 'You can pass signals by name or by their associated number. Use `kill -l` to
     get a full list of signals. See also [unix.stackexchange: List of Signals](https://unix.stackexchange.com/q/317492/109046)
     and [unix.stackexchange: What causes various signals to be sent?](https://unix.stackexchange.com/q/6332/109046).'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过名称或与其关联的数字传递信号。使用 `kill -l` 获取完整的信号列表。另请参阅 [unix.stackexchange：信号列表](https://unix.stackexchange.com/q/317492/109046)
+    和 [unix.stackexchange：什么原因会导致发送各种信号？](https://unix.stackexchange.com/q/6332/109046)。
 - en: '[PRE9]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'You can use the PID or job number to specify the process to which the signal
     has to be sent. By default, `SIGTERM` (`15`) is sent, which is a polite way to
     ask the program to terminate. Here''s an example:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用PID或作业号来指定要发送信号的进程。默认情况下，发送 `SIGTERM`（`15`），这是一种礼貌地请求程序终止的方式。以下是一个示例：
 - en: '[PRE10]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Note that in the above example, pressing `Ctrl+z` actually sends the `SIGTSTP`
     (`20`) signal. Programs usually handle such signals to find a safer spot to suspend.
     Pressing `Ctrl+c` sends the `SIGINT` (`2`) signal, usually used to abort a process
     (depends on how the program handles it). You can use `Ctrl+\` to send `SIGQUIT`
     (`3`), typically used to ask the program to quit and give a [core dump](https://en.wikipedia.org/wiki/Core_dump).
     See also [stackoverflow: gracefully shutdown processes](https://stackoverflow.com/q/690415/4082052).'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在上面的示例中，按 `Ctrl+z` 实际上发送了 `SIGTSTP`（`20`）信号。程序通常会处理此类信号以找到更安全的挂起位置。按 `Ctrl+c`
+    发送 `SIGINT`（`2`）信号，通常用于终止进程（取决于程序如何处理它）。您可以使用 `Ctrl+\` 发送 `SIGQUIT`（`3`），通常用于请求程序退出并生成
+    [核心转储](https://en.wikipedia.org/wiki/Core_dump)。另请参阅 [stackoverflow：优雅地关闭进程](https://stackoverflow.com/q/690415/4082052)。
 - en: 'Here''s an illustration to show how to pass signals by their names and numerical
     values:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是一个说明如何通过名称和数值传递信号的示例：
 - en: '[PRE11]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
     If you need to terminate a process at all costs, you can use `SIGKILL` (`9`).
     This is a signal that cannot be blocked by programs. Use `Ctrl+z` to suspend a
     runaway job and then apply `kill -9` instead of trying to abort such jobs using
     `Ctrl+c`. See also [unix.stackexchange: why kill -9 should be avoided](https://unix.stackexchange.com/q/8916/109046).'
+  id: totrans-53
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) ![warning](../Images/b5314b4a0acf0f436c4bf59486793342.png)
+    如果无论如何都需要终止一个进程，你可以使用 `SIGKILL` (`9`)。这是一个程序无法阻止的信号。使用 `Ctrl+z` 暂停失控的作业，然后使用 `kill
+    -9` 而不是尝试使用 `Ctrl+c` 来中止此类作业。另请参阅 [unix.stackexchange: why kill -9 should be avoided](https://unix.stackexchange.com/q/8916/109046)。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Note that your system
     will likely have several different implementations of the `kill` command. The
     shell builtin version was discussed in this section.'
+  id: totrans-54
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 注意，你的系统可能有多达几个不同的 `kill`
+    命令实现。本节讨论了 shell 内置版本。'
 - en: '[top](#top)'
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[top](#top)'
 - en: 'The `top` command displays processes in a tabular format along with information
     like PID, process name, memory usage and so on. Here''s a sample screenshot:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '`top` 命令以表格形式显示进程，并附带信息如 PID、进程名称、内存使用情况等。以下是一个示例截图：'
 - en: '![sample screenshot for the top command](../Images/f5b01783dbf406f68a37befbd1efa1f7.png)'
+  id: totrans-57
   prefs: []
   type: TYPE_IMG
+  zh: '![top 命令的示例截图](../Images/f5b01783dbf406f68a37befbd1efa1f7.png)'
 - en: This command opens an interactive session, and automatically updates the information
     being displayed as well. You can press `M` (uppercase) to sort the processes by
     memory usage. Press `e` repeatedly to display memory sizes in terms of mega/giga/etc.
     Press `h` for help and press `q` to quit the session.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令打开一个交互式会话，并自动更新显示的信息。你可以按 `M`（大写）按内存使用量对进程进行排序。按 `e` 重复显示以兆/吉等术语表示的内存大小。按
+    `h` 获取帮助，按 `q` 退出会话。
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) Press `W` (uppercase)
     to write the current settings to the `toprc` configuration file and quit. The
     next time you use the `top` command, it will be displayed in the format that was
     saved.'
+  id: totrans-59
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 按 `W`（大写）将当前设置写入 `toprc`
+    配置文件并退出。下次使用 `top` 命令时，它将以保存的格式显示。'
 - en: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) See also alternative
     implementations like [htop](https://github.com/htop-dev/htop/) and [btop](https://github.com/aristocratos/btop).'
+  id: totrans-60
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '![info](../Images/147d5d96e6e103c258c8b5f99e9505a9.png) 另请参阅其他实现，如 [htop](https://github.com/htop-dev/htop/)
+    和 [btop](https://github.com/aristocratos/btop)。'
 - en: '[free](#free)'
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[free](#free)'
 - en: 'The `free` command displays information about your system memory. Here''s an
     example:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '`free` 命令显示有关系统内存的信息。以下是一个示例：'
 - en: '[PRE12]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: '[Further Reading](#further-reading)'
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[进一步阅读](#further-reading)'
 - en: '[mywiki.wooledge: Process Management](https://mywiki.wooledge.org/ProcessManagement)'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mywiki.wooledge: Process Management](https://mywiki.wooledge.org/ProcessManagement)'
 - en: '[ryanstutorials: Process Management](https://ryanstutorials.net/linuxtutorial/processes.php)'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ryanstutorials: Process Management](https://ryanstutorials.net/linuxtutorial/processes.php)'
 - en: '[digitalocean: Managing Linux Processes](https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux)'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[digitalocean: Managing Linux Processes](https://www.digitalocean.com/community/tutorials/how-to-use-ps-kill-and-nice-to-manage-processes-in-linux)'
 - en: '[Linux ate my ram](https://www.linuxatemyram.com/) — Linux is borrowing unused
     memory for disk caching. This makes it look like you are low on memory, but you
     are not! Everything is fine!'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Linux ate my ram](https://www.linuxatemyram.com/) — Linux 正在借用未使用的内存进行磁盘缓存。这使得看起来你的内存不足，但实际上一切正常！'
 - en: '[Exercises](#exercises)'
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '[练习](#exercises)'
 - en: '**1)** How would you invoke a command to be executed in the background? And
     what would you do to push a job to the background after it has already been launched?
     What commands can you use to track active jobs?'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1)** 你会如何调用一个在后台执行的命令？在命令已经启动后，你该如何将其推送到后台？你可以使用哪些命令来跟踪活动作业？'
 - en: '**2)** What do the `+` and `-` symbols next to job numbers indicate?'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2)** 就业编号旁边的 `+` 和 `-` 符号表示什么？'
 - en: '**3)** When would you use `fg %n` and `bg %n` instead of just `fg` and `bg`
     respectively?'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3)** 你会在什么情况下使用 `fg %n` 和 `bg %n` 而不是仅仅使用 `fg` 和 `bg` 分别？'
 - en: '**4)** Which option will help you customize the output fields needed for the
     `ps` command?'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4)** 哪个选项可以帮助你自定义 `ps` 命令所需的输出字段？'
 - en: '**5)** What''s the difference between `pgrep -a` and `pgrep -l` options?'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5)** `pgrep -a` 和 `pgrep -l` 选项之间的区别是什么？'
 - en: '**6)** If the job number is `2`, would you use `kill %2` or `kill 2` to send
     `SIGTERM` to that process?'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6)** 如果作业编号是 `2`，你会使用 `kill %2` 还是 `kill 2` 来向该进程发送 `SIGTERM`？'
 - en: '**7)** Which signal does the `Ctrl+c` shortcut send to the currently running
     process?'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7)** `Ctrl+c` 快捷键向当前运行进程发送哪个信号？'
 - en: '**8)** Which command helps you to continuously monitor processes, along with
     details like PID, memory usage, etc?'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8)** 哪个命令可以帮助你持续监控进程，包括如 PID、内存使用等详细信息？'
 - en: '**9)** Which key will help you manipulate kill tasks from within the `top`
     session?'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9)** 哪个键可以帮助你在 `top` 会话中操作结束任务？'
 - en: '**10)** What does the `free` command do?'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10)** `free` 命令的作用是什么？'
