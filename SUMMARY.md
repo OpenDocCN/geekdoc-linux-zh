@@ -11,6 +11,7 @@
 +   [Linux 内部原理](docs/linux-inside/README.md)
 +   [Linux 工具快速教程](docs/linux-tool-qkgd/README.md)
 +   [Linkedin SRE 中文教程](docs/lkin-sre/README.md)
++   [操作系统开发的简明指南](docs/ltl-bk-os-dev/README.md)
 +   [鸟哥的 Linux 私房菜：基础学习篇 第四版](docs/niaoge-linux-basic-4e/README.md)
 +   [鸟哥的 Linux 私房菜：服务器架设篇 第三版](docs/niaoge-linux-svr-3e/README.md)
 +   [Shell 编程范例](docs/shell-prog-ex/README.md)
