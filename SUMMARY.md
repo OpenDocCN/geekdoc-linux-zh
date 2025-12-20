@@ -1,4 +1,5 @@
 +   [AWK 程序设计语言](docs/awk-pl/README.md)
++   [计算机网络：原理、协议与实践](docs/cmpt-net-prcp-prtc-prac/README.md)
 +   [ElderNode 博客中文翻译](docs/eldernode-blog/README.md)
 +   [嵌入式 Linux 知识库 (eLinux.org)](docs/emb-linux-wiki/README.md)
 +   [FreeBSD 使用手册](docs/fbsd-man/README.md)
