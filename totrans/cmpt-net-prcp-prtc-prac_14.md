@@ -1,0 +1,449 @@
+# Glossary#
+
+> 原文：[https://4ed.computer-networking.info/syllabus/default/glossary.html](https://4ed.computer-networking.info/syllabus/default/glossary.html)
+
+ AIMD[#](#term-AIMD "Link to this term")
+
+Additive Increase, Multiplicative Decrease. A rate adaption algorithm used notably by TCP where a host additively increases its transmission rate when the network is not congested and multiplicatively decreases when congested is detected.
+
+anycast[#](#term-anycast "Link to this term")
+
+a transmission mode where an information is sent from one source to one receiver that belongs to a specified group
+
+API[#](#term-API "Link to this term")
+
+Application Programming Interface
+
+ARP[#](#term-ARP "Link to this term")
+
+The Address Resolution Protocol is a protocol used by IPv4 devices to obtain the datalink layer address that corresponds to an IPv4 address on the local area network. ARP is defined in [**RFC 826**](https://datatracker.ietf.org/doc/html/rfc826.html)
+
+ARPANET[#](#term-ARPANET "Link to this term")
+
+The Advanced Research Project Agency (ARPA) Network is a network that was built by network scientists in USA with funding from the ARPA of the US Ministry of Defense. ARPANET is considered as the grandfather of today’s Internet.
+
+ASCII[#](#term-ASCII "Link to this term")
+
+The American Standard Code for Information Interchange (ASCII) is a character-encoding scheme that defines a binary representation for characters. The ASCII table contains both printable characters and control characters. ASCII characters were encoded in 7 bits and only contained the characters required to write text in English. Other character sets such as Unicode have been developed later to support all written languages.
+
+ASN.1[#](#term-ASN.1 "Link to this term")
+
+The Abstract Syntax Notation One (ASN.1) was designed by ISO and ITU-T. It is a standard and flexible notation that can be used to describe data structures for representing, encoding, transmitting, and decoding data between applications. It was designed to be used in the Presentation layer of the OSI reference model but is now used in other protocols such as [SNMP](#term-SNMP).
+
+ATM[#](#term-ATM "Link to this term")
+
+Asynchronous Transfer Mode
+
+BGP[#](#term-BGP "Link to this term")
+
+The Border Gateway Protocol is the interdomain routing protocol used in the global Internet.
+
+BNF[#](#term-BNF "Link to this term")
+
+A Backus-Naur Form (BNF) is a formal way to describe a language by using syntactic and lexical rules. BNFs are frequently used to define programming languages, but also to define the messages exchanged between networked applications. [**RFC 5234**](https://datatracker.ietf.org/doc/html/rfc5234.html) explains how a BNF must be written to specify an Internet protocol.
+
+broadcast[#](#term-broadcast "Link to this term")
+
+a transmission mode where is same information is sent to all nodes in the network
+
+CIDR[#](#term-CIDR "Link to this term")
+
+Classless Inter Domain Routing is the current address allocation architecture for IP version 4\. It was defined in [**RFC 1518**](https://datatracker.ietf.org/doc/html/rfc1518.html) and [**RFC 4632**](https://datatracker.ietf.org/doc/html/rfc4632.html).
+
+dial-up line[#](#term-dial-up-line "Link to this term")
+
+A synonym for a regular telephone line, i.e. a line that can be used to dial any telephone number.
+
+DNS[#](#term-DNS "Link to this term")
+
+The Domain Name System is a distributed database that can be queried by hosts to map names onto IP addresses. It is defined in [**RFC 1035**](https://datatracker.ietf.org/doc/html/rfc1035.html)
+
+eBGP[#](#term-eBGP "Link to this term")
+
+An eBGP session is a BGP session between two directly connected routers that belong to two different Autonomous Systems. Also called an external BGP session.
+
+EGP[#](#term-EGP "Link to this term")
+
+Exterior Gateway Protocol. Synonym of interdomain routing protocol
+
+EIGRP[#](#term-EIGRP "Link to this term")
+
+The Enhanced Interior Gateway Routing Protocol (EIGRP) is a proprietary intradomain routing protocol that is often used in enterprise networks. EIGRP uses the DUAL algorithm described in [[Garcia1993]](bibliography.html#garcia1993).
+
+Ethernet[#](#term-Ethernet "Link to this term")
+
+The most widely used LAN technology.
+
+file transfer[#](#term-file-transfer "Link to this term")
+
+A service that enables a user to send or receive a file from a distant server over the network. The File Transfer Protocol [FTP](#term-FTP) was a popular service. It has now been replaced by HTTP/HTTPs or more secure protocols such as the [SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol).
+
+frame[#](#term-frame "Link to this term")
+
+a frame is the unit of information transfer in the datalink layer
+
+Frame-Relay[#](#term-Frame-Relay "Link to this term")
+
+A wide area networking technology using virtual circuits that is deployed by telecom operators.
+
+ftp[#](#term-ftp "Link to this term")
+
+The File Transfer Protocol defined in [**RFC 959**](https://datatracker.ietf.org/doc/html/rfc959.html) has been the de facto protocol to exchange files over the Internet before the widespread adoption of HTTP [**RFC 2616**](https://datatracker.ietf.org/doc/html/rfc2616.html).
+
+FTP[#](#term-FTP "Link to this term")
+
+The File Transfer Protocol is defined in [**RFC 959**](https://datatracker.ietf.org/doc/html/rfc959.html)
+
+hosts.txt[#](#term-hosts.txt "Link to this term")
+
+The original file containing the list of all Internet hosts. This file has been deprecated, but Unix variants still maintain a local `/etc/hosts` containing mappings between names and IP addresses. See [http://man7.org/linux/man-pages/man5/hosts.5.html](http://man7.org/linux/man-pages/man5/hosts.5.html) for a description of the format of this file on Linux.
+
+HTML[#](#term-HTML "Link to this term")
+
+The HyperText Markup Language specifies the structure and the syntax of the documents that are exchanged on the world wide web. HTML is maintained by the [HTML working group](https://www.w3.org/html/wg/) of the [W3C](#term-W3C)
+
+HTTP[#](#term-HTTP "Link to this term")
+
+The HyperText Transport Protocol is defined in [**RFC 2616**](https://datatracker.ietf.org/doc/html/rfc2616.html)
+
+hub[#](#term-hub "Link to this term")
+
+A relay operating in the physical layer.
+
+iBGP[#](#term-iBGP "Link to this term")
+
+An iBGP session is a BGP between two routers belonging to the same Autonomous System. Also called an internal BGP session.
+
+ICANN[#](#term-ICANN "Link to this term")
+
+The Internet Corporation for Assigned Names and Numbers (ICANN) coordinates the allocation of domain names, IP addresses and AS numbers as well protocol parameters. It also coordinates the operation and the evolution of the DNS root name servers.
+
+IETF[#](#term-IETF "Link to this term")
+
+The Internet Engineering Task Force is a non-profit organization that develops the standards for the protocols used in the Internet. The IETF mainly covers the transport and network layers. Several application layer protocols are also standardized within the IETF. The work in the IETF is organized in working groups. Most of the work is performed by exchanging emails and there are three IETF meetings every year. Participation is open to anyone. See [https://www.ietf.org](https://www.ietf.org)
+
+IGP[#](#term-IGP "Link to this term")
+
+Interior Gateway Protocol. Synonym of intradomain routing protocol
+
+IGRP[#](#term-IGRP "Link to this term")
+
+The Interior Gateway Routing Protocol (IGRP) is a proprietary intradomain routing protocol that uses distance vector. IGRP supports multiple metrics for each route but has been replaced by [EIGRP](#term-EIGRP)
+
+IMAP[#](#term-IMAP "Link to this term")
+
+The Internet Message Access Protocol (IMAP), defined in [**RFC 3501**](https://datatracker.ietf.org/doc/html/rfc3501.html), is an application-level protocol that allows a client to access and manipulate the emails stored on a server. With IMAP, the email messages remain on the server and are not downloaded on the client.
+
+Internet[#](#term-Internet "Link to this term")
+
+a public internet, i.e. a network composed of different networks that are running [IPv4](#term-IPv4) or [IPv6](#term-IPv6)
+
+internet[#](#term-internet "Link to this term")
+
+an internet is an internetwork, i.e. a network composed of different networks. The [Internet](#term-Internet), with a capital I corresponds to the global network that we use today, but other internetworks have been used in the path.
+
+Internet Assigned Numbers Authority[#](#term-Internet-Assigned-Numbers-Authority "Link to this term")
+
+IANA[#](#term-IANA "Link to this term")
+
+The Internet Assigned Numbers Authority (IANA) is responsible for the coordination of the DNS Root, IP addressing, and other Internet protocol resources
+
+Internet Protocol[#](#term-Internet-Protocol "Link to this term")
+
+IP[#](#term-IP "Link to this term")
+
+Internet Protocol is the generic term for the network layer protocol in the TCP/IP protocol suite. IP version 4 is widely used but IP version 6 is being deployed globally.
+
+Internet Service Providers[#](#term-Internet-Service-Providers "Link to this term")
+
+Internet Service Provider[#](#term-Internet-Service-Provider "Link to this term")
+
+ISP[#](#term-0 "Link to this term")
+
+A company that provides Internet access to users
+
+inverse query[#](#term-inverse-query "Link to this term")
+
+For DNS servers and resolvers, an inverse query is a query for the domain name that corresponds to a given IP address.
+
+IP subnet[#](#term-IP-subnet "Link to this term")
+
+A set of IP addresses having a common prefix.
+
+IP version 4[#](#term-IP-version-4 "Link to this term")
+
+IPv4[#](#term-IPv4 "Link to this term")
+
+is the version 4 of the Internet Protocol, the connectionless network layer protocol used in most of the Internet today. IPv4 addresses are encoded as a 32 bits field.
+
+IP version 6[#](#term-IP-version-6 "Link to this term")
+
+IPv6[#](#term-IPv6 "Link to this term")
+
+is the version 6 of the Internet Protocol, the connectionless network layer protocol which is intended to replace IPv4\. IP version 6 addresses are encoded as a 128 bits field.
+
+IS-IS[#](#term-IS-IS "Link to this term")
+
+Intermediate System- Intermediate System. A link-state intradomain routing that was initially defined for the ISO CLNP protocol but was extended to support IP v4 and IP v6\. IS-IS is often used in ISP networks. It is defined in [[ISO10589]](bibliography.html#iso10589)
+
+ISN[#](#term-ISN "Link to this term")
+
+The Initial Sequence Number of a TCP connection is the sequence number chosen by the client ( resp. server) that is placed in the SYN (resp. SYN+ACK) segment during the establishment of the TCP connection.
+
+ISO[#](#term-ISO "Link to this term")
+
+The International Standardization Organization is an agency of the United Nations that is based in Geneva and develop standards on various topics. Within ISO, country representatives vote to approve or reject standards. Most of the work on the development of ISO standards is done in expert working groups. Additional information about ISO may be obtained from [https://www.iso.org](https://www.iso.org)
+
+ISO-3166[#](#term-ISO-3166 "Link to this term")
+
+An [ISO](#term-ISO) standard that defines codes to represent countries and their subdivisions. See [http://www.iso.org/iso/country_codes.htm](http://www.iso.org/iso/country_codes.htm)
+
+ISP[#](#term-ISP "Link to this term")
+
+An Internet Service Provider, i.e. a network that provides Internet access to its clients.
+
+ITU[#](#term-ITU "Link to this term")
+
+The International Telecommunication Union is a United Nation’s agency whose purpose is to develop standards for the telecommunication industry. It was initially created to standardize the basic telephone system but expanded later towards data networks. The work within ITU is mainly done by network specialists from the telecommunication industry (operators and vendors). See [https://www.itu.int](https://www.itu.int) for more information
+
+IXP[#](#term-IXP "Link to this term")
+
+Internet eXchange Point. A location where routers belonging to different domains are attached to the same Local Area Network to establish peering sessions and exchange packets. See [http://www.euro-ix.net/](http://www.euro-ix.net/) or [https://en.wikipedia.org/wiki/List_of_Internet_exchange_points_by_size](https://en.wikipedia.org/wiki/List_of_Internet_exchange_points_by_size) for a partial list of IXPs.
+
+leased line[#](#term-leased-line "Link to this term")
+
+A telephone line that is permanently available between two endpoints.
+
+Local Area Network[#](#term-Local-Area-Network "Link to this term")
+
+Local Area Networks[#](#term-Local-Area-Networks "Link to this term")
+
+LAN[#](#term-LAN "Link to this term")
+
+Local Area Network. Examples include Ethernet, Wi-Fi, Token-Ring, FDDI, …
+
+MAC address[#](#term-MAC-address "Link to this term")
+
+IP address[#](#term-IP-address "Link to this term")
+
+address[#](#term-address "Link to this term")
+
+A string of bits that identifies a network interface in the network layer or the datalink layer. Most addresses have a fixed length, e.g. 32 bits for [IPv4](#term-IPv4), 128 bits for [IPv6](#term-IPv6) or 48 bits for [Ethernet](#term-Ethernet) and other related Local Area Networks.
+
+MAN[#](#term-MAN "Link to this term")
+
+Metropolitan Area Network. A network covering the geographic area around a large city.
+
+Medium Access Control[#](#term-Medium-Access-Control "Link to this term")
+
+A technique to regulate the access to a shared medium.
+
+MIME[#](#term-MIME "Link to this term")
+
+The Multipurpose Internet Mail Extensions (MIME) defined in [**RFC 2045**](https://datatracker.ietf.org/doc/html/rfc2045.html) are a set of extensions to the format of email messages that allow to use non-ASCII characters inside mail messages. A MIME message can be composed of several different parts each having a different format.
+
+MIME document[#](#term-MIME-document "Link to this term")
+
+A MIME document is a document, encoded by using the [MIME](#term-MIME) format.
+
+minicomputer[#](#term-minicomputer "Link to this term")
+
+A minicomputer is a multi-user system that was typically used in the 1960s/1970s to serve departments. See the corresponding Wikipedia article for additional information : [https://en.wikipedia.org/wiki/Minicomputer](https://en.wikipedia.org/wiki/Minicomputer)
+
+modem[#](#term-modem "Link to this term")
+
+A modem (modulator-demodulator) is a device that encodes (resp. decodes) digital information by modulating (resp. demodulating) an analog signal. Modems are frequently used to transmit digital information over telephone lines and radio links. See [https://en.wikipedia.org/wiki/Modem](https://en.wikipedia.org/wiki/Modem) for a survey of various types of modems
+
+MSS[#](#term-MSS "Link to this term")
+
+A TCP option used by a TCP entity in SYN segments to indicate the Maximum Segment Size that it is able to receive.
+
+multicast[#](#term-multicast "Link to this term")
+
+a transmission mode where an information is sent efficiently to all the receivers that belong to a given group
+
+nameserver[#](#term-nameserver "Link to this term")
+
+A server that implements the DNS protocol and can answer queries for names inside its own domain.
+
+NAT[#](#term-NAT "Link to this term")
+
+A Network Address Translator is a middlebox that translates IP packets.
+
+NBMA[#](#term-NBMA "Link to this term")
+
+A Non Broadcast Mode Multiple Access Network is a subnetwork that supports multiple hosts/routers but does not provide an efficient way of sending broadcast frames to all devices attached to the subnetwork. ATM subnetworks are an example of NBMA networks.
+
+network-byte order[#](#term-network-byte-order "Link to this term")
+
+Internet protocol allow to transport sequences of bytes. These sequences of bytes are sufficient to carry ASCII characters. The network-byte order refers to the Big-Endian encoding for 16 and 32 bits integer. See [https://en.wikipedia.org/wiki/Endianness](https://en.wikipedia.org/wiki/Endianness)
+
+NFS[#](#term-NFS "Link to this term")
+
+The Network File System is defined in [**RFC 1094**](https://datatracker.ietf.org/doc/html/rfc1094.html)
+
+NNTP[#](#term-NNTP "Link to this term")
+
+Network News Transfer Protocol[#](#term-Network-News-Transfer-Protocol "Link to this term")
+
+A protocol to transfer newsgroup messages defined in [**RFC 3977**](https://datatracker.ietf.org/doc/html/rfc3977.html).
+
+NTP[#](#term-NTP "Link to this term")
+
+The Network Time Protocol is defined in [**RFC 1305**](https://datatracker.ietf.org/doc/html/rfc1305.html)
+
+OSI[#](#term-OSI "Link to this term")
+
+Open Systems Interconnection. A set of networking standards developed by [ISO](#term-ISO) including the 7 layers OSI reference model.
+
+OSPF[#](#term-OSPF "Link to this term")
+
+Open Shortest Path First. A link-state intradomain routing protocol that is often used in enterprise and ISP networks. OSPF is defined in and [**RFC 2328**](https://datatracker.ietf.org/doc/html/rfc2328.html) and [**RFC 5340**](https://datatracker.ietf.org/doc/html/rfc5340.html)
+
+packets[#](#term-packets "Link to this term")
+
+packet[#](#term-packet "Link to this term")
+
+a packet is the unit of information transfer in the network layer
+
+PBL[#](#term-PBL "Link to this term")
+
+Problem-based learning is a teaching approach that relies on problems.
+
+POP[#](#term-POP "Link to this term")
+
+The Post Office Protocol (POP), defined [**RFC 1939**](https://datatracker.ietf.org/doc/html/rfc1939.html), is an application-level protocol that allows a client to download email messages stored on a server.
+
+protocol[#](#term-protocol "Link to this term")
+
+A set of rules (semantics and syntax) that specify the messages that nodes can exchange to communicate
+
+remote login[#](#term-remote-login "Link to this term")
+
+A service that enables a user to connect to a distant server over the network. Telnet, defined in [**RFC 854**](https://datatracker.ietf.org/doc/html/rfc854.html) and the BSD rlogin services defined in [**RFC 1282**](https://datatracker.ietf.org/doc/html/rfc1282.html) were popular in the past. They have been deprecated for security reasons and are now replaced by [ssh](#term-ssh).
+
+resolver[#](#term-resolver "Link to this term")
+
+A server that implements the DNS protocol and can resolve queries. A resolver usually serves a set of clients (e.g. all hosts in campus or all clients of a given ISP). It sends DNS queries to nameservers everywhere on behalf of its clients and stores the received answers in its cache. A resolver must know the IP addresses of the root nameservers.
+
+RIP[#](#term-RIP "Link to this term")
+
+Routing Information Protocol. An intradomain routing protocol based on distance vectors that is sometimes used in enterprise networks. RIP is defined in [**RFC 2453**](https://datatracker.ietf.org/doc/html/rfc2453.html).
+
+RIR[#](#term-RIR "Link to this term")
+
+Regional Internet Registry. An organization that manages IP addresses and AS numbers on behalf of [IANA](#term-IANA).
+
+root nameserver[#](#term-root-nameserver "Link to this term")
+
+A name server that is responsible for the root of the domain names hierarchy. There are currently a dozen root nameservers and each DNS resolver See [http://www.root-servers.org/](http://www.root-servers.org/) for more information about the operation of these root servers.
+
+round-trip-time[#](#term-round-trip-time "Link to this term")
+
+The round-trip-time (RTT) is the delay between the transmission of a segment and the reception of the corresponding acknowledgment in a transport protocol.
+
+router[#](#term-router "Link to this term")
+
+A relay operating in the network layer.
+
+RPC[#](#term-RPC "Link to this term")
+
+Several types of remote procedure calls have been defined. The RPC mechanism defined in [**RFC 5531**](https://datatracker.ietf.org/doc/html/rfc5531.html) is used by applications such as NFS
+
+SDU (Service Data Unit)[#](#term-SDU-Service-Data-Unit "Link to this term")
+
+a Service Data Unit is the unit information transferred between applications
+
+segment[#](#term-segment "Link to this term")
+
+a segment is the unit of information transfer in the transport layer
+
+SMTP[#](#term-SMTP "Link to this term")
+
+The Simple Mail Transfer Protocol is defined in [**RFC 821**](https://datatracker.ietf.org/doc/html/rfc821.html)
+
+SNMP[#](#term-SNMP "Link to this term")
+
+The Simple Network Management Protocol is a management protocol defined for TCP/IP networks.
+
+socket[#](#term-socket "Link to this term")
+
+A low-level API originally defined on Berkeley Unix to allow programmers to develop clients and servers.
+
+spoofed packet[#](#term-spoofed-packet "Link to this term")
+
+A packet is said to be spoofed when the sender of the packet has used as source address a different address than its own.
+
+ssh[#](#term-ssh "Link to this term")
+
+The Secure Shell (SSH) Transport Layer Protocol is defined in [**RFC 4253**](https://datatracker.ietf.org/doc/html/rfc4253.html)
+
+standard query[#](#term-standard-query "Link to this term")
+
+For DNS servers and resolvers, a standard query is a query for a A or a AAAA record. Such a query typically returns an IP address.
+
+switch[#](#term-switch "Link to this term")
+
+A relay operating in the datalink layer.
+
+SYN cookie[#](#term-SYN-cookie "Link to this term")
+
+The SYN cookies is a technique used to compute the initial sequence number (ISN)
+
+TCB[#](#term-TCB "Link to this term")
+
+The Transmission Control Block is the set of variables that are maintained for each established TCP connection by a TCP implementation.
+
+TCP[#](#term-TCP "Link to this term")
+
+The Transmission Control Protocol is a protocol of the transport layer in the TCP/IP protocol suite that provides a reliable bytestream connection-oriented service on top of IP
+
+TCP/IP[#](#term-TCP-IP "Link to this term")
+
+refers to the [TCP](#term-TCP) and [IP](#term-IP) protocols
+
+telnet[#](#term-telnet "Link to this term")
+
+The telnet protocol is defined in [**RFC 854**](https://datatracker.ietf.org/doc/html/rfc854.html)
+
+TLD[#](#term-TLD "Link to this term")
+
+A Top-level domain name. There are two types of TLDs. The ccTLD are the TLD that correspond to a two letters [ISO-3166](#term-ISO-3166) country code. The gTLD are the generic TLDs that are not assigned to a country.
+
+TLS[#](#term-TLS "Link to this term")
+
+Transport Layer Security, defined in [**RFC 5246**](https://datatracker.ietf.org/doc/html/rfc5246.html) is a cryptographic protocol that is used to provide communication security for Internet applications. This protocol is used on top of the transport service but a detailed description is outside the scope of this book.
+
+UDP[#](#term-UDP "Link to this term")
+
+User Datagram Protocol is a protocol of the transport layer in the TCP/IP protocol suite that provides an unreliable connectionless service that includes a mechanism to detect corruption
+
+unicast[#](#term-unicast "Link to this term")
+
+a transmission mode where an information is sent from one source to one recipient
+
+VNC[#](#term-VNC "Link to this term")
+
+vnc[#](#term-vnc "Link to this term")
+
+A networked application that allows to remotely access a computer’s Graphical User Interface. See [https://en.wikipedia.org/wiki/Virtual_Network_Computing](https://en.wikipedia.org/wiki/Virtual_Network_Computing)
+
+W3C[#](#term-W3C "Link to this term")
+
+The world wide web consortium was created to standardize the protocols and mechanisms used in the world wide web. It is thus focused on a subset of the application layer. See [https://www.w3.org](https://www.w3.org)
+
+WAN[#](#term-WAN "Link to this term")
+
+Wide Area Network. A large network.
+
+X.25[#](#term-X.25 "Link to this term")
+
+A wide area networking technology using virtual circuits that was deployed by telecommunication operators.
+
+X11[#](#term-X11 "Link to this term")
+
+The XWindow system and the associated protocols are defined in [[SG1990]](bibliography.html#sg1990)
+
+XML[#](#term-XML "Link to this term")
+
+The eXtensible Markup Language (XML) is a flexible text format derived from SGML. It was originally designed for the electronic publishing industry but is now used by a wide variety of applications that need to exchange structured data. The XML specifications are maintained by [several working groups](https://www.w3.org/XML/) of the [W3C](#term-W3C)
