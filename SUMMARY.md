@@ -9,6 +9,7 @@
 +   [Linux 命令行](docs/linux-cli/README.md)
 +   [Linux 命令行计算指南](docs/linux-cli-cmpt/README.md)
 +   [Linux 内部原理](docs/linux-inside/README.md)
++   [Linux 内核模块编程指南](docs/linux-krn-mdl-prog-dg/README.md)
 +   [Linux 工具快速教程](docs/linux-tool-qkgd/README.md)
 +   [Linkedin SRE 中文教程](docs/lkin-sre/README.md)
 +   [操作系统开发的简明指南](docs/ltl-bk-os-dev/README.md)
