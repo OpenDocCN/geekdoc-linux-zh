@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Interdomain routing#</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Interdomain routing#</h1>
+<blockquote>原文：<a href="https://4ed.computer-networking.info/syllabus/default/networks/bgp.html">https://4ed.computer-networking.info/syllabus/default/networks/bgp.html</a></blockquote>
+
+<p>As explained earlier, the Internet is composed of more than 100,000 different networks <a class="footnote-reference brackets" href="#fasnum" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> called <cite>domains</cite>. Each domain is composed of a group of routers and hosts that are managed by the same organization. Example domains include <a class="reference external" href="https://www.belnet.be">belnet</a>, <a class="reference external" href="https://www.sprint.net/">sprint</a>, <a class="reference external" href="https://www.lumen.com">level3</a>, <a class="reference external" href="https://www.geant.net">geant</a>, <a class="reference external" href="https://www.internet2.edu">abilene</a>, <a class="reference external" href="https://www.cisco.com">cisco</a> or <a class="reference external" href="https://www.google.com">google</a> …</p>
+<p id="index-0">Each domain contains a set of routers. From a routing point of view, these domains can be divided into two classes : the <cite>transit</cite> and the <cite>stub</cite> domains. A <cite>stub</cite> domain sends and receives packets whose source or destination are one of its own hosts. A <cite>transit</cite> domain is a domain that provides a transit service for other domains, i.e. the routers in this domain forward packets whose source and destination do not belong to the transit domain. As of this writing, about 85% of the domains in the Internet are stub domains <a class="footnote-reference brackets" href="#fpotaroo" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. A <cite>stub</cite> domain that is connected to a single transit domain is called a <cite>single-homed stub</cite> (e.g., <cite>S1</cite> in figure <a class="reference internal" href="#fig-transit-stub"><span class="std std-numref">Fig. 151</span></a>.). A <cite>multihomed stub</cite> is a <cite>stub</cite> domain connected to two or more transit providers (e.g., <cite>S2</cite>).</p>
+<figure class="align-center" id="id29">
+<span id="fig-transit-stub"/><a class="reference internal image-reference" href="../_images/transit-stub.png"><img alt="../_images/transit-stub.png" src="../Images/b9d5e18667918170f0100c7c633d6575.png" style="width: 394.79999999999995px; height: 123.89999999999999px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/transit-stub.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 151 </span><span class="caption-text">Transit and stub domains</span><a class="headerlink" href="#id29" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The stub domains can be further classified by considering whether they mainly send or receive packets. An <cite>access-rich</cite> stub domain is a domain that contains hosts that mainly receive packets. Typical examples include small ADSL- or cable modem-based Internet Service Providers or enterprise networks. On the other hand, a <cite>content-rich</cite> stub domain is a domain that mainly produces packets. Examples of <cite>content-rich</cite> stub domains include <a class="reference external" href="https://www.google.com">google</a>, <a class="reference external" href="https://www.yahoo.com">yahoo</a>, <a class="reference external" href="https://www.microsoft.com">microsoft</a>, <a class="reference external" href="https://www.facebook.com">facebook</a> or content distribution networks such as <a class="reference external" href="https://www.akamai.com">akamai</a> or <a class="reference external" href="https://uk.limelightnetworks.com/index.php">limelight</a>. For the last few years, we have seen a rapid growth of these <cite>content-rich</cite> stub domains. Recent measurements <a class="reference internal" href="../bibliography.html#atlas2009" id="id3"><span>[ATLAS2009]</span></a> indicate that a growing fraction of all the packets exchanged on the Internet are produced in the data centers managed by these content providers.</p>
+<p>Domains need to be interconnected to allow a host inside a domain to exchange IP packets with hosts located in other domains. From a physical perspective, domains can be interconnected in two different ways. The first solution is to directly connect a router belonging to the first domain with a router inside the second domain. Such links between domains are called private interdomain links or <cite>private peering links</cite>. In practice, for redundancy or performance reasons, distinct physical links are usually established between different routers in the two domains that are interconnected.</p>
+<figure class="align-center" id="id30">
+<a class="reference internal image-reference" href="../_images/private-peer.png"><img alt="../_images/private-peer.png" src="../Images/e2ecaec9b0430d860633a8347e635865.png" style="width: 282.09999999999997px; height: 67.89999999999999px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/private-peer.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 152 </span><span class="caption-text">Interconnection of two domains via a private peering link</span><a class="headerlink" href="#id30" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Such <cite>private peering links</cite> are useful when, for example, an enterprise or university network needs to be connected to its Internet Service Provider. However, some domains are connected to hundreds of other domains <a class="footnote-reference brackets" href="#fasrank" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> . For some of these domains, using only private peering links would be too costly. A better solution to allow many domains to cheaply interconnect are the <cite>Internet eXchange Points</cite> (<a class="reference internal" href="../glossary.html#term-IXP"><span class="xref std std-term">IXP</span></a>). An <a class="reference internal" href="../glossary.html#term-IXP"><span class="xref std std-term">IXP</span></a> is usually some space in a data center that hosts routers belonging to different domains. A domain willing to exchange packets with other domains present at the <a class="reference internal" href="../glossary.html#term-IXP"><span class="xref std std-term">IXP</span></a> installs one of its routers on the <a class="reference internal" href="../glossary.html#term-IXP"><span class="xref std std-term">IXP</span></a> and connects it to other routers inside its own network. The IXP contains a Local Area Network to which all the participating routers are connected. When two domains that are present at the IXP wish <a class="footnote-reference brackets" href="#fwish" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> to exchange packets, they simply use the Local Area Network. IXPs are very popular in Europe and many Internet Service Providers and Content providers are present in these IXPs.</p>
+<figure class="align-center" id="id31">
+<a class="reference internal image-reference" href="../_images/ixp.png"><img alt="../_images/ixp.png" src="../Images/221a6b5e300e1c15e16ba90766f0a82f.png" style="width: 396.2px; height: 97.3px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/ixp.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 153 </span><span class="caption-text">Interconnection of two domains at an Internet eXchange Point</span><a class="headerlink" href="#id31" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the early days of the Internet, domains would simply exchange all the routes they know to allow a host inside one domain to reach any host in the global Internet. However, in today’s highly commercial Internet, this is no longer true as interdomain routing mainly needs to take into account the economical relationships between the domains. Furthermore, while intradomain routing usually prefers some routes over others based on their technical merits (e.g. prefer route with the minimum number of hops, prefer route with the minimum delay, prefer high bandwidth routes over low bandwidth ones, etc) interdomain routing mainly deals with economical issues. For interdomain routing, the cost of using a route is often more important than the quality of the route measured by its delay or bandwidth.</p>
+<p>There are different types of economical relationships that can exist between domains. Interdomain routing converts these relationships into peering relationships between domains that are connected via peering links.</p>
+<p id="index-1">The first category of peering relationship is the <cite>customer-&gt;provider</cite> relationship. Such a relationship is used when a customer domain pays an Internet Service Provider to be able to exchange packets with the global Internet over an interdomain link. A similar relationship is used when a small Internet Service Provider pays a larger Internet Service Provider to exchange packets with the global Internet.</p>
+<figure class="align-center" id="id32">
+<span id="fig-net-cust-prov"/><a class="reference internal image-reference" href="../_images/cust-prov.png"><img alt="../_images/cust-prov.png" src="../Images/9bbaa4c6866576e40be5d34dc1cdfaa9.png" style="width: 350.7px; height: 179.89999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/cust-prov.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 154 </span><span class="caption-text">A simple Internet with peering relationships</span><a class="headerlink" href="#id32" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To understand the <cite>customer-&gt;provider</cite> relationship, let us consider the simple internetwork shown in figure <a class="reference internal" href="#fig-net-cust-prov"><span class="std std-numref">Fig. 154</span></a>. In this internetwork, <cite>AS7</cite> is a stub domain that is connected to one provider : <cite>AS4</cite>. The contract between <cite>AS4</cite> and <cite>AS7</cite> allows a host inside <cite>AS7</cite> to exchange packets with any host in the internetwork. To enable this exchange of packets, <cite>AS7</cite> must know a route towards any domain and all the domains of the internetwork must know a route via <cite>AS4</cite> that allows them to reach hosts inside <cite>AS7</cite>. From a routing perspective, the commercial contract between <cite>AS7</cite> and <cite>AS4</cite> leads to the following routes being exchanged :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>over a <cite>customer-&gt;provider</cite> relationship, the <cite>customer</cite> domain advertises to its <cite>provider</cite>  its own prefixes and all the routes that it has learned from its own customers.</p></li>
+<li><p>over a <cite>provider-&gt;customer</cite> relationship, the <cite>provider</cite> advertises all the routes that it knows to its <cite>customer</cite>.</p></li>
+</ul>
+</div></blockquote>
+<p>The second rule ensures that the customer domain receives a route towards all destinations that are reachable via its provider. The first rule allows the prefixes of the customer domain to be distributed throughout the Internet.</p>
+<p>Coming back to figure <a class="reference internal" href="#fig-net-cust-prov"><span class="std std-numref">Fig. 154</span></a>, <cite>AS4</cite> advertises to its two providers <cite>AS1</cite> and <cite>AS2</cite> its own prefixes and the routes learned from its customer, <cite>AS7</cite>. On the other hand, <cite>AS4</cite> advertises to <cite>AS7</cite> all the routes that it knows.</p>
+<p id="index-2">The second type of peering relationship is the <cite>shared-cost</cite> peering relationship. Such a relationship usually does not involve a payment from one domain to the other in contrast with the <cite>customer-&gt;provider</cite> relationship. A <cite>shared-cost</cite> peering relationship is usually established between domains having a similar size and geographic coverage. For example, consider figure <a class="reference internal" href="#fig-net-cust-prov"><span class="std std-numref">Fig. 154</span></a>. If <cite>AS3</cite> and <cite>AS4</cite> exchange many packets via <cite>AS1</cite>, they both need to pay <cite>AS1</cite>. A cheaper alternative for <cite>AS3</cite> and <cite>AS4</cite> would be to establish a <cite>shared-cost</cite> peering. Such a peering can be established at IXPs where both <cite>AS3</cite> and <cite>AS4</cite> are present or by using private peering links. This <cite>shared-cost</cite> peering should be used to exchange packets between hosts inside <cite>AS3</cite> and hosts inside <cite>AS4</cite>. However, <cite>AS3</cite> does not want to receive on the <cite>AS3-AS4</cite> <cite>shared-cost</cite> peering links packets whose destination belongs to <cite>AS1</cite> as <cite>AS3</cite> would have to pay to send these packets to <cite>AS1</cite>.</p>
+<p>From a routing perspective, over a <cite>shared-cost</cite> peering relationship a domain only advertises its internal routes/prefixes and the routes that it has learned from its customers. This restriction ensures that only packets destined to the local domain or one of its customers is received over the <cite>shared-cost</cite> peering relationship. This implies that the routes that have been learned from a provider or from another <cite>shared-cost</cite> peer is not advertised over a <cite>shared-cost</cite> peering relationship. This is motivated by economical reasons. If a domain were to advertise the routes that it learned from a provider over a <cite>shared-cost</cite> peering relationship that does not bring revenue, it would have allowed its <cite>shared-cost</cite> peer to use the link with its provider without any payment. If a domain were to advertise the routes it learned over a <cite>shared cost</cite> peering over another <cite>shared-cost</cite> peering relationship, it would have allowed these <cite>shared-cost</cite> peers to use its own network (which may span one or more continents) freely to exchange packets.</p>
+<p id="index-3">Finally, the last type of peering relationship is the <cite>sibling</cite>. Such a relationship is used when two domains exchange all their routes in both directions. In practice, such a relationship is only used between domains that belong to the same company.</p>
+<p id="index-4">These different types of relationships are implemented in the <cite>interdomain routing policies</cite> defined by each domain. The <cite>interdomain routing policy</cite> of a domain is composed of three main parts :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>import filter</cite> that specifies, for each peering relationship, the routes that can be accepted from the neighboring domain (the non-acceptable routes are ignored and the domain never uses them to forward packets)</p></li>
+<li><p>the <cite>export filter</cite> that specifies, for each peering relationship, the routes that can be advertised to the neighboring domain</p></li>
+<li><p>the <cite>ranking</cite> algorithm that is used to select the best route among all the routes that the domain has received towards the same destination prefix</p></li>
+</ul>
+</div></blockquote>
+<p id="index-5">A domain’s import and export filters can be defined by using the Route Policy Specification Language (RPSL) specified in <span class="target" id="index-6"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2622.html"><strong>RFC 2622</strong></a> <a class="reference internal" href="../bibliography.html#gave1999" id="id6"><span>[GAVE1999]</span></a> . Some Internet Service Providers, notably in Europe, use RPSL to document <a class="footnote-reference brackets" href="#fripedb" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> their import and export policies. Several tools help to easily convert a RPSL policy into router commands.</p>
+<p>Figure <a class="reference internal" href="#fig-bgp-rpsl"><span class="std std-numref">Fig. 155</span></a> provides a simple example of import and export filters for two domains in a simple internetwork. In RPSL, the keyword <cite>ANY</cite> is used to replace any route from any domain. It is typically used by a provider to indicate that it announces all its routes to a customer over a <cite>provider-&gt;customer</cite> relationship. This is the case for <cite>AS4</cite>’s export policy. The example below clearly shows the difference between a <cite>provider-&gt;customer</cite> and a <cite>shared-cost</cite> peering relationship. <cite>AS4</cite>’s export filter indicates that it announces only its internal routes (<cite>AS4</cite>) and the routes learned from its clients (<cite>AS7</cite>) over its <cite>shared-cost</cite> peering with <cite>AS3</cite>, while it advertises all the routes that it uses (including the routes learned from <cite>AS3</cite>) to <cite>AS7</cite>.</p>
+<figure class="align-center" id="id33">
+<span id="fig-bgp-rpsl"/><a class="reference internal image-reference" href="../_images/bgp-policies.png"><img alt="../_images/bgp-policies.png" src="../Images/9c1ff571215d2e7a9427e810eb9ba668.png" style="width: 496.99999999999994px; height: 287.7px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-policies.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 155 </span><span class="caption-text">Import and export policies</span><a class="headerlink" href="#id33" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="the-border-gateway-protocol">
+<span id="index-7"/><h2>The Border Gateway Protocol<a class="headerlink" href="#the-border-gateway-protocol" title="Link to this heading">#</a></h2>
+<p>The Internet uses a single interdomain routing protocol : the Border Gateway Protocol (BGP). The current version of BGP is defined in <span class="target" id="index-8"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>. BGP differs from the intradomain routing protocols that we have already discussed in several ways. First, BGP is a <cite>path-vector</cite> protocol. When a BGP router advertises a route towards a prefix, it announces the IP prefix and the interdomain path used to reach this prefix. From BGP’s point of view, each domain is identified by a unique <cite>Autonomous System</cite> (AS) number <a class="footnote-reference brackets" href="#fasdomain" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> and the interdomain path contains the AS numbers of the transit domains that are used to reach the associated prefix. This interdomain path is called the <cite>AS Path</cite>. Thanks to these AS-Paths, BGP does not suffer from the count-to-infinity problems that affect distance vector routing protocols. Furthermore, the AS-Path can be used to implement some routing policies. Another difference between BGP and the intradomain routing protocols is that a BGP router does not send the entire contents of its routing table to its neighbors regularly. Given the size of the global Internet, routers would be overloaded by the number of BGP messages that they would need to process. BGP uses incremental updates, i.e. it only announces the routes that have changed to its neighbors.</p>
+<p>Figure <a class="reference internal" href="#fig-bgp-simple-example"><span class="std std-numref">Fig. 156</span></a> shows a simple example of the BGP routes that are exchanged between domains. In this example, prefix <cite>2001:db8:cafe::/48</cite> is announced by <cite>AS1</cite>. <cite>AS1</cite> advertises a BGP route towards this prefix to <cite>AS2</cite>. The AS-Path of this route indicates that <cite>AS1</cite> is the originator of the prefix. When <cite>AS4</cite> receives the BGP route from <cite>AS1</cite>, it re-announces it to <cite>AS2</cite> and adds its AS number to the AS-Path. <cite>AS2</cite> has learned two routes towards prefix <cite>2001:db8:cafe::/48</cite>. It compares the two routes and prefers the route learned from <cite>AS4</cite> based on its own ranking algorithm. <cite>AS2</cite> advertises to <cite>AS5</cite> a route towards <cite>2001:db8:cafe::/48</cite> with its AS-Path set to <cite>AS2:AS4:AS1</cite>. Thanks to the AS-Path, <cite>AS5</cite> knows that if it sends a packet towards <cite>2001:db8:cafe::/48</cite> the packet first passes through <cite>AS2</cite>, then through <cite>AS4</cite> before reaching its destination inside <cite>AS1</cite>.</p>
+<figure class="align-center" id="id34">
+<span id="fig-bgp-simple-example"/><img alt="../_images/bgp-example.svg" src="../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-example.svg"/>
+<figcaption>
+<p><span class="caption-number">Fig. 156 </span><span class="caption-text">Simple exchange of BGP routes</span><a class="headerlink" href="#id34" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-9">BGP routers exchange routes over BGP sessions. A BGP session is established between two routers belonging to two different domains that are directly connected. As explained earlier, the physical connection between the two routers can be implemented as a private peering link or over an Internet eXchange Point. A BGP session between two adjacent routers runs above a TCP connection (the default BGP port is 179). In contrast with intradomain routing protocols that exchange IP packets or UDP segments, BGP runs above TCP because TCP ensures a reliable delivery of the BGP messages sent by each router without forcing the routers to implement acknowledgments, checksums, etc. Furthermore, the two routers consider the peering link to be up as long as the BGP session and the underlying TCP connection remain up <a class="footnote-reference brackets" href="#flifetimebgp" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>. The two endpoints of a BGP session are called <cite>BGP peers</cite>.</p>
+<figure class="align-center" id="id35">
+<a class="reference internal image-reference" href="../_images/bgp-peering.svg"><img alt="../_images/bgp-peering.svg" src="../Images/e2885e7697e16c061ff1e144ac74d408.png" style="width: 100.1px; height: 156.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-peering.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 157 </span><span class="caption-text">A BGP peering session between two directly connected routers</span><a class="headerlink" href="#id35" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In practice, to establish a BGP session between routers <cite>R1</cite> and <cite>R2</cite> in the figure above, the network administrator of <cite>AS3</cite> must first configure on <cite>R1</cite> the IP address of <cite>R2</cite> on the <cite>R1-R2</cite> link and the AS number of <cite>R2</cite>. Router <cite>R1</cite> then regularly tries to establish the BGP session with <cite>R2</cite>. <cite>R2</cite> only agrees to establish the BGP session with <cite>R1</cite> once it has been configured with the IP address of <cite>R1</cite> and its AS number. For security reasons, a router never establishes a BGP session that has not been manually configured on the router.</p>
+<p id="index-10">The BGP protocol <span class="target" id="index-11"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a> defines several types of messages that can be exchanged over a BGP session :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>OPEN</cite> : this message is sent as soon as the TCP connection between the two routers has been established. It initializes the BGP session and allows the negotiation of some options. Details about this message may be found in <span class="target" id="index-12"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>.</p></li>
+<li><p><cite>NOTIFICATION</cite> : this message is used to terminate a BGP session, usually because an error has been detected by the BGP peer. A router that sends or receives a <cite>NOTIFICATION</cite> message immediately shutdowns the corresponding BGP session.</p></li>
+<li><p><cite>UPDATE</cite>: this message is used to advertise new or modified routes or to withdraw previously advertised routes.</p></li>
+<li><p><cite>KEEPALIVE</cite> : this message is used to ensure a regular exchange of messages on the BGP session, even when no route changes. When a BGP router has not sent an <cite>UPDATE</cite> message during the last 30 seconds, it shall send a <cite>KEEPALIVE</cite> message to confirm to the other peer that it is still up. If a peer does not receive any BGP message during a period of 90 seconds <a class="footnote-reference brackets" href="#fdefaultkeepalive" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, the BGP session is considered to be down and all the routes learned over this session are withdrawn.</p></li>
+</ul>
+</div></blockquote>
+<p>As explained earlier, BGP relies on incremental updates. This implies that when a BGP session starts, each router first sends BGP <cite>UPDATE</cite> messages to advertise to the other peer all the exportable routes that it knows. Once all these routes have been advertised, the BGP router only sends BGP <cite>UPDATE</cite> messages about a prefix if the route is new, one of its attributes has changed or the route became unreachable and must be withdrawn. The BGP <cite>UPDATE</cite> message allows BGP routers to efficiently exchange such information while minimizing the number of bytes exchanged. Each <cite>UPDATE</cite> message contains :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a list of IP prefixes that are withdrawn</p></li>
+<li><p>a list of IP prefixes that are (re-)advertised</p></li>
+<li><p>the set of attributes (e.g. AS-Path) associated to the advertised prefixes</p></li>
+</ul>
+</div></blockquote>
+<p>In the remainder of this chapter, and although all routing information is exchanged using BGP <cite>UPDATE</cite> messages, we assume for simplicity that a BGP message contains only information about one prefix and we use the words :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>Withdraw message</cite> to indicate a BGP <cite>UPDATE</cite> message containing one route that is withdrawn</p></li>
+<li><p><cite>Update message</cite> to indicate a BGP <cite>UPDATE</cite> containing a new or updated route towards one destination prefix with its attributes</p></li>
+</ul>
+</div></blockquote>
+<p id="index-13">From a conceptual point of view, a BGP router connected to <cite>N</cite> BGP peers, can be described as being composed of four parts as shown in the figure below.</p>
+<figure class="align-center" id="id36">
+<span id="bgprouter"/><a class="reference internal image-reference" href="../_images/bgp-router.png"><img alt="../_images/bgp-router.png" src="../Images/0079025668f84e1a91f1e4196c6e5332.png" style="width: 521.5px; height: 186.89999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-router.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 158 </span><span class="caption-text">Organization of a BGP router</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this figure, the router receives BGP messages on the left part of the figure, processes these messages and possibly sends BGP messages on the right part of the figure. A BGP router contains three important data structures :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>Adj-RIB-In</cite> contains the BGP routes that have been received from each BGP peer. The routes in the <cite>Adj-RIB-In</cite> are filtered by the <cite>import filter</cite> before being placed in the <cite>BGP-Loc-RIB</cite>. There is one <cite>import filter</cite> per BGP peer.</p></li>
+<li><p>the <cite>Local Routing Information Base</cite> (<cite>Loc-RIB</cite>) contains all the routes that are considered as acceptable by the router. The <cite>Loc-RIB</cite> may contain several routes, learned from different BGP peers, towards the same destination prefix.</p></li>
+<li><p>the <cite>Forwarding Information Base</cite> (<cite>FIB</cite>) is used by the dataplane to forward packets towards their destination. The <cite>FIB</cite> contains, for each destination, the best route that has been selected by the <cite>BGP decision process</cite>. This decision process is an algorithm that selects, for each destination prefix, the best route according to the router’s ranking algorithm that is part of its policy.</p></li>
+<li><p>the <cite>Adj-RIB-Out</cite> contains the BGP routes that have been advertised to each BGP peer. The <cite>Adj-RIB-Out</cite> for a given peer is built by applying the peer’s <cite>export filter</cite> on the routes that have been installed in the <cite>FIB</cite>. There is one <cite>export filter</cite> per BGP peer. For this reason, the Adj-RIB-Out of a peer may contain different routes than the Adj-RIB-Out of another peer.</p></li>
+</ul>
+</div></blockquote>
+<p>When a BGP session starts, the routers first exchange <cite>OPEN</cite> messages to negotiate the options that apply throughout the entire session. Then, each router extracts from its FIB the routes to be advertised to the peer. It is important to note that, for each known destination prefix, a BGP router can only advertise to a peer the route that it has itself installed inside its <cite>FIB</cite>. The routes that are advertised to a peer must pass the peer’s <cite>export filter</cite>. The <cite>export filter</cite> is a set of rules that define which routes can be advertised over the corresponding session, possibly after having modified some of its attributes. One <cite>export filter</cite> is associated to each BGP session. For example, on a <cite>shared-cost peering</cite>, the <cite>export filter</cite> only selects the internal routes and the routes that have been learned from a <cite>customer</cite>. The pseudo-code below shows the initialization of a BGP session.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">initialize_BGP_session</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">):</span>
+    <span class="c1"># Initialize and start BGP session</span>
+    <span class="c1"># Send BGP OPEN Message to RemoteIP on port 179</span>
+    <span class="c1"># Follow BGP state machine</span>
+    <span class="c1"># Advertise local routes and routes learned from peers</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">BGPLocRIB</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">build_BGP_update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">msg_to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">msg_to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">send_update</span><span class="p">(</span><span class="n">msg_to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+    <span class="c1"># Entire RIB has now been sent. New updates will be sent</span>
+    <span class="c1"># to reflect local or distant changes in routers.</span>
+</pre></div>
+</div>
+<p>In the above pseudo-code, the <cite>build_BGP_update(d)</cite> procedure extracts from the <cite>BGP Loc-RIB</cite> the best path towards destination <cite>d</cite> (i.e. the route installed in the FIB) and prepares the corresponding BGP <cite>UPDATE</cite> message. This message is then passed to the <cite>export filter</cite> that returns <cite>None</cite> if the route cannot be advertised to the peer or the (possibly modified) BGP <cite>UPDATE</cite> message to be advertised. BGP routers allow network administrators to specify very complex <cite>export filters</cite>, see e.g. <a class="reference internal" href="../bibliography.html#wms2004" id="id11"><span>[WMS2004]</span></a>. A simple <cite>export filter</cite> that implements the equivalent of <cite>split horizon</cite> is shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">bgpMsg</span><span class="p">):</span>
+    <span class="c1"># Check if RemoteAS already received route</span>
+    <span class="k">if</span> <span class="n">remoteAS</span> <span class="ow">in</span> <span class="n">bgpMsg</span><span class="o">.</span><span class="n">ASPath</span><span class="p">:</span>
+        <span class="n">bgpMsg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Many additional export policies can be configured:</span>
+        <span class="c1"># accept or refuse the bgpMsg, modify selected attributes</span>
+        <span class="c1"># inside bgpMsg, ...</span>
+    <span class="k">return</span> <span class="n">bgpMsg</span>
+</pre></div>
+</div>
+<p>At this point, the remote router has received all the exportable BGP routes. After this initial exchange, the router only sends <cite>BGP UPDATE</cite> messages when there is a change (addition of a route, removal of a route or change in the attributes of a route) in one of these exportable routes. Such a change can happen when the router receives a BGP message. The pseudo-code below summarizes the processing of these BGP messages.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">bgp_message_received</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">):</span>
+    <span class="n">filtered_msg</span> <span class="o">=</span> <span class="n">apply_import_filter</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filtered_msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># msg is not acceptable</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">is_update</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+        <span class="n">old_route</span> <span class="o">=</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="n">insert_in_RIB</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">run_decision_process</span><span class="p">(</span><span class="n">RIB</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span> <span class="o">!=</span> <span class="n">old_route</span><span class="p">:</span>
+            <span class="c1"># Best route changed</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="n">build_BGP_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Announce best route</span>
+                <span class="n">send_update</span><span class="p">(</span><span class="n">to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">old_route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Withdraw the route</span>
+                <span class="n">send_withdraw</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># msg is WITHDRAW</span>
+        <span class="n">old_route</span> <span class="o">=</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="n">remove_from_rib</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">run_decision_process</span><span class="p">(</span><span class="n">RIB</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span> <span class="o">!=</span> <span class="n">old_route</span><span class="p">:</span>
+            <span class="c1"># Best route changed</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="n">build_BGP_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># There is still one best route</span>
+                <span class="c1"># towards msg.prefix</span>
+                <span class="n">send_update</span><span class="p">(</span><span class="n">to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">old_route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># No best route anymore</span>
+                <span class="n">send_withdraw</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a BGP message is received, the router first applies the peer’s <cite>import filter</cite> to verify whether the message is acceptable or not. If the message is not acceptable, the processing stops. The pseudo-code below shows a simple <cite>import filter</cite>. This <cite>import filter</cite> accepts all routes, except those that already contain the local AS in their AS-Path. If such a route was used, it would cause a routing loop. Another example of an <cite>import filter</cite> would be a filter used by an Internet Service Provider on a session with a customer to only accept routes towards the IP prefixes assigned to the customer by the provider. On real routers, <cite>import filters</cite> can be much more complex and some <cite>import filters</cite> modify the attributes of the received BGP <cite>UPDATE</cite> <a class="reference internal" href="../bibliography.html#wms2004" id="id12"><span>[WMS2004]</span></a> .</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">apply_import_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">bgpMsg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">my_AS</span> <span class="ow">in</span> <span class="n">bgpMsg</span><span class="o">.</span><span class="n">ASPath</span><span class="p">:</span>
+        <span class="n">bgpMsg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Many additional import policies can be configured:</span>
+        <span class="c1"># accept or refuse the bgpMsg, modify selected</span>
+        <span class="c1"># attributes inside bgpMsg,...</span>
+    <span class="k">return</span> <span class="n">bgpMsg</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The bogon filters</p>
+<p>Another example of frequently used <cite>import filters</cite> are the filters that Internet Service Providers use to ignore bogon routes. In the ISP community, a bogon route is a route that should not be advertised on the global Internet. Typical examples include the documentation IPv6 prefix (<cite>2001:db8::/32</cite> used for most examples in this book), the loopback address (<cite>::1/128</cite>) or the IPv6 prefixes that have not yet been allocated by IANA. A well managed BGP router should ensure that it never advertises bogons on the global Internet. Detailed information about these bogons may be found in <a class="reference internal" href="../bibliography.html#imhm2013" id="id13"><span>[IMHM2013]</span></a>.</p>
+</div>
+<p>If the import filter accepts the BGP message, the pseudo-code distinguishes two cases. If this is an <cite>Update message</cite> for prefix <cite>p</cite>, this can be a new route for this prefix or a modification of the route’s attributes. The router first retrieves from its <cite>RIB</cite> the best route towards prefix <cite>p</cite>. Then, the new route is inserted in the <cite>RIB</cite> and the <cite>BGP decision process</cite> is run to find whether the best route towards destination <cite>p</cite> changes. A BGP message only needs to be sent to the router’s peers if the best route has changed. For each peer, the router applies the  <cite>export filter</cite> to verify whether the route can be advertised. If yes, the filtered BGP message is sent. Otherwise, a <cite>Withdraw message</cite> is sent. When the router receives a <cite>Withdraw message</cite>, it also verifies whether the removal of the route from its <cite>RIB</cite> caused its best route towards this prefix to change. It should be noted that, depending on the content of the <cite>RIB</cite> and the <cite>export filters</cite>, a BGP router may need to send a <cite>Withdraw message</cite> to a peer after having received an <cite>Update message</cite> from another peer and conversely.</p>
+<p>Let us now discuss in more detail the operation of BGP in an IPv6 network. For this, let us consider the simple network composed of three routers located in three different ASes and shown in the figure below.</p>
+<figure class="align-center" id="id37">
+<a class="reference internal image-reference" href="../_images/bgp-nexthop.svg"><img alt="../_images/bgp-nexthop.svg" src="../Images/e4d6965066e9e8670bd2ee7036f03d88.png" style="width: 775.0px; height: 191.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-nexthop.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 159 </span><span class="caption-text">Utilization of the BGP nexthop attribute</span><a class="headerlink" href="#id37" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This network contains three routers : <cite>R1</cite>, <cite>R2</cite> and <cite>R3</cite>. Each router is attached to a local IPv6 subnet that it advertises using BGP. There are two BGP sessions, one between <cite>R1</cite> and <cite>R2</cite> and the second between <cite>R2</cite> and <cite>R3</cite>. A <cite>/127</cite> subnet is used on each interdomain link (<cite>2001:db8::4/127</cite> on <cite>R1-R2</cite> and <cite>2001:db8::0/127</cite> on <cite>R2-R3</cite>) in conformance with the latest recommendation <span class="target" id="index-14"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6164.html"><strong>RFC 6164</strong></a>. The BGP sessions run above TCP connections established between the neighboring routers (e.g. <cite>2001:db8::5 - 2001:db8::6</cite> for the <cite>R1-R2</cite> session).</p>
+<p id="index-15">Let us assume that the <cite>R1-R2</cite> BGP session is the first to be established. A <cite>BGP Update</cite> message sent on such a session contains three fields :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the advertised prefix</p></li>
+<li><p>the <cite>BGP nexthop</cite></p></li>
+<li><p>the attributes including the AS-Path</p></li>
+</ul>
+</div></blockquote>
+<p>We use the notation <cite>U(prefix, nexthop, attributes)</cite> to represent such a <cite>BGP Update</cite> message in this section. Similarly, <cite>W(prefix)</cite> represents a <cite>BGP withdraw</cite> for the specified prefix. Once the <cite>R1-R2</cite> session has been established, <cite>R1</cite> sends <cite>U(2001:db8:1234::/48,2001:db8::5,AS10)</cite> to <cite>R2</cite> and <cite>R2</cite> sends <cite>U(2001:db8:5678:/48,2001:db8::6,AS20)</cite>. At this point, <cite>R1</cite> can reach <cite>2001:db8:5678::/48</cite> via <cite>2001:db8::6</cite> and <cite>R2</cite> can reach <cite>2001:db8:1234::/48</cite> via <cite>2001:db8::5</cite>.</p>
+<p>Once the <cite>R2-R3</cite> has been established, <cite>R3</cite> sends <cite>U(2001:db8:acbd::/48,2001:db8::2,AS30)</cite>. <cite>R2</cite> announces on the <cite>R2-R3</cite> session all the routes inside its RIB. It thus sends to <cite>R3</cite> : <cite>U(2001:db8:1234::/48,2001:db8::1,AS20:AS10)</cite> and <cite>U(2001:db8:5678::/48,2001:db8::1,AS20)</cite>. Note that when <cite>R2</cite> advertises the route that it learned from <cite>R1</cite>, it updates the BGP nexthop and adds its AS number to the AS-Path. <cite>R2</cite> also sends <cite>U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)</cite> to <cite>R1</cite> on the <cite>R1-R3</cite> session. At this point, all BGP routes have been exchanged and all routers can reach <cite>2001:db8::1234/48</cite>, <cite>2001:db8:5678::/48</cite> and <cite>2001:db8:abcd::/48</cite>.</p>
+<p>If the link between <cite>R2</cite> and <cite>R3</cite> fails, <cite>R3</cite> detects the failure as it did not receive <cite>KEEPALIVE</cite> messages recently from <cite>R2</cite>. At this time, <cite>R3</cite> removes from its RIB all the routes learned over the <cite>R2-R3</cite> BGP session. <cite>R2</cite> also removes from its RIB the routes learned from <cite>R3</cite>. <cite>R2</cite> also sends  <cite>W(2001:db8:acbd::/48)</cite> to <cite>R1</cite> over the <cite>R1-R3</cite> BGP session since it does not have a route anymore towards this prefix.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Origin of the routes advertised by a BGP router</p>
+<p>A frequent practical question about the operation of BGP is how a BGP router decides to originate or advertise a route for the first time. In practice, this occurs in two situations :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the router has been manually configured by the network operator to always advertise one or several routes on a BGP session. For example, on the BGP session between UCLouvain and its provider, <a class="reference external" href="https://www.belnet.be">belnet</a> , UCLouvain’s router always advertises the <cite>2001:6a8:3080/48</cite> IPv6 prefix assigned to the campus network</p></li>
+<li><p>the router has been configured by the network operator to advertise over its BGP session some of the routes that it learns with its intradomain routing protocol. For example, an enterprise router may advertise over a BGP session with its provider the routes to remote sites when these routes are reachable and advertised by the intradomain routing protocol</p></li>
+</ul>
+</div></blockquote>
+<p>The first solution is the most frequent. Advertising routes learned from an intradomain routing protocol is not recommended, this is because if the route flaps <a class="footnote-reference brackets" href="#fflap" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, this would cause a large number of BGP messages being exchanged in the global Internet.</p>
+</div>
+<section id="the-bgp-decision-process">
+<span id="index-16"/><h3>The BGP decision process<a class="headerlink" href="#the-bgp-decision-process" title="Link to this heading">#</a></h3>
+<p>Besides the import and export filters, a key difference between BGP and the intradomain routing protocols is that each domain can define its own ranking algorithm to determine which route is chosen to forward packets when several routes have been learned towards the same prefix. This ranking depends on several BGP attributes that can be attached to a BGP route.</p>
+<p id="index-17">The first BGP attribute that is used to rank BGP routes is the <cite>local-preference</cite> (local-pref) attribute. This attribute is an unsigned integer that is attached to each BGP route received over an eBGP session by the associated import filter.</p>
+<p>When comparing routes towards the same destination prefix, a BGP router always prefers the routes with the highest <cite>local-pref</cite>. If the BGP router knows several routes with the same <cite>local-pref</cite>, it prefers among the routes having this <cite>local-pref</cite> the ones with the shortest AS-Path.</p>
+<p>The <cite>local-pref</cite> attribute is often used to prefer some routes over others.</p>
+<p>A common utilization of <cite>local-pref</cite> is to support backup links. Consider the situation depicted in the figure below. <cite>AS1</cite> would always like to use the high bandwidth link to send and receive packets via <cite>AS2</cite> and only use the backup link upon failure of the primary one.</p>
+<figure class="align-center" id="id38">
+<a class="reference internal image-reference" href="../_images/bgp-backup.svg"><img alt="../_images/bgp-backup.svg" src="../Images/a3485a4ec7385b94aecb7b585e809d0b.png" style="width: 549.0px; height: 333.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-backup.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 160 </span><span class="caption-text">How to create a backup link with BGP ?</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As BGP routers always prefer the routes with the highest <cite>local-pref</cite> attribute, this policy can be implemented using the following import filter on <cite>R1</cite></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS2 RB at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>With this import filter, all the BGP routes learned from <cite>RB</cite> over the high bandwidth links are preferred over the routes learned over the backup link. If the primary link fails, the corresponding routes are removed from <cite>R1</cite>’s RIB and <cite>R1</cite> uses the route learned from <cite>RA</cite>. <cite>R1</cite> reuses the routes via <cite>RB</cite> as soon as they are advertised by <cite>RB</cite> once the <cite>R1-RB</cite> link comes back.</p>
+<p>The import filter above modifies the selection of the BGP routes inside <cite>AS1</cite>. Thus, it influences the route followed by the packets forwarded by <cite>AS1</cite>. In addition to using the primary link to send packets, <cite>AS1</cite> would like to receive its packets via the high bandwidth link. For this, <cite>AS2</cite> also needs to set the <cite>local-pref</cite> attribute in its import filter.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS1 R1 at RA set localpref=100;
+        from  AS1 R1 at RB set localpref=200;
+        accept AS1
+</pre></div>
+</div>
+<p>Sometimes, the <cite>local-pref</cite> attribute is used to prefer a <cite>cheap</cite> link compared to a more expensive one. For example, in the network below, <cite>AS1</cite> could wish to send and receive packets mainly via its interdomain link with <cite>AS4</cite>.</p>
+<figure class="align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/bgp-prefer.svg"><img alt="../_images/bgp-prefer.svg" src="../Images/a6ae4372991a589dfd16713f3fbf28dc.png" style="width: 751.0px; height: 253.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-prefer.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 161 </span><span class="caption-text">How to prefer a cheap link over an more expensive one ?</span><a class="headerlink" href="#id39" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><cite>AS1</cite> can install the following import filter on <cite>R1</cite> to ensure that it always sends packets via <cite>R2</cite> when it has learned a route via <cite>AS2</cite> and another via <cite>AS4</cite>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS4 R2 at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>However, this import filter does not influence how <cite>AS3</cite> , for example, prefers some routes over others. If the link between <cite>AS3</cite> and <cite>AS2</cite> is less expensive than the link between <cite>AS3</cite> and <cite>AS4</cite>, <cite>AS3</cite> could send all its packets via <cite>AS2</cite> and <cite>AS1</cite> would receive packets over its expensive link. An important point to remember about <cite>local-pref</cite> is that it can be used to prefer some routes over others to send packets, but it has no influence on the routes followed by received packets.</p>
+<p>Another important utilization of the <cite>local-pref</cite> attribute is to support the <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite> peering relationships. From an economic point of view, there is an important difference between these three types of peering relationships. A domain usually earns money when it sends packets over a <cite>provider-&gt;customer</cite> relationship. On the other hand, it must pay its provider when it sends packets over a <cite>customer-&gt;provider</cite> relationship. Using a <cite>shared-cost</cite> peering to send packets is usually neutral from an economic perspective. To take into account these economic issues, domains usually configure the import filters on their routers as follows :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>insert a high <cite>local-pref</cite> attribute in the routes learned from a customer</p></li>
+<li><p>insert a medium <cite>local-pref</cite> attribute in the routes learned over a shared-cost peering</p></li>
+<li><p>insert a low <cite>local-pref</cite> attribute in the routes learned from a provider</p></li>
+</ul>
+</div></blockquote>
+<p>With such an import filter, the routers of a domain always prefer to reach destinations via their customers whenever such a route exists. Otherwise, they prefer to use <cite>shared-cost</cite> peering relationships and they only send packets via their providers when they do not know any alternate route. A consequence of setting the <cite>local-pref</cite> attribute like this is that Internet paths are often asymmetrical. Consider for example the internetwork shown in the figure below.</p>
+<figure class="align-center" id="id40">
+<a class="reference internal image-reference" href="../_images/asymetry.svg"><img alt="../_images/asymetry.svg" src="../Images/0a126e385db1ba6a60851408e8964db3.png" style="width: 610.0px; height: 462.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/asymetry.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 162 </span><span class="caption-text">Asymmetry of Internet paths</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Consider in this internetwork the routes available inside <cite>AS1</cite> to reach <cite>AS5</cite>. <cite>AS1</cite> learns the <cite>AS4:AS6:AS7:AS5</cite> path from <cite>AS4</cite>, the <cite>AS3:AS8:AS5</cite> path from <cite>AS3</cite> and the <cite>AS2:AS5</cite> path from <cite>AS2</cite>. The first path is chosen since it was learned from a customer. <cite>AS5</cite> on the other hand receives three paths towards <cite>AS1</cite> via its providers. It may select any of these paths to reach <cite>AS1</cite> , depending on how it prefers one provider over the others.</p>
+</section>
+<section id="bgp-convergence">
+<h3>BGP convergence<a class="headerlink" href="#bgp-convergence" title="Link to this heading">#</a></h3>
+<p>In the previous sections, we have explained the operation of BGP routers. Compared to intradomain routing protocols, a key feature of BGP is its ability to support interdomain routing policies that are defined by each domain as its import and export filters and ranking process. A domain can define its own routing policies and router vendors have implemented many configuration tweaks to support complex routing policies. However, the routing policy chosen by a domain may interfere with the routing policy chosen by another domain. To understand this issue, let us first consider the simple internetwork shown below.</p>
+<figure class="align-center" id="id41">
+<a class="reference internal image-reference" href="../_images/disagree.svg"><img alt="../_images/disagree.svg" src="../Images/e0d8fea96abc42f780dccaaf6f640d03.png" style="width: 540.0px; height: 230.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/disagree.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 163 </span><span class="caption-text">The disagree internetwork</span><a class="headerlink" href="#id41" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, we focus on the route towards <cite>2001:db8::1234/48</cite> which is advertised by <cite>AS1</cite>. Let us also assume that <cite>AS3</cite> (resp. <cite>AS4</cite>) prefers, e.g. for economic reasons, a route learned from <cite>AS4</cite> (<cite>AS3</cite>) over a route learned from <cite>AS1</cite>. When <cite>AS1</cite> sends <cite>U(2001:db8::1234/48,AS1)</cite> to <cite>AS3</cite> and <cite>AS4</cite>, three sequences of exchanges of BGP messages are possible :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS3</cite> sends first <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite>. <cite>AS4</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS3</cite> and does not advertise a route to <cite>AS3</cite></p></li>
+<li><p><cite>AS4</cite> first sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite> to <cite>AS3</cite>. <cite>AS3</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS4</cite> and does not advertise a route to <cite>AS4</cite></p></li>
+<li><p><cite>AS3</cite> sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite> and, at the same time, <cite>AS4</cite> sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite>.  <cite>AS3</cite> prefers the route via <cite>AS4</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS4</cite>. In the mean time, <cite>AS4</cite> prefers the route via <cite>AS3</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS3</cite>. Upon reception of the <cite>BGP Withdraws</cite>, <cite>AS3</cite> and <cite>AS4</cite> only know the direct route towards <cite>2001:db8:1234/48</cite>. <cite>AS3</cite> (resp. <cite>AS4</cite>) sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> (resp. <cite>U(2001:db8:1234/48,AS4:AS1)</cite>) to <cite>AS4</cite> (resp. <cite>AS3</cite>). <cite>AS3</cite> and <cite>AS4</cite> could in theory continue to exchange BGP messages for ever. In practice, one of them sends one message faster than the other and BGP converges.</p></li>
+</ol>
+</div></blockquote>
+<p>The example above has shown that the routes selected by BGP routers may sometimes depend on the ordering of the BGP messages that are exchanged. Other similar scenarios may be found in <span class="target" id="index-18"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4264.html"><strong>RFC 4264</strong></a>.</p>
+<p>From an operational perspective, the above configuration is annoying since the network operators cannot easily predict which paths are chosen. Unfortunately, there are even more annoying BGP configurations. For example, let us consider the configuration below which is often named <cite>Bad Gadget</cite> <a class="reference internal" href="../bibliography.html#gw1999" id="id15"><span>[GW1999]</span></a></p>
+<figure class="align-center" id="id42">
+<a class="reference internal image-reference" href="../_images/bad-gadget.svg"><img alt="../_images/bad-gadget.svg" src="../Images/98a26037d12a6cb60b64faf1e25a4470.png" style="width: 627.0px; height: 329.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bad-gadget.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 164 </span><span class="caption-text">The bad gadget internetwork</span><a class="headerlink" href="#id42" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, there are four ASes. <cite>AS0</cite> advertises one route towards one prefix and we only analyze the routes towards this prefix. The routing preferences of <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> are the following :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>AS1</cite> prefers the path <cite>AS3:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS3</cite> prefers the path <cite>AS4:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS4</cite> prefers the path <cite>AS1:AS0</cite> over all other paths</p></li>
+</ul>
+</div></blockquote>
+<p><cite>AS0</cite> sends <cite>U(p,AS0)</cite> to <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite>. As this is the only route known by <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> towards <cite>p</cite>, they all select the direct path. Let us now consider one possible exchange of BGP messages :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS1</cite> sends <cite>U(p, AS1:AS0)</cite> to <cite>AS3</cite> and <cite>AS4</cite>. <cite>AS4</cite> selects the path via <cite>AS1</cite> since this is its preferred path. <cite>AS3</cite> still uses the direct path.</p></li>
+<li><p><cite>AS4</cite> advertises <cite>U(p,AS4:AS1:AS0)</cite> to <cite>AS3</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p, AS3:AS0)</cite> to <cite>AS1</cite> and <cite>AS4</cite>. <cite>AS1</cite> selects the path via <cite>AS3</cite> since this is its preferred path. <cite>AS4</cite> still uses the path via <cite>AS1</cite>.</p></li>
+<li><p>As <cite>AS1</cite> has changed its path, it sends <cite>U(p,AS1:AS3:AS0)</cite> to <cite>AS4</cite> and <cite>W(p)</cite> to <cite>AS3</cite> since its new path is via <cite>AS3</cite>. <cite>AS4</cite> switches back to the direct path.</p></li>
+<li><p><cite>AS4</cite> sends <cite>U(p,AS4:AS0)</cite> to <cite>AS1</cite> and <cite>AS3</cite>. <cite>AS3</cite> prefers the path via <cite>AS4</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p,AS3:AS4:AS0)</cite> to <cite>AS1</cite> and <cite>W(p)</cite> to <cite>AS4</cite>. <cite>AS1</cite> switches back to the direct path and we are back at the first step.</p></li>
+</ol>
+</div></blockquote>
+<p>This example shows that the convergence of BGP is unfortunately not always guaranteed as some interdomain routing policies may interfere with each other in complex ways. <a class="reference internal" href="../bibliography.html#gw1999" id="id16"><span>[GW1999]</span></a> have shown that checking for global convergence is either NP-complete or NP-hard. See <a class="reference internal" href="../bibliography.html#gsw2002" id="id17"><span>[GSW2002]</span></a> for a more detailed discussion.</p>
+<p>Fortunately, there are some operational guidelines <a class="reference internal" href="../bibliography.html#gr2001" id="id18"><span>[GR2001]</span></a> <a class="reference internal" href="../bibliography.html#ggr2001" id="id19"><span>[GGR2001]</span></a> that can guarantee BGP convergence in the global Internet. To ensure that BGP will converge, these guidelines consider that there are two types of peering relationships : <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite>. In this case, BGP convergence is guaranteed provided that the following conditions are fulfilled :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The topology composed of all the directed <cite>customer-&gt;provider</cite> peering links is a graph that does not contain any cycle</p></li>
+<li><p>An AS always prefers a route received from a <cite>customer</cite> over a route received from a <cite>shared-cost</cite> peer or a <cite>provider</cite>.</p></li>
+</ol>
+</div></blockquote>
+<p>The first guideline implies that the provider of the provider of <cite>ASx</cite> cannot be a customer of <cite>ASx</cite>. Such a relationship would not make sense from an economic perspective as it would imply circular payments. Furthermore, providers are usually larger than customers.</p>
+<p>The second guideline also corresponds to economic preferences. Since a provider earns money when sending packets to one of its customers, it makes sense to prefer such customer learned routes over routes learned from providers. <a class="reference internal" href="../bibliography.html#gr2001" id="id20"><span>[GR2001]</span></a> also shows that BGP convergence is guaranteed even if an AS associates the same preference to routes learned from a <cite>shared-cost</cite> peer and routes learned from a customer.</p>
+<p>From a theoretical perspective, these guidelines should be verified automatically to ensure that BGP will always converge in the global Internet. However, such a verification cannot be performed in practice because this would force all domains to disclose their routing policies (and few are willing to do so) and furthermore the problem is known to be NP-hard [GW1999].</p>
+<p>In practice, researchers and operators expect that these guidelines are verified <a class="footnote-reference brackets" href="#fgranularity" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> in most domains. Thanks to the large amount of BGP data that has been collected by operators and researchers <a class="footnote-reference brackets" href="#fbgpdata" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>, several studies have analyzed the AS-level topology of the Internet. <a class="reference internal" href="../bibliography.html#sark2002" id="id23"><span>[SARK2002]</span></a> is one of the first analysis. More recent studies include <a class="reference internal" href="../bibliography.html#coz2008" id="id24"><span>[COZ2008]</span></a> and <a class="reference internal" href="../bibliography.html#dkf-2007" id="id25"><span>[DKF+2007]</span></a></p>
+<p>Based on these studies and <a class="reference internal" href="../bibliography.html#atlas2009" id="id26"><span>[ATLAS2009]</span></a>, the AS-level Internet topology can be summarized as shown in the figure below.</p>
+<figure class="align-center" id="id43">
+<a class="reference internal image-reference" href="../_images/bgp-hierarchy.svg"><img alt="../_images/bgp-hierarchy.svg" src="../Images/7ed75e3a3085ea745ef374995877c629.png" style="width: 410.2px; height: 366.09999999999997px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-hierarchy.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 165 </span><span class="caption-text">The layered structure of the global Internet</span><a class="headerlink" href="#id43" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-19">The domains on the Internet can be divided in about four categories according to their role and their position in the AS-level topology.</p>
+<p>Due to this organization of the Internet and due to the BGP decision process, most AS-level paths on the Internet have a length of 3-5 AS hops.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fasnum" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>An analysis of the evolution of the number of domains on the global Internet during the last ten years may be found in <a class="reference external" href="https://www.potaroo.net/tools/asn32/">https://www.potaroo.net/tools/asn32/</a>.</p>
+</aside>
+<aside class="footnote brackets" id="fpotaroo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Several web sites collect and analyze data about the evolution of BGP in the global Internet. <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a> provides lots of statistics and analyzes that are updated daily.</p>
+</aside>
+<aside class="footnote brackets" id="fasrank" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="http://as-rank.caida.org/">http://as-rank.caida.org/</a> for an  analysis of the interconnections between domains based on measurements collected in the global Internet.</p>
+</aside>
+<aside class="footnote brackets" id="fwish" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>Two routers that are attached to the same IXP exchange packets only when the owners of their domains have an economical incentive to exchange packets on this IXP. Usually, a router on an IXP is only able to exchange packets with a small fraction of the routers that are present on the same IXP.</p>
+</aside>
+<aside class="footnote brackets" id="fripedb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">5</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="ftp://ftp.ripe.net/ripe/dbase">ftp://ftp.ripe.net/ripe/dbase</a> for the RIPE database that contains the import and export policies of many European ISPs.</p>
+</aside>
+<aside class="footnote brackets" id="fasdomain" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<p>In this text, we consider Autonomous System and domain as synonyms. In practice, a domain may be  divided into several Autonomous Systems, but we ignore this detail.</p>
+</aside>
+<aside class="footnote brackets" id="flifetimebgp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">7</a><span class="fn-bracket">]</span></span>
+<p>The BGP sessions and the underlying TCP connection are typically established by the routers when they boot based on information found in their configuration. The BGP sessions are rarely released, except if the corresponding peering link fails or one of the endpoints crashes or needs to be rebooted.</p>
+</aside>
+<aside class="footnote brackets" id="fdefaultkeepalive" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">8</a><span class="fn-bracket">]</span></span>
+<p>90 seconds is the default delay recommended by <span class="target" id="index-20"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>. However, two BGP peers can negotiate a different timer during the establishment of their BGP session. Using a too small interval to detect BGP session failures is not recommended. BFD <a class="reference internal" href="../bibliography.html#kw2009" id="id27"><span>[KW2009]</span></a> can be used to replace BGP’s KEEPALIVE mechanism if fast detection of interdomain link failures is required.</p>
+</aside>
+<aside class="footnote brackets" id="fflap" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">9</a><span class="fn-bracket">]</span></span>
+<p>A link is said to be flapping if it switches several times between an operational state and a disabled state within a short period of time. A router attached to such a link would need to frequently send routing messages.</p>
+</aside>
+<aside class="footnote brackets" id="fgranularity" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">10</a><span class="fn-bracket">]</span></span>
+<p>Researchers such as <a class="reference internal" href="../bibliography.html#muf-2007" id="id28"><span>[MUF+2007]</span></a> have shown that modeling the Internet topology at the AS-level requires more than the <cite>shared-cost</cite> and <cite>customer-&gt;provider</cite> peering relationships. However, there is no publicly available model that goes beyond these classical peering relationships.</p>
+</aside>
+<aside class="footnote brackets" id="fbgpdata" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">11</a><span class="fn-bracket">]</span></span>
+<p>BGP data is often collected by establishing BGP sessions between Unix hosts running a BGP daemon and BGP routers in different ASes. The Unix hosts store all BGP messages received and regular dumps of their BGP routing tables. See <a class="reference external" href="http://www.routeviews.org">http://www.routeviews.org</a>, <a class="reference external" href="https://www.ripe.net/ris">https://www.ripe.net/ris</a>, or <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a>.</p>
+</aside>
+</aside>
+</section>
+</section>
+&#13;
+
+<span id="index-7"/><h2>The Border Gateway Protocol<a class="headerlink" href="#the-border-gateway-protocol" title="Link to this heading">#</a></h2>
+<p>The Internet uses a single interdomain routing protocol : the Border Gateway Protocol (BGP). The current version of BGP is defined in <span class="target" id="index-8"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>. BGP differs from the intradomain routing protocols that we have already discussed in several ways. First, BGP is a <cite>path-vector</cite> protocol. When a BGP router advertises a route towards a prefix, it announces the IP prefix and the interdomain path used to reach this prefix. From BGP’s point of view, each domain is identified by a unique <cite>Autonomous System</cite> (AS) number <a class="footnote-reference brackets" href="#fasdomain" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a> and the interdomain path contains the AS numbers of the transit domains that are used to reach the associated prefix. This interdomain path is called the <cite>AS Path</cite>. Thanks to these AS-Paths, BGP does not suffer from the count-to-infinity problems that affect distance vector routing protocols. Furthermore, the AS-Path can be used to implement some routing policies. Another difference between BGP and the intradomain routing protocols is that a BGP router does not send the entire contents of its routing table to its neighbors regularly. Given the size of the global Internet, routers would be overloaded by the number of BGP messages that they would need to process. BGP uses incremental updates, i.e. it only announces the routes that have changed to its neighbors.</p>
+<p>Figure <a class="reference internal" href="#fig-bgp-simple-example"><span class="std std-numref">Fig. 156</span></a> shows a simple example of the BGP routes that are exchanged between domains. In this example, prefix <cite>2001:db8:cafe::/48</cite> is announced by <cite>AS1</cite>. <cite>AS1</cite> advertises a BGP route towards this prefix to <cite>AS2</cite>. The AS-Path of this route indicates that <cite>AS1</cite> is the originator of the prefix. When <cite>AS4</cite> receives the BGP route from <cite>AS1</cite>, it re-announces it to <cite>AS2</cite> and adds its AS number to the AS-Path. <cite>AS2</cite> has learned two routes towards prefix <cite>2001:db8:cafe::/48</cite>. It compares the two routes and prefers the route learned from <cite>AS4</cite> based on its own ranking algorithm. <cite>AS2</cite> advertises to <cite>AS5</cite> a route towards <cite>2001:db8:cafe::/48</cite> with its AS-Path set to <cite>AS2:AS4:AS1</cite>. Thanks to the AS-Path, <cite>AS5</cite> knows that if it sends a packet towards <cite>2001:db8:cafe::/48</cite> the packet first passes through <cite>AS2</cite>, then through <cite>AS4</cite> before reaching its destination inside <cite>AS1</cite>.</p>
+<figure class="align-center" id="id34">
+<span id="fig-bgp-simple-example"/><img alt="../_images/bgp-example.svg" src="../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-example.svg"/>
+<figcaption>
+<p><span class="caption-number">Fig. 156 </span><span class="caption-text">Simple exchange of BGP routes</span><a class="headerlink" href="#id34" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-9">BGP routers exchange routes over BGP sessions. A BGP session is established between two routers belonging to two different domains that are directly connected. As explained earlier, the physical connection between the two routers can be implemented as a private peering link or over an Internet eXchange Point. A BGP session between two adjacent routers runs above a TCP connection (the default BGP port is 179). In contrast with intradomain routing protocols that exchange IP packets or UDP segments, BGP runs above TCP because TCP ensures a reliable delivery of the BGP messages sent by each router without forcing the routers to implement acknowledgments, checksums, etc. Furthermore, the two routers consider the peering link to be up as long as the BGP session and the underlying TCP connection remain up <a class="footnote-reference brackets" href="#flifetimebgp" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a>. The two endpoints of a BGP session are called <cite>BGP peers</cite>.</p>
+<figure class="align-center" id="id35">
+<a class="reference internal image-reference" href="../_images/bgp-peering.svg"><img alt="../_images/bgp-peering.svg" src="../Images/e2885e7697e16c061ff1e144ac74d408.png" style="width: 100.1px; height: 156.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-peering.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 157 </span><span class="caption-text">A BGP peering session between two directly connected routers</span><a class="headerlink" href="#id35" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In practice, to establish a BGP session between routers <cite>R1</cite> and <cite>R2</cite> in the figure above, the network administrator of <cite>AS3</cite> must first configure on <cite>R1</cite> the IP address of <cite>R2</cite> on the <cite>R1-R2</cite> link and the AS number of <cite>R2</cite>. Router <cite>R1</cite> then regularly tries to establish the BGP session with <cite>R2</cite>. <cite>R2</cite> only agrees to establish the BGP session with <cite>R1</cite> once it has been configured with the IP address of <cite>R1</cite> and its AS number. For security reasons, a router never establishes a BGP session that has not been manually configured on the router.</p>
+<p id="index-10">The BGP protocol <span class="target" id="index-11"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a> defines several types of messages that can be exchanged over a BGP session :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>OPEN</cite> : this message is sent as soon as the TCP connection between the two routers has been established. It initializes the BGP session and allows the negotiation of some options. Details about this message may be found in <span class="target" id="index-12"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>.</p></li>
+<li><p><cite>NOTIFICATION</cite> : this message is used to terminate a BGP session, usually because an error has been detected by the BGP peer. A router that sends or receives a <cite>NOTIFICATION</cite> message immediately shutdowns the corresponding BGP session.</p></li>
+<li><p><cite>UPDATE</cite>: this message is used to advertise new or modified routes or to withdraw previously advertised routes.</p></li>
+<li><p><cite>KEEPALIVE</cite> : this message is used to ensure a regular exchange of messages on the BGP session, even when no route changes. When a BGP router has not sent an <cite>UPDATE</cite> message during the last 30 seconds, it shall send a <cite>KEEPALIVE</cite> message to confirm to the other peer that it is still up. If a peer does not receive any BGP message during a period of 90 seconds <a class="footnote-reference brackets" href="#fdefaultkeepalive" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a>, the BGP session is considered to be down and all the routes learned over this session are withdrawn.</p></li>
+</ul>
+</div></blockquote>
+<p>As explained earlier, BGP relies on incremental updates. This implies that when a BGP session starts, each router first sends BGP <cite>UPDATE</cite> messages to advertise to the other peer all the exportable routes that it knows. Once all these routes have been advertised, the BGP router only sends BGP <cite>UPDATE</cite> messages about a prefix if the route is new, one of its attributes has changed or the route became unreachable and must be withdrawn. The BGP <cite>UPDATE</cite> message allows BGP routers to efficiently exchange such information while minimizing the number of bytes exchanged. Each <cite>UPDATE</cite> message contains :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a list of IP prefixes that are withdrawn</p></li>
+<li><p>a list of IP prefixes that are (re-)advertised</p></li>
+<li><p>the set of attributes (e.g. AS-Path) associated to the advertised prefixes</p></li>
+</ul>
+</div></blockquote>
+<p>In the remainder of this chapter, and although all routing information is exchanged using BGP <cite>UPDATE</cite> messages, we assume for simplicity that a BGP message contains only information about one prefix and we use the words :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>Withdraw message</cite> to indicate a BGP <cite>UPDATE</cite> message containing one route that is withdrawn</p></li>
+<li><p><cite>Update message</cite> to indicate a BGP <cite>UPDATE</cite> containing a new or updated route towards one destination prefix with its attributes</p></li>
+</ul>
+</div></blockquote>
+<p id="index-13">From a conceptual point of view, a BGP router connected to <cite>N</cite> BGP peers, can be described as being composed of four parts as shown in the figure below.</p>
+<figure class="align-center" id="id36">
+<span id="bgprouter"/><a class="reference internal image-reference" href="../_images/bgp-router.png"><img alt="../_images/bgp-router.png" src="../Images/0079025668f84e1a91f1e4196c6e5332.png" style="width: 521.5px; height: 186.89999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-router.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 158 </span><span class="caption-text">Organization of a BGP router</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this figure, the router receives BGP messages on the left part of the figure, processes these messages and possibly sends BGP messages on the right part of the figure. A BGP router contains three important data structures :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>Adj-RIB-In</cite> contains the BGP routes that have been received from each BGP peer. The routes in the <cite>Adj-RIB-In</cite> are filtered by the <cite>import filter</cite> before being placed in the <cite>BGP-Loc-RIB</cite>. There is one <cite>import filter</cite> per BGP peer.</p></li>
+<li><p>the <cite>Local Routing Information Base</cite> (<cite>Loc-RIB</cite>) contains all the routes that are considered as acceptable by the router. The <cite>Loc-RIB</cite> may contain several routes, learned from different BGP peers, towards the same destination prefix.</p></li>
+<li><p>the <cite>Forwarding Information Base</cite> (<cite>FIB</cite>) is used by the dataplane to forward packets towards their destination. The <cite>FIB</cite> contains, for each destination, the best route that has been selected by the <cite>BGP decision process</cite>. This decision process is an algorithm that selects, for each destination prefix, the best route according to the router’s ranking algorithm that is part of its policy.</p></li>
+<li><p>the <cite>Adj-RIB-Out</cite> contains the BGP routes that have been advertised to each BGP peer. The <cite>Adj-RIB-Out</cite> for a given peer is built by applying the peer’s <cite>export filter</cite> on the routes that have been installed in the <cite>FIB</cite>. There is one <cite>export filter</cite> per BGP peer. For this reason, the Adj-RIB-Out of a peer may contain different routes than the Adj-RIB-Out of another peer.</p></li>
+</ul>
+</div></blockquote>
+<p>When a BGP session starts, the routers first exchange <cite>OPEN</cite> messages to negotiate the options that apply throughout the entire session. Then, each router extracts from its FIB the routes to be advertised to the peer. It is important to note that, for each known destination prefix, a BGP router can only advertise to a peer the route that it has itself installed inside its <cite>FIB</cite>. The routes that are advertised to a peer must pass the peer’s <cite>export filter</cite>. The <cite>export filter</cite> is a set of rules that define which routes can be advertised over the corresponding session, possibly after having modified some of its attributes. One <cite>export filter</cite> is associated to each BGP session. For example, on a <cite>shared-cost peering</cite>, the <cite>export filter</cite> only selects the internal routes and the routes that have been learned from a <cite>customer</cite>. The pseudo-code below shows the initialization of a BGP session.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">initialize_BGP_session</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">):</span>
+    <span class="c1"># Initialize and start BGP session</span>
+    <span class="c1"># Send BGP OPEN Message to RemoteIP on port 179</span>
+    <span class="c1"># Follow BGP state machine</span>
+    <span class="c1"># Advertise local routes and routes learned from peers</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">BGPLocRIB</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">build_BGP_update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">msg_to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">msg_to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">send_update</span><span class="p">(</span><span class="n">msg_to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+    <span class="c1"># Entire RIB has now been sent. New updates will be sent</span>
+    <span class="c1"># to reflect local or distant changes in routers.</span>
+</pre></div>
+</div>
+<p>In the above pseudo-code, the <cite>build_BGP_update(d)</cite> procedure extracts from the <cite>BGP Loc-RIB</cite> the best path towards destination <cite>d</cite> (i.e. the route installed in the FIB) and prepares the corresponding BGP <cite>UPDATE</cite> message. This message is then passed to the <cite>export filter</cite> that returns <cite>None</cite> if the route cannot be advertised to the peer or the (possibly modified) BGP <cite>UPDATE</cite> message to be advertised. BGP routers allow network administrators to specify very complex <cite>export filters</cite>, see e.g. <a class="reference internal" href="../bibliography.html#wms2004" id="id11"><span>[WMS2004]</span></a>. A simple <cite>export filter</cite> that implements the equivalent of <cite>split horizon</cite> is shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">bgpMsg</span><span class="p">):</span>
+    <span class="c1"># Check if RemoteAS already received route</span>
+    <span class="k">if</span> <span class="n">remoteAS</span> <span class="ow">in</span> <span class="n">bgpMsg</span><span class="o">.</span><span class="n">ASPath</span><span class="p">:</span>
+        <span class="n">bgpMsg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Many additional export policies can be configured:</span>
+        <span class="c1"># accept or refuse the bgpMsg, modify selected attributes</span>
+        <span class="c1"># inside bgpMsg, ...</span>
+    <span class="k">return</span> <span class="n">bgpMsg</span>
+</pre></div>
+</div>
+<p>At this point, the remote router has received all the exportable BGP routes. After this initial exchange, the router only sends <cite>BGP UPDATE</cite> messages when there is a change (addition of a route, removal of a route or change in the attributes of a route) in one of these exportable routes. Such a change can happen when the router receives a BGP message. The pseudo-code below summarizes the processing of these BGP messages.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">bgp_message_received</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">):</span>
+    <span class="n">filtered_msg</span> <span class="o">=</span> <span class="n">apply_import_filter</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filtered_msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># msg is not acceptable</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">is_update</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+        <span class="n">old_route</span> <span class="o">=</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="n">insert_in_RIB</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">run_decision_process</span><span class="p">(</span><span class="n">RIB</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span> <span class="o">!=</span> <span class="n">old_route</span><span class="p">:</span>
+            <span class="c1"># Best route changed</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="n">build_BGP_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Announce best route</span>
+                <span class="n">send_update</span><span class="p">(</span><span class="n">to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">old_route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Withdraw the route</span>
+                <span class="n">send_withdraw</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># msg is WITHDRAW</span>
+        <span class="n">old_route</span> <span class="o">=</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+        <span class="n">remove_from_rib</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">run_decision_process</span><span class="p">(</span><span class="n">RIB</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">best_route</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span> <span class="o">!=</span> <span class="n">old_route</span><span class="p">:</span>
+            <span class="c1"># Best route changed</span>
+            <span class="n">out_msg</span> <span class="o">=</span> <span class="n">build_BGP_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+            <span class="n">to_send</span> <span class="o">=</span> <span class="n">apply_export_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">out_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">to_send</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># There is still one best route</span>
+                <span class="c1"># towards msg.prefix</span>
+                <span class="n">send_update</span><span class="p">(</span><span class="n">to_send</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">old_route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># No best route anymore</span>
+                <span class="n">send_withdraw</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">remoteAS</span><span class="p">,</span> <span class="n">remoteIP</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a BGP message is received, the router first applies the peer’s <cite>import filter</cite> to verify whether the message is acceptable or not. If the message is not acceptable, the processing stops. The pseudo-code below shows a simple <cite>import filter</cite>. This <cite>import filter</cite> accepts all routes, except those that already contain the local AS in their AS-Path. If such a route was used, it would cause a routing loop. Another example of an <cite>import filter</cite> would be a filter used by an Internet Service Provider on a session with a customer to only accept routes towards the IP prefixes assigned to the customer by the provider. On real routers, <cite>import filters</cite> can be much more complex and some <cite>import filters</cite> modify the attributes of the received BGP <cite>UPDATE</cite> <a class="reference internal" href="../bibliography.html#wms2004" id="id12"><span>[WMS2004]</span></a> .</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">def</span><span class="w"> </span><span class="nf">apply_import_filter</span><span class="p">(</span><span class="n">remoteAS</span><span class="p">,</span> <span class="n">bgpMsg</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">my_AS</span> <span class="ow">in</span> <span class="n">bgpMsg</span><span class="o">.</span><span class="n">ASPath</span><span class="p">:</span>
+        <span class="n">bgpMsg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Many additional import policies can be configured:</span>
+        <span class="c1"># accept or refuse the bgpMsg, modify selected</span>
+        <span class="c1"># attributes inside bgpMsg,...</span>
+    <span class="k">return</span> <span class="n">bgpMsg</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The bogon filters</p>
+<p>Another example of frequently used <cite>import filters</cite> are the filters that Internet Service Providers use to ignore bogon routes. In the ISP community, a bogon route is a route that should not be advertised on the global Internet. Typical examples include the documentation IPv6 prefix (<cite>2001:db8::/32</cite> used for most examples in this book), the loopback address (<cite>::1/128</cite>) or the IPv6 prefixes that have not yet been allocated by IANA. A well managed BGP router should ensure that it never advertises bogons on the global Internet. Detailed information about these bogons may be found in <a class="reference internal" href="../bibliography.html#imhm2013" id="id13"><span>[IMHM2013]</span></a>.</p>
+</div>
+<p>If the import filter accepts the BGP message, the pseudo-code distinguishes two cases. If this is an <cite>Update message</cite> for prefix <cite>p</cite>, this can be a new route for this prefix or a modification of the route’s attributes. The router first retrieves from its <cite>RIB</cite> the best route towards prefix <cite>p</cite>. Then, the new route is inserted in the <cite>RIB</cite> and the <cite>BGP decision process</cite> is run to find whether the best route towards destination <cite>p</cite> changes. A BGP message only needs to be sent to the router’s peers if the best route has changed. For each peer, the router applies the  <cite>export filter</cite> to verify whether the route can be advertised. If yes, the filtered BGP message is sent. Otherwise, a <cite>Withdraw message</cite> is sent. When the router receives a <cite>Withdraw message</cite>, it also verifies whether the removal of the route from its <cite>RIB</cite> caused its best route towards this prefix to change. It should be noted that, depending on the content of the <cite>RIB</cite> and the <cite>export filters</cite>, a BGP router may need to send a <cite>Withdraw message</cite> to a peer after having received an <cite>Update message</cite> from another peer and conversely.</p>
+<p>Let us now discuss in more detail the operation of BGP in an IPv6 network. For this, let us consider the simple network composed of three routers located in three different ASes and shown in the figure below.</p>
+<figure class="align-center" id="id37">
+<a class="reference internal image-reference" href="../_images/bgp-nexthop.svg"><img alt="../_images/bgp-nexthop.svg" src="../Images/e4d6965066e9e8670bd2ee7036f03d88.png" style="width: 775.0px; height: 191.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-nexthop.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 159 </span><span class="caption-text">Utilization of the BGP nexthop attribute</span><a class="headerlink" href="#id37" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This network contains three routers : <cite>R1</cite>, <cite>R2</cite> and <cite>R3</cite>. Each router is attached to a local IPv6 subnet that it advertises using BGP. There are two BGP sessions, one between <cite>R1</cite> and <cite>R2</cite> and the second between <cite>R2</cite> and <cite>R3</cite>. A <cite>/127</cite> subnet is used on each interdomain link (<cite>2001:db8::4/127</cite> on <cite>R1-R2</cite> and <cite>2001:db8::0/127</cite> on <cite>R2-R3</cite>) in conformance with the latest recommendation <span class="target" id="index-14"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6164.html"><strong>RFC 6164</strong></a>. The BGP sessions run above TCP connections established between the neighboring routers (e.g. <cite>2001:db8::5 - 2001:db8::6</cite> for the <cite>R1-R2</cite> session).</p>
+<p id="index-15">Let us assume that the <cite>R1-R2</cite> BGP session is the first to be established. A <cite>BGP Update</cite> message sent on such a session contains three fields :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the advertised prefix</p></li>
+<li><p>the <cite>BGP nexthop</cite></p></li>
+<li><p>the attributes including the AS-Path</p></li>
+</ul>
+</div></blockquote>
+<p>We use the notation <cite>U(prefix, nexthop, attributes)</cite> to represent such a <cite>BGP Update</cite> message in this section. Similarly, <cite>W(prefix)</cite> represents a <cite>BGP withdraw</cite> for the specified prefix. Once the <cite>R1-R2</cite> session has been established, <cite>R1</cite> sends <cite>U(2001:db8:1234::/48,2001:db8::5,AS10)</cite> to <cite>R2</cite> and <cite>R2</cite> sends <cite>U(2001:db8:5678:/48,2001:db8::6,AS20)</cite>. At this point, <cite>R1</cite> can reach <cite>2001:db8:5678::/48</cite> via <cite>2001:db8::6</cite> and <cite>R2</cite> can reach <cite>2001:db8:1234::/48</cite> via <cite>2001:db8::5</cite>.</p>
+<p>Once the <cite>R2-R3</cite> has been established, <cite>R3</cite> sends <cite>U(2001:db8:acbd::/48,2001:db8::2,AS30)</cite>. <cite>R2</cite> announces on the <cite>R2-R3</cite> session all the routes inside its RIB. It thus sends to <cite>R3</cite> : <cite>U(2001:db8:1234::/48,2001:db8::1,AS20:AS10)</cite> and <cite>U(2001:db8:5678::/48,2001:db8::1,AS20)</cite>. Note that when <cite>R2</cite> advertises the route that it learned from <cite>R1</cite>, it updates the BGP nexthop and adds its AS number to the AS-Path. <cite>R2</cite> also sends <cite>U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)</cite> to <cite>R1</cite> on the <cite>R1-R3</cite> session. At this point, all BGP routes have been exchanged and all routers can reach <cite>2001:db8::1234/48</cite>, <cite>2001:db8:5678::/48</cite> and <cite>2001:db8:abcd::/48</cite>.</p>
+<p>If the link between <cite>R2</cite> and <cite>R3</cite> fails, <cite>R3</cite> detects the failure as it did not receive <cite>KEEPALIVE</cite> messages recently from <cite>R2</cite>. At this time, <cite>R3</cite> removes from its RIB all the routes learned over the <cite>R2-R3</cite> BGP session. <cite>R2</cite> also removes from its RIB the routes learned from <cite>R3</cite>. <cite>R2</cite> also sends  <cite>W(2001:db8:acbd::/48)</cite> to <cite>R1</cite> over the <cite>R1-R3</cite> BGP session since it does not have a route anymore towards this prefix.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Origin of the routes advertised by a BGP router</p>
+<p>A frequent practical question about the operation of BGP is how a BGP router decides to originate or advertise a route for the first time. In practice, this occurs in two situations :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the router has been manually configured by the network operator to always advertise one or several routes on a BGP session. For example, on the BGP session between UCLouvain and its provider, <a class="reference external" href="https://www.belnet.be">belnet</a> , UCLouvain’s router always advertises the <cite>2001:6a8:3080/48</cite> IPv6 prefix assigned to the campus network</p></li>
+<li><p>the router has been configured by the network operator to advertise over its BGP session some of the routes that it learns with its intradomain routing protocol. For example, an enterprise router may advertise over a BGP session with its provider the routes to remote sites when these routes are reachable and advertised by the intradomain routing protocol</p></li>
+</ul>
+</div></blockquote>
+<p>The first solution is the most frequent. Advertising routes learned from an intradomain routing protocol is not recommended, this is because if the route flaps <a class="footnote-reference brackets" href="#fflap" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, this would cause a large number of BGP messages being exchanged in the global Internet.</p>
+</div>
+<section id="the-bgp-decision-process">
+<span id="index-16"/><h3>The BGP decision process<a class="headerlink" href="#the-bgp-decision-process" title="Link to this heading">#</a></h3>
+<p>Besides the import and export filters, a key difference between BGP and the intradomain routing protocols is that each domain can define its own ranking algorithm to determine which route is chosen to forward packets when several routes have been learned towards the same prefix. This ranking depends on several BGP attributes that can be attached to a BGP route.</p>
+<p id="index-17">The first BGP attribute that is used to rank BGP routes is the <cite>local-preference</cite> (local-pref) attribute. This attribute is an unsigned integer that is attached to each BGP route received over an eBGP session by the associated import filter.</p>
+<p>When comparing routes towards the same destination prefix, a BGP router always prefers the routes with the highest <cite>local-pref</cite>. If the BGP router knows several routes with the same <cite>local-pref</cite>, it prefers among the routes having this <cite>local-pref</cite> the ones with the shortest AS-Path.</p>
+<p>The <cite>local-pref</cite> attribute is often used to prefer some routes over others.</p>
+<p>A common utilization of <cite>local-pref</cite> is to support backup links. Consider the situation depicted in the figure below. <cite>AS1</cite> would always like to use the high bandwidth link to send and receive packets via <cite>AS2</cite> and only use the backup link upon failure of the primary one.</p>
+<figure class="align-center" id="id38">
+<a class="reference internal image-reference" href="../_images/bgp-backup.svg"><img alt="../_images/bgp-backup.svg" src="../Images/a3485a4ec7385b94aecb7b585e809d0b.png" style="width: 549.0px; height: 333.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-backup.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 160 </span><span class="caption-text">How to create a backup link with BGP ?</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As BGP routers always prefer the routes with the highest <cite>local-pref</cite> attribute, this policy can be implemented using the following import filter on <cite>R1</cite></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS2 RB at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>With this import filter, all the BGP routes learned from <cite>RB</cite> over the high bandwidth links are preferred over the routes learned over the backup link. If the primary link fails, the corresponding routes are removed from <cite>R1</cite>’s RIB and <cite>R1</cite> uses the route learned from <cite>RA</cite>. <cite>R1</cite> reuses the routes via <cite>RB</cite> as soon as they are advertised by <cite>RB</cite> once the <cite>R1-RB</cite> link comes back.</p>
+<p>The import filter above modifies the selection of the BGP routes inside <cite>AS1</cite>. Thus, it influences the route followed by the packets forwarded by <cite>AS1</cite>. In addition to using the primary link to send packets, <cite>AS1</cite> would like to receive its packets via the high bandwidth link. For this, <cite>AS2</cite> also needs to set the <cite>local-pref</cite> attribute in its import filter.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS1 R1 at RA set localpref=100;
+        from  AS1 R1 at RB set localpref=200;
+        accept AS1
+</pre></div>
+</div>
+<p>Sometimes, the <cite>local-pref</cite> attribute is used to prefer a <cite>cheap</cite> link compared to a more expensive one. For example, in the network below, <cite>AS1</cite> could wish to send and receive packets mainly via its interdomain link with <cite>AS4</cite>.</p>
+<figure class="align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/bgp-prefer.svg"><img alt="../_images/bgp-prefer.svg" src="../Images/a6ae4372991a589dfd16713f3fbf28dc.png" style="width: 751.0px; height: 253.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-prefer.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 161 </span><span class="caption-text">How to prefer a cheap link over an more expensive one ?</span><a class="headerlink" href="#id39" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><cite>AS1</cite> can install the following import filter on <cite>R1</cite> to ensure that it always sends packets via <cite>R2</cite> when it has learned a route via <cite>AS2</cite> and another via <cite>AS4</cite>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS4 R2 at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>However, this import filter does not influence how <cite>AS3</cite> , for example, prefers some routes over others. If the link between <cite>AS3</cite> and <cite>AS2</cite> is less expensive than the link between <cite>AS3</cite> and <cite>AS4</cite>, <cite>AS3</cite> could send all its packets via <cite>AS2</cite> and <cite>AS1</cite> would receive packets over its expensive link. An important point to remember about <cite>local-pref</cite> is that it can be used to prefer some routes over others to send packets, but it has no influence on the routes followed by received packets.</p>
+<p>Another important utilization of the <cite>local-pref</cite> attribute is to support the <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite> peering relationships. From an economic point of view, there is an important difference between these three types of peering relationships. A domain usually earns money when it sends packets over a <cite>provider-&gt;customer</cite> relationship. On the other hand, it must pay its provider when it sends packets over a <cite>customer-&gt;provider</cite> relationship. Using a <cite>shared-cost</cite> peering to send packets is usually neutral from an economic perspective. To take into account these economic issues, domains usually configure the import filters on their routers as follows :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>insert a high <cite>local-pref</cite> attribute in the routes learned from a customer</p></li>
+<li><p>insert a medium <cite>local-pref</cite> attribute in the routes learned over a shared-cost peering</p></li>
+<li><p>insert a low <cite>local-pref</cite> attribute in the routes learned from a provider</p></li>
+</ul>
+</div></blockquote>
+<p>With such an import filter, the routers of a domain always prefer to reach destinations via their customers whenever such a route exists. Otherwise, they prefer to use <cite>shared-cost</cite> peering relationships and they only send packets via their providers when they do not know any alternate route. A consequence of setting the <cite>local-pref</cite> attribute like this is that Internet paths are often asymmetrical. Consider for example the internetwork shown in the figure below.</p>
+<figure class="align-center" id="id40">
+<a class="reference internal image-reference" href="../_images/asymetry.svg"><img alt="../_images/asymetry.svg" src="../Images/0a126e385db1ba6a60851408e8964db3.png" style="width: 610.0px; height: 462.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/asymetry.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 162 </span><span class="caption-text">Asymmetry of Internet paths</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Consider in this internetwork the routes available inside <cite>AS1</cite> to reach <cite>AS5</cite>. <cite>AS1</cite> learns the <cite>AS4:AS6:AS7:AS5</cite> path from <cite>AS4</cite>, the <cite>AS3:AS8:AS5</cite> path from <cite>AS3</cite> and the <cite>AS2:AS5</cite> path from <cite>AS2</cite>. The first path is chosen since it was learned from a customer. <cite>AS5</cite> on the other hand receives three paths towards <cite>AS1</cite> via its providers. It may select any of these paths to reach <cite>AS1</cite> , depending on how it prefers one provider over the others.</p>
+</section>
+<section id="bgp-convergence">
+<h3>BGP convergence<a class="headerlink" href="#bgp-convergence" title="Link to this heading">#</a></h3>
+<p>In the previous sections, we have explained the operation of BGP routers. Compared to intradomain routing protocols, a key feature of BGP is its ability to support interdomain routing policies that are defined by each domain as its import and export filters and ranking process. A domain can define its own routing policies and router vendors have implemented many configuration tweaks to support complex routing policies. However, the routing policy chosen by a domain may interfere with the routing policy chosen by another domain. To understand this issue, let us first consider the simple internetwork shown below.</p>
+<figure class="align-center" id="id41">
+<a class="reference internal image-reference" href="../_images/disagree.svg"><img alt="../_images/disagree.svg" src="../Images/e0d8fea96abc42f780dccaaf6f640d03.png" style="width: 540.0px; height: 230.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/disagree.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 163 </span><span class="caption-text">The disagree internetwork</span><a class="headerlink" href="#id41" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, we focus on the route towards <cite>2001:db8::1234/48</cite> which is advertised by <cite>AS1</cite>. Let us also assume that <cite>AS3</cite> (resp. <cite>AS4</cite>) prefers, e.g. for economic reasons, a route learned from <cite>AS4</cite> (<cite>AS3</cite>) over a route learned from <cite>AS1</cite>. When <cite>AS1</cite> sends <cite>U(2001:db8::1234/48,AS1)</cite> to <cite>AS3</cite> and <cite>AS4</cite>, three sequences of exchanges of BGP messages are possible :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS3</cite> sends first <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite>. <cite>AS4</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS3</cite> and does not advertise a route to <cite>AS3</cite></p></li>
+<li><p><cite>AS4</cite> first sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite> to <cite>AS3</cite>. <cite>AS3</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS4</cite> and does not advertise a route to <cite>AS4</cite></p></li>
+<li><p><cite>AS3</cite> sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite> and, at the same time, <cite>AS4</cite> sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite>.  <cite>AS3</cite> prefers the route via <cite>AS4</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS4</cite>. In the mean time, <cite>AS4</cite> prefers the route via <cite>AS3</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS3</cite>. Upon reception of the <cite>BGP Withdraws</cite>, <cite>AS3</cite> and <cite>AS4</cite> only know the direct route towards <cite>2001:db8:1234/48</cite>. <cite>AS3</cite> (resp. <cite>AS4</cite>) sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> (resp. <cite>U(2001:db8:1234/48,AS4:AS1)</cite>) to <cite>AS4</cite> (resp. <cite>AS3</cite>). <cite>AS3</cite> and <cite>AS4</cite> could in theory continue to exchange BGP messages for ever. In practice, one of them sends one message faster than the other and BGP converges.</p></li>
+</ol>
+</div></blockquote>
+<p>The example above has shown that the routes selected by BGP routers may sometimes depend on the ordering of the BGP messages that are exchanged. Other similar scenarios may be found in <span class="target" id="index-18"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4264.html"><strong>RFC 4264</strong></a>.</p>
+<p>From an operational perspective, the above configuration is annoying since the network operators cannot easily predict which paths are chosen. Unfortunately, there are even more annoying BGP configurations. For example, let us consider the configuration below which is often named <cite>Bad Gadget</cite> <a class="reference internal" href="../bibliography.html#gw1999" id="id15"><span>[GW1999]</span></a></p>
+<figure class="align-center" id="id42">
+<a class="reference internal image-reference" href="../_images/bad-gadget.svg"><img alt="../_images/bad-gadget.svg" src="../Images/98a26037d12a6cb60b64faf1e25a4470.png" style="width: 627.0px; height: 329.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bad-gadget.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 164 </span><span class="caption-text">The bad gadget internetwork</span><a class="headerlink" href="#id42" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, there are four ASes. <cite>AS0</cite> advertises one route towards one prefix and we only analyze the routes towards this prefix. The routing preferences of <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> are the following :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>AS1</cite> prefers the path <cite>AS3:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS3</cite> prefers the path <cite>AS4:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS4</cite> prefers the path <cite>AS1:AS0</cite> over all other paths</p></li>
+</ul>
+</div></blockquote>
+<p><cite>AS0</cite> sends <cite>U(p,AS0)</cite> to <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite>. As this is the only route known by <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> towards <cite>p</cite>, they all select the direct path. Let us now consider one possible exchange of BGP messages :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS1</cite> sends <cite>U(p, AS1:AS0)</cite> to <cite>AS3</cite> and <cite>AS4</cite>. <cite>AS4</cite> selects the path via <cite>AS1</cite> since this is its preferred path. <cite>AS3</cite> still uses the direct path.</p></li>
+<li><p><cite>AS4</cite> advertises <cite>U(p,AS4:AS1:AS0)</cite> to <cite>AS3</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p, AS3:AS0)</cite> to <cite>AS1</cite> and <cite>AS4</cite>. <cite>AS1</cite> selects the path via <cite>AS3</cite> since this is its preferred path. <cite>AS4</cite> still uses the path via <cite>AS1</cite>.</p></li>
+<li><p>As <cite>AS1</cite> has changed its path, it sends <cite>U(p,AS1:AS3:AS0)</cite> to <cite>AS4</cite> and <cite>W(p)</cite> to <cite>AS3</cite> since its new path is via <cite>AS3</cite>. <cite>AS4</cite> switches back to the direct path.</p></li>
+<li><p><cite>AS4</cite> sends <cite>U(p,AS4:AS0)</cite> to <cite>AS1</cite> and <cite>AS3</cite>. <cite>AS3</cite> prefers the path via <cite>AS4</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p,AS3:AS4:AS0)</cite> to <cite>AS1</cite> and <cite>W(p)</cite> to <cite>AS4</cite>. <cite>AS1</cite> switches back to the direct path and we are back at the first step.</p></li>
+</ol>
+</div></blockquote>
+<p>This example shows that the convergence of BGP is unfortunately not always guaranteed as some interdomain routing policies may interfere with each other in complex ways. <a class="reference internal" href="../bibliography.html#gw1999" id="id16"><span>[GW1999]</span></a> have shown that checking for global convergence is either NP-complete or NP-hard. See <a class="reference internal" href="../bibliography.html#gsw2002" id="id17"><span>[GSW2002]</span></a> for a more detailed discussion.</p>
+<p>Fortunately, there are some operational guidelines <a class="reference internal" href="../bibliography.html#gr2001" id="id18"><span>[GR2001]</span></a> <a class="reference internal" href="../bibliography.html#ggr2001" id="id19"><span>[GGR2001]</span></a> that can guarantee BGP convergence in the global Internet. To ensure that BGP will converge, these guidelines consider that there are two types of peering relationships : <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite>. In this case, BGP convergence is guaranteed provided that the following conditions are fulfilled :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The topology composed of all the directed <cite>customer-&gt;provider</cite> peering links is a graph that does not contain any cycle</p></li>
+<li><p>An AS always prefers a route received from a <cite>customer</cite> over a route received from a <cite>shared-cost</cite> peer or a <cite>provider</cite>.</p></li>
+</ol>
+</div></blockquote>
+<p>The first guideline implies that the provider of the provider of <cite>ASx</cite> cannot be a customer of <cite>ASx</cite>. Such a relationship would not make sense from an economic perspective as it would imply circular payments. Furthermore, providers are usually larger than customers.</p>
+<p>The second guideline also corresponds to economic preferences. Since a provider earns money when sending packets to one of its customers, it makes sense to prefer such customer learned routes over routes learned from providers. <a class="reference internal" href="../bibliography.html#gr2001" id="id20"><span>[GR2001]</span></a> also shows that BGP convergence is guaranteed even if an AS associates the same preference to routes learned from a <cite>shared-cost</cite> peer and routes learned from a customer.</p>
+<p>From a theoretical perspective, these guidelines should be verified automatically to ensure that BGP will always converge in the global Internet. However, such a verification cannot be performed in practice because this would force all domains to disclose their routing policies (and few are willing to do so) and furthermore the problem is known to be NP-hard [GW1999].</p>
+<p>In practice, researchers and operators expect that these guidelines are verified <a class="footnote-reference brackets" href="#fgranularity" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> in most domains. Thanks to the large amount of BGP data that has been collected by operators and researchers <a class="footnote-reference brackets" href="#fbgpdata" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>, several studies have analyzed the AS-level topology of the Internet. <a class="reference internal" href="../bibliography.html#sark2002" id="id23"><span>[SARK2002]</span></a> is one of the first analysis. More recent studies include <a class="reference internal" href="../bibliography.html#coz2008" id="id24"><span>[COZ2008]</span></a> and <a class="reference internal" href="../bibliography.html#dkf-2007" id="id25"><span>[DKF+2007]</span></a></p>
+<p>Based on these studies and <a class="reference internal" href="../bibliography.html#atlas2009" id="id26"><span>[ATLAS2009]</span></a>, the AS-level Internet topology can be summarized as shown in the figure below.</p>
+<figure class="align-center" id="id43">
+<a class="reference internal image-reference" href="../_images/bgp-hierarchy.svg"><img alt="../_images/bgp-hierarchy.svg" src="../Images/7ed75e3a3085ea745ef374995877c629.png" style="width: 410.2px; height: 366.09999999999997px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-hierarchy.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 165 </span><span class="caption-text">The layered structure of the global Internet</span><a class="headerlink" href="#id43" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-19">The domains on the Internet can be divided in about four categories according to their role and their position in the AS-level topology.</p>
+<p>Due to this organization of the Internet and due to the BGP decision process, most AS-level paths on the Internet have a length of 3-5 AS hops.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fasnum" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>An analysis of the evolution of the number of domains on the global Internet during the last ten years may be found in <a class="reference external" href="https://www.potaroo.net/tools/asn32/">https://www.potaroo.net/tools/asn32/</a>.</p>
+</aside>
+<aside class="footnote brackets" id="fpotaroo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Several web sites collect and analyze data about the evolution of BGP in the global Internet. <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a> provides lots of statistics and analyzes that are updated daily.</p>
+</aside>
+<aside class="footnote brackets" id="fasrank" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="http://as-rank.caida.org/">http://as-rank.caida.org/</a> for an  analysis of the interconnections between domains based on measurements collected in the global Internet.</p>
+</aside>
+<aside class="footnote brackets" id="fwish" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>Two routers that are attached to the same IXP exchange packets only when the owners of their domains have an economical incentive to exchange packets on this IXP. Usually, a router on an IXP is only able to exchange packets with a small fraction of the routers that are present on the same IXP.</p>
+</aside>
+<aside class="footnote brackets" id="fripedb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">5</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="ftp://ftp.ripe.net/ripe/dbase">ftp://ftp.ripe.net/ripe/dbase</a> for the RIPE database that contains the import and export policies of many European ISPs.</p>
+</aside>
+<aside class="footnote brackets" id="fasdomain" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<p>In this text, we consider Autonomous System and domain as synonyms. In practice, a domain may be  divided into several Autonomous Systems, but we ignore this detail.</p>
+</aside>
+<aside class="footnote brackets" id="flifetimebgp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">7</a><span class="fn-bracket">]</span></span>
+<p>The BGP sessions and the underlying TCP connection are typically established by the routers when they boot based on information found in their configuration. The BGP sessions are rarely released, except if the corresponding peering link fails or one of the endpoints crashes or needs to be rebooted.</p>
+</aside>
+<aside class="footnote brackets" id="fdefaultkeepalive" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">8</a><span class="fn-bracket">]</span></span>
+<p>90 seconds is the default delay recommended by <span class="target" id="index-20"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>. However, two BGP peers can negotiate a different timer during the establishment of their BGP session. Using a too small interval to detect BGP session failures is not recommended. BFD <a class="reference internal" href="../bibliography.html#kw2009" id="id27"><span>[KW2009]</span></a> can be used to replace BGP’s KEEPALIVE mechanism if fast detection of interdomain link failures is required.</p>
+</aside>
+<aside class="footnote brackets" id="fflap" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">9</a><span class="fn-bracket">]</span></span>
+<p>A link is said to be flapping if it switches several times between an operational state and a disabled state within a short period of time. A router attached to such a link would need to frequently send routing messages.</p>
+</aside>
+<aside class="footnote brackets" id="fgranularity" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">10</a><span class="fn-bracket">]</span></span>
+<p>Researchers such as <a class="reference internal" href="../bibliography.html#muf-2007" id="id28"><span>[MUF+2007]</span></a> have shown that modeling the Internet topology at the AS-level requires more than the <cite>shared-cost</cite> and <cite>customer-&gt;provider</cite> peering relationships. However, there is no publicly available model that goes beyond these classical peering relationships.</p>
+</aside>
+<aside class="footnote brackets" id="fbgpdata" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">11</a><span class="fn-bracket">]</span></span>
+<p>BGP data is often collected by establishing BGP sessions between Unix hosts running a BGP daemon and BGP routers in different ASes. The Unix hosts store all BGP messages received and regular dumps of their BGP routing tables. See <a class="reference external" href="http://www.routeviews.org">http://www.routeviews.org</a>, <a class="reference external" href="https://www.ripe.net/ris">https://www.ripe.net/ris</a>, or <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a>.</p>
+</aside>
+</aside>
+</section>
+&#13;
+
+<span id="index-16"/><h3>The BGP decision process<a class="headerlink" href="#the-bgp-decision-process" title="Link to this heading">#</a></h3>
+<p>Besides the import and export filters, a key difference between BGP and the intradomain routing protocols is that each domain can define its own ranking algorithm to determine which route is chosen to forward packets when several routes have been learned towards the same prefix. This ranking depends on several BGP attributes that can be attached to a BGP route.</p>
+<p id="index-17">The first BGP attribute that is used to rank BGP routes is the <cite>local-preference</cite> (local-pref) attribute. This attribute is an unsigned integer that is attached to each BGP route received over an eBGP session by the associated import filter.</p>
+<p>When comparing routes towards the same destination prefix, a BGP router always prefers the routes with the highest <cite>local-pref</cite>. If the BGP router knows several routes with the same <cite>local-pref</cite>, it prefers among the routes having this <cite>local-pref</cite> the ones with the shortest AS-Path.</p>
+<p>The <cite>local-pref</cite> attribute is often used to prefer some routes over others.</p>
+<p>A common utilization of <cite>local-pref</cite> is to support backup links. Consider the situation depicted in the figure below. <cite>AS1</cite> would always like to use the high bandwidth link to send and receive packets via <cite>AS2</cite> and only use the backup link upon failure of the primary one.</p>
+<figure class="align-center" id="id38">
+<a class="reference internal image-reference" href="../_images/bgp-backup.svg"><img alt="../_images/bgp-backup.svg" src="../Images/a3485a4ec7385b94aecb7b585e809d0b.png" style="width: 549.0px; height: 333.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-backup.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 160 </span><span class="caption-text">How to create a backup link with BGP ?</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As BGP routers always prefer the routes with the highest <cite>local-pref</cite> attribute, this policy can be implemented using the following import filter on <cite>R1</cite></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS2 RB at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>With this import filter, all the BGP routes learned from <cite>RB</cite> over the high bandwidth links are preferred over the routes learned over the backup link. If the primary link fails, the corresponding routes are removed from <cite>R1</cite>’s RIB and <cite>R1</cite> uses the route learned from <cite>RA</cite>. <cite>R1</cite> reuses the routes via <cite>RB</cite> as soon as they are advertised by <cite>RB</cite> once the <cite>R1-RB</cite> link comes back.</p>
+<p>The import filter above modifies the selection of the BGP routes inside <cite>AS1</cite>. Thus, it influences the route followed by the packets forwarded by <cite>AS1</cite>. In addition to using the primary link to send packets, <cite>AS1</cite> would like to receive its packets via the high bandwidth link. For this, <cite>AS2</cite> also needs to set the <cite>local-pref</cite> attribute in its import filter.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS1 R1 at RA set localpref=100;
+        from  AS1 R1 at RB set localpref=200;
+        accept AS1
+</pre></div>
+</div>
+<p>Sometimes, the <cite>local-pref</cite> attribute is used to prefer a <cite>cheap</cite> link compared to a more expensive one. For example, in the network below, <cite>AS1</cite> could wish to send and receive packets mainly via its interdomain link with <cite>AS4</cite>.</p>
+<figure class="align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/bgp-prefer.svg"><img alt="../_images/bgp-prefer.svg" src="../Images/a6ae4372991a589dfd16713f3fbf28dc.png" style="width: 751.0px; height: 253.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-prefer.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 161 </span><span class="caption-text">How to prefer a cheap link over an more expensive one ?</span><a class="headerlink" href="#id39" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><cite>AS1</cite> can install the following import filter on <cite>R1</cite> to ensure that it always sends packets via <cite>R2</cite> when it has learned a route via <cite>AS2</cite> and another via <cite>AS4</cite>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span/>import: from  AS2 RA at R1 set localpref=100;
+        from  AS4 R2 at R1 set localpref=200;
+        accept ANY
+</pre></div>
+</div>
+<p>However, this import filter does not influence how <cite>AS3</cite> , for example, prefers some routes over others. If the link between <cite>AS3</cite> and <cite>AS2</cite> is less expensive than the link between <cite>AS3</cite> and <cite>AS4</cite>, <cite>AS3</cite> could send all its packets via <cite>AS2</cite> and <cite>AS1</cite> would receive packets over its expensive link. An important point to remember about <cite>local-pref</cite> is that it can be used to prefer some routes over others to send packets, but it has no influence on the routes followed by received packets.</p>
+<p>Another important utilization of the <cite>local-pref</cite> attribute is to support the <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite> peering relationships. From an economic point of view, there is an important difference between these three types of peering relationships. A domain usually earns money when it sends packets over a <cite>provider-&gt;customer</cite> relationship. On the other hand, it must pay its provider when it sends packets over a <cite>customer-&gt;provider</cite> relationship. Using a <cite>shared-cost</cite> peering to send packets is usually neutral from an economic perspective. To take into account these economic issues, domains usually configure the import filters on their routers as follows :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>insert a high <cite>local-pref</cite> attribute in the routes learned from a customer</p></li>
+<li><p>insert a medium <cite>local-pref</cite> attribute in the routes learned over a shared-cost peering</p></li>
+<li><p>insert a low <cite>local-pref</cite> attribute in the routes learned from a provider</p></li>
+</ul>
+</div></blockquote>
+<p>With such an import filter, the routers of a domain always prefer to reach destinations via their customers whenever such a route exists. Otherwise, they prefer to use <cite>shared-cost</cite> peering relationships and they only send packets via their providers when they do not know any alternate route. A consequence of setting the <cite>local-pref</cite> attribute like this is that Internet paths are often asymmetrical. Consider for example the internetwork shown in the figure below.</p>
+<figure class="align-center" id="id40">
+<a class="reference internal image-reference" href="../_images/asymetry.svg"><img alt="../_images/asymetry.svg" src="../Images/0a126e385db1ba6a60851408e8964db3.png" style="width: 610.0px; height: 462.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/asymetry.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 162 </span><span class="caption-text">Asymmetry of Internet paths</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Consider in this internetwork the routes available inside <cite>AS1</cite> to reach <cite>AS5</cite>. <cite>AS1</cite> learns the <cite>AS4:AS6:AS7:AS5</cite> path from <cite>AS4</cite>, the <cite>AS3:AS8:AS5</cite> path from <cite>AS3</cite> and the <cite>AS2:AS5</cite> path from <cite>AS2</cite>. The first path is chosen since it was learned from a customer. <cite>AS5</cite> on the other hand receives three paths towards <cite>AS1</cite> via its providers. It may select any of these paths to reach <cite>AS1</cite> , depending on how it prefers one provider over the others.</p>
+&#13;
+
+<h3>BGP convergence<a class="headerlink" href="#bgp-convergence" title="Link to this heading">#</a></h3>
+<p>In the previous sections, we have explained the operation of BGP routers. Compared to intradomain routing protocols, a key feature of BGP is its ability to support interdomain routing policies that are defined by each domain as its import and export filters and ranking process. A domain can define its own routing policies and router vendors have implemented many configuration tweaks to support complex routing policies. However, the routing policy chosen by a domain may interfere with the routing policy chosen by another domain. To understand this issue, let us first consider the simple internetwork shown below.</p>
+<figure class="align-center" id="id41">
+<a class="reference internal image-reference" href="../_images/disagree.svg"><img alt="../_images/disagree.svg" src="../Images/e0d8fea96abc42f780dccaaf6f640d03.png" style="width: 540.0px; height: 230.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/disagree.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 163 </span><span class="caption-text">The disagree internetwork</span><a class="headerlink" href="#id41" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, we focus on the route towards <cite>2001:db8::1234/48</cite> which is advertised by <cite>AS1</cite>. Let us also assume that <cite>AS3</cite> (resp. <cite>AS4</cite>) prefers, e.g. for economic reasons, a route learned from <cite>AS4</cite> (<cite>AS3</cite>) over a route learned from <cite>AS1</cite>. When <cite>AS1</cite> sends <cite>U(2001:db8::1234/48,AS1)</cite> to <cite>AS3</cite> and <cite>AS4</cite>, three sequences of exchanges of BGP messages are possible :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS3</cite> sends first <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite>. <cite>AS4</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS3</cite> and does not advertise a route to <cite>AS3</cite></p></li>
+<li><p><cite>AS4</cite> first sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite> to <cite>AS3</cite>. <cite>AS3</cite> has learned two routes towards <cite>2001:db8:1234/48</cite>. It runs its BGP decision process and selects the route via <cite>AS4</cite> and does not advertise a route to <cite>AS4</cite></p></li>
+<li><p><cite>AS3</cite> sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> to <cite>AS4</cite> and, at the same time, <cite>AS4</cite> sends <cite>U(2001:db8:1234/48,AS4:AS1)</cite>.  <cite>AS3</cite> prefers the route via <cite>AS4</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS4</cite>. In the mean time, <cite>AS4</cite> prefers the route via <cite>AS3</cite> and thus sends <cite>W(2001:db8:1234/48)</cite> to <cite>AS3</cite>. Upon reception of the <cite>BGP Withdraws</cite>, <cite>AS3</cite> and <cite>AS4</cite> only know the direct route towards <cite>2001:db8:1234/48</cite>. <cite>AS3</cite> (resp. <cite>AS4</cite>) sends <cite>U(2001:db8:1234/48,AS3:AS1)</cite> (resp. <cite>U(2001:db8:1234/48,AS4:AS1)</cite>) to <cite>AS4</cite> (resp. <cite>AS3</cite>). <cite>AS3</cite> and <cite>AS4</cite> could in theory continue to exchange BGP messages for ever. In practice, one of them sends one message faster than the other and BGP converges.</p></li>
+</ol>
+</div></blockquote>
+<p>The example above has shown that the routes selected by BGP routers may sometimes depend on the ordering of the BGP messages that are exchanged. Other similar scenarios may be found in <span class="target" id="index-18"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4264.html"><strong>RFC 4264</strong></a>.</p>
+<p>From an operational perspective, the above configuration is annoying since the network operators cannot easily predict which paths are chosen. Unfortunately, there are even more annoying BGP configurations. For example, let us consider the configuration below which is often named <cite>Bad Gadget</cite> <a class="reference internal" href="../bibliography.html#gw1999" id="id15"><span>[GW1999]</span></a></p>
+<figure class="align-center" id="id42">
+<a class="reference internal image-reference" href="../_images/bad-gadget.svg"><img alt="../_images/bad-gadget.svg" src="../Images/98a26037d12a6cb60b64faf1e25a4470.png" style="width: 627.0px; height: 329.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bad-gadget.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 164 </span><span class="caption-text">The bad gadget internetwork</span><a class="headerlink" href="#id42" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this internetwork, there are four ASes. <cite>AS0</cite> advertises one route towards one prefix and we only analyze the routes towards this prefix. The routing preferences of <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> are the following :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>AS1</cite> prefers the path <cite>AS3:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS3</cite> prefers the path <cite>AS4:AS0</cite> over all other paths</p></li>
+<li><p><cite>AS4</cite> prefers the path <cite>AS1:AS0</cite> over all other paths</p></li>
+</ul>
+</div></blockquote>
+<p><cite>AS0</cite> sends <cite>U(p,AS0)</cite> to <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite>. As this is the only route known by <cite>AS1</cite>, <cite>AS3</cite> and <cite>AS4</cite> towards <cite>p</cite>, they all select the direct path. Let us now consider one possible exchange of BGP messages :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><cite>AS1</cite> sends <cite>U(p, AS1:AS0)</cite> to <cite>AS3</cite> and <cite>AS4</cite>. <cite>AS4</cite> selects the path via <cite>AS1</cite> since this is its preferred path. <cite>AS3</cite> still uses the direct path.</p></li>
+<li><p><cite>AS4</cite> advertises <cite>U(p,AS4:AS1:AS0)</cite> to <cite>AS3</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p, AS3:AS0)</cite> to <cite>AS1</cite> and <cite>AS4</cite>. <cite>AS1</cite> selects the path via <cite>AS3</cite> since this is its preferred path. <cite>AS4</cite> still uses the path via <cite>AS1</cite>.</p></li>
+<li><p>As <cite>AS1</cite> has changed its path, it sends <cite>U(p,AS1:AS3:AS0)</cite> to <cite>AS4</cite> and <cite>W(p)</cite> to <cite>AS3</cite> since its new path is via <cite>AS3</cite>. <cite>AS4</cite> switches back to the direct path.</p></li>
+<li><p><cite>AS4</cite> sends <cite>U(p,AS4:AS0)</cite> to <cite>AS1</cite> and <cite>AS3</cite>. <cite>AS3</cite> prefers the path via <cite>AS4</cite>.</p></li>
+<li><p><cite>AS3</cite> sends <cite>U(p,AS3:AS4:AS0)</cite> to <cite>AS1</cite> and <cite>W(p)</cite> to <cite>AS4</cite>. <cite>AS1</cite> switches back to the direct path and we are back at the first step.</p></li>
+</ol>
+</div></blockquote>
+<p>This example shows that the convergence of BGP is unfortunately not always guaranteed as some interdomain routing policies may interfere with each other in complex ways. <a class="reference internal" href="../bibliography.html#gw1999" id="id16"><span>[GW1999]</span></a> have shown that checking for global convergence is either NP-complete or NP-hard. See <a class="reference internal" href="../bibliography.html#gsw2002" id="id17"><span>[GSW2002]</span></a> for a more detailed discussion.</p>
+<p>Fortunately, there are some operational guidelines <a class="reference internal" href="../bibliography.html#gr2001" id="id18"><span>[GR2001]</span></a> <a class="reference internal" href="../bibliography.html#ggr2001" id="id19"><span>[GGR2001]</span></a> that can guarantee BGP convergence in the global Internet. To ensure that BGP will converge, these guidelines consider that there are two types of peering relationships : <cite>customer-&gt;provider</cite> and <cite>shared-cost</cite>. In this case, BGP convergence is guaranteed provided that the following conditions are fulfilled :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The topology composed of all the directed <cite>customer-&gt;provider</cite> peering links is a graph that does not contain any cycle</p></li>
+<li><p>An AS always prefers a route received from a <cite>customer</cite> over a route received from a <cite>shared-cost</cite> peer or a <cite>provider</cite>.</p></li>
+</ol>
+</div></blockquote>
+<p>The first guideline implies that the provider of the provider of <cite>ASx</cite> cannot be a customer of <cite>ASx</cite>. Such a relationship would not make sense from an economic perspective as it would imply circular payments. Furthermore, providers are usually larger than customers.</p>
+<p>The second guideline also corresponds to economic preferences. Since a provider earns money when sending packets to one of its customers, it makes sense to prefer such customer learned routes over routes learned from providers. <a class="reference internal" href="../bibliography.html#gr2001" id="id20"><span>[GR2001]</span></a> also shows that BGP convergence is guaranteed even if an AS associates the same preference to routes learned from a <cite>shared-cost</cite> peer and routes learned from a customer.</p>
+<p>From a theoretical perspective, these guidelines should be verified automatically to ensure that BGP will always converge in the global Internet. However, such a verification cannot be performed in practice because this would force all domains to disclose their routing policies (and few are willing to do so) and furthermore the problem is known to be NP-hard [GW1999].</p>
+<p>In practice, researchers and operators expect that these guidelines are verified <a class="footnote-reference brackets" href="#fgranularity" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a> in most domains. Thanks to the large amount of BGP data that has been collected by operators and researchers <a class="footnote-reference brackets" href="#fbgpdata" id="id22" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a>, several studies have analyzed the AS-level topology of the Internet. <a class="reference internal" href="../bibliography.html#sark2002" id="id23"><span>[SARK2002]</span></a> is one of the first analysis. More recent studies include <a class="reference internal" href="../bibliography.html#coz2008" id="id24"><span>[COZ2008]</span></a> and <a class="reference internal" href="../bibliography.html#dkf-2007" id="id25"><span>[DKF+2007]</span></a></p>
+<p>Based on these studies and <a class="reference internal" href="../bibliography.html#atlas2009" id="id26"><span>[ATLAS2009]</span></a>, the AS-level Internet topology can be summarized as shown in the figure below.</p>
+<figure class="align-center" id="id43">
+<a class="reference internal image-reference" href="../_images/bgp-hierarchy.svg"><img alt="../_images/bgp-hierarchy.svg" src="../Images/7ed75e3a3085ea745ef374995877c629.png" style="width: 410.2px; height: 366.09999999999997px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/bgp-hierarchy.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 165 </span><span class="caption-text">The layered structure of the global Internet</span><a class="headerlink" href="#id43" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-19">The domains on the Internet can be divided in about four categories according to their role and their position in the AS-level topology.</p>
+<p>Due to this organization of the Internet and due to the BGP decision process, most AS-level paths on the Internet have a length of 3-5 AS hops.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fasnum" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>An analysis of the evolution of the number of domains on the global Internet during the last ten years may be found in <a class="reference external" href="https://www.potaroo.net/tools/asn32/">https://www.potaroo.net/tools/asn32/</a>.</p>
+</aside>
+<aside class="footnote brackets" id="fpotaroo" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Several web sites collect and analyze data about the evolution of BGP in the global Internet. <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a> provides lots of statistics and analyzes that are updated daily.</p>
+</aside>
+<aside class="footnote brackets" id="fasrank" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="http://as-rank.caida.org/">http://as-rank.caida.org/</a> for an  analysis of the interconnections between domains based on measurements collected in the global Internet.</p>
+</aside>
+<aside class="footnote brackets" id="fwish" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>Two routers that are attached to the same IXP exchange packets only when the owners of their domains have an economical incentive to exchange packets on this IXP. Usually, a router on an IXP is only able to exchange packets with a small fraction of the routers that are present on the same IXP.</p>
+</aside>
+<aside class="footnote brackets" id="fripedb" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">5</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="ftp://ftp.ripe.net/ripe/dbase">ftp://ftp.ripe.net/ripe/dbase</a> for the RIPE database that contains the import and export policies of many European ISPs.</p>
+</aside>
+<aside class="footnote brackets" id="fasdomain" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<p>In this text, we consider Autonomous System and domain as synonyms. In practice, a domain may be  divided into several Autonomous Systems, but we ignore this detail.</p>
+</aside>
+<aside class="footnote brackets" id="flifetimebgp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">7</a><span class="fn-bracket">]</span></span>
+<p>The BGP sessions and the underlying TCP connection are typically established by the routers when they boot based on information found in their configuration. The BGP sessions are rarely released, except if the corresponding peering link fails or one of the endpoints crashes or needs to be rebooted.</p>
+</aside>
+<aside class="footnote brackets" id="fdefaultkeepalive" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">8</a><span class="fn-bracket">]</span></span>
+<p>90 seconds is the default delay recommended by <span class="target" id="index-20"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4271.html"><strong>RFC 4271</strong></a>. However, two BGP peers can negotiate a different timer during the establishment of their BGP session. Using a too small interval to detect BGP session failures is not recommended. BFD <a class="reference internal" href="../bibliography.html#kw2009" id="id27"><span>[KW2009]</span></a> can be used to replace BGP’s KEEPALIVE mechanism if fast detection of interdomain link failures is required.</p>
+</aside>
+<aside class="footnote brackets" id="fflap" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">9</a><span class="fn-bracket">]</span></span>
+<p>A link is said to be flapping if it switches several times between an operational state and a disabled state within a short period of time. A router attached to such a link would need to frequently send routing messages.</p>
+</aside>
+<aside class="footnote brackets" id="fgranularity" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">10</a><span class="fn-bracket">]</span></span>
+<p>Researchers such as <a class="reference internal" href="../bibliography.html#muf-2007" id="id28"><span>[MUF+2007]</span></a> have shown that modeling the Internet topology at the AS-level requires more than the <cite>shared-cost</cite> and <cite>customer-&gt;provider</cite> peering relationships. However, there is no publicly available model that goes beyond these classical peering relationships.</p>
+</aside>
+<aside class="footnote brackets" id="fbgpdata" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id22">11</a><span class="fn-bracket">]</span></span>
+<p>BGP data is often collected by establishing BGP sessions between Unix hosts running a BGP daemon and BGP routers in different ASes. The Unix hosts store all BGP messages received and regular dumps of their BGP routing tables. See <a class="reference external" href="http://www.routeviews.org">http://www.routeviews.org</a>, <a class="reference external" href="https://www.ripe.net/ris">https://www.ripe.net/ris</a>, or <a class="reference external" href="https://bgp.potaroo.net">https://bgp.potaroo.net</a>.</p>
+</aside>
+</aside>
+    
+</body>
+</html>

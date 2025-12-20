@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The Transmission Control Protocol#</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>The Transmission Control Protocol#</h1>
+<blockquote>原文：<a href="https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html">https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html</a></blockquote>
+<span id="tcp"/><span id="index-0"/>
+<p>The Transmission Control Protocol (TCP) was initially defined in <span class="target" id="index-1"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. Several parts of the protocol have been improved since the publication of the original protocol specification <a class="footnote-reference brackets" href="#ftcpspecs" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. However, the basics of the protocol remain and an implementation that only supports <span class="target" id="index-2"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> should inter-operate with today’s implementation.</p>
+<p>TCP provides a reliable bytestream, connection-oriented transport service on top of the unreliable connectionless network service provided by <a class="reference internal" href="../glossary.html#term-IP"><span class="xref std std-term">IP</span></a>. TCP is used by a large number of applications, including :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Email (<a class="reference internal" href="../glossary.html#term-SMTP"><span class="xref std std-term">SMTP</span></a>, <a class="reference internal" href="../glossary.html#term-POP"><span class="xref std std-term">POP</span></a>, <a class="reference internal" href="../glossary.html#term-IMAP"><span class="xref std std-term">IMAP</span></a>)</p></li>
+<li><p>World wide web ( <a class="reference internal" href="../glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a>, …)</p></li>
+<li><p>Most file transfer protocols ( <a class="reference internal" href="../glossary.html#term-ftp"><span class="xref std std-term">ftp</span></a>, peer-to-peer file sharing applications , …)</p></li>
+<li><p>remote computer access : <a class="reference internal" href="../glossary.html#term-telnet"><span class="xref std std-term">telnet</span></a>, <a class="reference internal" href="../glossary.html#term-ssh"><span class="xref std std-term">ssh</span></a>, <a class="reference internal" href="../glossary.html#term-X11"><span class="xref std std-term">X11</span></a>, <a class="reference internal" href="../glossary.html#term-VNC"><span class="xref std std-term">VNC</span></a>, …</p></li>
+<li><p>non-interactive multimedia applications (flash, …)</p></li>
+</ul>
+</div></blockquote>
+<p>On the global Internet, most of the applications used in the wide area rely on TCP. Many studies <a class="footnote-reference brackets" href="#ftcpusage" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> have reported that TCP was responsible for more than 90% of the data exchanged in the global Internet.</p>
+<p id="index-3">To provide this service, TCP relies on a simple segment format that is shown in the figure below. Each TCP segment contains a header described below and, optionally, a payload. The default length of the TCP header is twenty bytes, but some TCP headers contain options.</p>
+<figure class="align-center" id="id28">
+<a class="reference internal image-reference" href="../_images/tcp.svg"><img alt="../_images/tcp.svg" src="../Images/87dee73fcc75a09e24fba746d7444297.png" style="width: 685.1999999999999px; height: 288.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp.svg"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">TCP header format</span><a class="headerlink" href="#id28" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A TCP header contains the following fields :</p>
+<blockquote>
+<div><ul>
+<li><p>the <cite>source and destination ports</cite>. The source and destination ports play an important role in TCP, as they allow the identification of the connection to which a TCP segment belongs. When a client opens a TCP connection, it typically selects an ephemeral TCP port number as its source port and contacts the server by using the server’s port number. All the segments that are sent by the client on this connection have the same source and destination ports. The server sends segments that contain as source (resp. destination) port, the destination (resp. source) port of the segments sent by the client (see figure <a class="reference internal" href="#fig-tcpports"><span class="std std-ref">Utilization of the TCP source and destination ports</span></a>). A TCP connection is always identified by four pieces of information :</p>
+<ul class="simple">
+<li><p>the address of the client</p></li>
+<li><p>the address of the server</p></li>
+<li><p>the port chosen by the client</p></li>
+<li><p>the port chosen by the server</p></li>
+</ul>
+</li>
+<li><p>the <cite>sequence number</cite> (32 bits), <cite>acknowledgment number</cite> (32 bits) and <cite>window</cite> (16 bits) fields are used to provide a reliable data transfer, using a window-based protocol. In a TCP bytestream, each byte of the stream consumes one sequence number. Their usage is described in more detail in section <a class="reference internal" href="#tcpreliable"><span class="std std-ref">TCP reliable data transfer</span></a></p></li>
+<li><p>the <cite>Urgent pointer</cite> is used to indicate that some data should be considered as urgent in a TCP bytestream. However, it is rarely used in practice and will not be described here. Additional details about the utilization of this pointer may be found in <span class="target" id="index-4"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>, <span class="target" id="index-5"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a> or <a class="reference internal" href="../bibliography.html#stevens1994" id="id3"><span>[Stevens1994]</span></a></p></li>
+<li><p>the flags field contains a set of bit flags that indicate how a segment should be interpreted by the TCP entity receiving it :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>SYN</cite> flag is used during connection establishment</p></li>
+<li><p>the <cite>FIN</cite> flag is used during connection release</p></li>
+<li><p>the <cite>RST</cite> is used in case of problems or when an invalid segment has been received</p></li>
+<li><p>when the <cite>ACK</cite> flag is set, it indicates that the <cite>acknowledgment</cite> field contains a valid number. Otherwise, the content of the <cite>acknowledgment</cite> field must be ignored by the receiver</p></li>
+<li><p>the <cite>URG</cite> flag is used together with the <cite>Urgent pointer</cite></p></li>
+<li><p>the <cite>PSH</cite> flag is used as a notification from the sender to indicate to the receiver that it should pass all the data it has received to the receiving process. However, in practice TCP implementations do not allow TCP users to indicate when the <cite>PSH</cite> flag should be set.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>the <cite>checksum</cite> field contains the value of the Internet checksum computed over the entire TCP segment and a pseudo-header as with UDP</p></li>
+<li><p>the <cite>Reserved</cite> field was initially reserved for future utilization. It is now used by <span class="target" id="index-6"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc3168.html"><strong>RFC 3168</strong></a>.</p></li>
+<li><p>the <cite>TCP Header Length</cite> (THL) or <cite>Data Offset</cite> field is a four-bit field that indicates the size of the TCP header in 32 bit words. The maximum size of the TCP header is thus 64 bytes.</p></li>
+<li><p>the <cite>Optional header extension</cite> is used to add optional information to the TCP header. Thanks to this header extension, it is possible to add new fields to the TCP header that were not planned in the original specification. This allowed TCP to evolve since the early eighties. The details of the TCP header extension are explained in sections <a class="reference internal" href="#tcpopen"><span class="std std-ref">TCP connection establishment</span></a> and <a class="reference internal" href="#tcpreliable"><span class="std std-ref">TCP reliable data transfer</span></a>.</p>
+<blockquote>
+<div><div class="figure" id="id29" style="text-align: center">
+<span id="fig-tcpports"/><p><img src="../Images/459c6e652d1308abcbccb7d1bb110ad1.png" alt="Figure made with TikZ" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tikz-f56628bf1e5ee4146e6817beefc19d770f8e2e20.png"/></p>
+<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Utilization of the TCP source and destination ports</span></p>
+</div></div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>The rest of this section is organized as follows. We first explain the establishment and the release of a TCP connection, then we discuss the mechanisms that are used by TCP to provide a reliable bytestream service. We end the section with a discussion of network congestion and explain the mechanisms that TCP uses to avoid congestion collapse.</p>
+<section id="tcp-connection-establishment">
+<span id="tcpopen"/><h2>TCP connection establishment<a class="headerlink" href="#tcp-connection-establishment" title="Link to this heading">#</a></h2>
+<p id="index-7">A TCP connection is established by using a three-way handshake. The connection establishment phase uses the <cite>sequence number</cite>, the <cite>acknowledgment number</cite> and the <cite>SYN</cite> flag. When a TCP connection is established, the two communicating hosts negotiate the initial sequence number to be used in both directions of the connection. For this, each TCP entity maintains a 32-bit counter, which is supposed to be incremented by one at least every 4 microseconds and after each connection establishment <a class="footnote-reference brackets" href="#ftcpclock" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. When a client host wants to open a TCP connection with a server host, it creates a TCP segment with :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>SYN</cite> flag set</p></li>
+<li><p>the <cite>sequence number</cite> set to the current value of the 32-bit counter of the client host’s TCP entity</p></li>
+</ul>
+</div></blockquote>
+<p>Upon reception of this segment (which is often called a <cite>SYN segment</cite>), the server host replies with a segment containing :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>SYN</cite> flag set</p></li>
+<li><p>the <cite>sequence number</cite> set to the current value of the 32-bit counter of the server host’s TCP entity</p></li>
+<li><p>the <cite>ACK</cite> flag set</p></li>
+<li><p>the <cite>acknowledgment number</cite> set to the <cite>sequence number</cite> of the received <cite>SYN</cite> segment incremented by 1 <span class="math notranslate nohighlight">\(\pmod{2^{32}}\)</span>. When a TCP entity sends a segment having <cite>x+1</cite> as acknowledgment number, this indicates that it has received all data up to and including sequence number <cite>x</cite> and that it is expecting data having sequence number <cite>x+1</cite>. As the <cite>SYN</cite> flag was set in a segment having sequence number <cite>x</cite>, this implies that setting the <cite>SYN</cite> flag in a segment consumes one sequence number.</p></li>
+</ul>
+</div></blockquote>
+<p>This segment is often called a <cite>SYN+ACK</cite> segment. The acknowledgment confirms to the client that the server has correctly received the <cite>SYN</cite> segment. The <cite>sequence number</cite> of the <cite>SYN+ACK</cite> segment is used by the server host to verify that the <cite>client</cite> has received the segment. Upon reception of the <cite>SYN+ACK</cite> segment, the client host replies with a segment containing :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>ACK</cite> flag set</p></li>
+<li><p>the <cite>acknowledgment number</cite> set to the <cite>sequence number</cite> of the received <cite>SYN+ACK</cite> segment incremented by 1 <span class="math notranslate nohighlight">\(\pmod{2^{32}}\)</span></p></li>
+</ul>
+</div></blockquote>
+<p>At this point, the TCP connection is open and both the client and the server are allowed to send TCP segments containing data. This is illustrated in the figure below.</p>
+<figure class="align-center" id="id30">
+<a class="reference internal image-reference" href="../_images/tcp-estab.png"><img alt="../_images/tcp-estab.png" src="../Images/694105c783e9c32b13337f7332d8f745.png" style="width: 528.5px; height: 191.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Establishment of a TCP connection</span><a class="headerlink" href="#id30" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the figure above, the connection is considered to be established by the client once it has received the <cite>SYN+ACK</cite> segment, while the server considers the connection to be established upon reception of the <cite>ACK</cite> segment. The first data segment sent by the client (server) has its <cite>sequence number</cite> set to <cite>x+1</cite> (resp. <cite>y+1</cite>).</p>
+<div class="admonition note" id="index-8">
+<p class="admonition-title">Note</p>
+<p>Computing TCP’s initial sequence number</p>
+<p>In the original TCP specification <span class="target" id="index-9"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>, each TCP entity maintained a clock to compute the initial sequence number (<a class="reference internal" href="../glossary.html#term-ISN"><span class="xref std std-term">ISN</span></a>) placed in the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments. This made the ISN predictable and caused a security issue. The typical security problem was the following. Consider a server that trusts a host based on its IP address and allows the system administrator to log in from this host without giving a password <a class="footnote-reference brackets" href="#frlogin" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Consider now an attacker who knows this particular configuration and is able to send IP packets having the client’s address as source. He can send fake TCP segments to the server, but does not receive the server’s answers. If he can predict the <cite>ISN</cite> that is chosen by the server, he can send a fake <cite>SYN</cite> segment and shortly after the fake <cite>ACK</cite> segment confirming the reception of the <cite>SYN+ACK</cite> segment sent by the server. Once the TCP connection is open, he can use it to send any command to the server. To counter this attack, current TCP implementations add randomness to the <cite>ISN</cite>. One of the solutions, proposed in <span class="target" id="index-10"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1948.html"><strong>RFC 1948</strong></a> is to compute the <cite>ISN</cite> as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span/><span class="n">ISN</span> <span class="o">=</span> <span class="n">M</span> <span class="o">+</span> <span class="n">H</span><span class="p">(</span><span class="n">localhost</span><span class="p">,</span> <span class="n">localport</span><span class="p">,</span> <span class="n">remotehost</span><span class="p">,</span> <span class="n">remoteport</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>where <cite>M</cite> is the current value of the TCP clock and <cite>H</cite> is a cryptographic hash function. <cite>localhost</cite> and <cite>remotehost</cite> (resp. <cite>localport</cite> and <cite>remoteport</cite> ) are the IP addresses (port numbers) of the local and remote host and <cite>secret</cite> is a random number only known by the server. This method allows the server to use different ISNs for different clients at the same time. <a class="reference external" href="http://lcamtuf.coredump.cx/newtcp/">Measurements</a> performed with the first implementations of this technique showed that it was difficult to implement it correctly, but today’s TCP implementations now generate good ISNs.</p>
+</div>
+<p id="index-11">A server could, of course, refuse to open a TCP connection upon reception of a <cite>SYN</cite> segment. This refusal may be due to various reasons. There may be no server process that is listening on the destination port of the <cite>SYN</cite> segment. The server could always refuse connection establishments from this particular client (e.g. due to security reasons) or the server may not have enough resources to accept a new TCP connection at that time. In this case, the server would reply with a TCP segment having its <cite>RST</cite> flag set and containing the <cite>sequence number</cite> of the received <cite>SYN</cite> segment incremented by one as its <cite>acknowledgment number</cite>. This is illustrated in the figure below. We discuss the other usages of the TCP <cite>RST</cite> flag later (see <a class="reference internal" href="#tcprelease"><span class="std std-ref">TCP connection release</span></a>).</p>
+<figure class="align-center" id="id31">
+<a class="reference internal image-reference" href="../_images/tcp-estab-rej.png"><img alt="../_images/tcp-estab-rej.png" src="../Images/6efba2b39440115db107cf4f9ac21ff3.png" style="width: 450.09999999999997px; height: 163.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab-rej.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 73 </span><span class="caption-text">TCP connection establishment rejected by peer</span><a class="headerlink" href="#id31" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>TCP connection establishment can be described as the four state Finite State Machine shown below. In this FSM, <cite>!X</cite> (resp. <cite>?Y</cite>) indicates the transmission of segment <cite>X</cite> (resp. reception of segment <cite>Y</cite>) during the corresponding transition. <cite>Init</cite> is the initial state.</p>
+<blockquote>
+<div><div class="figure" id="id32" style="text-align: center"><p><img src="../Images/fa409c45183ba9c4c429c05386da995b.png" alt="Figure made with TikZ" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tikz-9f5f1b6f86ecb2d68a5be9447cede02cae24f3c6.png"/></p>
+<p><span class="caption-number">Fig. 74 </span><span class="caption-text">TCP FSM for connection establishment</span></p>
+</div></div></blockquote>
+<p>A client host starts in the <cite>Init</cite> state. It then sends a <cite>SYN</cite> segment and enters the <cite>SYN Sent</cite> state where it waits for a <cite>SYN+ACK</cite> segment. Then, it replies with an <cite>ACK</cite> segment and enters the <cite>Established</cite> state where data can be exchanged. On the other hand, a server host starts in the <cite>Init</cite> state. When a server process starts to listen to a destination port, the underlying TCP entity creates a TCP control block and a queue to process incoming <cite>SYN</cite> segments. Upon reception of a <cite>SYN</cite> segment, the server’s TCP entity replies with a <cite>SYN+ACK</cite> and enters the <cite>SYN RCVD</cite> state. It remains in this state until it receives an <cite>ACK</cite> segment that acknowledges its <cite>SYN+ACK</cite> segment, with this it then enters the <cite>Established</cite> state.</p>
+<p>Apart from these two paths in the TCP connection establishment FSM, there is a third path that corresponds to the case when both the client and the server send a <cite>SYN</cite> segment to open a TCP connection <a class="footnote-reference brackets" href="#ftcpboth" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. In this case, the client and the server send a <cite>SYN</cite> segment and enter the <cite>SYN Sent</cite> state. Upon reception of the <cite>SYN</cite> segment sent by the other host, they reply by sending a <cite>SYN+ACK</cite> segment and enter the <cite>SYN RCVD</cite> state. The <cite>SYN+ACK</cite> that arrives from the other host allows it to transition to the <cite>Established</cite> state. The figure below illustrates such a simultaneous establishment of a TCP connection.</p>
+<figure class="align-center" id="id33">
+<a class="reference internal image-reference" href="../_images/tcp-estab-sim.png"><img alt="../_images/tcp-estab-sim.png" src="../Images/51666ccbe7edc387550885fadae101a9.png" style="width: 513.8px; height: 255.49999999999997px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab-sim.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Simultaneous establishment of a TCP connection</span><a class="headerlink" href="#id33" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<aside class="topic" id="index-12">
+<p class="topic-title">Denial of Service attacks</p>
+<p>When a TCP entity opens a TCP connection, it creates a Transmission Control Block (<a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>). The TCB contains the entire state that is maintained by the TCP entity for each TCP connection. During connection establishment, the TCB contains the local IP address, the remote IP address, the local port number, the remote port number, the current local sequence number and the last sequence number received from the remote entity. Until the mid-1990s, TCP implementations had a limit on the number of TCP connections that could be in the <cite>SYN RCVD</cite> state at a given time. Many implementations set this limit to about 100 TCBs. This limit was considered sufficient even for heavily loaded HTTP servers given the small delay between the reception of a <cite>SYN</cite> segment and the reception of the <cite>ACK</cite> segment that terminates the establishment of the TCP connection. When the limit of 100 TCBs in the <cite>SYN Rcvd</cite> state is reached, the TCP entity discards all received TCP <cite>SYN</cite> segments that do not correspond to an existing TCB.</p>
+<p>This limit of 100 TCBs in the <cite>SYN Rcvd</cite> state was chosen to protect the TCP entity from the risk of overloading its memory with too many TCBs in the <cite>SYN Rcvd</cite> state. However, it was also the reason for a new type of Denial of Service (DoS) attack <span class="target" id="index-13"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4987.html"><strong>RFC 4987</strong></a>. A DoS attack is defined as an attack where an attacker can render a resource unavailable in the network. For example, an attacker may cause a DoS attack on a 2 Mbps link used by a company by sending more than 2 Mbps of packets through this link. In this case, the DoS attack was more subtle. As a TCP entity discards all received <cite>SYN</cite> segments as soon as it has 100 TCBs in the <cite>SYN Rcvd</cite> state, an attacker simply had to send a few 100 <cite>SYN</cite> segments every second to a server and never reply to the received <cite>SYN+ACK</cite> segments. To avoid being caught, attackers were of course sending these <cite>SYN</cite> segments with a different address than their own IP address <a class="footnote-reference brackets" href="#fspoofing" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>. On most TCP implementations, once a TCB entered the <cite>SYN Rcvd</cite> state, it remained in this state for several seconds, waiting for a retransmission of the initial <cite>SYN</cite> segment. This attack was later called a <cite>SYN flood</cite> attack and the servers of the ISP named Panix were among the first to <a class="reference external" href="http://memex.org/meme2-12.html">be affected</a> by this attack.</p>
+<p>To avoid the <cite>SYN flood</cite> attacks, recent TCP implementations no longer enter the <cite>SYN Rcvd</cite> state upon reception of a <cite>SYN segment</cite>. Instead, they reply directly with a <cite>SYN+ACK</cite> segment and wait until the reception of a valid <cite>ACK</cite>. This implementation trick is only possible if the TCP implementation is able to verify that the received <cite>ACK</cite> segment acknowledges the <cite>SYN+ACK</cite> segment sent earlier without storing the initial sequence number of this <cite>SYN+ACK</cite> segment in a TCB. The solution to solve this problem, which is known as <a class="reference external" href="http://cr.yp.to/syncookies.html">SYN cookies</a> is to compute the 32 bits of the <cite>ISN</cite> as follows :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the high order bits contain the low order bits of a counter that is incremented slowly</p></li>
+<li><p>the low order bits contain a hash value computed over the local and remote IP addresses and ports and a random secret only known to the server</p></li>
+</ul>
+</div></blockquote>
+<p>The advantage of the <a class="reference external" href="http://cr.yp.to/syncookies.html">SYN cookies</a> is that by using them, the server does not need to create a <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> upon reception of the <cite>SYN</cite> segment and can still check the returned <cite>ACK</cite> segment by recomputing the <cite>SYN cookie</cite>. The main disadvantage is that they are not fully compatible with the TCP options. This is why they are not enabled by default on a typical system.</p>
+</aside>
+<aside class="topic">
+<p class="topic-title">Retransmitting the first <cite>SYN</cite> segment</p>
+<p>As IP provides an unreliable connectionless service, the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments sent to open a TCP connection could be lost. Current TCP implementations start a retransmission timer when they send the first <cite>SYN</cite> segment. This timer is often set to three seconds for the first retransmission and then doubles after each retransmission <span class="target" id="index-14"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>. TCP implementations also enforce a maximum number of retransmissions for the initial <cite>SYN</cite> segment.</p>
+</aside>
+<p id="index-15">As explained earlier, TCP segments may contain an optional header extension. In the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments, these options are used to negotiate some parameters and the utilization of extensions to the basic TCP specification.</p>
+<p id="index-16">The first parameter which is negotiated during the establishment of a TCP connection is the Maximum Segment Size (<a class="reference internal" href="../glossary.html#term-MSS"><span class="xref std std-term">MSS</span></a>). The MSS is the size of the largest segment that a TCP entity is able to process. According to <span class="target" id="index-17"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc879.html"><strong>RFC 879</strong></a>, all TCP implementations must be able to receive TCP segments containing 536 bytes of payload. However, most TCP implementations are able to process larger segments. Such TCP implementations use the TCP MSS Option in the <cite>SYN</cite>/<cite>SYN+ACK</cite> segment to indicate the largest segment they are able to process. The MSS value indicates the maximum size of the payload of the TCP segments. The client (resp. server) stores in its <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> the MSS value announced by the server (resp. the client).</p>
+<p>Another utilization of TCP options during connection establishment is to enable TCP extensions. For example, consider <span class="target" id="index-18"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> (which is discussed in <a class="reference internal" href="#tcpreliable"><span class="std std-ref">TCP reliable data transfer</span></a>). <span class="target" id="index-19"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> defines TCP extensions to support timestamps and larger windows. If the client supports <span class="target" id="index-20"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it adds a <span class="target" id="index-21"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option to its <cite>SYN</cite> segment. If the server understands this <span class="target" id="index-22"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option and wishes to use it, it replies with a <span class="target" id="index-23"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option in the <cite>SYN+ACK</cite> segment and the extension defined in <span class="target" id="index-24"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> is used throughout the TCP connection. Otherwise, if the server’s <cite>SYN+ACK</cite> does not contain the <span class="target" id="index-25"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option, the client is not allowed to use this extension and the corresponding TCP header options throughout the TCP connection. TCP’s option mechanism is flexible and it allows the extension of TCP while maintaining compatibility with older implementations.</p>
+<p>The TCP options are encoded by using a Type Length Value format where :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the first byte indicates the <cite>type</cite> of the option.</p></li>
+<li><p>the second byte indicates the total length of the option (including the first two bytes) in bytes</p></li>
+<li><p>the remaining bytes are specific for each type of option</p></li>
+</ul>
+</div></blockquote>
+<p><span class="target" id="index-26"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> defines the Maximum Segment Size (MSS) TCP option that must be understood by all TCP implementations. This option (type 2) has a length of 4 bytes and contains a 16-bit word that indicates the MSS supported by the sender of the <cite>SYN</cite> segment. The MSS option can only be used in TCP segments having the <cite>SYN</cite> flag set.</p>
+<p><span class="target" id="index-27"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> also defines two special options that must be supported by all TCP implementations. The first option is <cite>End of option</cite>. It is encoded as a single byte having value <cite>0x00</cite> and can be used to ensure that the TCP header extension ends on a 32-bit boundary. The <cite>No-Operation</cite> option, encoded as a single byte having value <cite>0x01</cite>, can be used when the TCP header extension contains several TCP options that should be aligned on 32-bit boundaries. All other options <a class="footnote-reference brackets" href="#ftcpoptions" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> are encoded using the TLV format.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The robustness principle</p>
+<p>The handling of the TCP options by TCP implementations is one of the many applications of the <cite>robustness principle</cite> which is usually attributed to <a class="reference external" href="https://www.postel.org/postel.html">Jon Postel</a> and is often quoted as <cite>“Be liberal in what you accept, and conservative in what you send”</cite> <span class="target" id="index-28"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>.</p>
+<p>Concerning the TCP options, the robustness principle implies that a TCP implementation should be able to accept TCP options that it does not understand, in particular in received <cite>SYN</cite> segments, and that it should be able to parse any received segment without crashing, even if the segment contains an unknown TCP option. Furthermore, a server should not send in the <cite>SYN+ACK</cite> segment or later, options that have not been proposed by the client in the <cite>SYN</cite> segment.</p>
+</div>
+</section>
+<section id="tcp-reliable-data-transfer">
+<span id="tcpreliable"/><h2>TCP reliable data transfer<a class="headerlink" href="#tcp-reliable-data-transfer" title="Link to this heading">#</a></h2>
+<p>The original TCP data transfer mechanisms were defined in <span class="target" id="index-29"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. Based on the experience of using TCP on the growing global Internet, this part of the TCP specification has been updated and improved several times, always while preserving the backward compatibility with older TCP implementations. In this section, we review the main data transfer mechanisms used by TCP.</p>
+<p>TCP is a window-based transport protocol that provides a bi-directional byte stream service. This has several implications on the fields of the TCP header and the mechanisms used by TCP. The three fields of the TCP header are :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>sequence number</cite>. TCP uses a 32 bits sequence number. The <cite>sequence number</cite> placed in the header of a TCP segment containing data is the sequence number of the first byte of the payload of the TCP segment.</p></li>
+<li><p><cite>acknowledgment number</cite>. TCP uses cumulative positive acknowledgments. Each TCP segment contains the <cite>sequence number</cite> of the next byte that the sender of the acknowledgment expects to receive from the remote host. In theory, the <cite>acknowledgment number</cite> is only valid if the <cite>ACK</cite> flag of the TCP header is set. In practice, almost all <a class="footnote-reference brackets" href="#fackflag" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> TCP segments have their <cite>ACK</cite> flag set.</p></li>
+<li><p><cite>window</cite>. a TCP receiver uses this 16 bits field to indicate the current size of its receive window expressed in bytes.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note" id="index-30">
+<p class="admonition-title">Note</p>
+<p>The Transmission Control Block</p>
+<p>For each established TCP connection, a TCP implementation must maintain a Transmission Control Block (<a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>). A TCB contains all the information required to send and receive segments on this connection <span class="target" id="index-31"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. This includes <a class="footnote-reference brackets" href="#ftcpurgent" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the local IP address</p></li>
+<li><p>the remote IP address</p></li>
+<li><p>the local TCP port number</p></li>
+<li><p>the remote TCP port number</p></li>
+<li><p>the current state of the TCP FSM</p></li>
+<li><p>the <cite>maximum segment size</cite> (MSS)</p></li>
+<li><p><cite>snd.nxt</cite> : the sequence number of the next byte in the byte stream (the first byte of a new data segment that you send uses this sequence number)</p></li>
+<li><p><cite>snd.una</cite> : the earliest sequence number that has been sent but has not yet been acknowledged</p></li>
+<li><p><cite>snd.wnd</cite> : the current size of the sending window (in bytes)</p></li>
+<li><p><cite>rcv.nxt</cite> : the sequence number of the next byte that is expected to be received from the remote host</p></li>
+<li><p><cite>rcv.wnd</cite> : the current size of the receive window advertised by the remote host</p></li>
+<li><p><cite>sending buffer</cite> : a buffer used to store all unacknowledged data</p></li>
+<li><p><cite>receiving buffer</cite> : a buffer to store all data received from the remote host that has not yet been delivered to the user. Data may be stored in the <cite>receiving buffer</cite> because either it was not received in sequence or because the user is too slow to process it</p></li>
+</ul>
+</div></blockquote>
+</div>
+<p>The original TCP specification can be summarized as a transport protocol that provides a byte stream service and uses <cite>go-back-n</cite> with a <cite>selective-repeat</cite> reception strategy.</p>
+<p>To send new data on an established connection, a TCP entity performs the following operations on the corresponding TCB. It first checks that the <cite>sending buffer</cite> does not contain more data than the receive window advertised by the remote host (<cite>rcv.wnd</cite>). If the window is not full, up to <cite>MSS</cite> bytes of data are placed in the payload of a TCP segment. The <cite>sequence number</cite> of this segment is the sequence number of the first byte of the payload. It is set to the first available sequence number, <cite>snd.nxt</cite>, and <cite>snd.nxt</cite> is incremented by the length of the payload of the TCP segment. The <cite>acknowledgment number</cite> of this segment is set to the current value of <cite>rcv.nxt</cite> and the <cite>window</cite> field of the TCP segment is computed based on the current occupancy of the <cite>receiving buffer</cite>. The data is kept in the <cite>sending buffer</cite> in case it needs to be retransmitted later.</p>
+<p>When a TCP segment with the <cite>ACK</cite> flag set is received, the following operations are performed. <cite>rcv.wnd</cite> is set to the value of the <cite>window</cite> field of the received segment. The <cite>acknowledgment number</cite> is compared to <cite>snd.una</cite>. The newly acknowledged data is removed from the <cite>sending buffer</cite> and <cite>snd.una</cite> is updated. If the TCP segment contained data, the <cite>sequence number</cite> is compared to <cite>rcv.nxt</cite>. If they are equal, the segment was received in sequence and the data can be delivered to the user and <cite>rcv.nxt</cite> is updated. The contents of the <cite>receiving buffer</cite> is checked to see whether other data already present in this buffer can be delivered in sequence to the user. If so, <cite>rcv.nxt</cite> is updated again. Otherwise, the segment’s payload is placed in the <cite>receiving buffer</cite>.</p>
+<section id="segment-transmission-strategies">
+<h3>Segment transmission strategies<a class="headerlink" href="#segment-transmission-strategies" title="Link to this heading">#</a></h3>
+<p id="index-32">In a transport protocol such as TCP that offers a bytestream, a practical issue that was left as an implementation choice in <span class="target" id="index-33"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> is to decide when a new TCP segment containing data must be sent. There are two simple and extreme implementation choices. The first implementation choice is to send a TCP segment as soon as the user has requested the transmission of some data. This allows TCP to provide a low delay service. However, if the user is sending data one byte at a time, TCP would place each user byte in a segment containing 20 bytes of TCP header <a class="footnote-reference brackets" href="#fnagleip" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>. This is a huge overhead that is not acceptable in wide area networks. A second simple solution would be to only transmit a new TCP segment once the user has produced MSS bytes of data. This solution reduces the overhead, but at the cost of a potentially very high delay.</p>
+<p>An elegant solution to this problem was proposed by John Nagle in <span class="target" id="index-34"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc896.html"><strong>RFC 896</strong></a>. John Nagle observed that the overhead caused by the TCP header was a problem in wide area connections, but less in local area connections where the available bandwidth is usually higher. He proposed the following rules to decide to send a new data segment when a new data has been produced by the user or a new <cite>ack</cite> segment has been received.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">if</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span> <span class="o">&gt;=</span> <span class="n">MSS</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MSS</span><span class="p">:</span>
+    <span class="n">send</span> <span class="n">one</span> <span class="n">MSS</span><span class="o">-</span><span class="n">sized</span> <span class="n">segment</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">there</span> <span class="n">are</span> <span class="n">unacknowledged</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">place</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">buffer</span> <span class="n">until</span> <span class="n">acknowledgment</span> <span class="n">has</span> <span class="n">been</span> <span class="n">received</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">send</span> <span class="n">one</span> <span class="n">TCP</span> <span class="n">segment</span> <span class="n">containing</span> <span class="nb">all</span> <span class="n">buffered</span> <span class="n">data</span> <span class="p">(</span><span class="n">up</span> <span class="n">to</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first rule ensures that a TCP connection used for bulk data transfer always sends full TCP segments. The second rule sends one partially filled TCP segment every round-trip-time.</p>
+<p id="index-35">This algorithm, called the Nagle algorithm, takes a few lines of code in all TCP implementations. These lines of code have a huge impact on the packets that are exchanged in TCP/IP networks. Researchers have analyzed the distribution of the packet sizes by capturing and analyzing all the packets passing through a given link. These studies have shown several important results :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>in TCP/IP networks, a large fraction of the packets are TCP segments that contain only an acknowledgment. These packets usually account for 40-50% of the packets passing through the studied link</p></li>
+<li><p>in TCP/IP networks, most of the bytes are exchanged in long packets, usually packets containing about 1440 bytes of payload which is the default MSS for hosts attached to an Ethernet network, the most popular type of LAN</p></li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml">Recent measurements</a> indicate that these packet size distributions are still valid in today’s Internet, although the packet distribution tends to become bi-modal with small packets corresponding to TCP pure acknowledgments and large 1440-bytes packets carrying most of the user data <a class="reference internal" href="../bibliography.html#smasu2012" id="id12"><span>[SMASU2012]</span></a>.</p>
+</section>
+</section>
+<section id="tcp-windows">
+<span id="index-36"/><h2>TCP windows<a class="headerlink" href="#tcp-windows" title="Link to this heading">#</a></h2>
+<p>From a performance point of view, one of the main limitations of the original TCP specification is the 16 bits <cite>window</cite> field in the TCP header. As this field indicates the current size of the receive window in bytes, it limits the TCP receive window at 65535 bytes. This limitation was not a severe problem when TCP was designed since at that time high-speed wide area networks offered a maximum bandwidth of 56 kbps. However, in today’s network, this limitation is not acceptable anymore. The table below provides the rough <a class="footnote-reference brackets" href="#faveragebandwidth" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> maximum throughput that can be achieved by a TCP connection with a 64 KBytes window in function of the connection’s round-trip-time</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>RTT</p></th>
+<th class="head"><p>Maximum Throughput</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1 msec</p></td>
+<td><p>524 Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 msec</p></td>
+<td><p>52.4 Mbps</p></td>
+</tr>
+<tr class="row-even"><td><p>100 msec</p></td>
+<td><p>5.24 Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>500 msec</p></td>
+<td><p>1.05 Mbps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To solve this problem, a backward compatible extension that allows TCP to use larger receive windows was proposed in <span class="target" id="index-37"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>. Today, most TCP implementations support this option. The basic idea is that instead of storing <cite>snd.wnd</cite> and <cite>rcv.wnd</cite> as 16 bits integers in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>, they should be stored as 32 bits integers. As the TCP segment header only contains 16 bits to place the window field, it is impossible to copy the value of <cite>snd.wnd</cite> in each sent TCP segment. Instead the header contains <cite>snd.wnd &gt;&gt; S</cite> where <cite>S</cite> is the scaling factor ( <span class="math notranslate nohighlight">\(0 \le S \le 14\)</span>) negotiated during connection establishment. The client adds its proposed scaling factor as a TCP option in the <cite>SYN</cite> segment. If the server supports <span class="target" id="index-38"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it places in the <cite>SYN+ACK</cite> segment the scaling factor that it uses when advertising its own receive window. The local and remote scaling factors are included in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. If the server does not support <span class="target" id="index-39"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it ignores the received option and no scaling is applied.</p>
+<p>By using the window scaling extensions defined in <span class="target" id="index-40"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, TCP implementations can use a receive buffer of up to 1 GByte. With such a receive buffer, the maximum throughput that can be achieved by a single TCP connection becomes :</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>RTT</p></th>
+<th class="head"><p>Maximum Throughput</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1 msec</p></td>
+<td><p>8590 Gbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 msec</p></td>
+<td><p>859 Gbps</p></td>
+</tr>
+<tr class="row-even"><td><p>100 msec</p></td>
+<td><p>86 Gbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>500 msec</p></td>
+<td><p>17 Gbps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>These throughputs are acceptable in today’s networks. However, there are already servers having 10 Gbps interfaces… Early TCP implementations had fixed receiving and sending buffers <a class="footnote-reference brackets" href="#ftcphosts" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>. Today’s high performance implementations are able to automatically adjust the size of the sending and receiving buffer to better support high bandwidth flows <a class="reference internal" href="../bibliography.html#smm1998" id="id15"><span>[SMM1998]</span></a>.</p>
+</section>
+<section id="tcp-s-retransmission-timeout">
+<h2>TCP’s retransmission timeout<a class="headerlink" href="#tcp-s-retransmission-timeout" title="Link to this heading">#</a></h2>
+<p>In a go-back-n transport protocol such as TCP, the retransmission timeout must be correctly set in order to achieve good performance. On one hand, if the retransmission timeout expires too early, then bandwidth is wasted by retransmitting segments that have already been correctly received. On the other hand, if the retransmission timeout expires too late, then bandwidth is wasted because the sender is idle waiting for the expiration of its retransmission timeout.</p>
+<p>A good setting of the retransmission timeout clearly depends on an accurate estimation of the round-trip-time of each TCP connection. The round-trip-time differs between TCP connections, but may also change during the lifetime of a single connection. For example, the figure below shows the evolution of the round-trip-time  between two hosts during a period of 45 seconds.</p>
+<figure class="align-center" id="id34">
+<a class="reference internal image-reference" href="../_images/tcp-rtt.png"><img alt="../_images/tcp-rtt.png" src="../Images/0a2d2e0115955ccfed932c13f7aadca3.png" style="width: 253.39999999999998px; height: 172.89999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Evolution of the round-trip-time between two hosts</span><a class="headerlink" href="#id34" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The easiest solution to measure the round-trip-time on a TCP connection is to measure the delay between the transmission of a data segment and the reception of a corresponding acknowledgment <a class="footnote-reference brackets" href="#frttmes" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>. As illustrated in the figure below, this measurement works well when there are no segment losses.</p>
+<figure class="align-center" id="id35">
+<a class="reference internal image-reference" href="../_images/tcp-rtt2.png"><img alt="../_images/tcp-rtt2.png" src="../Images/8ce63a02756a9faddc11dd69b870be27.png" style="width: 426.29999999999995px; height: 177.79999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt2.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 77 </span><span class="caption-text">How to measure the round-trip-time ?</span><a class="headerlink" href="#id35" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>However, when a data segment is lost, as illustrated in the bottom part of the figure, the measurement is ambiguous as the sender cannot determine whether the received acknowledgment was triggered by the first transmission of segment <cite>123</cite> or its retransmission. Using incorrect round-trip-time estimations could lead to incorrect values of the retransmission timeout. For this reason, Phil Karn and Craig Partridge proposed, in <a class="reference internal" href="../bibliography.html#kp91" id="id17"><span>[KP91]</span></a>, to ignore the round-trip-time measurements performed during retransmissions.</p>
+<p>To avoid this ambiguity in the estimation of the round-trip-time when segments are retransmitted, recent TCP implementations rely on the <cite>timestamp option</cite> defined in <span class="target" id="index-41"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>. This option allows a TCP sender to place two 32 bit timestamps in each TCP segment that it sends. The first timestamp, TS Value (<cite>TSval</cite>) is chosen by the sender of the segment. It could for example be the current value of its real-time clock <a class="footnote-reference brackets" href="#ftimestamp" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>. The second value, TS Echo Reply (<cite>TSecr</cite>), is the last <cite>TSval</cite> that was received from the remote host and stored in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. The figure below shows how the utilization of this timestamp option allows for the disambiguation of the round-trip-time measurement when there are retransmissions.</p>
+<figure class="align-center" id="id36">
+<a class="reference internal image-reference" href="../_images/tcp-rtt-ts.png"><img alt="../_images/tcp-rtt-ts.png" src="../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png" style="width: 419.29999999999995px; height: 177.79999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt-ts.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Disambiguating round-trip-time measurements with the <span class="target" id="index-42"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> timestamp option</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Once the round-trip-time measurements have been collected for a given TCP connection, the TCP entity must compute the retransmission timeout. As the round-trip-time measurements may change during the lifetime of a connection, the retransmission timeout may also change. At the beginning of a connection <a class="footnote-reference brackets" href="#ftcbtouch" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>, the TCP entity that sends a <cite>SYN</cite> segment does not know the round-trip-time to reach the remote host and the initial retransmission timeout is usually set to 3 seconds <span class="target" id="index-43"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>.</p>
+<p>The original TCP specification proposed in <span class="target" id="index-44"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> to include two additional variables in the TCB :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>srtt</cite> : the smoothed round-trip-time computed as <span class="math notranslate nohighlight">\(srtt=(\alpha \times srtt)+( (1-\alpha) \times rtt)\)</span> where <span class="math notranslate nohighlight">\(rtt\)</span> is the round-trip-time measured according to the above procedure and <span class="math notranslate nohighlight">\(\alpha\)</span> a smoothing factor (e.g. 0.8 or 0.9)</p></li>
+<li><p><cite>rto</cite> : the retransmission timeout is computed as <span class="math notranslate nohighlight">\(rto=\min(60,\max(1,\beta \times srtt))\)</span> where <span class="math notranslate nohighlight">\(\beta\)</span> is used to take into account the delay variance (value : 1.3 to 2.0). The <cite>60</cite> and <cite>1</cite> constants are used to ensure that the <cite>rto</cite> is not larger than one minute nor smaller than 1 second.</p></li>
+</ul>
+</div></blockquote>
+<p>However, in practice, this computation for the retransmission timeout did not work well. The main problem was that the computed <cite>rto</cite> did not correctly take into account the variations in the measured round-trip-time. <cite>Van Jacobson</cite> proposed in his seminal paper <a class="reference internal" href="../bibliography.html#jacobson1988" id="id20"><span>[Jacobson1988]</span></a> an improved algorithm to compute the <cite>rto</cite> and implemented it in the BSD Unix distribution. This algorithm is now part of the TCP standard <span class="target" id="index-45"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>.</p>
+<p>Jacobson’s algorithm uses two state variables, <cite>srtt</cite> the smoothed <cite>rtt</cite> and <cite>rttvar</cite> the estimation of the variance of the <cite>rtt</cite> and two parameters : <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>. When a TCP connection starts, the first <cite>rto</cite> is set to <cite>3</cite> seconds. When a first estimation of the <cite>rtt</cite> is available, the <cite>srtt</cite>, <cite>rttvar</cite> and <cite>rto</cite> are computed as follows :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">srtt</span> <span class="o">=</span> <span class="n">rtt</span>
+<span class="n">rttvar</span> <span class="o">=</span> <span class="n">rtt</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">rto</span> <span class="o">=</span> <span class="n">srtt</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">rttvar</span>
+</pre></div>
+</div>
+<p>Then, when other rtt measurements are collected, <cite>srtt</cite> and <cite>rttvar</cite> are updated as follows :</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)</span></p>
+<p><span class="math notranslate nohighlight">\(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)</span></p>
+<p><span class="math notranslate nohighlight">\(rto=srtt + 4 \times rttvar\)</span></p>
+</div></blockquote>
+<p>The proposed values for the parameters are <span class="math notranslate nohighlight">\(\alpha=\frac{1}{8}\)</span> and <span class="math notranslate nohighlight">\(\beta=\frac{1}{4}\)</span>. This allows a TCP implementation, implemented in the kernel, to perform the <cite>rtt</cite> computation by using shift operations instead of the more costly floating point operations <a class="reference internal" href="../bibliography.html#jacobson1988" id="id21"><span>[Jacobson1988]</span></a>. The figure below illustrates the computation of the <cite>rto</cite> upon <cite>rtt</cite> changes.</p>
+<figure class="align-center" id="id37">
+<a class="reference internal image-reference" href="../_images/tcp-rto.png"><img alt="../_images/tcp-rto.png" src="../Images/0d04bfd2484086ab09bb9aeef68035d0.png" style="width: 234.49999999999997px; height: 181.29999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rto.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Example computation of the <cite>rto</cite></span><a class="headerlink" href="#id37" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="advanced-retransmission-strategies">
+<h2>Advanced retransmission strategies<a class="headerlink" href="#advanced-retransmission-strategies" title="Link to this heading">#</a></h2>
+<p id="index-46">The default go-back-n retransmission strategy was defined in <span class="target" id="index-47"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. When the retransmission timer expires, TCP retransmits the first unacknowledged segment (i.e. the one having sequence number <cite>snd.una</cite>). After each expiration of the retransmission timeout, <span class="target" id="index-48"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a> recommends to double the value of the retransmission timeout. This is called an <cite>exponential backoff</cite>. This doubling of the retransmission timeout after a retransmission was included in TCP to deal with issues such as network/receiver overload and incorrect initial estimations of the retransmission timeout. If the same segment is retransmitted several times, the retransmission timeout is doubled after every retransmission until it reaches a configured maximum. <span class="target" id="index-49"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a> suggests a maximum retransmission timeout of at least 60 seconds. Once the retransmission timeout reaches this configured maximum, the remote host is considered to be unreachable and the TCP connection is closed.</p>
+<p id="index-50">This retransmission strategy has been refined based on the experience of using TCP on the Internet. The first refinement was a clarification of the strategy used to send acknowledgments. As TCP uses piggybacking, the easiest and less costly method to send acknowledgments is to place them in the data segments sent in the other direction. However, few application layer protocols exchange data in both directions at the same time and thus this method rarely works. For an application that is sending data segments in one direction only, the remote TCP entity returns empty TCP segments whose only useful information is their acknowledgment number. This may cause a large overhead in wide area network if a pure <cite>ACK</cite> segment is sent in response to each received data segment. Most TCP implementations use a <cite>delayed acknowledgment</cite> strategy. This strategy ensures that piggybacking is used whenever possible, otherwise pure <cite>ACK</cite> segments are sent for every second received data segments when there are no losses. When there are losses or reordering, <cite>ACK</cite> segments are more important for the sender and they are sent immediately <span class="target" id="index-51"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc813.html"><strong>RFC 813</strong></a> <span class="target" id="index-52"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>. This strategy relies on a new timer with a short delay (e.g. 50 milliseconds) and one additional flag in the TCB. It can be implemented as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">reception</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">segment</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">seq</span> <span class="o">==</span> <span class="n">rcv</span><span class="o">.</span><span class="n">nxt</span><span class="p">:</span>  <span class="c1"># segment received in sequence</span>
+        <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+            <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># out of sequence segment</span>
+        <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+        <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<span class="n">transmission</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">segment</span><span class="p">:</span>  <span class="c1"># piggyback ack</span>
+    <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+        <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<span class="n">acktimer</span> <span class="n">expiration</span><span class="p">:</span>
+    <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+    <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Due to this delayed acknowledgment strategy, during a bulk transfer, a TCP implementation usually acknowledges every second TCP segment received.</p>
+<p>The default go-back-n retransmission strategy used by TCP has the advantage of being simple to implement, in particular on the receiver side, but when there are losses, a go-back-n strategy provides a lower performance than a selective repeat strategy. The TCP developers have designed several extensions to TCP to allow it to use a selective repeat strategy while maintaining backward compatibility with older TCP implementations. These TCP extensions assume that the receiver is able to buffer the segments that it receives out-of-sequence.</p>
+<p id="index-53">The first extension that was proposed is the fast retransmit heuristic. This extension can be implemented on TCP senders and thus does not require any change to the protocol. It only assumes that the TCP receiver is able to buffer out-of-sequence segments.</p>
+<p>From a performance point of view, one issue with TCP’s <cite>retransmission timeout</cite> is that when there are isolated segment losses, the TCP sender often remains idle waiting for the expiration of its retransmission timeouts. Such isolated losses are frequent in the global Internet <a class="reference internal" href="../bibliography.html#paxson99" id="id22"><span>[Paxson99]</span></a>.  A heuristic to deal with isolated losses without waiting for the expiration of the retransmission timeout has been included in many TCP implementations since the early 1990s. To understand this heuristic, let us consider the figure below that shows the segments exchanged over a TCP connection when an isolated segment is lost.</p>
+<figure class="align-center" id="id38">
+<a class="reference internal image-reference" href="../_images/tcp-loss.png"><img alt="../_images/tcp-loss.png" src="../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png" style="width: 418.59999999999997px; height: 223.29999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-loss.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Detecting isolated segment losses</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As shown above, when an isolated segment is lost the sender receives several <cite>duplicate acknowledgments</cite> since the TCP receiver immediately sends a pure acknowledgment when it receives an out-of-sequence segment. A duplicate acknowledgment is an acknowledgment that contains the same <cite>acknowledgment number</cite> as a previous segment. A single duplicate acknowledgment does not necessarily imply that a segment was lost, as a simple reordering of the segments may cause duplicate acknowledgments as well. Measurements  <a class="reference internal" href="../bibliography.html#paxson99" id="id23"><span>[Paxson99]</span></a> have shown that segment reordering is frequent in the Internet. Based on these observations, the <cite>fast retransmit</cite> heuristic has been included in most TCP implementations. It can be implemented as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">ack</span> <span class="n">arrival</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tcp</span><span class="o">.</span><span class="n">ack</span> <span class="o">==</span> <span class="n">snd</span><span class="o">.</span><span class="n">una</span><span class="p">:</span>  <span class="c1"># duplicate acknowledgment</span>
+        <span class="n">dupacks</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">dupacks</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">retransmit</span> <span class="n">segment</span><span class="p">(</span><span class="n">snd</span><span class="o">.</span><span class="n">una</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dupacks</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># process acknowledgment</span>
+</pre></div>
+</div>
+<p>This heuristic requires an additional variable in the TCB (<cite>dupacks</cite>). Most implementations set the default number of duplicate acknowledgments that trigger a retransmission to 3. It is now part of the standard TCP specification <span class="target" id="index-54"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2581.html"><strong>RFC 2581</strong></a>. The <cite>fast retransmit</cite> heuristic improves the TCP performance provided that isolated segments are lost and the current window is large enough to allow the sender to send three duplicate acknowledgments.</p>
+<p>The figure below illustrates the operation of the <cite>fast retransmit</cite> heuristic.</p>
+<figure class="align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/tcp-frr.png"><img alt="../_images/tcp-frr.png" src="../Images/9542e04356c75d728bbd935961cc1860.png" style="width: 352.09999999999997px; height: 224.7px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-frr.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">TCP fast retransmit heuristics</span><a class="headerlink" href="#id39" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-55">When losses are not isolated or when the windows are small, the performance of the <cite>fast retransmit</cite> heuristic decreases. In such environments, it is necessary to allow a TCP sender to use a selective repeat strategy instead of the default go-back-n strategy. Implementing selective-repeat requires a change to the TCP protocol as the receiver needs to be able to inform the sender of the out-of-order segments that it has already received. This can be done by using the Selective Acknowledgments (SACK) option defined in <span class="target" id="index-56"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2018.html"><strong>RFC 2018</strong></a>. This TCP option is negotiated during the establishment of a TCP connection. If both TCP hosts support the option, SACK blocks can be attached by the receiver to the segments that it sends. SACK blocks allow a TCP receiver to indicate the blocks of data that it has received correctly but out of sequence. The figure below illustrates the utilization of the SACK blocks.</p>
+<figure class="align-center" id="id40">
+<a class="reference internal image-reference" href="../_images/tcp-sack.png"><img alt="../_images/tcp-sack.png" src="../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png" style="width: 347.2px; height: 224.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-sack.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">TCP selective acknowledgments</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A SACK option contains one or more blocks. A block corresponds to all the sequence numbers between the <cite>left edge</cite> and the <cite>right edge</cite> of the block. The two edges of the block are encoded as 32 bit numbers (the same size as the TCP sequence number) in an SACK option. As the SACK option contains one byte to encode its type and one byte for its length, a SACK option containing <cite>b</cite> blocks is encoded as a sequence of <span class="math notranslate nohighlight">\(2+8 \times b\)</span> bytes. In practice, the size of the SACK option can be problematic as the optional TCP header extension cannot be longer than 40 bytes. As the SACK option is usually combined with the <span class="target" id="index-57"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> timestamp extension, this implies that a TCP segment cannot usually contain more than three SACK blocks. This limitation implies that a TCP receiver cannot always place in the SACK option that it sends, information about all the received blocks.</p>
+<p>To deal with the limited size of the SACK option, a TCP receiver currently having more than 3 blocks inside its receiving buffer must select the blocks to place in the SACK option. A good heuristic is to put in the SACK option the blocks that have most recently changed, as the sender is likely to be already aware of the older blocks.</p>
+<p>When a sender receives a SACK option indicating a new block and thus a new possible segment loss, it usually does not retransmit the missing segments immediately. To deal with reordering, a TCP sender can use a heuristic similar to <cite>fast retransmit</cite> by retransmitting a gap only once it has received three SACK options indicating this gap. It should be noted that the SACK option does not supersede the <cite>acknowledgment number</cite> of the TCP header. A TCP sender can only remove data from its sending buffer once they have been acknowledged by TCP’s cumulative acknowledgments. This design was chosen for two reasons. First, it allows the receiver to discard parts of its receiving buffer when it is running out of memory without loosing data. Second, as the SACK option is not transmitted reliably, the cumulative acknowledgments are still required to deal with losses of <cite>ACK</cite> segments carrying only SACK information. Thus, the SACK option only serves as a hint to allow the sender to optimize its retransmissions.</p>
+<p>As explained earlier, the TCP Timestamp option <span class="target" id="index-58"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> prevents ambiguities while collecting round-trip-time measurements. It plays another very important role in today’s high-bandwidth networks. Since TCP uses 32 bits long sequence numbers, the sequence numbers wrap after the transmission of 4 GBytes of data. With 10 Gbps and soon 100 Gbps interfaces, TCP only needs to transmit during a few seconds before reusing the same sequence number. Given that the Maximum Segment Lifetime is still 2 minutes, several packets, belonging to the same TCP connection could use the same sequence number. If one of these packets is severely delayed through the network, it could reappear at the same time as a packet with the same TCP sequence number. To prevent this problem, most modern TCP implementations associate a TCP timestamp option to each segment on transmission. When a TCP stack receives a TCP segment, it checks that its TCP timestamp is valid and if not the segment is discarded <span class="target" id="index-59"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc7323.html"><strong>RFC 7323</strong></a>.</p>
+</section>
+<section id="tcp-connection-release">
+<span id="tcprelease"/><h2>TCP connection release<a class="headerlink" href="#tcp-connection-release" title="Link to this heading">#</a></h2>
+<p id="index-60">TCP, like most connection-oriented transport protocols, supports two types of connection releases :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>graceful connection release, where each TCP user can release its own direction of data transfer after having transmitted all data</p></li>
+<li><p>abrupt connection release, where either one user closes both directions of data transfer or one TCP entity is forced to close the connection (e.g., because the remote host does not reply anymore or due to lack of resources)</p></li>
+</ul>
+</div></blockquote>
+<p id="tcpreset">The abrupt connection release mechanism is very simple and relies on a single segment having the <cite>RST</cite> bit set. A TCP segment containing the <cite>RST</cite> bit can be sent for the following reasons :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a non-<cite>SYN</cite> segment was received for a non-existing TCP connection <span class="target" id="index-61"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a></p></li>
+<li><p>by extension, some implementations respond with an <cite>RST</cite> segment to a segment that is received on an existing connection but with an invalid header <span class="target" id="index-62"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc3360.html"><strong>RFC 3360</strong></a>. This causes the corresponding connection to be closed and has caused security attacks <span class="target" id="index-63"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4953.html"><strong>RFC 4953</strong></a></p></li>
+<li><p>by extension, some implementations send an <cite>RST</cite> segment when they need to close an existing TCP connection (e.g., because there are not enough resources to support this connection or because the remote host is considered to be unreachable). Measurements have shown that this usage of TCP <cite>RST</cite> is widespread <a class="reference internal" href="../bibliography.html#aw05" id="id24"><span>[AW05]</span></a></p></li>
+</ul>
+</div></blockquote>
+<p>When an <cite>RST</cite> segment is sent by a TCP entity, it should contain the current value of the <cite>sequence number</cite> for the connection (or 0 if it does not belong to any existing connection) and the <cite>acknowledgment number</cite> should be set to the next expected in-sequence <cite>sequence number</cite> on this connection.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TCP <cite>RST</cite> wars</p>
+<p id="index-64">The designers of TCP implementations should ensure that two TCP entities never enter a TCP <cite>RST</cite> war where host <cite>A</cite> is sending a <cite>RST</cite> segment in response to a previous <cite>RST</cite> segment that was sent by host <cite>B</cite> in response to a TCP <cite>RST</cite> segment sent by host <cite>A</cite> … To avoid such an infinite exchange of <cite>RST</cite> segments that do not carry data, a TCP entity is <em>never</em> allowed to send a <cite>RST</cite> segment in response to another <cite>RST</cite> segment.</p>
+</div>
+<p>The normal way of terminating a TCP connection is by using the graceful TCP connection release. This mechanism uses the <cite>FIN</cite> flag of the TCP header and allows each host to release its own direction of data transfer. As for the <cite>SYN</cite> flag, the utilization of the <cite>FIN</cite> flag in the TCP header consumes one sequence number. The figure <a class="reference internal" href="#fig-tcprelease"><span class="std std-ref">FSM for TCP connection release</span></a> shows the part of the TCP FSM used when a TCP connection is released.</p>
+<blockquote>
+<div><div class="figure" id="id41" style="text-align: center">
+<span id="fig-tcprelease"/><p><img src="../Images/40c02c0ae392648ba0563e7f85e5257f.png" alt="Figure made with TikZ" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tikz-6eed1fb2d4578af21ce0ed7b0e872bf59b94c107.png"/></p>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">FSM for TCP connection release</span></p>
+</div></div></blockquote>
+<p>Starting from the <cite>Established</cite> state, there are two main paths through this FSM.</p>
+<p>The first path is when the host receives a segment with sequence number <cite>x</cite> and the <cite>FIN</cite> flag set. The utilization of the <cite>FIN</cite> flag indicates that the byte before <cite>sequence number</cite> <cite>x</cite> was the last byte of the byte stream sent by the remote host. Once all of the data has been delivered to the user, the TCP entity sends an <cite>ACK</cite> segment whose <cite>ack</cite> field is set to <span class="math notranslate nohighlight">\((x+1) \pmod{2^{32}}\)</span> to acknowledge the <cite>FIN</cite> segment. The <cite>FIN</cite> segment is subject to the same retransmission mechanisms as a normal TCP segment. In particular, its transmission is protected by the retransmission timer. At this point, the TCP connection enters the <cite>CLOSE_WAIT</cite> state. In this state, the host can still send data to the remote host. Once all its data have been sent, it sends a <cite>FIN</cite> segment and enter the <cite>LAST_ACK</cite> state. In this state, the TCP entity waits for the acknowledgment of its <cite>FIN</cite> segment. It may still retransmit unacknowledged data segments, e.g., if the retransmission timer expires. Upon reception of the acknowledgment for the <cite>FIN</cite> segment, the TCP connection is completely closed and its <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> can be discarded.</p>
+<p>The second path is when the host has transmitted all data. Assume that the last transmitted sequence number is <cite>z</cite>. Then, the host sends a  <cite>FIN</cite> segment with sequence number <span class="math notranslate nohighlight">\((z+1) \pmod{2^{32}}\)</span> and enters the <cite>FIN_WAIT1</cite> state. In this state, it can retransmit unacknowledged segments but cannot send new data segments. It waits for an acknowledgment of its <cite>FIN</cite> segment (i.e. sequence number <span class="math notranslate nohighlight">\((z+1) \pmod{2^{32}}\)</span>), but may receive a <cite>FIN</cite> segment sent by the remote host. In the first case, the TCP connection enters the <cite>FIN_WAIT2</cite> state. In this state, new data segments from the remote host are still accepted until the reception of the <cite>FIN</cite> segment. The acknowledgment for this <cite>FIN</cite> segment is sent once all data received before the <cite>FIN</cite> segment have been delivered to the user and the connection enters the <cite>TIME_WAIT</cite> state. In the second case, a <cite>FIN</cite> segment is received and the connection enters the <cite>Closing</cite> state once all data received from the remote host have been delivered to the user. In this state, no new data segments can be sent and the host waits for an acknowledgment of its <cite>FIN</cite> segment before entering the <cite>TIME_WAIT</cite> state.</p>
+<p>The <cite>TIME_WAIT</cite> state is different from the other states of the TCP FSM. A TCP entity enters this state after having sent the last <cite>ACK</cite> segment on a TCP connection. This segment indicates to the remote host that all the data that it has sent have been correctly received and that it can safely release the TCP connection and discard the corresponding <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. After having sent the last <cite>ACK</cite> segment, a TCP connection enters the <cite>TIME_WAIT</cite> and remains in this state for <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds. During this period, the TCB of the connection is maintained. This ensures that the TCP entity that sent the last <cite>ACK</cite> maintains enough state to be able to retransmit this segment if this <cite>ACK</cite> segment is lost and the remote host retransmits its last <cite>FIN</cite> segment or another one. The delay of <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds ensures that any duplicate segments on the connection would be handled correctly without causing the transmission of an <cite>RST</cite> segment. Without the <cite>TIME_WAIT</cite> state and the <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds delay, the connection release would not be graceful when the last <cite>ACK</cite> segment is lost.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TIME_WAIT on busy TCP servers</p>
+<p>The <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds delay in the <cite>TIME_WAIT</cite> state is an important operational problem on servers having thousands of simultaneously opened TCP connections <a class="reference internal" href="../bibliography.html#fty99" id="id25"><span>[FTY99]</span></a>. Consider for example a busy web server that processes 10.000 TCP connections every second. If each of these connections remains in the <cite>TIME_WAIT</cite> state for 4 minutes, this implies that the server would have to maintain more than 2 million TCBs at any time. For this reason, some TCP implementations prefer to perform an abrupt connection release by sending a <cite>RST</cite> segment to close the connection <a class="reference internal" href="../bibliography.html#aw05" id="id26"><span>[AW05]</span></a> and immediately discard the corresponding <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. However, if the <cite>RST</cite> segment is lost, the remote host continues to maintain a <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> for a connection that no longer exists. This optimization reduces the number of TCBs maintained by the host sending the <cite>RST</cite> segment but at the potential cost of increased processing on the remote host when the <cite>RST</cite> segment is lost.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="ftcpspecs" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>A detailed presentation of all standardization documents concerning TCP may be found in <span class="target" id="index-65"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4614.html"><strong>RFC 4614</strong></a></p>
+</aside>
+<aside class="footnote brackets" id="ftcpusage" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Several researchers have analyzed the utilization of TCP and UDP in the global Internet. Most of these studies have been performed by collecting all the packets transmitted over a given link during a period of a few hours or days and then analyzing their headers to infer the transport protocol used, the type of application, … Recent studies include <a class="reference external" href="http://www.caida.org/research/traffic-analysis/tcpudpratio/">http://www.caida.org/research/traffic-analysis/tcpudpratio/</a>, <a class="reference external" href="https://research.sprintlabs.com/packstat/packetoverview.php">https://research.sprintlabs.com/packstat/packetoverview.php</a> or <a class="reference external" href="http://www.nanog.org/meetings/nanog43/presentations/Labovitz_internetstats_N43.pdf">http://www.nanog.org/meetings/nanog43/presentations/Labovitz_internetstats_N43.pdf</a></p>
+</aside>
+<aside class="footnote brackets" id="ftcpclock" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>This 32 bits counter was specified in <span class="target" id="index-66"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. A 32 bits counter that is incremented every 4 microseconds wraps in about 4.5 hours. This period is much larger than the Maximum Segment Lifetime that is fixed at 2 minutes in the Internet (<span class="target" id="index-67"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc791.html"><strong>RFC 791</strong></a>, <span class="target" id="index-68"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>).</p>
+</aside>
+<aside class="footnote brackets" id="frlogin" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>On many departmental networks containing Unix workstations, it was common to allow users on one of the hosts to use <code class="docutils literal notranslate"><span class="pre">rlogin</span></code> <span class="target" id="index-69"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1258.html"><strong>RFC 1258</strong></a>  to run commands on any of the workstations of the network without giving any password. In this case, the remote workstation “authenticated” the client host based on its IP address. This was a bad practice from a security viewpoint.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpboth" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
+<p>Of course, such a simultaneous TCP establishment can only occur if the source port chosen by the client is equal to the destination port chosen by the server. This may happen when a host can serve both as a client as a server or in peer-to-peer applications when the communicating hosts do not use ephemeral port numbers.</p>
+</aside>
+<aside class="footnote brackets" id="fspoofing" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
+<p>Sending a packet with a different source IP address than the address allocated to the host is called sending a <a class="reference internal" href="../glossary.html#term-spoofed-packet"><span class="xref std std-term">spoofed packet</span></a>.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpoptions" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
+<p>The full list of all TCP options may be found at <a class="reference external" href="https://www.iana.org/assignments/tcp-parameters/">https://www.iana.org/assignments/tcp-parameters/</a></p>
+</aside>
+<aside class="footnote brackets" id="fackflag" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">8</a><span class="fn-bracket">]</span></span>
+<p>In practice, only the <cite>SYN</cite> segment do not have their <cite>ACK</cite> flag set.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpurgent" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">9</a><span class="fn-bracket">]</span></span>
+<p>A complete TCP implementation contains additional information in its TCB, notably to support the <cite>urgent</cite> pointer. However, this part of TCP is not discussed in this book. Refer to <span class="target" id="index-70"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> and <span class="target" id="index-71"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2140.html"><strong>RFC 2140</strong></a> for more details about the TCB.</p>
+</aside>
+</aside>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fnagleip" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">10</a><span class="fn-bracket">]</span></span>
+<p>This TCP segment is then placed in an IP header. We describe IPv6 in the next chapter. The minimum size of the IPv6 (resp. IPv4) header is 40 bytes (resp. 20 bytes).</p>
+</aside>
+<aside class="footnote brackets" id="faveragebandwidth" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">11</a><span class="fn-bracket">]</span></span>
+<p>A precise estimation of the maximum bandwidth that can be achieved by a TCP connection should take into account the overhead of the TCP and IP headers as well.</p>
+</aside>
+<aside class="footnote brackets" id="ftcphosts" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">12</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="https://fasterdata.es.net/host-tuning/">https://fasterdata.es.net/host-tuning/</a> for more information on how to tune a TCP implementation</p>
+</aside>
+<aside class="footnote brackets" id="frttmes" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">13</a><span class="fn-bracket">]</span></span>
+<p>In theory, a TCP implementation could store the timestamp of each data segment transmitted and compute a new estimate for the round-trip-time upon reception of the corresponding acknowledgment. However, using such frequent measurements introduces a lot of noise in practice and many implementations still measure the round-trip-time once per round-trip-time by recording the transmission time of one segment at a time <span class="target" id="index-72"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a></p>
+</aside>
+<aside class="footnote brackets" id="ftimestamp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">14</a><span class="fn-bracket">]</span></span>
+<p>Some security experts have raised concerns that using the real-time clock to set the <cite>TSval</cite> in the timestamp option can leak information such as the system’s up-time. Solutions proposed to solve this problem may be found in <a class="reference internal" href="../bibliography.html#cnpi09" id="id27"><span>[CNPI09]</span></a></p>
+</aside>
+<aside class="footnote brackets" id="ftcbtouch" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">15</a><span class="fn-bracket">]</span></span>
+<p>As a TCP client often establishes several parallel or successive connections with the same server, <span class="target" id="index-73"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2140.html"><strong>RFC 2140</strong></a> has proposed to reuse for a new connection some information that was collected in the TCB of a previous connection, such as the measured rtt. However, this solution has not been widely implemented.</p>
+</aside>
+</aside>
+</section>
+&#13;
+
+<span id="tcpopen"/><h2>TCP connection establishment<a class="headerlink" href="#tcp-connection-establishment" title="Link to this heading">#</a></h2>
+<p id="index-7">A TCP connection is established by using a three-way handshake. The connection establishment phase uses the <cite>sequence number</cite>, the <cite>acknowledgment number</cite> and the <cite>SYN</cite> flag. When a TCP connection is established, the two communicating hosts negotiate the initial sequence number to be used in both directions of the connection. For this, each TCP entity maintains a 32-bit counter, which is supposed to be incremented by one at least every 4 microseconds and after each connection establishment <a class="footnote-reference brackets" href="#ftcpclock" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. When a client host wants to open a TCP connection with a server host, it creates a TCP segment with :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>SYN</cite> flag set</p></li>
+<li><p>the <cite>sequence number</cite> set to the current value of the 32-bit counter of the client host’s TCP entity</p></li>
+</ul>
+</div></blockquote>
+<p>Upon reception of this segment (which is often called a <cite>SYN segment</cite>), the server host replies with a segment containing :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>SYN</cite> flag set</p></li>
+<li><p>the <cite>sequence number</cite> set to the current value of the 32-bit counter of the server host’s TCP entity</p></li>
+<li><p>the <cite>ACK</cite> flag set</p></li>
+<li><p>the <cite>acknowledgment number</cite> set to the <cite>sequence number</cite> of the received <cite>SYN</cite> segment incremented by 1 <span class="math notranslate nohighlight">\(\pmod{2^{32}}\)</span>. When a TCP entity sends a segment having <cite>x+1</cite> as acknowledgment number, this indicates that it has received all data up to and including sequence number <cite>x</cite> and that it is expecting data having sequence number <cite>x+1</cite>. As the <cite>SYN</cite> flag was set in a segment having sequence number <cite>x</cite>, this implies that setting the <cite>SYN</cite> flag in a segment consumes one sequence number.</p></li>
+</ul>
+</div></blockquote>
+<p>This segment is often called a <cite>SYN+ACK</cite> segment. The acknowledgment confirms to the client that the server has correctly received the <cite>SYN</cite> segment. The <cite>sequence number</cite> of the <cite>SYN+ACK</cite> segment is used by the server host to verify that the <cite>client</cite> has received the segment. Upon reception of the <cite>SYN+ACK</cite> segment, the client host replies with a segment containing :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the <cite>ACK</cite> flag set</p></li>
+<li><p>the <cite>acknowledgment number</cite> set to the <cite>sequence number</cite> of the received <cite>SYN+ACK</cite> segment incremented by 1 <span class="math notranslate nohighlight">\(\pmod{2^{32}}\)</span></p></li>
+</ul>
+</div></blockquote>
+<p>At this point, the TCP connection is open and both the client and the server are allowed to send TCP segments containing data. This is illustrated in the figure below.</p>
+<figure class="align-center" id="id30">
+<a class="reference internal image-reference" href="../_images/tcp-estab.png"><img alt="../_images/tcp-estab.png" src="../Images/694105c783e9c32b13337f7332d8f745.png" style="width: 528.5px; height: 191.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Establishment of a TCP connection</span><a class="headerlink" href="#id30" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the figure above, the connection is considered to be established by the client once it has received the <cite>SYN+ACK</cite> segment, while the server considers the connection to be established upon reception of the <cite>ACK</cite> segment. The first data segment sent by the client (server) has its <cite>sequence number</cite> set to <cite>x+1</cite> (resp. <cite>y+1</cite>).</p>
+<div class="admonition note" id="index-8">
+<p class="admonition-title">Note</p>
+<p>Computing TCP’s initial sequence number</p>
+<p>In the original TCP specification <span class="target" id="index-9"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>, each TCP entity maintained a clock to compute the initial sequence number (<a class="reference internal" href="../glossary.html#term-ISN"><span class="xref std std-term">ISN</span></a>) placed in the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments. This made the ISN predictable and caused a security issue. The typical security problem was the following. Consider a server that trusts a host based on its IP address and allows the system administrator to log in from this host without giving a password <a class="footnote-reference brackets" href="#frlogin" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Consider now an attacker who knows this particular configuration and is able to send IP packets having the client’s address as source. He can send fake TCP segments to the server, but does not receive the server’s answers. If he can predict the <cite>ISN</cite> that is chosen by the server, he can send a fake <cite>SYN</cite> segment and shortly after the fake <cite>ACK</cite> segment confirming the reception of the <cite>SYN+ACK</cite> segment sent by the server. Once the TCP connection is open, he can use it to send any command to the server. To counter this attack, current TCP implementations add randomness to the <cite>ISN</cite>. One of the solutions, proposed in <span class="target" id="index-10"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1948.html"><strong>RFC 1948</strong></a> is to compute the <cite>ISN</cite> as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span/><span class="n">ISN</span> <span class="o">=</span> <span class="n">M</span> <span class="o">+</span> <span class="n">H</span><span class="p">(</span><span class="n">localhost</span><span class="p">,</span> <span class="n">localport</span><span class="p">,</span> <span class="n">remotehost</span><span class="p">,</span> <span class="n">remoteport</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>where <cite>M</cite> is the current value of the TCP clock and <cite>H</cite> is a cryptographic hash function. <cite>localhost</cite> and <cite>remotehost</cite> (resp. <cite>localport</cite> and <cite>remoteport</cite> ) are the IP addresses (port numbers) of the local and remote host and <cite>secret</cite> is a random number only known by the server. This method allows the server to use different ISNs for different clients at the same time. <a class="reference external" href="http://lcamtuf.coredump.cx/newtcp/">Measurements</a> performed with the first implementations of this technique showed that it was difficult to implement it correctly, but today’s TCP implementations now generate good ISNs.</p>
+</div>
+<p id="index-11">A server could, of course, refuse to open a TCP connection upon reception of a <cite>SYN</cite> segment. This refusal may be due to various reasons. There may be no server process that is listening on the destination port of the <cite>SYN</cite> segment. The server could always refuse connection establishments from this particular client (e.g. due to security reasons) or the server may not have enough resources to accept a new TCP connection at that time. In this case, the server would reply with a TCP segment having its <cite>RST</cite> flag set and containing the <cite>sequence number</cite> of the received <cite>SYN</cite> segment incremented by one as its <cite>acknowledgment number</cite>. This is illustrated in the figure below. We discuss the other usages of the TCP <cite>RST</cite> flag later (see <a class="reference internal" href="#tcprelease"><span class="std std-ref">TCP connection release</span></a>).</p>
+<figure class="align-center" id="id31">
+<a class="reference internal image-reference" href="../_images/tcp-estab-rej.png"><img alt="../_images/tcp-estab-rej.png" src="../Images/6efba2b39440115db107cf4f9ac21ff3.png" style="width: 450.09999999999997px; height: 163.1px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab-rej.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 73 </span><span class="caption-text">TCP connection establishment rejected by peer</span><a class="headerlink" href="#id31" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>TCP connection establishment can be described as the four state Finite State Machine shown below. In this FSM, <cite>!X</cite> (resp. <cite>?Y</cite>) indicates the transmission of segment <cite>X</cite> (resp. reception of segment <cite>Y</cite>) during the corresponding transition. <cite>Init</cite> is the initial state.</p>
+<blockquote>
+<div><div class="figure" id="id32" style="text-align: center"><p><img src="../Images/fa409c45183ba9c4c429c05386da995b.png" alt="Figure made with TikZ" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tikz-9f5f1b6f86ecb2d68a5be9447cede02cae24f3c6.png"/></p>
+<p><span class="caption-number">Fig. 74 </span><span class="caption-text">TCP FSM for connection establishment</span></p>
+</div></div></blockquote>
+<p>A client host starts in the <cite>Init</cite> state. It then sends a <cite>SYN</cite> segment and enters the <cite>SYN Sent</cite> state where it waits for a <cite>SYN+ACK</cite> segment. Then, it replies with an <cite>ACK</cite> segment and enters the <cite>Established</cite> state where data can be exchanged. On the other hand, a server host starts in the <cite>Init</cite> state. When a server process starts to listen to a destination port, the underlying TCP entity creates a TCP control block and a queue to process incoming <cite>SYN</cite> segments. Upon reception of a <cite>SYN</cite> segment, the server’s TCP entity replies with a <cite>SYN+ACK</cite> and enters the <cite>SYN RCVD</cite> state. It remains in this state until it receives an <cite>ACK</cite> segment that acknowledges its <cite>SYN+ACK</cite> segment, with this it then enters the <cite>Established</cite> state.</p>
+<p>Apart from these two paths in the TCP connection establishment FSM, there is a third path that corresponds to the case when both the client and the server send a <cite>SYN</cite> segment to open a TCP connection <a class="footnote-reference brackets" href="#ftcpboth" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. In this case, the client and the server send a <cite>SYN</cite> segment and enter the <cite>SYN Sent</cite> state. Upon reception of the <cite>SYN</cite> segment sent by the other host, they reply by sending a <cite>SYN+ACK</cite> segment and enter the <cite>SYN RCVD</cite> state. The <cite>SYN+ACK</cite> that arrives from the other host allows it to transition to the <cite>Established</cite> state. The figure below illustrates such a simultaneous establishment of a TCP connection.</p>
+<figure class="align-center" id="id33">
+<a class="reference internal image-reference" href="../_images/tcp-estab-sim.png"><img alt="../_images/tcp-estab-sim.png" src="../Images/51666ccbe7edc387550885fadae101a9.png" style="width: 513.8px; height: 255.49999999999997px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-estab-sim.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Simultaneous establishment of a TCP connection</span><a class="headerlink" href="#id33" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<aside class="topic" id="index-12">
+<p class="topic-title">Denial of Service attacks</p>
+<p>When a TCP entity opens a TCP connection, it creates a Transmission Control Block (<a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>). The TCB contains the entire state that is maintained by the TCP entity for each TCP connection. During connection establishment, the TCB contains the local IP address, the remote IP address, the local port number, the remote port number, the current local sequence number and the last sequence number received from the remote entity. Until the mid-1990s, TCP implementations had a limit on the number of TCP connections that could be in the <cite>SYN RCVD</cite> state at a given time. Many implementations set this limit to about 100 TCBs. This limit was considered sufficient even for heavily loaded HTTP servers given the small delay between the reception of a <cite>SYN</cite> segment and the reception of the <cite>ACK</cite> segment that terminates the establishment of the TCP connection. When the limit of 100 TCBs in the <cite>SYN Rcvd</cite> state is reached, the TCP entity discards all received TCP <cite>SYN</cite> segments that do not correspond to an existing TCB.</p>
+<p>This limit of 100 TCBs in the <cite>SYN Rcvd</cite> state was chosen to protect the TCP entity from the risk of overloading its memory with too many TCBs in the <cite>SYN Rcvd</cite> state. However, it was also the reason for a new type of Denial of Service (DoS) attack <span class="target" id="index-13"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4987.html"><strong>RFC 4987</strong></a>. A DoS attack is defined as an attack where an attacker can render a resource unavailable in the network. For example, an attacker may cause a DoS attack on a 2 Mbps link used by a company by sending more than 2 Mbps of packets through this link. In this case, the DoS attack was more subtle. As a TCP entity discards all received <cite>SYN</cite> segments as soon as it has 100 TCBs in the <cite>SYN Rcvd</cite> state, an attacker simply had to send a few 100 <cite>SYN</cite> segments every second to a server and never reply to the received <cite>SYN+ACK</cite> segments. To avoid being caught, attackers were of course sending these <cite>SYN</cite> segments with a different address than their own IP address <a class="footnote-reference brackets" href="#fspoofing" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>. On most TCP implementations, once a TCB entered the <cite>SYN Rcvd</cite> state, it remained in this state for several seconds, waiting for a retransmission of the initial <cite>SYN</cite> segment. This attack was later called a <cite>SYN flood</cite> attack and the servers of the ISP named Panix were among the first to <a class="reference external" href="http://memex.org/meme2-12.html">be affected</a> by this attack.</p>
+<p>To avoid the <cite>SYN flood</cite> attacks, recent TCP implementations no longer enter the <cite>SYN Rcvd</cite> state upon reception of a <cite>SYN segment</cite>. Instead, they reply directly with a <cite>SYN+ACK</cite> segment and wait until the reception of a valid <cite>ACK</cite>. This implementation trick is only possible if the TCP implementation is able to verify that the received <cite>ACK</cite> segment acknowledges the <cite>SYN+ACK</cite> segment sent earlier without storing the initial sequence number of this <cite>SYN+ACK</cite> segment in a TCB. The solution to solve this problem, which is known as <a class="reference external" href="http://cr.yp.to/syncookies.html">SYN cookies</a> is to compute the 32 bits of the <cite>ISN</cite> as follows :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the high order bits contain the low order bits of a counter that is incremented slowly</p></li>
+<li><p>the low order bits contain a hash value computed over the local and remote IP addresses and ports and a random secret only known to the server</p></li>
+</ul>
+</div></blockquote>
+<p>The advantage of the <a class="reference external" href="http://cr.yp.to/syncookies.html">SYN cookies</a> is that by using them, the server does not need to create a <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> upon reception of the <cite>SYN</cite> segment and can still check the returned <cite>ACK</cite> segment by recomputing the <cite>SYN cookie</cite>. The main disadvantage is that they are not fully compatible with the TCP options. This is why they are not enabled by default on a typical system.</p>
+</aside>
+<aside class="topic">
+<p class="topic-title">Retransmitting the first <cite>SYN</cite> segment</p>
+<p>As IP provides an unreliable connectionless service, the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments sent to open a TCP connection could be lost. Current TCP implementations start a retransmission timer when they send the first <cite>SYN</cite> segment. This timer is often set to three seconds for the first retransmission and then doubles after each retransmission <span class="target" id="index-14"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>. TCP implementations also enforce a maximum number of retransmissions for the initial <cite>SYN</cite> segment.</p>
+</aside>
+<p id="index-15">As explained earlier, TCP segments may contain an optional header extension. In the <cite>SYN</cite> and <cite>SYN+ACK</cite> segments, these options are used to negotiate some parameters and the utilization of extensions to the basic TCP specification.</p>
+<p id="index-16">The first parameter which is negotiated during the establishment of a TCP connection is the Maximum Segment Size (<a class="reference internal" href="../glossary.html#term-MSS"><span class="xref std std-term">MSS</span></a>). The MSS is the size of the largest segment that a TCP entity is able to process. According to <span class="target" id="index-17"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc879.html"><strong>RFC 879</strong></a>, all TCP implementations must be able to receive TCP segments containing 536 bytes of payload. However, most TCP implementations are able to process larger segments. Such TCP implementations use the TCP MSS Option in the <cite>SYN</cite>/<cite>SYN+ACK</cite> segment to indicate the largest segment they are able to process. The MSS value indicates the maximum size of the payload of the TCP segments. The client (resp. server) stores in its <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> the MSS value announced by the server (resp. the client).</p>
+<p>Another utilization of TCP options during connection establishment is to enable TCP extensions. For example, consider <span class="target" id="index-18"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> (which is discussed in <a class="reference internal" href="#tcpreliable"><span class="std std-ref">TCP reliable data transfer</span></a>). <span class="target" id="index-19"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> defines TCP extensions to support timestamps and larger windows. If the client supports <span class="target" id="index-20"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it adds a <span class="target" id="index-21"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option to its <cite>SYN</cite> segment. If the server understands this <span class="target" id="index-22"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option and wishes to use it, it replies with a <span class="target" id="index-23"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option in the <cite>SYN+ACK</cite> segment and the extension defined in <span class="target" id="index-24"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> is used throughout the TCP connection. Otherwise, if the server’s <cite>SYN+ACK</cite> does not contain the <span class="target" id="index-25"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> option, the client is not allowed to use this extension and the corresponding TCP header options throughout the TCP connection. TCP’s option mechanism is flexible and it allows the extension of TCP while maintaining compatibility with older implementations.</p>
+<p>The TCP options are encoded by using a Type Length Value format where :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the first byte indicates the <cite>type</cite> of the option.</p></li>
+<li><p>the second byte indicates the total length of the option (including the first two bytes) in bytes</p></li>
+<li><p>the remaining bytes are specific for each type of option</p></li>
+</ul>
+</div></blockquote>
+<p><span class="target" id="index-26"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> defines the Maximum Segment Size (MSS) TCP option that must be understood by all TCP implementations. This option (type 2) has a length of 4 bytes and contains a 16-bit word that indicates the MSS supported by the sender of the <cite>SYN</cite> segment. The MSS option can only be used in TCP segments having the <cite>SYN</cite> flag set.</p>
+<p><span class="target" id="index-27"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> also defines two special options that must be supported by all TCP implementations. The first option is <cite>End of option</cite>. It is encoded as a single byte having value <cite>0x00</cite> and can be used to ensure that the TCP header extension ends on a 32-bit boundary. The <cite>No-Operation</cite> option, encoded as a single byte having value <cite>0x01</cite>, can be used when the TCP header extension contains several TCP options that should be aligned on 32-bit boundaries. All other options <a class="footnote-reference brackets" href="#ftcpoptions" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> are encoded using the TLV format.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The robustness principle</p>
+<p>The handling of the TCP options by TCP implementations is one of the many applications of the <cite>robustness principle</cite> which is usually attributed to <a class="reference external" href="https://www.postel.org/postel.html">Jon Postel</a> and is often quoted as <cite>“Be liberal in what you accept, and conservative in what you send”</cite> <span class="target" id="index-28"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>.</p>
+<p>Concerning the TCP options, the robustness principle implies that a TCP implementation should be able to accept TCP options that it does not understand, in particular in received <cite>SYN</cite> segments, and that it should be able to parse any received segment without crashing, even if the segment contains an unknown TCP option. Furthermore, a server should not send in the <cite>SYN+ACK</cite> segment or later, options that have not been proposed by the client in the <cite>SYN</cite> segment.</p>
+</div>
+&#13;
+
+<span id="tcpreliable"/><h2>TCP reliable data transfer<a class="headerlink" href="#tcp-reliable-data-transfer" title="Link to this heading">#</a></h2>
+<p>The original TCP data transfer mechanisms were defined in <span class="target" id="index-29"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. Based on the experience of using TCP on the growing global Internet, this part of the TCP specification has been updated and improved several times, always while preserving the backward compatibility with older TCP implementations. In this section, we review the main data transfer mechanisms used by TCP.</p>
+<p>TCP is a window-based transport protocol that provides a bi-directional byte stream service. This has several implications on the fields of the TCP header and the mechanisms used by TCP. The three fields of the TCP header are :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>sequence number</cite>. TCP uses a 32 bits sequence number. The <cite>sequence number</cite> placed in the header of a TCP segment containing data is the sequence number of the first byte of the payload of the TCP segment.</p></li>
+<li><p><cite>acknowledgment number</cite>. TCP uses cumulative positive acknowledgments. Each TCP segment contains the <cite>sequence number</cite> of the next byte that the sender of the acknowledgment expects to receive from the remote host. In theory, the <cite>acknowledgment number</cite> is only valid if the <cite>ACK</cite> flag of the TCP header is set. In practice, almost all <a class="footnote-reference brackets" href="#fackflag" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a> TCP segments have their <cite>ACK</cite> flag set.</p></li>
+<li><p><cite>window</cite>. a TCP receiver uses this 16 bits field to indicate the current size of its receive window expressed in bytes.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note" id="index-30">
+<p class="admonition-title">Note</p>
+<p>The Transmission Control Block</p>
+<p>For each established TCP connection, a TCP implementation must maintain a Transmission Control Block (<a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>). A TCB contains all the information required to send and receive segments on this connection <span class="target" id="index-31"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. This includes <a class="footnote-reference brackets" href="#ftcpurgent" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a> :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the local IP address</p></li>
+<li><p>the remote IP address</p></li>
+<li><p>the local TCP port number</p></li>
+<li><p>the remote TCP port number</p></li>
+<li><p>the current state of the TCP FSM</p></li>
+<li><p>the <cite>maximum segment size</cite> (MSS)</p></li>
+<li><p><cite>snd.nxt</cite> : the sequence number of the next byte in the byte stream (the first byte of a new data segment that you send uses this sequence number)</p></li>
+<li><p><cite>snd.una</cite> : the earliest sequence number that has been sent but has not yet been acknowledged</p></li>
+<li><p><cite>snd.wnd</cite> : the current size of the sending window (in bytes)</p></li>
+<li><p><cite>rcv.nxt</cite> : the sequence number of the next byte that is expected to be received from the remote host</p></li>
+<li><p><cite>rcv.wnd</cite> : the current size of the receive window advertised by the remote host</p></li>
+<li><p><cite>sending buffer</cite> : a buffer used to store all unacknowledged data</p></li>
+<li><p><cite>receiving buffer</cite> : a buffer to store all data received from the remote host that has not yet been delivered to the user. Data may be stored in the <cite>receiving buffer</cite> because either it was not received in sequence or because the user is too slow to process it</p></li>
+</ul>
+</div></blockquote>
+</div>
+<p>The original TCP specification can be summarized as a transport protocol that provides a byte stream service and uses <cite>go-back-n</cite> with a <cite>selective-repeat</cite> reception strategy.</p>
+<p>To send new data on an established connection, a TCP entity performs the following operations on the corresponding TCB. It first checks that the <cite>sending buffer</cite> does not contain more data than the receive window advertised by the remote host (<cite>rcv.wnd</cite>). If the window is not full, up to <cite>MSS</cite> bytes of data are placed in the payload of a TCP segment. The <cite>sequence number</cite> of this segment is the sequence number of the first byte of the payload. It is set to the first available sequence number, <cite>snd.nxt</cite>, and <cite>snd.nxt</cite> is incremented by the length of the payload of the TCP segment. The <cite>acknowledgment number</cite> of this segment is set to the current value of <cite>rcv.nxt</cite> and the <cite>window</cite> field of the TCP segment is computed based on the current occupancy of the <cite>receiving buffer</cite>. The data is kept in the <cite>sending buffer</cite> in case it needs to be retransmitted later.</p>
+<p>When a TCP segment with the <cite>ACK</cite> flag set is received, the following operations are performed. <cite>rcv.wnd</cite> is set to the value of the <cite>window</cite> field of the received segment. The <cite>acknowledgment number</cite> is compared to <cite>snd.una</cite>. The newly acknowledged data is removed from the <cite>sending buffer</cite> and <cite>snd.una</cite> is updated. If the TCP segment contained data, the <cite>sequence number</cite> is compared to <cite>rcv.nxt</cite>. If they are equal, the segment was received in sequence and the data can be delivered to the user and <cite>rcv.nxt</cite> is updated. The contents of the <cite>receiving buffer</cite> is checked to see whether other data already present in this buffer can be delivered in sequence to the user. If so, <cite>rcv.nxt</cite> is updated again. Otherwise, the segment’s payload is placed in the <cite>receiving buffer</cite>.</p>
+<section id="segment-transmission-strategies">
+<h3>Segment transmission strategies<a class="headerlink" href="#segment-transmission-strategies" title="Link to this heading">#</a></h3>
+<p id="index-32">In a transport protocol such as TCP that offers a bytestream, a practical issue that was left as an implementation choice in <span class="target" id="index-33"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> is to decide when a new TCP segment containing data must be sent. There are two simple and extreme implementation choices. The first implementation choice is to send a TCP segment as soon as the user has requested the transmission of some data. This allows TCP to provide a low delay service. However, if the user is sending data one byte at a time, TCP would place each user byte in a segment containing 20 bytes of TCP header <a class="footnote-reference brackets" href="#fnagleip" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>. This is a huge overhead that is not acceptable in wide area networks. A second simple solution would be to only transmit a new TCP segment once the user has produced MSS bytes of data. This solution reduces the overhead, but at the cost of a potentially very high delay.</p>
+<p>An elegant solution to this problem was proposed by John Nagle in <span class="target" id="index-34"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc896.html"><strong>RFC 896</strong></a>. John Nagle observed that the overhead caused by the TCP header was a problem in wide area connections, but less in local area connections where the available bandwidth is usually higher. He proposed the following rules to decide to send a new data segment when a new data has been produced by the user or a new <cite>ack</cite> segment has been received.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">if</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span> <span class="o">&gt;=</span> <span class="n">MSS</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MSS</span><span class="p">:</span>
+    <span class="n">send</span> <span class="n">one</span> <span class="n">MSS</span><span class="o">-</span><span class="n">sized</span> <span class="n">segment</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">there</span> <span class="n">are</span> <span class="n">unacknowledged</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">place</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">buffer</span> <span class="n">until</span> <span class="n">acknowledgment</span> <span class="n">has</span> <span class="n">been</span> <span class="n">received</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">send</span> <span class="n">one</span> <span class="n">TCP</span> <span class="n">segment</span> <span class="n">containing</span> <span class="nb">all</span> <span class="n">buffered</span> <span class="n">data</span> <span class="p">(</span><span class="n">up</span> <span class="n">to</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first rule ensures that a TCP connection used for bulk data transfer always sends full TCP segments. The second rule sends one partially filled TCP segment every round-trip-time.</p>
+<p id="index-35">This algorithm, called the Nagle algorithm, takes a few lines of code in all TCP implementations. These lines of code have a huge impact on the packets that are exchanged in TCP/IP networks. Researchers have analyzed the distribution of the packet sizes by capturing and analyzing all the packets passing through a given link. These studies have shown several important results :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>in TCP/IP networks, a large fraction of the packets are TCP segments that contain only an acknowledgment. These packets usually account for 40-50% of the packets passing through the studied link</p></li>
+<li><p>in TCP/IP networks, most of the bytes are exchanged in long packets, usually packets containing about 1440 bytes of payload which is the default MSS for hosts attached to an Ethernet network, the most popular type of LAN</p></li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml">Recent measurements</a> indicate that these packet size distributions are still valid in today’s Internet, although the packet distribution tends to become bi-modal with small packets corresponding to TCP pure acknowledgments and large 1440-bytes packets carrying most of the user data <a class="reference internal" href="../bibliography.html#smasu2012" id="id12"><span>[SMASU2012]</span></a>.</p>
+</section>
+&#13;
+
+<h3>Segment transmission strategies<a class="headerlink" href="#segment-transmission-strategies" title="Link to this heading">#</a></h3>
+<p id="index-32">In a transport protocol such as TCP that offers a bytestream, a practical issue that was left as an implementation choice in <span class="target" id="index-33"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> is to decide when a new TCP segment containing data must be sent. There are two simple and extreme implementation choices. The first implementation choice is to send a TCP segment as soon as the user has requested the transmission of some data. This allows TCP to provide a low delay service. However, if the user is sending data one byte at a time, TCP would place each user byte in a segment containing 20 bytes of TCP header <a class="footnote-reference brackets" href="#fnagleip" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a>. This is a huge overhead that is not acceptable in wide area networks. A second simple solution would be to only transmit a new TCP segment once the user has produced MSS bytes of data. This solution reduces the overhead, but at the cost of a potentially very high delay.</p>
+<p>An elegant solution to this problem was proposed by John Nagle in <span class="target" id="index-34"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc896.html"><strong>RFC 896</strong></a>. John Nagle observed that the overhead caused by the TCP header was a problem in wide area connections, but less in local area connections where the available bandwidth is usually higher. He proposed the following rules to decide to send a new data segment when a new data has been produced by the user or a new <cite>ack</cite> segment has been received.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="k">if</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span> <span class="o">&gt;=</span> <span class="n">MSS</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MSS</span><span class="p">:</span>
+    <span class="n">send</span> <span class="n">one</span> <span class="n">MSS</span><span class="o">-</span><span class="n">sized</span> <span class="n">segment</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">there</span> <span class="n">are</span> <span class="n">unacknowledged</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">place</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">buffer</span> <span class="n">until</span> <span class="n">acknowledgment</span> <span class="n">has</span> <span class="n">been</span> <span class="n">received</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">send</span> <span class="n">one</span> <span class="n">TCP</span> <span class="n">segment</span> <span class="n">containing</span> <span class="nb">all</span> <span class="n">buffered</span> <span class="n">data</span> <span class="p">(</span><span class="n">up</span> <span class="n">to</span> <span class="n">rcv</span><span class="o">.</span><span class="n">wnd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first rule ensures that a TCP connection used for bulk data transfer always sends full TCP segments. The second rule sends one partially filled TCP segment every round-trip-time.</p>
+<p id="index-35">This algorithm, called the Nagle algorithm, takes a few lines of code in all TCP implementations. These lines of code have a huge impact on the packets that are exchanged in TCP/IP networks. Researchers have analyzed the distribution of the packet sizes by capturing and analyzing all the packets passing through a given link. These studies have shown several important results :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>in TCP/IP networks, a large fraction of the packets are TCP segments that contain only an acknowledgment. These packets usually account for 40-50% of the packets passing through the studied link</p></li>
+<li><p>in TCP/IP networks, most of the bytes are exchanged in long packets, usually packets containing about 1440 bytes of payload which is the default MSS for hosts attached to an Ethernet network, the most popular type of LAN</p></li>
+</ul>
+</div></blockquote>
+<p><a class="reference external" href="http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml">Recent measurements</a> indicate that these packet size distributions are still valid in today’s Internet, although the packet distribution tends to become bi-modal with small packets corresponding to TCP pure acknowledgments and large 1440-bytes packets carrying most of the user data <a class="reference internal" href="../bibliography.html#smasu2012" id="id12"><span>[SMASU2012]</span></a>.</p>
+&#13;
+
+<span id="index-36"/><h2>TCP windows<a class="headerlink" href="#tcp-windows" title="Link to this heading">#</a></h2>
+<p>From a performance point of view, one of the main limitations of the original TCP specification is the 16 bits <cite>window</cite> field in the TCP header. As this field indicates the current size of the receive window in bytes, it limits the TCP receive window at 65535 bytes. This limitation was not a severe problem when TCP was designed since at that time high-speed wide area networks offered a maximum bandwidth of 56 kbps. However, in today’s network, this limitation is not acceptable anymore. The table below provides the rough <a class="footnote-reference brackets" href="#faveragebandwidth" id="id13" role="doc-noteref"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></a> maximum throughput that can be achieved by a TCP connection with a 64 KBytes window in function of the connection’s round-trip-time</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>RTT</p></th>
+<th class="head"><p>Maximum Throughput</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1 msec</p></td>
+<td><p>524 Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 msec</p></td>
+<td><p>52.4 Mbps</p></td>
+</tr>
+<tr class="row-even"><td><p>100 msec</p></td>
+<td><p>5.24 Mbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>500 msec</p></td>
+<td><p>1.05 Mbps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To solve this problem, a backward compatible extension that allows TCP to use larger receive windows was proposed in <span class="target" id="index-37"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>. Today, most TCP implementations support this option. The basic idea is that instead of storing <cite>snd.wnd</cite> and <cite>rcv.wnd</cite> as 16 bits integers in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>, they should be stored as 32 bits integers. As the TCP segment header only contains 16 bits to place the window field, it is impossible to copy the value of <cite>snd.wnd</cite> in each sent TCP segment. Instead the header contains <cite>snd.wnd &gt;&gt; S</cite> where <cite>S</cite> is the scaling factor ( <span class="math notranslate nohighlight">\(0 \le S \le 14\)</span>) negotiated during connection establishment. The client adds its proposed scaling factor as a TCP option in the <cite>SYN</cite> segment. If the server supports <span class="target" id="index-38"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it places in the <cite>SYN+ACK</cite> segment the scaling factor that it uses when advertising its own receive window. The local and remote scaling factors are included in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. If the server does not support <span class="target" id="index-39"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, it ignores the received option and no scaling is applied.</p>
+<p>By using the window scaling extensions defined in <span class="target" id="index-40"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>, TCP implementations can use a receive buffer of up to 1 GByte. With such a receive buffer, the maximum throughput that can be achieved by a single TCP connection becomes :</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>RTT</p></th>
+<th class="head"><p>Maximum Throughput</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1 msec</p></td>
+<td><p>8590 Gbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>10 msec</p></td>
+<td><p>859 Gbps</p></td>
+</tr>
+<tr class="row-even"><td><p>100 msec</p></td>
+<td><p>86 Gbps</p></td>
+</tr>
+<tr class="row-odd"><td><p>500 msec</p></td>
+<td><p>17 Gbps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>These throughputs are acceptable in today’s networks. However, there are already servers having 10 Gbps interfaces… Early TCP implementations had fixed receiving and sending buffers <a class="footnote-reference brackets" href="#ftcphosts" id="id14" role="doc-noteref"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></a>. Today’s high performance implementations are able to automatically adjust the size of the sending and receiving buffer to better support high bandwidth flows <a class="reference internal" href="../bibliography.html#smm1998" id="id15"><span>[SMM1998]</span></a>.</p>
+&#13;
+
+<h2>TCP’s retransmission timeout<a class="headerlink" href="#tcp-s-retransmission-timeout" title="Link to this heading">#</a></h2>
+<p>In a go-back-n transport protocol such as TCP, the retransmission timeout must be correctly set in order to achieve good performance. On one hand, if the retransmission timeout expires too early, then bandwidth is wasted by retransmitting segments that have already been correctly received. On the other hand, if the retransmission timeout expires too late, then bandwidth is wasted because the sender is idle waiting for the expiration of its retransmission timeout.</p>
+<p>A good setting of the retransmission timeout clearly depends on an accurate estimation of the round-trip-time of each TCP connection. The round-trip-time differs between TCP connections, but may also change during the lifetime of a single connection. For example, the figure below shows the evolution of the round-trip-time  between two hosts during a period of 45 seconds.</p>
+<figure class="align-center" id="id34">
+<a class="reference internal image-reference" href="../_images/tcp-rtt.png"><img alt="../_images/tcp-rtt.png" src="../Images/0a2d2e0115955ccfed932c13f7aadca3.png" style="width: 253.39999999999998px; height: 172.89999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Evolution of the round-trip-time between two hosts</span><a class="headerlink" href="#id34" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The easiest solution to measure the round-trip-time on a TCP connection is to measure the delay between the transmission of a data segment and the reception of a corresponding acknowledgment <a class="footnote-reference brackets" href="#frttmes" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>. As illustrated in the figure below, this measurement works well when there are no segment losses.</p>
+<figure class="align-center" id="id35">
+<a class="reference internal image-reference" href="../_images/tcp-rtt2.png"><img alt="../_images/tcp-rtt2.png" src="../Images/8ce63a02756a9faddc11dd69b870be27.png" style="width: 426.29999999999995px; height: 177.79999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt2.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 77 </span><span class="caption-text">How to measure the round-trip-time ?</span><a class="headerlink" href="#id35" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>However, when a data segment is lost, as illustrated in the bottom part of the figure, the measurement is ambiguous as the sender cannot determine whether the received acknowledgment was triggered by the first transmission of segment <cite>123</cite> or its retransmission. Using incorrect round-trip-time estimations could lead to incorrect values of the retransmission timeout. For this reason, Phil Karn and Craig Partridge proposed, in <a class="reference internal" href="../bibliography.html#kp91" id="id17"><span>[KP91]</span></a>, to ignore the round-trip-time measurements performed during retransmissions.</p>
+<p>To avoid this ambiguity in the estimation of the round-trip-time when segments are retransmitted, recent TCP implementations rely on the <cite>timestamp option</cite> defined in <span class="target" id="index-41"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a>. This option allows a TCP sender to place two 32 bit timestamps in each TCP segment that it sends. The first timestamp, TS Value (<cite>TSval</cite>) is chosen by the sender of the segment. It could for example be the current value of its real-time clock <a class="footnote-reference brackets" href="#ftimestamp" id="id18" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>. The second value, TS Echo Reply (<cite>TSecr</cite>), is the last <cite>TSval</cite> that was received from the remote host and stored in the <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. The figure below shows how the utilization of this timestamp option allows for the disambiguation of the round-trip-time measurement when there are retransmissions.</p>
+<figure class="align-center" id="id36">
+<a class="reference internal image-reference" href="../_images/tcp-rtt-ts.png"><img alt="../_images/tcp-rtt-ts.png" src="../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png" style="width: 419.29999999999995px; height: 177.79999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rtt-ts.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Disambiguating round-trip-time measurements with the <span class="target" id="index-42"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> timestamp option</span><a class="headerlink" href="#id36" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Once the round-trip-time measurements have been collected for a given TCP connection, the TCP entity must compute the retransmission timeout. As the round-trip-time measurements may change during the lifetime of a connection, the retransmission timeout may also change. At the beginning of a connection <a class="footnote-reference brackets" href="#ftcbtouch" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></a>, the TCP entity that sends a <cite>SYN</cite> segment does not know the round-trip-time to reach the remote host and the initial retransmission timeout is usually set to 3 seconds <span class="target" id="index-43"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>.</p>
+<p>The original TCP specification proposed in <span class="target" id="index-44"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> to include two additional variables in the TCB :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>srtt</cite> : the smoothed round-trip-time computed as <span class="math notranslate nohighlight">\(srtt=(\alpha \times srtt)+( (1-\alpha) \times rtt)\)</span> where <span class="math notranslate nohighlight">\(rtt\)</span> is the round-trip-time measured according to the above procedure and <span class="math notranslate nohighlight">\(\alpha\)</span> a smoothing factor (e.g. 0.8 or 0.9)</p></li>
+<li><p><cite>rto</cite> : the retransmission timeout is computed as <span class="math notranslate nohighlight">\(rto=\min(60,\max(1,\beta \times srtt))\)</span> where <span class="math notranslate nohighlight">\(\beta\)</span> is used to take into account the delay variance (value : 1.3 to 2.0). The <cite>60</cite> and <cite>1</cite> constants are used to ensure that the <cite>rto</cite> is not larger than one minute nor smaller than 1 second.</p></li>
+</ul>
+</div></blockquote>
+<p>However, in practice, this computation for the retransmission timeout did not work well. The main problem was that the computed <cite>rto</cite> did not correctly take into account the variations in the measured round-trip-time. <cite>Van Jacobson</cite> proposed in his seminal paper <a class="reference internal" href="../bibliography.html#jacobson1988" id="id20"><span>[Jacobson1988]</span></a> an improved algorithm to compute the <cite>rto</cite> and implemented it in the BSD Unix distribution. This algorithm is now part of the TCP standard <span class="target" id="index-45"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a>.</p>
+<p>Jacobson’s algorithm uses two state variables, <cite>srtt</cite> the smoothed <cite>rtt</cite> and <cite>rttvar</cite> the estimation of the variance of the <cite>rtt</cite> and two parameters : <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>. When a TCP connection starts, the first <cite>rto</cite> is set to <cite>3</cite> seconds. When a first estimation of the <cite>rtt</cite> is available, the <cite>srtt</cite>, <cite>rttvar</cite> and <cite>rto</cite> are computed as follows :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">srtt</span> <span class="o">=</span> <span class="n">rtt</span>
+<span class="n">rttvar</span> <span class="o">=</span> <span class="n">rtt</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">rto</span> <span class="o">=</span> <span class="n">srtt</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">rttvar</span>
+</pre></div>
+</div>
+<p>Then, when other rtt measurements are collected, <cite>srtt</cite> and <cite>rttvar</cite> are updated as follows :</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)</span></p>
+<p><span class="math notranslate nohighlight">\(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)</span></p>
+<p><span class="math notranslate nohighlight">\(rto=srtt + 4 \times rttvar\)</span></p>
+</div></blockquote>
+<p>The proposed values for the parameters are <span class="math notranslate nohighlight">\(\alpha=\frac{1}{8}\)</span> and <span class="math notranslate nohighlight">\(\beta=\frac{1}{4}\)</span>. This allows a TCP implementation, implemented in the kernel, to perform the <cite>rtt</cite> computation by using shift operations instead of the more costly floating point operations <a class="reference internal" href="../bibliography.html#jacobson1988" id="id21"><span>[Jacobson1988]</span></a>. The figure below illustrates the computation of the <cite>rto</cite> upon <cite>rtt</cite> changes.</p>
+<figure class="align-center" id="id37">
+<a class="reference internal image-reference" href="../_images/tcp-rto.png"><img alt="../_images/tcp-rto.png" src="../Images/0d04bfd2484086ab09bb9aeef68035d0.png" style="width: 234.49999999999997px; height: 181.29999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-rto.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Example computation of the <cite>rto</cite></span><a class="headerlink" href="#id37" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+&#13;
+
+<h2>Advanced retransmission strategies<a class="headerlink" href="#advanced-retransmission-strategies" title="Link to this heading">#</a></h2>
+<p id="index-46">The default go-back-n retransmission strategy was defined in <span class="target" id="index-47"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. When the retransmission timer expires, TCP retransmits the first unacknowledged segment (i.e. the one having sequence number <cite>snd.una</cite>). After each expiration of the retransmission timeout, <span class="target" id="index-48"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a> recommends to double the value of the retransmission timeout. This is called an <cite>exponential backoff</cite>. This doubling of the retransmission timeout after a retransmission was included in TCP to deal with issues such as network/receiver overload and incorrect initial estimations of the retransmission timeout. If the same segment is retransmitted several times, the retransmission timeout is doubled after every retransmission until it reaches a configured maximum. <span class="target" id="index-49"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a> suggests a maximum retransmission timeout of at least 60 seconds. Once the retransmission timeout reaches this configured maximum, the remote host is considered to be unreachable and the TCP connection is closed.</p>
+<p id="index-50">This retransmission strategy has been refined based on the experience of using TCP on the Internet. The first refinement was a clarification of the strategy used to send acknowledgments. As TCP uses piggybacking, the easiest and less costly method to send acknowledgments is to place them in the data segments sent in the other direction. However, few application layer protocols exchange data in both directions at the same time and thus this method rarely works. For an application that is sending data segments in one direction only, the remote TCP entity returns empty TCP segments whose only useful information is their acknowledgment number. This may cause a large overhead in wide area network if a pure <cite>ACK</cite> segment is sent in response to each received data segment. Most TCP implementations use a <cite>delayed acknowledgment</cite> strategy. This strategy ensures that piggybacking is used whenever possible, otherwise pure <cite>ACK</cite> segments are sent for every second received data segments when there are no losses. When there are losses or reordering, <cite>ACK</cite> segments are more important for the sender and they are sent immediately <span class="target" id="index-51"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc813.html"><strong>RFC 813</strong></a> <span class="target" id="index-52"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>. This strategy relies on a new timer with a short delay (e.g. 50 milliseconds) and one additional flag in the TCB. It can be implemented as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">reception</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">segment</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pkt</span><span class="o">.</span><span class="n">seq</span> <span class="o">==</span> <span class="n">rcv</span><span class="o">.</span><span class="n">nxt</span><span class="p">:</span>  <span class="c1"># segment received in sequence</span>
+        <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+            <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># out of sequence segment</span>
+        <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+        <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+            <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<span class="n">transmission</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">segment</span><span class="p">:</span>  <span class="c1"># piggyback ack</span>
+    <span class="k">if</span> <span class="n">delayed_ack</span><span class="p">:</span>
+        <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">ack_timer</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<span class="n">acktimer</span> <span class="n">expiration</span><span class="p">:</span>
+    <span class="n">send</span> <span class="n">pure</span> <span class="n">ack</span> <span class="n">segment</span>
+    <span class="n">delayed_ack</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Due to this delayed acknowledgment strategy, during a bulk transfer, a TCP implementation usually acknowledges every second TCP segment received.</p>
+<p>The default go-back-n retransmission strategy used by TCP has the advantage of being simple to implement, in particular on the receiver side, but when there are losses, a go-back-n strategy provides a lower performance than a selective repeat strategy. The TCP developers have designed several extensions to TCP to allow it to use a selective repeat strategy while maintaining backward compatibility with older TCP implementations. These TCP extensions assume that the receiver is able to buffer the segments that it receives out-of-sequence.</p>
+<p id="index-53">The first extension that was proposed is the fast retransmit heuristic. This extension can be implemented on TCP senders and thus does not require any change to the protocol. It only assumes that the TCP receiver is able to buffer out-of-sequence segments.</p>
+<p>From a performance point of view, one issue with TCP’s <cite>retransmission timeout</cite> is that when there are isolated segment losses, the TCP sender often remains idle waiting for the expiration of its retransmission timeouts. Such isolated losses are frequent in the global Internet <a class="reference internal" href="../bibliography.html#paxson99" id="id22"><span>[Paxson99]</span></a>.  A heuristic to deal with isolated losses without waiting for the expiration of the retransmission timeout has been included in many TCP implementations since the early 1990s. To understand this heuristic, let us consider the figure below that shows the segments exchanged over a TCP connection when an isolated segment is lost.</p>
+<figure class="align-center" id="id38">
+<a class="reference internal image-reference" href="../_images/tcp-loss.png"><img alt="../_images/tcp-loss.png" src="../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png" style="width: 418.59999999999997px; height: 223.29999999999998px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-loss.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Detecting isolated segment losses</span><a class="headerlink" href="#id38" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As shown above, when an isolated segment is lost the sender receives several <cite>duplicate acknowledgments</cite> since the TCP receiver immediately sends a pure acknowledgment when it receives an out-of-sequence segment. A duplicate acknowledgment is an acknowledgment that contains the same <cite>acknowledgment number</cite> as a previous segment. A single duplicate acknowledgment does not necessarily imply that a segment was lost, as a simple reordering of the segments may cause duplicate acknowledgments as well. Measurements  <a class="reference internal" href="../bibliography.html#paxson99" id="id23"><span>[Paxson99]</span></a> have shown that segment reordering is frequent in the Internet. Based on these observations, the <cite>fast retransmit</cite> heuristic has been included in most TCP implementations. It can be implemented as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span/><span class="n">ack</span> <span class="n">arrival</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tcp</span><span class="o">.</span><span class="n">ack</span> <span class="o">==</span> <span class="n">snd</span><span class="o">.</span><span class="n">una</span><span class="p">:</span>  <span class="c1"># duplicate acknowledgment</span>
+        <span class="n">dupacks</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">dupacks</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">retransmit</span> <span class="n">segment</span><span class="p">(</span><span class="n">snd</span><span class="o">.</span><span class="n">una</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dupacks</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># process acknowledgment</span>
+</pre></div>
+</div>
+<p>This heuristic requires an additional variable in the TCB (<cite>dupacks</cite>). Most implementations set the default number of duplicate acknowledgments that trigger a retransmission to 3. It is now part of the standard TCP specification <span class="target" id="index-54"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2581.html"><strong>RFC 2581</strong></a>. The <cite>fast retransmit</cite> heuristic improves the TCP performance provided that isolated segments are lost and the current window is large enough to allow the sender to send three duplicate acknowledgments.</p>
+<p>The figure below illustrates the operation of the <cite>fast retransmit</cite> heuristic.</p>
+<figure class="align-center" id="id39">
+<a class="reference internal image-reference" href="../_images/tcp-frr.png"><img alt="../_images/tcp-frr.png" src="../Images/9542e04356c75d728bbd935961cc1860.png" style="width: 352.09999999999997px; height: 224.7px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-frr.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">TCP fast retransmit heuristics</span><a class="headerlink" href="#id39" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p id="index-55">When losses are not isolated or when the windows are small, the performance of the <cite>fast retransmit</cite> heuristic decreases. In such environments, it is necessary to allow a TCP sender to use a selective repeat strategy instead of the default go-back-n strategy. Implementing selective-repeat requires a change to the TCP protocol as the receiver needs to be able to inform the sender of the out-of-order segments that it has already received. This can be done by using the Selective Acknowledgments (SACK) option defined in <span class="target" id="index-56"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2018.html"><strong>RFC 2018</strong></a>. This TCP option is negotiated during the establishment of a TCP connection. If both TCP hosts support the option, SACK blocks can be attached by the receiver to the segments that it sends. SACK blocks allow a TCP receiver to indicate the blocks of data that it has received correctly but out of sequence. The figure below illustrates the utilization of the SACK blocks.</p>
+<figure class="align-center" id="id40">
+<a class="reference internal image-reference" href="../_images/tcp-sack.png"><img alt="../_images/tcp-sack.png" src="../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png" style="width: 347.2px; height: 224.0px;" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tcp-sack.png"/>
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">TCP selective acknowledgments</span><a class="headerlink" href="#id40" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A SACK option contains one or more blocks. A block corresponds to all the sequence numbers between the <cite>left edge</cite> and the <cite>right edge</cite> of the block. The two edges of the block are encoded as 32 bit numbers (the same size as the TCP sequence number) in an SACK option. As the SACK option contains one byte to encode its type and one byte for its length, a SACK option containing <cite>b</cite> blocks is encoded as a sequence of <span class="math notranslate nohighlight">\(2+8 \times b\)</span> bytes. In practice, the size of the SACK option can be problematic as the optional TCP header extension cannot be longer than 40 bytes. As the SACK option is usually combined with the <span class="target" id="index-57"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> timestamp extension, this implies that a TCP segment cannot usually contain more than three SACK blocks. This limitation implies that a TCP receiver cannot always place in the SACK option that it sends, information about all the received blocks.</p>
+<p>To deal with the limited size of the SACK option, a TCP receiver currently having more than 3 blocks inside its receiving buffer must select the blocks to place in the SACK option. A good heuristic is to put in the SACK option the blocks that have most recently changed, as the sender is likely to be already aware of the older blocks.</p>
+<p>When a sender receives a SACK option indicating a new block and thus a new possible segment loss, it usually does not retransmit the missing segments immediately. To deal with reordering, a TCP sender can use a heuristic similar to <cite>fast retransmit</cite> by retransmitting a gap only once it has received three SACK options indicating this gap. It should be noted that the SACK option does not supersede the <cite>acknowledgment number</cite> of the TCP header. A TCP sender can only remove data from its sending buffer once they have been acknowledged by TCP’s cumulative acknowledgments. This design was chosen for two reasons. First, it allows the receiver to discard parts of its receiving buffer when it is running out of memory without loosing data. Second, as the SACK option is not transmitted reliably, the cumulative acknowledgments are still required to deal with losses of <cite>ACK</cite> segments carrying only SACK information. Thus, the SACK option only serves as a hint to allow the sender to optimize its retransmissions.</p>
+<p>As explained earlier, the TCP Timestamp option <span class="target" id="index-58"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1323.html"><strong>RFC 1323</strong></a> prevents ambiguities while collecting round-trip-time measurements. It plays another very important role in today’s high-bandwidth networks. Since TCP uses 32 bits long sequence numbers, the sequence numbers wrap after the transmission of 4 GBytes of data. With 10 Gbps and soon 100 Gbps interfaces, TCP only needs to transmit during a few seconds before reusing the same sequence number. Given that the Maximum Segment Lifetime is still 2 minutes, several packets, belonging to the same TCP connection could use the same sequence number. If one of these packets is severely delayed through the network, it could reappear at the same time as a packet with the same TCP sequence number. To prevent this problem, most modern TCP implementations associate a TCP timestamp option to each segment on transmission. When a TCP stack receives a TCP segment, it checks that its TCP timestamp is valid and if not the segment is discarded <span class="target" id="index-59"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc7323.html"><strong>RFC 7323</strong></a>.</p>
+&#13;
+
+<span id="tcprelease"/><h2>TCP connection release<a class="headerlink" href="#tcp-connection-release" title="Link to this heading">#</a></h2>
+<p id="index-60">TCP, like most connection-oriented transport protocols, supports two types of connection releases :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>graceful connection release, where each TCP user can release its own direction of data transfer after having transmitted all data</p></li>
+<li><p>abrupt connection release, where either one user closes both directions of data transfer or one TCP entity is forced to close the connection (e.g., because the remote host does not reply anymore or due to lack of resources)</p></li>
+</ul>
+</div></blockquote>
+<p id="tcpreset">The abrupt connection release mechanism is very simple and relies on a single segment having the <cite>RST</cite> bit set. A TCP segment containing the <cite>RST</cite> bit can be sent for the following reasons :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>a non-<cite>SYN</cite> segment was received for a non-existing TCP connection <span class="target" id="index-61"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a></p></li>
+<li><p>by extension, some implementations respond with an <cite>RST</cite> segment to a segment that is received on an existing connection but with an invalid header <span class="target" id="index-62"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc3360.html"><strong>RFC 3360</strong></a>. This causes the corresponding connection to be closed and has caused security attacks <span class="target" id="index-63"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4953.html"><strong>RFC 4953</strong></a></p></li>
+<li><p>by extension, some implementations send an <cite>RST</cite> segment when they need to close an existing TCP connection (e.g., because there are not enough resources to support this connection or because the remote host is considered to be unreachable). Measurements have shown that this usage of TCP <cite>RST</cite> is widespread <a class="reference internal" href="../bibliography.html#aw05" id="id24"><span>[AW05]</span></a></p></li>
+</ul>
+</div></blockquote>
+<p>When an <cite>RST</cite> segment is sent by a TCP entity, it should contain the current value of the <cite>sequence number</cite> for the connection (or 0 if it does not belong to any existing connection) and the <cite>acknowledgment number</cite> should be set to the next expected in-sequence <cite>sequence number</cite> on this connection.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TCP <cite>RST</cite> wars</p>
+<p id="index-64">The designers of TCP implementations should ensure that two TCP entities never enter a TCP <cite>RST</cite> war where host <cite>A</cite> is sending a <cite>RST</cite> segment in response to a previous <cite>RST</cite> segment that was sent by host <cite>B</cite> in response to a TCP <cite>RST</cite> segment sent by host <cite>A</cite> … To avoid such an infinite exchange of <cite>RST</cite> segments that do not carry data, a TCP entity is <em>never</em> allowed to send a <cite>RST</cite> segment in response to another <cite>RST</cite> segment.</p>
+</div>
+<p>The normal way of terminating a TCP connection is by using the graceful TCP connection release. This mechanism uses the <cite>FIN</cite> flag of the TCP header and allows each host to release its own direction of data transfer. As for the <cite>SYN</cite> flag, the utilization of the <cite>FIN</cite> flag in the TCP header consumes one sequence number. The figure <a class="reference internal" href="#fig-tcprelease"><span class="std std-ref">FSM for TCP connection release</span></a> shows the part of the TCP FSM used when a TCP connection is released.</p>
+<blockquote>
+<div><div class="figure" id="id41" style="text-align: center">
+<span id="fig-tcprelease"/><p><img src="../Images/40c02c0ae392648ba0563e7f85e5257f.png" alt="Figure made with TikZ" data-original-src="https://4ed.computer-networking.info/syllabus/default/_images/tikz-6eed1fb2d4578af21ce0ed7b0e872bf59b94c107.png"/></p>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">FSM for TCP connection release</span></p>
+</div></div></blockquote>
+<p>Starting from the <cite>Established</cite> state, there are two main paths through this FSM.</p>
+<p>The first path is when the host receives a segment with sequence number <cite>x</cite> and the <cite>FIN</cite> flag set. The utilization of the <cite>FIN</cite> flag indicates that the byte before <cite>sequence number</cite> <cite>x</cite> was the last byte of the byte stream sent by the remote host. Once all of the data has been delivered to the user, the TCP entity sends an <cite>ACK</cite> segment whose <cite>ack</cite> field is set to <span class="math notranslate nohighlight">\((x+1) \pmod{2^{32}}\)</span> to acknowledge the <cite>FIN</cite> segment. The <cite>FIN</cite> segment is subject to the same retransmission mechanisms as a normal TCP segment. In particular, its transmission is protected by the retransmission timer. At this point, the TCP connection enters the <cite>CLOSE_WAIT</cite> state. In this state, the host can still send data to the remote host. Once all its data have been sent, it sends a <cite>FIN</cite> segment and enter the <cite>LAST_ACK</cite> state. In this state, the TCP entity waits for the acknowledgment of its <cite>FIN</cite> segment. It may still retransmit unacknowledged data segments, e.g., if the retransmission timer expires. Upon reception of the acknowledgment for the <cite>FIN</cite> segment, the TCP connection is completely closed and its <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> can be discarded.</p>
+<p>The second path is when the host has transmitted all data. Assume that the last transmitted sequence number is <cite>z</cite>. Then, the host sends a  <cite>FIN</cite> segment with sequence number <span class="math notranslate nohighlight">\((z+1) \pmod{2^{32}}\)</span> and enters the <cite>FIN_WAIT1</cite> state. In this state, it can retransmit unacknowledged segments but cannot send new data segments. It waits for an acknowledgment of its <cite>FIN</cite> segment (i.e. sequence number <span class="math notranslate nohighlight">\((z+1) \pmod{2^{32}}\)</span>), but may receive a <cite>FIN</cite> segment sent by the remote host. In the first case, the TCP connection enters the <cite>FIN_WAIT2</cite> state. In this state, new data segments from the remote host are still accepted until the reception of the <cite>FIN</cite> segment. The acknowledgment for this <cite>FIN</cite> segment is sent once all data received before the <cite>FIN</cite> segment have been delivered to the user and the connection enters the <cite>TIME_WAIT</cite> state. In the second case, a <cite>FIN</cite> segment is received and the connection enters the <cite>Closing</cite> state once all data received from the remote host have been delivered to the user. In this state, no new data segments can be sent and the host waits for an acknowledgment of its <cite>FIN</cite> segment before entering the <cite>TIME_WAIT</cite> state.</p>
+<p>The <cite>TIME_WAIT</cite> state is different from the other states of the TCP FSM. A TCP entity enters this state after having sent the last <cite>ACK</cite> segment on a TCP connection. This segment indicates to the remote host that all the data that it has sent have been correctly received and that it can safely release the TCP connection and discard the corresponding <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. After having sent the last <cite>ACK</cite> segment, a TCP connection enters the <cite>TIME_WAIT</cite> and remains in this state for <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds. During this period, the TCB of the connection is maintained. This ensures that the TCP entity that sent the last <cite>ACK</cite> maintains enough state to be able to retransmit this segment if this <cite>ACK</cite> segment is lost and the remote host retransmits its last <cite>FIN</cite> segment or another one. The delay of <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds ensures that any duplicate segments on the connection would be handled correctly without causing the transmission of an <cite>RST</cite> segment. Without the <cite>TIME_WAIT</cite> state and the <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds delay, the connection release would not be graceful when the last <cite>ACK</cite> segment is lost.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TIME_WAIT on busy TCP servers</p>
+<p>The <span class="math notranslate nohighlight">\(2*MSL\)</span> seconds delay in the <cite>TIME_WAIT</cite> state is an important operational problem on servers having thousands of simultaneously opened TCP connections <a class="reference internal" href="../bibliography.html#fty99" id="id25"><span>[FTY99]</span></a>. Consider for example a busy web server that processes 10.000 TCP connections every second. If each of these connections remains in the <cite>TIME_WAIT</cite> state for 4 minutes, this implies that the server would have to maintain more than 2 million TCBs at any time. For this reason, some TCP implementations prefer to perform an abrupt connection release by sending a <cite>RST</cite> segment to close the connection <a class="reference internal" href="../bibliography.html#aw05" id="id26"><span>[AW05]</span></a> and immediately discard the corresponding <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a>. However, if the <cite>RST</cite> segment is lost, the remote host continues to maintain a <a class="reference internal" href="../glossary.html#term-TCB"><span class="xref std std-term">TCB</span></a> for a connection that no longer exists. This optimization reduces the number of TCBs maintained by the host sending the <cite>RST</cite> segment but at the potential cost of increased processing on the remote host when the <cite>RST</cite> segment is lost.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="ftcpspecs" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>A detailed presentation of all standardization documents concerning TCP may be found in <span class="target" id="index-65"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4614.html"><strong>RFC 4614</strong></a></p>
+</aside>
+<aside class="footnote brackets" id="ftcpusage" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Several researchers have analyzed the utilization of TCP and UDP in the global Internet. Most of these studies have been performed by collecting all the packets transmitted over a given link during a period of a few hours or days and then analyzing their headers to infer the transport protocol used, the type of application, … Recent studies include <a class="reference external" href="http://www.caida.org/research/traffic-analysis/tcpudpratio/">http://www.caida.org/research/traffic-analysis/tcpudpratio/</a>, <a class="reference external" href="https://research.sprintlabs.com/packstat/packetoverview.php">https://research.sprintlabs.com/packstat/packetoverview.php</a> or <a class="reference external" href="http://www.nanog.org/meetings/nanog43/presentations/Labovitz_internetstats_N43.pdf">http://www.nanog.org/meetings/nanog43/presentations/Labovitz_internetstats_N43.pdf</a></p>
+</aside>
+<aside class="footnote brackets" id="ftcpclock" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>This 32 bits counter was specified in <span class="target" id="index-66"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a>. A 32 bits counter that is incremented every 4 microseconds wraps in about 4.5 hours. This period is much larger than the Maximum Segment Lifetime that is fixed at 2 minutes in the Internet (<span class="target" id="index-67"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc791.html"><strong>RFC 791</strong></a>, <span class="target" id="index-68"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1122.html"><strong>RFC 1122</strong></a>).</p>
+</aside>
+<aside class="footnote brackets" id="frlogin" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">4</a><span class="fn-bracket">]</span></span>
+<p>On many departmental networks containing Unix workstations, it was common to allow users on one of the hosts to use <code class="docutils literal notranslate"><span class="pre">rlogin</span></code> <span class="target" id="index-69"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1258.html"><strong>RFC 1258</strong></a>  to run commands on any of the workstations of the network without giving any password. In this case, the remote workstation “authenticated” the client host based on its IP address. This was a bad practice from a security viewpoint.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpboth" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">5</a><span class="fn-bracket">]</span></span>
+<p>Of course, such a simultaneous TCP establishment can only occur if the source port chosen by the client is equal to the destination port chosen by the server. This may happen when a host can serve both as a client as a server or in peer-to-peer applications when the communicating hosts do not use ephemeral port numbers.</p>
+</aside>
+<aside class="footnote brackets" id="fspoofing" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">6</a><span class="fn-bracket">]</span></span>
+<p>Sending a packet with a different source IP address than the address allocated to the host is called sending a <a class="reference internal" href="../glossary.html#term-spoofed-packet"><span class="xref std std-term">spoofed packet</span></a>.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpoptions" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
+<p>The full list of all TCP options may be found at <a class="reference external" href="https://www.iana.org/assignments/tcp-parameters/">https://www.iana.org/assignments/tcp-parameters/</a></p>
+</aside>
+<aside class="footnote brackets" id="fackflag" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">8</a><span class="fn-bracket">]</span></span>
+<p>In practice, only the <cite>SYN</cite> segment do not have their <cite>ACK</cite> flag set.</p>
+</aside>
+<aside class="footnote brackets" id="ftcpurgent" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">9</a><span class="fn-bracket">]</span></span>
+<p>A complete TCP implementation contains additional information in its TCB, notably to support the <cite>urgent</cite> pointer. However, this part of TCP is not discussed in this book. Refer to <span class="target" id="index-70"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc793.html"><strong>RFC 793</strong></a> and <span class="target" id="index-71"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2140.html"><strong>RFC 2140</strong></a> for more details about the TCB.</p>
+</aside>
+</aside>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fnagleip" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">10</a><span class="fn-bracket">]</span></span>
+<p>This TCP segment is then placed in an IP header. We describe IPv6 in the next chapter. The minimum size of the IPv6 (resp. IPv4) header is 40 bytes (resp. 20 bytes).</p>
+</aside>
+<aside class="footnote brackets" id="faveragebandwidth" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">11</a><span class="fn-bracket">]</span></span>
+<p>A precise estimation of the maximum bandwidth that can be achieved by a TCP connection should take into account the overhead of the TCP and IP headers as well.</p>
+</aside>
+<aside class="footnote brackets" id="ftcphosts" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id14">12</a><span class="fn-bracket">]</span></span>
+<p>See <a class="reference external" href="https://fasterdata.es.net/host-tuning/">https://fasterdata.es.net/host-tuning/</a> for more information on how to tune a TCP implementation</p>
+</aside>
+<aside class="footnote brackets" id="frttmes" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">13</a><span class="fn-bracket">]</span></span>
+<p>In theory, a TCP implementation could store the timestamp of each data segment transmitted and compute a new estimate for the round-trip-time upon reception of the corresponding acknowledgment. However, using such frequent measurements introduces a lot of noise in practice and many implementations still measure the round-trip-time once per round-trip-time by recording the transmission time of one segment at a time <span class="target" id="index-72"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2988.html"><strong>RFC 2988</strong></a></p>
+</aside>
+<aside class="footnote brackets" id="ftimestamp" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">14</a><span class="fn-bracket">]</span></span>
+<p>Some security experts have raised concerns that using the real-time clock to set the <cite>TSval</cite> in the timestamp option can leak information such as the system’s up-time. Solutions proposed to solve this problem may be found in <a class="reference internal" href="../bibliography.html#cnpi09" id="id27"><span>[CNPI09]</span></a></p>
+</aside>
+<aside class="footnote brackets" id="ftcbtouch" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">15</a><span class="fn-bracket">]</span></span>
+<p>As a TCP client often establishes several parallel or successive connections with the same server, <span class="target" id="index-73"/><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc2140.html"><strong>RFC 2140</strong></a> has proposed to reuse for a new connection some information that was collected in the TCB of a previous connection, such as the measured rtt. However, this solution has not been widely implemented.</p>
+</aside>
+</aside>
+    
+</body>
+</html>
