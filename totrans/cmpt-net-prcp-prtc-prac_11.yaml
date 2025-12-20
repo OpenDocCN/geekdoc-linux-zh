@@ -1,19 +1,28 @@
 - en: Interdomain routing#
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 跨域路由#
 - en: 原文：[https://4ed.computer-networking.info/syllabus/default/networks/bgp.html](https://4ed.computer-networking.info/syllabus/default/networks/bgp.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://4ed.computer-networking.info/syllabus/default/networks/bgp.html](https://4ed.computer-networking.info/syllabus/default/networks/bgp.html)'
 - en: As explained earlier, the Internet is composed of more than 100,000 different
     networks [[1]](#fasnum) called domains. Each domain is composed of a group of
     routers and hosts that are managed by the same organization. Example domains include
     [belnet](https://www.belnet.be), [sprint](https://www.sprint.net/), [level3](https://www.lumen.com),
     [geant](https://www.geant.net), [abilene](https://www.internet2.edu), [cisco](https://www.cisco.com)
     or [google](https://www.google.com) …
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，互联网由超过10万个不同的网络组成，这些网络被称为域 [[1]](#fasnum)。每个域由一组由同一组织管理的路由器和主机组成。示例域包括
+    [belnet](https://www.belnet.be), [sprint](https://www.sprint.net/), [level3](https://www.lumen.com),
+    [geant](https://www.geant.net), [abilene](https://www.internet2.edu), [cisco](https://www.cisco.com)
+    或 [google](https://www.google.com) …
 - en: 'Each domain contains a set of routers. From a routing point of view, these
     domains can be divided into two classes : the transit and the stub domains. A
     stub domain sends and receives packets whose source or destination are one of
@@ -24,14 +33,21 @@
     that is connected to a single transit domain is called a single-homed stub (e.g.,
     S1 in figure [Fig. 151](#fig-transit-stub).). A multihomed stub is a stub domain
     connected to two or more transit providers (e.g., S2).'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个域都包含一组路由器。从路由的角度来看，这些域可以分为两类：中继域和末端域。末端域发送和接收的数据包的源或目的地是其自己的主机之一。中继域是为其他域提供中继服务的域，即该域中的路由器转发源和目的地不属于中继域的数据包。截至本文撰写时，互联网中大约85%的域是末端域
+    [[2]](#fpotaroo)。连接到单个中继域的末端域被称为单宿主末端域（例如，图[图151](#fig-transit-stub)中的S1）。多宿主末端域是连接到两个或更多中继提供商的末端域（例如，S2）。
 - en: '[![../_images/transit-stub.png](../Images/b9d5e18667918170f0100c7c633d6575.png)](../_images/transit-stub.png)'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/transit-stub.png](../Images/b9d5e18667918170f0100c7c633d6575.png)](../_images/transit-stub.png)'
 - en: Fig. 151 Transit and stub domains[#](#id29 "Link to this image")
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 图151.中继域和末端域[#](#id29 "链接到这张图片")
 - en: The stub domains can be further classified by considering whether they mainly
     send or receive packets. An access-rich stub domain is a domain that contains
     hosts that mainly receive packets. Typical examples include small ADSL- or cable
@@ -44,8 +60,14 @@
     domains. Recent measurements [[ATLAS2009]](../bibliography.html#atlas2009) indicate
     that a growing fraction of all the packets exchanged on the Internet are produced
     in the data centers managed by these content providers.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过考虑这些末端域主要发送还是接收数据包，可以进一步对这些末端域进行分类。一个接入丰富的末端域是包含主要接收数据包的主机的域。典型的例子包括基于ADSL或电缆调制解调器的小型互联网服务提供商或企业网络。另一方面，一个内容丰富的末端域是主要产生数据包的域。内容丰富的末端域的例子包括
+    [google](https://www.google.com), [yahoo](https://www.yahoo.com), [microsoft](https://www.microsoft.com),
+    [facebook](https://www.facebook.com) 或内容分发网络，如 [akamai](https://www.akamai.com)
+    或 [limelight](https://uk.limelightnetworks.com/index.php)。在过去的几年里，我们看到了这些内容丰富的末端域的快速增长。最近的测量
+    [[ATLAS2009]](../bibliography.html#atlas2009) 表明，在互联网上交换的所有数据包中，越来越多的数据包是在这些内容提供商管理的数据中心产生的。
 - en: Domains need to be interconnected to allow a host inside a domain to exchange
     IP packets with hosts located in other domains. From a physical perspective, domains
     can be interconnected in two different ways. The first solution is to directly
@@ -54,15 +76,21 @@
     peering links. In practice, for redundancy or performance reasons, distinct physical
     links are usually established between different routers in the two domains that
     are interconnected.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 域需要相互连接，以便域内的主机能够与其他域中的主机交换 IP 数据包。从物理角度来看，域可以通过两种不同的方式相互连接。第一种解决方案是直接将属于第一个域的路由器与第二个域内的路由器连接起来。这种域间的链接被称为私有域间链接或私有对等链接。在实际操作中，出于冗余或性能的考虑，通常会在两个相互连接的域中的不同路由器之间建立独立的物理链接。
 - en: '[![../_images/private-peer.png](../Images/e2ecaec9b0430d860633a8347e635865.png)](../_images/private-peer.png)'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '![私有对等链接](../Images/e2ecaec9b0430d860633a8347e635865.png)(../_images/private-peer.png)'
 - en: Fig. 152 Interconnection of two domains via a private peering link[#](#id30
     "Link to this image")
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 152 通过私有对等链接连接两个域[#](#id30 "链接到这张图片")
 - en: Such private peering links are useful when, for example, an enterprise or university
     network needs to be connected to its Internet Service Provider. However, some
     domains are connected to hundreds of other domains [[3]](#fasrank) . For some
@@ -77,15 +105,25 @@
     that are present at the IXP wish [[4]](#fwish) to exchange packets, they simply
     use the Local Area Network. IXPs are very popular in Europe and many Internet
     Service Providers and Content providers are present in these IXPs.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种私有对等链接在例如企业或大学网络需要连接到其互联网服务提供商时非常有用。然而，一些域连接到数百个其他域 [[3]](#fasrank)。对于这些域中的某些域，仅使用私有对等链接会过于昂贵。允许许多域以低成本相互连接的更好解决方案是互联网交换点
+    ([IXP](../glossary.html#term-IXP))。一个 [IXP](../glossary.html#term-IXP) 通常是在数据中心中的一些空间，那里托管着属于不同域的路由器。一个愿意与其他在
+    [IXP](../glossary.html#term-IXP) 出现的域交换数据包的域，会在 [IXP](../glossary.html#term-IXP)
+    上安装其一个路由器并将其连接到其自己的网络内的其他路由器。IXP 包含一个局域网，所有参与的路由器都连接到这个局域网。当两个出现在 IXP 上的域希望 [[4]](#fwish)
+    交换数据包时，它们只需使用局域网。IXP 在欧洲非常流行，许多互联网服务提供商和内容提供商都存在于这些 IXP 中。
 - en: '[![../_images/ixp.png](../Images/221a6b5e300e1c15e16ba90766f0a82f.png)](../_images/ixp.png)'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '![互联网交换点](../Images/221a6b5e300e1c15e16ba90766f0a82f.png)(../_images/ixp.png)'
 - en: Fig. 153 Interconnection of two domains at an Internet eXchange Point[#](#id31
     "Link to this image")
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 153 在互联网交换点连接两个域[#](#id31 "链接到这张图片")
 - en: In the early days of the Internet, domains would simply exchange all the routes
     they know to allow a host inside one domain to reach any host in the global Internet.
     However, in today’s highly commercial Internet, this is no longer true as interdomain
@@ -96,27 +134,37 @@
     over low bandwidth ones, etc) interdomain routing mainly deals with economical
     issues. For interdomain routing, the cost of using a route is often more important
     than the quality of the route measured by its delay or bandwidth.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在互联网的早期，域会简单地交换它们所知道的所有路由，以便域内的主机能够到达全球互联网中的任何主机。然而，在今天的商业化程度很高的互联网中，这已不再成立，因为域间路由主要需要考虑域之间的经济关系。此外，虽然域内路由通常根据其技术优势（例如，优先选择跳数最少的路由，优先选择延迟最少的路由，优先选择带宽高的路由而不是带宽低的路由等）来优先选择某些路由，但域间路由主要处理经济问题。对于域间路由，使用路由的成本通常比通过其延迟或带宽来衡量的路由质量更重要。
 - en: There are different types of economical relationships that can exist between
     domains. Interdomain routing converts these relationships into peering relationships
     between domains that are connected via peering links.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 域之间可以存在不同类型的经济关系。域间路由将这些关系转换为通过对等链接连接的域之间的对等关系。
 - en: The first category of peering relationship is the customer->provider relationship.
     Such a relationship is used when a customer domain pays an Internet Service Provider
     to be able to exchange packets with the global Internet over an interdomain link.
     A similar relationship is used when a small Internet Service Provider pays a larger
     Internet Service Provider to exchange packets with the global Internet.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 对等关系的第一个类别是客户->提供商关系。当客户域支付互联网服务提供商以能够在域间链路上与全球互联网交换数据包时，使用这种关系。当小型互联网服务提供商支付大型互联网服务提供商以交换与全球互联网的数据包时，也使用类似的关系。
 - en: '[![../_images/cust-prov.png](../Images/9bbaa4c6866576e40be5d34dc1cdfaa9.png)](../_images/cust-prov.png)'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/cust-prov.png](../Images/9bbaa4c6866576e40be5d34dc1cdfaa9.png)(../_images/cust-prov.png)'
 - en: Fig. 154 A simple Internet with peering relationships[#](#id32 "Link to this
     image")
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 154 一个简单的具有对等关系的互联网[#](#id32 "链接到这张图片")
 - en: 'To understand the customer->provider relationship, let us consider the simple
     internetwork shown in figure [Fig. 154](#fig-net-cust-prov). In this internetwork,
     AS7 is a stub domain that is connected to one provider : AS4. The contract between
@@ -125,41 +173,56 @@
     any domain and all the domains of the internetwork must know a route via AS4 that
     allows them to reach hosts inside AS7. From a routing perspective, the commercial
     contract between AS7 and AS4 leads to the following routes being exchanged :'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 要理解客户->提供商的关系，让我们考虑图 [图 154](#fig-net-cust-prov) 中所示的简单互联网。在这个互联网中，AS7 是一个连接到一个提供商：AS4
+    的末端域。AS4 和 AS7 之间的合同允许 AS7 内部的任何主机与互联网中的任何主机交换数据包。为了实现这种数据包交换，AS7 必须知道通往任何域的路由，并且互联网中的所有域都必须知道通过
+    AS4 的路由，以便它们能够到达 AS7 内部的主机。从路由的角度来看，AS7 和 AS4 之间的商业合同导致以下路由被交换：
 - en: over a customer->provider relationship, the customer domain advertises to its
     provider its own prefixes and all the routes that it has learned from its own
     customers.
+  id: totrans-19
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在客户->提供商的关系中，客户域向其提供商通告其自己的前缀以及从其客户那里学习到的所有路由。
 - en: ''
+  id: totrans-20
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-21
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: over a provider->customer relationship, the provider advertises all the routes
     that it knows to its customer.
+  id: totrans-22
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在提供商->客户的关系中，提供商向其客户通告它所知道的所有路由。
 - en: The second rule ensures that the customer domain receives a route towards all
     destinations that are reachable via its provider. The first rule allows the prefixes
     of the customer domain to be distributed throughout the Internet.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二条规则确保客户域能够接收到通往所有可通过其提供商到达的目的地的路由。第一条规则允许客户域的前缀在整个互联网上分布。
 - en: Coming back to figure [Fig. 154](#fig-net-cust-prov), AS4 advertises to its
     two providers AS1 and AS2 its own prefixes and the routes learned from its customer,
     AS7. On the other hand, AS4 advertises to AS7 all the routes that it knows.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 回到图 [图 154](#fig-net-cust-prov)，AS4 向其两个提供商 AS1 和 AS2 通告其自己的前缀以及从其客户 AS7 学习到的路由。另一方面，AS4
+    向 AS7 通告它所知道的所有路由。
 - en: The second type of peering relationship is the shared-cost peering relationship.
     Such a relationship usually does not involve a payment from one domain to the
     other in contrast with the customer->provider relationship. A shared-cost peering
@@ -172,8 +235,10 @@
     packets between hosts inside AS3 and hosts inside AS4. However, AS3 does not want
     to receive on the AS3-AS4 shared-cost peering links packets whose destination
     belongs to AS1 as AS3 would have to pay to send these packets to AS1.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二种对等关系类型是共享成本对等关系。与客户->提供商关系相比，这种关系通常不涉及一个域向另一个域支付费用。共享成本对等关系通常在具有相似规模和地理覆盖范围的域之间建立。例如，考虑图[图.154](#fig-net-cust-prov)。如果AS3和AS4通过AS1交换大量报文，他们都需要向AS1付费。AS3和AS4的一个更便宜的替代方案是建立共享成本对等。这种对等可以在IXP处建立，其中AS3和AS4都存在，或者通过使用私有对等链路。这种共享成本对等应用于在AS3内部的主机和AS4内部的主机之间交换报文。然而，AS3不希望在AS3-AS4共享成本对等链路上接收目的地属于AS1的报文，因为AS3将不得不支付将这些报文发送到AS1的费用。
 - en: From a routing perspective, over a shared-cost peering relationship a domain
     only advertises its internal routes/prefixes and the routes that it has learned
     from its customers. This restriction ensures that only packets destined to the
@@ -187,64 +252,82 @@
     the routes it learned over a shared cost peering over another shared-cost peering
     relationship, it would have allowed these shared-cost peers to use its own network
     (which may span one or more continents) freely to exchange packets.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 从路由的角度来看，在共享成本对等关系中，一个域只通告其内部路由/前缀以及从其客户那里学习到的路由。这种限制确保只有目的地为本地域或其客户之一的报文会通过共享成本对等关系接收。这意味着从提供商或另一个共享成本对等方学习到的路由不会在共享成本对等关系中通告。这出于经济原因。如果一个域在不会带来收入的共享成本对等关系中通告从提供商那里学习到的路由，它就会允许其共享成本对等方免费使用其与提供商之间的链路而不支付任何费用。如果一个域在另一个共享成本对等关系中通告通过共享成本对等关系学习到的路由，它就会允许这些共享成本对等方免费使用其自己的网络（可能跨越一个或多个大陆）来交换报文。
 - en: Finally, the last type of peering relationship is the sibling. Such a relationship
     is used when two domains exchange all their routes in both directions. In practice,
     such a relationship is only used between domains that belong to the same company.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，对等关系的最后一种类型是兄弟关系。这种关系用于两个域在两个方向上交换所有路由的情况。在实践中，这种关系通常只在属于同一公司的域之间使用。
 - en: 'These different types of relationships are implemented in the interdomain routing
     policies defined by each domain. The interdomain routing policy of a domain is
     composed of three main parts :'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些不同类型的关系由每个域定义的域间路由策略实现。域的域间路由策略由三个主要部分组成：
 - en: the import filter that specifies, for each peering relationship, the routes
     that can be accepted from the neighboring domain (the non-acceptable routes are
     ignored and the domain never uses them to forward packets)
+  id: totrans-29
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用于指定每个对等关系可以接受从相邻域的路由的导入过滤器（不可接受的路由被忽略，域永远不会使用它们来转发报文）
 - en: ''
+  id: totrans-30
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-31
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the export filter that specifies, for each peering relationship, the routes
     that can be advertised to the neighboring domain
+  id: totrans-32
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用于指定每个对等关系可以通告给相邻域的路由的导出过滤器
 - en: ''
+  id: totrans-33
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-34
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the ranking algorithm that is used to select the best route among all the routes
     that the domain has received towards the same destination prefix
+  id: totrans-35
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用于从域接收到的所有路由中选择最佳路由的排名算法，这些路由是针对同一目的地前缀的
 - en: A domain’s import and export filters can be defined by using the Route Policy
     Specification Language (RPSL) specified in [**RFC 2622**](https://datatracker.ietf.org/doc/html/rfc2622.html)
     [[GAVE1999]](../bibliography.html#gave1999) . Some Internet Service Providers,
     notably in Europe, use RPSL to document [[5]](#fripedb) their import and export
     policies. Several tools help to easily convert a RPSL policy into router commands.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用在[**RFC 2622**](https://datatracker.ietf.org/doc/html/rfc2622.html)中指定的路由策略规范语言（RPSL）来定义域的导入和导出过滤器[[GAVE1999]](../bibliography.html#gave1999)。一些互联网服务提供商，特别是在欧洲，使用RPSL来记录[[5]](#fripedb)他们的导入和导出策略。有几个工具可以帮助轻松地将RPSL策略转换为路由器命令。
 - en: Figure [Fig. 155](#fig-bgp-rpsl) provides a simple example of import and export
     filters for two domains in a simple internetwork. In RPSL, the keyword ANY is
     used to replace any route from any domain. It is typically used by a provider
@@ -255,15 +338,22 @@
     and the routes learned from its clients (AS7) over its shared-cost peering with
     AS3, while it advertises all the routes that it uses (including the routes learned
     from AS3) to AS7.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 图[图. 155](#fig-bgp-rpsl)提供了一个简单互联网中两个域的导入和导出过滤器的示例。在RPSL中，关键字ANY用于替换来自任何域的任何路由。它通常由服务提供商用于表示它通过服务提供商->客户关系向客户宣布其所有路由。这是AS4的导出策略的案例。下面的示例清楚地显示了服务提供商->客户关系和共享成本对等关系的差异。AS4的导出过滤器表明它只宣布其内部路由（AS4）和从其客户端（AS7）学习到的路由，通过其与AS3的共享成本对等。而它向AS7宣布了它使用的所有路由（包括从AS3学习到的路由）。
 - en: '[![../_images/bgp-policies.png](../Images/9c1ff571215d2e7a9427e810eb9ba668.png)](../_images/bgp-policies.png)'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-policies.png](../Images/9c1ff571215d2e7a9427e810eb9ba668.png)(../_images/bgp-policies.png)'
 - en: 'Fig. 155 Import and export policies[#](#id33 "Link to this image")  ## The
     Border Gateway Protocol[#](#the-border-gateway-protocol "Link to this heading")'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '图. 155 导入和导出策略[#](#id33 "链接到此图像")  ## 边界网关协议[#](#the-border-gateway-protocol
+    "链接到此标题")'
 - en: 'The Internet uses a single interdomain routing protocol : the Border Gateway
     Protocol (BGP). The current version of BGP is defined in [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html).
     BGP differs from the intradomain routing protocols that we have already discussed
@@ -281,8 +371,10 @@
     would be overloaded by the number of BGP messages that they would need to process.
     BGP uses incremental updates, i.e. it only announces the routes that have changed
     to its neighbors.'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网使用单一的域间路由协议：边界网关协议（BGP）。BGP的当前版本定义在[**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)中。BGP与我们已经讨论过的域内路由协议在几个方面有所不同。首先，BGP是一个路径向量协议。当一个BGP路由器宣布指向一个前缀的路由时，它会宣布IP前缀和用于到达该前缀的域间路径。从BGP的角度来看，每个域由一个唯一的自治系统（AS）编号[[6]](#fasdomain)标识，域间路径包含用于到达相关前缀的转接域的AS编号。这个域间路径被称为AS路径。多亏了这些AS路径，BGP不会受到影响距离向量路由协议的无限计数问题。此外，AS路径可以用来实现一些路由策略。BGP与域内路由协议的另一个不同之处在于，BGP路由器不会定期向其邻居发送其整个路由表的内容。考虑到全球互联网的规模，路由器会被需要处理的BGP消息数量所压垮。BGP使用增量更新，即它只向邻居宣布已更改的路由。
 - en: Figure [Fig. 156](#fig-bgp-simple-example) shows a simple example of the BGP
     routes that are exchanged between domains. In this example, prefix 2001:db8:cafe::/48
     is announced by AS1. AS1 advertises a BGP route towards this prefix to AS2. The
@@ -294,14 +386,20 @@
     with its AS-Path set to AS2:AS4:AS1. Thanks to the AS-Path, AS5 knows that if
     it sends a packet towards 2001:db8:cafe::/48 the packet first passes through AS2,
     then through AS4 before reaching its destination inside AS1.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 图[图156](#fig-bgp-simple-example)展示了域之间交换的BGP路由的简单示例。在这个例子中，前缀2001:db8:cafe::/48由AS1宣布。AS1向AS2宣布了指向此前缀的BGP路由。此路由的AS-Path表明AS1是前缀的发起者。当AS4从AS1接收到BGP路由时，它会将其重新宣布给AS2，并将自己的AS号添加到AS-Path中。AS2已经学到了两条指向前缀2001:db8:cafe::/48的路由。它比较了这两条路由，并根据其自己的排名算法选择了从AS4学到的路由。AS2向AS5宣布了一条指向2001:db8:cafe::/48的路由，其AS-Path设置为AS2:AS4:AS1。多亏了AS-Path，AS5知道如果它向2001:db8:cafe::/48发送数据包，数据包首先会通过AS2，然后通过AS4，最后到达AS1内部的目的地。
 - en: '![../_images/bgp-example.svg](../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![../_images/bgp-example.svg](../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png)'
 - en: Fig. 156 Simple exchange of BGP routes[#](#id34 "Link to this image")
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 图156：简单的BGP路由交换[#](#id34 "链接到此图像")
 - en: BGP routers exchange routes over BGP sessions. A BGP session is established
     between two routers belonging to two different domains that are directly connected.
     As explained earlier, the physical connection between the two routers can be implemented
@@ -313,15 +411,22 @@
     checksums, etc. Furthermore, the two routers consider the peering link to be up
     as long as the BGP session and the underlying TCP connection remain up [[7]](#flifetimebgp).
     The two endpoints of a BGP session are called BGP peers.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: BGP路由器通过BGP会话交换路由。两个属于不同域且直接连接的路由器之间建立了BGP会话。如前所述，两个路由器之间的物理连接可以实施为私有对等链接或通过一个互联网交换点。两个相邻路由器之间的BGP会话运行在TCP连接之上（默认BGP端口为179）。与交换IP数据包或UDP段的域内路由协议相比，BGP运行在TCP之上，因为TCP确保了每个路由器发送的BGP消息的可靠交付，而不强迫路由器实现确认、校验和等。此外，只要BGP会话和底层的TCP连接保持开启，两个路由器就会认为对等链接是开启的
+    [[7]](#flifetimebgp)。BGP会话的两个端点称为BGP对等体。
 - en: '[![../_images/bgp-peering.svg](../Images/e2885e7697e16c061ff1e144ac74d408.png)](../_images/bgp-peering.svg)'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/bgp-peering.svg](../Images/e2885e7697e16c061ff1e144ac74d408.png)](../_images/bgp-peering.svg)'
 - en: Fig. 157 A BGP peering session between two directly connected routers[#](#id35
     "Link to this image")
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 图157：两个直接连接的路由器之间的BGP对等会话[#](#id35 "链接到此图像")
 - en: In practice, to establish a BGP session between routers R1 and R2 in the figure
     above, the network administrator of AS3 must first configure on R1 the IP address
     of R2 on the R1-R2 link and the AS number of R2. Router R1 then regularly tries
@@ -329,25 +434,33 @@
     with R1 once it has been configured with the IP address of R1 and its AS number.
     For security reasons, a router never establishes a BGP session that has not been
     manually configured on the router.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，为了在上图中的路由器R1和R2之间建立BGP会话，AS3的网络管理员必须首先在R1上配置R1-R2链路上的R2的IP地址和R2的AS号。然后，路由器R1会定期尝试与R2建立BGP会话。只有当R2被配置了R1的IP地址和其AS号后，才会同意与R1建立BGP会话。出于安全考虑，路由器永远不会建立未在路由器上手动配置的BGP会话。
 - en: 'The BGP protocol [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)
     defines several types of messages that can be exchanged over a BGP session :'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: BGP协议[**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)定义了可以在BGP会话中交换的几种消息类型：
 - en: 'OPEN : this message is sent as soon as the TCP connection between the two routers
     has been established. It initializes the BGP session and allows the negotiation
     of some options. Details about this message may be found in [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html).'
+  id: totrans-49
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 开启：此消息在两个路由器之间的 TCP 连接建立后立即发送。它初始化 BGP 会话并允许协商一些选项。有关此消息的详细信息，请参阅 [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)。
 - en: ''
+  id: totrans-50
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-51
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -355,32 +468,40 @@
 - en: 'NOTIFICATION : this message is used to terminate a BGP session, usually because
     an error has been detected by the BGP peer. A router that sends or receives a
     NOTIFICATION message immediately shutdowns the corresponding BGP session.'
+  id: totrans-52
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通知：此消息用于终止 BGP 会话，通常是因为 BGP 对等体检测到错误。发送或接收通知消息的路由器会立即关闭相应的 BGP 会话。
 - en: ''
+  id: totrans-53
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-54
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'UPDATE: this message is used to advertise new or modified routes or to withdraw
     previously advertised routes.'
+  id: totrans-55
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新：此消息用于通告新或修改过的路由，或撤销之前通告的路由。
 - en: ''
+  id: totrans-56
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-57
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -391,10 +512,13 @@
     confirm to the other peer that it is still up. If a peer does not receive any
     BGP message during a period of 90 seconds [[8]](#fdefaultkeepalive), the BGP session
     is considered to be down and all the routes learned over this session are withdrawn.'
+  id: totrans-58
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保持活动：此消息用于确保在 BGP 会话上定期交换消息，即使没有路由变化。当一个 BGP 路由器在最后 30 秒内没有发送更新消息时，它应发送一个保持活动消息，以确认它仍然处于活动状态。如果一个对等体在
+    90 秒内没有收到任何 BGP 消息 [[8]](#fdefaultkeepalive)，则认为 BGP 会话已断开，并且在此会话中学习的所有路由都将被撤销。
 - en: 'As explained earlier, BGP relies on incremental updates. This implies that
     when a BGP session starts, each router first sends BGP UPDATE messages to advertise
     to the other peer all the exportable routes that it knows. Once all these routes
@@ -403,98 +527,132 @@
     and must be withdrawn. The BGP UPDATE message allows BGP routers to efficiently
     exchange such information while minimizing the number of bytes exchanged. Each
     UPDATE message contains :'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，BGP 依赖于增量更新。这意味着当 BGP 会话开始时，每个路由器首先发送 BGP 更新消息，向其他对等体通告它所知道的所有可导出路由。一旦所有这些路由都已通告，BGP
+    路由器只有在路由是新的、其属性之一已更改或路由变得不可达并必须撤销时，才会发送关于前缀的 BGP 更新消息。BGP 更新消息允许 BGP 路由器有效地交换此类信息，同时最大限度地减少交换的字节数。每个更新消息包含：
 - en: a list of IP prefixes that are withdrawn
+  id: totrans-60
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一份撤销的 IP 前缀列表
 - en: ''
+  id: totrans-61
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-62
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: a list of IP prefixes that are (re-)advertised
+  id: totrans-63
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一份（重新）通告的 IP 前缀列表
 - en: ''
+  id: totrans-64
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-65
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the set of attributes (e.g. AS-Path) associated to the advertised prefixes
+  id: totrans-66
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与通告前缀关联的属性集（例如 AS-Path）
 - en: 'In the remainder of this chapter, and although all routing information is exchanged
     using BGP UPDATE messages, we assume for simplicity that a BGP message contains
     only information about one prefix and we use the words :'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章的剩余部分，尽管所有路由信息都是通过 BGP 更新消息交换的，但为了简单起见，我们假设一个 BGP 消息只包含有关一个前缀的信息，并使用以下词汇：
 - en: Withdraw message to indicate a BGP UPDATE message containing one route that
     is withdrawn
+  id: totrans-68
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 撤销消息用于指示包含一个被撤销路由的 BGP 更新消息
 - en: ''
+  id: totrans-69
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-70
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: Update message to indicate a BGP UPDATE containing a new or updated route towards
     one destination prefix with its attributes
+  id: totrans-71
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新消息用于指示包含一个新或更新路由的 BGP 更新，该路由指向一个目的地前缀及其属性
 - en: From a conceptual point of view, a BGP router connected to N BGP peers, can
     be described as being composed of four parts as shown in the figure below.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 从概念上讲，连接到 N 个 BGP 对等体的 BGP 路由器可以描述为由图下所示的四个部分组成。
 - en: '[![../_images/bgp-router.png](../Images/0079025668f84e1a91f1e4196c6e5332.png)](../_images/bgp-router.png)'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-router.png](../Images/0079025668f84e1a91f1e4196c6e5332.png)(../_images/bgp-router.png)'
 - en: Fig. 158 Organization of a BGP router[#](#id36 "Link to this image")
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 158 BGP 路由器组织结构[#](#id36 "链接到此图像")
 - en: 'In this figure, the router receives BGP messages on the left part of the figure,
     processes these messages and possibly sends BGP messages on the right part of
     the figure. A BGP router contains three important data structures :'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此图中，路由器在图的左侧接收 BGP 消息，处理这些消息，并在图的右侧可能发送 BGP 消息。一个 BGP 路由器包含三个重要的数据结构：
 - en: the Adj-RIB-In contains the BGP routes that have been received from each BGP
     peer. The routes in the Adj-RIB-In are filtered by the import filter before being
     placed in the BGP-Loc-RIB. There is one import filter per BGP peer.
+  id: totrans-76
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Adj-RIB-In 包含从每个 BGP 对等体接收到的 BGP 路由。在放入 BGP-Loc-RIB 之前，Adj-RIB-In 中的路由会经过导入过滤器的过滤。每个
+    BGP 对等体有一个导入过滤器。
 - en: ''
+  id: totrans-77
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-78
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -502,16 +660,20 @@
 - en: the Local Routing Information Base (Loc-RIB) contains all the routes that are
     considered as acceptable by the router. The Loc-RIB may contain several routes,
     learned from different BGP peers, towards the same destination prefix.
+  id: totrans-79
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地路由信息库（Loc-RIB）包含所有被路由器视为可接受的路由。Loc-RIB 可能包含多个路由，这些路由是从不同的 BGP 对等体学习到的，指向相同的目的地前缀。
 - en: ''
+  id: totrans-80
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-81
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -521,16 +683,20 @@
     that has been selected by the BGP decision process. This decision process is an
     algorithm that selects, for each destination prefix, the best route according
     to the router’s ranking algorithm that is part of its policy.
+  id: totrans-82
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 转发信息库（FIB）被数据平面用于将数据包转发到其目的地。对于每个目的地，FIB 包含由 BGP 决策过程选定的最佳路由。这个决策过程是一个算法，它为每个目的地前缀选择最佳路由，该路由是路由器策略的一部分，由其排名算法实现。
 - en: ''
+  id: totrans-83
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-84
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -540,10 +706,13 @@
     filter on the routes that have been installed in the FIB. There is one export
     filter per BGP peer. For this reason, the Adj-RIB-Out of a peer may contain different
     routes than the Adj-RIB-Out of another peer.
+  id: totrans-85
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Adj-RIB-Out 包含已向每个 BGP 对等体通告的 BGP 路由。对于特定对等体的 Adj-RIB-Out 是通过对 FIB 中已安装的路由应用该对等体的导出过滤器构建的。每个
+    BGP 对等体有一个导出过滤器。因此，一个对等体的 Adj-RIB-Out 可能包含与另一个对等体的 Adj-RIB-Out 不同的路由。
 - en: When a BGP session starts, the routers first exchange OPEN messages to negotiate
     the options that apply throughout the entire session. Then, each router extracts
     from its FIB the routes to be advertised to the peer. It is important to note
@@ -555,11 +724,17 @@
     is associated to each BGP session. For example, on a shared-cost peering, the
     export filter only selects the internal routes and the routes that have been learned
     from a customer. The pseudo-code below shows the initialization of a BGP session.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 BGP 会话开始时，路由器首先交换 OPEN 消息以协商在整个会话中适用的选项。然后，每个路由器从其 FIB 中提取要向对等体通告的路由。重要的是要注意，对于每个已知的
+    destinations 前缀，BGP 路由器只能向对等体通告它自己在其 FIB 内安装的路由。通告给对等体的路由必须通过对等体的导出过滤器。导出过滤器是一组规则，定义了哪些路由可以在相应的会话中通告，可能是在修改了一些属性之后。每个
+    BGP 会话关联一个导出过滤器。例如，在共享成本对等连接中，导出过滤器只选择内部路由和从客户那里学习到的路由。下面的伪代码展示了 BGP 会话的初始化。
 - en: '[PRE0]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: In the above pseudo-code, the build_BGP_update(d) procedure extracts from the
     BGP Loc-RIB the best path towards destination d (i.e. the route installed in the
     FIB) and prepares the corresponding BGP UPDATE message. This message is then passed
@@ -568,22 +743,33 @@
     allow network administrators to specify very complex export filters, see e.g.
     [[WMS2004]](../bibliography.html#wms2004). A simple export filter that implements
     the equivalent of split horizon is shown below.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述伪代码中，build_BGP_update(d) 过程从 BGP Loc-RIB 中提取指向目的地 d 的最佳路径（即 FIB 中安装的路由），并准备相应的
+    BGP UPDATE 消息。然后，将此消息传递给导出过滤器，如果路由不能向对等体通告，则返回 None，或者返回要通告的（可能已修改的）BGP UPDATE
+    消息。BGP 路由器允许网络管理员指定非常复杂的导出过滤器，例如，参见 [[WMS2004]](../bibliography.html#wms2004)。下面展示了实现类似分割水平功能的简单导出过滤器的示例。
 - en: '[PRE1]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: At this point, the remote router has received all the exportable BGP routes.
     After this initial exchange, the router only sends BGP UPDATE messages when there
     is a change (addition of a route, removal of a route or change in the attributes
     of a route) in one of these exportable routes. Such a change can happen when the
     router receives a BGP message. The pseudo-code below summarizes the processing
     of these BGP messages.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，远程路由器已经收到了所有可导出的BGP路由。在此初始交换之后，路由器只有在这些可导出路由中有一个发生变化（添加路由、删除路由或路由属性的变化）时才发送BGP
+    UPDATE消息。这种变化可能发生在路由器收到BGP消息时。下面的伪代码总结了这些BGP消息的处理过程。
 - en: '[PRE2]'
+  id: totrans-91
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: When a BGP message is received, the router first applies the peer’s import filter
     to verify whether the message is acceptable or not. If the message is not acceptable,
     the processing stops. The pseudo-code below shows a simple import filter. This
@@ -594,17 +780,26 @@
     assigned to the customer by the provider. On real routers, import filters can
     be much more complex and some import filters modify the attributes of the received
     BGP UPDATE [[WMS2004]](../bibliography.html#wms2004) .
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 当收到BGP消息时，路由器首先应用对等体的导入过滤器以验证消息是否可接受。如果消息不可接受，则处理停止。下面的伪代码显示了一个简单的导入过滤器。此导入过滤器接受所有路由，除了那些在其AS-PATH中已经包含本地AS的路由。如果使用了这样的路由，它将导致路由循环。另一个导入过滤器的例子是，互联网服务提供商在与客户的会话中使用的过滤器，仅接受由提供商分配给客户的IP前缀的路由。在实际的路由器上，导入过滤器可以更加复杂，并且一些导入过滤器会修改接收到的BGP
+    UPDATE的属性[[WMS2004]](../bibliography.html#wms2004)。
 - en: '[PRE3]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Note
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The bogon filters
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: bogon过滤器
 - en: Another example of frequently used import filters are the filters that Internet
     Service Providers use to ignore bogon routes. In the ISP community, a bogon route
     is a route that should not be advertised on the global Internet. Typical examples
@@ -613,8 +808,10 @@
     yet been allocated by IANA. A well managed BGP router should ensure that it never
     advertises bogons on the global Internet. Detailed information about these bogons
     may be found in [[IMHM2013]](../bibliography.html#imhm2013).
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个常用导入过滤器的例子是互联网服务提供商使用的过滤器，以忽略bogon路由。在ISP社区中，bogon路由是指不应在全球互联网上公告的路由。典型的例子包括文档IPv6前缀（2001:db8::/32，本书中的大多数示例都使用），环回地址（::1/128）或尚未由IANA分配的IPv6前缀。一个管理良好的BGP路由器应确保它永远不会在全球互联网上公告bogons。有关这些bogons的详细信息，可以在[[IMHM2013]](../bibliography.html#imhm2013)中找到。
 - en: If the import filter accepts the BGP message, the pseudo-code distinguishes
     two cases. If this is an Update message for prefix p, this can be a new route
     for this prefix or a modification of the route’s attributes. The router first
@@ -629,19 +826,27 @@
     depending on the content of the RIB and the export filters, a BGP router may need
     to send a Withdraw message to a peer after having received an Update message from
     another peer and conversely.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果导入过滤器接受BGP消息，伪代码区分两种情况。如果这是一个针对前缀p的更新消息，这可以是该前缀的新路由或路由属性的修改。路由器首先从其RIB中检索到前缀p的最佳路由。然后，新路由被插入到RIB中，并运行BGP决策过程以确定是否改变了到目的地p的最佳路由。只有当最佳路由改变时，才需要向路由器的对等体发送BGP消息。对于每个对等体，路由器应用导出过滤器以验证该路由是否可以公告。如果可以，则发送过滤后的BGP消息。否则，发送一个撤回消息。当路由器收到撤回消息时，它还验证从其RIB中删除路由是否导致其到该前缀的最佳路由改变。需要注意的是，根据RIB的内容和导出过滤器，BGP路由器可能需要在收到来自另一个对等体的更新消息后向对等体发送一个撤回消息，反之亦然。
 - en: Let us now discuss in more detail the operation of BGP in an IPv6 network. For
     this, let us consider the simple network composed of three routers located in
     three different ASes and shown in the figure below.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们更详细地讨论BGP在IPv6网络中的操作。为此，让我们考虑由三个位于不同AS中的路由器组成的简单网络，如图所示。
 - en: '[![../_images/bgp-nexthop.svg](../Images/e4d6965066e9e8670bd2ee7036f03d88.png)](../_images/bgp-nexthop.svg)'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-nexthop.svg](../Images/e4d6965066e9e8670bd2ee7036f03d88.png)'
 - en: Fig. 159 Utilization of the BGP nexthop attribute[#](#id37 "Link to this image")
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 图159 BGP下一跳属性的使用[#](#id37 "链接到此图像")
 - en: 'This network contains three routers : R1, R2 and R3. Each router is attached
     to a local IPv6 subnet that it advertises using BGP. There are two BGP sessions,
     one between R1 and R2 and the second between R2 and R3. A /127 subnet is used
@@ -649,55 +854,73 @@
     in conformance with the latest recommendation [**RFC 6164**](https://datatracker.ietf.org/doc/html/rfc6164.html).
     The BGP sessions run above TCP connections established between the neighboring
     routers (e.g. 2001:db8::5 - 2001:db8::6 for the R1-R2 session).'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 该网络包含三个路由器：R1、R2和R3。每个路由器连接到一个本地IPv6子网，它使用BGP来通告该子网。存在两个BGP会话，一个在R1和R2之间，另一个在R2和R3之间。每个域间链路使用/127子网（R1-R2为2001:db8::4/127，R2-R3为2001:db8::0/127），符合最新的推荐[**RFC
+    6164**](https://datatracker.ietf.org/doc/html/rfc6164.html)。BGP会话在相邻路由器之间建立的TCP连接之上运行（例如，R1-R2会话为2001:db8::5
+    - 2001:db8::6）。
 - en: 'Let us assume that the R1-R2 BGP session is the first to be established. A
     BGP Update message sent on such a session contains three fields :'
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设R1-R2 BGP会话是第一个建立的。在这种会话上发送的BGP更新消息包含三个字段：
 - en: the advertised prefix
+  id: totrans-103
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 广告前缀
 - en: ''
+  id: totrans-104
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-105
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the BGP nexthop
+  id: totrans-106
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: BGP下一跳
 - en: ''
+  id: totrans-107
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-108
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the attributes including the AS-Path
+  id: totrans-109
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 包含AS-PATH的属性
 - en: We use the notation U(prefix, nexthop, attributes) to represent such a BGP Update
     message in this section. Similarly, W(prefix) represents a BGP withdraw for the
     specified prefix. Once the R1-R2 session has been established, R1 sends U(2001:db8:1234::/48,2001:db8::5,AS10)
     to R2 and R2 sends U(2001:db8:5678:/48,2001:db8::6,AS20). At this point, R1 can
     reach 2001:db8:5678::/48 via 2001:db8::6 and R2 can reach 2001:db8:1234::/48 via
     2001:db8::5.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在本节中使用记号U(prefix, nexthop, attributes)来表示此类BGP更新消息。同样，W(prefix)表示指定前缀的BGP撤销。一旦R1-R2会话建立，R1向R2发送U(2001:db8:1234::/48,2001:db8::5,AS10)和R2向R2发送U(2001:db8:5678:/48,2001:db8::6,AS20)。此时，R1可以通过2001:db8::6到达2001:db8:5678::/48，R2可以通过2001:db8::5到达2001:db8:1234::/48。
 - en: 'Once the R2-R3 has been established, R3 sends U(2001:db8:acbd::/48,2001:db8::2,AS30).
     R2 announces on the R2-R3 session all the routes inside its RIB. It thus sends
     to R3 : U(2001:db8:1234::/48,2001:db8::1,AS20:AS10) and U(2001:db8:5678::/48,2001:db8::1,AS20).
@@ -705,40 +928,56 @@
     BGP nexthop and adds its AS number to the AS-Path. R2 also sends U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)
     to R1 on the R1-R3 session. At this point, all BGP routes have been exchanged
     and all routers can reach 2001:db8::1234/48, 2001:db8:5678::/48 and 2001:db8:abcd::/48.'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦R2-R3会话建立，R3发送U(2001:db8:acbd::/48,2001:db8::2,AS30)。R2在其RIB内的所有路由上通告R2-R3会话。因此，它向R3发送：U(2001:db8:1234::/48,2001:db8::1,AS20:AS10)和U(2001:db8:5678::/48,2001:db8::1,AS20)。请注意，当R2通告从R1学习的路由时，它更新BGP下一跳并将其AS号码添加到AS-PATH中。R2还向R1在R1-R3会话上发送U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)。此时，所有BGP路由都已交换，所有路由器都可以到达2001:db8::1234/48、2001:db8:5678::/48和2001:db8:abcd::/48。
 - en: If the link between R2 and R3 fails, R3 detects the failure as it did not receive
     KEEPALIVE messages recently from R2. At this time, R3 removes from its RIB all
     the routes learned over the R2-R3 BGP session. R2 also removes from its RIB the
     routes learned from R3. R2 also sends W(2001:db8:acbd::/48) to R1 over the R1-R3
     BGP session since it does not have a route anymore towards this prefix.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果R2和R3之间的链路失败，R3会检测到失败，因为它最近没有从R2收到KEEPALIVE消息。此时，R3从其RIB中删除通过R2-R3 BGP会话学习的所有路由。R2也从其RIB中删除从R3学习的路由。由于R2不再有指向该前缀的路由，它还通过R1-R3
+    BGP会话向R1发送W(2001:db8:acbd::/48)。
 - en: Note
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: Origin of the routes advertised by a BGP router
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: BGP路由器通告的路由的起源
 - en: 'A frequent practical question about the operation of BGP is how a BGP router
     decides to originate or advertise a route for the first time. In practice, this
     occurs in two situations :'
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于BGP操作的一个常见实际问题是如何决定BGP路由器首次发起或通告路由。在实践中，这发生在两种情况下：
 - en: the router has been manually configured by the network operator to always advertise
     one or several routes on a BGP session. For example, on the BGP session between
     UCLouvain and its provider, [belnet](https://www.belnet.be) , UCLouvain’s router
     always advertises the 2001:6a8:3080/48 IPv6 prefix assigned to the campus network
+  id: totrans-116
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 路由器已被网络运营商手动配置，始终在 BGP 会话中通告一个或多个路由。例如，在 UCLouvain 和其提供商 belnet（https://www.belnet.be）之间的
+    BGP 会话中，UCLouvain 的路由器始终通告分配给校园网络的 2001:6a8:3080/48 IPv6 前缀
 - en: ''
+  id: totrans-117
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-118
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -748,103 +987,150 @@
     For example, an enterprise router may advertise over a BGP session with its provider
     the routes to remote sites when these routes are reachable and advertised by the
     intradomain routing protocol
+  id: totrans-119
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 路由器已被网络运营商配置，在它的 BGP 会话中通告一些它通过域内路由协议学习到的路由。例如，企业路由器可能在其与提供商的 BGP 会话中通告远程站点的路由，当这些路由可通过域内路由协议到达并通告时。
 - en: The first solution is the most frequent. Advertising routes learned from an
     intradomain routing protocol is not recommended, this is because if the route
     flaps [[9]](#fflap), this would cause a large number of BGP messages being exchanged
     in the global Internet.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个解决方案是最常见的。不建议通告从域内路由协议学习到的路由，这是因为如果路由发生波动 [[9]](#fflap)，这将在全球互联网中导致大量 BGP
+    消息交换。
 - en: '### The BGP decision process[#](#the-bgp-decision-process "Link to this heading")'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '### BGP 决策过程[#](#the-bgp-decision-process "链接到这个标题")'
 - en: Besides the import and export filters, a key difference between BGP and the
     intradomain routing protocols is that each domain can define its own ranking algorithm
     to determine which route is chosen to forward packets when several routes have
     been learned towards the same prefix. This ranking depends on several BGP attributes
     that can be attached to a BGP route.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了导入和导出过滤器之外，BGP 与域内路由协议之间的一个关键区别是，每个域都可以定义自己的排序算法，以确定在针对同一前缀学习到多个路由时选择哪个路由来转发数据包。这种排序取决于可以附加到
+    BGP 路由的多个 BGP 属性。
 - en: The first BGP attribute that is used to rank BGP routes is the local-preference
     (local-pref) attribute. This attribute is an unsigned integer that is attached
     to each BGP route received over an eBGP session by the associated import filter.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于对 BGP 路由进行排序的第一个 BGP 属性是本地优先级（local-pref）属性。该属性是一个无符号整数，它附加到通过关联的导入过滤器接收到的每个通过
+    eBGP 会话接收到的 BGP 路由。
 - en: When comparing routes towards the same destination prefix, a BGP router always
     prefers the routes with the highest local-pref. If the BGP router knows several
     routes with the same local-pref, it prefers among the routes having this local-pref
     the ones with the shortest AS-Path.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 当比较指向同一目标前缀的路由时，BGP 路由器始终优先选择具有最高本地优先级的路由。如果 BGP 路由器知道具有相同本地优先级的多个路由，它将优先选择具有最短
+    AS-Path 的路由。
 - en: The local-pref attribute is often used to prefer some routes over others.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先级属性通常用于优先选择某些路由而不是其他路由。
 - en: A common utilization of local-pref is to support backup links. Consider the
     situation depicted in the figure below. AS1 would always like to use the high
     bandwidth link to send and receive packets via AS2 and only use the backup link
     upon failure of the primary one.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先级的一个常见用途是支持备份链接。考虑下面图中描述的情况。AS1 总是希望使用高带宽链路通过 AS2 发送和接收数据包，并且仅在主链路故障时使用备份链路。
 - en: '[![../_images/bgp-backup.svg](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)](../_images/bgp-backup.svg)'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-backup.svg](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)'
 - en: Fig. 160 How to create a backup link with BGP ?[#](#id38 "Link to this image")
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 160 如何使用 BGP 创建备份链接？[#](#id38 "链接到这张图片")
 - en: As BGP routers always prefer the routes with the highest local-pref attribute,
     this policy can be implemented using the following import filter on R1
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 BGP 路由器始终优先选择具有最高本地优先级属性的路线，因此可以使用以下 R1 上的导入过滤器来实现此策略
 - en: '[PRE4]'
+  id: totrans-130
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: With this import filter, all the BGP routes learned from RB over the high bandwidth
     links are preferred over the routes learned over the backup link. If the primary
     link fails, the corresponding routes are removed from R1’s RIB and R1 uses the
     route learned from RA. R1 reuses the routes via RB as soon as they are advertised
     by RB once the R1-RB link comes back.
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此导入过滤器，从 RB 通过高带宽链路学习的所有 BGP 路由都优先于通过备份链路学习的路由。如果主链路故障，相应的路由将从 R1 的 RIB 中删除，R1
+    使用从 RA 学习的路由。一旦 R1-RB 链路恢复，R1 就会重新使用 RB 广告的路由。
 - en: The import filter above modifies the selection of the BGP routes inside AS1.
     Thus, it influences the route followed by the packets forwarded by AS1. In addition
     to using the primary link to send packets, AS1 would like to receive its packets
     via the high bandwidth link. For this, AS2 also needs to set the local-pref attribute
     in its import filter.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述导入过滤器修改了AS1内部BGP路由的选择。因此，它影响了由AS1转发的数据包所遵循的路由。除了使用主链路发送数据包外，AS1还希望通过高带宽链路接收其数据包。为此，AS2也需要在其导入过滤器中设置本地优先属性。
 - en: '[PRE5]'
+  id: totrans-133
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Sometimes, the local-pref attribute is used to prefer a cheap link compared
     to a more expensive one. For example, in the network below, AS1 could wish to
     send and receive packets mainly via its interdomain link with AS4.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，本地优先属性被用来偏好一个便宜链路而不是更昂贵的链路。例如，在下面的网络中，AS1可能希望主要通过其与AS4的域间链路发送和接收数据包。
 - en: '[![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)](../_images/bgp-prefer.svg)'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)](../_images/bgp-prefer.svg)'
 - en: Fig. 161 How to prefer a cheap link over an more expensive one ?[#](#id39 "Link
     to this image")
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: 图161 如何偏好一个便宜链路而不是更昂贵的链路？[#](#id39 "链接到此图像")
 - en: AS1 can install the following import filter on R1 to ensure that it always sends
     packets via R2 when it has learned a route via AS2 and another via AS4.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: AS1可以在R1上安装以下导入过滤器，以确保它在通过AS2和AS4学习到路由时始终通过R2发送数据包。
 - en: '[PRE6]'
+  id: totrans-138
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: However, this import filter does not influence how AS3 , for example, prefers
     some routes over others. If the link between AS3 and AS2 is less expensive than
     the link between AS3 and AS4, AS3 could send all its packets via AS2 and AS1 would
     receive packets over its expensive link. An important point to remember about
     local-pref is that it can be used to prefer some routes over others to send packets,
     but it has no influence on the routes followed by received packets.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这个导入过滤器不会影响AS3（例如）如何偏好某些路由而不是其他路由。如果AS3与AS2之间的链路比AS3与AS4之间的链路更便宜，AS3可以发送所有数据包通过AS2，而AS1将通过其昂贵的链路接收数据包。关于本地优先属性的一个重要观点是，它可以用来偏好某些路由以发送数据包，但它对接收数据包所遵循的路由没有影响。
 - en: 'Another important utilization of the local-pref attribute is to support the
     customer->provider and shared-cost peering relationships. From an economic point
     of view, there is an important difference between these three types of peering
@@ -854,70 +1140,94 @@
     is usually neutral from an economic perspective. To take into account these economic
     issues, domains usually configure the import filters on their routers as follows
     :'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先属性的一个重要用途是支持客户到提供商和共享成本对等关系。从经济角度来看，这三种对等关系之间存在重要差异。一个域在通过提供商到客户关系发送数据包时通常会赚钱。另一方面，当它通过客户到提供商关系发送数据包时，它必须向其提供商付费。使用共享成本对等关系发送数据包通常从经济角度来看是中性的。为了考虑这些经济问题，域通常会按照以下方式在其路由器上配置导入过滤器：
 - en: insert a high local-pref attribute in the routes learned from a customer
+  id: totrans-141
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从客户学习到的路由中插入一个高本地优先属性
 - en: ''
+  id: totrans-142
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-143
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a medium local-pref attribute in the routes learned over a shared-cost
     peering
+  id: totrans-144
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在通过共享成本对等关系学习到的路由中插入一个中等本地优先属性
 - en: ''
+  id: totrans-145
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-146
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a low local-pref attribute in the routes learned from a provider
+  id: totrans-147
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从提供商学习到的路由中插入一个低本地优先属性
 - en: With such an import filter, the routers of a domain always prefer to reach destinations
     via their customers whenever such a route exists. Otherwise, they prefer to use
     shared-cost peering relationships and they only send packets via their providers
     when they do not know any alternate route. A consequence of setting the local-pref
     attribute like this is that Internet paths are often asymmetrical. Consider for
     example the internetwork shown in the figure below.
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这样的导入过滤器，一个域的路由器总是优先通过其客户到达目的地，只要存在这样的路由。否则，它们更喜欢使用共享成本对等关系，并且只有在不知道任何替代路由时才会通过其提供商发送数据包。设置本地优先属性的结果是，互联网路径通常是不对称的。例如，考虑下面图中的互联网。
 - en: '[![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)](../_images/asymetry.svg)'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)](../_images/asymetry.svg)'
 - en: Fig. 162 Asymmetry of Internet paths[#](#id40 "Link to this image")
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 图162 互联网路径的不对称性[#](#id40 "链接到此图像")
 - en: Consider in this internetwork the routes available inside AS1 to reach AS5.
     AS1 learns the AS4:AS6:AS7:AS5 path from AS4, the AS3:AS8:AS5 path from AS3 and
     the AS2:AS5 path from AS2. The first path is chosen since it was learned from
     a customer. AS5 on the other hand receives three paths towards AS1 via its providers.
     It may select any of these paths to reach AS1 , depending on how it prefers one
     provider over the others.
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网络中，考虑 AS1 内部可用的路由，以到达 AS5。AS1 从 AS4 学习到 AS4:AS6:AS7:AS5 路径，从 AS3 学习到 AS3:AS8:AS5
+    路径，从 AS2 学习到 AS2:AS5 路径。第一条路径被选中，因为它是从客户那里学习的。另一方面，AS5 通过其提供商接收三条通往 AS1 的路径。它可以根据它对某个提供商相对于其他提供商的偏好选择这些路径中的任何一条来到达
+    AS1。
 - en: BGP convergence[#](#bgp-convergence "Link to this heading")
+  id: totrans-152
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: BGP 收敛[#](#bgp-convergence "链接到这个标题")
 - en: In the previous sections, we have explained the operation of BGP routers. Compared
     to intradomain routing protocols, a key feature of BGP is its ability to support
     interdomain routing policies that are defined by each domain as its import and
@@ -926,34 +1236,49 @@
     routing policies. However, the routing policy chosen by a domain may interfere
     with the routing policy chosen by another domain. To understand this issue, let
     us first consider the simple internetwork shown below.
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的章节中，我们解释了 BGP 路由器的操作。与域内路由协议相比，BGP 的一个关键特性是它能够支持每个域定义的域间路由策略，这些策略作为其导入和导出过滤器以及排名过程。一个域可以定义自己的路由策略，路由器供应商已经实现了许多配置调整以支持复杂的路由策略。然而，一个域选择的路由策略可能会干扰另一个域选择的路由策略。为了理解这个问题，让我们首先考虑下面的简单互联网络。
 - en: '[![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)](../_images/disagree.svg)'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)](../_images/disagree.svg)'
 - en: Fig. 163 The disagree internetwork[#](#id41 "Link to this image")
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 163 不一致的互联网络[#](#id41 "链接到这张图片")
 - en: 'In this internetwork, we focus on the route towards 2001:db8::1234/48 which
     is advertised by AS1. Let us also assume that AS3 (resp. AS4) prefers, e.g. for
     economic reasons, a route learned from AS4 (AS3) over a route learned from AS1.
     When AS1 sends U(2001:db8::1234/48,AS1) to AS3 and AS4, three sequences of exchanges
     of BGP messages are possible :'
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网络中，我们关注的是由 AS1 广告的指向 2001:db8::1234/48 的路由。让我们还假设 AS3（分别 AS4）出于经济原因，例如，更喜欢从
+    AS4（AS3）学习到的路由，而不是从 AS1 学习到的路由。当 AS1 向 AS3 和 AS4 发送 U(2001:db8::1234/48,AS1) 时，可能发生三种
+    BGP 消息交换的序列：
 - en: AS3 sends first U(2001:db8:1234/48,AS3:AS1) to AS4. AS4 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS3 and does not advertise a route to AS3
+  id: totrans-157
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3 首先向 AS4 发送 U(2001:db8:1234/48,AS3:AS1)。AS4 已学习到两条通往 2001:db8:1234/48 的路由。它运行其
+    BGP 决策过程，并选择通过 AS3 的路由，并不向 AS3 宣告路由。
 - en: ''
+  id: totrans-158
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-159
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -961,16 +1286,21 @@
 - en: AS4 first sends U(2001:db8:1234/48,AS4:AS1) to AS3. AS3 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS4 and does not advertise a route to AS4
+  id: totrans-160
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4 首先向 AS3 发送 U(2001:db8:1234/48,AS4:AS1)。AS3 已学习到两条通往 2001:db8:1234/48 的路由。它运行其
+    BGP 决策过程，并选择通过 AS4 的路由，并不向 AS4 宣告路由。
 - en: ''
+  id: totrans-161
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-162
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -983,245 +1313,328 @@
     (resp. U(2001:db8:1234/48,AS4:AS1)) to AS4 (resp. AS3). AS3 and AS4 could in theory
     continue to exchange BGP messages for ever. In practice, one of them sends one
     message faster than the other and BGP converges.
+  id: totrans-163
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3 向 AS4 发送 U(2001:db8:1234/48,AS3:AS1)，同时 AS4 向 AS3 发送 U(2001:db8:1234/48,AS4:AS1)。AS3
+    更喜欢通过 AS4 的路由，因此向 AS4 发送 W(2001:db8:1234/48)。与此同时，AS4 更喜欢通过 AS3 的路由，因此向 AS3 发送
+    W(2001:db8:1234/48)。在收到 BGP 撤回后，AS3 和 AS4 只知道通往 2001:db8:1234/48 的直接路由。AS3（分别
+    AS4）向 AS4（分别 AS3）发送 U(2001:db8:1234/48,AS3:AS1)（分别 U(2001:db8:1234/48,AS4:AS1))。从理论上讲，AS3
+    和 AS4 可以继续无限期地交换 BGP 消息。在实践中，其中之一发送消息的速度比另一个快，BGP 收敛。
 - en: The example above has shown that the routes selected by BGP routers may sometimes
     depend on the ordering of the BGP messages that are exchanged. Other similar scenarios
     may be found in [**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html).
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的例子已经表明，BGP 路由器选择的路径有时可能取决于交换的 BGP 消息的顺序。其他类似的场景可以在 [**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html)
+    中找到。
 - en: From an operational perspective, the above configuration is annoying since the
     network operators cannot easily predict which paths are chosen. Unfortunately,
     there are even more annoying BGP configurations. For example, let us consider
     the configuration below which is often named Bad Gadget [[GW1999]](../bibliography.html#gw1999)
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 从操作角度来看，上述配置很烦人，因为网络运营商无法轻易预测哪些路径被选择。不幸的是，还有更多令人烦恼的BGP配置。例如，让我们考虑以下配置，通常被称为“坏设备”[[GW1999](../bibliography.html#gw1999)]。
 - en: '[![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)](../_images/bad-gadget.svg)'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)'
 - en: Fig. 164 The bad gadget internetwork[#](#id42 "Link to this image")
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 图164 坏设备互连网络[#](#id42 "链接到此图像")
 - en: 'In this internetwork, there are four ASes. AS0 advertises one route towards
     one prefix and we only analyze the routes towards this prefix. The routing preferences
     of AS1, AS3 and AS4 are the following :'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互连网络中，有四个自治系统。AS0通告一个前缀的路由，我们只分析指向这个前缀的路由。AS1、AS3和AS4的路由优先级如下：
 - en: AS1 prefers the path AS3:AS0 over all other paths
+  id: totrans-169
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS1优先选择AS3:AS0路径，而忽略所有其他路径
 - en: ''
+  id: totrans-170
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-171
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 prefers the path AS4:AS0 over all other paths
+  id: totrans-172
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS3优先选择AS4:AS0路径，而忽略所有其他路径
 - en: ''
+  id: totrans-173
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-174
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 prefers the path AS1:AS0 over all other paths
+  id: totrans-175
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS4优先选择AS1:AS0路径，而忽略所有其他路径
 - en: 'AS0 sends U(p,AS0) to AS1, AS3 and AS4. As this is the only route known by
     AS1, AS3 and AS4 towards p, they all select the direct path. Let us now consider
     one possible exchange of BGP messages :'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: AS0将U(p,AS0)发送到AS1、AS3和AS4。由于这是AS1、AS3和AS4知道指向p的唯一路由，它们都选择了直接路径。现在让我们考虑BGP消息的一个可能交换：
 - en: AS1 sends U(p, AS1:AS0) to AS3 and AS4. AS4 selects the path via AS1 since this
     is its preferred path. AS3 still uses the direct path.
+  id: totrans-177
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS1将U(p, AS1:AS0)发送到AS3和AS4。AS4选择通过AS1的路径，因为这是它首选的路径。AS3仍然使用直接路径。
 - en: ''
+  id: totrans-178
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-179
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 advertises U(p,AS4:AS1:AS0) to AS3.
+  id: totrans-180
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4向AS3通告U(p,AS4:AS1:AS0)。
 - en: ''
+  id: totrans-181
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-182
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p, AS3:AS0) to AS1 and AS4. AS1 selects the path via AS3 since this
     is its preferred path. AS4 still uses the path via AS1.
+  id: totrans-183
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3将U(p, AS3:AS0)发送到AS1和AS4。AS1选择通过AS3的路径，因为这是它首选的路径。AS4仍然使用通过AS1的路径。
 - en: ''
+  id: totrans-184
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-185
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: As AS1 has changed its path, it sends U(p,AS1:AS3:AS0) to AS4 and W(p) to AS3
     since its new path is via AS3. AS4 switches back to the direct path.
+  id: totrans-186
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于AS1已经更改了路径，它将U(p,AS1:AS3:AS0)发送到AS4，将W(p)发送到AS3，因为它的新路径是通过AS3。AS4切换回直接路径。
 - en: ''
+  id: totrans-187
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-188
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 sends U(p,AS4:AS0) to AS1 and AS3. AS3 prefers the path via AS4.
+  id: totrans-189
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4将U(p,AS4:AS0)发送到AS1和AS3。AS3优先选择通过AS4的路径。
 - en: ''
+  id: totrans-190
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-191
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p,AS3:AS4:AS0) to AS1 and W(p) to AS4. AS1 switches back to the
     direct path and we are back at the first step.
+  id: totrans-192
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3将U(p,AS3:AS4:AS0)发送到AS1和W(p)发送到AS4。AS1切换回直接路径，我们回到了第一步。
 - en: This example shows that the convergence of BGP is unfortunately not always guaranteed
     as some interdomain routing policies may interfere with each other in complex
     ways. [[GW1999]](../bibliography.html#gw1999) have shown that checking for global
     convergence is either NP-complete or NP-hard. See [[GSW2002]](../bibliography.html#gsw2002)
     for a more detailed discussion.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个例子表明，BGP的收敛性并不总是可以保证的，因为在复杂的情况下，一些域间路由策略可能会相互干扰。[GW1999](../bibliography.html#gw1999)
+    已经表明，检查全局收敛性要么是NP完全的，要么是NP困难的。参见[GSW2002](../bibliography.html#gsw2002)以获取更详细的讨论。
 - en: 'Fortunately, there are some operational guidelines [[GR2001]](../bibliography.html#gr2001)
     [[GGR2001]](../bibliography.html#ggr2001) that can guarantee BGP convergence in
     the global Internet. To ensure that BGP will converge, these guidelines consider
     that there are two types of peering relationships : customer->provider and shared-cost.
     In this case, BGP convergence is guaranteed provided that the following conditions
     are fulfilled :'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 幸运的是，有一些操作指南[[GR2001](../bibliography.html#gr2001)] [[GGR2001](../bibliography.html#ggr2001)]可以保证全球互联网中的BGP收敛性。为了确保BGP将收敛，这些指南考虑存在两种类型的对等关系：客户->提供商和共享成本。在这种情况下，只要满足以下条件，BGP收敛就得到保证：
 - en: The topology composed of all the directed customer->provider peering links is
     a graph that does not contain any cycle
+  id: totrans-195
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由所有有向客户->提供商对等链接组成的拓扑是一个不包含任何环路的图。
 - en: ''
+  id: totrans-196
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-197
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: An AS always prefers a route received from a customer over a route received
     from a shared-cost peer or a provider.
+  id: totrans-198
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个自治系统总是优先选择从客户那里接收的路由，而不是从共享成本对等体或提供商那里接收的路由。
 - en: The first guideline implies that the provider of the provider of ASx cannot
     be a customer of ASx. Such a relationship would not make sense from an economic
     perspective as it would imply circular payments. Furthermore, providers are usually
     larger than customers.
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条指南意味着ASx的提供商不能是ASx的客户。从经济角度来看，这种关系是没有意义的，因为它会暗示循环支付。此外，提供商通常比客户规模大。
 - en: The second guideline also corresponds to economic preferences. Since a provider
     earns money when sending packets to one of its customers, it makes sense to prefer
     such customer learned routes over routes learned from providers. [[GR2001]](../bibliography.html#gr2001)
     also shows that BGP convergence is guaranteed even if an AS associates the same
     preference to routes learned from a shared-cost peer and routes learned from a
     customer.
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二条指南也符合经济偏好。由于提供商在向其客户之一发送数据包时赚钱，因此优先考虑从客户那里学习到的路由比从提供商那里学习到的路由更有意义。[[GR2001]](../bibliography.html#gr2001)也表明，即使一个AS将相同的优先级分配给从共享成本对等方和客户学习到的路由，BGP收敛也是保证的。
 - en: From a theoretical perspective, these guidelines should be verified automatically
     to ensure that BGP will always converge in the global Internet. However, such
     a verification cannot be performed in practice because this would force all domains
     to disclose their routing policies (and few are willing to do so) and furthermore
     the problem is known to be NP-hard [GW1999].
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 从理论角度来看，这些指南应该自动验证以确保BGP在全球互联网中始终收敛。然而，在实际操作中，这种验证是无法进行的，因为这将迫使所有域公开其路由策略（而且很少有人愿意这样做），而且这个问题已知是NP-hard
+    [GW1999]。
 - en: In practice, researchers and operators expect that these guidelines are verified
     [[10]](#fgranularity) in most domains. Thanks to the large amount of BGP data
     that has been collected by operators and researchers [[11]](#fbgpdata), several
     studies have analyzed the AS-level topology of the Internet. [[SARK2002]](../bibliography.html#sark2002)
     is one of the first analysis. More recent studies include [[COZ2008]](../bibliography.html#coz2008)
     and [[DKF+2007]](../bibliography.html#dkf-2007)
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，研究人员和运营商期望这些指南在大多数域中得到验证 [[10]](#fgranularity)。多亏了运营商和研究人员收集的大量BGP数据 [[11]](#fbgpdata)，已经进行了几项研究分析了互联网的AS级拓扑。[[SARK2002]](../bibliography.html#sark2002)是首次分析之一。更近期的包括[[COZ2008]](../bibliography.html#coz2008)和[[DKF+2007]](../bibliography.html#dkf-2007)。
 - en: Based on these studies and [[ATLAS2009]](../bibliography.html#atlas2009), the
     AS-level Internet topology can be summarized as shown in the figure below.
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于这些研究和[[ATLAS2009]](../bibliography.html#atlas2009)，AS级互联网拓扑可以总结如下图所示。
 - en: '[![../_images/bgp-hierarchy.svg](../Images/7ed75e3a3085ea745ef374995877c629.png)](../_images/bgp-hierarchy.svg)'
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: '![BGP层次结构](../Images/7ed75e3a3085ea745ef374995877c629.png)'
 - en: Fig. 165 The layered structure of the global Internet[#](#id43 "Link to this
     image")
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 图165 全球互联网的分层结构[#](#id43 "链接到这个图像")
 - en: The domains on the Internet can be divided in about four categories according
     to their role and their position in the AS-level topology.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据其在AS级拓扑中的角色和位置，互联网上的域可以大致分为四类。
 - en: Due to this organization of the Internet and due to the BGP decision process,
     most AS-level paths on the Internet have a length of 3-5 AS hops.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于互联网的这种组织和BGP决策过程，互联网上大多数AS级路径的长度为3-5个AS跳数。
 - en: 'Footnotes  ## The Border Gateway Protocol[#](#the-border-gateway-protocol "Link
     to this heading")'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '脚注  ## 边界网关协议[#](#the-border-gateway-protocol "链接到这个标题")'
 - en: 'The Internet uses a single interdomain routing protocol : the Border Gateway
     Protocol (BGP). The current version of BGP is defined in [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html).
     BGP differs from the intradomain routing protocols that we have already discussed
@@ -1239,8 +1652,10 @@
     would be overloaded by the number of BGP messages that they would need to process.
     BGP uses incremental updates, i.e. it only announces the routes that have changed
     to its neighbors.'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网使用单一的域间路由协议：边界网关协议（BGP）。BGP的当前版本定义在[**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)中。BGP与我们已经讨论过的域内路由协议在几个方面有所不同。首先，BGP是一个路径向量协议。当一个BGP路由器宣布指向一个前缀的路由时，它会宣布IP前缀和用于到达该前缀的域间路径。从BGP的角度来看，每个域由一个唯一的自治系统（AS）编号[[6]](#fasdomain)标识，域间路径包含用于到达相关前缀的传输域的AS编号。这个域间路径被称为AS路径。多亏了这些AS路径，BGP不会受到影响距离向量路由协议的无限计数问题。此外，AS路径可以用来实现一些路由策略。BGP与域内路由协议的另一个不同之处在于，BGP路由器不会定期向其邻居发送其路由表的全部内容。考虑到全球互联网的规模，路由器会被需要处理的BGP消息数量所压垮。BGP使用增量更新，即它只向邻居宣布已更改的路由。
 - en: Figure [Fig. 156](#fig-bgp-simple-example) shows a simple example of the BGP
     routes that are exchanged between domains. In this example, prefix 2001:db8:cafe::/48
     is announced by AS1. AS1 advertises a BGP route towards this prefix to AS2. The
@@ -1252,14 +1667,20 @@
     with its AS-Path set to AS2:AS4:AS1. Thanks to the AS-Path, AS5 knows that if
     it sends a packet towards 2001:db8:cafe::/48 the packet first passes through AS2,
     then through AS4 before reaching its destination inside AS1.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 图[图156](#fig-bgp-simple-example)展示了域间交换的BGP路由的简单示例。在这个例子中，前缀2001:db8:cafe::/48由AS1宣布。AS1向AS2宣布了指向该前缀的BGP路由。该路由的AS路径表明AS1是该前缀的发起者。当AS4从AS1接收到BGP路由时，它会将其重新宣布给AS2，并将自己的AS编号添加到AS路径中。AS2已经学到了两条指向前缀2001:db8:cafe::/48的路由。它比较了这两条路由，并根据其自己的排名算法偏好从AS4学到的路由。AS2向AS5宣布了一条指向2001:db8:cafe::/48的路由，其AS路径设置为AS2:AS4:AS1。多亏了AS路径，AS5知道如果它向2001:db8:cafe::/48发送数据包，数据包首先会通过AS2，然后通过AS4，最后到达AS1内部的目的地。
 - en: '![../_images/bgp-example.svg](../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png)'
+  id: totrans-211
   prefs: []
   type: TYPE_IMG
+  zh: '![../_images/bgp-example.svg](../Images/56e7d7a0ece44c03599c9703f7a1ad4a.png)'
 - en: Fig. 156 Simple exchange of BGP routes[#](#id34 "Link to this image")
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 图156 简单的BGP路由交换[#](#id34 "链接到这张图片")
 - en: BGP routers exchange routes over BGP sessions. A BGP session is established
     between two routers belonging to two different domains that are directly connected.
     As explained earlier, the physical connection between the two routers can be implemented
@@ -1271,15 +1692,24 @@
     checksums, etc. Furthermore, the two routers consider the peering link to be up
     as long as the BGP session and the underlying TCP connection remain up [[7]](#flifetimebgp).
     The two endpoints of a BGP session are called BGP peers.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: BGP 路由器通过 BGP 会话交换路由。两个属于不同域且直接连接的路由器之间建立 BGP 会话。如前所述，两个路由器之间的物理连接可以实施为私有对等链接或通过互联网交换点。两个相邻路由器之间的
+    BGP 会话运行在 TCP 连接之上（默认 BGP 端口为 179）。与交换 IP 数据包或 UDP 数据段的域内路由协议相比，BGP 运行在 TCP 之上，因为
+    TCP 确保每个路由器发送的 BGP 消息的可靠传输，而不强迫路由器实现确认、校验和等。此外，只要 BGP 会话和底层的 TCP 连接保持活跃，两个路由器就会认为对等链接是活跃的
+    [[7]](#flifetimebgp)。BGP 会话的两个端点称为 BGP 对等体。
 - en: '[![../_images/bgp-peering.svg](../Images/e2885e7697e16c061ff1e144ac74d408.png)](../_images/bgp-peering.svg)'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-peering.svg](../Images/e2885e7697e16c061ff1e144ac74d408.png)'
 - en: Fig. 157 A BGP peering session between two directly connected routers[#](#id35
     "Link to this image")
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 157 两个直接连接的路由器之间的 BGP 对等会话 [#](#id35 "链接到此图像")
 - en: In practice, to establish a BGP session between routers R1 and R2 in the figure
     above, the network administrator of AS3 must first configure on R1 the IP address
     of R2 on the R1-R2 link and the AS number of R2. Router R1 then regularly tries
@@ -1287,25 +1717,36 @@
     with R1 once it has been configured with the IP address of R1 and its AS number.
     For security reasons, a router never establishes a BGP session that has not been
     manually configured on the router.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，为了在上图中的路由器 R1 和 R2 之间建立 BGP 会话，AS3 的网络管理员必须首先在 R1 上配置 R2 在 R1-R2 链接上的 IP
+    地址和 R2 的 AS 号码。然后，路由器 R1 定期尝试与 R2 建立BGP 会话。只有当 R2 配置了 R1 的 IP 地址和其 AS 号码后，才会同意与
+    R1 建立BGP 会话。出于安全原因，路由器永远不会建立未在路由器上手动配置的 BGP 会话。
 - en: 'The BGP protocol [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)
     defines several types of messages that can be exchanged over a BGP session :'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: BGP 协议 [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html) 定义了可以在
+    BGP 会话中交换的几种消息类型：
 - en: 'OPEN : this message is sent as soon as the TCP connection between the two routers
     has been established. It initializes the BGP session and allows the negotiation
     of some options. Details about this message may be found in [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html).'
+  id: totrans-218
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: OPEN：此消息在两个路由器之间的 TCP 连接建立后立即发送。它初始化 BGP 会话并允许协商一些选项。有关此消息的详细信息，请参阅 [**RFC 4271**](https://datatracker.ietf.org/doc/html/rfc4271.html)。
 - en: ''
+  id: totrans-219
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-220
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1313,32 +1754,40 @@
 - en: 'NOTIFICATION : this message is used to terminate a BGP session, usually because
     an error has been detected by the BGP peer. A router that sends or receives a
     NOTIFICATION message immediately shutdowns the corresponding BGP session.'
+  id: totrans-221
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通知：此消息用于终止 BGP 会话，通常是因为 BGP 对等体检测到错误。发送或接收通知消息的路由器会立即关闭相应的 BGP 会话。
 - en: ''
+  id: totrans-222
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-223
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'UPDATE: this message is used to advertise new or modified routes or to withdraw
     previously advertised routes.'
+  id: totrans-224
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新：此消息用于通告新或修改后的路由，或撤销之前通告的路由。
 - en: ''
+  id: totrans-225
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-226
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1349,10 +1798,14 @@
     confirm to the other peer that it is still up. If a peer does not receive any
     BGP message during a period of 90 seconds [[8]](#fdefaultkeepalive), the BGP session
     is considered to be down and all the routes learned over this session are withdrawn.'
+  id: totrans-227
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保持活动：此消息用于确保在 BGP 会话上定期交换消息，即使没有路由变化。当一个 BGP 路由器在最后 30 秒内没有发送 UPDATE 消息时，它应发送一个
+    KEEPALIVE 消息以确认它仍然处于活动状态。如果一个对等体在 90 秒内没有收到任何 BGP 消息 [[8]](#fdefaultkeepalive)，则认为
+    BGP 会话已断开，并且在此会话中学习的所有路由都将被撤销。
 - en: 'As explained earlier, BGP relies on incremental updates. This implies that
     when a BGP session starts, each router first sends BGP UPDATE messages to advertise
     to the other peer all the exportable routes that it knows. Once all these routes
@@ -1361,98 +1814,133 @@
     and must be withdrawn. The BGP UPDATE message allows BGP routers to efficiently
     exchange such information while minimizing the number of bytes exchanged. Each
     UPDATE message contains :'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，BGP 依赖于增量更新。这意味着当 BGP 会话开始时，每个路由器首先发送 BGP UPDATE 消息，向其他对等体通告它所知道的所有可导出路由。一旦所有这些路由都已通告，BGP
+    路由器只有在路由是新的、其属性之一已更改或路由变得不可达并必须被撤回时，才会发送关于前缀的 BGP UPDATE 消息。BGP UPDATE 消息允许 BGP
+    路由器有效地交换此类信息，同时最大限度地减少交换的字节数。每个 UPDATE 消息包含：
 - en: a list of IP prefixes that are withdrawn
+  id: totrans-229
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一系列被撤回的 IP 前缀
 - en: ''
+  id: totrans-230
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-231
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: a list of IP prefixes that are (re-)advertised
+  id: totrans-232
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一系列被（重新）通告的 IP 前缀
 - en: ''
+  id: totrans-233
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-234
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the set of attributes (e.g. AS-Path) associated to the advertised prefixes
+  id: totrans-235
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与通告前缀关联的属性集（例如 AS-Path）
 - en: 'In the remainder of this chapter, and although all routing information is exchanged
     using BGP UPDATE messages, we assume for simplicity that a BGP message contains
     only information about one prefix and we use the words :'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章的剩余部分，尽管所有路由信息都是通过 BGP UPDATE 消息交换的，但我们为了简单起见假设一个 BGP 消息只包含有关一个前缀的信息，并使用以下词语：
 - en: Withdraw message to indicate a BGP UPDATE message containing one route that
     is withdrawn
+  id: totrans-237
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 撤回消息以指示包含一个被撤回路由的 BGP UPDATE 消息
 - en: ''
+  id: totrans-238
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-239
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: Update message to indicate a BGP UPDATE containing a new or updated route towards
     one destination prefix with its attributes
+  id: totrans-240
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新消息以指示包含指向一个目的地前缀的新或更新路由及其属性的 BGP UPDATE
 - en: From a conceptual point of view, a BGP router connected to N BGP peers, can
     be described as being composed of four parts as shown in the figure below.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 从概念上讲，连接到 N 个 BGP 对等体的 BGP 路由器可以描述为由以下图中所示的四个部分组成。
 - en: '[![../_images/bgp-router.png](../Images/0079025668f84e1a91f1e4196c6e5332.png)](../_images/bgp-router.png)'
+  id: totrans-242
   prefs: []
   type: TYPE_NORMAL
+  zh: '![BGP 路由器](../Images/0079025668f84e1a91f1e4196c6e5332.png)'
 - en: Fig. 158 Organization of a BGP router[#](#id36 "Link to this image")
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 158 BGP 路由器组织[#](#id36 "链接到此图像")
 - en: 'In this figure, the router receives BGP messages on the left part of the figure,
     processes these messages and possibly sends BGP messages on the right part of
     the figure. A BGP router contains three important data structures :'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此图中，路由器在图的左侧接收 BGP 消息，处理这些消息，并在图的右侧可能发送 BGP 消息。一个 BGP 路由器包含三个重要的数据结构：
 - en: the Adj-RIB-In contains the BGP routes that have been received from each BGP
     peer. The routes in the Adj-RIB-In are filtered by the import filter before being
     placed in the BGP-Loc-RIB. There is one import filter per BGP peer.
+  id: totrans-245
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Adj-RIB-In 包含从每个 BGP 对等体接收到的 BGP 路由。在放入 BGP-Loc-RIB 之前，Adj-RIB-In 中的路由会被导入过滤器过滤。每个
+    BGP 对等体有一个导入过滤器。
 - en: ''
+  id: totrans-246
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-247
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1460,16 +1948,20 @@
 - en: the Local Routing Information Base (Loc-RIB) contains all the routes that are
     considered as acceptable by the router. The Loc-RIB may contain several routes,
     learned from different BGP peers, towards the same destination prefix.
+  id: totrans-248
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地路由信息库（Loc-RIB）包含所有被路由器视为可接受的路由。Loc-RIB 可能包含多个路由，这些路由是从不同的 BGP 对等体学习到的，指向相同的目的地前缀。
 - en: ''
+  id: totrans-249
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-250
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1479,16 +1971,20 @@
     that has been selected by the BGP decision process. This decision process is an
     algorithm that selects, for each destination prefix, the best route according
     to the router’s ranking algorithm that is part of its policy.
+  id: totrans-251
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 转发信息库（FIB）被数据平面用于转发数据包到其目的地。对于每个目的地，FIB 包含由 BGP 决策过程选定的最佳路由。这个决策过程是一个算法，它根据路由器的排名算法（这是其策略的一部分）为每个目的地前缀选择最佳路由。
 - en: ''
+  id: totrans-252
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-253
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1498,10 +1994,13 @@
     filter on the routes that have been installed in the FIB. There is one export
     filter per BGP peer. For this reason, the Adj-RIB-Out of a peer may contain different
     routes than the Adj-RIB-Out of another peer.
+  id: totrans-254
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Adj-RIB-Out 包含已向每个 BGP 对等体通告的 BGP 路由。对于给定对等体的 Adj-RIB-Out 是通过对 FIB 中已安装的路由应用该对等体的导出过滤器来构建的。每个
+    BGP 对等体有一个导出过滤器。因此，对等体的 Adj-RIB-Out 可能包含与另一个对等体的 Adj-RIB-Out 不同的路由。
 - en: When a BGP session starts, the routers first exchange OPEN messages to negotiate
     the options that apply throughout the entire session. Then, each router extracts
     from its FIB the routes to be advertised to the peer. It is important to note
@@ -1513,11 +2012,15 @@
     is associated to each BGP session. For example, on a shared-cost peering, the
     export filter only selects the internal routes and the routes that have been learned
     from a customer. The pseudo-code below shows the initialization of a BGP session.
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 当BGP会话开始时，路由器首先交换OPEN消息来协商整个会话中适用的选项。然后，每个路由器从其FIB中提取要向对等体通告的路由。重要的是要注意，对于每个已知的目的地前缀，BGP路由器只能向对等体通告它自己在其FIB内部安装的路由。通告给对等体的路由必须通过对等体的导出过滤器。导出过滤器是一组规则，定义了哪些路由可以在相应的会话中通告，可能是在修改了一些属性之后。每个BGP会话都关联一个导出过滤器。例如，在共享成本对等连接上，导出过滤器仅选择内部路由和从客户那里学习到的路由。下面的伪代码展示了BGP会话的初始化过程。
 - en: '[PRE7]'
+  id: totrans-256
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: In the above pseudo-code, the build_BGP_update(d) procedure extracts from the
     BGP Loc-RIB the best path towards destination d (i.e. the route installed in the
     FIB) and prepares the corresponding BGP UPDATE message. This message is then passed
@@ -1526,22 +2029,32 @@
     allow network administrators to specify very complex export filters, see e.g.
     [[WMS2004]](../bibliography.html#wms2004). A simple export filter that implements
     the equivalent of split horizon is shown below.
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述伪代码中，build_BGP_update(d)过程从BGP Loc-RIB中提取到目的地d的最佳路径（即FIB中安装的路由），并准备相应的BGP
+    UPDATE消息。然后，将此消息传递给导出过滤器，如果路由不能向对等体通告，则返回None，或者返回要通告的（可能已修改的）BGP UPDATE消息。BGP路由器允许网络管理员指定非常复杂的导出过滤器，例如，参见[[WMS2004]](../bibliography.html#wms2004)。下面展示了一个简单的导出过滤器，它实现了类似分割水平的功能。
 - en: '[PRE8]'
+  id: totrans-258
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: At this point, the remote router has received all the exportable BGP routes.
     After this initial exchange, the router only sends BGP UPDATE messages when there
     is a change (addition of a route, removal of a route or change in the attributes
     of a route) in one of these exportable routes. Such a change can happen when the
     router receives a BGP message. The pseudo-code below summarizes the processing
     of these BGP messages.
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，远程路由器已经接收了所有可导出的BGP路由。在此初始交换之后，路由器仅在以下可导出路由之一发生变化（添加路由、删除路由或路由属性的变化）时发送BGP
+    UPDATE消息。这种变化可能发生在路由器接收到一个BGP消息时。下面的伪代码总结了这些BGP消息的处理过程。
 - en: '[PRE9]'
+  id: totrans-260
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: When a BGP message is received, the router first applies the peer’s import filter
     to verify whether the message is acceptable or not. If the message is not acceptable,
     the processing stops. The pseudo-code below shows a simple import filter. This
@@ -1552,17 +2065,26 @@
     assigned to the customer by the provider. On real routers, import filters can
     be much more complex and some import filters modify the attributes of the received
     BGP UPDATE [[WMS2004]](../bibliography.html#wms2004) .
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: 当接收到一个BGP消息时，路由器首先应用对等体的导入过滤器来验证该消息是否可接受。如果消息不可接受，则处理停止。下面的伪代码展示了一个简单的导入过滤器。此导入过滤器接受所有路由，除了那些在其AS-Path中已经包含本地AS的路由。如果使用了这样的路由，它将导致路由循环。另一个导入过滤器的例子是，互联网服务提供商在与客户的会话中使用的过滤器，仅接受由提供商分配给客户的IP前缀的路由。在实际的路由器上，导入过滤器可以更加复杂，一些导入过滤器会修改接收到的BGP
+    UPDATE [[WMS2004]](../bibliography.html#wms2004) 的属性。
 - en: '[PRE10]'
+  id: totrans-262
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Note
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The bogon filters
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: bogon过滤器
 - en: Another example of frequently used import filters are the filters that Internet
     Service Providers use to ignore bogon routes. In the ISP community, a bogon route
     is a route that should not be advertised on the global Internet. Typical examples
@@ -1571,8 +2093,10 @@
     yet been allocated by IANA. A well managed BGP router should ensure that it never
     advertises bogons on the global Internet. Detailed information about these bogons
     may be found in [[IMHM2013]](../bibliography.html#imhm2013).
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一个常用导入过滤器的例子是互联网服务提供商使用的忽略bogon路由的过滤器。在ISP社区中，bogon路由是指不应在全球互联网上广告的路由。典型例子包括文档IPv6前缀（本书大多数示例中使用的2001:db8::/32）、环回地址（::1/128）或尚未由IANA分配的IPv6前缀。一个管理良好的BGP路由器应确保它永远不会在全球互联网上广告bogons。有关这些bogons的详细信息，可以在[[IMHM2013]](../bibliography.html#imhm2013)中找到。
 - en: If the import filter accepts the BGP message, the pseudo-code distinguishes
     two cases. If this is an Update message for prefix p, this can be a new route
     for this prefix or a modification of the route’s attributes. The router first
@@ -1587,19 +2111,27 @@
     depending on the content of the RIB and the export filters, a BGP router may need
     to send a Withdraw message to a peer after having received an Update message from
     another peer and conversely.
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果导入过滤器接受BGP消息，伪代码区分两种情况。如果是针对前缀p的更新消息，这可能是一条新的路由，或者是对路由属性进行的修改。路由器首先从其RIB中检索到前缀p的最佳路由。然后，将新路由插入RIB，并运行BGP决策过程以确定是否更改了到目的地p的最佳路由。只有当最佳路由更改时，才需要向路由器的对等体发送BGP消息。对于每个对等体，路由器应用导出过滤器以验证路由是否可以广告。如果可以，则发送过滤后的BGP消息。否则，发送撤回消息。当路由器收到撤回消息时，它还验证从其RIB中删除路由是否导致其最佳路由发生变化。需要注意的是，根据RIB的内容和导出过滤器，BGP路由器可能需要在收到来自另一个对等体的更新消息后向对等体发送撤回消息，反之亦然。
 - en: Let us now discuss in more detail the operation of BGP in an IPv6 network. For
     this, let us consider the simple network composed of three routers located in
     three different ASes and shown in the figure below.
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在让我们更详细地讨论BGP在IPv6网络中的操作。为此，让我们考虑由三个位于不同AS中的路由器组成的简单网络，如图所示。
 - en: '[![../_images/bgp-nexthop.svg](../Images/e4d6965066e9e8670bd2ee7036f03d88.png)](../_images/bgp-nexthop.svg)'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: '![BGP下一跳](../Images/e4d6965066e9e8670bd2ee7036f03d88.png)'
 - en: Fig. 159 Utilization of the BGP nexthop attribute[#](#id37 "Link to this image")
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: 图159 BGP下一跳属性的使用[#](#id37 "链接到此图像")
 - en: 'This network contains three routers : R1, R2 and R3. Each router is attached
     to a local IPv6 subnet that it advertises using BGP. There are two BGP sessions,
     one between R1 and R2 and the second between R2 and R3. A /127 subnet is used
@@ -1607,55 +2139,76 @@
     in conformance with the latest recommendation [**RFC 6164**](https://datatracker.ietf.org/doc/html/rfc6164.html).
     The BGP sessions run above TCP connections established between the neighboring
     routers (e.g. 2001:db8::5 - 2001:db8::6 for the R1-R2 session).'
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
+  zh: 该网络包含三个路由器：R1、R2和R3。每个路由器连接到一个本地IPv6子网，并使用BGP进行广告。存在两个BGP会话，一个在R1和R2之间，另一个在R2和R3之间。每个域间链路使用/127子网（R1-R2为2001:db8::4/127，R2-R3为2001:db8::0/127），符合最新的推荐[**RFC
+    6164**](https://datatracker.ietf.org/doc/html/rfc6164.html)。BGP会话在相邻路由器之间建立的TCP连接之上运行（例如，R1-R2会话为2001:db8::5
+    - 2001:db8::6）。
 - en: 'Let us assume that the R1-R2 BGP session is the first to be established. A
     BGP Update message sent on such a session contains three fields :'
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设R1-R2 BGP会话是第一个建立的。在这样的会话上发送的BGP更新消息包含三个字段：
 - en: the advertised prefix
+  id: totrans-272
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 广告前缀
 - en: ''
+  id: totrans-273
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-274
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the BGP nexthop
+  id: totrans-275
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: BGP下一跳
 - en: ''
+  id: totrans-276
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-277
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the attributes including the AS-Path
+  id: totrans-278
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 包含AS-PATH的属性
 - en: We use the notation U(prefix, nexthop, attributes) to represent such a BGP Update
     message in this section. Similarly, W(prefix) represents a BGP withdraw for the
     specified prefix. Once the R1-R2 session has been established, R1 sends U(2001:db8:1234::/48,2001:db8::5,AS10)
     to R2 and R2 sends U(2001:db8:5678:/48,2001:db8::6,AS20). At this point, R1 can
     reach 2001:db8:5678::/48 via 2001:db8::6 and R2 can reach 2001:db8:1234::/48 via
     2001:db8::5.
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本节中，我们使用表示法 U(prefix, nexthop, attributes) 来表示此类 BGP 更新消息。同样，W(prefix) 表示指定前缀的
+    BGP 撤回。一旦 R1-R2 会话建立，R1 向 R2 发送 U(2001:db8:1234::/48,2001:db8::5,AS10)，而 R2 向
+    R2 发送 U(2001:db8:5678:/48,2001:db8::6,AS20)。此时，R1 可以通过 2001:db8::6 达到 2001:db8:5678::/48，而
+    R2 可以通过 2001:db8::5 达到 2001:db8:1234::/48。
 - en: 'Once the R2-R3 has been established, R3 sends U(2001:db8:acbd::/48,2001:db8::2,AS30).
     R2 announces on the R2-R3 session all the routes inside its RIB. It thus sends
     to R3 : U(2001:db8:1234::/48,2001:db8::1,AS20:AS10) and U(2001:db8:5678::/48,2001:db8::1,AS20).
@@ -1663,40 +2216,60 @@
     BGP nexthop and adds its AS number to the AS-Path. R2 also sends U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)
     to R1 on the R1-R3 session. At this point, all BGP routes have been exchanged
     and all routers can reach 2001:db8::1234/48, 2001:db8:5678::/48 and 2001:db8:abcd::/48.'
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦 R2-R3 会话建立，R3 向 R2 发送 U(2001:db8:acbd::/48,2001:db8::2,AS30)。R2 在 R2-R3 会话上宣布其
+    RIB 内的所有路由。因此，它向 R3 发送：U(2001:db8:1234::/48,2001:db8::1,AS20:AS10) 和 U(2001:db8:5678::/48,2001:db8::1,AS20)。请注意，当
+    R2 通告从 R1 学习的路由时，它会更新 BGP 下一个跳和将其 AS 号添加到 AS-Path。R2 还在 R1-R3 会话上向 R1 发送 U(2001:db8:abcd::48,2001:db8::6,AS20:AS30)。此时，所有
+    BGP 路由都已交换，所有路由器都可以到达 2001:db8::1234/48、2001:db8:5678::/48 和 2001:db8:abcd::/48。
 - en: If the link between R2 and R3 fails, R3 detects the failure as it did not receive
     KEEPALIVE messages recently from R2. At this time, R3 removes from its RIB all
     the routes learned over the R2-R3 BGP session. R2 also removes from its RIB the
     routes learned from R3. R2 also sends W(2001:db8:acbd::/48) to R1 over the R1-R3
     BGP session since it does not have a route anymore towards this prefix.
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 R2 和 R3 之间的链路失败，R3 会检测到失败，因为它最近没有从 R2 收到 KEEPALIVE 消息。此时，R3 从其 RIB 中删除通过
+    R2-R3 BGP 会话学习的所有路由。R2 也从其 RIB 中删除从 R3 学习的路由。由于 R2 没有再向此前缀提供路由，它还通过 R1-R3 BGP
+    会话向 R1 发送 W(2001:db8:acbd::/48)。
 - en: Note
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: Origin of the routes advertised by a BGP router
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
+  zh: 通告的 BGP 路由的起源
 - en: 'A frequent practical question about the operation of BGP is how a BGP router
     decides to originate or advertise a route for the first time. In practice, this
     occurs in two situations :'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于 BGP 运作的常见实际问题之一是 BGP 路由器如何决定首次发起或通告路由。在实践中，这发生在两种情况下：
 - en: the router has been manually configured by the network operator to always advertise
     one or several routes on a BGP session. For example, on the BGP session between
     UCLouvain and its provider, [belnet](https://www.belnet.be) , UCLouvain’s router
     always advertises the 2001:6a8:3080/48 IPv6 prefix assigned to the campus network
+  id: totrans-285
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 路由器已被网络运营商手动配置，以在 BGP 会话中始终通告一个或多个路由。例如，在 UCLouvain 和其提供商 belnet（[belnet](https://www.belnet.be)）之间的
+    BGP 会话中，UCLouvain 的路由器始终通告分配给校园网络的 2001:6a8:3080/48 IPv6 前缀。
 - en: ''
+  id: totrans-286
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-287
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1706,103 +2279,146 @@
     For example, an enterprise router may advertise over a BGP session with its provider
     the routes to remote sites when these routes are reachable and advertised by the
     intradomain routing protocol
+  id: totrans-288
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 路由器已被网络运营商配置，以在其 BGP 会话中通告其通过域内路由协议学习的某些路由。例如，企业路由器可能在其与提供商的 BGP 会话中通告远程站点的路由，当这些路由可通过域内路由协议访问并通告时。
 - en: The first solution is the most frequent. Advertising routes learned from an
     intradomain routing protocol is not recommended, this is because if the route
     flaps [[9]](#fflap), this would cause a large number of BGP messages being exchanged
     in the global Internet.
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一种解决方案是最常见的。不建议通告从域内路由协议学习的路由，这是因为如果路由出现波动 [[9]](#fflap)，这会导致在全局互联网中交换大量 BGP
+    消息。
 - en: '### The BGP decision process[#](#the-bgp-decision-process "Link to this heading")'
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: '### BGP 决策过程[#](#the-bgp-decision-process "链接到此标题")'
 - en: Besides the import and export filters, a key difference between BGP and the
     intradomain routing protocols is that each domain can define its own ranking algorithm
     to determine which route is chosen to forward packets when several routes have
     been learned towards the same prefix. This ranking depends on several BGP attributes
     that can be attached to a BGP route.
+  id: totrans-291
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了导入和导出过滤器之外，BGP与域内路由协议的一个关键区别是，每个域都可以定义自己的排名算法，以确定在针对同一前缀学习到多个路由时选择哪个路由来转发数据包。这种排名取决于可以附加到BGP路由的多个BGP属性。
 - en: The first BGP attribute that is used to rank BGP routes is the local-preference
     (local-pref) attribute. This attribute is an unsigned integer that is attached
     to each BGP route received over an eBGP session by the associated import filter.
+  id: totrans-292
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个用于对BGP路由进行排序的BGP属性是本地优先级（local-pref）属性。该属性是一个附加到通过相关导入过滤器接收的每个BGP路由上的无符号整数。
 - en: When comparing routes towards the same destination prefix, a BGP router always
     prefers the routes with the highest local-pref. If the BGP router knows several
     routes with the same local-pref, it prefers among the routes having this local-pref
     the ones with the shortest AS-Path.
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: 当比较指向同一目标前缀的路由时，BGP路由器总是优先选择具有最高本地优先级的路由。如果BGP路由器知道具有相同本地优先级的多个路由，它将优先选择具有最短AS-Path的路由。
 - en: The local-pref attribute is often used to prefer some routes over others.
+  id: totrans-294
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先属性通常用于优先选择某些路由而不是其他路由。
 - en: A common utilization of local-pref is to support backup links. Consider the
     situation depicted in the figure below. AS1 would always like to use the high
     bandwidth link to send and receive packets via AS2 and only use the backup link
     upon failure of the primary one.
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先（local-pref）的一个常见用途是支持备份链路。考虑下面图示的情况。AS1总是希望使用高带宽链路通过AS2发送和接收数据包，只有在主链路故障时才使用备份链路。
 - en: '[![../_images/bgp-backup.svg](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)](../_images/bgp-backup.svg)'
+  id: totrans-296
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-backup.svg](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)'
 - en: Fig. 160 How to create a backup link with BGP ?[#](#id38 "Link to this image")
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: 图160 如何使用BGP创建备份链路？[#](#id38 "链接到这张图片")
 - en: As BGP routers always prefer the routes with the highest local-pref attribute,
     this policy can be implemented using the following import filter on R1
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于BGP路由器总是优先选择具有最高本地优先级属性的路由，因此可以使用以下R1上的导入过滤器来实现此策略。
 - en: '[PRE11]'
+  id: totrans-299
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: With this import filter, all the BGP routes learned from RB over the high bandwidth
     links are preferred over the routes learned over the backup link. If the primary
     link fails, the corresponding routes are removed from R1’s RIB and R1 uses the
     route learned from RA. R1 reuses the routes via RB as soon as they are advertised
     by RB once the R1-RB link comes back.
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此导入过滤器，所有从RB通过高带宽链路学到的BGP路由都优先于通过备份链路学到的路由。如果主链路故障，相应的路由将从R1的RIB中删除，R1将使用从RA学到的路由。一旦R1-RB链路恢复，R1就会立即重新使用RB通告的路由。
 - en: The import filter above modifies the selection of the BGP routes inside AS1.
     Thus, it influences the route followed by the packets forwarded by AS1. In addition
     to using the primary link to send packets, AS1 would like to receive its packets
     via the high bandwidth link. For this, AS2 also needs to set the local-pref attribute
     in its import filter.
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述导入过滤器修改了AS1内部BGP路由的选择。因此，它影响了由AS1转发的数据包所遵循的路由。除了使用主链路发送数据包外，AS1还希望通过高带宽链路接收其数据包。为此，AS2也需要在其导入过滤器中设置本地优先级属性。
 - en: '[PRE12]'
+  id: totrans-302
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Sometimes, the local-pref attribute is used to prefer a cheap link compared
     to a more expensive one. For example, in the network below, AS1 could wish to
     send and receive packets mainly via its interdomain link with AS4.
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，本地优先级属性用于优先选择比更昂贵的链路更便宜的链路。例如，在下面的网络中，AS1可能希望主要通过与其AS4的域间链路发送和接收数据包。
 - en: '[![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)](../_images/bgp-prefer.svg)'
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)'
 - en: Fig. 161 How to prefer a cheap link over an more expensive one ?[#](#id39 "Link
     to this image")
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: 图161 如何优先选择比更昂贵的链路更便宜的链路？[#](#id39 "链接到这张图片")
 - en: AS1 can install the following import filter on R1 to ensure that it always sends
     packets via R2 when it has learned a route via AS2 and another via AS4.
+  id: totrans-306
   prefs: []
   type: TYPE_NORMAL
+  zh: AS1可以在R1上安装以下导入过滤器，以确保它在通过AS2和AS4学习到路由时始终通过R2发送数据包。
 - en: '[PRE13]'
+  id: totrans-307
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: However, this import filter does not influence how AS3 , for example, prefers
     some routes over others. If the link between AS3 and AS2 is less expensive than
     the link between AS3 and AS4, AS3 could send all its packets via AS2 and AS1 would
     receive packets over its expensive link. An important point to remember about
     local-pref is that it can be used to prefer some routes over others to send packets,
     but it has no influence on the routes followed by received packets.
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，这个导入过滤器不会影响AS3（例如）如何偏好某些路由而不是其他路由。如果AS3和AS2之间的链路比AS3和AS4之间的链路便宜，AS3可以发送所有数据包通过AS2，而AS1将通过其昂贵的链路接收数据包。关于本地优先属性的一个重要观点是，它可以用来偏好某些路由而不是其他路由来发送数据包，但它对接收数据包所遵循的路由没有影响。
 - en: 'Another important utilization of the local-pref attribute is to support the
     customer->provider and shared-cost peering relationships. From an economic point
     of view, there is an important difference between these three types of peering
@@ -1812,70 +2428,92 @@
     is usually neutral from an economic perspective. To take into account these economic
     issues, domains usually configure the import filters on their routers as follows
     :'
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先属性的一个重要用途是支持客户到提供商和共享成本对等关系。从经济角度来看，这三种对等关系之间存在重要差异。一个域在通过提供商到客户关系发送数据包时通常会赚钱。另一方面，当它通过客户到提供商关系发送数据包时，必须向其提供商付费。使用共享成本对等关系发送数据包通常从经济角度来看是中性的。为了考虑这些经济问题，域通常按照以下方式在其路由器上配置导入过滤器：
 - en: insert a high local-pref attribute in the routes learned from a customer
+  id: totrans-310
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从客户学到的路由中插入一个高本地优先属性
 - en: ''
+  id: totrans-311
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-312
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a medium local-pref attribute in the routes learned over a shared-cost
     peering
+  id: totrans-313
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在通过共享成本对等关系学到的路由中插入一个中等本地优先属性
 - en: ''
+  id: totrans-314
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-315
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a low local-pref attribute in the routes learned from a provider
+  id: totrans-316
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从提供商学到的路由中插入一个低本地优先属性
 - en: With such an import filter, the routers of a domain always prefer to reach destinations
     via their customers whenever such a route exists. Otherwise, they prefer to use
     shared-cost peering relationships and they only send packets via their providers
     when they do not know any alternate route. A consequence of setting the local-pref
     attribute like this is that Internet paths are often asymmetrical. Consider for
     example the internetwork shown in the figure below.
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这样的导入过滤器，域的路由器总是优先通过其客户到达目的地，只要存在这样的路由。否则，它们更喜欢使用共享成本对等关系，并且只有在不知道任何替代路由时才会通过其提供商发送数据包。设置本地优先属性的结果是，互联网路径通常是不对称的。例如，考虑下面图中的互联网。
 - en: '[![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)](../_images/asymetry.svg)'
+  id: totrans-318
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)](../_images/asymetry.svg)'
 - en: Fig. 162 Asymmetry of Internet paths[#](#id40 "Link to this image")
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 图162 互联网路径的不对称性[#](#id40 "链接到这个图像")
 - en: Consider in this internetwork the routes available inside AS1 to reach AS5.
     AS1 learns the AS4:AS6:AS7:AS5 path from AS4, the AS3:AS8:AS5 path from AS3 and
     the AS2:AS5 path from AS2. The first path is chosen since it was learned from
     a customer. AS5 on the other hand receives three paths towards AS1 via its providers.
     It may select any of these paths to reach AS1 , depending on how it prefers one
     provider over the others.
+  id: totrans-320
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑在这个互联网中，AS1内部可用的路由以到达AS5。AS1从AS4学习到AS4:AS6:AS7:AS5路径，从AS3学习到AS3:AS8:AS5路径，从AS2学习到AS2:AS5路径。第一条路径被选中，因为它是从客户那里学到的。另一方面，AS5通过其提供商接收三条通往AS1的路径。它可以根据它对某个提供商相对于其他提供商的偏好选择其中任何一条路径来到达AS1。
 - en: BGP convergence[#](#bgp-convergence "Link to this heading")
+  id: totrans-321
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: BGP收敛[#](#bgp-convergence "链接到这个标题")
 - en: In the previous sections, we have explained the operation of BGP routers. Compared
     to intradomain routing protocols, a key feature of BGP is its ability to support
     interdomain routing policies that are defined by each domain as its import and
@@ -1884,34 +2522,46 @@
     routing policies. However, the routing policy chosen by a domain may interfere
     with the routing policy chosen by another domain. To understand this issue, let
     us first consider the simple internetwork shown below.
+  id: totrans-322
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的章节中，我们解释了BGP路由器的操作。与域内路由协议相比，BGP的一个关键特性是它能够支持每个域定义的域间路由策略，作为其导入和导出过滤器以及排名过程。域可以定义自己的路由策略，路由器供应商已经实施了许多配置调整以支持复杂的路由策略。然而，一个域选择的路由策略可能会干扰另一个域选择的路由策略。为了理解这个问题，让我们首先考虑下面所示的简单互连网络。
 - en: '[![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)](../_images/disagree.svg)'
+  id: totrans-323
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)](../_images/disagree.svg)'
 - en: Fig. 163 The disagree internetwork[#](#id41 "Link to this image")
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: 图163 不同意见的互连网络[#](#id41 "链接到这张图片")
 - en: 'In this internetwork, we focus on the route towards 2001:db8::1234/48 which
     is advertised by AS1. Let us also assume that AS3 (resp. AS4) prefers, e.g. for
     economic reasons, a route learned from AS4 (AS3) over a route learned from AS1.
     When AS1 sends U(2001:db8::1234/48,AS1) to AS3 and AS4, three sequences of exchanges
     of BGP messages are possible :'
+  id: totrans-325
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互连网络中，我们关注的是由AS1通告的通往2001:db8::1234/48的路由。让我们还假设AS3（分别对应AS4）出于经济原因，例如，更喜欢从AS4（AS3）学习到的路由，而不是从AS1学习到的路由。当AS1向AS3和AS4发送U(2001:db8::1234/48,AS1)时，可能发生三种BGP消息交换的序列：
 - en: AS3 sends first U(2001:db8:1234/48,AS3:AS1) to AS4. AS4 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS3 and does not advertise a route to AS3
+  id: totrans-326
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3首先向AS4发送U(2001:db8:1234/48,AS3:AS1)。AS4已经学习到了通往2001:db8:1234/48的两种路由。它运行其BGP决策过程，选择通过AS3的路由，并且不对AS3通告路由。
 - en: ''
+  id: totrans-327
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-328
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1919,16 +2569,20 @@
 - en: AS4 first sends U(2001:db8:1234/48,AS4:AS1) to AS3. AS3 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS4 and does not advertise a route to AS4
+  id: totrans-329
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4首先向AS3发送U(2001:db8:1234/48,AS4:AS1)。AS3已经学习到了通往2001:db8:1234/48的两种路由。它运行其BGP决策过程，选择通过AS4的路由，并且不对AS4通告路由。
 - en: ''
+  id: totrans-330
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-331
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1941,331 +2595,452 @@
     (resp. U(2001:db8:1234/48,AS4:AS1)) to AS4 (resp. AS3). AS3 and AS4 could in theory
     continue to exchange BGP messages for ever. In practice, one of them sends one
     message faster than the other and BGP converges.
+  id: totrans-332
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS4发送U(2001:db8:1234/48,AS3:AS1)并，同时，AS4向AS1发送U(2001:db8:1234/48,AS4:AS1)。AS3更喜欢通过AS4的路由，因此向AS4发送W(2001:db8:1234/48)。与此同时，AS4更喜欢通过AS3的路由，因此向AS3发送W(2001:db8:1234/48)。在接收到BGP
+    Withdraws之后，AS3和AS4只知道通往2001:db8:1234/48的直接路由。AS3（分别对应AS4）向AS4（分别对应AS3）发送U(2001:db8:1234/48,AS3:AS1)（分别对应U(2001:db8:1234/48,AS4:AS1))。理论上，AS3和AS4可以继续无限期地交换BGP消息。实际上，其中之一发送消息的速度比另一个快，BGP就会收敛。
 - en: The example above has shown that the routes selected by BGP routers may sometimes
     depend on the ordering of the BGP messages that are exchanged. Other similar scenarios
     may be found in [**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html).
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的例子表明，BGP路由器选择的路径有时可能取决于交换的BGP消息的顺序。其他类似的场景可以在[**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html)中找到。
 - en: From an operational perspective, the above configuration is annoying since the
     network operators cannot easily predict which paths are chosen. Unfortunately,
     there are even more annoying BGP configurations. For example, let us consider
     the configuration below which is often named Bad Gadget [[GW1999]](../bibliography.html#gw1999)
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
+  zh: 从操作的角度来看，上述配置令人烦恼，因为网络运营商无法轻易预测哪些路径被选择。不幸的是，还有更多令人烦恼的BGP配置。例如，让我们考虑以下配置，通常被称为Bad
+    Gadget [[GW1999]](../bibliography.html#gw1999)。
 - en: '[![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)](../_images/bad-gadget.svg)'
+  id: totrans-335
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)](../_images/bad-gadget.svg)'
 - en: Fig. 164 The bad gadget internetwork[#](#id42 "Link to this image")
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
+  zh: 图164 恶劣的设备互连网络[#](#id42 "链接到这张图片")
 - en: 'In this internetwork, there are four ASes. AS0 advertises one route towards
     one prefix and we only analyze the routes towards this prefix. The routing preferences
     of AS1, AS3 and AS4 are the following :'
+  id: totrans-337
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网中，有四个AS。AS0向一个前缀广告一条路由，我们只分析这个前缀的路由。AS1、AS3和AS4的路由偏好如下：
 - en: AS1 prefers the path AS3:AS0 over all other paths
+  id: totrans-338
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS1优先选择AS3:AS0路径，而不是其他所有路径。
 - en: ''
+  id: totrans-339
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-340
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 prefers the path AS4:AS0 over all other paths
+  id: totrans-341
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS3优先选择AS4:AS0路径，而不是其他所有路径。
 - en: ''
+  id: totrans-342
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-343
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 prefers the path AS1:AS0 over all other paths
+  id: totrans-344
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS4优先选择AS1:AS0路径，而不是其他所有路径。
 - en: 'AS0 sends U(p,AS0) to AS1, AS3 and AS4. As this is the only route known by
     AS1, AS3 and AS4 towards p, they all select the direct path. Let us now consider
     one possible exchange of BGP messages :'
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
+  zh: AS0向AS1、AS3和AS4发送U(p,AS0)。由于这是AS1、AS3和AS4通往p的唯一已知路由，因此它们都选择了直接路径。现在让我们考虑BGP消息的一个可能交换：
 - en: AS1 sends U(p, AS1:AS0) to AS3 and AS4. AS4 selects the path via AS1 since this
     is its preferred path. AS3 still uses the direct path.
+  id: totrans-346
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS1向AS3和AS4发送U(p, AS1:AS0)。AS4选择通过AS1的路径，因为这是它的首选路径。AS3仍然使用直接路径。
 - en: ''
+  id: totrans-347
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-348
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 advertises U(p,AS4:AS1:AS0) to AS3.
+  id: totrans-349
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4向AS3广告U(p,AS4:AS1:AS0)。
 - en: ''
+  id: totrans-350
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-351
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p, AS3:AS0) to AS1 and AS4. AS1 selects the path via AS3 since this
     is its preferred path. AS4 still uses the path via AS1.
+  id: totrans-352
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS1和AS4发送U(p, AS3:AS0)。AS1选择通过AS3的路径，因为这是它的首选路径。AS4仍然使用通过AS1的路径。
 - en: ''
+  id: totrans-353
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-354
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: As AS1 has changed its path, it sends U(p,AS1:AS3:AS0) to AS4 and W(p) to AS3
     since its new path is via AS3. AS4 switches back to the direct path.
+  id: totrans-355
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于AS1更改了路径，它向AS4发送U(p,AS1:AS3:AS0)并向AS3发送W(p)，因为它的新路径是通过AS3。AS4切换回直接路径。
 - en: ''
+  id: totrans-356
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-357
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 sends U(p,AS4:AS0) to AS1 and AS3. AS3 prefers the path via AS4.
+  id: totrans-358
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4向AS1和AS3发送U(p,AS4:AS0)。AS3更喜欢通过AS4的路径。
 - en: ''
+  id: totrans-359
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-360
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p,AS3:AS4:AS0) to AS1 and W(p) to AS4. AS1 switches back to the
     direct path and we are back at the first step.
+  id: totrans-361
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS1和AS4发送U(p,AS3:AS4:AS0)并向AS4发送W(p)。AS1切换回直接路径，我们回到了第一步。
 - en: This example shows that the convergence of BGP is unfortunately not always guaranteed
     as some interdomain routing policies may interfere with each other in complex
     ways. [[GW1999]](../bibliography.html#gw1999) have shown that checking for global
     convergence is either NP-complete or NP-hard. See [[GSW2002]](../bibliography.html#gsw2002)
     for a more detailed discussion.
+  id: totrans-362
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个例子表明，BGP的收敛性并不总是可以保证的，因为一些域间路由策略可能会以复杂的方式相互干扰。[GW1999](../bibliography.html#gw1999)已经表明，检查全局收敛性要么是NP完全的，要么是NP难的。参见[GSW2002](../bibliography.html#gsw2002)以获取更详细的讨论。
 - en: 'Fortunately, there are some operational guidelines [[GR2001]](../bibliography.html#gr2001)
     [[GGR2001]](../bibliography.html#ggr2001) that can guarantee BGP convergence in
     the global Internet. To ensure that BGP will converge, these guidelines consider
     that there are two types of peering relationships : customer->provider and shared-cost.
     In this case, BGP convergence is guaranteed provided that the following conditions
     are fulfilled :'
+  id: totrans-363
   prefs: []
   type: TYPE_NORMAL
+  zh: 幸运的是，有一些操作指南[GR2001](../bibliography.html#gr2001) [GGR2001](../bibliography.html#ggr2001)可以保证全球互联网中的BGP收敛性。为了确保BGP将收敛，这些指南考虑存在两种类型的对等关系：客户->提供商和共享成本。在这种情况下，只要满足以下条件，BGP收敛就得到了保证：
 - en: The topology composed of all the directed customer->provider peering links is
     a graph that does not contain any cycle
+  id: totrans-364
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由所有定向客户->提供商对等链路组成的拓扑是一个不包含任何环路的图。
 - en: ''
+  id: totrans-365
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-366
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: An AS always prefers a route received from a customer over a route received
     from a shared-cost peer or a provider.
+  id: totrans-367
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个AS总是优先选择从客户那里接收的路由，而不是从共享成本对等方或提供商那里接收的路由。
 - en: The first guideline implies that the provider of the provider of ASx cannot
     be a customer of ASx. Such a relationship would not make sense from an economic
     perspective as it would imply circular payments. Furthermore, providers are usually
     larger than customers.
+  id: totrans-368
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一个指导原则意味着ASx的提供商的提供商不能是ASx的客户。从经济角度来看，这种关系是没有意义的，因为它会意味着循环支付。此外，提供商通常比客户大。
 - en: The second guideline also corresponds to economic preferences. Since a provider
     earns money when sending packets to one of its customers, it makes sense to prefer
     such customer learned routes over routes learned from providers. [[GR2001]](../bibliography.html#gr2001)
     also shows that BGP convergence is guaranteed even if an AS associates the same
     preference to routes learned from a shared-cost peer and routes learned from a
     customer.
+  id: totrans-369
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二个指导原则也对应于经济偏好。由于提供商在向其客户之一发送数据包时赚钱，因此优先选择从客户那里学习到的路由，而不是从提供商那里学习到的路由是有意义的。[GR2001](../bibliography.html#gr2001)还表明，即使一个AS将相同的优先级分配给从共享成本对等方和客户那里学习到的路由，BGP收敛也是可以保证的。
 - en: From a theoretical perspective, these guidelines should be verified automatically
     to ensure that BGP will always converge in the global Internet. However, such
     a verification cannot be performed in practice because this would force all domains
     to disclose their routing policies (and few are willing to do so) and furthermore
     the problem is known to be NP-hard [GW1999].
+  id: totrans-370
   prefs: []
   type: TYPE_NORMAL
+  zh: 从理论角度来看，这些指南应该自动得到验证，以确保BGP在全球互联网中始终收敛。然而，在实践中无法执行这种验证，因为这将迫使所有域公开其路由策略（而且很少有人愿意这样做），此外，这个问题已知是NP-hard
+    [GW1999]。
 - en: In practice, researchers and operators expect that these guidelines are verified
     [[10]](#fgranularity) in most domains. Thanks to the large amount of BGP data
     that has been collected by operators and researchers [[11]](#fbgpdata), several
     studies have analyzed the AS-level topology of the Internet. [[SARK2002]](../bibliography.html#sark2002)
     is one of the first analysis. More recent studies include [[COZ2008]](../bibliography.html#coz2008)
     and [[DKF+2007]](../bibliography.html#dkf-2007)
+  id: totrans-371
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，研究人员和运营商期望这些指南在大多数领域得到验证 [[10]](#fgranularity)。多亏了运营商和研究人员收集的大量BGP数据 [[11]](#fbgpdata)，几项研究已经分析了互联网的AS级拓扑。[[SARK2002]](../bibliography.html#sark2002)
+    是最早的分析之一。更近期的研究包括 [[COZ2008]](../bibliography.html#coz2008) 和 [[DKF+2007]](../bibliography.html#dkf-2007)。
 - en: Based on these studies and [[ATLAS2009]](../bibliography.html#atlas2009), the
     AS-level Internet topology can be summarized as shown in the figure below.
+  id: totrans-372
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于这些研究和 [[ATLAS2009]](../bibliography.html#atlas2009)，可以总结出AS级互联网拓扑结构，如图所示。
 - en: '[![../_images/bgp-hierarchy.svg](../Images/7ed75e3a3085ea745ef374995877c629.png)](../_images/bgp-hierarchy.svg)'
+  id: totrans-373
   prefs: []
   type: TYPE_NORMAL
+  zh: '![BGP层次结构](../Images/7ed75e3a3085ea745ef374995877c629.png)(../_images/bgp-hierarchy.svg)'
 - en: Fig. 165 The layered structure of the global Internet[#](#id43 "Link to this
     image")
+  id: totrans-374
   prefs: []
   type: TYPE_NORMAL
+  zh: 图. 165 全球互联网的分层结构[#](#id43 "链接到此图像")
 - en: The domains on the Internet can be divided in about four categories according
     to their role and their position in the AS-level topology.
+  id: totrans-375
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据其在AS级拓扑中的角色和位置，可以将互联网上的域大致分为四类。
 - en: Due to this organization of the Internet and due to the BGP decision process,
     most AS-level paths on the Internet have a length of 3-5 AS hops.
+  id: totrans-376
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于互联网的这种组织结构和BGP决策过程，互联网上的大多数AS级路径长度为3-5个AS跳数。
 - en: Footnotes
+  id: totrans-377
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚注
 - en: '### The BGP decision process[#](#the-bgp-decision-process "Link to this heading")'
+  id: totrans-378
   prefs: []
   type: TYPE_NORMAL
+  zh: '### BGP决策过程[#](#the-bgp-decision-process "链接到此标题")'
 - en: Besides the import and export filters, a key difference between BGP and the
     intradomain routing protocols is that each domain can define its own ranking algorithm
     to determine which route is chosen to forward packets when several routes have
     been learned towards the same prefix. This ranking depends on several BGP attributes
     that can be attached to a BGP route.
+  id: totrans-379
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了导入和导出过滤器之外，BGP与域内路由协议的一个关键区别是，每个域都可以定义自己的排名算法，以确定在针对同一前缀学习到多个路由时，选择哪个路由来转发数据包。这种排名取决于可以附加到BGP路由的几个BGP属性。
 - en: The first BGP attribute that is used to rank BGP routes is the local-preference
     (local-pref) attribute. This attribute is an unsigned integer that is attached
     to each BGP route received over an eBGP session by the associated import filter.
+  id: totrans-380
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先用于对BGP路由进行排名的BGP属性是本地优先级（local-pref）属性。这个属性是一个附加到通过相关导入过滤器接收的每个BGP路由上的无符号整数。
 - en: When comparing routes towards the same destination prefix, a BGP router always
     prefers the routes with the highest local-pref. If the BGP router knows several
     routes with the same local-pref, it prefers among the routes having this local-pref
     the ones with the shortest AS-Path.
+  id: totrans-381
   prefs: []
   type: TYPE_NORMAL
+  zh: 当比较指向同一目标前缀的路由时，BGP路由器总是优先选择具有最高本地优先级的路由。如果BGP路由器知道具有相同本地优先级的多个路由，它将优先选择具有最短AS路径的路由。
 - en: The local-pref attribute is often used to prefer some routes over others.
+  id: totrans-382
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先级属性通常用于优先选择某些路由而不是其他路由。
 - en: A common utilization of local-pref is to support backup links. Consider the
     situation depicted in the figure below. AS1 would always like to use the high
     bandwidth link to send and receive packets via AS2 and only use the backup link
     upon failure of the primary one.
+  id: totrans-383
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先级的一个常见用途是支持备份链路。考虑下面图中的情况。AS1总是希望使用高带宽链路通过AS2发送和接收数据包，只有在主链路故障时才使用备份链路。
 - en: '[![../_images/bgp-backup.svg](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)](../_images/bgp-backup.svg)'
+  id: totrans-384
   prefs: []
   type: TYPE_NORMAL
+  zh: '![BGP备份](../Images/a3485a4ec7385b94aecb7b585e809d0b.png)(../_images/bgp-backup.svg)'
 - en: Fig. 160 How to create a backup link with BGP ?[#](#id38 "Link to this image")
+  id: totrans-385
   prefs: []
   type: TYPE_NORMAL
+  zh: 图. 160 如何使用BGP创建备份链路？[#](#id38 "链接到此图像")
 - en: As BGP routers always prefer the routes with the highest local-pref attribute,
     this policy can be implemented using the following import filter on R1
+  id: totrans-386
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 BGP 路由器始终优先选择具有最高本地优先级属性的路由，因此可以使用以下 R1 上的导入过滤器来实现此策略
 - en: '[PRE14]'
+  id: totrans-387
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: With this import filter, all the BGP routes learned from RB over the high bandwidth
     links are preferred over the routes learned over the backup link. If the primary
     link fails, the corresponding routes are removed from R1’s RIB and R1 uses the
     route learned from RA. R1 reuses the routes via RB as soon as they are advertised
     by RB once the R1-RB link comes back.
+  id: totrans-388
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此导入过滤器，所有从 RB 通过高速链路学到的 BGP 路由都优先于通过备份链路学到的路由。如果主链路失败，相应的路由将从 R1 的 RIB 中删除，并且
+    R1 使用从 RA 学到的路由。一旦 R1-RB 链路恢复，R1 就会重新使用 RB 广告的路由。
 - en: The import filter above modifies the selection of the BGP routes inside AS1.
     Thus, it influences the route followed by the packets forwarded by AS1. In addition
     to using the primary link to send packets, AS1 would like to receive its packets
     via the high bandwidth link. For this, AS2 also needs to set the local-pref attribute
     in its import filter.
+  id: totrans-389
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的导入过滤器修改了 AS1 内部的 BGP 路由选择。因此，它影响了 AS1 转发的数据包所遵循的路由。除了使用主链路发送数据包外，AS1 还希望通过高速链路接收其数据包。为此，AS2
+    也需要在它的导入过滤器中设置本地优先级属性。
 - en: '[PRE15]'
+  id: totrans-390
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Sometimes, the local-pref attribute is used to prefer a cheap link compared
     to a more expensive one. For example, in the network below, AS1 could wish to
     send and receive packets mainly via its interdomain link with AS4.
+  id: totrans-391
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，本地优先级属性被用来优先选择一个便宜的链路，而不是更昂贵的链路。例如，在下面的网络中，AS1 可能希望主要通过与其 AS4 的域间链路发送和接收数据包。
 - en: '[![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)](../_images/bgp-prefer.svg)'
+  id: totrans-392
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-prefer.svg](../Images/a6ae4372991a589dfd16713f3fbf28dc.png)'
 - en: Fig. 161 How to prefer a cheap link over an more expensive one ?[#](#id39 "Link
     to this image")
+  id: totrans-393
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 161 如何优先选择一个便宜的链路而不是更昂贵的链路？[#](#id39 "链接到这张图片")
 - en: AS1 can install the following import filter on R1 to ensure that it always sends
     packets via R2 when it has learned a route via AS2 and another via AS4.
+  id: totrans-394
   prefs: []
   type: TYPE_NORMAL
+  zh: AS1 可以在 R1 上安装以下导入过滤器，以确保它在通过 AS2 和 AS4 学习到路由时始终通过 R2 发送数据包。
 - en: '[PRE16]'
+  id: totrans-395
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: However, this import filter does not influence how AS3 , for example, prefers
     some routes over others. If the link between AS3 and AS2 is less expensive than
     the link between AS3 and AS4, AS3 could send all its packets via AS2 and AS1 would
     receive packets over its expensive link. An important point to remember about
     local-pref is that it can be used to prefer some routes over others to send packets,
     but it has no influence on the routes followed by received packets.
+  id: totrans-396
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，此导入过滤器不会影响 AS3（例如）如何优先选择某些路由。如果 AS3 和 AS2 之间的链路比 AS3 和 AS4 之间的链路便宜，AS3 可以发送所有数据包通过
+    AS2，而 AS1 将通过其昂贵的链路接收数据包。关于本地优先级的一个重要观点是，它可以用来优先选择某些路由以发送数据包，但它对接收数据包所遵循的路由没有影响。
 - en: 'Another important utilization of the local-pref attribute is to support the
     customer->provider and shared-cost peering relationships. From an economic point
     of view, there is an important difference between these three types of peering
@@ -2275,70 +3050,92 @@
     is usually neutral from an economic perspective. To take into account these economic
     issues, domains usually configure the import filters on their routers as follows
     :'
+  id: totrans-397
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地优先级属性的另一个重要用途是支持客户->提供商和共享成本对等关系。从经济角度来看，这三种对等关系之间存在重要的区别。一个域通常在通过提供商->客户关系发送数据包时赚钱。另一方面，当它通过客户->提供商关系发送数据包时，它必须向其提供商付费。使用共享成本对等关系发送数据包通常在经济上保持中立。为了考虑这些经济问题，域通常按照以下方式在其路由器上配置导入过滤器：
 - en: insert a high local-pref attribute in the routes learned from a customer
+  id: totrans-398
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从客户学习到的路由中插入一个高本地优先级属性
 - en: ''
+  id: totrans-399
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-400
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a medium local-pref attribute in the routes learned over a shared-cost
     peering
+  id: totrans-401
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在通过共享成本对等关系学习到的路由中插入一个中等本地优先级属性
 - en: ''
+  id: totrans-402
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-403
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: insert a low local-pref attribute in the routes learned from a provider
+  id: totrans-404
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在从提供商学习到的路由中插入一个低本地优先级属性
 - en: With such an import filter, the routers of a domain always prefer to reach destinations
     via their customers whenever such a route exists. Otherwise, they prefer to use
     shared-cost peering relationships and they only send packets via their providers
     when they do not know any alternate route. A consequence of setting the local-pref
     attribute like this is that Internet paths are often asymmetrical. Consider for
     example the internetwork shown in the figure below.
+  id: totrans-405
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这样的导入过滤器，一个域的路由器总是偏好通过其客户到达目的地，只要存在这样的路由。否则，它们偏好使用共享成本对等关系，并且只有在不知道任何替代路由时才通过其提供商发送数据包。将本地优先级属性设置为这样的结果通常是互联网路径不对称。例如，考虑下面图中的互联网。
 - en: '[![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)](../_images/asymetry.svg)'
+  id: totrans-406
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/asymetry.svg](../Images/0a126e385db1ba6a60851408e8964db3.png)'
 - en: Fig. 162 Asymmetry of Internet paths[#](#id40 "Link to this image")
+  id: totrans-407
   prefs: []
   type: TYPE_NORMAL
+  zh: 图162 互联网路径的不对称[#](#id40 "链接到这张图片")
 - en: Consider in this internetwork the routes available inside AS1 to reach AS5.
     AS1 learns the AS4:AS6:AS7:AS5 path from AS4, the AS3:AS8:AS5 path from AS3 and
     the AS2:AS5 path from AS2. The first path is chosen since it was learned from
     a customer. AS5 on the other hand receives three paths towards AS1 via its providers.
     It may select any of these paths to reach AS1 , depending on how it prefers one
     provider over the others.
+  id: totrans-408
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网中，考虑AS1内部到达AS5的可用路由。AS1从AS4学习到AS4:AS6:AS7:AS5路径，从AS3学习到AS3:AS8:AS5路径，从AS2学习到AS2:AS5路径。第一条路径被选择，因为它是从客户那里学到的。另一方面，AS5通过其提供商接收三条通往AS1的路由。它可以选择其中任何一条路径来到达AS1，具体取决于它如何偏好某个提供商而不是其他提供商。
 - en: BGP convergence[#](#bgp-convergence "Link to this heading")
+  id: totrans-409
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: BGP收敛[#](#bgp-convergence "链接到这个标题")
 - en: In the previous sections, we have explained the operation of BGP routers. Compared
     to intradomain routing protocols, a key feature of BGP is its ability to support
     interdomain routing policies that are defined by each domain as its import and
@@ -2347,34 +3144,46 @@
     routing policies. However, the routing policy chosen by a domain may interfere
     with the routing policy chosen by another domain. To understand this issue, let
     us first consider the simple internetwork shown below.
+  id: totrans-410
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的章节中，我们解释了BGP路由器的操作。与域内路由协议相比，BGP的一个关键特性是它能够支持每个域定义的域间路由策略，这些策略作为其导入和导出过滤器以及排名过程。一个域可以定义自己的路由策略，路由器供应商已经实施了许多配置调整以支持复杂的路由策略。然而，一个域选择的路由策略可能会干扰另一个域选择的路由策略。为了理解这个问题，让我们首先考虑下面的简单互联网。
 - en: '[![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)](../_images/disagree.svg)'
+  id: totrans-411
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/disagree.svg](../Images/e0d8fea96abc42f780dccaaf6f640d03.png)'
 - en: Fig. 163 The disagree internetwork[#](#id41 "Link to this image")
+  id: totrans-412
   prefs: []
   type: TYPE_NORMAL
+  zh: 图163 不一致互联网路径[#](#id41 "链接到这张图片")
 - en: 'In this internetwork, we focus on the route towards 2001:db8::1234/48 which
     is advertised by AS1. Let us also assume that AS3 (resp. AS4) prefers, e.g. for
     economic reasons, a route learned from AS4 (AS3) over a route learned from AS1.
     When AS1 sends U(2001:db8::1234/48,AS1) to AS3 and AS4, three sequences of exchanges
     of BGP messages are possible :'
+  id: totrans-413
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网中，我们关注的是由AS1通告的通往2001:db8::1234/48的路由。让我们还假设AS3（分别AS4）出于经济原因等偏好从AS4（AS3）学习到的路由，而不是从AS1学习到的路由。当AS1向AS3和AS4发送U(2001:db8::1234/48,AS1)时，可能发生三种BGP消息交换序列：
 - en: AS3 sends first U(2001:db8:1234/48,AS3:AS1) to AS4. AS4 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS3 and does not advertise a route to AS3
+  id: totrans-414
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3首先向AS4发送U(2001:db8:1234/48,AS3:AS1)。AS4已经学习了通往2001:db8:1234/48的两种路由。它运行其BGP决策过程，并选择通过AS3的路由，不对AS3通告路由。
 - en: ''
+  id: totrans-415
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-416
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2382,16 +3191,20 @@
 - en: AS4 first sends U(2001:db8:1234/48,AS4:AS1) to AS3. AS3 has learned two routes
     towards 2001:db8:1234/48. It runs its BGP decision process and selects the route
     via AS4 and does not advertise a route to AS4
+  id: totrans-417
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4首先向AS3发送U(2001:db8:1234/48,AS4:AS1)。AS3已经学习了通往2001:db8:1234/48的两种路由。它运行其BGP决策过程，并选择通过AS4的路由，不对AS4通告路由。
 - en: ''
+  id: totrans-418
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-419
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2404,241 +3217,322 @@
     (resp. U(2001:db8:1234/48,AS4:AS1)) to AS4 (resp. AS3). AS3 and AS4 could in theory
     continue to exchange BGP messages for ever. In practice, one of them sends one
     message faster than the other and BGP converges.
+  id: totrans-420
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS4发送U(2001:db8:1234/48,AS3:AS1)和同时，AS4向AS3发送U(2001:db8:1234/48,AS4:AS1)。AS3更喜欢通过AS4的路径，因此向AS4发送W(2001:db8:1234/48)。同时，AS4更喜欢通过AS3的路径，因此向AS3发送W(2001:db8:1234/48)。在收到BGP
+    Withdraws后，AS3和AS4只知道通往2001:db8:1234/48的直接路径。AS3（分别）向AS4发送U(2001:db8:1234/48,AS3:AS1)（分别）向AS3发送U(2001:db8:1234/48,AS4:AS1)。理论上，AS3和AS4可以继续无限期地交换BGP消息。在实践中，其中一个发送消息的速度比另一个快，BGP收敛。
 - en: The example above has shown that the routes selected by BGP routers may sometimes
     depend on the ordering of the BGP messages that are exchanged. Other similar scenarios
     may be found in [**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html).
+  id: totrans-421
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述示例表明，BGP路由器选择的路径有时可能取决于交换的BGP消息的顺序。其他类似的场景可以在[**RFC 4264**](https://datatracker.ietf.org/doc/html/rfc4264.html)中找到。
 - en: From an operational perspective, the above configuration is annoying since the
     network operators cannot easily predict which paths are chosen. Unfortunately,
     there are even more annoying BGP configurations. For example, let us consider
     the configuration below which is often named Bad Gadget [[GW1999]](../bibliography.html#gw1999)
+  id: totrans-422
   prefs: []
   type: TYPE_NORMAL
+  zh: 从操作角度来看，上述配置很烦人，因为网络运营商无法轻易预测哪些路径被选择。不幸的是，还有更多令人烦恼的BGP配置。例如，让我们考虑以下配置，这通常被称为坏设备[[GW1999]](../bibliography.html#gw1999)
 - en: '[![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)](../_images/bad-gadget.svg)'
+  id: totrans-423
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/bad-gadget.svg](../Images/98a26037d12a6cb60b64faf1e25a4470.png)](../_images/bad-gadget.svg)'
 - en: Fig. 164 The bad gadget internetwork[#](#id42 "Link to this image")
+  id: totrans-424
   prefs: []
   type: TYPE_NORMAL
+  zh: 图164 坏设备互联网络[#](#id42 "链接到这张图片")
 - en: 'In this internetwork, there are four ASes. AS0 advertises one route towards
     one prefix and we only analyze the routes towards this prefix. The routing preferences
     of AS1, AS3 and AS4 are the following :'
+  id: totrans-425
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个互联网络中，有四个AS。AS0向一个前缀广告一条路由，我们只分析这条前缀的路由。AS1、AS3和AS4的路由优先级如下：
 - en: AS1 prefers the path AS3:AS0 over all other paths
+  id: totrans-426
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS1比所有其他路径更喜欢AS3:AS0的路径
 - en: ''
+  id: totrans-427
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-428
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 prefers the path AS4:AS0 over all other paths
+  id: totrans-429
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS3比所有其他路径更喜欢AS4:AS0的路径
 - en: ''
+  id: totrans-430
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-431
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 prefers the path AS1:AS0 over all other paths
+  id: totrans-432
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AS4比所有其他路径更喜欢AS1:AS0的路径
 - en: 'AS0 sends U(p,AS0) to AS1, AS3 and AS4. As this is the only route known by
     AS1, AS3 and AS4 towards p, they all select the direct path. Let us now consider
     one possible exchange of BGP messages :'
+  id: totrans-433
   prefs: []
   type: TYPE_NORMAL
+  zh: AS0向AS1、AS3和AS4发送U(p,AS0)。由于这是AS1、AS3和AS4知道的唯一通往p的路由，它们都选择了直接路径。现在让我们考虑BGP消息的一个可能交换：
 - en: AS1 sends U(p, AS1:AS0) to AS3 and AS4. AS4 selects the path via AS1 since this
     is its preferred path. AS3 still uses the direct path.
+  id: totrans-434
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS1向AS3和AS4发送U(p, AS1:AS0)。AS4选择通过AS1的路径，因为这正是它首选的路径。AS3仍然使用直接路径。
 - en: ''
+  id: totrans-435
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-436
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 advertises U(p,AS4:AS1:AS0) to AS3.
+  id: totrans-437
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4向AS3广告U(p,AS4:AS1:AS0)。
 - en: ''
+  id: totrans-438
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-439
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p, AS3:AS0) to AS1 and AS4. AS1 selects the path via AS3 since this
     is its preferred path. AS4 still uses the path via AS1.
+  id: totrans-440
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS1和AS4发送U(p, AS3:AS0)。AS1选择通过AS3的路径，因为这正是它首选的路径。AS4仍然使用通过AS1的路径。
 - en: ''
+  id: totrans-441
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-442
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: As AS1 has changed its path, it sends U(p,AS1:AS3:AS0) to AS4 and W(p) to AS3
     since its new path is via AS3. AS4 switches back to the direct path.
+  id: totrans-443
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于AS1更改了路径，它向AS4发送U(p,AS1:AS3:AS0)和向AS3发送W(p)，因为它的新路径是通过AS3。AS4切换回直接路径。
 - en: ''
+  id: totrans-444
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-445
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS4 sends U(p,AS4:AS0) to AS1 and AS3. AS3 prefers the path via AS4.
+  id: totrans-446
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS4向AS1和AS3发送U(p,AS4:AS0)。AS3更喜欢通过AS4的路径。
 - en: ''
+  id: totrans-447
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-448
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: AS3 sends U(p,AS3:AS4:AS0) to AS1 and W(p) to AS4. AS1 switches back to the
     direct path and we are back at the first step.
+  id: totrans-449
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AS3向AS1和AS4发送U(p,AS3:AS4:AS0)和W(p)。AS1切换回直接路径，我们回到了第一步。
 - en: This example shows that the convergence of BGP is unfortunately not always guaranteed
     as some interdomain routing policies may interfere with each other in complex
     ways. [[GW1999]](../bibliography.html#gw1999) have shown that checking for global
     convergence is either NP-complete or NP-hard. See [[GSW2002]](../bibliography.html#gsw2002)
     for a more detailed discussion.
+  id: totrans-450
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个例子表明，BGP的收敛性并不总是可以保证的，因为一些域间路由策略可能会以复杂的方式相互干扰。[GW1999](../bibliography.html#gw1999)已经表明，检查全局收敛性要么是NP完全的，要么是NP难的。参见[[GSW2002]](../bibliography.html#gsw2002)以获取更详细的讨论。
 - en: 'Fortunately, there are some operational guidelines [[GR2001]](../bibliography.html#gr2001)
     [[GGR2001]](../bibliography.html#ggr2001) that can guarantee BGP convergence in
     the global Internet. To ensure that BGP will converge, these guidelines consider
     that there are two types of peering relationships : customer->provider and shared-cost.
     In this case, BGP convergence is guaranteed provided that the following conditions
     are fulfilled :'
+  id: totrans-451
   prefs: []
   type: TYPE_NORMAL
+  zh: 幸运的是，有一些操作指南 [[GR2001]](../bibliography.html#gr2001) [[GGR2001]](../bibliography.html#ggr2001)
+    可以保证全球互联网中的BGP收敛。为了确保BGP会收敛，这些指南考虑存在两种对等关系类型：客户->提供商和共享成本。在这种情况下，只要满足以下条件，BGP收敛就得到保证：
 - en: The topology composed of all the directed customer->provider peering links is
     a graph that does not contain any cycle
+  id: totrans-452
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由所有有向客户->提供商对等链接组成的拓扑是一个不包含任何环的图。
 - en: ''
+  id: totrans-453
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-454
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: An AS always prefers a route received from a customer over a route received
     from a shared-cost peer or a provider.
+  id: totrans-455
   prefs:
   - PREF_BQ
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 一个AS总是优先考虑从客户那里接收的路由，而不是从共享成本对等方或提供商那里接收的路由。
 - en: The first guideline implies that the provider of the provider of ASx cannot
     be a customer of ASx. Such a relationship would not make sense from an economic
     perspective as it would imply circular payments. Furthermore, providers are usually
     larger than customers.
+  id: totrans-456
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条指南意味着ASx的提供商不能是ASx的客户。从经济角度来看，这种关系是没有意义的，因为它会暗示循环支付。此外，提供商通常比客户规模大。
 - en: The second guideline also corresponds to economic preferences. Since a provider
     earns money when sending packets to one of its customers, it makes sense to prefer
     such customer learned routes over routes learned from providers. [[GR2001]](../bibliography.html#gr2001)
     also shows that BGP convergence is guaranteed even if an AS associates the same
     preference to routes learned from a shared-cost peer and routes learned from a
     customer.
+  id: totrans-457
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二条指南也对应于经济偏好。由于提供商在向其客户之一发送数据包时赚钱，因此优先考虑从客户那里学习的路由而不是从提供商那里学习的路由是有意义的。[[GR2001]](../bibliography.html#gr2001)
+    也表明，即使一个AS将相同的优先级分配给从共享成本对等方和客户那里学习的路由，BGP收敛也是保证的。
 - en: From a theoretical perspective, these guidelines should be verified automatically
     to ensure that BGP will always converge in the global Internet. However, such
     a verification cannot be performed in practice because this would force all domains
     to disclose their routing policies (and few are willing to do so) and furthermore
     the problem is known to be NP-hard [GW1999].
+  id: totrans-458
   prefs: []
   type: TYPE_NORMAL
+  zh: 从理论角度来看，这些指南应该自动验证，以确保BGP在全球互联网中始终收敛。然而，在实践中，这种验证是无法进行的，因为这会迫使所有域披露它们的路由策略（而且很少有人愿意这样做），而且这个问题已知是NP难的
+    [GW1999]。
 - en: In practice, researchers and operators expect that these guidelines are verified
     [[10]](#fgranularity) in most domains. Thanks to the large amount of BGP data
     that has been collected by operators and researchers [[11]](#fbgpdata), several
     studies have analyzed the AS-level topology of the Internet. [[SARK2002]](../bibliography.html#sark2002)
     is one of the first analysis. More recent studies include [[COZ2008]](../bibliography.html#coz2008)
     and [[DKF+2007]](../bibliography.html#dkf-2007)
+  id: totrans-459
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实践中，研究人员和运营商期望这些指南在大多数域中得到验证 [[10]](#fgranularity)。多亏了运营商和研究人员收集的大量BGP数据 [[11]](#fbgpdata)，一些研究已经分析了互联网的AS级拓扑。[[SARK2002]](../bibliography.html#sark2002)
+    是最早的分析之一。更近的研究包括 [[COZ2008]](../bibliography.html#coz2008) 和 [[DKF+2007]](../bibliography.html#dkf-2007)。
 - en: Based on these studies and [[ATLAS2009]](../bibliography.html#atlas2009), the
     AS-level Internet topology can be summarized as shown in the figure below.
+  id: totrans-460
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于这些研究和 [[ATLAS2009]](../bibliography.html#atlas2009)，AS级互联网拓扑可以总结如下，如图所示。
 - en: '[![../_images/bgp-hierarchy.svg](../Images/7ed75e3a3085ea745ef374995877c629.png)](../_images/bgp-hierarchy.svg)'
+  id: totrans-461
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/bgp-hierarchy.svg](../Images/7ed75e3a3085ea745ef374995877c629.png)'
 - en: Fig. 165 The layered structure of the global Internet[#](#id43 "Link to this
     image")
+  id: totrans-462
   prefs: []
   type: TYPE_NORMAL
+  zh: 图165 全球互联网的分层结构[#](#id43 "链接到这张图片")
 - en: The domains on the Internet can be divided in about four categories according
     to their role and their position in the AS-level topology.
+  id: totrans-463
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据它们在AS级拓扑中的角色和位置，互联网上的域可以大致分为四类。
 - en: Due to this organization of the Internet and due to the BGP decision process,
     most AS-level paths on the Internet have a length of 3-5 AS hops.
+  id: totrans-464
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于互联网的这种组织结构和BGP决策过程，互联网上大多数AS级路径的长度为3-5个AS跳数。
 - en: Footnotes
+  id: totrans-465
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚注

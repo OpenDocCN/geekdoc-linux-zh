@@ -1,111 +1,148 @@
 - en: The Transmission Control Protocol#
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 传输控制协议#
 - en: 原文：[https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html](https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html](https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html)
 - en: The Transmission Control Protocol (TCP) was initially defined in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     Several parts of the protocol have been improved since the publication of the
     original protocol specification [[1]](#ftcpspecs). However, the basics of the
     protocol remain and an implementation that only supports [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     should inter-operate with today’s implementation.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 传输控制协议（TCP）最初在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中定义。自原始协议规范发布以来，该协议的几个部分已经得到改进[[1]](#ftcpspecs)。然而，协议的基本原理仍然存在，并且仅支持[**RFC
+    793**](https://datatracker.ietf.org/doc/html/rfc793.html)的实现应该能够与今天的实现进行互操作。
 - en: 'TCP provides a reliable bytestream, connection-oriented transport service on
     top of the unreliable connectionless network service provided by [IP](../glossary.html#term-IP).
     TCP is used by a large number of applications, including :'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP在不可靠的无连接网络服务之上提供了一种可靠的字节流、面向连接的传输服务，这种网络服务由[IP](../glossary.html#term-IP)提供。TCP被大量应用程序使用，包括：
 - en: Email ([SMTP](../glossary.html#term-SMTP), [POP](../glossary.html#term-POP),
     [IMAP](../glossary.html#term-IMAP))
+  id: totrans-4
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 电子邮件（[SMTP](../glossary.html#term-SMTP)，[POP](../glossary.html#term-POP)，[IMAP](../glossary.html#term-IMAP)）
 - en: ''
+  id: totrans-5
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-6
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: World wide web ( [HTTP](../glossary.html#term-HTTP), …)
+  id: totrans-7
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 全球万维网（[HTTP](../glossary.html#term-HTTP)，…）
 - en: ''
+  id: totrans-8
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-9
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: Most file transfer protocols ( [ftp](../glossary.html#term-ftp), peer-to-peer
     file sharing applications , …)
+  id: totrans-10
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 大多数文件传输协议（[ftp](../glossary.html#term-ftp)，对等文件共享应用程序，…）
 - en: ''
+  id: totrans-11
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-12
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'remote computer access : [telnet](../glossary.html#term-telnet), [ssh](../glossary.html#term-ssh),
     [X11](../glossary.html#term-X11), [VNC](../glossary.html#term-VNC), …'
+  id: totrans-13
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 远程计算机访问：[telnet](../glossary.html#term-telnet)，[ssh](../glossary.html#term-ssh)，[X11](../glossary.html#term-X11)，[VNC](../glossary.html#term-VNC)，…
 - en: ''
+  id: totrans-14
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-15
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: non-interactive multimedia applications (flash, …)
+  id: totrans-16
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 非交互式多媒体应用程序（Flash，…）
 - en: On the global Internet, most of the applications used in the wide area rely
     on TCP. Many studies [[2]](#ftcpusage) have reported that TCP was responsible
     for more than 90% of the data exchanged in the global Internet.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在全球互联网上，大多数在广域网中使用的应用程序都依赖于TCP。许多研究[[2]](#ftcpusage)报告称，TCP是全球互联网中交换数据的90%以上。
 - en: To provide this service, TCP relies on a simple segment format that is shown
     in the figure below. Each TCP segment contains a header described below and, optionally,
     a payload. The default length of the TCP header is twenty bytes, but some TCP
     headers contain options.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提供这项服务，TCP依赖于图下所示的简单分段格式。每个TCP分段包含以下描述的头部，以及可选的负载。TCP头部的默认长度为20字节，但某些TCP头部包含选项。
 - en: '[![../_images/tcp.svg](../Images/87dee73fcc75a09e24fba746d7444297.png)](../_images/tcp.svg)'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp.svg](../Images/87dee73fcc75a09e24fba746d7444297.png)'
 - en: Fig. 70 TCP header format[#](#id28 "Link to this image")
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 图70 TCP头部格式[#](#id28 "链接到此图像")
 - en: 'A TCP header contains the following fields :'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP头部包含以下字段：
 - en: 'the source and destination ports. The source and destination ports play an
     important role in TCP, as they allow the identification of the connection to which
     a TCP segment belongs. When a client opens a TCP connection, it typically selects
@@ -116,87 +153,107 @@
     port of the segments sent by the client (see figure [Utilization of the TCP source
     and destination ports](#fig-tcpports)). A TCP connection is always identified
     by four pieces of information :'
+  id: totrans-22
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 源端口和目标端口。在TCP中，源端口和目标端口起着重要作用，因为它们允许识别TCP分段所属的连接。当客户端打开TCP连接时，它通常会选择一个临时TCP端口号作为其源端口，并通过使用服务器的端口号来联系服务器。客户端在此连接上发送的所有分段都具有相同的源端口和目标端口。服务器发送包含源（分别。目标）端口的分段，即客户端发送的分段的目标（分别。源）端口（参见图[TCP源和目标端口的利用](#fig-tcpports)）。一个TCP连接始终由以下四项信息标识：
 - en: ''
+  id: totrans-23
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-24
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the address of the client
+  id: totrans-25
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 客户端的地址
 - en: ''
+  id: totrans-26
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-27
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: the address of the server
+  id: totrans-28
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 服务器的地址
 - en: ''
+  id: totrans-29
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-30
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: the port chosen by the client
+  id: totrans-31
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 客户端选择的端口
 - en: ''
+  id: totrans-32
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-33
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: the port chosen by the server
+  id: totrans-34
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 服务器选择的端口
 - en: ''
+  id: totrans-35
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-36
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -206,16 +263,20 @@
     bits) fields are used to provide a reliable data transfer, using a window-based
     protocol. In a TCP bytestream, each byte of the stream consumes one sequence number.
     Their usage is described in more detail in section [TCP reliable data transfer](#tcpreliable)
+  id: totrans-37
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号（32位）、确认号（32位）和窗口（16位）字段用于通过基于窗口的协议提供可靠的数据传输。在TCP字节流中，流中的每个字节消耗一个序列号。它们的用法在[TCP可靠数据传输](#tcpreliable)部分中更详细地描述。
 - en: ''
+  id: totrans-38
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-39
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -225,49 +286,62 @@
     be described here. Additional details about the utilization of this pointer may
     be found in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html),
     [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html) or [[Stevens1994]](../bibliography.html#stevens1994)
+  id: totrans-40
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 紧急指针用于指示某些数据应被视为TCP字节流中的紧急数据。然而，在实际应用中很少使用，此处不予描述。有关此指针的更多详细信息，请参阅[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)、[**RFC
+    1122**](https://datatracker.ietf.org/doc/html/rfc1122.html)或[[Stevens1994]](../bibliography.html#stevens1994)
 - en: ''
+  id: totrans-41
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-42
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'the flags field contains a set of bit flags that indicate how a segment should
     be interpreted by the TCP entity receiving it :'
+  id: totrans-43
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 标志字段包含一组位标志，指示TCP实体如何解释接收到的段：
 - en: ''
+  id: totrans-44
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-45
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-46
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the SYN flag is used during connection establishment
+  id: totrans-47
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: SYN标志用于连接建立过程中
 - en: ''
+  id: totrans-48
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -275,6 +349,7 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-49
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -282,13 +357,16 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: the FIN flag is used during connection release
+  id: totrans-50
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: FIN标志用于连接释放过程中
 - en: ''
+  id: totrans-51
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -296,6 +374,7 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-52
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -303,13 +382,16 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: the RST is used in case of problems or when an invalid segment has been received
+  id: totrans-53
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: RST在出现问题时或接收到无效段时使用
 - en: ''
+  id: totrans-54
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -317,6 +399,7 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-55
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -326,13 +409,16 @@
 - en: when the ACK flag is set, it indicates that the acknowledgment field contains
     a valid number. Otherwise, the content of the acknowledgment field must be ignored
     by the receiver
+  id: totrans-56
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当ACK标志被设置时，它表示确认字段包含一个有效的数字。否则，接收方必须忽略确认字段的内容
 - en: ''
+  id: totrans-57
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -340,6 +426,7 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-58
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -347,13 +434,16 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: the URG flag is used together with the Urgent pointer
+  id: totrans-59
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: URG标志与紧急指针一起使用
 - en: ''
+  id: totrans-60
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -361,6 +451,7 @@
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-61
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -371,50 +462,62 @@
     that it should pass all the data it has received to the receiving process. However,
     in practice TCP implementations do not allow TCP users to indicate when the PSH
     flag should be set.
+  id: totrans-62
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: PSH标志用作发送方向接收方发出的通知，指示接收方应将其接收到的所有数据传递给接收进程。然而，在实际中，TCP实现不允许TCP用户指示何时设置PSH标志。
 - en: ''
+  id: totrans-63
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-64
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the checksum field contains the value of the Internet checksum computed over
     the entire TCP segment and a pseudo-header as with UDP
+  id: totrans-65
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 校验和字段包含整个TCP段和伪头（与UDP类似）计算出的Internet校验和值
 - en: ''
+  id: totrans-66
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-67
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the Reserved field was initially reserved for future utilization. It is now
     used by [**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html).
+  id: totrans-68
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保留字段最初是为未来使用预留的。现在它被[**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html)使用。
 - en: ''
+  id: totrans-69
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-70
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -422,16 +525,20 @@
 - en: the TCP Header Length (THL) or Data Offset field is a four-bit field that indicates
     the size of the TCP header in 32 bit words. The maximum size of the TCP header
     is thus 64 bytes.
+  id: totrans-71
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: TCP头长度（THL）或数据偏移字段是一个4位字段，指示TCP头的大小（以32位字为单位）。因此，TCP头的最大大小为64字节。
 - en: ''
+  id: totrans-72
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-73
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -442,54 +549,68 @@
     to evolve since the early eighties. The details of the TCP header extension are
     explained in sections [TCP connection establishment](#tcpopen) and [TCP reliable
     data transfer](#tcpreliable).
+  id: totrans-74
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可选头扩展用于向TCP头添加可选信息。多亏了这个头扩展，才有可能向TCP头添加原始规范中没有计划的新字段。这使得TCP自20世纪80年代初以来得以发展。TCP头扩展的详细信息在[TCP连接建立](#tcpopen)和[TCP可靠数据传输](#tcpreliable)部分中解释。
 - en: ''
+  id: totrans-75
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-76
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-77
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: '![Figure made with TikZ](../Images/459c6e652d1308abcbccb7d1bb110ad1.png)'
+  id: totrans-78
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![使用TikZ制作的图](../Images/459c6e652d1308abcbccb7d1bb110ad1.png)'
 - en: ''
+  id: totrans-79
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Fig. 71 Utilization of the TCP source and destination ports
+  id: totrans-80
   prefs:
   - PREF_BQ
   - PREF_IND
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 图71 TCP源端口和目的端口的利用
 - en: The rest of this section is organized as follows. We first explain the establishment
     and the release of a TCP connection, then we discuss the mechanisms that are used
     by TCP to provide a reliable bytestream service. We end the section with a discussion
     of network congestion and explain the mechanisms that TCP uses to avoid congestion
     collapse.
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节的其余部分组织如下。我们首先解释TCP连接的建立和释放，然后讨论TCP提供可靠字节流服务所使用的机制。我们以讨论网络拥塞和TCP避免拥塞崩溃的机制结束本节。
 - en: '## TCP connection establishment[#](#tcp-connection-establishment "Link to this
     heading")'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '## TCP连接建立[#](#tcp-connection-establishment "链接到本标题")'
 - en: 'A TCP connection is established by using a three-way handshake. The connection
     establishment phase uses the sequence number, the acknowledgment number and the
     SYN flag. When a TCP connection is established, the two communicating hosts negotiate
@@ -498,75 +619,98 @@
     by one at least every 4 microseconds and after each connection establishment [[3]](#ftcpclock).
     When a client host wants to open a TCP connection with a server host, it creates
     a TCP segment with :'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP连接是通过使用三次握手建立的。连接建立阶段使用序列号、确认号和SYN标志。当TCP连接建立时，两个通信主机协商用于连接两个方向的初始序列号。为此，每个TCP实体维护一个32位计数器，该计数器至少每4微秒增加一次，并在每次连接建立后增加
+    [[3]](#ftcpclock)。当客户端主机想要与服务器主机建立TCP连接时，它创建一个包含以下内容的TCP段：
 - en: the SYN flag set
+  id: totrans-84
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置SYN标志
 - en: ''
+  id: totrans-85
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-86
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the sequence number set to the current value of the 32-bit counter of the client
     host’s TCP entity
+  id: totrans-87
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号设置为客户端主机TCP实体的32位计数器的当前值
 - en: 'Upon reception of this segment (which is often called a SYN segment), the server
     host replies with a segment containing :'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在接收到这个段（通常称为SYN段）后，服务器主机回复一个包含以下内容的段：
 - en: the SYN flag set
+  id: totrans-89
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置SYN标志
 - en: ''
+  id: totrans-90
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-91
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the sequence number set to the current value of the 32-bit counter of the server
     host’s TCP entity
+  id: totrans-92
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号设置为服务器主机TCP实体的32位计数器的当前值
 - en: ''
+  id: totrans-93
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-94
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the ACK flag set
+  id: totrans-95
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置ACK标志
 - en: ''
+  id: totrans-96
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-97
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -577,61 +721,83 @@
     including sequence number x and that it is expecting data having sequence number
     x+1. As the SYN flag was set in a segment having sequence number x, this implies
     that setting the SYN flag in a segment consumes one sequence number.
+  id: totrans-98
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号设置为接收到的SYN段的序列号加1 \(\pmod{2^{32}}\). 当一个TCP实体发送一个确认号为x+1的段时，这表示它已经接收了所有从序列号x开始及包括x的所有数据，并且正在等待序列号为x+1的数据。由于SYN标志在序列号为x的段中已设置，这意味着在段中设置SYN标志会消耗一个序列号。
 - en: 'This segment is often called a SYN+ACK segment. The acknowledgment confirms
     to the client that the server has correctly received the SYN segment. The sequence
     number of the SYN+ACK segment is used by the server host to verify that the client
     has received the segment. Upon reception of the SYN+ACK segment, the client host
     replies with a segment containing :'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个段通常被称为SYN+ACK段。确认号确认服务器已正确接收了SYN段。SYN+ACK段的序列号由服务器主机用于验证客户端是否已接收该段。在接收到SYN+ACK段后，客户端主机回复一个包含以下内容的段：
 - en: the ACK flag set
+  id: totrans-100
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置ACK标志
 - en: ''
+  id: totrans-101
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-102
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the acknowledgment number set to the sequence number of the received SYN+ACK
     segment incremented by 1 \(\pmod{2^{32}}\)
+  id: totrans-103
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号设置为接收到的SYN+ACK段的序列号加1 \(\pmod{2^{32}}\)
 - en: At this point, the TCP connection is open and both the client and the server
     are allowed to send TCP segments containing data. This is illustrated in the figure
     below.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 到这一点，TCP连接已打开，客户端和服务器都可以发送包含数据的TCP段。这在下图中表示。
 - en: '[![../_images/tcp-estab.png](../Images/694105c783e9c32b13337f7332d8f745.png)](../_images/tcp-estab.png)'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-estab.png](../Images/694105c783e9c32b13337f7332d8f745.png)](../_images/tcp-estab.png)'
 - en: Fig. 72 Establishment of a TCP connection[#](#id30 "Link to this image")
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 图72 TCP连接建立[#](#id30 "链接到此图像")
 - en: In the figure above, the connection is considered to be established by the client
     once it has received the SYN+ACK segment, while the server considers the connection
     to be established upon reception of the ACK segment. The first data segment sent
     by the client (server) has its sequence number set to x+1 (resp. y+1).
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上面的图中，客户端一旦接收到SYN+ACK段，就认为连接已建立，而服务器在接收到ACK段后认为连接已建立。客户端（服务器）发送的第一个数据段的序列号设置为x+1（分别对应y+1）。
 - en: Note
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: Computing TCP’s initial sequence number
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算TCP的初始序列号
 - en: In the original TCP specification [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html),
     each TCP entity maintained a clock to compute the initial sequence number ([ISN](../glossary.html#term-ISN))
     placed in the SYN and SYN+ACK segments. This made the ISN predictable and caused
@@ -647,11 +813,16 @@
     this attack, current TCP implementations add randomness to the ISN. One of the
     solutions, proposed in [**RFC 1948**](https://datatracker.ietf.org/doc/html/rfc1948.html)
     is to compute the ISN as
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 在原始的TCP规范[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中，每个TCP实体维护一个时钟来计算放置在SYN和SYN+ACK段中的初始序列号([ISN](../glossary.html#term-ISN))。这使得ISN可预测，并引发了安全问题。典型的安全问题如下。考虑一个基于其IP地址信任主机的服务器，并允许系统管理员无需密码即可从该主机登录[[4]](#frlogin)。现在考虑一个知道这种特定配置并能够发送具有客户端地址作为源地址的IP数据包的攻击者。他可以向服务器发送伪造的TCP段，但不会收到服务器的响应。如果他能够预测服务器选择的ISN，他可以发送一个伪造的SYN段，并在稍后发送一个伪造的ACK段以确认接收服务器发送的SYN+ACK段。一旦TCP连接建立，他就可以用它向服务器发送任何命令。为了应对这种攻击，当前的TCP实现向ISN添加随机性。在[**RFC
+    1948**](https://datatracker.ietf.org/doc/html/rfc1948.html)中提出的解决方案之一是将ISN计算为
 - en: '[PRE0]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: where M is the current value of the TCP clock and H is a cryptographic hash
     function. localhost and remotehost (resp. localport and remoteport ) are the IP
     addresses (port numbers) of the local and remote host and secret is a random number
@@ -660,8 +831,10 @@
     performed with the first implementations of this technique showed that it was
     difficult to implement it correctly, but today’s TCP implementations now generate
     good ISNs.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中M是当前TCP时钟的值，H是一个加密散列函数。localhost和remotehost（分别对应localport和remoteport）是本地和远程主机的IP地址（端口号），secret是一个只有服务器知道的随机数。这种方法允许服务器同时为不同的客户端使用不同的ISN。[测量](http://lcamtuf.coredump.cx/newtcp/)表明，这种技术的首次实现很难正确实现，但今天的TCP实现现在生成好的ISN。
 - en: A server could, of course, refuse to open a TCP connection upon reception of
     a SYN segment. This refusal may be due to various reasons. There may be no server
     process that is listening on the destination port of the SYN segment. The server
@@ -672,33 +845,47 @@
     received SYN segment incremented by one as its acknowledgment number. This is
     illustrated in the figure below. We discuss the other usages of the TCP RST flag
     later (see [TCP connection release](#tcprelease)).
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，服务器可以在接收到SYN段后拒绝打开TCP连接。这种拒绝可能由于各种原因。可能没有监听SYN段目标端口的服务器进程。服务器可以始终拒绝来自特定客户端的连接建立（例如，由于安全原因）或服务器可能没有足够的资源在那时接受新的TCP连接。在这种情况下，服务器会回复一个设置了RST标志并包含接收到的SYN段序列号加一的确认号的TCP段。这在下图中说明。我们将在后面讨论TCP
+    RST标志的其他用法（见[TCP连接释放](#tcprelease)）。
 - en: '[![../_images/tcp-estab-rej.png](../Images/6efba2b39440115db107cf4f9ac21ff3.png)](../_images/tcp-estab-rej.png)'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-estab-rej.png](../Images/6efba2b39440115db107cf4f9ac21ff3.png)(../_images/tcp-estab-rej.png)'
 - en: Fig. 73 TCP connection establishment rejected by peer[#](#id31 "Link to this
     image")
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 图73 TCP连接被对等方拒绝[#](#id31 "链接到此图像")
 - en: TCP connection establishment can be described as the four state Finite State
     Machine shown below. In this FSM, !X (resp. ?Y) indicates the transmission of
     segment X (resp. reception of segment Y) during the corresponding transition.
     Init is the initial state.
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP连接建立可以描述为以下所示的四个状态有限状态机。在这个FSM中，!X（分别对应?Y）表示在相应的转换期间传输段X（分别接收段Y）。Init是初始状态。
 - en: '![Figure made with TikZ](../Images/fa409c45183ba9c4c429c05386da995b.png)'
+  id: totrans-117
   prefs:
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![使用TikZ制作的图](../Images/fa409c45183ba9c4c429c05386da995b.png)'
 - en: ''
+  id: totrans-118
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Fig. 74 TCP FSM for connection establishment
+  id: totrans-119
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 图74 TCP连接建立FSM
 - en: A client host starts in the Init state. It then sends a SYN segment and enters
     the SYN Sent state where it waits for a SYN+ACK segment. Then, it replies with
     an ACK segment and enters the Established state where data can be exchanged. On
@@ -708,8 +895,11 @@
     a SYN segment, the server’s TCP entity replies with a SYN+ACK and enters the SYN
     RCVD state. It remains in this state until it receives an ACK segment that acknowledges
     its SYN+ACK segment, with this it then enters the Established state.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户端主机从Init状态开始。然后它发送一个SYN段并进入SYN Sent状态，在那里它等待接收SYN+ACK段。然后，它回复一个ACK段并进入Established状态，在此状态下可以交换数据。另一方面，服务器主机从Init状态开始。当服务器进程开始监听目标端口时，底层的TCP实体创建一个TCP控制块和一个队列来处理传入的SYN段。在接收到SYN段后，服务器的TCP实体回复一个SYN+ACK并进入SYN
+    RCVD状态。它保持在这个状态，直到它接收到一个确认其SYN+ACK段的ACK段，然后进入Established状态。
 - en: Apart from these two paths in the TCP connection establishment FSM, there is
     a third path that corresponds to the case when both the client and the server
     send a SYN segment to open a TCP connection [[5]](#ftcpboth). In this case, the
@@ -718,20 +908,29 @@
     and enter the SYN RCVD state. The SYN+ACK that arrives from the other host allows
     it to transition to the Established state. The figure below illustrates such a
     simultaneous establishment of a TCP connection.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了TCP连接建立有限状态机（FSM）中的这两条路径之外，还存在第三条路径，对应于客户端和服务器都发送SYN段以打开TCP连接的情况 [[5]](#ftcpboth)。在这种情况下，客户端和服务器发送SYN段并进入SYN
+    Sent状态。在接收到来自另一主机的SYN段后，它们通过发送SYN+ACK段并进入SYN RCVD状态来回复。来自另一主机的SYN+ACK允许它过渡到Established状态。下面的图示说明了这种同时建立TCP连接的情况。
 - en: '[![../_images/tcp-estab-sim.png](../Images/51666ccbe7edc387550885fadae101a9.png)](../_images/tcp-estab-sim.png)'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '![![TCP连接建立模拟图](../Images/51666ccbe7edc387550885fadae101a9.png)](../_images/tcp-estab-sim.png)'
 - en: Fig. 75 Simultaneous establishment of a TCP connection[#](#id33 "Link to this
     image")
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 图75 TCP连接的同时建立[#](#id33 "链接到这张图片")
 - en: As explained earlier, TCP segments may contain an optional header extension.
     In the SYN and SYN+ACK segments, these options are used to negotiate some parameters
     and the utilization of extensions to the basic TCP specification.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，TCP段可能包含可选的头部扩展。在SYN和SYN+ACK段中，这些选项用于协商一些参数以及基本TCP规范扩展的使用。
 - en: The first parameter which is negotiated during the establishment of a TCP connection
     is the Maximum Segment Size ([MSS](../glossary.html#term-MSS)). The MSS is the
     size of the largest segment that a TCP entity is able to process. According to
@@ -742,8 +941,12 @@
     they are able to process. The MSS value indicates the maximum size of the payload
     of the TCP segments. The client (resp. server) stores in its [TCB](../glossary.html#term-TCB)
     the MSS value announced by the server (resp. the client).
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 在建立TCP连接期间协商的第一个参数是最大段大小（[MSS](../glossary.html#term-MSS)）。MSS是TCP实体能够处理的最大段的大小。根据[**RFC
+    879**](https://datatracker.ietf.org/doc/html/rfc879.html)，所有TCP实现都必须能够接收包含536字节有效负载的TCP段。然而，大多数TCP实现能够处理更大的段。这样的TCP实现使用SYN/SYN+ACK段中的TCP
+    MSS选项来指示它们能够处理的最大段。MSS值指示TCP段有效负载的最大大小。客户端（分别对应服务器）在其[TCB](../glossary.html#term-TCB)中存储服务器（分别对应客户端）宣布的MSS值。
 - en: Another utilization of TCP options during connection establishment is to enable
     TCP extensions. For example, consider [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     (which is discussed in [TCP reliable data transfer](#tcpreliable)). [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
@@ -759,54 +962,80 @@
     TCP header options throughout the TCP connection. TCP’s option mechanism is flexible
     and it allows the extension of TCP while maintaining compatibility with older
     implementations.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 在建立连接期间，TCP 选项的另一种用途是启用 TCP 扩展。例如，考虑 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)（在
+    [TCP 可靠数据传输](#tcpreliable) 中讨论）。[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    定义了 TCP 扩展以支持时间戳和更大的窗口。如果客户端支持 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将在其
+    SYN 分段中添加一个 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    选项。如果服务器理解这个 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    选项并希望使用它，它将在 SYN+ACK 分段中回复一个 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    选项，并且 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html) 中定义的扩展将在整个
+    TCP 连接中使用。否则，如果服务器的 SYN+ACK 不包含 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    选项，客户端不允许在整个 TCP 连接中使用此扩展和相应的 TCP 头部选项。TCP 的选项机制是灵活的，它允许扩展 TCP 同时保持与旧实现的兼容性。
 - en: 'The TCP options are encoded by using a Type Length Value format where :'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP 选项通过使用类型长度值格式进行编码，其中：
 - en: the first byte indicates the type of the option.
+  id: totrans-128
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个字节指示选项的类型。
 - en: ''
+  id: totrans-129
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-130
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the second byte indicates the total length of the option (including the first
     two bytes) in bytes
+  id: totrans-131
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二个字节指示选项的总长度（包括前两个字节）以字节为单位
 - en: ''
+  id: totrans-132
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-133
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remaining bytes are specific for each type of option
+  id: totrans-134
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 剩余的字节针对每种选项类型是特定的
 - en: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) defines the
     Maximum Segment Size (MSS) TCP option that must be understood by all TCP implementations.
     This option (type 2) has a length of 4 bytes and contains a 16-bit word that indicates
     the MSS supported by the sender of the SYN segment. The MSS option can only be
     used in TCP segments having the SYN flag set.'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 定义了必须被所有 TCP
+    实现理解的 TCP 最大分段大小 (MSS) 选项。此选项（类型 2）长度为 4 字节，包含一个 16 位字，表示 SYN 分段发送者支持的 MSS。MSS
+    选项只能在设置了 SYN 标志的 TCP 分段中使用。'
 - en: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) also defines
     two special options that must be supported by all TCP implementations. The first
     option is End of option. It is encoded as a single byte having value 0x00 and
@@ -815,20 +1044,32 @@
     when the TCP header extension contains several TCP options that should be aligned
     on 32-bit boundaries. All other options [[7]](#ftcpoptions) are encoded using
     the TLV format.'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 还定义了两个所有 TCP
+    实现都必须支持的特别选项。第一个选项是选项结束。它编码为一个值为 0x00 的单字节，可以用来确保 TCP 头部扩展以 32 位边界结束。无操作选项，编码为一个值为
+    0x01 的单字节，可以在 TCP 头部扩展包含多个应按 32 位边界对齐的 TCP 选项时使用。所有其他选项 [[7]](#ftcpoptions) 都使用
+    TLV 格式进行编码。'
 - en: Note
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The robustness principle
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 顽健性原则
 - en: The handling of the TCP options by TCP implementations is one of the many applications
     of the robustness principle which is usually attributed to [Jon Postel](https://www.postel.org/postel.html)
     and is often quoted as “Be liberal in what you accept, and conservative in what
     you send” [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html).
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP 实现对 TCP 选项的处理是顽健性原则的许多应用之一，该原则通常归功于 [Jon Postel](https://www.postel.org/postel.html)，常被引用为“在接受方面要宽容，在发送方面要保守”
+    [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html)。
 - en: 'Concerning the TCP options, the robustness principle implies that a TCP implementation
     should be able to accept TCP options that it does not understand, in particular
     in received SYN segments, and that it should be able to parse any received segment
@@ -836,33 +1077,44 @@
     a server should not send in the SYN+ACK segment or later, options that have not
     been proposed by the client in the SYN segment.  ## TCP reliable data transfer[#](#tcp-reliable-data-transfer
     "Link to this heading")'
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于TCP选项，健壮性原则意味着TCP实现应该能够接受它不理解TCP选项，特别是在接收到的SYN段中，并且它应该能够解析任何接收到的段而不会崩溃，即使该段包含一个未知的TCP选项。此外，服务器不应在SYN+ACK段或之后发送客户端在SYN段中未提出的选项。##
+    TCP可靠数据传输[#](#tcp-reliable-data-transfer "链接到本标题")
 - en: The original TCP data transfer mechanisms were defined in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     Based on the experience of using TCP on the growing global Internet, this part
     of the TCP specification has been updated and improved several times, always while
     preserving the backward compatibility with older TCP implementations. In this
     section, we review the main data transfer mechanisms used by TCP.
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 原始的TCP数据传输机制在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中定义。基于在日益增长的全球互联网上使用TCP的经验，TCP规范的这一部分已经被更新和改进了好几次，始终在保持与较老TCP实现的向后兼容性。在本节中，我们回顾了TCP使用的主要数据传输机制。
 - en: 'TCP is a window-based transport protocol that provides a bi-directional byte
     stream service. This has several implications on the fields of the TCP header
     and the mechanisms used by TCP. The three fields of the TCP header are :'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP是一种基于窗口的传输协议，提供双向字节流服务。这给TCP头部的字段和TCP使用的机制带来了一些影响。TCP头部的三个字段是：
 - en: sequence number. TCP uses a 32 bits sequence number. The sequence number placed
     in the header of a TCP segment containing data is the sequence number of the first
     byte of the payload of the TCP segment.
+  id: totrans-143
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号。TCP使用32位序列号。放置在包含数据的TCP段头部的序列号是该TCP段有效载荷的第一个字节的序列号。
 - en: ''
+  id: totrans-144
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-145
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -872,217 +1124,279 @@
     expects to receive from the remote host. In theory, the acknowledgment number
     is only valid if the ACK flag of the TCP header is set. In practice, almost all
     [[8]](#fackflag) TCP segments have their ACK flag set.
+  id: totrans-146
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号。TCP使用累积的肯定确认。每个TCP段包含发送确认方期望从远程主机接收的下一个字节的序列号。理论上，确认号仅在TCP头部的ACK标志被设置时有效。在实践中，几乎所有[[8]](#fackflag)
+    TCP段都有其ACK标志被设置。
 - en: ''
+  id: totrans-147
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-148
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: window. a TCP receiver uses this 16 bits field to indicate the current size
     of its receive window expressed in bytes.
+  id: totrans-149
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: window：TCP接收器使用这个16位字段来指示当前接收窗口的大小，以字节为单位。
 - en: Note
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The Transmission Control Block
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: 传输控制块
 - en: 'For each established TCP connection, a TCP implementation must maintain a Transmission
     Control Block ([TCB](../glossary.html#term-TCB)). A TCB contains all the information
     required to send and receive segments on this connection [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     This includes [[9]](#ftcpurgent) :'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个建立的TCP连接，TCP实现必须维护一个传输控制块（[TCB](../glossary.html#term-TCB)）。TCB包含在此连接上发送和接收段所需的所有信息[**RFC
+    793**](https://datatracker.ietf.org/doc/html/rfc793.html)。这包括[[9]](#ftcpurgent)：
 - en: the local IP address
+  id: totrans-153
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地IP地址
 - en: ''
+  id: totrans-154
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-155
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remote IP address
+  id: totrans-156
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 远程IP地址
 - en: ''
+  id: totrans-157
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-158
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the local TCP port number
+  id: totrans-159
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地TCP端口号
 - en: ''
+  id: totrans-160
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-161
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remote TCP port number
+  id: totrans-162
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 远程TCP端口号
 - en: ''
+  id: totrans-163
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-164
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the current state of the TCP FSM
+  id: totrans-165
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前TCP状态机（FSM）的状态
 - en: ''
+  id: totrans-166
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-167
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the maximum segment size (MSS)
+  id: totrans-168
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大分段大小（MSS）
 - en: ''
+  id: totrans-169
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-170
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.nxt : the sequence number of the next byte in the byte stream (the first
     byte of a new data segment that you send uses this sequence number)'
+  id: totrans-171
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: snd.nxt：字节流中下一个字节的序列号（你发送的新数据段的第一字节使用此序列号）
 - en: ''
+  id: totrans-172
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-173
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.una : the earliest sequence number that has been sent but has not yet been
     acknowledged'
+  id: totrans-174
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: snd.una：已发送但尚未被确认的最早序列号
 - en: ''
+  id: totrans-175
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-176
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.wnd : the current size of the sending window (in bytes)'
+  id: totrans-177
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: snd.wnd：当前发送窗口的大小（以字节为单位）
 - en: ''
+  id: totrans-178
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-179
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'rcv.nxt : the sequence number of the next byte that is expected to be received
     from the remote host'
+  id: totrans-180
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: rcv.nxt：期望从远程主机接收的下一个字节的序列号
 - en: ''
+  id: totrans-181
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-182
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'rcv.wnd : the current size of the receive window advertised by the remote host'
+  id: totrans-183
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: rcv.wnd：远程主机当前宣布的接收窗口的大小
 - en: ''
+  id: totrans-184
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-185
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'sending buffer : a buffer used to store all unacknowledged data'
+  id: totrans-186
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发送缓冲区：用于存储所有未确认数据的缓冲区
 - en: ''
+  id: totrans-187
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-188
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1091,15 +1405,19 @@
     that has not yet been delivered to the user. Data may be stored in the receiving
     buffer because either it was not received in sequence or because the user is too
     slow to process it'
+  id: totrans-189
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接收缓冲区：一个用于存储尚未传递给用户的从远程主机接收的所有数据的缓冲区。数据可能存储在接收缓冲区中，因为它要么不是按顺序接收的，要么是因为用户处理速度太慢。
 - en: The original TCP specification can be summarized as a transport protocol that
     provides a byte stream service and uses go-back-n with a selective-repeat reception
     strategy.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: 原始的TCP规范可以概括为一个提供字节流服务并使用带重传的n次选择重传接收策略的传输协议。
 - en: To send new data on an established connection, a TCP entity performs the following
     operations on the corresponding TCB. It first checks that the sending buffer does
     not contain more data than the receive window advertised by the remote host (rcv.wnd).
@@ -1111,8 +1429,10 @@
     the window field of the TCP segment is computed based on the current occupancy
     of the receiving buffer. The data is kept in the sending buffer in case it needs
     to be retransmitted later.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在建立的连接上发送新数据，TCP实体将对相应的TCB执行以下操作。它首先检查发送缓冲区中的数据是否不大于远程主机声明的接收窗口（rcv.wnd）。如果窗口未满，则最多放置MSS字节的数据在TCP段的负载中。此段的序列号是负载的第一个字节的序列号。它被设置为第一个可用的序列号，snd.nxt，并且snd.nxt根据TCP段负载的长度增加。此段的确认号设置为当前rcv.nxt的值，并且TCP段的窗口字段基于接收缓冲区的当前占用情况计算。数据保留在发送缓冲区中，以防稍后需要重传。
 - en: When a TCP segment with the ACK flag set is received, the following operations
     are performed. rcv.wnd is set to the value of the window field of the received
     segment. The acknowledgment number is compared to snd.una. The newly acknowledged
@@ -1123,13 +1443,17 @@
     whether other data already present in this buffer can be delivered in sequence
     to the user. If so, rcv.nxt is updated again. Otherwise, the segment’s payload
     is placed in the receiving buffer.
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 当接收到一个ACK标志被设置的TCP段时，将执行以下操作。rcv.wnd被设置为接收到的段的窗口字段值。确认号与snd.una进行比较。新确认的数据从发送缓冲区中移除，并且snd.una被更新。如果TCP段包含数据，序列号与rcv.nxt进行比较。如果它们相等，则段是按顺序接收的，数据可以被传递给用户，并且rcv.nxt被更新。检查接收缓冲区的内容以确定是否可以按顺序将此缓冲区中已存在的其他数据传递给用户。如果是这样，rcv.nxt再次更新。否则，段的负载被放置在接收缓冲区中。
 - en: Segment transmission strategies[#](#segment-transmission-strategies "Link to
     this heading")
+  id: totrans-193
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 段传输策略[#](#segment-transmission-strategies "链接到本标题")
 - en: In a transport protocol such as TCP that offers a bytestream, a practical issue
     that was left as an implementation choice in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     is to decide when a new TCP segment containing data must be sent. There are two
@@ -1141,44 +1465,59 @@
     acceptable in wide area networks. A second simple solution would be to only transmit
     a new TCP segment once the user has produced MSS bytes of data. This solution
     reduces the overhead, but at the cost of a potentially very high delay.
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: 在TCP这样的传输协议中，它提供了一个字节流，一个在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中被留作实现选择的实际问题是在何时发送包含数据的新的TCP段。有两种简单且极端的实现选择。第一种实现选择是用户请求传输一些数据时立即发送TCP段。这允许TCP提供低延迟的服务。然而，如果用户逐字节发送数据，TCP会将每个用户字节放在包含20字节TCP头部的段中
+    [[10]](#fnagleip)。这在广域网络中是一个巨大的开销，是不可接受的。第二种简单的解决方案是在用户产生MSS字节的数据后，才传输新的TCP段。这种解决方案减少了开销，但代价是可能非常高的延迟。
 - en: An elegant solution to this problem was proposed by John Nagle in [**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html).
     John Nagle observed that the overhead caused by the TCP header was a problem in
     wide area connections, but less in local area connections where the available
     bandwidth is usually higher. He proposed the following rules to decide to send
     a new data segment when a new data has been produced by the user or a new ack
     segment has been received.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 约翰·纳格尔在[**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html)中提出了这个问题的优雅解决方案。约翰·纳格尔观察到，TCP头部的开销在广域连接中是一个问题，但在通常可用带宽更高的局域网连接中则较小。他提出了以下规则，以决定在用户产生新的数据段或接收到新的确认段时发送新的数据段。
 - en: '[PRE1]'
+  id: totrans-196
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The first rule ensures that a TCP connection used for bulk data transfer always
     sends full TCP segments. The second rule sends one partially filled TCP segment
     every round-trip-time.
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条规则确保用于大量数据传输的TCP连接始终发送完整的TCP段。第二条规则在每个往返时间发送一个部分填充的TCP段。
 - en: 'This algorithm, called the Nagle algorithm, takes a few lines of code in all
     TCP implementations. These lines of code have a huge impact on the packets that
     are exchanged in TCP/IP networks. Researchers have analyzed the distribution of
     the packet sizes by capturing and analyzing all the packets passing through a
     given link. These studies have shown several important results :'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个算法被称为Nagle算法，在所有的TCP实现中只需要几行代码。这些代码对TCP/IP网络中交换的数据包产生了巨大影响。研究人员通过捕获和分析通过给定链路的所有数据包，分析了数据包大小的分布。这些研究表明了几个重要结果：
 - en: in TCP/IP networks, a large fraction of the packets are TCP segments that contain
     only an acknowledgment. These packets usually account for 40-50% of the packets
     passing through the studied link
+  id: totrans-199
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，很大一部分的数据包是只包含确认的TCP段。这些数据包通常占通过研究链路的数据包的40-50%。
 - en: ''
+  id: totrans-200
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-201
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1186,18 +1525,23 @@
 - en: in TCP/IP networks, most of the bytes are exchanged in long packets, usually
     packets containing about 1440 bytes of payload which is the default MSS for hosts
     attached to an Ethernet network, the most popular type of LAN
+  id: totrans-202
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，大部分的字节都是在长数据包中交换的，通常这些数据包包含大约1440字节的负载，这是连接到以太网（最流行的局域网类型）的主机的默认MSS。
 - en: '[Recent measurements](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)
     indicate that these packet size distributions are still valid in today’s Internet,
     although the packet distribution tends to become bi-modal with small packets corresponding
     to TCP pure acknowledgments and large 1440-bytes packets carrying most of the
     user data [[SMASU2012]](../bibliography.html#smasu2012).  ## TCP windows[#](#tcp-windows
     "Link to this heading")'
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: '[最近测量](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)表明，这些数据包大小分布仍然在今天的互联网中有效，尽管数据包分布趋向于成为双峰分布，小数据包对应于TCP纯确认，而大数据包（1440字节）携带大部分用户数据
+    [[SMASU2012]](../bibliography.html#smasu2012)。  ## TCP窗口[#](#tcp-windows "链接到这个标题")'
 - en: From a performance point of view, one of the main limitations of the original
     TCP specification is the 16 bits window field in the TCP header. As this field
     indicates the current size of the receive window in bytes, it limits the TCP receive
@@ -1207,26 +1551,42 @@
     The table below provides the rough [[11]](#faveragebandwidth) maximum throughput
     that can be achieved by a TCP connection with a 64 KBytes window in function of
     the connection’s round-trip-time
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 从性能角度来看，原始 TCP 规范的一个主要限制是 TCP 头中的 16 位窗口字段。因为这个字段表示接收窗口的当前大小（以字节为单位），它将 TCP
+    接收窗口限制在 65535 字节。当 TCP 设计时，这个限制并不是一个严重的问题，因为当时高速广域网提供的最大带宽为 56 kbps。然而，在今天的网络中，这个限制已经不再可接受。下表提供了
+    TCP 连接在 64 KBytes 窗口大小下，根据连接的往返时间所能达到的粗略 [[11]](#faveragebandwidth) 最大吞吐量
 - en: '| RTT | Maximum Throughput |'
+  id: totrans-205
   prefs: []
   type: TYPE_TB
+  zh: '| RTT | 最大吞吐量 |'
 - en: '| --- | --- |'
+  id: totrans-206
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 1 msec | 524 Mbps |'
+  id: totrans-207
   prefs: []
   type: TYPE_TB
+  zh: '| 1 毫秒 | 524 Mbps |'
 - en: '| 10 msec | 52.4 Mbps |'
+  id: totrans-208
   prefs: []
   type: TYPE_TB
+  zh: '| 10 毫秒 | 52.4 Mbps |'
 - en: '| 100 msec | 5.24 Mbps |'
+  id: totrans-209
   prefs: []
   type: TYPE_TB
+  zh: '| 100 毫秒 | 5.24 Mbps |'
 - en: '| 500 msec | 1.05 Mbps |'
+  id: totrans-210
   prefs: []
   type: TYPE_TB
+  zh: '| 500 毫秒 | 1.05 Mbps |'
 - en: To solve this problem, a backward compatible extension that allows TCP to use
     larger receive windows was proposed in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html).
     Today, most TCP implementations support this option. The basic idea is that instead
@@ -1241,78 +1601,120 @@
     its own receive window. The local and remote scaling factors are included in the
     [TCB](../glossary.html#term-TCB). If the server does not support [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html),
     it ignores the received option and no scaling is applied.
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个问题，在[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)中提出了一个向后兼容的扩展，允许
+    TCP 使用更大的接收窗口。今天，大多数 TCP 实现都支持这个选项。基本思想是，而不是将 snd.wnd 和 rcv.wnd 作为 16 位整数存储在 [TCB](../glossary.html#term-TCB)
+    中，它们应该作为 32 位整数存储。因为 TCP 段头只包含 16 位来放置窗口字段，所以不可能在每个发送的 TCP 段中复制 snd.wnd 的值。相反，头包含
+    snd.wnd >> S，其中 S 是在连接建立期间协商的缩放因子（ \(0 \le S \le 14\)）。客户端将其建议的缩放因子作为 TCP 选项添加到
+    SYN 段中。如果服务器支持 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将在
+    SYN+ACK 段中放置它用于宣传其自己的接收窗口的缩放因子。本地和远程缩放因子包含在 [TCB](../glossary.html#term-TCB) 中。如果服务器不支持
+    [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将忽略接收到的选项，并且不应用缩放。
 - en: 'By using the window scaling extensions defined in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html),
     TCP implementations can use a receive buffer of up to 1 GByte. With such a receive
     buffer, the maximum throughput that can be achieved by a single TCP connection
     becomes :'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用在[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)中定义的窗口缩放扩展，TCP
+    实现可以使用高达 1 GByte 的接收缓冲区。有了这样的接收缓冲区，单个 TCP 连接可以达到的最大吞吐量变为：
 - en: '| RTT | Maximum Throughput |'
+  id: totrans-213
   prefs: []
   type: TYPE_TB
+  zh: '| RTT | 最大吞吐量 |'
 - en: '| --- | --- |'
+  id: totrans-214
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 1 msec | 8590 Gbps |'
+  id: totrans-215
   prefs: []
   type: TYPE_TB
+  zh: '| 1 毫秒 | 8590 Gbps |'
 - en: '| 10 msec | 859 Gbps |'
+  id: totrans-216
   prefs: []
   type: TYPE_TB
+  zh: '| 10 毫秒 | 859 Gbps |'
 - en: '| 100 msec | 86 Gbps |'
+  id: totrans-217
   prefs: []
   type: TYPE_TB
+  zh: '| 100 毫秒 | 86 Gbps |'
 - en: '| 500 msec | 17 Gbps |'
+  id: totrans-218
   prefs: []
   type: TYPE_TB
+  zh: '| 500 毫秒 | 17 Gbps |'
 - en: These throughputs are acceptable in today’s networks. However, there are already
     servers having 10 Gbps interfaces… Early TCP implementations had fixed receiving
     and sending buffers [[12]](#ftcphosts). Today’s high performance implementations
     are able to automatically adjust the size of the sending and receiving buffer
     to better support high bandwidth flows [[SMM1998]](../bibliography.html#smm1998).
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些吞吐量在今天的网络中是可以接受的。然而，已经有服务器配备了 10 Gbps 的接口…早期的 TCP 实现具有固定的接收和发送缓冲区 [[12]](#ftcphosts)。今天的高性能实现能够自动调整发送和接收缓冲区的大小，以更好地支持高带宽流
+    [[SMM1998]](../bibliography.html#smm1998)。
 - en: TCP’s retransmission timeout[#](#tcp-s-retransmission-timeout "Link to this
     heading")
+  id: totrans-220
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TCP 的重传超时[#](#tcp-s-retransmission-timeout "链接到本标题")
 - en: In a go-back-n transport protocol such as TCP, the retransmission timeout must
     be correctly set in order to achieve good performance. On one hand, if the retransmission
     timeout expires too early, then bandwidth is wasted by retransmitting segments
     that have already been correctly received. On the other hand, if the retransmission
     timeout expires too late, then bandwidth is wasted because the sender is idle
     waiting for the expiration of its retransmission timeout.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 在像TCP这样的回退N协议中，为了实现良好的性能，必须正确设置重传超时。一方面，如果重传超时过早到期，则已正确接收的段的重传会浪费带宽。另一方面，如果重传超时过晚到期，则发送者空闲等待重传超时到期会浪费带宽。
 - en: A good setting of the retransmission timeout clearly depends on an accurate
     estimation of the round-trip-time of each TCP connection. The round-trip-time
     differs between TCP connections, but may also change during the lifetime of a
     single connection. For example, the figure below shows the evolution of the round-trip-time
     between two hosts during a period of 45 seconds.
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 重传超时的良好设置明显取决于对每个TCP连接往返时间的准确估计。往返时间在不同TCP连接之间可能不同，也可能在单个连接的生命周期内发生变化。例如，下面的图显示了两个主机在45秒期间往返时间的演变。
 - en: '[![../_images/tcp-rtt.png](../Images/0a2d2e0115955ccfed932c13f7aadca3.png)](../_images/tcp-rtt.png)'
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-rtt.png](../Images/0a2d2e0115955ccfed932c13f7aadca3.png)'
 - en: Fig. 76 Evolution of the round-trip-time between two hosts[#](#id34 "Link to
     this image")
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: 图76 两个主机之间往返时间的演变[#](#id34 "链接到这张图片")
 - en: The easiest solution to measure the round-trip-time on a TCP connection is to
     measure the delay between the transmission of a data segment and the reception
     of a corresponding acknowledgment [[13]](#frttmes). As illustrated in the figure
     below, this measurement works well when there are no segment losses.
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 在TCP连接上测量往返时间最简单的解决方案是测量数据段传输和相应确认接收之间的延迟[[13]](#frttmes)。如图所示，在没有数据段丢失的情况下，这种测量方法效果良好。
 - en: '[![../_images/tcp-rtt2.png](../Images/8ce63a02756a9faddc11dd69b870be27.png)](../_images/tcp-rtt2.png)'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-rtt2.png](../Images/8ce63a02756a9faddc11dd69b870be27.png)'
 - en: Fig. 77 How to measure the round-trip-time ?[#](#id35 "Link to this image")
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 图77 如何测量往返时间？[#](#id35 "链接到这张图片")
 - en: However, when a data segment is lost, as illustrated in the bottom part of the
     figure, the measurement is ambiguous as the sender cannot determine whether the
     received acknowledgment was triggered by the first transmission of segment 123
@@ -1320,8 +1722,11 @@
     to incorrect values of the retransmission timeout. For this reason, Phil Karn
     and Craig Partridge proposed, in [[KP91]](../bibliography.html#kp91), to ignore
     the round-trip-time measurements performed during retransmissions.
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，当数据段丢失时，如图中底部所示，测量结果是不明确的，因为发送者无法确定接收到的确认是来自段123的第一次传输还是其重传。使用不正确的往返时间估计可能会导致重传超时值不正确。因此，Phil
+    Karn和Craig Partridge在[[KP91]](../bibliography.html#kp91)中提出，在重传期间忽略进行的往返时间测量。
 - en: To avoid this ambiguity in the estimation of the round-trip-time when segments
     are retransmitted, recent TCP implementations rely on the timestamp option defined
     in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html). This option
@@ -1332,15 +1737,22 @@
     the remote host and stored in the [TCB](../glossary.html#term-TCB). The figure
     below shows how the utilization of this timestamp option allows for the disambiguation
     of the round-trip-time measurement when there are retransmissions.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了避免在段重传时估计往返时间的这种歧义，最近的TCP实现依赖于在[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)中定义的时间戳选项。此选项允许TCP发送者在每个发送的TCP段中放置两个32位时间戳。第一个时间戳，TS值（TSval），由段发送者选择。例如，它可以是其实时时钟的当前值[[14]](#ftimestamp)。第二个值，TS回显应答（TSecr），是从远程主机接收到的最后一个TSval，并存储在[TCB](../glossary.html#term-TCB)中。下面的图显示了如何利用此时间戳选项在存在重传时消除往返时间测量的歧义。
 - en: '[![../_images/tcp-rtt-ts.png](../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png)](../_images/tcp-rtt-ts.png)'
+  id: totrans-230
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-rtt-ts.png](../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png)'
 - en: Fig. 78 Disambiguating round-trip-time measurements with the [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     timestamp option[#](#id36 "Link to this image")
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: 图78 使用 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html) 时间戳选项区分往返时间测量
+    [#](#id36 "链接到此图像")
 - en: Once the round-trip-time measurements have been collected for a given TCP connection,
     the TCP entity must compute the retransmission timeout. As the round-trip-time
     measurements may change during the lifetime of a connection, the retransmission
@@ -1348,25 +1760,35 @@
     the TCP entity that sends a SYN segment does not know the round-trip-time to reach
     the remote host and the initial retransmission timeout is usually set to 3 seconds
     [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html).
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦为给定的TCP连接收集了往返时间测量值，TCP实体必须计算重传超时。由于往返时间测量值可能在连接的生命周期内发生变化，重传超时也可能发生变化。在连接开始时
+    [[15]](#ftcbtouch)，发送SYN段的TCP实体不知道到达远程主机的往返时间，并且初始重传超时通常设置为3秒 [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)。
 - en: 'The original TCP specification proposed in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     to include two additional variables in the TCB :'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 中提出的原始TCP规范建议在TCB中包含两个额外的变量：
 - en: 'srtt : the smoothed round-trip-time computed as \(srtt=(\alpha \times srtt)+(
     (1-\alpha) \times rtt)\) where \(rtt\) is the round-trip-time measured according
     to the above procedure and \(\alpha\) a smoothing factor (e.g. 0.8 or 0.9)'
+  id: totrans-234
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: srtt：平滑往返时间计算为 \(srtt=(\alpha \times srtt)+( (1-\alpha) \times rtt)\)，其中 \(rtt\)
+    是根据上述程序测量的往返时间，\(\alpha\) 是平滑因子（例如0.8或0.9）
 - en: ''
+  id: totrans-235
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-236
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1375,70 +1797,99 @@
     \times srtt))\) where \(\beta\) is used to take into account the delay variance
     (value : 1.3 to 2.0). The 60 and 1 constants are used to ensure that the rto is
     not larger than one minute nor smaller than 1 second.'
+  id: totrans-237
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: rto：重传超时计算为 \(rto=\min(60,\max(1,\beta \times srtt))\)，其中 \(\beta\) 用于考虑延迟变异性（值：1.3到2.0）。60和1个常数用于确保rto不超过一分钟也不小于1秒。
 - en: However, in practice, this computation for the retransmission timeout did not
     work well. The main problem was that the computed rto did not correctly take into
     account the variations in the measured round-trip-time. Van Jacobson proposed
     in his seminal paper [[Jacobson1988]](../bibliography.html#jacobson1988) an improved
     algorithm to compute the rto and implemented it in the BSD Unix distribution.
     This algorithm is now part of the TCP standard [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html).
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在实践中，对于重传超时的计算并没有很好地工作。主要问题是计算出的rto没有正确地考虑到测量到的往返时间的变异性。Van Jacobson 在他的开创性论文
+    [[Jacobson1988]](../bibliography.html#jacobson1988) 中提出了一种改进的算法来计算rto，并在BSD Unix发行版中实现了它。这个算法现在是TCP标准的一部分
+    [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)。
 - en: 'Jacobson’s algorithm uses two state variables, srtt the smoothed rtt and rttvar
     the estimation of the variance of the rtt and two parameters : \(\alpha\) and
     \(\beta\). When a TCP connection starts, the first rto is set to 3 seconds. When
     a first estimation of the rtt is available, the srtt, rttvar and rto are computed
     as follows :'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: Jacobson的算法使用两个状态变量，srtt（平滑rtt）和rttvar（rtt的方差估计），以及两个参数：\(\alpha\) 和 \(\beta\)。当TCP连接开始时，第一个rto设置为3秒。当有rtt的第一个估计值可用时，srtt、rttvar和rto按以下方式计算：
 - en: '[PRE2]'
+  id: totrans-240
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Then, when other rtt measurements are collected, srtt and rttvar are updated
     as follows :'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，当收集到其他rtt测量值时，srtt和rttvar按以下方式更新：
 - en: \(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)
+  id: totrans-242
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)
 - en: ''
+  id: totrans-243
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: \(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)
+  id: totrans-244
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)
 - en: ''
+  id: totrans-245
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: \(rto=srtt + 4 \times rttvar\)
+  id: totrans-246
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(rto=srtt + 4 \times rttvar\)
 - en: The proposed values for the parameters are \(\alpha=\frac{1}{8}\) and \(\beta=\frac{1}{4}\).
     This allows a TCP implementation, implemented in the kernel, to perform the rtt
     computation by using shift operations instead of the more costly floating point
     operations [[Jacobson1988]](../bibliography.html#jacobson1988). The figure below
     illustrates the computation of the rto upon rtt changes.
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 提出的参数值为 \(\alpha=\frac{1}{8}\) 和 \(\beta=\frac{1}{4}\)。这允许在内核中实现的TCP实现通过使用移位操作而不是更昂贵的浮点操作来执行rtt计算
+    [[Jacobson1988]](../bibliography.html#jacobson1988)。下面的图示说明了在rtt变化时的rto计算。
 - en: '[![../_images/tcp-rto.png](../Images/0d04bfd2484086ab09bb9aeef68035d0.png)](../_images/tcp-rto.png)'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-rto.png](../Images/0d04bfd2484086ab09bb9aeef68035d0.png)](../_images/tcp-rto.png)'
 - en: Fig. 79 Example computation of the rto[#](#id37 "Link to this image")
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 图79 示例计算rto[#](#id37 "链接到这张图片")
 - en: Advanced retransmission strategies[#](#advanced-retransmission-strategies "Link
     to this heading")
+  id: totrans-250
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 高级重传策略[#](#advanced-retransmission-strategies "链接到这个标题")
 - en: The default go-back-n retransmission strategy was defined in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     When the retransmission timer expires, TCP retransmits the first unacknowledged
     segment (i.e. the one having sequence number snd.una). After each expiration of
@@ -1452,8 +1903,12 @@
     suggests a maximum retransmission timeout of at least 60 seconds. Once the retransmission
     timeout reaches this configured maximum, the remote host is considered to be unreachable
     and the TCP connection is closed.
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认的回退N重传策略在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中定义。当重传计时器超时时，TCP重新传输第一个未确认的段（即序列号snd.una的段）。在每次重传超时后，[**RFC
+    2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)建议将重传超时的值加倍。这被称为指数退避。在重传后加倍重传超时被包含在TCP中，以处理诸如网络/接收器过载和重传超时初始估计不正确等问题。如果相同的段被重传多次，重传超时在每次重传后会加倍，直到达到配置的最大值。[**RFC
+    2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)建议最大重传超时至少为60秒。一旦重传超时达到这个配置的最大值，远程主机被认为是不可达的，TCP连接被关闭。
 - en: This retransmission strategy has been refined based on the experience of using
     TCP on the Internet. The first refinement was a clarification of the strategy
     used to send acknowledgments. As TCP uses piggybacking, the easiest and less costly
@@ -1471,15 +1926,22 @@
     813**](https://datatracker.ietf.org/doc/html/rfc813.html) [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html).
     This strategy relies on a new timer with a short delay (e.g. 50 milliseconds)
     and one additional flag in the TCB. It can be implemented as follows.
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种重传策略是基于在互联网上使用TCP的经验进行优化的。第一次优化是对发送确认所使用的策略进行了澄清。由于TCP使用尾随，发送确认的最简单和成本最低的方法是将它们放在发送到另一方向的数据段中。然而，很少有应用层协议同时双向交换数据，因此这种方法很少有效。对于只向一个方向发送数据段的程序，远程TCP实体返回空TCP段，其中唯一有用的信息是它们的确认号。如果对每个接收到的数据段都发送纯ACK段，这可能会在广域网中造成大量开销。大多数TCP实现使用延迟确认策略。这种策略确保尽可能使用尾随，如果没有丢失，则在每两个接收到的数据段之间发送纯ACK段。当有丢失或重排序时，ACK段对发送者来说更重要，并且它们会立即发送[**RFC
+    813**](https://datatracker.ietf.org/doc/html/rfc813.html) [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html)。这种策略依赖于一个具有短延迟（例如50毫秒）的新计时器以及在TCB中的一个额外标志。它可以如下实现。
 - en: '[PRE3]'
+  id: totrans-253
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Due to this delayed acknowledgment strategy, during a bulk transfer, a TCP implementation
     usually acknowledges every second TCP segment received.
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这种延迟确认策略，在大量传输期间，TCP实现通常每接收两个TCP段就确认一次。
 - en: The default go-back-n retransmission strategy used by TCP has the advantage
     of being simple to implement, in particular on the receiver side, but when there
     are losses, a go-back-n strategy provides a lower performance than a selective
@@ -1487,14 +1949,18 @@
     allow it to use a selective repeat strategy while maintaining backward compatibility
     with older TCP implementations. These TCP extensions assume that the receiver
     is able to buffer the segments that it receives out-of-sequence.
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP使用的默认go-back-n重传策略具有易于实现的优点，尤其是在接收方，但当出现丢包时，go-back-n策略的性能低于选择性重传策略。TCP开发者设计了几个TCP扩展，以允许它使用选择性重传策略，同时保持与较老TCP实现的向后兼容性。这些TCP扩展假设接收方能够缓冲它接收到的乱序段。
 - en: The first extension that was proposed is the fast retransmit heuristic. This
     extension can be implemented on TCP senders and thus does not require any change
     to the protocol. It only assumes that the TCP receiver is able to buffer out-of-sequence
     segments.
+  id: totrans-256
   prefs: []
   type: TYPE_NORMAL
+  zh: 提出的第一个扩展是快速重传启发式方法。这个扩展可以在TCP发送方上实现，因此不需要对协议进行任何更改。它只假设TCP接收方能够缓冲乱序段。
 - en: From a performance point of view, one issue with TCP’s retransmission timeout
     is that when there are isolated segment losses, the TCP sender often remains idle
     waiting for the expiration of its retransmission timeouts. Such isolated losses
@@ -1504,14 +1970,20 @@
     the early 1990s. To understand this heuristic, let us consider the figure below
     that shows the segments exchanged over a TCP connection when an isolated segment
     is lost.
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: 从性能角度来看，TCP重传超时的问题之一是，当存在孤立段丢失时，TCP发送方通常会空闲等待重传超时的到期。这种孤立丢失在全局互联网中很常见[[Paxson99]](../bibliography.html#paxson99)。自20世纪90年代初以来，许多TCP实现中已经包含了一种处理孤立丢失而不必等待重传超时到期的启发式方法。为了理解这个启发式方法，让我们考虑下面的图，它显示了当孤立段丢失时在TCP连接上交换的段。
 - en: '[![../_images/tcp-loss.png](../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png)](../_images/tcp-loss.png)'
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: '![TCP丢包](../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png)'
 - en: Fig. 80 Detecting isolated segment losses[#](#id38 "Link to this image")
+  id: totrans-259
   prefs: []
   type: TYPE_NORMAL
+  zh: 图80 检测孤立段丢失[#](#id38 "链接到这个图像")
 - en: As shown above, when an isolated segment is lost the sender receives several
     duplicate acknowledgments since the TCP receiver immediately sends a pure acknowledgment
     when it receives an out-of-sequence segment. A duplicate acknowledgment is an
@@ -1522,28 +1994,41 @@
     segment reordering is frequent in the Internet. Based on these observations, the
     fast retransmit heuristic has been included in most TCP implementations. It can
     be implemented as follows.
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上图所示，当孤立段丢失时，发送方会收到几个重复确认，因为TCP接收方在接收到乱序段时会立即发送纯确认。重复确认是一个包含与先前段相同确认号的确认。单个重复确认并不一定意味着段已丢失，因为段的重排序也可能导致重复确认。测量[[Paxson99]](../bibliography.html#paxson99)表明，段重排序在互联网中很常见。基于这些观察，快速重传启发式方法已包含在大多数TCP实现中。它可以如下实现。
 - en: '[PRE4]'
+  id: totrans-261
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: This heuristic requires an additional variable in the TCB (dupacks). Most implementations
     set the default number of duplicate acknowledgments that trigger a retransmission
     to 3\. It is now part of the standard TCP specification [**RFC 2581**](https://datatracker.ietf.org/doc/html/rfc2581.html).
     The fast retransmit heuristic improves the TCP performance provided that isolated
     segments are lost and the current window is large enough to allow the sender to
     send three duplicate acknowledgments.
+  id: totrans-262
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个启发式方法需要在TCB（dupacks）中添加一个额外的变量。大多数实现将触发重传的默认重复确认数设置为3。现在，它已成为TCP标准规范的一部分[**RFC
+    2581**](https://datatracker.ietf.org/doc/html/rfc2581.html)。快速重传启发式方法在孤立段丢失且当前窗口足够大以允许发送方发送三个重复确认的情况下，可以提高TCP的性能。
 - en: The figure below illustrates the operation of the fast retransmit heuristic.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面的图展示了快速重传启发式方法的工作原理。
 - en: '[![../_images/tcp-frr.png](../Images/9542e04356c75d728bbd935961cc1860.png)](../_images/tcp-frr.png)'
+  id: totrans-264
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-frr.png](../Images/9542e04356c75d728bbd935961cc1860.png)'
 - en: Fig. 81 TCP fast retransmit heuristics[#](#id39 "Link to this image")
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 81 TCP 快速重传启发式方法[#](#id39 "链接到此图像")
 - en: When losses are not isolated or when the windows are small, the performance
     of the fast retransmit heuristic decreases. In such environments, it is necessary
     to allow a TCP sender to use a selective repeat strategy instead of the default
@@ -1556,14 +2041,23 @@
     to the segments that it sends. SACK blocks allow a TCP receiver to indicate the
     blocks of data that it has received correctly but out of sequence. The figure
     below illustrates the utilization of the SACK blocks.
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: 当丢失不是隔离的或窗口较小时，快速重传启发式方法的表现会下降。在这样的环境中，有必要允许 TCP 发送者使用选择性重传策略而不是默认的回退 n 策略。实现选择性重传需要修改
+    TCP 协议，因为接收器需要能够通知发送者它已经接收到的乱序数据段。这可以通过使用在 [**RFC 2018**](https://datatracker.ietf.org/doc/html/rfc2018.html)
+    中定义的选择性确认（SACK）选项来完成。这个 TCP 选项在建立 TCP 连接期间协商。如果两个 TCP 主机都支持此选项，接收器可以将 SACK 数据块附加到它发送的段中。SACK
+    数据块允许 TCP 接收器指示它已正确接收但顺序不正确的数据块。下面的图示说明了 SACK 数据块的使用情况。
 - en: '[![../_images/tcp-sack.png](../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png)](../_images/tcp-sack.png)'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-sack.png](../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png)'
 - en: Fig. 82 TCP selective acknowledgments[#](#id40 "Link to this image")
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 82 TCP 选择性确认[#](#id40 "链接到此图像")
 - en: A SACK option contains one or more blocks. A block corresponds to all the sequence
     numbers between the left edge and the right edge of the block. The two edges of
     the block are encoded as 32 bit numbers (the same size as the TCP sequence number)
@@ -1575,15 +2069,22 @@
     timestamp extension, this implies that a TCP segment cannot usually contain more
     than three SACK blocks. This limitation implies that a TCP receiver cannot always
     place in the SACK option that it sends, information about all the received blocks.
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: SACK 选项包含一个或多个数据块。一个数据块对应于数据块左边缘和右边缘之间的所有序列号。数据块的这两个边缘在 SACK 选项中以 32 位数字（与 TCP
+    序列号大小相同）编码。由于 SACK 选项包含一个字节用于编码其类型和一个字节用于其长度，因此包含 b 个数据块的 SACK 选项被编码为 \(2+8 \times
+    b\) 字节序列。在实践中，SACK 选项的大小可能存在问题，因为可选的 TCP 头部扩展不能超过 40 字节。由于 SACK 选项通常与 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    时间戳扩展结合使用，这意味着 TCP 段通常不能包含超过三个 SACK 数据块。这种限制意味着 TCP 接收器不能总是将其发送的 SACK 选项中包含有关所有接收到的数据块的信息。
 - en: To deal with the limited size of the SACK option, a TCP receiver currently having
     more than 3 blocks inside its receiving buffer must select the blocks to place
     in the SACK option. A good heuristic is to put in the SACK option the blocks that
     have most recently changed, as the sender is likely to be already aware of the
     older blocks.
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了处理 SACK 选项的有限大小，当前接收缓冲区内有超过 3 个数据块的网络连接器必须选择要放入 SACK 选项中的数据块。一个很好的启发式方法是放入最近更改的数据块，因为发送者可能已经知道较旧的数据块。
 - en: When a sender receives a SACK option indicating a new block and thus a new possible
     segment loss, it usually does not retransmit the missing segments immediately.
     To deal with reordering, a TCP sender can use a heuristic similar to fast retransmit
@@ -1597,8 +2098,10 @@
     are still required to deal with losses of ACK segments carrying only SACK information.
     Thus, the SACK option only serves as a hint to allow the sender to optimize its
     retransmissions.
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: 当发送方收到一个SACK选项，指示一个新的块以及新的可能的段丢失时，它通常不会立即重传丢失的段。为了处理重排序，TCP发送方可以使用类似于快速重传的启发式方法，只在收到三个指示此间隙的SACK选项后重传一个间隙。应该注意的是，SACK选项不取代TCP头部的确认号。TCP发送方只能在TCP的累积确认已确认数据后从其发送缓冲区中删除数据。这种设计选择有两个原因。首先，它允许接收方在内存不足时丢弃其接收缓冲区的一部分，而不会丢失数据。其次，由于SACK选项不是可靠传输的，累积确认仍然需要处理只携带SACK信息的ACK段丢失。因此，SACK选项仅作为提示，允许发送方优化其重传。
 - en: As explained earlier, the TCP Timestamp option [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     prevents ambiguities while collecting round-trip-time measurements. It plays another
     very important role in today’s high-bandwidth networks. Since TCP uses 32 bits
@@ -1612,27 +2115,40 @@
     associate a TCP timestamp option to each segment on transmission. When a TCP stack
     receives a TCP segment, it checks that its TCP timestamp is valid and if not the
     segment is discarded [**RFC 7323**](https://datatracker.ietf.org/doc/html/rfc7323.html).
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，TCP时间戳选项 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    防止在收集往返时间测量时产生歧义。它在今天的高带宽网络中扮演着另一个非常重要的角色。由于TCP使用32位长的序列号，序列号在传输4 GBytes的数据后会回绕。在10
+    Gbps和即将到来的100 Gbps接口上，TCP只需要在几秒钟内传输，然后就可以重新使用相同的序列号。考虑到最大段生存期仍然是2分钟，属于同一TCP连接的几个数据包可能会使用相同的序列号。如果这些数据包中的一个在网络中严重延迟，它可能会与具有相同TCP序列号的数据包同时出现。为了防止这个问题，大多数现代TCP实现会在传输时将TCP时间戳选项与每个段关联。当TCP堆栈接收到一个TCP段时，它会检查其TCP时间戳是否有效，如果不是，则丢弃该段
+    [**RFC 7323**](https://datatracker.ietf.org/doc/html/rfc7323.html)。
 - en: '## TCP connection release[#](#tcp-connection-release "Link to this heading")'
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: '## TCP连接释放[#](#tcp-connection-release "链接到这个标题")'
 - en: 'TCP, like most connection-oriented transport protocols, supports two types
     of connection releases :'
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP，像大多数面向连接的传输协议一样，支持两种类型的连接释放：
 - en: graceful connection release, where each TCP user can release its own direction
     of data transfer after having transmitted all data
+  id: totrans-275
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 优雅的连接释放，其中每个TCP用户在传输所有数据后都可以释放其自己的数据传输方向
 - en: ''
+  id: totrans-276
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-277
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1640,26 +2156,34 @@
 - en: abrupt connection release, where either one user closes both directions of data
     transfer or one TCP entity is forced to close the connection (e.g., because the
     remote host does not reply anymore or due to lack of resources)
+  id: totrans-278
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 突然的连接释放，其中任一用户关闭两个方向的数据传输，或者一个TCP实体被迫关闭连接（例如，因为远程主机不再回复或由于资源不足）
 - en: 'The abrupt connection release mechanism is very simple and relies on a single
     segment having the RST bit set. A TCP segment containing the RST bit can be sent
     for the following reasons :'
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 突然的连接释放机制非常简单，依赖于一个设置了RST位的单个段。包含RST位的TCP段可以发送的原因如下：
 - en: a non-SYN segment was received for a non-existing TCP connection [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
+  id: totrans-280
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接收到一个非SYN段，但该TCP连接不存在 [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
 - en: ''
+  id: totrans-281
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-282
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1668,16 +2192,21 @@
     that is received on an existing connection but with an invalid header [**RFC 3360**](https://datatracker.ietf.org/doc/html/rfc3360.html).
     This causes the corresponding connection to be closed and has caused security
     attacks [**RFC 4953**](https://datatracker.ietf.org/doc/html/rfc4953.html)
+  id: totrans-283
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过扩展，一些实现会对在现有连接上接收到的但具有无效报头的段响应一个 RST 段 [**RFC 3360**](https://datatracker.ietf.org/doc/html/rfc3360.html)。这导致相应的连接被关闭，并导致了安全攻击
+    [**RFC 4953**](https://datatracker.ietf.org/doc/html/rfc4953.html)
 - en: ''
+  id: totrans-284
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-285
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1686,53 +2215,77 @@
     an existing TCP connection (e.g., because there are not enough resources to support
     this connection or because the remote host is considered to be unreachable). Measurements
     have shown that this usage of TCP RST is widespread [[AW05]](../bibliography.html#aw05)
+  id: totrans-286
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过扩展，一些实现会在需要关闭现有的 TCP 连接时发送一个 RST 段（例如，因为没有足够的资源来支持此连接，或者因为远程主机被认为不可达）。测量表明，这种
+    TCP RST 的使用很普遍 [[AW05]](../bibliography.html#aw05)
 - en: When an RST segment is sent by a TCP entity, it should contain the current value
     of the sequence number for the connection (or 0 if it does not belong to any existing
     connection) and the acknowledgment number should be set to the next expected in-sequence
     sequence number on this connection.
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 TCP 实体发送 RST 段时，它应包含连接的当前序列号值（如果它不属于任何现有连接，则为 0）以及确认号应设置为在此连接上期望的下一个顺序序列号。
 - en: Note
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: TCP RST wars
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP 重置战
 - en: The designers of TCP implementations should ensure that two TCP entities never
     enter a TCP RST war where host A is sending a RST segment in response to a previous
     RST segment that was sent by host B in response to a TCP RST segment sent by host
     A … To avoid such an infinite exchange of RST segments that do not carry data,
     a TCP entity is *never* allowed to send a RST segment in response to another RST
     segment.
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP 实现的设计者应确保两个 TCP 实体永远不会进入一个 TCP 重置战，其中主机 A 正在发送一个 RST 段作为对主机 B 发送的先前的 RST
+    段的响应，而主机 B 发送该 RST 段是对主机 A 发送的 TCP RST 段的响应……为了避免这种不携带数据的 RST 段的无穷交换，TCP 实体*永远*不允许在响应另一个
+    RST 段时发送 RST 段。
 - en: The normal way of terminating a TCP connection is by using the graceful TCP
     connection release. This mechanism uses the FIN flag of the TCP header and allows
     each host to release its own direction of data transfer. As for the SYN flag,
     the utilization of the FIN flag in the TCP header consumes one sequence number.
     The figure [FSM for TCP connection release](#fig-tcprelease) shows the part of
     the TCP FSM used when a TCP connection is released.
+  id: totrans-291
   prefs: []
   type: TYPE_NORMAL
+  zh: 终止 TCP 连接的正常方式是通过使用优雅的 TCP 连接释放。此机制使用 TCP 报头中的 FIN 标志，并允许每个主机释放其自己的数据传输方向。至于
+    SYN 标志，TCP 报头中 FIN 标志的使用消耗一个序列号。图 [TCP 连接释放的有限状态机](#fig-tcprelease) 显示了在释放 TCP
+    连接时使用的 TCP FSM 的部分。
 - en: '![Figure made with TikZ](../Images/40c02c0ae392648ba0563e7f85e5257f.png)'
+  id: totrans-292
   prefs:
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![使用 TikZ 制作的图](../Images/40c02c0ae392648ba0563e7f85e5257f.png)'
 - en: ''
+  id: totrans-293
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Fig. 83 FSM for TCP connection release
+  id: totrans-294
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 图 83 TCP 连接释放的有限状态机
 - en: Starting from the Established state, there are two main paths through this FSM.
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 从已建立状态开始，通过此 FSM 有两条主要路径。
 - en: The first path is when the host receives a segment with sequence number x and
     the FIN flag set. The utilization of the FIN flag indicates that the byte before
     sequence number x was the last byte of the byte stream sent by the remote host.
@@ -1747,8 +2300,13 @@
     unacknowledged data segments, e.g., if the retransmission timer expires. Upon
     reception of the acknowledgment for the FIN segment, the TCP connection is completely
     closed and its [TCB](../glossary.html#term-TCB) can be discarded.
+  id: totrans-296
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条路径是当主机收到一个序列号为 x 且设置了 FIN 标志的段。FIN 标志的使用表明序列号 x 之前的字节是远程主机发送的字节流的最后一个字节。一旦所有数据都交付给用户，TCP
+    实体发送一个 ack 字段设置为 \((x+1) \pmod{2^{32}}\) 的 ACK 段来确认 FIN 段。FIN 段受到与正常 TCP 段相同的重传机制。特别是，它的传输受到重传计时器的保护。在此点，TCP
+    连接进入 CLOSE_WAIT 状态。在此状态下，主机仍然可以向远程主机发送数据。一旦它发送了所有数据，它发送一个 FIN 段并进入 LAST_ACK 状态。在此状态下，TCP
+    实体等待它的 FIN 段的确认。它仍然可以重传未确认的数据段，例如，如果重传计时器超时。收到对 FIN 段的确认后，TCP 连接完全关闭，并且可以丢弃其 [TCB](../glossary.html#term-TCB)。
 - en: The second path is when the host has transmitted all data. Assume that the last
     transmitted sequence number is z. Then, the host sends a FIN segment with sequence
     number \((z+1) \pmod{2^{32}}\) and enters the FIN_WAIT1 state. In this state,
@@ -1763,8 +2321,14 @@
     the Closing state once all data received from the remote host have been delivered
     to the user. In this state, no new data segments can be sent and the host waits
     for an acknowledgment of its FIN segment before entering the TIME_WAIT state.
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二条路径是当主机已经传输了所有数据。假设最后一个传输的序列号是 z。然后，主机发送一个序列号为 \((z+1) \pmod{2^{32}}\) 的 FIN
+    段，并进入 FIN_WAIT1 状态。在此状态下，它可以重传未确认的段，但不能发送新的数据段。它等待对它的 FIN 段的确认（即序列号 \((z+1) \pmod{2^{32}}\)），但可能会收到远程主机发送的
+    FIN 段。在第一种情况下，TCP 连接进入 FIN_WAIT2 状态。在此状态下，仍然接受来自远程主机的新的数据段，直到收到 FIN 段。一旦在 FIN
+    段之前接收到的所有数据都交付给用户，并且连接进入 TIME_WAIT 状态，就发送对该 FIN 段的确认。在第二种情况下，收到一个 FIN 段，并且一旦从远程主机接收到的所有数据都交付给用户，连接就进入关闭状态。在此状态下，不能发送新的数据段，主机在进入
+    TIME_WAIT 状态之前等待对它的 FIN 段的确认。
 - en: The TIME_WAIT state is different from the other states of the TCP FSM. A TCP
     entity enters this state after having sent the last ACK segment on a TCP connection.
     This segment indicates to the remote host that all the data that it has sent have
@@ -1779,14 +2343,20 @@
     be handled correctly without causing the transmission of an RST segment. Without
     the TIME_WAIT state and the \(2*MSL\) seconds delay, the connection release would
     not be graceful when the last ACK segment is lost.
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: TIME_WAIT状态与TCP FSM的其他状态不同。TCP实体在发送了TCP连接上的最后一个ACK段后进入此状态。此段向远程主机指示它已正确接收了发送的所有数据，并且可以安全地释放TCP连接并丢弃相应的[TCB](../glossary.html#term-TCB)。在发送了最后一个ACK段之后，TCP连接进入TIME_WAIT状态，并保持此状态\(2*MSL\)秒。在此期间，连接的TCB被维护。这确保了发送最后一个ACK段的TCP实体保持足够的状态，以便在ACK段丢失且远程主机重传其最后一个FIN段或其他段时能够重传此段。\(2*MSL\)秒的延迟确保了任何连接上的重复段都会被正确处理，而不会导致发送RST段。如果没有TIME_WAIT状态和\(2*MSL\)秒的延迟，当最后一个ACK段丢失时，连接释放将不会是优雅的。
 - en: Note
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: TIME_WAIT on busy TCP servers
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: 忙碌的TCP服务器上的TIME_WAIT
 - en: The \(2*MSL\) seconds delay in the TIME_WAIT state is an important operational
     problem on servers having thousands of simultaneously opened TCP connections [[FTY99]](../bibliography.html#fty99).
     Consider for example a busy web server that processes 10.000 TCP connections every
@@ -1799,12 +2369,17 @@
     for a connection that no longer exists. This optimization reduces the number of
     TCBs maintained by the host sending the RST segment but at the potential cost
     of increased processing on the remote host when the RST segment is lost.
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: 在TIME_WAIT状态下的\(2*MSL\)秒延迟是拥有数千个同时打开的TCP连接的服务器上的一项重要操作问题 [[FTY99]](../bibliography.html#fty99)。以一个每秒处理10,000个TCP连接的繁忙的Web服务器为例。如果这些连接中的每一个都保持在TIME_WAIT状态4分钟，这意味着服务器在任何时候都需要维护超过200万个TCB。因此，一些TCP实现更喜欢通过发送一个RST段来突然释放连接
+    [[AW05]](../bibliography.html#aw05)，并立即丢弃相应的[TCB](../glossary.html#term-TCB)。然而，如果RST段丢失，远程主机将继续维护一个不再存在的连接的[TCB](../glossary.html#term-TCB)。这种优化减少了发送RST段的主机维护的TCB数量，但可能会以远程主机在RST段丢失时处理增加的潜在成本为代价。
 - en: 'Footnotes  ## TCP connection establishment[#](#tcp-connection-establishment
     "Link to this heading")'
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: '脚注  ## TCP连接建立[#](#tcp-connection-establishment "链接到这个标题")'
 - en: 'A TCP connection is established by using a three-way handshake. The connection
     establishment phase uses the sequence number, the acknowledgment number and the
     SYN flag. When a TCP connection is established, the two communicating hosts negotiate
@@ -1813,75 +2388,98 @@
     by one at least every 4 microseconds and after each connection establishment [[3]](#ftcpclock).
     When a client host wants to open a TCP connection with a server host, it creates
     a TCP segment with :'
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP连接是通过使用三次握手来建立的。连接建立阶段使用序列号、确认号和SYN标志。当TCP连接建立时，两个通信主机协商在连接的两个方向上使用的初始序列号。为此，每个TCP实体维护一个32位计数器，该计数器至少每4微秒增加一次，并在每次连接建立后增加
+    [[3]](#ftcpclock)。当客户端主机想要与服务器主机建立TCP连接时，它创建一个带有TCP段：
 - en: the SYN flag set
+  id: totrans-304
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: SYN标志被设置
 - en: ''
+  id: totrans-305
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-306
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the sequence number set to the current value of the 32-bit counter of the client
     host’s TCP entity
+  id: totrans-307
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号设置为客户端主机TCP实体的32位计数器的当前值
 - en: 'Upon reception of this segment (which is often called a SYN segment), the server
     host replies with a segment containing :'
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: 在接收到这个段（通常称为SYN段）后，服务器主机用一个包含以下内容的段进行回复：
 - en: the SYN flag set
+  id: totrans-309
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置SYN标志
 - en: ''
+  id: totrans-310
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-311
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the sequence number set to the current value of the 32-bit counter of the server
     host’s TCP entity
+  id: totrans-312
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号设置为服务器主机TCP实体的32位计数器的当前值
 - en: ''
+  id: totrans-313
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-314
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the ACK flag set
+  id: totrans-315
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置ACK标志
 - en: ''
+  id: totrans-316
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-317
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -1892,61 +2490,83 @@
     including sequence number x and that it is expecting data having sequence number
     x+1. As the SYN flag was set in a segment having sequence number x, this implies
     that setting the SYN flag in a segment consumes one sequence number.
+  id: totrans-318
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号设置为接收到的SYN段的序列号加1 \(\pmod{2^{32}}\)。当TCP实体发送一个确认号为x+1的段时，这表示它已经接收了所有从序列号x开始及包括x的所有数据，并且正在等待序列号为x+1的数据。由于SYN标志在序列号为x的段中被设置，这意味着在段中设置SYN标志消耗了一个序列号。
 - en: 'This segment is often called a SYN+ACK segment. The acknowledgment confirms
     to the client that the server has correctly received the SYN segment. The sequence
     number of the SYN+ACK segment is used by the server host to verify that the client
     has received the segment. Upon reception of the SYN+ACK segment, the client host
     replies with a segment containing :'
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个段通常被称为SYN+ACK段。确认号确认服务器已正确接收了SYN段。SYN+ACK段的序列号由服务器主机用来验证客户端是否接收到了段。在接收到SYN+ACK段后，客户端主机用一个包含以下内容的段进行回复：
 - en: the ACK flag set
+  id: totrans-320
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 设置ACK标志
 - en: ''
+  id: totrans-321
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-322
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the acknowledgment number set to the sequence number of the received SYN+ACK
     segment incremented by 1 \(\pmod{2^{32}}\)
+  id: totrans-323
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号设置为接收到的SYN+ACK段的序列号加1 \(\pmod{2^{32}}\)
 - en: At this point, the TCP connection is open and both the client and the server
     are allowed to send TCP segments containing data. This is illustrated in the figure
     below.
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，TCP连接已打开，客户端和服务器都可以发送包含数据的TCP段。这在下图中进行了说明。
 - en: '[![../_images/tcp-estab.png](../Images/694105c783e9c32b13337f7332d8f745.png)](../_images/tcp-estab.png)'
+  id: totrans-325
   prefs: []
   type: TYPE_NORMAL
+  zh: '![TCP建立连接](../Images/694105c783e9c32b13337f7332d8f745.png)'
 - en: Fig. 72 Establishment of a TCP connection[#](#id30 "Link to this image")
+  id: totrans-326
   prefs: []
   type: TYPE_NORMAL
+  zh: 图72 TCP连接的建立[#](#id30 "链接到这张图片")
 - en: In the figure above, the connection is considered to be established by the client
     once it has received the SYN+ACK segment, while the server considers the connection
     to be established upon reception of the ACK segment. The first data segment sent
     by the client (server) has its sequence number set to x+1 (resp. y+1).
+  id: totrans-327
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上图，客户端一旦接收到SYN+ACK段，就认为连接已经建立，而服务器在接收到ACK段后认为连接已经建立。客户端（服务器）发送的第一个数据段的序列号设置为x+1（分别对应y+1）。
 - en: Note
+  id: totrans-328
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: Computing TCP’s initial sequence number
+  id: totrans-329
   prefs: []
   type: TYPE_NORMAL
+  zh: 计算TCP的初始序列号
 - en: In the original TCP specification [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html),
     each TCP entity maintained a clock to compute the initial sequence number ([ISN](../glossary.html#term-ISN))
     placed in the SYN and SYN+ACK segments. This made the ISN predictable and caused
@@ -1962,11 +2582,21 @@
     this attack, current TCP implementations add randomness to the ISN. One of the
     solutions, proposed in [**RFC 1948**](https://datatracker.ietf.org/doc/html/rfc1948.html)
     is to compute the ISN as
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: 在原始的 TCP 规范[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中，每个
+    TCP 实体维护一个时钟来计算放置在 SYN 和 SYN+ACK 段中的初始序列号（[ISN](../glossary.html#term-ISN)）。这使得
+    ISN 可预测，并引发了安全问题。典型的安全问题如下。考虑一个基于其 IP 地址信任主机的服务器，并允许系统管理员从该主机登录而不需要密码 [[4]](#frlogin)。现在考虑一个知道这种特定配置并能够发送具有客户端地址作为源地址的
+    IP 数据包的攻击者。他可以向服务器发送伪造的 TCP 段，但不会收到服务器的响应。如果他能够预测服务器选择的 ISN，他可以发送一个伪造的 SYN 段，并在稍后发送一个伪造的
+    ACK 段以确认接收服务器发送的 SYN+ACK 段。一旦 TCP 连接建立，他就可以用它向服务器发送任何命令。为了对抗这种攻击，当前的 TCP 实现向 ISN
+    添加随机性。在[**RFC 1948**](https://datatracker.ietf.org/doc/html/rfc1948.html)中提出的解决方案之一是将
+    ISN 计算如下
 - en: '[PRE5]'
+  id: totrans-331
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: where M is the current value of the TCP clock and H is a cryptographic hash
     function. localhost and remotehost (resp. localport and remoteport ) are the IP
     addresses (port numbers) of the local and remote host and secret is a random number
@@ -1975,8 +2605,12 @@
     performed with the first implementations of this technique showed that it was
     difficult to implement it correctly, but today’s TCP implementations now generate
     good ISNs.
+  id: totrans-332
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中 M 是 TCP 时钟的当前值，H 是一个加密散列函数。localhost 和 remotehost（分别对应 localport 和 remoteport）是本地和远程主机的
+    IP 地址（端口号），secret 是只有服务器才知道的随机数。这种方法允许服务器同时为不同的客户端使用不同的 ISN。使用这种技术的首次实现进行的[测量](http://lcamtuf.coredump.cx/newtcp/)表明，正确实现它很困难，但今天的
+    TCP 实现现在生成良好的 ISN。
 - en: A server could, of course, refuse to open a TCP connection upon reception of
     a SYN segment. This refusal may be due to various reasons. There may be no server
     process that is listening on the destination port of the SYN segment. The server
@@ -1987,33 +2621,48 @@
     received SYN segment incremented by one as its acknowledgment number. This is
     illustrated in the figure below. We discuss the other usages of the TCP RST flag
     later (see [TCP connection release](#tcprelease)).
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，服务器可以在收到 SYN 段后拒绝打开 TCP 连接。这种拒绝可能由于各种原因。可能没有监听 SYN 段目标端口的服务器进程。服务器可以始终拒绝来自该特定客户端的连接建立（例如，由于安全原因），或者服务器可能没有足够的资源在那时接受新的
+    TCP 连接。在这种情况下，服务器会回复一个设置了 RST 标志并包含接收到的 SYN 段序列号加一的确认号的 TCP 段。这在下图中说明。我们将在后面讨论
+    TCP RST 标志的其他用途（见[TCP 连接释放](#tcprelease)）。
 - en: '[![../_images/tcp-estab-rej.png](../Images/6efba2b39440115db107cf4f9ac21ff3.png)](../_images/tcp-estab-rej.png)'
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-estab-rej.png](../Images/6efba2b39440115db107cf4f9ac21ff3.png)'
 - en: Fig. 73 TCP connection establishment rejected by peer[#](#id31 "Link to this
     image")
+  id: totrans-335
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 73 对等方拒绝的 TCP 连接建立[#](#id31 "链接到这张图片")
 - en: TCP connection establishment can be described as the four state Finite State
     Machine shown below. In this FSM, !X (resp. ?Y) indicates the transmission of
     segment X (resp. reception of segment Y) during the corresponding transition.
     Init is the initial state.
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP连接建立可以描述为下图中所示的四状态有限状态机。在这个有限状态机中，!X（分别对应?Y）表示在相应的转换期间传输段X（分别接收段Y）。Init是初始状态。
 - en: '![Figure made with TikZ](../Images/fa409c45183ba9c4c429c05386da995b.png)'
+  id: totrans-337
   prefs:
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![使用TikZ制作的图](../Images/fa409c45183ba9c4c429c05386da995b.png)'
 - en: ''
+  id: totrans-338
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Fig. 74 TCP FSM for connection establishment
+  id: totrans-339
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 图74 TCP连接建立FSM
 - en: A client host starts in the Init state. It then sends a SYN segment and enters
     the SYN Sent state where it waits for a SYN+ACK segment. Then, it replies with
     an ACK segment and enters the Established state where data can be exchanged. On
@@ -2023,8 +2672,11 @@
     a SYN segment, the server’s TCP entity replies with a SYN+ACK and enters the SYN
     RCVD state. It remains in this state until it receives an ACK segment that acknowledges
     its SYN+ACK segment, with this it then enters the Established state.
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户端主机从Init状态开始。然后它发送一个SYN段并进入SYN Sent状态，在那里它等待SYN+ACK段。然后，它回复一个ACK段并进入Established状态，在那里可以进行数据交换。另一方面，服务器主机从Init状态开始。当服务器进程开始监听目标端口时，底层的TCP实体创建一个TCP控制块和一个队列来处理传入的SYN段。在接收到SYN段后，服务器的TCP实体回复一个SYN+ACK并进入SYN
+    RCVD状态。它保持在这个状态，直到它接收到一个确认其SYN+ACK段的ACK段，然后进入Established状态。
 - en: Apart from these two paths in the TCP connection establishment FSM, there is
     a third path that corresponds to the case when both the client and the server
     send a SYN segment to open a TCP connection [[5]](#ftcpboth). In this case, the
@@ -2033,20 +2685,29 @@
     and enter the SYN RCVD state. The SYN+ACK that arrives from the other host allows
     it to transition to the Established state. The figure below illustrates such a
     simultaneous establishment of a TCP connection.
+  id: totrans-341
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了TCP连接建立有限状态机中的这两条路径之外，还存在第三条路径，对应于客户端和服务器都发送SYN段以打开TCP连接的情况[[5]](#ftcpboth)。在这种情况下，客户端和服务器发送SYN段并进入SYN
+    Sent状态。在接收到来自另一主机的SYN段后，它们通过发送SYN+ACK段并进入SYN RCVD状态来回复。来自另一主机的SYN+ACK允许它过渡到Established状态。下图说明了这种同时建立TCP连接的情况。
 - en: '[![../_images/tcp-estab-sim.png](../Images/51666ccbe7edc387550885fadae101a9.png)](../_images/tcp-estab-sim.png)'
+  id: totrans-342
   prefs: []
   type: TYPE_NORMAL
+  zh: '![![../_images/tcp-estab-sim.png](../Images/51666ccbe7edc387550885fadae101a9.png)](../_images/tcp-estab-sim.png)'
 - en: Fig. 75 Simultaneous establishment of a TCP connection[#](#id33 "Link to this
     image")
+  id: totrans-343
   prefs: []
   type: TYPE_NORMAL
+  zh: 图75 TCP连接同时建立[#](#id33 "链接到这张图片")
 - en: As explained earlier, TCP segments may contain an optional header extension.
     In the SYN and SYN+ACK segments, these options are used to negotiate some parameters
     and the utilization of extensions to the basic TCP specification.
+  id: totrans-344
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，TCP段可能包含可选的头部扩展。在SYN和SYN+ACK段中，这些选项用于协商一些参数和基本TCP规范扩展的使用。
 - en: The first parameter which is negotiated during the establishment of a TCP connection
     is the Maximum Segment Size ([MSS](../glossary.html#term-MSS)). The MSS is the
     size of the largest segment that a TCP entity is able to process. According to
@@ -2057,8 +2718,12 @@
     they are able to process. The MSS value indicates the maximum size of the payload
     of the TCP segments. The client (resp. server) stores in its [TCB](../glossary.html#term-TCB)
     the MSS value announced by the server (resp. the client).
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
+  zh: 在TCP连接建立过程中协商的第一个参数是最大段大小([MSS](../glossary.html#term-MSS))。MSS是TCP实体能够处理的最大段的大小。根据[**RFC
+    879**](https://datatracker.ietf.org/doc/html/rfc879.html)，所有TCP实现都必须能够接收包含536字节有效载荷的TCP段。然而，大多数TCP实现能够处理更大的段。这样的TCP实现使用SYN/SYN+ACK段中的TCP
+    MSS选项来指示它们能够处理的最大段。MSS值指示TCP段有效载荷的最大大小。客户端（分别对应服务器）在其[TCB](../glossary.html#term-TCB)中存储服务器（分别对应客户端）宣布的MSS值。
 - en: Another utilization of TCP options during connection establishment is to enable
     TCP extensions. For example, consider [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     (which is discussed in [TCP reliable data transfer](#tcpreliable)). [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
@@ -2074,54 +2739,77 @@
     TCP header options throughout the TCP connection. TCP’s option mechanism is flexible
     and it allows the extension of TCP while maintaining compatibility with older
     implementations.
+  id: totrans-346
   prefs: []
   type: TYPE_NORMAL
+  zh: 在建立连接期间，TCP选项的另一个用途是启用TCP扩展。例如，考虑[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)（在[TCP可靠数据传输](#tcpreliable)中讨论）。[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html) 定义了支持时间戳和更大窗口的TCP扩展。如果客户端支持[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将在其SYN段中添加一个[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)选项。如果服务器理解这个[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)选项并希望使用它，它将在SYN+ACK段中回复一个[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)选项，并在整个TCP连接中使用[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)中定义的扩展。否则，如果服务器的SYN+ACK段不包含[**RFC
+    1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)选项，客户端不允许在整个TCP连接中使用此扩展和相应的TCP头部选项。TCP的选项机制是灵活的，它允许扩展TCP同时保持与旧实现的兼容性。
 - en: 'The TCP options are encoded by using a Type Length Value format where :'
+  id: totrans-347
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP选项通过使用类型长度值格式进行编码，其中：
 - en: the first byte indicates the type of the option.
+  id: totrans-348
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第一个字节表示选项的类型。
 - en: ''
+  id: totrans-349
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-350
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the second byte indicates the total length of the option (including the first
     two bytes) in bytes
+  id: totrans-351
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第二个字节表示选项的总长度（包括前两个字节）以字节为单位。
 - en: ''
+  id: totrans-352
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-353
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remaining bytes are specific for each type of option
+  id: totrans-354
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 剩余的字节是针对每种选项类型的特定字节。
 - en: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) defines the
     Maximum Segment Size (MSS) TCP option that must be understood by all TCP implementations.
     This option (type 2) has a length of 4 bytes and contains a 16-bit word that indicates
     the MSS supported by the sender of the SYN segment. The MSS option can only be
     used in TCP segments having the SYN flag set.'
+  id: totrans-355
   prefs: []
   type: TYPE_NORMAL
+  zh: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 定义了必须由所有TCP实现理解的TCP最大分段大小（MSS）选项。此选项（类型2）长度为4字节，包含一个16位字，表示发送SYN段的数据发送者支持的MSS。MSS选项只能在设置了SYN标志的TCP段中使用。'
 - en: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) also defines
     two special options that must be supported by all TCP implementations. The first
     option is End of option. It is encoded as a single byte having value 0x00 and
@@ -2130,57 +2818,79 @@
     when the TCP header extension contains several TCP options that should be aligned
     on 32-bit boundaries. All other options [[7]](#ftcpoptions) are encoded using
     the TLV format.'
+  id: totrans-356
   prefs: []
   type: TYPE_NORMAL
+  zh: '[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 还定义了两个所有TCP实现都必须支持的特殊选项。第一个选项是选项结束。它编码为一个值为0x00的单字节，可以用来确保TCP头部扩展以32位边界结束。无操作选项，编码为一个值为0x01的单字节，当TCP头部扩展包含多个应按32位边界对齐的TCP选项时可以使用。所有其他选项
+    [[7]](#ftcpoptions) 都使用TLV格式进行编码。'
 - en: Note
+  id: totrans-357
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The robustness principle
+  id: totrans-358
   prefs: []
   type: TYPE_NORMAL
+  zh: 稳健性原则
 - en: The handling of the TCP options by TCP implementations is one of the many applications
     of the robustness principle which is usually attributed to [Jon Postel](https://www.postel.org/postel.html)
     and is often quoted as “Be liberal in what you accept, and conservative in what
     you send” [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html).
+  id: totrans-359
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP实现处理TCP选项是稳健性原则的许多应用之一，这一原则通常归功于[Jon Postel](https://www.postel.org/postel.html)，常被引用为“在接受方面要宽容，在发送方面要保守”
+    [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html)。
 - en: Concerning the TCP options, the robustness principle implies that a TCP implementation
     should be able to accept TCP options that it does not understand, in particular
     in received SYN segments, and that it should be able to parse any received segment
     without crashing, even if the segment contains an unknown TCP option. Furthermore,
     a server should not send in the SYN+ACK segment or later, options that have not
     been proposed by the client in the SYN segment.
+  id: totrans-360
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于TCP选项，健壮性原则意味着TCP实现应该能够接受它不理解TCP选项，特别是在接收到的SYN段中，并且它应该能够解析任何接收到的段而不会崩溃，即使该段包含未知的TCP选项。此外，服务器不应在SYN+ACK段或之后发送客户端在SYN段中未提出的选项。
 - en: '## TCP reliable data transfer[#](#tcp-reliable-data-transfer "Link to this
     heading")'
+  id: totrans-361
   prefs: []
   type: TYPE_NORMAL
+  zh: '## TCP可靠数据传输[#](#tcp-reliable-data-transfer "链接到本标题")'
 - en: The original TCP data transfer mechanisms were defined in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     Based on the experience of using TCP on the growing global Internet, this part
     of the TCP specification has been updated and improved several times, always while
     preserving the backward compatibility with older TCP implementations. In this
     section, we review the main data transfer mechanisms used by TCP.
+  id: totrans-362
   prefs: []
   type: TYPE_NORMAL
+  zh: 原始TCP数据传输机制在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中定义。基于在日益增长的全球互联网上使用TCP的经验，TCP规范的这一部分已被更新和改进多次，始终同时保持与旧版TCP实现的向后兼容性。在本节中，我们回顾TCP使用的主要数据传输机制。
 - en: 'TCP is a window-based transport protocol that provides a bi-directional byte
     stream service. This has several implications on the fields of the TCP header
     and the mechanisms used by TCP. The three fields of the TCP header are :'
+  id: totrans-363
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP是一种基于窗口的传输协议，它提供双向字节流服务。这给TCP头部字段和TCP使用的机制带来了一些影响。TCP头部的三个字段是：
 - en: sequence number. TCP uses a 32 bits sequence number. The sequence number placed
     in the header of a TCP segment containing data is the sequence number of the first
     byte of the payload of the TCP segment.
+  id: totrans-364
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 序列号。TCP使用32位序列号。放置在包含数据的TCP段头部的序列号是TCP段有效载荷的第一个字节的序列号。
 - en: ''
+  id: totrans-365
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-366
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2190,217 +2900,279 @@
     expects to receive from the remote host. In theory, the acknowledgment number
     is only valid if the ACK flag of the TCP header is set. In practice, almost all
     [[8]](#fackflag) TCP segments have their ACK flag set.
+  id: totrans-367
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 确认号。TCP使用累积的肯定确认。每个TCP段包含发送确认方期望从远程主机接收的下一个字节的序列号。理论上，确认号仅在TCP头部的ACK标志被设置时有效。在实践中，几乎所有[[8]](#fackflag)
+    TCP段都有其ACK标志被设置。
 - en: ''
+  id: totrans-368
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-369
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: window. a TCP receiver uses this 16 bits field to indicate the current size
     of its receive window expressed in bytes.
+  id: totrans-370
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 窗口。TCP接收方使用这个16位字段来指示当前接收窗口的大小，以字节为单位。
 - en: Note
+  id: totrans-371
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: The Transmission Control Block
+  id: totrans-372
   prefs: []
   type: TYPE_NORMAL
+  zh: 传输控制块
 - en: 'For each established TCP connection, a TCP implementation must maintain a Transmission
     Control Block ([TCB](../glossary.html#term-TCB)). A TCB contains all the information
     required to send and receive segments on this connection [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     This includes [[9]](#ftcpurgent) :'
+  id: totrans-373
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个建立的TCP连接，TCP实现必须维护一个传输控制块([TCB](../glossary.html#term-TCB))。TCB包含在此连接上发送和接收段所需的所有信息[**RFC
+    793**](https://datatracker.ietf.org/doc/html/rfc793.html)。这包括[[9]](#ftcpurgent)：
 - en: the local IP address
+  id: totrans-374
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地IP地址
 - en: ''
+  id: totrans-375
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-376
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remote IP address
+  id: totrans-377
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 远程IP地址
 - en: ''
+  id: totrans-378
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-379
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the local TCP port number
+  id: totrans-380
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 本地TCP端口号
 - en: ''
+  id: totrans-381
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-382
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the remote TCP port number
+  id: totrans-383
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 远程TCP端口号
 - en: ''
+  id: totrans-384
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-385
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the current state of the TCP FSM
+  id: totrans-386
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: TCP FSM的当前状态
 - en: ''
+  id: totrans-387
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-388
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: the maximum segment size (MSS)
+  id: totrans-389
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最大段大小（MSS）
 - en: ''
+  id: totrans-390
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-391
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.nxt : the sequence number of the next byte in the byte stream (the first
     byte of a new data segment that you send uses this sequence number)'
+  id: totrans-392
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'snd.nxt : 字节流中下一个字节的序列号（你发送的新数据段的第一字节使用此序列号）'
 - en: ''
+  id: totrans-393
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-394
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.una : the earliest sequence number that has been sent but has not yet been
     acknowledged'
+  id: totrans-395
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'snd.una : 已发送但尚未被确认的最早序列号'
 - en: ''
+  id: totrans-396
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-397
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'snd.wnd : the current size of the sending window (in bytes)'
+  id: totrans-398
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'snd.wnd : 发送窗口的当前大小（以字节为单位）'
 - en: ''
+  id: totrans-399
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-400
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'rcv.nxt : the sequence number of the next byte that is expected to be received
     from the remote host'
+  id: totrans-401
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'rcv.nxt : 预期从远程主机接收的下一个字节的序列号'
 - en: ''
+  id: totrans-402
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-403
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'rcv.wnd : the current size of the receive window advertised by the remote host'
+  id: totrans-404
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'rcv.wnd : 远程主机宣布的接收窗口的当前大小'
 - en: ''
+  id: totrans-405
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-406
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: 'sending buffer : a buffer used to store all unacknowledged data'
+  id: totrans-407
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发送缓冲区：用于存储所有未确认数据的缓冲区
 - en: ''
+  id: totrans-408
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-409
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2409,15 +3181,19 @@
     that has not yet been delivered to the user. Data may be stored in the receiving
     buffer because either it was not received in sequence or because the user is too
     slow to process it'
+  id: totrans-410
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接收缓冲区：一个用于存储从远程主机接收但尚未交付给用户的所有数据的缓冲区。数据可能存储在接收缓冲区中，要么是因为它没有按顺序接收，要么是因为用户处理数据太慢。
 - en: The original TCP specification can be summarized as a transport protocol that
     provides a byte stream service and uses go-back-n with a selective-repeat reception
     strategy.
+  id: totrans-411
   prefs: []
   type: TYPE_NORMAL
+  zh: 原始的TCP规范可以概括为一个提供字节流服务的传输协议，并使用带有选择性重传接收策略的回退N。
 - en: To send new data on an established connection, a TCP entity performs the following
     operations on the corresponding TCB. It first checks that the sending buffer does
     not contain more data than the receive window advertised by the remote host (rcv.wnd).
@@ -2429,8 +3205,10 @@
     the window field of the TCP segment is computed based on the current occupancy
     of the receiving buffer. The data is kept in the sending buffer in case it needs
     to be retransmitted later.
+  id: totrans-412
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在已建立的连接上发送新数据，TCP实体对相应的TCB执行以下操作。它首先检查发送缓冲区中的数据是否不大于远程主机声明的接收窗口（rcv.wnd）。如果窗口未满，则最多放置MSS字节的数据在TCP段的负载中。此段的序列号是负载的第一个字节的序列号。它被设置为第一个可用的序列号，snd.nxt，并且snd.nxt增加TCP段负载的长度。此段的确认号设置为rcv.nxt的当前值，TCP段的窗口字段根据接收缓冲区的当前占用情况计算。数据保留在发送缓冲区中，以防稍后需要重传。
 - en: When a TCP segment with the ACK flag set is received, the following operations
     are performed. rcv.wnd is set to the value of the window field of the received
     segment. The acknowledgment number is compared to snd.una. The newly acknowledged
@@ -2441,13 +3219,17 @@
     whether other data already present in this buffer can be delivered in sequence
     to the user. If so, rcv.nxt is updated again. Otherwise, the segment’s payload
     is placed in the receiving buffer.
+  id: totrans-413
   prefs: []
   type: TYPE_NORMAL
+  zh: 当接收到设置ACK标志的TCP段时，执行以下操作。rcv.wnd设置为接收到的段的窗口字段值。确认号与snd.una进行比较。新确认的数据从发送缓冲区中删除，并且snd.una更新。如果TCP段包含数据，则将序列号与rcv.nxt进行比较。如果它们相等，则段是按顺序接收的，并且可以将数据交付给用户，并且rcv.nxt更新。检查接收缓冲区的内容，以查看是否可以将其他已存在于该缓冲区中的数据按顺序交付给用户。如果是这样，则rcv.nxt再次更新。否则，将段的负载放置在接收缓冲区中。
 - en: Segment transmission strategies[#](#segment-transmission-strategies "Link to
     this heading")
+  id: totrans-414
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 分段传输策略[#](#segment-transmission-strategies "链接到本标题")
 - en: In a transport protocol such as TCP that offers a bytestream, a practical issue
     that was left as an implementation choice in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     is to decide when a new TCP segment containing data must be sent. There are two
@@ -2459,44 +3241,59 @@
     acceptable in wide area networks. A second simple solution would be to only transmit
     a new TCP segment once the user has produced MSS bytes of data. This solution
     reduces the overhead, but at the cost of a potentially very high delay.
+  id: totrans-415
   prefs: []
   type: TYPE_NORMAL
+  zh: 在像TCP这样的提供字节流的传输协议中，[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中留下作为实现选择的实际问题是决定何时发送包含数据的新的TCP段。有两种简单且极端的实现选择。第一种实现选择是用户请求传输一些数据时立即发送TCP段。这允许TCP提供低延迟服务。然而，如果用户逐字节发送数据，TCP会将每个用户字节放置在包含20字节TCP头部的段中
+    [[10]](#fnagleip)。这在广域网络中是一个巨大的开销，是不可接受的。第二种简单的解决方案是在用户产生MSS字节的数据后仅传输新的TCP段。这种解决方案减少了开销，但代价是可能非常高的延迟。
 - en: An elegant solution to this problem was proposed by John Nagle in [**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html).
     John Nagle observed that the overhead caused by the TCP header was a problem in
     wide area connections, but less in local area connections where the available
     bandwidth is usually higher. He proposed the following rules to decide to send
     a new data segment when a new data has been produced by the user or a new ack
     segment has been received.
+  id: totrans-416
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个问题的优雅解决方案是由约翰·纳格尔在[**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html)中提出的。约翰·纳格尔观察到，由TCP头部引起的开销在广域连接中是一个问题，但在通常可用带宽更高的局域网连接中则较少。他提出了以下规则，以决定在用户产生新的数据段或接收到新的确认段时发送新的数据段。
 - en: '[PRE6]'
+  id: totrans-417
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: The first rule ensures that a TCP connection used for bulk data transfer always
     sends full TCP segments. The second rule sends one partially filled TCP segment
     every round-trip-time.
+  id: totrans-418
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条规则确保用于大量数据传输的TCP连接始终发送完整的TCP段。第二条规则在每个往返时间发送一个部分填充的TCP段。
 - en: 'This algorithm, called the Nagle algorithm, takes a few lines of code in all
     TCP implementations. These lines of code have a huge impact on the packets that
     are exchanged in TCP/IP networks. Researchers have analyzed the distribution of
     the packet sizes by capturing and analyzing all the packets passing through a
     given link. These studies have shown several important results :'
+  id: totrans-419
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个算法被称为纳格尔算法，在所有TCP实现中只需要几行代码。这些代码行对TCP/IP网络中交换的数据包有巨大影响。研究人员通过捕获和分析通过给定链路的所有数据包来分析数据包大小的分布。这些研究表明了几个重要结果：
 - en: in TCP/IP networks, a large fraction of the packets are TCP segments that contain
     only an acknowledgment. These packets usually account for 40-50% of the packets
     passing through the studied link
+  id: totrans-420
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，很大一部分的数据包是只包含确认的TCP段。这些数据包通常占通过研究链路的数据包的40-50%
 - en: ''
+  id: totrans-421
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-422
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2504,22 +3301,29 @@
 - en: in TCP/IP networks, most of the bytes are exchanged in long packets, usually
     packets containing about 1440 bytes of payload which is the default MSS for hosts
     attached to an Ethernet network, the most popular type of LAN
+  id: totrans-423
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，大多数字节是在长数据包中交换的，通常是包含大约1440字节有效载荷的包，这是连接到以太网的主机的默认MSS，以太网是最流行的局域网类型。
 - en: '[Recent measurements](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)
     indicate that these packet size distributions are still valid in today’s Internet,
     although the packet distribution tends to become bi-modal with small packets corresponding
     to TCP pure acknowledgments and large 1440-bytes packets carrying most of the
     user data [[SMASU2012]](../bibliography.html#smasu2012).'
+  id: totrans-424
   prefs: []
   type: TYPE_NORMAL
+  zh: '[最近测量](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)表明，这些数据包大小分布在今天互联网中仍然有效，尽管数据包分布趋于双峰，小数据包对应于TCP纯确认，而大数据包（1440字节）携带大部分用户数据
+    [[SMASU2012]](../bibliography.html#smasu2012)。'
 - en: Segment transmission strategies[#](#segment-transmission-strategies "Link to
     this heading")
+  id: totrans-425
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 段传输策略[#](#segment-transmission-strategies "链接到这个标题")
 - en: In a transport protocol such as TCP that offers a bytestream, a practical issue
     that was left as an implementation choice in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     is to decide when a new TCP segment containing data must be sent. There are two
@@ -2531,44 +3335,59 @@
     acceptable in wide area networks. A second simple solution would be to only transmit
     a new TCP segment once the user has produced MSS bytes of data. This solution
     reduces the overhead, but at the cost of a potentially very high delay.
+  id: totrans-426
   prefs: []
   type: TYPE_NORMAL
+  zh: 在提供字节流的传输协议，如TCP中，[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中留下作为实现选择的实际问题是决定何时发送包含数据的新的TCP段。有两种简单且极端的实现选择。第一种实现选择是用户请求传输一些数据时立即发送TCP段。这允许TCP提供低延迟服务。然而，如果用户逐字节发送数据，TCP会将每个用户字节放置在包含20字节TCP头部的段中
+    [[10]](#fnagleip)。这在广域网络中是一个巨大的开销，是不可接受的。第二种简单的解决方案是在用户产生MSS字节的数据后，才传输新的TCP段。这种解决方案减少了开销，但代价是可能非常高的延迟。
 - en: An elegant solution to this problem was proposed by John Nagle in [**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html).
     John Nagle observed that the overhead caused by the TCP header was a problem in
     wide area connections, but less in local area connections where the available
     bandwidth is usually higher. He proposed the following rules to decide to send
     a new data segment when a new data has been produced by the user or a new ack
     segment has been received.
+  id: totrans-427
   prefs: []
   type: TYPE_NORMAL
+  zh: 约翰·纳格尔在[**RFC 896**](https://datatracker.ietf.org/doc/html/rfc896.html)中提出了这个问题的优雅解决方案。约翰·纳格尔观察到，TCP头部的开销在广域连接中是一个问题，但在通常可用带宽更高的局域网连接中则较少。他提出了以下规则，当用户产生新的数据段或接收到新的ack段时，决定是否发送新的数据段。
 - en: '[PRE7]'
+  id: totrans-428
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The first rule ensures that a TCP connection used for bulk data transfer always
     sends full TCP segments. The second rule sends one partially filled TCP segment
     every round-trip-time.
+  id: totrans-429
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条规则确保用于大量数据传输的TCP连接始终发送完整的TCP段。第二条规则在每个往返时间内发送一个部分填充的TCP段。
 - en: 'This algorithm, called the Nagle algorithm, takes a few lines of code in all
     TCP implementations. These lines of code have a huge impact on the packets that
     are exchanged in TCP/IP networks. Researchers have analyzed the distribution of
     the packet sizes by capturing and analyzing all the packets passing through a
     given link. These studies have shown several important results :'
+  id: totrans-430
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个算法被称为纳格尔算法，在所有TCP实现中只需要几行代码。这些代码行对TCP/IP网络中交换的包产生了巨大影响。研究人员通过捕获和分析通过给定链路的所有包来分析包大小分布。这些研究表明了几个重要结果：
 - en: in TCP/IP networks, a large fraction of the packets are TCP segments that contain
     only an acknowledgment. These packets usually account for 40-50% of the packets
     passing through the studied link
+  id: totrans-431
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，大部分的包是只包含确认信息的TCP段。这些包通常占通过研究链路传输的包的40-50%。
 - en: ''
+  id: totrans-432
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-433
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2576,20 +3395,27 @@
 - en: in TCP/IP networks, most of the bytes are exchanged in long packets, usually
     packets containing about 1440 bytes of payload which is the default MSS for hosts
     attached to an Ethernet network, the most popular type of LAN
+  id: totrans-434
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在TCP/IP网络中，大部分的字节是在长包中交换的，通常是包含大约1440字节有效载荷的包，这是连接到以太网的主机的默认MSS，以太网是最流行的局域网类型。
 - en: '[Recent measurements](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)
     indicate that these packet size distributions are still valid in today’s Internet,
     although the packet distribution tends to become bi-modal with small packets corresponding
     to TCP pure acknowledgments and large 1440-bytes packets carrying most of the
     user data [[SMASU2012]](../bibliography.html#smasu2012).'
+  id: totrans-435
   prefs: []
   type: TYPE_NORMAL
+  zh: '[最近的研究测量](http://www.caida.org/research/traffic-analysis/pkt_size_distribution/graphs.xml)表明，这些包大小分布仍然在今天的互联网中有效，尽管包分布趋于双峰，小包对应于TCP纯确认，而大1440字节的包携带大部分用户数据
+    [[SMASU2012]](../bibliography.html#smasu2012)。'
 - en: '## TCP windows[#](#tcp-windows "Link to this heading")'
+  id: totrans-436
   prefs: []
   type: TYPE_NORMAL
+  zh: '## TCP窗口[#](#tcp-windows "链接到这个标题")'
 - en: From a performance point of view, one of the main limitations of the original
     TCP specification is the 16 bits window field in the TCP header. As this field
     indicates the current size of the receive window in bytes, it limits the TCP receive
@@ -2599,26 +3425,42 @@
     The table below provides the rough [[11]](#faveragebandwidth) maximum throughput
     that can be achieved by a TCP connection with a 64 KBytes window in function of
     the connection’s round-trip-time
+  id: totrans-437
   prefs: []
   type: TYPE_NORMAL
+  zh: 从性能角度来看，原始 TCP 规范的一个主要限制是 TCP 头中的 16 位窗口字段。因为这个字段指示当前接收窗口的字节数，它将 TCP 接收窗口限制在
+    65535 字节。当 TCP 被设计时，这个限制并不是一个严重的问题，因为当时高速广域网络提供的最大带宽为 56 kbps。然而，在今天的网络中，这个限制已经不再可接受。下表提供了
+    TCP 连接在 64 KBytes 窗口大小下，根据连接的往返时间所能实现的粗略 [[11]](#faveragebandwidth) 最大吞吐量。
 - en: '| RTT | Maximum Throughput |'
+  id: totrans-438
   prefs: []
   type: TYPE_TB
+  zh: '| RTT | 最大吞吐量 |'
 - en: '| --- | --- |'
+  id: totrans-439
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 1 msec | 524 Mbps |'
+  id: totrans-440
   prefs: []
   type: TYPE_TB
+  zh: '| 1 毫秒 | 524 Mbps |'
 - en: '| 10 msec | 52.4 Mbps |'
+  id: totrans-441
   prefs: []
   type: TYPE_TB
+  zh: '| 10 毫秒 | 52.4 Mbps |'
 - en: '| 100 msec | 5.24 Mbps |'
+  id: totrans-442
   prefs: []
   type: TYPE_TB
+  zh: '| 100 毫秒 | 5.24 Mbps |'
 - en: '| 500 msec | 1.05 Mbps |'
+  id: totrans-443
   prefs: []
   type: TYPE_TB
+  zh: '| 500 毫秒 | 1.05 Mbps |'
 - en: To solve this problem, a backward compatible extension that allows TCP to use
     larger receive windows was proposed in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html).
     Today, most TCP implementations support this option. The basic idea is that instead
@@ -2633,78 +3475,120 @@
     its own receive window. The local and remote scaling factors are included in the
     [TCB](../glossary.html#term-TCB). If the server does not support [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html),
     it ignores the received option and no scaling is applied.
+  id: totrans-444
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个问题，提出了一个向后兼容的扩展，允许 TCP 使用更大的接收窗口，这在 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
+    中被提出。如今，大多数 TCP 实现都支持这个选项。基本思想是，而不是将 snd.wnd 和 rcv.wnd 作为 16 位整数存储在 [TCB](../glossary.html#term-TCB)
+    中，它们应该作为 32 位整数存储。因为 TCP 段头只包含 16 位来放置窗口字段，所以不可能在每个发送的 TCP 段中复制 snd.wnd 的值。相反，头包含
+    snd.wnd >> S，其中 S 是在连接建立期间协商的缩放因子（ \(0 \le S \le 14\））。客户端将其提议的缩放因子作为 TCP 选项添加到
+    SYN 段中。如果服务器支持 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将在
+    SYN+ACK 段中放置它用于宣传其自己的接收窗口的缩放因子。本地和远程缩放因子包含在 [TCB](../glossary.html#term-TCB) 中。如果服务器不支持
+    [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)，它将忽略接收到的选项，并且不应用缩放。
 - en: 'By using the window scaling extensions defined in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html),
     TCP implementations can use a receive buffer of up to 1 GByte. With such a receive
     buffer, the maximum throughput that can be achieved by a single TCP connection
     becomes :'
+  id: totrans-445
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用在 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html) 中定义的窗口缩放扩展，TCP
+    实现可以使用高达 1 GByte 的接收缓冲区。有了这样的接收缓冲区，单个 TCP 连接可以达到的最大吞吐量变为：
 - en: '| RTT | Maximum Throughput |'
+  id: totrans-446
   prefs: []
   type: TYPE_TB
+  zh: '| RTT | 最大吞吐量 |'
 - en: '| --- | --- |'
+  id: totrans-447
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 1 msec | 8590 Gbps |'
+  id: totrans-448
   prefs: []
   type: TYPE_TB
+  zh: '| 1 毫秒 | 8590 Gbps |'
 - en: '| 10 msec | 859 Gbps |'
+  id: totrans-449
   prefs: []
   type: TYPE_TB
+  zh: '| 10 毫秒 | 859 Gbps |'
 - en: '| 100 msec | 86 Gbps |'
+  id: totrans-450
   prefs: []
   type: TYPE_TB
+  zh: '| 100 毫秒 | 86 Gbps |'
 - en: '| 500 msec | 17 Gbps |'
+  id: totrans-451
   prefs: []
   type: TYPE_TB
+  zh: '| 500 毫秒 | 17 Gbps |'
 - en: These throughputs are acceptable in today’s networks. However, there are already
     servers having 10 Gbps interfaces… Early TCP implementations had fixed receiving
     and sending buffers [[12]](#ftcphosts). Today’s high performance implementations
     are able to automatically adjust the size of the sending and receiving buffer
     to better support high bandwidth flows [[SMM1998]](../bibliography.html#smm1998).
+  id: totrans-452
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些吞吐量在今天的网络中是可以接受的。然而，已经有服务器拥有 10 Gbps 的接口……早期的 TCP 实现具有固定的接收和发送缓冲区 [[12]](#ftcphosts)。今天的高性能实现能够自动调整发送和接收缓冲区的大小，以更好地支持高带宽流
+    [[SMM1998]](../bibliography.html#smm1998)。
 - en: TCP’s retransmission timeout[#](#tcp-s-retransmission-timeout "Link to this
     heading")
+  id: totrans-453
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TCP 的重传超时[#](#tcp-s-retransmission-timeout "链接到这个标题")
 - en: In a go-back-n transport protocol such as TCP, the retransmission timeout must
     be correctly set in order to achieve good performance. On one hand, if the retransmission
     timeout expires too early, then bandwidth is wasted by retransmitting segments
     that have already been correctly received. On the other hand, if the retransmission
     timeout expires too late, then bandwidth is wasted because the sender is idle
     waiting for the expiration of its retransmission timeout.
+  id: totrans-454
   prefs: []
   type: TYPE_NORMAL
+  zh: 在像TCP这样的回退N协议中，为了实现良好的性能，必须正确设置重传超时。一方面，如果重传超时过早到期，则已正确接收的段的重传会浪费带宽。另一方面，如果重传超时过晚到期，则发送者空闲等待重传超时到期会浪费带宽。
 - en: A good setting of the retransmission timeout clearly depends on an accurate
     estimation of the round-trip-time of each TCP connection. The round-trip-time
     differs between TCP connections, but may also change during the lifetime of a
     single connection. For example, the figure below shows the evolution of the round-trip-time
     between two hosts during a period of 45 seconds.
+  id: totrans-455
   prefs: []
   type: TYPE_NORMAL
+  zh: 重传超时的良好设置明显取决于对每个TCP连接往返时间的准确估计。往返时间在不同TCP连接之间可能不同，也可能在单个连接的生命周期内发生变化。例如，下面的图显示了两个主机在45秒期间往返时间的演变。
 - en: '[![../_images/tcp-rtt.png](../Images/0a2d2e0115955ccfed932c13f7aadca3.png)](../_images/tcp-rtt.png)'
+  id: totrans-456
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-rtt.png](../Images/0a2d2e0115955ccfed932c13f7aadca3.png)](../_images/tcp-rtt.png)'
 - en: Fig. 76 Evolution of the round-trip-time between two hosts[#](#id34 "Link to
     this image")
+  id: totrans-457
   prefs: []
   type: TYPE_NORMAL
+  zh: 图76 两个主机之间往返时间的演变[#](#id34 "链接到这张图片")
 - en: The easiest solution to measure the round-trip-time on a TCP connection is to
     measure the delay between the transmission of a data segment and the reception
     of a corresponding acknowledgment [[13]](#frttmes). As illustrated in the figure
     below, this measurement works well when there are no segment losses.
+  id: totrans-458
   prefs: []
   type: TYPE_NORMAL
+  zh: 测量TCP连接上的往返时间最简单的方法是测量数据段传输和相应确认接收之间的延迟[[13]](#frttmes)。如图所示，在没有段丢失的情况下，这种测量方法效果良好。
 - en: '[![../_images/tcp-rtt2.png](../Images/8ce63a02756a9faddc11dd69b870be27.png)](../_images/tcp-rtt2.png)'
+  id: totrans-459
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-rtt2.png](../Images/8ce63a02756a9faddc11dd69b870be27.png)](../_images/tcp-rtt2.png)'
 - en: Fig. 77 How to measure the round-trip-time ?[#](#id35 "Link to this image")
+  id: totrans-460
   prefs: []
   type: TYPE_NORMAL
+  zh: 图77 如何测量往返时间？[#](#id35 "链接到这张图片")
 - en: However, when a data segment is lost, as illustrated in the bottom part of the
     figure, the measurement is ambiguous as the sender cannot determine whether the
     received acknowledgment was triggered by the first transmission of segment 123
@@ -2712,8 +3596,11 @@
     to incorrect values of the retransmission timeout. For this reason, Phil Karn
     and Craig Partridge proposed, in [[KP91]](../bibliography.html#kp91), to ignore
     the round-trip-time measurements performed during retransmissions.
+  id: totrans-461
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，当数据段丢失时，如图中底部部分所示，测量结果是不确定的，因为发送者无法确定接收到的确认是来自段123的第一次传输还是其重传。使用不正确的往返时间估计可能导致重传超时值不正确。因此，Phil
+    Karn和Craig Partridge在[[KP91]](../bibliography.html#kp91)中提出，在重传期间忽略往返时间测量。
 - en: To avoid this ambiguity in the estimation of the round-trip-time when segments
     are retransmitted, recent TCP implementations rely on the timestamp option defined
     in [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html). This option
@@ -2724,15 +3611,22 @@
     the remote host and stored in the [TCB](../glossary.html#term-TCB). The figure
     below shows how the utilization of this timestamp option allows for the disambiguation
     of the round-trip-time measurement when there are retransmissions.
+  id: totrans-462
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了避免在段重传时估计往返时间的这种歧义，最近的TCP实现依赖于在[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)中定义的时间戳选项。此选项允许TCP发送者在每个发送的TCP段中放置两个32位时间戳。第一个时间戳，TS值（TSval），由段发送者选择。例如，它可以是其实时时钟的当前值[[14]](#ftimestamp)。第二个值，TS回显应答（TSecr），是从远程主机接收到的最后一个TSval，并存储在[TCB](../glossary.html#term-TCB)中。下面的图显示了如何利用此时间戳选项在存在重传时消除往返时间测量的歧义。
 - en: '[![../_images/tcp-rtt-ts.png](../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png)](../_images/tcp-rtt-ts.png)'
+  id: totrans-463
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-rtt-ts.png](../Images/23ee4cc93ccb6bf57ac47c6ecb4a941a.png)](../_images/tcp-rtt-ts.png)'
 - en: Fig. 78 Disambiguating round-trip-time measurements with the [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     timestamp option[#](#id36 "Link to this image")
+  id: totrans-464
   prefs: []
   type: TYPE_NORMAL
+  zh: 图 78 使用 [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html) 时间戳选项消除往返时间测量的歧义[#](#id36
+    "链接到此图像")
 - en: Once the round-trip-time measurements have been collected for a given TCP connection,
     the TCP entity must compute the retransmission timeout. As the round-trip-time
     measurements may change during the lifetime of a connection, the retransmission
@@ -2740,25 +3634,36 @@
     the TCP entity that sends a SYN segment does not know the round-trip-time to reach
     the remote host and the initial retransmission timeout is usually set to 3 seconds
     [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html).
+  id: totrans-465
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦收集了给定 TCP 连接的往返时间测量值，TCP 实体必须计算重传超时。由于往返时间测量值可能在连接的生命周期内发生变化，重传超时也可能发生变化。在连接开始时
+    [[15]](#ftcbtouch)，发送 SYN 段的 TCP 实体不知道到达远程主机的往返时间，初始重传超时通常设置为 3 秒 [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)。
 - en: 'The original TCP specification proposed in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
     to include two additional variables in the TCB :'
+  id: totrans-466
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html) 中提出的原始 TCP
+    规范建议在 TCB 中包含两个额外的变量：
 - en: 'srtt : the smoothed round-trip-time computed as \(srtt=(\alpha \times srtt)+(
     (1-\alpha) \times rtt)\) where \(rtt\) is the round-trip-time measured according
     to the above procedure and \(\alpha\) a smoothing factor (e.g. 0.8 or 0.9)'
+  id: totrans-467
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: srtt：平滑往返时间计算为 \(srtt=(\alpha \times srtt)+( (1-\alpha) \times rtt)\)，其中 \(rtt\)
+    是根据上述程序测量的往返时间，\(\alpha\) 是平滑因子（例如 0.8 或 0.9）
 - en: ''
+  id: totrans-468
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-469
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -2767,70 +3672,102 @@
     \times srtt))\) where \(\beta\) is used to take into account the delay variance
     (value : 1.3 to 2.0). The 60 and 1 constants are used to ensure that the rto is
     not larger than one minute nor smaller than 1 second.'
+  id: totrans-470
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: rto：重传超时时间计算为 \(rto=\min(60,\max(1,\beta \times srtt))\)，其中 \(\beta\) 用于考虑延迟方差（值：1.3
+    到 2.0）。常数 60 和 1 用于确保 rto 不超过一分钟也不小于 1 秒。
 - en: However, in practice, this computation for the retransmission timeout did not
     work well. The main problem was that the computed rto did not correctly take into
     account the variations in the measured round-trip-time. Van Jacobson proposed
     in his seminal paper [[Jacobson1988]](../bibliography.html#jacobson1988) an improved
     algorithm to compute the rto and implemented it in the BSD Unix distribution.
     This algorithm is now part of the TCP standard [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html).
+  id: totrans-471
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在实践中，这个重传超时的计算并没有很好地工作。主要问题是计算出的 rto 没有正确地考虑测量往返时间的变化。Van Jacobson 在他的开创性论文
+    [[Jacobson1988]](../bibliography.html#jacobson1988) 中提出了一种改进的算法来计算 rto，并在 BSD
+    Unix 分发中实现了它。现在，这个算法是 TCP 标准的一部分 [**RFC 2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)。
 - en: 'Jacobson’s algorithm uses two state variables, srtt the smoothed rtt and rttvar
     the estimation of the variance of the rtt and two parameters : \(\alpha\) and
     \(\beta\). When a TCP connection starts, the first rto is set to 3 seconds. When
     a first estimation of the rtt is available, the srtt, rttvar and rto are computed
     as follows :'
+  id: totrans-472
   prefs: []
   type: TYPE_NORMAL
+  zh: Jacobson 的算法使用两个状态变量，srtt（平滑往返时间）和 rttvar（rtt 方差的估计），以及两个参数：\(\alpha\) 和 \(\beta\)。当
+    TCP 连接开始时，第一个 rto 设置为 3 秒。当有第一个 rtt 估计值可用时，srtt、rttvar 和 rto 的计算如下：
 - en: '[PRE8]'
+  id: totrans-473
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Then, when other rtt measurements are collected, srtt and rttvar are updated
     as follows :'
+  id: totrans-474
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，当收集到其他 rtt 测量值时，srtt 和 rttvar 的更新如下：
 - en: \(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)
+  id: totrans-475
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(rttvar=(1-\beta) \times rttvar + \beta \times |srtt - rtt|\)
 - en: ''
+  id: totrans-476
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: \(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)
+  id: totrans-477
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(srtt=(1-\alpha) \times srtt + \alpha \times rtt\)
 - en: ''
+  id: totrans-478
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: \(rto=srtt + 4 \times rttvar\)
+  id: totrans-479
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: \(rto=srtt + 4 \times rttvar\)
 - en: The proposed values for the parameters are \(\alpha=\frac{1}{8}\) and \(\beta=\frac{1}{4}\).
     This allows a TCP implementation, implemented in the kernel, to perform the rtt
     computation by using shift operations instead of the more costly floating point
     operations [[Jacobson1988]](../bibliography.html#jacobson1988). The figure below
     illustrates the computation of the rto upon rtt changes.
+  id: totrans-480
   prefs: []
   type: TYPE_NORMAL
+  zh: 建议的参数值为 \(\alpha=\frac{1}{8}\) 和 \(\beta=\frac{1}{4}\)。这允许在内核中实现的 TCP 实现通过使用移位操作而不是更昂贵的浮点运算来执行
+    rtt 计算 [[Jacobson1988]](../bibliography.html#jacobson1988)。下面的图示说明了在 rtt 变化时 rto
+    的计算。
 - en: '[![../_images/tcp-rto.png](../Images/0d04bfd2484086ab09bb9aeef68035d0.png)](../_images/tcp-rto.png)'
+  id: totrans-481
   prefs: []
   type: TYPE_NORMAL
+  zh: '![../_images/tcp-rto.png](../Images/0d04bfd2484086ab09bb9aeef68035d0.png)(../_images/tcp-rto.png)'
 - en: Fig. 79 Example computation of the rto[#](#id37 "Link to this image")
+  id: totrans-482
   prefs: []
   type: TYPE_NORMAL
+  zh: 图79 示例计算rto[#](#id37 "链接到这张图片")
 - en: Advanced retransmission strategies[#](#advanced-retransmission-strategies "Link
     to this heading")
+  id: totrans-483
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 高级重传策略[#](#advanced-retransmission-strategies "链接到这个标题")
 - en: The default go-back-n retransmission strategy was defined in [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html).
     When the retransmission timer expires, TCP retransmits the first unacknowledged
     segment (i.e. the one having sequence number snd.una). After each expiration of
@@ -2844,8 +3781,12 @@
     suggests a maximum retransmission timeout of at least 60 seconds. Once the retransmission
     timeout reaches this configured maximum, the remote host is considered to be unreachable
     and the TCP connection is closed.
+  id: totrans-484
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认的回退N重传策略在[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)中定义。当重传计时器超时时，TCP重新传输第一个未确认的段（即序列号snd.una的段）。在每次重传超时到期后，[**RFC
+    2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)建议将重传超时的值加倍。这被称为指数退避。在重传后加倍重传超时被包含在TCP中，以处理诸如网络/接收器过载和重传超时初始估计不正确等问题。如果相同的段被重传多次，重传超时在每次重传后会加倍，直到达到配置的最大值。[**RFC
+    2988**](https://datatracker.ietf.org/doc/html/rfc2988.html)建议最大重传超时至少为60秒。一旦重传超时达到这个配置的最大值，远程主机被认为不可达，TCP连接被关闭。
 - en: This retransmission strategy has been refined based on the experience of using
     TCP on the Internet. The first refinement was a clarification of the strategy
     used to send acknowledgments. As TCP uses piggybacking, the easiest and less costly
@@ -2863,15 +3804,22 @@
     813**](https://datatracker.ietf.org/doc/html/rfc813.html) [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html).
     This strategy relies on a new timer with a short delay (e.g. 50 milliseconds)
     and one additional flag in the TCB. It can be implemented as follows.
+  id: totrans-485
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种重传策略是基于在互联网上使用TCP的经验而细化的。第一次细化是对发送确认所使用的策略进行了澄清。由于TCP使用尾随，发送确认的最简单和成本最低的方法是将它们放在发送到另一方向的数据段中。然而，很少有应用层协议同时双向交换数据，因此这种方法很少有效。对于只向一个方向发送数据段的程序，远程TCP实体返回空TCP段，其中唯一有用的信息是它们的确认号。如果对每个接收到的数据段都发送纯ACK段，这可能会在广域网中造成大量开销。大多数TCP实现都使用延迟确认策略。这种策略确保尽可能使用尾随，如果没有丢失，则在每两个接收到的数据段之间发送纯ACK段。当有丢失或重排序时，ACK段对发送者来说更重要，它们会立即发送[**RFC
+    813**](https://datatracker.ietf.org/doc/html/rfc813.html) [**RFC 1122**](https://datatracker.ietf.org/doc/html/rfc1122.html)。这种策略依赖于一个具有短延迟（例如50毫秒）的新计时器以及在TCB中的一个额外标志。它可以如下实现。
 - en: '[PRE9]'
+  id: totrans-486
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Due to this delayed acknowledgment strategy, during a bulk transfer, a TCP implementation
     usually acknowledges every second TCP segment received.
+  id: totrans-487
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这种延迟确认策略，在大量传输期间，TCP实现通常每接收两个TCP段就确认一次。
 - en: The default go-back-n retransmission strategy used by TCP has the advantage
     of being simple to implement, in particular on the receiver side, but when there
     are losses, a go-back-n strategy provides a lower performance than a selective
@@ -2879,14 +3827,18 @@
     allow it to use a selective repeat strategy while maintaining backward compatibility
     with older TCP implementations. These TCP extensions assume that the receiver
     is able to buffer the segments that it receives out-of-sequence.
+  id: totrans-488
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP使用的默认go-back-n重传策略具有易于实现的优点，尤其是在接收方，但当出现丢包时，go-back-n策略的性能低于选择性重传策略。TCP开发者设计了几个TCP扩展，以允许它使用选择性重传策略，同时保持与较老TCP实现的向后兼容性。这些TCP扩展假设接收方能够缓冲它接收到的乱序段。
 - en: The first extension that was proposed is the fast retransmit heuristic. This
     extension can be implemented on TCP senders and thus does not require any change
     to the protocol. It only assumes that the TCP receiver is able to buffer out-of-sequence
     segments.
+  id: totrans-489
   prefs: []
   type: TYPE_NORMAL
+  zh: 提出的第一个扩展是快速重传启发式算法。这个扩展可以在TCP发送方上实现，因此不需要对协议进行任何更改。它只假设TCP接收方能够缓冲乱序段。
 - en: From a performance point of view, one issue with TCP’s retransmission timeout
     is that when there are isolated segment losses, the TCP sender often remains idle
     waiting for the expiration of its retransmission timeouts. Such isolated losses
@@ -2896,14 +3848,20 @@
     the early 1990s. To understand this heuristic, let us consider the figure below
     that shows the segments exchanged over a TCP connection when an isolated segment
     is lost.
+  id: totrans-490
   prefs: []
   type: TYPE_NORMAL
+  zh: 从性能角度来看，TCP重传超时的问题之一是，当出现孤立段丢失时，TCP发送方通常会空闲等待重传超时的到期。这种孤立丢失在全局互联网中很常见[[Paxson99]](../bibliography.html#paxson99)。自20世纪90年代初以来，许多TCP实现中已经包含了一种处理孤立丢失而不等待重传超时到期的启发式算法。为了理解这个启发式算法，让我们考虑下面的图，它显示了当孤立段丢失时在TCP连接上交换的段。
 - en: '[![../_images/tcp-loss.png](../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png)](../_images/tcp-loss.png)'
+  id: totrans-491
   prefs: []
   type: TYPE_NORMAL
+  zh: '[![../_images/tcp-loss.png](../Images/e974a627c60cb2e57b52cfe55d4e1b1a.png)](../_images/tcp-loss.png)'
 - en: Fig. 80 Detecting isolated segment losses[#](#id38 "Link to this image")
+  id: totrans-492
   prefs: []
   type: TYPE_NORMAL
+  zh: 图80 检测孤立段丢失[#](#id38 "链接到这张图片")
 - en: As shown above, when an isolated segment is lost the sender receives several
     duplicate acknowledgments since the TCP receiver immediately sends a pure acknowledgment
     when it receives an out-of-sequence segment. A duplicate acknowledgment is an
@@ -2914,28 +3872,41 @@
     segment reordering is frequent in the Internet. Based on these observations, the
     fast retransmit heuristic has been included in most TCP implementations. It can
     be implemented as follows.
+  id: totrans-493
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上图所示，当一个孤立段丢失时，发送方会收到几个重复确认，因为TCP接收方在接收到乱序段时会立即发送纯确认。重复确认是一个包含与先前段相同确认号的确认。单个重复确认并不一定意味着一个段已丢失，因为段的重排序也可能导致重复确认。测量[[Paxson99]](../bibliography.html#paxson99)表明，段的重排序在互联网中很常见。基于这些观察，快速重传启发式算法已被包含在大多数TCP实现中。它可以如下实现。
 - en: '[PRE10]'
+  id: totrans-494
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: This heuristic requires an additional variable in the TCB (dupacks). Most implementations
     set the default number of duplicate acknowledgments that trigger a retransmission
     to 3\. It is now part of the standard TCP specification [**RFC 2581**](https://datatracker.ietf.org/doc/html/rfc2581.html).
     The fast retransmit heuristic improves the TCP performance provided that isolated
     segments are lost and the current window is large enough to allow the sender to
     send three duplicate acknowledgments.
+  id: totrans-495
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个启发式算法需要在TCB（dupacks）中添加一个额外的变量。大多数实现将触发重传的默认重复确认数设置为3。现在，它已成为TCP标准规范的一部分[**RFC
+    2581**](https://datatracker.ietf.org/doc/html/rfc2581.html)。只要丢失了孤立的段，并且当前窗口足够大，允许发送方发送三个重复确认，快速重传启发式算法就能提高TCP的性能。
 - en: The figure below illustrates the operation of the fast retransmit heuristic.
+  id: totrans-496
   prefs: []
   type: TYPE_NORMAL
+  zh: 下图说明了快速重传启发式算法的操作。
 - en: '[![../_images/tcp-frr.png](../Images/9542e04356c75d728bbd935961cc1860.png)](../_images/tcp-frr.png)'
+  id: totrans-497
   prefs: []
   type: TYPE_NORMAL
+  zh: '![TCP FRR](../Images/9542e04356c75d728bbd935961cc1860.png)'
 - en: Fig. 81 TCP fast retransmit heuristics[#](#id39 "Link to this image")
+  id: totrans-498
   prefs: []
   type: TYPE_NORMAL
+  zh: 图81 TCP快速重传启发式算法[#](#id39 "链接到此图像")
 - en: When losses are not isolated or when the windows are small, the performance
     of the fast retransmit heuristic decreases. In such environments, it is necessary
     to allow a TCP sender to use a selective repeat strategy instead of the default
@@ -2948,14 +3919,21 @@
     to the segments that it sends. SACK blocks allow a TCP receiver to indicate the
     blocks of data that it has received correctly but out of sequence. The figure
     below illustrates the utilization of the SACK blocks.
+  id: totrans-499
   prefs: []
   type: TYPE_NORMAL
+  zh: 当丢包不是孤立的或者窗口较小时，快速重传启发式算法的性能会下降。在这样的环境中，有必要允许TCP发送者使用选择性重传策略而不是默认的回退N策略。实现选择性重传需要修改TCP协议，因为接收器需要能够通知发送者它已经接收的乱序段。这可以通过使用在[**RFC
+    2018**](https://datatracker.ietf.org/doc/html/rfc2018.html)中定义的选择性确认（SACK）选项来完成。这个TCP选项在TCP连接建立期间协商。如果两个TCP主机都支持此选项，接收者可以将SACK块附加到它发送的段中。SACK块允许TCP接收者指示它已正确接收但顺序错误的块。下面的图示说明了SACK块的使用情况。
 - en: '[![../_images/tcp-sack.png](../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png)](../_images/tcp-sack.png)'
+  id: totrans-500
   prefs: []
   type: TYPE_NORMAL
+  zh: '![TCP SACK](../Images/ecfc018fc9c09599b80fe2a2e0c0d069.png)'
 - en: Fig. 82 TCP selective acknowledgments[#](#id40 "Link to this image")
+  id: totrans-501
   prefs: []
   type: TYPE_NORMAL
+  zh: 图82 TCP选择性确认[#](#id40 "链接到此图像")
 - en: A SACK option contains one or more blocks. A block corresponds to all the sequence
     numbers between the left edge and the right edge of the block. The two edges of
     the block are encoded as 32 bit numbers (the same size as the TCP sequence number)
@@ -2967,15 +3945,20 @@
     timestamp extension, this implies that a TCP segment cannot usually contain more
     than three SACK blocks. This limitation implies that a TCP receiver cannot always
     place in the SACK option that it sends, information about all the received blocks.
+  id: totrans-502
   prefs: []
   type: TYPE_NORMAL
+  zh: SACK选项包含一个或多个块。一个块对应于块左边缘和右边缘之间的所有序列号。块的两侧在SACK选项中以32位数字（与TCP序列号大小相同）编码。由于SACK选项包含一个字节用于编码其类型和一个字节用于其长度，因此包含b个块的SACK选项被编码为\(2+8
+    \times b\)个字节的序列。在实践中，SACK选项的大小可能存在问题，因为可选的TCP头部扩展不能超过40字节。由于SACK选项通常与[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)时间戳扩展结合使用，这意味着TCP段通常不能包含超过三个SACK块。这种限制意味着TCP接收器不能总是将其发送的SACK选项中包含所有已接收块的信息。
 - en: To deal with the limited size of the SACK option, a TCP receiver currently having
     more than 3 blocks inside its receiving buffer must select the blocks to place
     in the SACK option. A good heuristic is to put in the SACK option the blocks that
     have most recently changed, as the sender is likely to be already aware of the
     older blocks.
+  id: totrans-503
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了处理SACK选项的有限大小，当前接收缓冲区中拥有超过3个块的TCP接收器必须选择要放入SACK选项中的块。一个很好的启发式方法是放入SACK选项中最近改变的块，因为发送者可能已经知道较旧的块。
 - en: When a sender receives a SACK option indicating a new block and thus a new possible
     segment loss, it usually does not retransmit the missing segments immediately.
     To deal with reordering, a TCP sender can use a heuristic similar to fast retransmit
@@ -2989,8 +3972,10 @@
     are still required to deal with losses of ACK segments carrying only SACK information.
     Thus, the SACK option only serves as a hint to allow the sender to optimize its
     retransmissions.
+  id: totrans-504
   prefs: []
   type: TYPE_NORMAL
+  zh: 当发送方收到一个SACK选项，表明一个新的数据块和可能的数据段丢失时，它通常不会立即重新传输丢失的数据段。为了处理重排序，TCP发送方可以使用类似于快速重传的启发式方法，只在收到三个指示此间隔的SACK选项后，才重新传输间隔。需要注意的是，SACK选项不取代TCP头部的确认号。TCP发送方只能在TCP的累积确认已确认数据后，才能从其发送缓冲区中删除数据。这种设计选择有两个原因。首先，它允许接收方在内存不足时丢弃其接收缓冲区的一部分，而不会丢失数据。其次，由于SACK选项不是可靠传输的，因此仍然需要累积确认来处理仅携带SACK信息的ACK数据段的丢失。因此，SACK选项仅作为提示，允许发送方优化其重传。
 - en: As explained earlier, the TCP Timestamp option [**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)
     prevents ambiguities while collecting round-trip-time measurements. It plays another
     very important role in today’s high-bandwidth networks. Since TCP uses 32 bits
@@ -3004,27 +3989,39 @@
     associate a TCP timestamp option to each segment on transmission. When a TCP stack
     receives a TCP segment, it checks that its TCP timestamp is valid and if not the
     segment is discarded [**RFC 7323**](https://datatracker.ietf.org/doc/html/rfc7323.html).
+  id: totrans-505
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前所述，TCP时间戳选项[**RFC 1323**](https://datatracker.ietf.org/doc/html/rfc1323.html)在收集往返时间测量时防止了歧义。它在今天的高带宽网络中扮演着另一个非常重要的角色。由于TCP使用32位长的序列号，序列号在传输4
+    GBytes的数据后会回绕。在10 Gbps和即将到来的100 Gbps接口上，TCP只需要在几秒钟内传输，然后就可以重新使用相同的序列号。考虑到最大段生存期仍然是2分钟，属于同一TCP连接的几个数据包可能会使用相同的序列号。如果其中任何一个数据包在网络中严重延迟，它可能会与具有相同TCP序列号的数据包同时出现。为了防止这个问题，大多数现代TCP实现会在传输时将TCP时间戳选项与每个数据段关联。当TCP堆栈接收到TCP数据段时，它会检查其TCP时间戳是否有效，如果不是，则丢弃该数据段[**RFC
+    7323**](https://datatracker.ietf.org/doc/html/rfc7323.html)。
 - en: '## TCP connection release[#](#tcp-connection-release "Link to this heading")'
+  id: totrans-506
   prefs: []
   type: TYPE_NORMAL
+  zh: '## TCP连接释放[#](#tcp-connection-release "链接到本标题")'
 - en: 'TCP, like most connection-oriented transport protocols, supports two types
     of connection releases :'
+  id: totrans-507
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP，像大多数面向连接的传输协议一样，支持两种类型的连接释放：
 - en: graceful connection release, where each TCP user can release its own direction
     of data transfer after having transmitted all data
+  id: totrans-508
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 优雅连接释放，其中每个TCP用户在传输所有数据后都可以释放自己的数据传输方向
 - en: ''
+  id: totrans-509
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-510
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -3032,26 +4029,34 @@
 - en: abrupt connection release, where either one user closes both directions of data
     transfer or one TCP entity is forced to close the connection (e.g., because the
     remote host does not reply anymore or due to lack of resources)
+  id: totrans-511
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 突然连接释放，其中任一用户关闭两个方向的数据传输，或者一个TCP实体被迫关闭连接（例如，因为远程主机不再回复或由于资源不足）
 - en: 'The abrupt connection release mechanism is very simple and relies on a single
     segment having the RST bit set. A TCP segment containing the RST bit can be sent
     for the following reasons :'
+  id: totrans-512
   prefs: []
   type: TYPE_NORMAL
+  zh: 突然连接释放机制非常简单，依赖于单个数据段设置RST位。包含RST位的数据段可以出于以下原因发送：
 - en: a non-SYN segment was received for a non-existing TCP connection [**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
+  id: totrans-513
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接收到一个非存在的TCP连接的非-SYN数据段[**RFC 793**](https://datatracker.ietf.org/doc/html/rfc793.html)
 - en: ''
+  id: totrans-514
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-515
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -3060,16 +4065,21 @@
     that is received on an existing connection but with an invalid header [**RFC 3360**](https://datatracker.ietf.org/doc/html/rfc3360.html).
     This causes the corresponding connection to be closed and has caused security
     attacks [**RFC 4953**](https://datatracker.ietf.org/doc/html/rfc4953.html)
+  id: totrans-516
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过扩展，一些实现会对在现有连接上接收到的但具有无效头部的段响应一个 RST 段 [**RFC 3360**](https://datatracker.ietf.org/doc/html/rfc3360.html)。这导致相应的连接被关闭，并导致了安全攻击
+    [**RFC 4953**](https://datatracker.ietf.org/doc/html/rfc4953.html)
 - en: ''
+  id: totrans-517
   prefs:
   - PREF_BQ
   - PREF_IND
   type: TYPE_NORMAL
 - en: ''
+  id: totrans-518
   prefs:
   - PREF_BQ
   - PREF_IND
@@ -3078,53 +4088,77 @@
     an existing TCP connection (e.g., because there are not enough resources to support
     this connection or because the remote host is considered to be unreachable). Measurements
     have shown that this usage of TCP RST is widespread [[AW05]](../bibliography.html#aw05)
+  id: totrans-519
   prefs:
   - PREF_BQ
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通过扩展，一些实现会在需要关闭现有 TCP 连接时发送 RST 段（例如，因为没有足够的资源来支持此连接或因为远程主机被认为不可达）。测量表明，这种 TCP
+    RST 的使用非常普遍 [[AW05]](../bibliography.html#aw05)
 - en: When an RST segment is sent by a TCP entity, it should contain the current value
     of the sequence number for the connection (or 0 if it does not belong to any existing
     connection) and the acknowledgment number should be set to the next expected in-sequence
     sequence number on this connection.
+  id: totrans-520
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个 TCP 实体发送 RST 段时，它应包含连接的当前序列号值（如果它不属于任何现有连接，则为 0）并且确认号应设置为在此连接上期望的下一个顺序序列号。
 - en: Note
+  id: totrans-521
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: TCP RST wars
+  id: totrans-522
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP RST 战争
 - en: The designers of TCP implementations should ensure that two TCP entities never
     enter a TCP RST war where host A is sending a RST segment in response to a previous
     RST segment that was sent by host B in response to a TCP RST segment sent by host
     A … To avoid such an infinite exchange of RST segments that do not carry data,
     a TCP entity is *never* allowed to send a RST segment in response to another RST
     segment.
+  id: totrans-523
   prefs: []
   type: TYPE_NORMAL
+  zh: TCP 实现的设计者应确保两个 TCP 实体永远不会进入一个 TCP RST 战争，其中主机 A 发送 RST 段作为对主机 B 发送的先前 RST 段的响应，而主机
+    B 是作为对主机 A 发送的 TCP RST 段的响应而发送该 RST 段的……为了避免这种不携带数据的 RST 段的无穷交换，TCP 实体*永远*不允许对另一个
+    RST 段发送 RST 段。
 - en: The normal way of terminating a TCP connection is by using the graceful TCP
     connection release. This mechanism uses the FIN flag of the TCP header and allows
     each host to release its own direction of data transfer. As for the SYN flag,
     the utilization of the FIN flag in the TCP header consumes one sequence number.
     The figure [FSM for TCP connection release](#fig-tcprelease) shows the part of
     the TCP FSM used when a TCP connection is released.
+  id: totrans-524
   prefs: []
   type: TYPE_NORMAL
+  zh: 终止 TCP 连接的正常方式是使用优雅的 TCP 连接释放。此机制使用 TCP 头部的 FIN 标志，并允许每个主机释放其自己的数据传输方向。至于 SYN
+    标志，TCP 头部中 FIN 标志的使用消耗一个序列号。图 [TCP 连接释放的 FSM](#fig-tcprelease) 显示了在释放 TCP 连接时使用的
+    TCP FSM 的部分。
 - en: '![Figure made with TikZ](../Images/40c02c0ae392648ba0563e7f85e5257f.png)'
+  id: totrans-525
   prefs:
   - PREF_BQ
   type: TYPE_IMG
+  zh: '![使用 TikZ 制作的图](../Images/40c02c0ae392648ba0563e7f85e5257f.png)'
 - en: ''
+  id: totrans-526
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: Fig. 83 FSM for TCP connection release
+  id: totrans-527
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 图 83 TCP 连接释放的 FSM
 - en: Starting from the Established state, there are two main paths through this FSM.
+  id: totrans-528
   prefs: []
   type: TYPE_NORMAL
+  zh: 从已建立状态开始，通过此 FSM 有两条主要路径。
 - en: The first path is when the host receives a segment with sequence number x and
     the FIN flag set. The utilization of the FIN flag indicates that the byte before
     sequence number x was the last byte of the byte stream sent by the remote host.
@@ -3139,8 +4173,14 @@
     unacknowledged data segments, e.g., if the retransmission timer expires. Upon
     reception of the acknowledgment for the FIN segment, the TCP connection is completely
     closed and its [TCB](../glossary.html#term-TCB) can be discarded.
+  id: totrans-529
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一条路径是当主机接收到一个带有序列号 x 和 FIN 标志的段时。FIN 标志的使用表明序列号 x 之前的字节是远程主机发送的字节流中的最后一个字节。一旦所有数据都已发送给用户，TCP
+    实体发送一个 ACK 段，其 ack 字段设置为 \((x+1) \pmod{2^{32}}\) 以确认 FIN 段。FIN 段受到与正常 TCP 段相同的重传机制。特别是，其传输受到重传计时器的保护。此时，TCP
+    连接进入 CLOSE_WAIT 状态。在此状态下，主机仍然可以向远程主机发送数据。一旦所有数据都已发送，它发送一个 FIN 段并进入 LAST_ACK 状态。在此状态下，TCP
+    实体等待其 FIN 段的确认。它可能仍然会重传未确认的数据段，例如，如果重传计时器到期。收到 FIN 段确认后，TCP 连接完全关闭，其 [TCB](../glossary.html#term-TCB)
+    可以被丢弃。
 - en: The second path is when the host has transmitted all data. Assume that the last
     transmitted sequence number is z. Then, the host sends a FIN segment with sequence
     number \((z+1) \pmod{2^{32}}\) and enters the FIN_WAIT1 state. In this state,
@@ -3155,8 +4195,14 @@
     the Closing state once all data received from the remote host have been delivered
     to the user. In this state, no new data segments can be sent and the host waits
     for an acknowledgment of its FIN segment before entering the TIME_WAIT state.
+  id: totrans-530
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二条路径是当主机已发送所有数据时。假设最后一个发送的序列号是 z。然后，主机发送一个序列号为 \((z+1) \pmod{2^{32}}\) 的 FIN
+    段并进入 FIN_WAIT1 状态。在此状态下，它可以重传未确认的段，但不能发送新的数据段。它等待其 FIN 段的确认（即序列号 \((z+1) \pmod{2^{32}}\)），但可能收到远程主机发送的
+    FIN 段。在第一种情况下，TCP 连接进入 FIN_WAIT2 状态。在此状态下，直到接收到 FIN 段之前，仍然接受来自远程主机的新的数据段。一旦在 FIN
+    段之前接收到的所有数据都已发送给用户，并且连接进入 TIME_WAIT 状态，就发送此 FIN 段的确认。在第二种情况下，收到一个 FIN 段，并且一旦从远程主机接收到的所有数据都已发送给用户，连接进入
+    Closing 状态。在此状态下，不能发送新的数据段，并且主机在进入 TIME_WAIT 状态之前等待其 FIN 段的确认。
 - en: The TIME_WAIT state is different from the other states of the TCP FSM. A TCP
     entity enters this state after having sent the last ACK segment on a TCP connection.
     This segment indicates to the remote host that all the data that it has sent have
@@ -3171,14 +4217,20 @@
     be handled correctly without causing the transmission of an RST segment. Without
     the TIME_WAIT state and the \(2*MSL\) seconds delay, the connection release would
     not be graceful when the last ACK segment is lost.
+  id: totrans-531
   prefs: []
   type: TYPE_NORMAL
+  zh: TIME_WAIT状态与TCP FSM的其他状态不同。TCP实体在发送了TCP连接上的最后一个ACK段后进入此状态。这个段向远程主机指示它发送的所有数据都已正确接收，并且它可以安全地释放TCP连接并丢弃相应的[TCB](../glossary.html#term-TCB)。在发送了最后一个ACK段之后，TCP连接进入TIME_WAIT状态，并保持此状态\(2*MSL\)秒。在此期间，连接的TCB被维护。这确保了发送最后一个ACK段的TCP实体保持足够的状态，以便在ACK段丢失时能够重新传输此段。\(2*MSL\)秒的延迟确保了任何连接上的重复段都会被正确处理，而不会导致发送RST段。如果没有TIME_WAIT状态和\(2*MSL\)秒的延迟，当最后一个ACK段丢失时，连接释放将不会是优雅的。
 - en: Note
+  id: totrans-532
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意
 - en: TIME_WAIT on busy TCP servers
+  id: totrans-533
   prefs: []
   type: TYPE_NORMAL
+  zh: 繁忙TCP服务器上的TIME_WAIT状态
 - en: The \(2*MSL\) seconds delay in the TIME_WAIT state is an important operational
     problem on servers having thousands of simultaneously opened TCP connections [[FTY99]](../bibliography.html#fty99).
     Consider for example a busy web server that processes 10.000 TCP connections every
@@ -3191,8 +4243,13 @@
     for a connection that no longer exists. This optimization reduces the number of
     TCBs maintained by the host sending the RST segment but at the potential cost
     of increased processing on the remote host when the RST segment is lost.
+  id: totrans-534
   prefs: []
   type: TYPE_NORMAL
+  zh: 在TIME_WAIT状态下的\(2*MSL\)秒延迟是拥有数千个同时打开的TCP连接的服务器上的一项重要操作问题 [[FTY99]](../bibliography.html#fty99)。以一个每秒处理10,000个TCP连接的繁忙的Web服务器为例。如果这些连接中的每一个都保持在TIME_WAIT状态4分钟，这意味着服务器在任何时候都需要维护超过200万个TCB。因此，一些TCP实现更喜欢通过发送一个RST段来突然释放连接
+    [[AW05]](../bibliography.html#aw05)，并立即丢弃相应的[TCB](../glossary.html#term-TCB)。然而，如果RST段丢失，远程主机将继续维护一个不再存在的连接的[TCB](../glossary.html#term-TCB)。这种优化减少了发送RST段的主机维护的TCB数量，但可能会以远程主机在RST段丢失时处理增加为代价。
 - en: Footnotes
+  id: totrans-535
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚注
