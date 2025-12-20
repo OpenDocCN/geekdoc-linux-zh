@@ -713,73 +713,11 @@ Expiration of the retransmission timer:
 
 如果将 TCP 确认过载用于携带 ECE 位，情况就不同了。考虑下面图中的示例。一个客户端通过路由器向服务器发送数据包。在下面的示例中，第一个数据包被标记。服务器返回一个设置了 ECE 位的确认。不幸的是，这个确认丢失了，并且从未到达客户端。不久之后，服务器发送了一个也携带累积确认的数据段。这个确认确认了数据已到达客户端，但它没有通过 ECE 位接收到拥塞信息。
 
-> ![msc {
-> 
-> 客户端 [label="客户端", linecolour=black],
-> 
-> 路由器 [label="路由器", linecolour=black],
-> 
-> 服务器 [label="服务器", linecolour=black];
-> 
-> 客户端=>路由器 [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器 -x 客户端 [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>客户端 [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端->服务器 [linecolour=white];
-> 
-> }](../Images/d2ed1589241adeb9e699082587d1916d.png)
+> ![](img/d2ed1589241adeb9e699082587d1916d.png)
 
 为了解决这个问题，[**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html) 在 TCP 头部中使用了额外的位：拥塞窗口减少 (CWR) 位。
 
-> ![msc {
-> 
-> 客户端 [label="客户端", linecolour=black],
-> 
-> 路由器 [label="路由器", linecolour=black],
-> 
-> 服务器 [label="服务器", linecolour=black];
-> 
-> 客户端=>路由器 [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器 -x 客户端 [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> server=>router [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> router=>client [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> client=>router [ label = "data[seq=1,ECT=1,CE=0,CWR=1]", arcskip="1" ];
-> 
-> router=>server [ label = "data[seq=1,ECT=1,CE=1,CWR=1]", arcskip="1"];
-> 
-> |||;
-> 
-> client->server [linecolour=white];
-> 
-> }](../Images/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
+> ![](img/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
 
 TCP 头部的 CWR 位为 ECE 位提供了一种确认形式。当 TCP 接收方检测到标记了 CE 位的分组时，它会将其返回给发送方的所有段中的 ECE 位置位。在收到 ECE 位已置位的确认后，发送方将其拥塞窗口减少以反映轻微的拥塞，并设置 CWR 位。只要接收到的段包含已置位的 ECE 位，此位将保持置位状态。发送方应仅对每个往返时间标记的分组做出一次反应。
 
@@ -1793,73 +1731,11 @@ Expiration of the retransmission timer:
 
 如果将 TCP 确认过载用于携带 ECE 位，情况就不同了。考虑下面图中的示例。一个客户端通过路由器向服务器发送数据包。在下面的示例中，第一个数据包被标记。服务器返回一个设置了 ECE 位的确认。不幸的是，这个确认丢失了，并且从未到达客户端。不久之后，服务器发送了一个也携带累积确认的数据段。这个确认确认了数据已到达客户端，但它没有通过 ECE 位收到拥塞信息。
 
-> ![msc {
-> 
-> 客户端 [label="客户端", linecolour=black],
-> 
-> 路由器 [label="路由器", linecolour=black],
-> 
-> 服务器 [label="服务器", linecolour=black];
-> 
-> 客户端=>路由器 [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器 -x 客户端 [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>客户端 [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端->服务器 [linecolour=white];
-> 
-> }](../Images/d2ed1589241adeb9e699082587d1916d.png)
+> ![](img/d2ed1589241adeb9e699082587d1916d.png)
 
 为了解决这个问题，[**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html) 在 TCP 头部使用了一个额外的位：拥塞窗口减少 (CWR) 位。
 
-> ![msc {
-> 
-> 客户端 [label="客户端", linecolour=black],
-> 
-> 路由器 [label="路由器", linecolour=black],
-> 
-> 服务器 [label="服务器", linecolour=black];
-> 
-> 客户端=>路由器 [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器 -x 客户端 [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>客户端 [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端=>路由器 [ label = "data[seq=1,ECT=1,CE=0,CWR=1]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ label = "data[seq=1,ECT=1,CE=1,CWR=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端->服务器 [linecolour=white];
-> 
-> }](../Images/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
+> ![](img/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
 
 TCP 头部的 CWR 位为 ECE 位提供了一种确认形式。当 TCP 接收方检测到一个标记了 CE 位的包时，它会将其返回给发送方的所有段中的 ECE 位设置为 1。在收到设置了 ECE 位的确认后，发送方将其拥塞窗口减少以反映轻微的拥塞，并设置 CWR 位。只要接收到的段包含设置了 ECE 位的位，该位就会保持设置状态。发送方应该只在往返时间内对标记的包做出一次反应。
 
@@ -2095,73 +1971,11 @@ Expiration of the retransmission timer:
 
 如果 TCP 确认信息超载以携带 ECE 位，情况就不同了。考虑下面图中的示例。一个客户端通过路由器向服务器发送数据包。在下面的示例中，第一个数据包被标记。服务器返回一个设置了 ECE 位的确认信息。不幸的是，这个确认信息丢失了，并且从未到达客户端。不久之后，服务器发送了一个也携带累积确认信息的数据段。这个确认信息确认了数据已到达客户端，但它没有通过 ECE 位接收到拥塞信息。
 
-> ![msc {
-> 
-> 客户端 [标签="客户端", 线颜色=黑色],
-> 
-> 路由器 [标签="路由器", 线颜色=黑色],
-> 
-> 服务器 [标签="server", 线颜色=黑色];
-> 
-> 客户端=>路由器 [ 标签 = "数据[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ 标签 = "数据[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ 标签 = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器配置 -x 客户端 [标签="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ 标签 = "数据[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>客户端 [ 标签 = "数据[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端->服务器 [线颜色=白色];
-> 
-> }](../Images/d2ed1589241adeb9e699082587d1916d.png)
+> ![](img/d2ed1589241adeb9e699082587d1916d.png)
 
 为了解决这个问题，[**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html) 在 TCP 头部使用了一个额外的位：拥塞窗口减少 (CWR) 位。
 
-> ![msc {
-> 
-> 客户端 [标签="客户端", 线颜色=黑色],
-> 
-> 路由器 [标签="路由器", 线颜色=黑色],
-> 
-> 服务器 [标签="服务器", 线颜色=黑色];
-> 
-> 客户端=>路由器 [ 标签 = "数据[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>服务器 [ 标签 = "数据[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 服务器=>路由器 [ 标签 = "ack=2,ECE=1", arcskip="1" ];
-> 
-> 路由器 -x 客户端 [标签="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> server=>router [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> router=>client [ label = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> client=>router [ label = "data[seq=1,ECT=1,CE=0,CWR=1]", arcskip="1" ];
-> 
-> router=>server [ label = "data[seq=1,ECT=1,CE=1,CWR=1]", arcskip="1"];
-> 
-> |||;
-> 
-> client->server [linecolour=white];
-> 
-> }](../Images/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
+> ![](img/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
 
 TCP 头部的 CWR 位为 ECE 位提供了一种形式的确认。当一个 TCP 接收器检测到一个标记了 CE 位的包时，它会将其返回给发送者的所有段中的 ECE 位置位。当收到一个设置了 ECE 位的确认时，发送器将其拥塞窗口减少以反映轻微的拥塞，并设置 CWR 位。只要接收到的段中设置了 ECE 位，此位将保持设置状态。发送器应该只在每个往返时间对标记的包做出一次反应。
 
@@ -2243,73 +2057,11 @@ TCP 拥塞控制动物园
 
 如果 TCP 确认信息超载以携带 ECE 位，情况就不同了。考虑下面图中的示例。一个客户端通过路由器向服务器发送数据包。在下面的示例中，第一个数据包被标记。服务器返回一个设置了 ECE 位的确认信息。不幸的是，这个确认信息丢失了，并且从未到达客户端。不久之后，服务器发送了一个也携带累积确认信息的数据段。这个确认信息确认了数据已到达客户端，但它没有通过 ECE 位接收到拥塞信息。
 
-> ![msc {
-> 
-> client [label="client", linecolour=black],
-> 
-> router [label="router", linecolour=black],
-> 
-> server [label="server", linecolour=black];
-> 
-> client=>router [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> router=>server [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> server=>router [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> router -x client [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> server=>router [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1" ];
-> 
-> router=>client [ label = "data[seq=x,ack=2,ECE=0,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> client->server [linecolour=white];
-> 
-> }](../Images/d2ed1589241adeb9e699082587d1916d.png)
+> ![](img/d2ed1589241adeb9e699082587d1916d.png)
 
 为了解决这个问题，[**RFC 3168**](https://datatracker.ietf.org/doc/html/rfc3168.html)在 TCP 头中使用了额外的位：拥塞窗口减少（CWR）位。
 
-> ![msc {
-> 
-> client [label="client", linecolour=black],
-> 
-> router [label="router", linecolour=black],
-> 
-> server [label="server", linecolour=black];
-> 
-> client=>router [ label = "data[seq=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> router=>server [ label = "data[seq=1,ECT=1,CE=1]", arcskip="1"];
-> 
-> |||;
-> 
-> server=>router [ label = "ack=2,ECE=1", arcskip="1" ];
-> 
-> router -x client [label="ack=2,ECE=1", arcskip="1" ];
-> 
-> |||;
-> 
-> 服务器=>路由器 [标签 = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1" ];
-> 
-> 路由器=>客户端 [标签 = "data[seq=x,ack=2,ECE=1,ECT=1,CE=0]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端=>路由器 [标签 = "data[seq=1,ECT=1,CE=0,CWR=1]", arcskip="1" ];
-> 
-> 路由器=>服务器 [标签 = "data[seq=1,ECT=1,CE=1,CWR=1]", arcskip="1"];
-> 
-> |||;
-> 
-> 客户端->服务器 [线路颜色=白色];
-> 
-> }](../Images/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
+> ![](img/36533b7c4d47ba50cac29ebf6ebcc1f1.png)
 
 TCP 头部中的 CWR 位为 ECE 位提供了一种确认形式。当 TCP 接收方检测到标记了 CE 位的分组时，它会将其返回给发送方的所有段中的 ECE 位置位。当收到 ECE 位已置位的确认后，发送方将其拥塞窗口减小以反映轻微的拥塞，并设置 CWR 位。只要接收到的段包含已置位的 ECE 位，此位将保持置位状态。发送方应仅在往返时间内对标记的分组做出一次反应。
 

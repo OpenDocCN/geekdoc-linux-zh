@@ -14,25 +14,7 @@
 
 在一个完美的网络之上运行时，传输实体可以在 DATA.req(SDU) 到达时简单地发出 send(SDU) [[1]](#fsdu)。同样，接收者在收到 recvd(SDU) 时发出 DATA.ind(SDU)。当发送单个 SDU 时，这样一个简单的协议就足够了。这在下图中有说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(SDU)" ] ,
-> 
-> b>>c [ label = "段(SDU)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(SDU)" ];
-> 
-> }](../Images/ba824d054705364b69646b80420c85eb.png)
+> ![](img/ba824d054705364b69646b80420c85eb.png)
 
 不幸的是，这并不总是足以确保 SDU 的可靠交付。考虑这样一个案例，一个客户端向服务器发送了数十个 SDU。如果服务器比客户端快，它将能够接收和处理客户端发送的所有段，并将内容交付给用户。然而，如果服务器比客户端慢，可能会出现问题。传输实体包含缓冲区以存储已作为数据请求接收但尚未发送的 SDU。如果应用程序比网络快，缓冲区可能会满。在这种情况下，操作系统将挂起应用程序，以便传输实体清空其传输队列。传输实体还使用缓冲区来存储尚未由应用程序处理的接收到的段。如果应用程序处理数据较慢，这个缓冲区可能会溢出，并且传输实体将无法接受任何额外的段。传输实体的缓冲区大小有限，如果它们溢出，到达的段将被丢弃，即使它们是正确的。
 
@@ -58,31 +40,7 @@
 
 发送方有限状态机显示，发送方必须等待接收方的确认才能传输下一个 SDU。下面的图示说明了两个主机之间的一些段交换。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)"], b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ],c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)" ], b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ], c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/15482ac863d12db91aebf9dbd402b97a.png)
+> ![](img/15482ac863d12db91aebf9dbd402b97a.png)
 
 注意
 
@@ -116,47 +74,7 @@ TCP/IP 协议套件中的大多数协议都依赖于简单的互联网校验和�
 
 由于接收者在收到每个数据段后都会发送一个确认，因此处理丢失的最简单方法是使用重传计时器。当发送者发送一个段时，它启动一个重传计时器。这个重传计时器的持续时间应该大于往返时间，即数据段传输和对应确认接收之间的延迟。当重传计时器到期时，发送者假定数据段已丢失，并重新发送它。这在下图中说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="取消计时器"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-> 
-> b-x c [ label = "D(b)", arcskip="1", linecolour=red];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "计时器到期" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/eb3e128faed868520ea345c4171d9007.png)
+> ![](img/eb3e128faed868520ea345c4171d9007.png)
 
 ```sh
 Please log in to see this exercise
@@ -164,51 +82,7 @@ Please log in to see this exercise
 
 不幸的是，仅重传计时器不足以从丢失中恢复。让我们考虑以下情况，如图所示，其中确认信息丢失。在这种情况下，发送方重新传输尚未确认的数据段。然而，如图所示，接收方将重传视为新的段，其有效载荷必须交付给其用户。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="取消计时器"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c-x b [label= "C(OK)", linecolour=red, arcskip="1"];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "计时器到期" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b) !!!!!", linecolour=red ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/f31aca9d4a56211a006ee59b4bbd6581.png)
+> ![](img/f31aca9d4a56211a006ee59b4bbd6581.png)
 
 为了解决这个问题，可靠的协议将序列号与每个数据段关联。这个序列号是数据段头部中找到的字段之一。我们使用记号 D(x,…)来表示序列号字段设置为值 x 的数据段。确认信息也包含一个序列号，表示它确认的数据段。我们使用 OKx 来表示确认接收了 D(x,…)的确认。序列号被编码为固定长度的比特串。最简单的可靠协议是交替位协议（ABP）。
 
@@ -236,153 +110,15 @@ Please log in to see this exercise
 
 下图说明了交替位协议的操作。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\nstart timer" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="cancel timer"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\nstart timer" ];
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="cancel timer"];
-
-|||;
-
-a=>b [ label = "DATA.req(c)\nstart timer" ] ,
-
-b>>c [ label = "D(0,c)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(c)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="cancel timer"];
-
-|||;
-
-}](../Images/58f29e8a1f0f64da47ef83b069805c78.png)
+![](img/58f29e8a1f0f64da47ef83b069805c78.png)
 
 交替位协议可以从数据或控制段的丢失中恢复。这在下面的两个图中得到说明。第一个图显示了数据段的丢失。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\nstart timer" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="cancel timer"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b-x c [ label = "D(1,b)", arcskip="1", linecolour=red];
-
-|||;
-
-|||;
-
-a=>b [ linecolour=white, label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/f662cc9a0b114455fe7ce91316c8aedb.png)
+![](img/f662cc9a0b114455fe7ce91316c8aedb.png)
 
 第二张图说明了主机如何处理一个控制段的丢失。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c-x b [label= "C(OK1)", linecolour=red, arcskip="1"];
-
-|||;
-
-a=>b [ linecolour=white, label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "Duplicate segment\n 被忽略", textcolour=red, linecolour=white ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/3bcb6de20e7b816c3750de577d1012cc.png)
+![](img/3bcb6de20e7b816c3750de577d1012cc.png)
 
 交替比特协议可以从传输错误和段丢失中恢复。然而，它有一个重要的缺点。考虑两个通过 50 Kbits/sec 卫星链路直接连接的主机，该链路具有 250 毫秒的传播延迟。如果这些主机发送 1000 比特的段，那么如果忽略确认的传输时间，交替比特协议可以达到的最大吞吐量是每 520 毫秒一个段，即$ 20+250+250=520 $毫秒。这还不到 2 Kbits/sec！
 
@@ -516,93 +252,13 @@ Please log in to see this exercise
 
 建立传输连接的最简单方法可能是定义两个特殊的控制段：CR（连接请求）和 CA（连接确认）。CR 段由希望发起连接的传输实体发送。如果远程实体希望接受连接，它将通过发送 CA 段进行回复。CR 和 CA 段包含端口号，这允许识别通信的应用程序。一旦收到 CA 段，就认为传输连接已经建立。在此点，可以双向发送数据段。
 
-![msc {
-
-a1 [label="", linecolour=white],
-
-a [label="", linecolour=white],
-
-b [label="源", linecolour=black],
-
-z [label="提供商", linecolour=white],
-
-c [label="目的地", linecolour=black],
-
-d [label="", linecolour=white],
-
-d1 [label="", linecolour=white];
-
-a1=>b [ label = "CONNECT.req" ] ,
-
-b>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "CONNECT.ind" ];
-
-d1=>c [ label = "CONNECT.resp" ] ,
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-b=>a1 [ label = "CONNECT.conf" ];
-
-a1=>b [ linecolour=white, textcolour=blue, label = "连接已建立" ] ,
-
-c=>d1 [ linecolour=white, textcolour=blue, label = "连接已建立" ];
-
-}](../Images/384affb0102503143b8af853578161f2.png)
+![](img/384affb0102503143b8af853578161f2.png)
 
 然而，考虑到网络层的不可靠性，这仍然是不够的。由于网络层不完美，CR 或 CA 段可能会丢失、延迟或出现传输错误。为了处理这些问题，控制段必须通过 CRC 或校验和来保护，以检测传输错误。此外，由于 CA 段确认了 CR 段的接收，CR 段应该使用重传定时器进行保护。
 
 不幸的是，这个方案不足以确保运输服务的可靠性。例如，考虑一个短暂的运输连接，其中发送了一个单一但重要的传输（例如，从银行账户转账）。这样的短暂连接以一个由 CA 段确认的 CR 段开始，然后发送数据段，确认并终止连接。不幸的是，由于网络层服务不可靠，延迟加上重传可能导致下图中所示的情况，即接收实体将来自前一个连接的延迟 CR 和数据段作为有效段接受，并将相应的数据交付给用户。重复 SDU 是不可接受的，传输协议必须解决这个问题。
 
-![msc {
-
-a1 [label="", linecolour=white],
-
-a [label="", linecolour=white],
-
-b [label="源", linecolour=black],
-
-z [label="提供商", linecolour=white],
-
-c [label="目的地", linecolour=black],
-
-d [label="", linecolour=white],
-
-d1 [label="", linecolour=white];
-
-a1=>b [ label = "CONNECT.req" ] ,
-
-b>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "CONNECT.ind" ];
-
-d1=>c [ label = "CONNECT.resp" ] ,
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-b=>a1 [ label = "CONNECT.conf" ];
-
-a1=>b [ linecolour=white, textcolour=blue, label = "First connection\nestablished" ] ,
-
-c=>d1 [ linecolour=white, textcolour=blue, label = "First connection\nestablished" ];
-
-a1=>b [ label = "", linecolour=white];
-
-a1=>b [ linecolour=white, textcolour=red, label = "First connection\nclosed" ] ,
-
-c=>d1 [ linecolour=white, textcolour=red, label = "First connection\nclosed" ];
-
-z>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "如何检测重复？" ],
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-a1=>b [ label = "", linecolour=white];
-
-z>>c [ label = "D", arcskip="1"];
-
-}](../Images/450730721625aed82431f20387763529.png)
+![](img/450730721625aed82431f20387763529.png)
 
 为了避免这些重复，传输协议要求网络层限制最大段生存时间（MSL）。网络的组织必须保证没有任何段在网络中停留超过 MSL 秒。例如，在今天的互联网上，MSL 预计为 2 分钟。为了避免重复的传输连接，传输协议实体必须能够安全地区分重复的 CR 段和新 CR 段，而无需迫使每个传输实体记住它过去建立的所有传输连接。
 
@@ -670,59 +326,11 @@ z>>c [ label = "D", arcskip="1"];
 
 可靠的传输协议也使用序列号和确认号。虽然我们的示例协议在每个段中使用一个序列号，但一些可靠的传输协议将所有传输的数据视为字节流。在这些协议中，放置在段头部的序列号对应于有效载荷中第一个字节的字节流位置。这个序列号允许检测丢失，同时也使接收方能够重新排序乱序的段。这在下图中得到了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(abcde)" ] ,
-> 
-> b>>c [ arcskip="1", label="1:abcde"];
-> 
-> c=>d [label="DATA.ind(abcde)"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(fghijkl)" ] ,
-> 
-> b>>c [ arcskip="1", label="6:fghijkl"];
-> 
-> c=>d [label="DATA.ind(fghijkl)"];
-> 
-> }](../Images/d415b226c2c0f1663b1289acf10b1351.png)
+> ![](img/d415b226c2c0f1663b1289acf10b1351.png)
 
 当传输层需要在多个段中分片 SDU 时，使用序列号来计数字节也有一个优点。下面的图示显示了将一个大 SDU 分片成两个段。在接收到段之后，接收方将使用序列号来正确地重新排序数据。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(abcdefghijkl)" ] ,
-> 
-> b>>c [ arcskip="1", label="1:abcde"];
-> 
-> |||;
-> 
-> b>>c [ arcskip="1", label="6:fghijkl"];
-> 
-> c=>d [label="DATA.ind(abcdefghijkl)"];
-> 
-> }](../Images/e9784923b6b5cd4438e6db36fa5b219d.png)
+> ![](img/e9784923b6b5cd4438e6db36fa5b219d.png)
 
 与我们的简单协议相比，可靠的传输协议使用更多的位来编码它们的序列号。32 位和 64 位序列号在传输层很常见。这个大的序列号空间有两个原因。首先，由于序列号对每个传输的字节进行递增，一个单独的段可能消耗一个或几个千个序列号。其次，可靠的传输协议必须能够检测延迟的段。这只能在 MSS 期间传输的字节数小于序列号空间的情况下完成。否则，存在接受重复段的风险。
 
@@ -784,25 +392,7 @@ z>>c [ label = "D", arcskip="1"];
 
 当在完美的网络之上运行时，传输实体可以在接收到 DATA.req(SDU) [[1]](#fsdu)后简单地发出一个 send(SDU)。同样，接收者在收到 recvd(SDU)后发出 DATA.ind(SDU)。当只发送单个 SDU 时，这样一个简单的协议就足够了。这在下图中有说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(SDU)" ] ,
-> 
-> b>>c [ label = "Segment(SDU)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(SDU)" ];
-> 
-> }](../Images/ba824d054705364b69646b80420c85eb.png)
+> ![](img/ba824d054705364b69646b80420c85eb.png)
 
 不幸的是，这并不总是足以确保 SDU 的可靠交付。考虑这样一个情况，客户端向服务器发送了数十个 SDU。如果服务器比客户端快，它将能够接收和处理客户端发送的所有段，并将它们的内容交付给用户。然而，如果服务器比客户端慢，可能会出现问题。传输实体包含缓冲区来存储已作为数据请求接收但尚未发送的 SDU。如果应用程序比网络快，缓冲区可能会满。在这种情况下，操作系统将挂起应用程序，让传输实体清空其传输队列。传输实体还使用缓冲区来存储尚未由应用程序处理的接收到的段。如果应用程序处理数据较慢，这个缓冲区可能会溢出，传输实体将无法接受任何额外的段。传输实体的缓冲区大小有限，如果它们溢出，到达的段将被丢弃，即使它们是正确的。
 
@@ -828,31 +418,7 @@ z>>c [ label = "D", arcskip="1"];
 
 发送者有限状态机显示发送者必须在收到接收者的确认之前才能传输下一个 SDU。下面的图示了两个主机之间交换的一些段。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)"], b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ],c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)" ], b>>c [ label = "D(b)",arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ], c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/15482ac863d12db91aebf9dbd402b97a.png)
+> ![](img/15482ac863d12db91aebf9dbd402b97a.png)
 
 注意
 
@@ -886,47 +452,7 @@ TCP/IP 协议族中的大多数协议都依赖于简单的互联网校验和来�
 
 由于接收方在接收到每个数据段后发送确认，处理丢失的最简单方法是使用重传计时器。发送方在发送段时启动重传计时器。这个重传计时器的持续时间应该大于往返时间，即数据段传输和对应确认接收之间的延迟。当重传计时器到期时，发送方假定数据段已丢失并重新发送它。这在下图中进行了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="取消计时器"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\n 启动定时器" ] ,
-> 
-> b-x c [ label = "D(b)", arcskip="1", linecolour=red];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "定时器到期" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/eb3e128faed868520ea345c4171d9007.png)
+> ![](img/eb3e128faed868520ea345c4171d9007.png)
 
 ```sh
 Please log in to see this exercise
@@ -934,51 +460,7 @@ Please log in to see this exercise
 
 不幸的是，仅靠重传定时器不足以从丢失中恢复。让我们考虑以下情况，其中确认信息丢失。在这种情况下，发送器会重传尚未确认的数据段。然而，如图所示，接收器将重传视为新的数据段，其有效载荷必须交付给用户。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\n 启动定时器" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="取消定时器"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\n 启动定时器" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c-x b [label= "C(OK)", linecolour=red, arcskip="1"];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "定时器到期" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b) !!!!!", linecolour=red ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/f31aca9d4a56211a006ee59b4bbd6581.png)
+> ![](img/f31aca9d4a56211a006ee59b4bbd6581.png)
 
 为了解决这个问题，可靠的协议将序列号分配给每个数据段。这个序列号是数据段头部中的一个字段。我们使用 D(x,…)表示序列号字段设置为 x 值的数据段。确认信息也包含一个序列号，表示它确认的数据段。我们使用 OKx 表示确认接收了 D(x,…)的确认信息。序列号被编码为固定长度的位字符串。最简单的可靠协议是交替位协议（ABP）。
 
@@ -1006,153 +488,15 @@ Please log in to see this exercise
 
 下图说明了交替位协议的操作。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ];
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(c)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,c)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(c)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/58f29e8a1f0f64da47ef83b069805c78.png)
+![](img/58f29e8a1f0f64da47ef83b069805c78.png)
 
 交替位协议可以从数据或控制段丢失中恢复。这在下述两个图中得到了说明。第一个图显示了数据段丢失的情况。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b-x c [ label = "D(1,b)", arcskip="1", linecolour=red];
-
-|||;
-
-|||;
-
-a=>b [ linecolour=white, label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/f662cc9a0b114455fe7ce91316c8aedb.png)
+![](img/f662cc9a0b114455fe7ce91316c8aedb.png)
 
 第二个图示说明了主机如何处理一个控制段的丢失。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c-x b [label= "C(OK1)", linecolour=red, arcskip="1"];
-
-|||;
-
-a=>b [ linecolour=white, label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "重复段\n 忽略", textcolour=red, linecolour=white ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/3bcb6de20e7b816c3750de577d1012cc.png)
+![](img/3bcb6de20e7b816c3750de577d1012cc.png)
 
 交替比特协议可以从传输错误和段丢失中恢复。然而，它有一个重要的缺点。考虑两个通过 50 Kbits/sec 卫星链路直接连接的主机，该链路具有 250 毫秒的传播延迟。如果这些主机发送 1000 比特的段，那么如果忽略确认的传输时间，交替比特协议可以达到的最大吞吐量是每 520 毫秒一个段，即$ 20+250+250=520 $毫秒。这还不到 2 Kbits/sec！
 
@@ -1304,47 +648,7 @@ TCP/IP 协议族中的大多数协议都依赖于简单的互联网校验和来�
 
 由于接收者在收到每个数据段后发送确认，因此处理丢失的最简单方法是使用重传计时器。当发送者发送一个段时，它启动一个重传计时器。这个重传计时器的持续时间应该大于往返时间，即数据段传输和对应确认接收之间的延迟。当重传计时器到期时，发送者假设数据段已丢失并重新发送它。这在下图中进行了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="取消计时器"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-> 
-> b-x c [ label = "D(b)", arcskip="1", linecolour=red];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "timer expires" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/eb3e128faed868520ea345c4171d9007.png)
+> ![](img/eb3e128faed868520ea345c4171d9007.png)
 
 ```sh
 Please log in to see this exercise
@@ -1352,51 +656,7 @@ Please log in to see this exercise
 
 不幸的是，仅重传计时器不足以从丢失中恢复。让我们考虑以下情况，其中确认信息丢失。在这种情况下，发送方重新传输尚未确认的数据段。然而，如图所示，接收方将重传视为新的段，其有效载荷必须交付给用户。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(a)\nstart timer" ] ,
-> 
-> b>>c [ label = "D(a)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(a)" ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> b->a [linecolour=white, label="cancel timer"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(b)\nstart timer" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b)" ];
-> 
-> c-x b [label= "C(OK)", linecolour=red, arcskip="1"];
-> 
-> |||;
-> 
-> a=>b [ linecolour=white, label = "timer expires" ] ,
-> 
-> b>>c [ label = "D(b)", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(b) !!!!!", linecolour=red ];
-> 
-> c>>b [label= "C(OK)", arcskip="1"];
-> 
-> |||;
-> 
-> }](../Images/f31aca9d4a56211a006ee59b4bbd6581.png)
+> ![](img/f31aca9d4a56211a006ee59b4bbd6581.png)
 
 为了解决这个问题，可靠的协议将序列号分配给每个数据段。这个序列号是数据段头部中找到的字段之一。我们使用表示法 D(x,…)来表示序列号字段设置为值 x 的数据段。确认信息也包含一个序列号，表示它确认的数据段。我们使用 OKx 来表示确认接收了 D(x,…)的确认信息。序列号被编码为固定长度的比特串。最简单的可靠协议是交替位协议（ABP）。
 
@@ -1424,153 +684,15 @@ Please log in to see this exercise
 
 下图说明了交替位协议的操作。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\nstart timer" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\nstart timer" ];
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(c)\nstart timer" ] ,
-
-b>>c [ label = "D(0,c)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(c)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/58f29e8a1f0f64da47ef83b069805c78.png)
+![](img/58f29e8a1f0f64da47ef83b069805c78.png)
 
 交替位协议可以从数据或控制段的丢失中恢复。这在下面的两个图中说明。第一个图显示了一个数据段的丢失。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\nstart timer" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b-x c [ label = "D(1,b)", arcskip="1", linecolour=red];
-
-|||;
-
-|||;
-
-a=>b [ label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/f662cc9a0b114455fe7ce91316c8aedb.png)
+![](img/f662cc9a0b114455fe7ce91316c8aedb.png)
 
 第二个图示说明了主机如何处理一个控制段的丢失。
 
-![msc {
-
-a [label="", linecolour=white],
-
-b [label="主机 A", linecolour=black],
-
-z [label="", linecolour=white],
-
-c [label="主机 B", linecolour=black],
-
-d [label="", linecolour=white];
-
-a=>b [ label = "DATA.req(a)\n 启动计时器" ] ,
-
-b>>c [ label = "D(0,a)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(a)" ];
-
-c>>b [label= "C(OK0)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-a=>b [ label = "DATA.req(b)\n 启动计时器" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "DATA.ind(b)" ];
-
-c-x b [label= "C(OK1)", linecolour=red, arcskip="1"];
-
-|||;
-
-a=>b [ linecolour=white, label = "计时器到期" ] ,
-
-b>>c [ label = "D(1,b)", arcskip="1"];
-
-c=>d [ label = "重复段\n 忽略", textcolour=red, linecolour=white ];
-
-c>>b [label= "C(OK1)", arcskip="1"];
-
-b->a [linecolour=white, label="取消计时器"];
-
-|||;
-
-}](../Images/3bcb6de20e7b816c3750de577d1012cc.png)
+![](img/3bcb6de20e7b816c3750de577d1012cc.png)
 
 交替比特协议可以从传输错误和段丢失中恢复。然而，它有一个重要的缺点。考虑两个通过 50 Kbits/sec 卫星链路直接连接的主机，该链路具有 250 毫秒的传播延迟。如果这些主机发送 1000 比特的段，那么如果忽略确认的传输时间，交替比特协议可以达到的最大吞吐量是每 520 毫秒一个段，即$ 20+250+250=520 $毫秒！这还不到 2 Kbits/sec！
 
@@ -1704,93 +826,13 @@ Please log in to see this exercise
 
 建立传输连接的最简单方法可能是定义两个特殊的控制段：CR（连接请求）和 CA（连接确认）。CR 段落由希望发起连接的传输实体发送。如果远程实体希望接受连接，它将通过发送 CA 段落进行回复。CR 和 CA 段落包含端口号，这允许识别通信的应用程序。一旦收到 CA 段落，传输连接就被认为是建立的。在此点，可以双向发送数据段。
 
-![msc {
-
-a1 [label="", linecolour=white],
-
-a [label="", linecolour=white],
-
-b [label="源", linecolour=black],
-
-z [label="提供者", linecolour=white],
-
-c [label="目的地", linecolour=black],
-
-d [label="", linecolour=white],
-
-d1 [label="", linecolour=white];
-
-a1=>b [ label = "CONNECT.req" ] ,
-
-b>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "CONNECT.ind" ];
-
-d1=>c [ label = "CONNECT.resp" ] ,
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-b=>a1 [ label = "CONNECT.conf" ];
-
-a1=>b [ linecolour=white, textcolour=blue, label = "连接已建立" ] ,
-
-c=>d1 [ linecolour=white, textcolour=blue, label = "连接已建立" ];
-
-}](../Images/384affb0102503143b8af853578161f2.png)
+![](img/384affb0102503143b8af853578161f2.png)
 
 不幸的是，考虑到网络层的不可靠性，这还不够。由于网络层不完美，CR 或 CA 段落可能会丢失、延迟或遭受传输错误。为了处理这些问题，控制段落必须通过 CRC 或校验和来保护，以检测传输错误。此外，由于 CA 段落确认了 CR 段落的接收，CR 段落应该使用重传计时器来保护。
 
 不幸的是，这个方案不足以确保传输服务的可靠性。例如，考虑一个短暂的传输连接，其中发送了一个单一但重要的传输（例如，从银行账户转账）。这样的短暂连接以一个被 CA 段落确认的 CR 段落开始，然后发送数据段，确认并终止连接。不幸的是，由于网络层服务不可靠，延迟加上重传可能会导致下图中描述的情况，即延迟的 CR 和数据段被接收实体作为有效段接受，并将相应的数据交付给用户。重复 SDU 是不可接受的，传输协议必须解决这个问题。
 
-![msc {
-
-a1 [label="", linecolour=white],
-
-a [label="", linecolour=white],
-
-b [label="源", linecolour=black],
-
-z [label="提供者", linecolour=white],
-
-c [label="目的地", linecolour=black],
-
-d [label="", linecolour=white],
-
-d1 [label="", linecolour=white];
-
-a1=>b [ label = "CONNECT.req" ] ,
-
-b>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "CONNECT.ind" ];
-
-d1=>c [ label = "CONNECT.resp" ] ,
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-b=>a1 [ label = "CONNECT.conf" ];
-
-a1=>b [ linecolour=white, textcolour=blue, label = "First connection\nestablished" ] ,
-
-c=>d1 [ linecolour=white, textcolour=blue, label = "First connection\nestablished" ];
-
-a1=>b [ label = "", linecolour=white];
-
-a1=>b [ linecolour=white, textcolour=red, label = "First connection\nclosed" ] ,
-
-c=>d1 [ linecolour=white, textcolour=red, label = "First connection\nclosed" ];
-
-z>>c [ label = "CR", arcskip="1", textcolour=red];
-
-c=>d1 [ label = "如何检测重复？" ],
-
-c>>b [ label = "CA", arcskip="1", textcolour=red];
-
-a1=>b [ label = "", linecolour=white];
-
-z>>c [ label = "D", arcskip="1"];
-
-}](../Images/450730721625aed82431f20387763529.png)
+![](img/450730721625aed82431f20387763529.png)
 
 为了避免这些重复，传输协议要求网络层限制最大段生存时间（MSL）。网络的组织必须保证没有任何段在网络中停留超过 MSL 秒。例如，在今天的互联网上，MSL 预计为 2 分钟。为了避免重复的传输连接，传输协议实体必须能够安全地区分重复的 CR 段和新的 CR 段，而无需强制每个传输实体记住它过去建立的所有传输连接。
 
@@ -1858,59 +900,11 @@ z>>c [ label = "D", arcskip="1"];
 
 可靠传输协议也使用序列号和确认号。虽然我们的示例协议在每个段中使用了单个序列号，但一些可靠传输协议将所有传输的数据视为字节流。在这些协议中，放置在段头中的序列号对应于有效载荷中第一个字节的字节流位置。这个序列号允许检测丢失，同时也使接收者能够重新排序出序的段。这在下图中进行了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(abcde)" ] ,
-> 
-> b>>c [ arcskip="1", label="1:abcde"];
-> 
-> c=>d [label="DATA.ind(abcde)"];
-> 
-> |||;
-> 
-> a=>b [ label = "DATA.req(fghijkl)" ] ,
-> 
-> b>>c [ arcskip="1", label="6:fghijkl"];
-> 
-> c=>d [label="DATA.ind(fghijkl)"];
-> 
-> ![图片](img/d415b226c2c0f1663b1289acf10b1351.png)
+> ![](img/d415b226c2c0f1663b1289acf10b1351.png)
 
 当传输层需要将 SDU 分成多个段时，使用序列号来计数字节也有一个优点。下图显示了将大型 SDU 分成两个段的过程。在接收到段后，接收者将使用序列号来正确地重新排序数据。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(abcdefghijkl)" ] ,
-> 
-> b>>c [ arcskip="1", label="1:abcde"];
-> 
-> |||;
-> 
-> b>>c [ arcskip="1", label="6:fghijkl"];
-> 
-> c=>d [label="DATA.ind(abcdefghijkl)"];
-> 
-> }](../Images/e9784923b6b5cd4438e6db36fa5b219d.png)
+> ![](img/e9784923b6b5cd4438e6db36fa5b219d.png)
 
 与我们的简单协议相比，可靠的传输协议使用更多的位来编码它们的序列号。32 位和 64 位序列号在传输层很常见。这个大的序列号空间有两个原因。首先，由于序列号对每个传输的字节进行递增，一个段可能消耗一个或几个千个序列号。其次，可靠的传输协议必须能够检测延迟的段。这只能在 MSL 期间传输的字节数小于序列号空间的情况下完成。否则，存在接受重复段的风险。
 

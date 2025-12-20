@@ -6,43 +6,7 @@
 
 当第一台计算机连接到数据网络时，开发了应用程序以使它们能够通过网络访问远程计算机。为了验证远程用户，这些应用程序也依赖于用户名和密码。当用户连接到远程计算机时，她通过网络发送她的用户名，然后提供她的密码以确认她的身份。此身份验证方案在下方的时序图中展示。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="主机 A", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="主机 B", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "DATA.req(I'm Alice)\n\n" ] ,
-> 
-> b>>c [ label = "", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(I'm Alice)\n\n" ];
-> 
-> d=>c [ label = "DATA.req(Password:)\n\n" ] ,
-> 
-> c>>b [ label = "", arcskip="1"];
-> 
-> b=>a [ label = "DATA.ind(Password:)\n\n" ];
-> 
-> a=>b [ label = "DATA.req(1234xyz$)\n\n" ] ,
-> 
-> b>>c [ label = "", arcskip="1"];
-> 
-> c=>d [ label = "DATA.ind(1234xyz$)\n\n" ];
-> 
-> d=>c [ label = "DATA.req(Access)\n\n" ] ,
-> 
-> c>>b [ label = "", arcskip="1"];
-> 
-> b=>a [ label = "DATA.ind(Access)\n\n" ];
-> 
-> }](../Images/ee7754cb2df3b43180ffc3b27a683d83.png)
+> ![](img/ee7754cb2df3b43180ffc3b27a683d83.png)
 
 注意
 
@@ -56,47 +20,7 @@ Alice 和 Bob 是用于安全技术示例中的第一个名字。它们首次出
 
 第一种攻击者被称为被动攻击者。被动攻击者是指能够观察并通常存储在给定网络或其子集（例如，特定链路）中交换的信息（例如，数据包）的人。这种攻击者可以访问通过此特定链路的所有数据。这是最基本的攻击类型，许多网络技术都容易受到此类攻击。在上面的示例中，被动攻击者可以轻易地捕获 Alice 发送的密码，并在以后将其重用来在远程计算机上以 Alice 的身份进行认证。这在下图中得到了说明，其中我们不再显示`DATA.req`和`DATA.ind`原语，而只显示交换的消息。在本章中，我们将始终使用 Eve 作为能够监听她面前通过的数据的用户。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Eve", linecolour=red],
-> 
-> d [label="", linecolour=white],
-> 
-> e [label="Bob", linecolour=black],
-> 
-> f [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>e [ label = "我是 Alice\n\n", arcskip="1"];
-> 
-> e=>f [ label = "" ];
-> 
-> e=>f [ label = "" ] ,
-> 
-> e>>b [ label = "密码：\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ];
-> 
-> b>>e [ label = "1234xyz$\n\n", arcskip="1"];
-> 
-> e=>f [ label = "" ];
-> 
-> e=>f [ label = "" ] ,
-> 
-> e>>b [ label = "访问\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/f4b5846cad3728586ed1ef7e20d24afb.png)
+> ![](img/f4b5846cad3728586ed1ef7e20d24afb.png)
 
 在上面的示例中，Eve 可以捕获 Bob 和 Alice 交换的所有数据包。这意味着 Eve 可以发现 Alice 的用户名和密码。有了这些信息，Eve 就可以在 Bob 的计算机上以 Alice 的身份进行认证，并执行 Alice 被授权执行的所有操作。这是一个重大的安全问题。为了防止这种攻击，Alice 永远不应该在网络中发送她的密码，因为有人可能会监听信息。在一些网络中，例如开放的无线网络，攻击者可以轻易地收集特定用户发送的所有数据。在其他网络中，这要复杂一些，具体取决于使用的网络技术，但存在各种软件包来自动化此过程。正如稍后将要描述的，防止此类攻击的最佳方法是依靠加密技术来确保密码永远不会以明文形式发送。
 
@@ -186,85 +110,13 @@ Alice 和 Bob 是用于安全技术示例中的第一个名字。它们首次出
 
 一种简单的方法是依赖于哈希函数。由于哈希函数是不可逆的，爱丽丝和鲍勃可以决定使用它们以安全的方式交换爱丽丝的密码。然后，可以使用以下交换来验证爱丽丝。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "我是爱丽丝\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "证明\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Hash(密码)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "访问允许\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/8ce774d886954a61fe3332c085b81a4f.png)
+> ![](img/8ce774d886954a61fe3332c085b81a4f.png)
 
 由于哈希函数不可逆，窃听者不能仅通过观察交换的数据来提取爱丽丝的密码。然而，攻击者的主要目标并不是爱丽丝的真实密码。Mallory 的主要目标是验证自己为爱丽丝。如果 Mallory 能够捕获到 Hash(密码)，他可以简单地重放这些数据，而无需能够逆转哈希函数。这被称为重放攻击。
 
 为了对抗这种重放攻击，我们需要确保爱丽丝永远不会向鲍勃发送相同的信息两次。下面是一种可能的操作模式。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "我是爱丽丝\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "挑战：764192\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Hash(764192||密码)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "访问\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/d68b2f1363c49e52d5bce558f315b1ad.png)
+> ![](img/d68b2f1363c49e52d5bce558f315b1ad.png)
 
 为了验证自己的身份，爱丽丝向鲍勃发送她的用户标识符。鲍勃回复一个随机数作为挑战，以验证爱丽丝知道共享的秘密（即她的密码）。爱丽丝回复计算出的哈希函数（例如 SHA-1）的结果，该函数作用在一个字符串上，该字符串是鲍勃选择的随机数和爱丽丝的密码的连接。鲍勃选择的随机数通常被称为 nonce，因为这个数字只能使用一次。鲍勃在本地执行相同的计算，并可以检查爱丽丝返回的消息。这种认证方案已在各种协议中使用。它防止重放攻击。如果伊芙捕获了爱丽丝和鲍勃之间交换的消息，她无法从这些消息中恢复爱丽丝的密码，因为哈希函数是不可逆的。此外，她无法重放哈希值，因为鲍勃总是会发送一个不同的 nonce。
 
@@ -276,255 +128,37 @@ Alice 和 Bob 是用于安全技术示例中的第一个名字。它们首次出
 
 公钥密码学为 Alice 在 Bob 的计算机上验证自己的身份提供了另一种可能性。再次假设 Alice 和 Bob 从之前的接触中认识彼此。Alice 知道 Bob 的公钥（$ Bob_{pub} $），而 Bob 也知道 Alice 的密钥（$ Alice_{pub} $）。为了验证自己的身份，Alice 可以发送她的用户标识符。Bob 会用 Alice 的公钥加密一个随机数作为回复：$ E_p(Alice_{pub},R) $。Alice 可以解密这条消息以恢复 R，并发送$ E_p(Bob_{pub},R) $。Bob 解密这个随机数并确认 Alice 知道$ Alice_{priv} $。如果窃听者捕获了交换的消息，他无法恢复 R 的值，这个值可以用作密钥，通过秘密密钥算法加密信息。这在下方的时序图中得到了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "E_p(Alice_{pub},R)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Bob_{pub},R)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/f7eeac697813279f3277f20eb023de49.png)
+> ![](img/f7eeac697813279f3277f20eb023de49.png)
 
 这种方法的缺点是 Bob 被迫执行两次公钥计算：一次加密将随机数发送给 Alice，一次解密恢复 Alice 加密的随机数。如果这些计算从 CPU 的角度来看成本高昂，这就会产生拒绝服务攻击的风险，攻击者可能会尝试访问 Bob 的计算机并迫使其执行这些昂贵的计算。在这种情况下，Bob 比 Alice 风险更大，他应该在确定自己正在与 Alice 交谈之前不执行复杂操作。下方的时序图中展示了另一种方法。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/5d0252030a1e74f0aa10edc4572b381d.png)
+> ![](img/5d0252030a1e74f0aa10edc4572b381d.png)
 
 在这里，鲍勃简单地给爱丽丝发送一个随机数，并验证她的签名。由于随机数和签名可能被窃听者捕获，因此它们不能用作加密更多数据的密钥。然而，鲍勃可以提出一个密钥，并将其与爱丽丝的公钥一起加密，作为对收到的签名随机数的回应。
 
 如上所述的解决方案在鲍勃和爱丽丝在通信前知道他们各自的公钥的情况下是有效的。否则，该协议不能抵御中间人攻击者。考虑玛洛里坐在爱丽丝和鲍勃之间的中间，并假设爱丽丝和鲍勃都不知道对方的公钥。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> x [label="", linecolour=white],
-> 
-> y [label="Mallory", textcolour="red", linecolour=red],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = " " ] ,
-> 
-> b>>y [ label = "I'm Alice key=Alice_{pub}", arcskip="1" ];
-> 
-> y>>c [ label = "I'm Alice key=Mallory_{pub}", textcolour="red", arcskip="1" ];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>y [ label = "E_p(Alice_{priv},R)", arcskip="1"];
-> 
-> y>>c [ label = "E_p(Mallory_{priv},R)", textcolour="red",  arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Access", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/0638f4c9db9fea46091250d1fe48d4c9.png)
+> ![](img/0638f4c9db9fea46091250d1fe48d4c9.png)
 
 在上述示例中，爱丽丝在她的第一条消息中发送了她的公钥（$ Alice_{pub} $），以及她的身份。玛洛里拦截了消息，并用他自己的密钥（$ Mallory_{pub} $）替换了爱丽丝的密钥。鲍勃回复了一个随机数，R。然后爱丽丝对随机数进行签名以证明她知道 $ Alice_{priv} $。玛洛里丢弃了信息，并计算 $ E_p(Mallory_{priv},R) $。现在鲍勃认为他正在与爱丽丝交谈，而玛洛里坐在中间。
 
 有时需要对称认证。在这种情况下，每个用户必须使用他的/她的私钥进行一些计算。一个可能的交换如下。爱丽丝将她的证书发送给鲍勃。鲍勃回复一个随机数，$ R1 $，并提供他的证书。爱丽丝使用她的私钥加密 $ R1 $ 并生成一个随机数，$ R2 $。鲍勃验证爱丽丝的计算，并使用他的私钥加密 $ R2 $。爱丽丝验证计算，双方都完成了认证。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:R1", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R1),R2", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "E_p(Bob_{priv},R2)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/682391126620ce67dffa1f33ee972f1b.png)
+> ![](img/682391126620ce67dffa1f33ee972f1b.png)
 
 上文描述的协议是可行的，但鲍勃验证爱丽丝和爱丽丝验证鲍勃都需要很长时间。更快的验证方式可以是以下这样。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice, R2", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:R1,E_p(Bob_{priv},R2)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ，
-> 
-> b>>c [ label = "E_p(Alice_{priv},R1)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/d9c1e952550357ddf872d47493c46bd4.png)
+> ![](img/d9c1e952550357ddf872d47493c46bd4.png)
 
 爱丽丝发送她的随机数，$ R2 $。鲍勃签署 $ R2 $ 并发送他的随机数：$ R1 $。爱丽丝签署 $ R1 $，双方都完成了验证。
 
 现在考虑玛洛丽想要作为爱丽丝进行验证的情况。上述协议存在一个细微的缺陷，可能会被玛洛丽利用。如果爱丽丝和鲍勃可以同时作为客户端和服务器，这个缺陷就可以被利用。了解这一点后，玛洛丽可以如下操作。玛洛丽开始与鲍勃进行验证，假装自己是爱丽丝。他向鲍勃发送第一条消息，包括爱丽丝的身份。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Mallory", textcolour="red", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice,RA", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:RB,E_p(Bob_{priv},RA)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/0129748f31a23c4c1ec10d426878fd81.png)
+> ![](img/0129748f31a23c4c1ec10d426878fd81.png)
 
 在这次交换中，鲍勃通过签署由玛洛丽发送的 $ RA $ 随机数来验证自己。现在，为了作为爱丽丝进行验证，玛洛丽需要使用爱丽丝的私钥计算随机数 $ RB $ 的签名。玛洛丽不知道爱丽丝的密钥，但他可以利用该协议强制爱丽丝执行所需的计算。为此，玛洛丽可以像下面这样开始对爱丽丝的验证。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Mallory", textcolour="red",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Alice", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Mallory,RB", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:RX,E_p(Alice_{priv},RB)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/cd66745b390b62a38dfe355eb3a5cc12.png)
+> ![](img/cd66745b390b62a38dfe355eb3a5cc12.png)
 
 在这个例子中，Mallory 迫使 Alice 计算$ E_p(Alice_{priv},RB) $，这是完成第一次交换并验证为 Alice 所需的信息。这说明了当相同信息可用于不同目的时，认证方案中存在的一个常见问题。这个问题源于 Alice 同意在 Bob 选择的随机数（由 Mallory 中继）上计算她的签名。如果随机数是一个没有结构的简单整数，则会出现这个问题。如果随机数包含一些结构，例如关于 Alice 和 Bob 身份的信息，甚至是一个表示随机数是否由作为客户端的用户（即启动认证）或作为服务器选择的一个比特位，那么该协议就不再容易受到攻击。
 
@@ -540,37 +174,7 @@ Alice 和 Bob 是用于安全技术示例中的第一个名字。它们首次出
 
 可能的协议可以是以下这样。Alice 发送$ Cert(Alice_{pub},Ted) $。Bob 回复一个随机随机数。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Cert(Alice_{pub},Ted)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = ""] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/64eccedf6350698b6491b83ea9b24e73.png)
+> ![](img/64eccedf6350698b6491b83ea9b24e73.png)
 
 到目前为止，我们只讨论了认证问题。这是在不可靠的网络中两个用户之间进行安全通信的重要但不是充分的一步。为了安全地交换信息，爱丽丝和鲍勃都需要：
 
@@ -660,43 +264,7 @@ Alice 和 Bob 已经同意了秘密信息$ 3 $，而没有通过网络明确发�
 
 `[IANA](https://www.iana.org)` 维护一个 `[加密算法列表](http://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-16)`，该列表可以被 `ssh` 实现使用。对于每种类型的算法，客户端提供一个按顺序排列的算法列表，并同意使用这些算法。服务器将收到的列表与其自己的列表进行比较。协商的结果是一组四个算法 [[4]](#fnull)，这些算法将用于本次会话。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "SSH 客户端 P-clientS 注释", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "SSH 服务器 P-serverS 注释", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "SSH_MSG_KEX_INIT", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "SSH_MSG_KEX_INIT", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/6c5012af9e2d96b7ddb2c31a55acbaec.png)
+> ![](img/6c5012af9e2d96b7ddb2c31a55acbaec.png)
 
 这种对加密算法的协商允许在提出新算法时实现进化。如果客户端进行了升级，即使服务器尚未升级，它也可以宣布一个新的算法作为其首选算法。
 
@@ -799,47 +367,7 @@ TLS 会话分为两个阶段：握手和数据传输。在握手阶段，客户�
 
 TLS 握手是一个四路握手，如图所示。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[随机数]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[随机数], 证书", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "E(K,MasterSecret), Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", linecolour="red", textcolour="red"];
-> 
-> b>>c [ label = "加密记录", linecolour="red", textcolour="red"];
-> 
-> }](../Images/300581e55a5559d21fa138b6759650ca.png)
+> ![](img/300581e55a5559d21fa138b6759650ca.png)
 
 简而言之，客户端通过提出一个随机数来启动 TLS 握手。服务器回复其随机数和一个将名称绑定到公钥的证书。客户端生成一个 MasterSecret，稍后将用于派生会话密钥，并用服务器的公钥对其进行加密。它还生成一个包含所有交换消息的 MAC 的 Finished 消息，以便服务器检测客户端发送的消息的任何修改。服务器也发送其自己的 Finished 消息。在此阶段，客户端和服务器通过从 MasterSecret 派生的密钥发送加密记录。
 
@@ -955,153 +483,17 @@ MAC 后加密或先加密后 MAC
 
 TLS 1.3 握手与 TLS 1.2 握手在几个方面有所不同。首先，当客户端首次连接到服务器时，TLS 1.3 握手需要单次往返时间。为了实现这一点，TLS 设计者详细研究了 TLS 1.2 握手，并发现第一次往返时间主要用于选择将在 TLS 会话中使用的加密算法和加密交换方案。TLS 1.3 通过要求使用具有小参数集的 Diffie-Hellman 交换来极大地简化了这种协商。这意味着客户端可以猜测服务器使用的参数（即模数 p 和底数 g），并立即开始 Diffie-Hellman 交换。下面图示展示了简化版的 TLS 1.3 握手。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Server", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Certificate, Sign(K,Handshake), Finished, Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/e5ae4c8c184c7b414c018f2972f772de.png)
+> ![](img/e5ae4c8c184c7b414c018f2972f772de.png)
 
 与 TLS 1.2 握手相比，有几个重要的不同之处。首先，TLS 1.3 需要 Diffie Hellman 密钥交换，并且这个交换是由客户端发起的（在验证服务器身份之前）。为了发起 Diffie Hellman 密钥交换，客户端需要猜测服务器可以接受的模数和基数。客户端要么使用大多数服务器支持的标准参数，要么记住与该特定服务器上次使用的最后一个模数/基数。如果客户端猜测错误，服务器将回复它期望的参数，这将导致丢失一个往返时间。当服务器发送其 ServerHello 时，它已经知道了会话密钥。这意味着服务器可以加密所有后续的消息。经过一个往返时间后，TLS 1.3 会话中交换的所有数据都是加密和认证的。在 TLS 1.3 中，服务器证书是用会话密钥加密的，以及 Finished 消息。服务器签署握手以确认它拥有其证书的公钥。如果服务器想要发送应用程序数据，它已经可以加密并发送给客户端。在接收到服务器证书后，客户端验证它并检查握手和 Finished 消息的签名。客户端通过发送自己的 Finished 消息来确认握手的结束。这时，客户端可以发送加密数据。这意味着客户端在发送加密数据之前只需等待一个往返时间。这比 TLS 1.2 快得多。
 
 对于某些应用，在能够发送数据之前等待一个往返时间太长了。TLS 1.3 允许客户端在 ClientHello 之后立即发送加密数据，无需等待 ServerHello 消息。在这个握手阶段，客户端无法知道通过 Diffie Hellman 密钥交换将导出的密钥。技巧是服务器和客户端需要事先就预共享密钥达成一致。这个密钥可以通过非绑定方式协商，但通常是在客户端和服务器之间的先前 TLS 会话中交换。客户端和服务器都可以将此密钥存储在它们的缓存中。当客户端创建到服务器的新的 TLS 会话时，它会检查是否已经知道该服务器的预共享密钥。如果是这样，客户端将在其 ClientHello 消息中宣布此密钥的标识符。多亏了这个标识符，服务器可以恢复密钥并使用它来解密 0-rtt 加密记录。下面展示了简化版的 0-rtt TLS 1.3 握手 [[8]](#fhandshake)。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Server", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt Encrypted record", textcolour="magenta", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "证书，签名(K,握手), 完成, 加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "完成", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/37315cb85580d2a0a41ccf2aa6b695ae.png)
+> ![](img/37315cb85580d2a0a41ccf2aa6b695ae.png)
 
 在网络上，TLS 客户端使用证书来验证服务器，但客户端没有被验证。然而，在企业网络等环境中，服务器可能还需要验证客户端。一种流行的部署是为希望通过虚拟专用网络服务访问企业网络的远程客户端进行验证。其中一些服务在 TLS 之上运行（或更精确地说，在 UDP 之上运行的 TLS 变体 DTLS，但超出了本章的范围[[MoR2004]](../bibliography.html#mor2004)）。在这些服务中，每个客户端都通过一个公钥和服务器信任的证书进行验证。为了建立 TLS 会话，这样的客户端需要证明它拥有与证书关联的公钥。这是通过服务器发送的证书请求消息来完成的。TLS 握手变为以下形式：
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt 加密记录", textcolour="洋红色", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "证书请求，证书，签名(K,握手), 完成, 加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "证书，签名(Kc, 握手), 完成", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "加密记录", textcolour="红色", linecolour="红色", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/6b610706117d1538fe4793f16be928b1.png)
+> ![](img/6b610706117d1538fe4793f16be928b1.png)
 
 服务器发送一个证书请求消息。客户端返回其证书并使用其私钥签名握手。这向服务器确认客户端拥有其证书中指示的公钥。
 
@@ -1188,47 +580,7 @@ gamma.example.org NSEC alpha.example.org
 
 第一种攻击者被称为被动攻击者。被动攻击者是指能够观察并通常存储在给定网络或其子集（例如，特定链路）中交换的信息（例如，数据包）的人。此攻击者可以访问通过此特定链路的所有数据。这是最基本的攻击类型，许多网络技术都容易受到此类攻击。在上面的示例中，被动攻击者可以轻易捕获 Alice 发送的密码，并在稍后将其重用来在远程计算机上以 Alice 的身份进行身份验证。这在下图中得到了说明，我们不再显示`DATA.req`和`DATA.ind`原语，而只显示交换的消息。在本章的整个过程中，我们始终使用 Eve 作为能够窃听她面前通过的数据的用户。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Eve", linecolour=red],
-> 
-> d [label="", linecolour=white],
-> 
-> e [label="Bob", linecolour=black],
-> 
-> f [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>e [ label = "I'm Alice\n\n", arcskip="1"];
-> 
-> e=>f [ label = "" ];
-> 
-> e=>f [ label = "" ] ,
-> 
-> e>>b [ label = "密码:\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>e [ label = "1234xyz$\n\n", arcskip="1"];
-> 
-> e=>f [ label = "" ];
-> 
-> e=>f [ label = "" ] ,
-> 
-> e>>b [ label = "访问\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/f4b5846cad3728586ed1ef7e20d24afb.png)
+> ![](img/f4b5846cad3728586ed1ef7e20d24afb.png)
 
 在上述示例中，Eve 可以捕获 Bob 和 Alice 之间交换的所有数据包。这意味着 Eve 可以发现 Alice 的用户名和密码。有了这些信息，Eve 可以随后在 Bob 的计算机上以 Alice 的身份进行身份验证，并执行 Alice 被授权执行的所有操作。这是一个重大的安全问题。为了防止这种攻击，Alice 永远不应该在网络中发送她的密码，因为有人可能会窃听信息。在一些网络中，例如开放的无线网络，攻击者可以轻易收集特定用户发送的所有数据。在其他网络中，这要复杂一些，具体取决于所使用的网络技术，但存在各种软件包来自动化此过程。正如稍后所述，防止此类攻击的最佳方法是依靠加密技术，以确保密码永远不会以明文形式发送。
 
@@ -1318,85 +670,13 @@ gamma.example.org NSEC alpha.example.org
 
 一种简单的方法是依赖于哈希函数。由于哈希函数是不可逆的，爱丽丝和鲍勃可以决定使用它们以安全的方式交换爱丽丝的密码。然后，爱丽丝可以通过以下交换进行身份验证。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "我是爱丽丝\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "证明它\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Hash(passwd)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "访问允许\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/8ce774d886954a61fe3332c085b81a4f.png)
+> ![](img/8ce774d886954a61fe3332c085b81a4f.png)
 
 由于哈希函数不可逆，窃听者不能仅通过观察交换的数据来提取爱丽丝的密码。然而，攻击者的主要目标并不是爱丽丝的真实密码。马洛里（Mallory）的主要目标是验证自己为爱丽丝。如果马洛里能够捕获 Hash(passwd)，他可以简单地重放这些数据，而无需能够逆推哈希函数。这被称为重放攻击。
 
 为了对抗这种重放攻击，我们需要确保爱丽丝永远不会向鲍勃发送相同的信息两次。下面是一种可能的操作模式。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ，
-> 
-> c>>b [ label = "挑战:764192\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Hash(764192||passwd)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "访问\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/d68b2f1363c49e52d5bce558f315b1ad.png)
+> ![](img/d68b2f1363c49e52d5bce558f315b1ad.png)
 
 为了验证自己的身份，爱丽丝将她的用户标识发送给鲍勃。鲍勃回复一个随机数作为挑战，以验证爱丽丝知道共享的秘密（即她的密码）。爱丽丝回复一个哈希函数（例如 SHA-1）的计算结果，该计算结果是对一个字符串的哈希，该字符串是鲍勃选择的随机数和爱丽丝的密码的连接。鲍勃选择的随机数通常被称为 nonce，因为这个数字应该只使用一次。鲍勃在本地执行相同的计算并可以检查爱丽丝返回的消息。这种认证方案已在各种协议中使用。它防止重放攻击。如果伊芙捕获了爱丽丝和鲍勃之间交换的消息，由于哈希函数是不可逆的，她不能从交换的消息中恢复爱丽丝的密码。此外，她不能重放哈希值，因为鲍勃总是会发送一个不同的 nonce。
 
@@ -1408,255 +688,37 @@ gamma.example.org NSEC alpha.example.org
 
 公钥密码学为爱丽丝在鲍勃的计算机上验证自己的身份提供了另一种可能性。再次假设爱丽丝和鲍勃从之前的接触中认识彼此。爱丽丝知道鲍勃的公钥（$ Bob_{pub} $），而鲍勃也知道爱丽丝的密钥（$ Alice_{pub} $）。为了验证自己的身份，爱丽丝可以发送她的用户标识符。鲍勃会回复一个用爱丽丝的公钥加密的随机数：$ E_p(Alice_{pub},R) $。爱丽丝可以解密这条消息以恢复 R，并发送$ E_p(Bob_{pub},R) $。鲍勃解密这个随机数并确认爱丽丝知道$ Alice_{priv} $。如果窃听者捕获了交换的消息，他无法恢复值 R，这个值可以用作使用秘密密钥算法加密信息的密钥。这在下方的时序图中进行了说明。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "我是爱丽丝\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "E_p(Alice_{pub},R)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Bob_{pub},R)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/f7eeac697813279f3277f20eb023de49.png)
+> ![](img/f7eeac697813279f3277f20eb023de49.png)
 
 这种方法的一个缺点是鲍勃被迫执行两次公钥计算：一次加密将随机数发送给爱丽丝，一次解密恢复爱丽丝加密的随机数。如果这些计算从 CPU 的角度来看成本高昂，这就会产生拒绝服务攻击的风险，攻击者可能会尝试访问鲍勃的计算机并迫使其执行这种昂贵的计算。在这种情况下，鲍勃比爱丽丝风险更大，他应该在确定自己正在与爱丽丝交谈之前不执行复杂的操作。下方的时序图中展示了另一种方法。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="爱丽丝", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="鲍勃", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "我是爱丽丝\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R\n\n", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R)\n\n", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/5d0252030a1e74f0aa10edc4572b381d.png)
+> ![](img/5d0252030a1e74f0aa10edc4572b381d.png)
 
 在这里，Bob 只是简单地向 Alice 发送一个随机数，并验证她的签名。由于随机数和签名可能被窃听者捕获，因此它们不能用作加密进一步数据的密钥。然而，Bob 可以提出一个密钥，并将其与 Alice 的公钥一起加密，作为对已签名的随机数的响应。
 
 如上所述的解决方案在 Bob 和 Alice 在通信之前知道他们各自的公钥的情况下是有效的。否则，该协议不能抵御中间人攻击者。考虑 Mallory 坐在 Alice 和 Bob 之间，假设 Alice 和 Bob 都不知道对方的公钥。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> x [label="", linecolour=white],
-> 
-> y [label="Mallory", textcolour="red", linecolour=red],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = " " ] ,
-> 
-> b>>y [ label = "I'm Alice key=Alice_{pub}", arcskip="1" ];
-> 
-> y>>c [ label = "I'm Alice key=Mallory_{pub}", textcolour="red", arcskip="1" ];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>y [ label = "E_p(Alice_{priv},R)", arcskip="1"];
-> 
-> y>>c [ label = "E_p(Mallory_{priv},R)", textcolour="red",  arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Access", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/0638f4c9db9fea46091250d1fe48d4c9.png)
+> ![](img/0638f4c9db9fea46091250d1fe48d4c9.png)
 
 在上述示例中，Alice 在她的第一条消息中发送她的公钥（$ Alice_{pub} $），以及她的身份。Mallory 拦截了消息，并用他自己的密钥（$ Mallory_{pub} $）替换了 Alice 的密钥。Bob 回复一个随机数 R。然后 Alice 签署随机数以证明她知道$ Alice_{priv} $。Mallory 丢弃了信息，而是计算$ E_p(Mallory_{priv},R) $。现在 Bob 认为他正在与 Alice 交谈，而 Mallory 坐在中间。
 
 有时候需要对称认证。在这种情况下，每个用户必须使用他的/她的私钥进行一些计算。一个可能的交换如下。Alice 将她的证书发送给 Bob。Bob 回复一个随机数，$ R1 $，并提供他的证书。Alice 使用她的私钥加密$ R1 $并生成一个随机数，$ R2 $。Bob 验证 Alice 的计算，并使用他的私钥加密$ R2 $。Alice 验证计算，双方都完成了认证。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:R1", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R1),R2", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "E_p(Bob_{priv},R2)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/682391126620ce67dffa1f33ee972f1b.png)
+> ![](img/682391126620ce67dffa1f33ee972f1b.png)
 
 上述协议是可行的，但 Bob 认证 Alice 和 Alice 认证 Bob 都需要很长时间。更快的认证方式可以是以下这样。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice, R2", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:R1,E_p(Bob_{priv},R2)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R1)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/d9c1e952550357ddf872d47493c46bd4.png)
+> ![](img/d9c1e952550357ddf872d47493c46bd4.png)
 
 Alice 发送她的随机非确定数，$ R2 $。Bob 签署$ R2 $并发送他的非确定数：$ R1 $。Alice 签署$ R1 $，双方都完成了认证。
 
 现在考虑 Mallory 想要作为 Alice 进行认证。上述协议存在一个细微的漏洞，Mallory 可以利用这个漏洞。如果 Alice 和 Bob 可以同时作为客户端和服务器，这个漏洞就可以被利用。了解到这一点后，Mallory 可以按照以下方式操作。Mallory 开始与 Bob 进行认证，假装自己是 Alice。他向 Bob 发送第一条消息，包括 Alice 的身份。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Mallory", textcolour="red", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Alice,RA", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:RB,E_p(Bob_{priv},RA)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/0129748f31a23c4c1ec10d426878fd81.png)
+> ![](img/0129748f31a23c4c1ec10d426878fd81.png)
 
 在这次交换中，Bob 通过签署 Mallory 发送的$ RA $非确定数来认证自己。现在，为了作为 Alice 进行认证，Mallory 需要使用 Alice 的私钥计算非确定数$ RB $的签名。Mallory 不知道 Alice 的密钥，但他可以利用协议强制 Alice 执行所需的计算。为此，Mallory 可以像下面这样开始对 Alice 进行认证。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Mallory", textcolour="red",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Alice", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "I'm Mallory,RB", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "Challenge:RX,E_p(Alice_{priv},RB)", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/cd66745b390b62a38dfe355eb3a5cc12.png)
+> ![](img/cd66745b390b62a38dfe355eb3a5cc12.png)
 
 在这个例子中，Mallory 迫使 Alice 计算$ E_p(Alice_{priv},RB) $，这是完成第一次交换并验证为 Alice 所需的信息。这说明了当相同信息可用于不同目的时，认证方案中存在的一个常见问题。问题源于 Alice 同意在 Bob 选择的（并由 Mallory 转发的）随机数上计算她的签名。如果随机数是一个没有结构的简单整数，则会出现这个问题。如果随机数包含一些结构，例如关于 Alice 和 Bob 身份的信息，甚至是一个表示随机数是否由作为客户端的用户（即启动认证）或作为服务器选择的单个比特，那么协议就不再容易受到攻击。
 
@@ -1672,37 +734,7 @@ Alice 发送她的随机非确定数，$ R2 $。Bob 签署$ R2 $并发送他的�
 
 可能的协议可以是以下。Alice 发送$ Cert(Alice_{pub},Ted) $。Bob 回复一个随机数。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Alice", linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Bob", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "Cert(Alice_{pub},Ted)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "R", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = ""] ,
-> 
-> b>>c [ label = "E_p(Alice_{priv},R)", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> }](../Images/64eccedf6350698b6491b83ea9b24e73.png)
+> ![](img/64eccedf6350698b6491b83ea9b24e73.png)
 
 到目前为止，我们只讨论了认证问题。这是在通过不安全的网络在两个用户之间建立安全通信的重要但不是充分的一步。为了安全地交换信息，爱丽丝和鲍勃都需要：
 
@@ -1792,43 +824,7 @@ ssh 协议直接运行在 TCP 协议之上。一旦 TCP 字节流建立，客户
 
 [IANA](https://www.iana.org) 维护了一个 [加密算法列表](http://www.iana.org/assignments/ssh-parameters/ssh-parameters.xhtml#ssh-parameters-16)，该列表可以被 `ssh` 实现使用。对于每种算法类型，客户端提供一个它支持的算法的有序列表，并同意使用这些算法。服务器将收到的列表与自己的列表进行比较。协商的结果是一组四个算法 [[4]](#fnull)，这些算法将用于本次会话。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Server", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "SSH-clientP-clientS comments", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "SSH-serverP-serverS comments", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> a=>b [ label = "" ] ,
-> 
-> b>>c [ label = "SSH_MSG_KEX_INIT", arcskip="1"];
-> 
-> c=>d [ label = "" ];
-> 
-> d=>c [ label = "" ] ,
-> 
-> c>>b [ label = "SSH_MSG_KEX_INIT", arcskip="1"];
-> 
-> b=>a [ label = "" ];
-> 
-> }](../Images/6c5012af9e2d96b7ddb2c31a55acbaec.png)
+> ![](img/6c5012af9e2d96b7ddb2c31a55acbaec.png)
 
 这种加密算法的协商允许在提出新算法时实现进化。如果客户端进行了升级，即使服务器尚未升级，它也可以宣布一个新的算法作为其首选算法。
 
@@ -1933,47 +929,7 @@ TLS 会话分为两个阶段：握手和数据传输。在握手阶段，客户�
 
 TLS 握手是一个四路握手，如图所示。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Server", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random], Certificate", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "E(K,MasterSecret), Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Encrypted Record", linecolour="red", textcolour="red"];
-> 
-> b>>c [ label = "Encrypted Record", linecolour="red", textcolour="red"];
-> 
-> }](../Images/300581e55a5559d21fa138b6759650ca.png)
+> ![](img/300581e55a5559d21fa138b6759650ca.png)
 
 简而言之，客户端通过提出一个随机数来启动 TLS 握手。服务器回复其随机数和一个将名称绑定到公钥的证书。客户端生成一个 MasterSecret，稍后将用于派生会话密钥，并用服务器的公钥加密它。它还生成一个包含所有交换消息的 MAC 的 Finished 消息，以便服务器能够检测客户端发送的消息的任何修改。服务器也发送其自己的 Finished 消息。此时，客户端和服务器通过从 MasterSecret 派生的密钥发送加密记录。
 
@@ -2089,153 +1045,17 @@ MAC-then-encrypt 或 Encrypt-then-MAC
 
 TLS 1.3 握手与 TLS 1.2 握手在几个方面有所不同。首先，当客户端首次连接到服务器时，TLS 1.3 握手需要单次往返时间。为了实现这一点，TLS 设计者详细研究了 TLS 1.2 握手，并发现第一次往返时间主要用于选择将在 TLS 会话中使用的加密算法和加密交换方案。TLS 1.3 通过要求使用具有小参数集的 Diffie-Hellman 交换来极大地简化了这一协商过程。这意味着客户端可以猜测服务器使用的参数（即模数 p 和基数 g），并立即开始 Diffie-Hellman 交换。下面图示展示了简化版的 TLS 1.3 握手。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="Client",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="Server", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Certificate, Sign(K,Handshake), Finished, Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/e5ae4c8c184c7b414c018f2972f772de.png)
+> ![](img/e5ae4c8c184c7b414c018f2972f772de.png)
 
 与 TLS 1.2 握手相比，有几个重要的区别。首先，TLS 1.3 需要 Diffie Hellman 密钥交换，并且这个交换是由客户端发起的（在验证服务器身份之前）。为了发起 Diffie Hellman 密钥交换，客户端需要猜测服务器可以接受的模数和基数。客户端要么使用大多数服务器支持的标准参数，要么记住与该特定服务器上次使用的最后一个模数/基数。如果客户端猜测错误，服务器将回复它期望的参数，并且会丢失一个往返时间。当服务器发送其 ServerHello 时，它已经知道了会话密钥。这意味着服务器可以加密所有后续的消息。经过一个往返时间后，TLS 1.3 会话中交换的所有数据都是加密和认证的。在 TLS 1.3 中，服务器证书是用会话密钥加密的，以及 Finished 消息。服务器签署握手以确认它拥有其证书的公钥。如果服务器想要发送应用程序数据，它已经可以加密并发送给客户端。在接收到服务器证书后，客户端验证它并检查握手和 Finished 消息的签名。客户端通过发送自己的 Finished 消息来确认握手的结束。这时，客户端可以发送加密数据。这意味着客户端在发送加密数据之前只需等待一个往返时间。这比 TLS 1.2 快得多。
 
 对于某些应用，在能够发送数据之前等待一个往返时间太长了。TLS 1.3 允许客户端在 ClientHello 之后立即发送加密数据，而无需等待 ServerHello 消息。在这个握手阶段，客户端无法知道通过 Diffie Hellman 密钥交换将导出的密钥。技巧是服务器和客户端需要事先商定一个预共享密钥。这个密钥可以通过非绑定方式协商，但通常是在客户端和服务器之间的先前 TLS 会话中交换。客户端和服务器都可以将此密钥存储在它们的缓存中。当客户端创建到服务器的新的 TLS 会话时，它会检查是否已经知道该服务器的预共享密钥。如果是这样，客户端将在其 ClientHello 消息中宣布此密钥的标识符。多亏了这个标识符，服务器可以恢复密钥并使用它来解密 0-rtt 加密记录。下面展示了简化版的 0-rtt TLS 1.3 握手 [[8]](#fhandshake)。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt Encrypted record", textcolour="magenta", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "Certificate, Sign(K,Handshake), Finished, Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/37315cb85580d2a0a41ccf2aa6b695ae.png)
+> ![](img/37315cb85580d2a0a41ccf2aa6b695ae.png)
 
 在网络上，TLS 客户端使用证书来验证服务器，但客户端没有被验证。然而，在企业网络等环境中，服务器可能还需要验证客户端。一种常见的部署是为那些希望通过虚拟专用网络服务访问企业网络的远程客户端进行验证。其中一些服务运行在 TLS 之上（或更精确地说，是在 UDP 之上的 TLS 变体 DTLS [[MoR2004]](../bibliography.html#mor2004)，但超出了本章的范围）。在这些服务中，每个客户端都通过一个由服务器信任的公钥和证书进行验证。为了建立 TLS 会话，这样的客户端需要证明它拥有与证书关联的公钥。这是通过服务器发送的 CertificateRequest 消息来完成的。TLS 握手变为以下形式：
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt Encrypted record", textcolour="magenta", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "CertificateRequest, Certificate, Sign(K,Handshake), Finished, Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "Certificate, Sign(Kc, Handshake), Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "Encrypted Record", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/6b610706117d1538fe4793f16be928b1.png)
+> ![](img/6b610706117d1538fe4793f16be928b1.png)
 
 服务器发送一个 CertificateRequest 消息。客户端返回其证书并使用其私钥对握手进行签名。这向服务器确认客户端拥有其证书中指示的公钥。
 
@@ -2253,47 +1073,7 @@ TLS 1.2 和 TLS 1.3 之间有许多更多差异。更多详细信息可以在它
 
 TLS 握手是一个四步握手，如图所示。
 
-> ![msc {
-> 
-> a [标签="", 线颜色=白色],
-> 
-> b [标签="客户端",linecolour=黑色],
-> 
-> z [标签="", 线颜色=白色],
-> 
-> c [标签="服务器", 线颜色=黑色],
-> 
-> d [标签="", 线颜色=白色];
-> 
-> b>>c [标签 = "ClientHello[随机]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [标签 = "ServerHello[随机], 证书", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [标签 = "E(K,MasterSecret), Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [标签 = "Finished=MAC(MasterSecret||Handshake)", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [标签 = "加密记录", 线颜色="红色", 文字颜色="红色"];
-> 
-> b>>c [标签 = "加密记录", 线颜色="红色", 文字颜色="红色"];
-> 
-> }](../Images/300581e55a5559d21fa138b6759650ca.png)
+> ![](img/300581e55a5559d21fa138b6759650ca.png)
 
 简而言之，客户端通过提出一个随机数来启动 TLS 握手。服务器回复其随机数和一个证书，该证书将其名称绑定到一个公钥。客户端生成一个 MasterSecret，稍后将用于派生会话密钥，并用服务器的公钥加密它。它还生成一个包含所有交换消息的 MAC 的 Finished 消息，以便服务器能够检测客户端发送的消息的任何修改。服务器也发送它自己的 Finished 消息。此时，客户端和服务器通过从 MasterSecret 派生的密钥发送加密记录。
 
@@ -2409,153 +1189,17 @@ MAC-then-encrypt 或 Encrypt-then-MAC
 
 TLS 1.3 握手与 TLS 1.2 握手在几个方面有所不同。首先，当客户端首次连接到服务器时，TLS 1.3 握手需要单次往返时间。为了实现这一点，TLS 设计者详细研究了 TLS 1.2 握手，并发现第一次往返时间主要用于选择将在 TLS 会话中使用的加密算法和加密交换方案。TLS 1.3 通过要求使用具有小参数集的 Diffie-Hellman 交换来极大地简化了这种协商。这意味着客户端可以猜测服务器使用的参数（即模数 p 和底数 g），并立即开始 Diffie-Hellman 交换。下面图示展示了简化版的 TLS 1.3 握手过程。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "客户端 Hello[随机, g^c]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[随机, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "证书，签名(K, 握手), 完成, 加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "完成", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/e5ae4c8c184c7b414c018f2972f772de.png)
+> ![](img/e5ae4c8c184c7b414c018f2972f772de.png)
 
 与 TLS 1.2 握手相比，有几个重要的区别。首先，TLS 1.3 要求进行 Diffie Hellman 密钥交换，并且这个交换是由客户端发起的（在验证服务器身份之前）。为了发起 Diffie Hellman 密钥交换，客户端需要猜测服务器可以接受的模数和基数。客户端可以使用大多数服务器支持的标准参数，或者客户端记得与该特定服务器上次使用的最后一个模数/基数。如果客户端猜测错误，服务器会回复它期望的参数，并且会丢失一个往返时间。当服务器发送其 ServerHello 时，它已经知道了会话密钥。这意味着服务器可以加密所有后续的消息。经过一个往返时间后，TLS 1.3 会话中交换的所有数据都是加密和认证的。在 TLS 1.3 中，服务器证书是用会话密钥加密的，以及 Finished 消息。服务器签署握手以确认它拥有其证书的公钥。如果服务器想要发送应用程序数据，它已经可以加密并发送给客户端。在接收到服务器证书后，客户端会验证它并检查握手和 Finished 消息的签名。客户端通过发送自己的 Finished 消息来确认握手的结束。这时，客户端可以发送加密数据。这意味着客户端在发送加密数据之前只需要等待一个往返时间。这比 TLS 1.2 要快得多。
 
 对于某些应用程序，在能够发送数据之前等待一个往返时间太长了。TLS 1.3 允许客户端在 ClientHello 之后立即发送加密数据，而无需等待 ServerHello 消息。在这个握手阶段，客户端无法知道 Diffie Hellman 密钥交换将导出的密钥。技巧是服务器和客户端需要事先就预共享密钥达成一致。这个密钥可以通过带外协商，但通常是在客户端和服务器之间的先前 TLS 会话中交换的。客户端和服务器都可以将其存储在缓存中。当客户端创建到服务器的新的 TLS 会话时，它会检查是否已经知道该服务器的预共享密钥。如果是这样，客户端会在其 ClientHello 消息中宣布这个密钥的标识符。多亏了这个标识符，服务器可以恢复密钥并使用它来解密 0-rtt Encrypted 记录。下面展示了简化版的 0-rtt TLS 1.3 握手[[8]](#fhandshake)。
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt Encrypted record", textcolour="magenta", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "Certificate, Sign(K,Handshake), Finished, 加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> b>>c [ label = "Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/37315cb85580d2a0a41ccf2aa6b695ae.png)
+> ![](img/37315cb85580d2a0a41ccf2aa6b695ae.png)
 
 在网络上，TLS 客户端使用证书来验证服务器，但客户端本身不被验证。然而，在企业网络等环境中，服务器可能还需要验证客户端。一种常见的部署方式是验证通过虚拟专用网络服务访问企业网络的远程客户端。其中一些服务运行在 TLS 之上（或更精确地说，是在 UDP 之上运行的 TLS 变体 DTLS [[MoR2004]](../bibliography.html#mor2004)，但不在本章的范围内）。在这些服务中，每个客户端都通过一个由服务器信任的公钥和证书进行验证。为了建立 TLS 会话，这样的客户端需要证明它拥有与证书关联的公钥。这是通过服务器发送的 CertificateRequest 消息来完成的。TLS 握手变为以下形式：
 
-> ![msc {
-> 
-> a [label="", linecolour=white],
-> 
-> b [label="客户端",linecolour=black],
-> 
-> z [label="", linecolour=white],
-> 
-> c [label="服务器", linecolour=black],
-> 
-> d [label="", linecolour=white];
-> 
-> b>>c [ label = "ClientHello[Random, g^c,server_conf=abcd]", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "0-rtt 加密记录", textcolour="magenta", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "ServerHello[Random, g^s]", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> c>>b [ label = "CertificateRequest, Certificate, Sign(K,Handshake), Finished, 加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "Certificate, Sign(Kc, Handshake), Finished", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> c>>b [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> b>>c [ label = "加密记录", textcolour="red", linecolour="red", arcskip="2"];
-> 
-> |||;
-> 
-> |||;
-> 
-> }](../Images/6b610706117d1538fe4793f16be928b1.png)
+> ![](img/6b610706117d1538fe4793f16be928b1.png)
 
 服务器发送一个 CertificateRequest 消息。客户端返回其证书并使用其私钥对握手进行签名。这向服务器确认客户端拥有其证书中指示的公钥。
 
