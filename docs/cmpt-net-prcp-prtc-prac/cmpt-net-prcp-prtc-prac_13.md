@@ -1,4 +1,4 @@
-# 资源共享#
+# 资源共享
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/networks/sharing.html`](https://4ed.computer-networking.info/syllabus/default/networks/sharing.html)
 

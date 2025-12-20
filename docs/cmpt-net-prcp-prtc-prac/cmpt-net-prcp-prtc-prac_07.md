@@ -1,4 +1,4 @@
-# QUIC#
+# QUIC
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/hosts/quic.html`](https://4ed.computer-networking.info/syllabus/default/hosts/quic.html)
 

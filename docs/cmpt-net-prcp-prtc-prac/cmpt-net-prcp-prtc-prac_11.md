@@ -1,4 +1,4 @@
-# 跨域路由#
+# 跨域路由
 
 > [`4ed.computer-networking.info/syllabus/default/networks/bgp.html`](https://4ed.computer-networking.info/syllabus/default/networks/bgp.html)
 

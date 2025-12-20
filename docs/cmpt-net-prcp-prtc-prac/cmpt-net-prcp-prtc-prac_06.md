@@ -1,4 +1,4 @@
-# 传输控制协议#
+# 传输控制协议
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/hosts/tcp.html`](https://4ed.computer-networking.info/syllabus/default/hosts/tcp.html)
 

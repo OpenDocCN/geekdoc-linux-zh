@@ -1,4 +1,4 @@
-# 构建网络#
+# 构建网络
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/networks/network.html`](https://4ed.computer-networking.info/syllabus/default/networks/network.html)
 
@@ -594,7 +594,7 @@
 
 脚注
 
-# 控制平面#
+# 控制平面
 
 网络层控制平面的一个目标是在所有路由器上维护路由表。如前所述，路由表是一种数据结构，它包含路由器所知的每个目标地址（或地址块），以及路由器必须转发到该地址的输出接口。路由表还可以包含其他信息，例如路径上下一个路由器的地址或该路径成本的估计。
 

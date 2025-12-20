@@ -1,4 +1,4 @@
-# 第四版前言#
+# 第四版前言
 
 > [原文](https://4ed.computer-networking.info/syllabus/default/preface.html)
 
@@ -8,7 +8,7 @@
 
 这种方法的优点之一是学生可以在第一学期就快速进行与真实协议相关的动手练习。之前的方法更多地依赖于传统的纸笔练习。在[鲁汶大学](https://www.uclouvain.be)的学生在课程的同时进行两个项目。第一个项目侧重于主机部分。学生使用[Wireshark](https://www.wireshark.org)和类似工具来探索应用程序或浏览器在与网站交互时交换的数据包。这迫使他们更深入地了解主机使用的协议，并与课程并行进行。第二个项目基于由劳伦特·范贝弗及其在苏黎世联邦理工学院（ETH Zurich）的同事设计的[迷你互联网项目](https://github.com/nsg-ethz/mini_internet_project) [[HBR2020]](bibliography.html#hbr2020)
 
-# 第一版前言#
+# 第一版前言
 
 这本教科书源于第一作者的一种挫败感。许多作者选择编写教科书，要么是因为他们所在领域没有教科书，要么是因为他们对现有的教科书不满意。这种挫败感在计算机网络领域催生了多本优秀的教科书。在计算机网络教科书主要侧重于理论的时代，[道格拉斯·科默](https://www.cs.purdue.edu/people/comer)选择编写一本完全专注于 TCP/IP 协议套件的教科书[[科默 1988]](bibliography.html#comer1988)，这在当时是一个艰难的选择。后来，他通过描述一个完整的 TCP/IP 实现来扩展了他的教科书，为[[科默 1988]](bibliography.html#comer1988)中的理论描述增添了实际考虑。[理查德·斯蒂文斯](https://www.kohala.com/)像探险家一样看待互联网，通过观察在线路上交换的所有数据包来解释协议的运作[[斯蒂文斯 1994]](bibliography.html#stevens1994)。[吉姆·库罗斯](https://www-net.cs.umass.edu/personnel/kurose.html)和[基思·罗斯](https://engineering.nyu.edu/faculty/keith-ross)从学生使用的应用开始，重新发明了计算机网络教科书，并逐步通过移除每一层来解释互联网协议[[库罗斯罗斯 09]](bibliography.html#kuroseross09)。
 

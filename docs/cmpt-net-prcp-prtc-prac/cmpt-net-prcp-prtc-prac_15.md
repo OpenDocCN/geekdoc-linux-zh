@@ -1,4 +1,4 @@
-# 参考文献#
+# 参考文献
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/bibliography.html`](https://4ed.computer-networking.info/syllabus/default/bibliography.html)
 

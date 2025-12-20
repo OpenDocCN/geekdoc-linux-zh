@@ -1,4 +1,4 @@
-# 可靠传输协议#
+# 可靠传输协议
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/hosts/reliability.html`](https://4ed.computer-networking.info/syllabus/default/hosts/reliability.html)
 

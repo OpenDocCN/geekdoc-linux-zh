@@ -1,4 +1,4 @@
-# 术语表#
+# 术语表
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/glossary.html`](https://4ed.computer-networking.info/syllabus/default/glossary.html)
 

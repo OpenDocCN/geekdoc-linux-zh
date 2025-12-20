@@ -1,4 +1,4 @@
-# 数据链路层技术#
+# 数据链路层技术
 
 > [`4ed.computer-networking.info/syllabus/default/networks/lan.html`](https://4ed.computer-networking.info/syllabus/default/networks/lan.html)
 

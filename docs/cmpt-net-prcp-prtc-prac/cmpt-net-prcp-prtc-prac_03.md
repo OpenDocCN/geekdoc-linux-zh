@@ -1,4 +1,4 @@
-# 网络应用程序#
+# 网络应用程序
 
 > [`4ed.computer-networking.info/syllabus/default/hosts/applications.html`](https://4ed.computer-networking.info/syllabus/default/hosts/applications.html)
 

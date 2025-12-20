@@ -1,4 +1,4 @@
-# 《计算机网络：原理、协议与实践》，第四版#
+# 《计算机网络：原理、协议与实践》，第四版
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/index.html`](https://4ed.computer-networking.info/syllabus/default/index.html)
 
@@ -14,7 +14,7 @@
 
 +   第一版序言
 
-# 第一部分：主机#
+# 第一部分：主机
 
 +   简介
 
@@ -178,7 +178,7 @@
 
         +   ICMP 版本 6
 
-# 第二部分：网络#
+# 第二部分：网络
 
 +   构建网络
 
@@ -260,9 +260,9 @@
 
             +   建模 TCP 拥塞控制
 
-# 第三部分：实践#
+# 第三部分：实践
 
-# 附录#
+# 附录
 
 +   术语表
 

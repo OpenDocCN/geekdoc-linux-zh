@@ -1,4 +1,4 @@
-# IP 网络中的路由#
+# IP 网络中的路由
 
 > 原文：[`4ed.computer-networking.info/syllabus/default/networks/routing.html`](https://4ed.computer-networking.info/syllabus/default/networks/routing.html)
 

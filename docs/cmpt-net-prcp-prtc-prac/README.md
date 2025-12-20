@@ -1,14 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+# 计算机网络：原理、协议与实践
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Computer Networking : Principles, Protocols and Practice</title>
-<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
-</head>
-<body>
-<h1>Computer Networking : Principles, Protocols and Practice</h1>
-<p>来源：<a href='https://4ed.computer-networking.info/syllabus/default/index.html'>https://4ed.computer-networking.info/syllabus/default/index.html</a></p>    
-</body>
-</html>
+> 原文：[`4ed.computer-networking.info/syllabus/default/index.html`](https://4ed.computer-networking.info/syllabus/default/index.html)
+> 
+> 译者：[飞龙](https://github.com/wizardforcel)
+> 
+> 协议：[CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
