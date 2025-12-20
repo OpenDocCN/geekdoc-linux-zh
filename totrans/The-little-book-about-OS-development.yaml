@@ -1,0 +1,3817 @@
+- en: <!--yml
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'category: 未分类'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'date: 2025-12-20 20:16:26'
+  prefs: []
+  type: TYPE_NORMAL
+- en: -->
+  prefs: []
+  type: TYPE_NORMAL
+- en: The little book about OS development
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 来源：[http://littleosbook.github.io/](http://littleosbook.github.io/)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Contents
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '[1 Introduction](#introduction)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.1 About the Book](#about-the-book)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.2 The Reader](#the-reader)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.3 Credits, Thanks and Acknowledgements](#credits-thanks-and-acknowledgements)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.4 Contributors](#contributors)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.5 Changes and Corrections](#changes-and-corrections)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.6 Issues and where to get help](#issues-and-where-to-get-help)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[1.7 License](#license)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2 First Steps](#first-steps)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1 Tools](#tools)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1.1 Quick Setup](#quick-setup)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1.2 Programming Languages](#programming-languages)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1.3 Host Operating System](#host-operating-system)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1.4 Build System](#build-system)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.1.5 Virtual Machine](#virtual-machine)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.2 Booting](#booting)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.2.1 BIOS](#bios)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.2.2 The Bootloader](#the-bootloader)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.2.3 The Operating System](#the-operating-system)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3 Hello Cafebabe](#hello-cafebabe)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3.1 Compiling the Operating System](#compiling-the-operating-system)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3.2 Linking the Kernel](#linking-the-kernel)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3.3 Obtaining GRUB](#obtaining-grub)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3.4 Building an ISO Image](#building-an-iso-image)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.3.5 Running Bochs](#running-bochs)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[2.4 Further Reading](#further-reading)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3 Getting to C](#getting-to-c)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.1 Setting Up a Stack](#setting-up-a-stack)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.2 Calling C Code From Assembly](#calling-c-code-from-assembly)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.2.1 Packing Structs](#packing-structs)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.3 Compiling C Code](#compiling-c-code)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.4 Build Tools](#build-tools)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[3.5 Further Reading](#further-reading-1)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4 Output](#output)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.1 Interacting with the Hardware](#interacting-with-the-hardware)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.2 The Framebuffer](#the-framebuffer)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.2.1 Writing Text](#writing-text)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.2.2 Moving the Cursor](#moving-the-cursor)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.2.3 The Driver](#the-driver)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3 The Serial Ports](#the-serial-ports)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.1 Configuring the Serial Port](#configuring-the-serial-port)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.2 Configuring the Line](#configuring-the-line)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.3 Configuring the Buffers](#configuring-the-buffers)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.4 Configuring the Modem](#configuring-the-modem)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.5 Writing Data to the Serial Port](#writing-data-to-the-serial-port)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.6 Configuring Bochs](#configuring-bochs)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.3.7 The Driver](#the-driver-1)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[4.4 Further Reading](#further-reading-2)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[5 Segmentation](#segmentation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[5.1 Accessing Memory](#accessing-memory)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[5.2 The Global Descriptor Table (GDT)](#the-global-descriptor-table-gdt)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[5.3 Loading the GDT](#loading-the-gdt)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[5.4 Further Reading](#further-reading-3)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6 Interrupts and Input](#interrupts-and-input)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.1 Interrupts Handlers](#interrupts-handlers)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.2 Creating an Entry in the IDT](#creating-an-entry-in-the-idt)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.3 Handling an Interrupt](#handling-an-interrupt)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.4 Creating a Generic Interrupt Handler](#creating-a-generic-interrupt-handler)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.5 Loading the IDT](#loading-the-idt)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.6 Programmable Interrupt Controller (PIC)](#programmable-interrupt-controller-pic)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.7 Reading Input from the Keyboard](#reading-input-from-the-keyboard)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[6.8 Further Reading](#further-reading-4)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7 The Road to User Mode](#the-road-to-user-mode)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.1 Loading an External Program](#loading-an-external-program)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.1.1 GRUB Modules](#grub-modules)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.2 Executing a Program](#executing-a-program)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.2.1 A Very Simple Program](#a-very-simple-program)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.2.2 Compiling](#compiling)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.2.3 Finding the Program in Memory](#finding-the-program-in-memory)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.2.4 Jumping to the Code](#jumping-to-the-code)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[7.3 The Beginning of User Mode](#the-beginning-of-user-mode)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[8 A Short Introduction to Virtual Memory](#a-short-introduction-to-virtual-memory)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[8.1 Virtual Memory Through Segmentation?](#virtual-memory-through-segmentation)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[8.2 Further Reading](#further-reading-5)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9 Paging](#paging)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.1 Why Paging?](#why-paging)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.2 Paging in x86](#paging-in-x86)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.2.1 Identity Paging](#identity-paging)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.2.2 Enabling Paging](#enabling-paging)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.2.3 A Few Details](#a-few-details)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3 Paging and the Kernel](#paging-and-the-kernel)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.1 Reasons to Not Identity Map the Kernel](#reasons-to-not-identity-map-the-kernel)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.2 The Virtual Address for the Kernel](#the-virtual-address-for-the-kernel)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.3 Placing the Kernel at `0xC0000000`](#placing-the-kernel-at-0xc0000000)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.4 Higher-half Linker Script](#higher-half-linker-script)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.5 Entering the Higher Half](#entering-the-higher-half)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.3.6 Running in the Higher Half](#running-in-the-higher-half)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.4 Virtual Memory Through Paging](#virtual-memory-through-paging)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[9.5 Further Reading](#further-reading-6)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10 Page Frame Allocation](#page-frame-allocation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.1 Managing Available Memory](#managing-available-memory)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.1.1 How Much Memory is There?](#how-much-memory-is-there)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.1.2 Managing Available Memory](#managing-available-memory-1)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.2 How Can We Access a Page Frame?](#how-can-we-access-a-page-frame)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.3 A Kernel Heap](#a-kernel-heap)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[10.4 Further reading](#further-reading-7)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11 User Mode](#user-mode)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.1 Segments for User Mode](#segments-for-user-mode)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.2 Setting Up For User Mode](#setting-up-for-user-mode)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.3 Entering User Mode](#entering-user-mode)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.4 Using C for User Mode Programs](#using-c-for-user-mode-programs)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.4.1 A C Library](#a-c-library)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[11.5 Further Reading](#further-reading-8)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12 File Systems](#file-systems)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12.1 Why a File System?](#why-a-file-system)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12.2 A Simple Read-Only File System](#a-simple-read-only-file-system)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12.3 Inodes and Writable File Systems](#inodes-and-writable-file-systems)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12.4 A Virtual File System](#a-virtual-file-system)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[12.5 Further Reading](#further-reading-9)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[13 System Calls](#system-calls)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[13.1 Designing System Calls](#designing-system-calls)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[13.2 Implementing System Calls](#implementing-system-calls)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[13.3 Further Reading](#further-reading-10)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14 Multitasking](#multitasking)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.1 Creating New Processes](#creating-new-processes)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.2 Cooperative Scheduling with Yielding](#cooperative-scheduling-with-yielding)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.3 Preemptive Scheduling with Interrupts](#preemptive-scheduling-with-interrupts)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.3.1 Programmable Interval Timer](#programmable-interval-timer)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.3.2 Separate Kernel Stacks for Processes](#separate-kernel-stacks-for-processes)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.3.3 Difficulties with Preemptive Scheduling](#difficulties-with-preemptive-scheduling)'
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[14.4 Further Reading](#further-reading-11)'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 1 Introduction
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This text is a practical guide to writing your own x86 operating system. It
+    is designed to give enough help with the technical details while at the same time
+    not reveal too much with samples and code excerpts. We’ve tried to collect parts
+    of the vast (and often excellent) expanse of material and tutorials available,
+    on the web and otherwise, and add our own insights into the problems we encountered
+    and struggled with.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This book is not about the theory behind operating systems, or how any specific
+    operating system (OS) works. For OS theory we recommend the book *Modern Operating
+    Systems* by Andrew Tanenbaum [1]. Lists and details on current operating systems
+    are available on the Internet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The starting chapters are quite detailed and explicit, to quickly get you into
+    coding. Later chapters give more of an outline of what is needed, as more and
+    more of the implementation and design becomes up to the reader, who should now
+    be more familiar with the world of kernel development. At the end of some chapters
+    there are links for further reading, which might be interesting and give a deeper
+    understanding of the topics covered.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In [chapter 2](#first-steps) and [3](#getting-to-c) we set up our development
+    environment and boot up our OS kernel in a virtual machine, eventually starting
+    to write code in C. We continue in [chapter 4](#output) with writing to the screen
+    and the serial port, and then we dive into segmentation in [chapter 5](#segmentation)
+    and interrupts and input in [chapter 6](#interrupts-and-input).
+  prefs: []
+  type: TYPE_NORMAL
+- en: After this we have a quite functional but bare-bones OS kernel. In [chapter
+    7](#the-road-to-user-mode) we start the road to user mode applications, with virtual
+    memory through paging ([chapter 8](#a-short-introduction-to-virtual-memory) and
+    [9](#paging)), memory allocation ([chapter 10](#page-frame-allocation)), and finally
+    running a user application in [chapter 11](#user-mode).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the last three chapters we discuss the more advanced topics of file systems
+    ([chapter 12](#file-systems)), system calls ([chapter 13](#system-calls)), and
+    multitasking ([chapter 14](#multitasking)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.1 About the Book
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The OS kernel and this book were produced as part of an advanced individual
+    course at the Royal Institute of Technology [2], Stockholm. The authors had previously
+    taken courses in OS theory, but had only minor practical experience with OS kernel
+    development. In order to get more insight and a deeper understanding of how the
+    theory from the previous OS courses works out in practice, the authors decided
+    to create a new course, which focused on the development of a small OS. Another
+    goal of the course was writing a thorough tutorial on how to develop a small OS
+    basically from scratch, and this short book is the result.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The x86 architecture is, and has been for a long time, one of the most common
+    hardware architectures. It was not a difficult choice to use the x86 architecture
+    as the target of the OS, with its large community, extensive reference material
+    and mature emulators. The documentation and information surrounding the details
+    of the hardware we had to work with was not always easy to find or understand,
+    despite (or perhaps due to) the age of the architecture.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The OS was developed in about six weeks of full-time work. The implementation
+    was done in many small steps, and after each step the OS was tested manually.
+    By developing in this incremental and iterative way, it was often easier to find
+    any bugs that were introduced, since only a small part of the code had changed
+    since the last known good state of the code. We encourage the reader to work in
+    a similar way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: During the six weeks of development, almost every single line of code was written
+    by the authors together (this way of working is also called *pair-programming*).
+    It is our belief that we managed to avoid a lot of bugs due to this style of development,
+    but this is hard to prove scientifically.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.2 The Reader
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The reader of this book should be comfortable with UNIX/Linux, systems programming,
+    the C language and computer systems in general (such as hexadecimal notation [3]).
+    This book could be a way to get started learning those things, but it will be
+    more difficult, and developing an operating system is already challenging on its
+    own. Search engines and other tutorials are often helpful if you get stuck.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.3 Credits, Thanks and Acknowledgements
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We’d like to thank the OSDev community [4] for their great wiki and helpful
+    members, and James Malloy for his eminent kernel development tutorial [5]. We’d
+    also like to thank our supervisor Torbjörn Granlund for his insightful questions
+    and interesting discussions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Most of the CSS formatting of the book is based on the work by Scott Chacon
+    for the book Pro Git, [http://progit.org/](http://progit.org/).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.4 Contributors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We are very grateful for the patches that people send us. The following users
+    have all contributed to this book:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[alexschneider](https://github.com/alexschneider)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Avidanborisov](https://github.com/Avidanborisov)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nirs](https://github.com/nirs)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[kedarmhaswade](https://github.com/kedarmhaswade)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[vamanea](https://github.com/vamanea)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ansjob](https://github.com/ansjob)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 1.5 Changes and Corrections
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This book is hosted on Github - if you have any suggestions, comments or corrections,
+    just fork the book, write your changes, and send us a pull request. We’ll happily
+    incorporate anything that makes this book better.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.6 Issues and where to get help
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you run into problems while reading the book, please check the issues on
+    Github for help: [https://github.com/littleosbook/littleosbook/issues](https://github.com/littleosbook/littleosbook/issues).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1.7 License
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: All content is under the Creative Commons Attribution Non Commercial Share Alike
+    3.0 license, [http://creativecommons.org/licenses/by-nc-sa/3.0/us/](http://creativecommons.org/licenses/by-nc-sa/3.0/us/).
+    The code samples are in the public domain - use them however you want. References
+    to this book are always received with warmth.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2 First Steps
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Developing an operating system (OS) is no easy task, and the question “How do
+    I even begin to solve this problem?” is likely to come up several times during
+    the course of the project for different problems. This chapter will help you set
+    up your development environment and booting a very small (and primitive) operating
+    system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.1 Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 2.1.1 Quick Setup
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We (the authors) have used Ubuntu [6] as the operating system for doing OS development,
+    running it both physically and virtually (using the virtual machine VirtualBox
+    [7]). A quick way to get everything up and running is to use the same setup as
+    we did, since we know that these tools work with the samples provided in this
+    book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Once Ubuntu is installed, either physical or virtual, the following packages
+    should be installed using `apt-get`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2.1.2 Programming Languages
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The operating system will be developed using the C programming language [8][9],
+    using GCC [10]. We use C because developing an OS requires a very precise control
+    of the generated code and direct access to memory. Other languages that provide
+    the same features can also be used, but this book will only cover C.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The code will make use of one type attribute that is specific for GCC:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This attribute allows us to ensure that the compiler uses a memory layout for
+    a `struct` exactly as we define it in the code. This is explained in more detail
+    in the next chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Due to this attribute, the example code might be hard to compile using a C compiler
+    other than GCC.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For writing assembly code, we have chosen NASM [11] as the assembler, since
+    we prefer NASM’s syntax over GNU Assembler.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash [12] will be used as the scripting language throughout the book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.1.3 Host Operating System
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: All the code examples assumes that the code is being compiled on a UNIX like
+    operating system. All code examples have been successfully compiled using Ubuntu
+    [6] versions 11.04 and 11.10.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.1.4 Build System
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Make [13] has been used when constructing the Makefile examples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.1.5 Virtual Machine
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When developing an OS it is very convenient to be able to run your code in a
+    *virtual machine* instead of on a physical computer, since starting your OS in
+    a virtual machine is much faster than getting your OS onto a physical medium and
+    then running it on a physical machine. Bochs [14] is an emulator for the x86 (IA-32)
+    platform which is well suited for OS development due to its debugging features.
+    Other popular choices are QEMU [15] and VirtualBox [7]. This book uses Bochs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By using a virtual machine we cannot ensure that our OS works on real, physical
+    hardware. The environment simulated by the virtual machine is designed to be very
+    similar to their physical counterparts, and the OS can be tested on one by just
+    copying the executable to a CD and finding a suitable machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.2 Booting
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Booting an operating system consists of transferring control along a chain
+    of small programs, each one more “powerful” than the previous one, where the operating
+    system is the last “program”. See the following figure for an example of the boot
+    process:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![An example of the boot process. Each box is a program.](img/061abc1092e86c93567ab242232a9f74.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: An example of the boot process. Each box is a program.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.2.1 BIOS
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When the PC is turned on, the computer will start a small program that adheres
+    to the *Basic Input Output System* (BIOS) [16] standard. This program is usually
+    stored on a read only memory chip on the motherboard of the PC. The original role
+    of the BIOS program was to export some library functions for printing to the screen,
+    reading keyboard input etc. Modern operating systems do not use the BIOS’ functions,
+    they use drivers that interact directly with the hardware, bypassing the BIOS.
+    Today, BIOS mainly runs some early diagnostics (power-on-self-test) and then transfers
+    control to the bootloader.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.2.2 The Bootloader
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The BIOS program will transfer control of the PC to a program called a *bootloader*.
+    The bootloader’s task is to transfer control to us, the operating system developers,
+    and our code. However, due to some restrictions[¹](#fn1) of the hardware and because
+    of backward compatibility, the bootloader is often split into two parts: the first
+    part of the bootloader will transfer control to the second part, which finally
+    gives control of the PC to the operating system.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Writing a bootloader involves writing a lot of low-level code that interacts
+    with the BIOS. Therefore, an existing bootloader will be used: the GNU GRand Unified
+    Bootloader (GRUB) [17].'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using GRUB, the operating system can be built as an ordinary ELF [18] executable,
+    which will be loaded by GRUB into the correct memory location. The compilation
+    of the kernel requires that the code is laid out in memory in a specific way (how
+    to compile the kernel will be discussed later in this chapter).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.2.3 The Operating System
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: GRUB will transfer control to the operating system by jumping to a position
+    in memory. Before the jump, GRUB will look for a magic number to ensure that it
+    is actually jumping to an OS and not some random code. This magic number is part
+    of the *multiboot specification* [19] which GRUB adheres to. Once GRUB has made
+    the jump, the OS has full control of the computer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.3 Hello Cafebabe
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section will describe how to implement of the smallest possible OS that
+    can be used together with GRUB. The only thing the OS will do is write `0xCAFEBABE`
+    to the `eax` register (most people would probably not even call this an OS).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.3.1 Compiling the Operating System
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'This part of the OS has to be written in assembly code, since C requires a
+    stack, which isn’t available (the chapter [“Getting to C”](#getting-to-c) describes
+    how to set one up). Save the following code in a file called `loader.s`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: The only thing this OS will do is write the very specific number `0xCAFEBABE`
+    to the `eax` register. It is *very* unlikely that the number `0xCAFEBABE` would
+    be in the `eax` register if the OS did *not* put it there.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The file `loader.s` can be compiled into a 32 bits ELF [18] object file with
+    the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2.3.2 Linking the Kernel
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The code must now be linked to produce an executable file, which requires some
+    extra thought compared to when linking most programs. We want GRUB to load the
+    kernel at a memory address larger than or equal to `0x00100000` (1 megabyte (MB)),
+    because addresses lower than 1 MB are used by GRUB itself, BIOS and memory-mapped
+    I/O. Therefore, the following linker script is needed (written for GNU LD [20]):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save the linker script into a file called `link.ld`. The executable can now
+    be linked with the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: The final executable will be called `kernel.elf`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.3.3 Obtaining GRUB
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The GRUB version we will use is GRUB Legacy, since the OS ISO image can then
+    be generated on systems using both GRUB Legacy and GRUB 2\. More specifically,
+    the GRUB Legacy `stage2_eltorito` bootloader will be used. This file can be built
+    from GRUB 0.97 by downloading the source from [ftp://alpha.gnu.org/gnu/grub/grub-0.97.tar.gz](ftp://alpha.gnu.org/gnu/grub/grub-0.97.tar.gz).
+    However, the `configure` script doesn’t work well with Ubuntu [21], so the binary
+    file can be downloaded from [http://littleosbook.github.com/files/stage2_eltorito](http://littleosbook.github.com/files/stage2_eltorito).
+    Copy the file `stage2_eltorito` to the folder that already contains `loader.s`
+    and `link.ld`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.3.4 Building an ISO Image
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The executable must be placed on a media that can be loaded by a virtual or
+    physical machine. In this book we will use ISO [22] image files as the media,
+    but one can also use floppy images, depending on what the virtual or physical
+    machine supports.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We will create the kernel ISO image with the program `genisoimage`. A folder
+    must first be created that contains the files that will be on the ISO image. The
+    following commands create the folder and copy the files to their correct places:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A configuration file `menu.lst` for GRUB must be created. This file tells GRUB
+    where the kernel is located and configures some options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Place the file `menu.lst` in the folder `iso/boot/grub/`. The contents of the
+    `iso` folder should now look like the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The ISO image can then be generated with the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: For more information about the flags used in the command, see the manual for
+    `genisoimage`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The ISO image `os.iso` now contains the kernel executable, the GRUB bootloader
+    and the configuration file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.3.5 Running Bochs
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Now we can run the OS in the Bochs emulator using the `os.iso` ISO image. Bochs
+    needs a configuration file to start and an example of a simple configuration file
+    is given below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: You might need to change the path to `romimage` and `vgaromimage` depending
+    on how you installed Bochs. More information about the Bochs config file can be
+    found at Boch’s website [23].
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you saved the configuration in a file named `bochsrc.txt` then you can run
+    Bochs with the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: The flag `-f` tells Bochs to use the given configuration file and the flag `-q`
+    tells Bochs to skip the interactive start menu. You should now see Bochs starting
+    and displaying a console with some information from GRUB on it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'After quitting Bochs, display the log produced by Boch:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: You should now see the contents of the registers of the CPU simulated by Bochs
+    somewhere in the output. If you find `RAX=00000000CAFEBABE` or `EAX=CAFEBABE`
+    (depending on if you are running Bochs with or without 64 bit support) in the
+    output then your OS has successfully booted!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2.4 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Gustavo Duertes has written an in-depth article about what actually happens
+    when a x86 computer boots up, [http://duartes.org/gustavo/blog/post/how-computers-boot-up](http://duartes.org/gustavo/blog/post/how-computers-boot-up)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Gustavo continues to describe what the kernel does in the very early stages
+    at [http://duartes.org/gustavo/blog/post/kernel-boot-process](http://duartes.org/gustavo/blog/post/kernel-boot-process)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The OSDev wiki also contains a nice article about booting an x86 computer:
+    [http://wiki.osdev.org/Boot_Sequence](http://wiki.osdev.org/Boot_Sequence)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 3 Getting to C
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter will show you how to use C instead of assembly code as the programming
+    language for the OS. Assembly is very good for interacting with the CPU and enables
+    maximum control over every aspect of the code. However, at least for the authors,
+    C is a much more convenient language to use. Therefore, we would like to use C
+    as much as possible and use assembly code only where it make sense.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3.1 Setting Up a Stack
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: One prerequisite for using C is a stack, since all non-trivial C programs use
+    a stack. Setting up a stack is not harder than to make the `esp` register point
+    to the end of an area of free memory (remember that the stack grows towards lower
+    addresses on the x86) that is correctly aligned (alignment on 4 bytes is recommended
+    from a performance perspective).
+  prefs: []
+  type: TYPE_NORMAL
+- en: We could point `esp` to a random area in memory since, so far, the only thing
+    in the memory is GRUB, BIOS, the OS kernel and some memory-mapped I/O. This is
+    not a good idea - we don’t know how much memory is available or if the area `esp`
+    would point to is used by something else. A better idea is to reserve a piece
+    of uninitialized memory in the `bss` section in the ELF file of the kernel. It
+    is better to use the `bss` section instead of the `data` section to reduce the
+    size of the OS executable. Since GRUB understands ELF, GRUB will allocate any
+    memory reserved in the `bss` section when loading the OS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The NASM pseudo-instruction `resb` [24] can be used to declare uninitialized
+    data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: There is no need to worry about the use of uninitialized memory for the stack,
+    since it is not possible to read a stack location that has not been written (without
+    manual pointer fiddling). A (correct) program can not pop an element from the
+    stack without having pushed an element onto the stack first. Therefore, the memory
+    locations of the stack will always be written to before they are being read.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The stack pointer is then set up by pointing `esp` to the end of the `kernel_stack`
+    memory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3.2 Calling C Code From Assembly
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The next step is to call a C function from assembly code. There are many different
+    conventions for how to call C code from assembly code [25]. This book uses the
+    *cdecl* calling convention, since that is the one used by GCC. The cdecl calling
+    convention states that arguments to a function should be passed via the stack
+    (on x86). The arguments of the function should be pushed on the stack in a right-to-left
+    order, that is, you push the rightmost argument first. The return value of the
+    function is placed in the `eax` register. The following code shows an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3.2.1 Packing Structs
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In the rest of this book, you will often come across “configuration bytes”
+    that are a collection of bits in a very specific order. Below follows an example
+    with 32 bits:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Instead of using an unsigned integer, `unsigned int`, for handling such configurations,
+    it is much more convenient to use “packed structures”:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When using the `struct` in the previous example there is no guarantee that
+    the size of the `struct` will be exactly 32 bits - the compiler can add some padding
+    between elements for various reasons, for example to speed up element access or
+    due to requirements set by the hardware and/or compiler. When using a `struct`
+    to represent configuration bytes, it is very important that the compiler does
+    *not* add any padding, because the `struct` will eventually be treated as a 32
+    bit unsigned integer by the hardware. The attribute `packed` can be used to force
+    GCC to *not* add any padding:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that `__attribute__((packed))` is not part of the C standard - it might
+    not work with all C compilers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3.3 Compiling C Code
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When compiling the C code for the OS, a lot of flags to GCC need to be used.
+    This is because the C code should *not* assume the presence of a standard library,
+    since there is no standard library available for our OS. For more information
+    about the flags, see the GCC manual.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The flags used for compiling the C code are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'As always when writing C programs we recommend turning on all warnings and
+    treat warnings as errors:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can now create a function `kmain` in a file called `kmain.c` that you call
+    from `loader.s`. At this point, `kmain` probably won’t need any arguments (but
+    in later chapters it will).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3.4 Build Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Now is also probably a good time to set up some build tools to make it easier
+    to compile and test-run the OS. We recommend using `make` [13], but there are
+    plenty of other build systems available. A simple Makefile for the OS could look
+    like the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The contents of your working directory should now look like the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: You should now be able to start the OS with the simple command `make run`, which
+    will compile the kernel and boot it up in Bochs (as defined in the Makefile above).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3.5 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Kernigan & Richie’s book, *The C Programming Language, Second Edition*, [8]
+    is great for learning about all the aspects of C.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 4 Output
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This chapter will present how to display text on the console as well as writing
+    data to the serial port. Furthermore, we will create our first *driver*, that
+    is, code that acts as a layer between the kernel and the hardware, providing a
+    higher abstraction than communicating directly with the hardware. The first part
+    of this chapter is about creating a driver for the *framebuffer* [26] to be able
+    to display text on the console. The second part shows how to create a driver for
+    the serial port. Bochs can store output from the serial port in a file, effectively
+    creating a logging mechanism for the operating system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.1 Interacting with the Hardware
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are usually two different ways to interact with the hardware, *memory-mapped
+    I/O* and *I/O ports*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the hardware uses memory-mapped I/O then you can write to a specific memory
+    address and the hardware will be updated with the new data. One example of this
+    is the framebuffer, which will be discussed in more detail later. For example,
+    if you write the value `0x410F` to address `0x000B8000`, you will see the letter
+    A in white color on a black background (see the section on [the framebuffer](#the-framebuffer)
+    for more details).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If the hardware uses I/O ports then the assembly code instructions `out` and
+    `in` must be used to communicate with the hardware. The instruction `out` takes
+    two parameters: the address of the I/O port and the data to send. The instruction
+    `in` takes a single parameter, the address of the I/O port, and returns data from
+    the hardware. One can think of I/O ports as communicating with hardware the same
+    way as you communicate with a server using sockets. The cursor (the blinking rectangle)
+    of the framebuffer is one example of hardware controlled via I/O ports on a PC.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.2 The Framebuffer
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The framebuffer is a hardware device that is capable of displaying a buffer
+    of memory on the screen [26]. The framebuffer has 80 columns and 25 rows, and
+    the row and column indices start at 0 (so rows are labelled 0 - 24).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.2.1 Writing Text
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Writing text to the console via the framebuffer is done with memory-mapped
+    I/O. The starting address of the memory-mapped I/O for the framebuffer is `0x000B8000`
+    [27]. The memory is divided into 16 bit cells, where the 16 bits determine both
+    the character, the foreground color and the background color. The highest eight
+    bits is the ASCII [28] value of the character, bit 7 - 4 the background and bit
+    3 - 0 the foreground, as can be seen in the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The available colors are shown in the following table:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Color | Value | Color | Value | Color | Value | Color | Value |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- | --: | :-- | --: | :-- | --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Black | 0 | Red | 4 | Dark grey | 8 | Light red | 12 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Blue | 1 | Magenta | 5 | Light blue | 9 | Light magenta | 13 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Green | 2 | Brown | 6 | Light green | 10 | Light brown | 14 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Cyan | 3 | Light grey | 7 | Light cyan | 11 | White | 15 |'
+  prefs: []
+  type: TYPE_TB
+- en: 'The first cell corresponds to row zero, column zero on the console. Using an
+    ASCII table, one can see that A corresponds to 65 or `0x41`. Therefore, to write
+    the character A with a green foreground (2) and dark grey background (8) at place
+    (0,0), the following assembly code instruction is used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The second cell then corresponds to row zero, column one and its address is
+    therefore:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Writing to the framebuffer can also be done in C by treating the address `0x000B8000`
+    as a char pointer, `char *fb = (char *) 0x000B8000`. Then, writing A at place
+    (0,0) with green foreground and dark grey background becomes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The following code shows how this can be wrapped into a function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The function can then be used as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: 4.2.2 Moving the Cursor
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Moving the cursor of the framebuffer is done via two different I/O ports. The
+    cursor’s position is determined with a 16 bits integer: 0 means row zero, column
+    zero; 1 means row zero, column one; 80 means row one, column zero and so on. Since
+    the position is 16 bits large, and the `out` assembly code instruction argument
+    is 8 bits, the position must be sent in two turns, first 8 bits then the next
+    8 bits. The framebuffer has two I/O ports, one for accepting the data, and one
+    for describing the data being received. Port `0x3D4` [29] is the port that describes
+    the data and port `0x3D5` [29] is for the data itself.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To set the cursor at row one, column zero (position `80 = 0x0050`), one would
+    use the following assembly code instructions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `out` assembly code instruction can’t be executed directly in C. Therefore
+    it is a good idea to wrap `out` in a function in assembly code which can be accessed
+    from C via the cdecl calling standard [25]:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'By storing this function in a file called `io.s` and also creating a header
+    `io.h`, the `out` assembly code instruction can be conveniently accessed from
+    C:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Moving the cursor can now be wrapped in a C function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: 4.2.3 The Driver
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The driver should provide an interface that the rest of the code in the OS
+    will use for interacting with the framebuffer. There is no right or wrong in what
+    functionality the interface should provide, but a suggestion is to have a `write`
+    function with the following declaration:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `write` function writes the contents of the buffer `buf` of length `len`
+    to the screen. The `write` function should automatically advance the cursor after
+    a character has been written and scroll the screen if necessary.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3 The Serial Ports
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The serial port [30] is an interface for communicating between hardware devices
+    and although it is available on almost all motherboards, it is seldom exposed
+    to the user in the form of a DE-9 connector nowadays. The serial port is easy
+    to use, and, more importantly, it can be used as a logging utility in Bochs. If
+    a computer has support for a serial port, then it usually has support for multiple
+    serial ports, but we will only make use of one of the ports. This is because we
+    will only use the serial ports for logging. Furthermore, we will only use the
+    serial ports for output, not input. The serial ports are completely controlled
+    via I/O ports.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.1 Configuring the Serial Port
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The first data that need to be sent to the serial port is configuration data.
+    In order for two hardware devices to be able to talk to each other they must agree
+    upon a couple of things. These things include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The speed used for sending data (bit or baud rate)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If any error checking should be used for the data (parity bit, stop bits)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The number of bits that represent a unit of data (data bits)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 4.3.2 Configuring the Line
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Configuring the line means to configure how data is being sent over the line.
+    The serial port has an I/O port, the *line command port*, that is used for configuration.
+  prefs: []
+  type: TYPE_NORMAL
+- en: First the speed for sending data will be set. The serial port has an internal
+    clock that runs at 115200 Hz. Setting the speed means sending a divisor to the
+    serial port, for example sending 2 results in a speed of `115200 / 2 = 57600`
+    Hz.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The divisor is a 16 bit number but we can only send 8 bits at a time. We must
+    therefore send an instruction telling the serial port to first expect the highest
+    8 bits, then the lowest 8 bits. This is done by sending `0x80` to the line command
+    port. An example is shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE35]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The way that data should be sent must be configured. This is also done via
+    the line command port by sending a byte. The layout of the 8 bits looks like the
+    following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE36]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A description for each name can be found in the table below (and in [31]):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Name | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| d | Enables (`d = 1`) or disables (`d = 0`) DLAB |'
+  prefs: []
+  type: TYPE_TB
+- en: '| b | If break control is enabled (`b = 1`) or disabled (`b = 0`) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| prty | The number of parity bits to use |'
+  prefs: []
+  type: TYPE_TB
+- en: '| s | The number of stop bits to use (`s = 0` equals 1, `s = 1` equals 1.5
+    or 2) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| dl | Describes the length of the data |'
+  prefs: []
+  type: TYPE_TB
+- en: 'We will use the mostly standard value `0x03` [31], meaning a length of 8 bits,
+    no parity bit, one stop bit and break control disabled. This is sent to the line
+    command port, as seen in the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE37]'
+  prefs: []
+  type: TYPE_PRE
+- en: The article on OSDev [31] has a more in-depth explanation of the values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.3 Configuring the Buffers
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'When data is transmitted via the serial port it is placed in buffers, both
+    when receiving and sending data. This way, if you send data to the serial port
+    faster than it can send it over the wire, it will be buffered. However, if you
+    send too much data too fast the buffer will be full and data will be lost. In
+    other words, the buffers are FIFO queues. The FIFO queue configuration byte looks
+    like the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE38]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A description for each name can be found in the table below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Name | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| lvl | How many bytes should be stored in the FIFO buffers |'
+  prefs: []
+  type: TYPE_TB
+- en: '| bs | If the buffers should be 16 or 64 bytes large |'
+  prefs: []
+  type: TYPE_TB
+- en: '| r | Reserved for future use |'
+  prefs: []
+  type: TYPE_TB
+- en: '| dma | How the serial port data should be accessed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| clt | Clear the transmission FIFO buffer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| clr | Clear the receiver FIFO buffer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| e | If the FIFO buffer should be enabled or not |'
+  prefs: []
+  type: TYPE_TB
+- en: 'We use the value `0xC7 = 11000111` that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Enables FIFO
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Clear both receiver and transmission FIFO queues
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use 14 bytes as size of queue
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The WikiBook on serial programming [32] explains the values in more depth.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.4 Configuring the Modem
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The modem control register is used for very simple hardware flow control via
+    the Ready To Transmit (RTS) and Data Terminal Ready (DTR) pins. When configuring
+    the serial port we want RTS and DTR to be 1, which means that we are ready to
+    send data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The modem configuration byte is shown in the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE39]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A description for each name can be found in the table below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Name | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| r | Reserved |'
+  prefs: []
+  type: TYPE_TB
+- en: '| af | Autoflow control enabled |'
+  prefs: []
+  type: TYPE_TB
+- en: '| lb | Loopback mode (used for debugging serial ports) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ao2 | Auxiliary output 2, used for receiving interrupts |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ao1 | Auxiliary output 1 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| rts | Ready To Transmit |'
+  prefs: []
+  type: TYPE_TB
+- en: '| dtr | Data Terminal Ready |'
+  prefs: []
+  type: TYPE_TB
+- en: We don’t need to enable interrupts, because we won’t handle any received data.
+    Therefore we use the configuration value `0x03 = 00000011` (RTS = 1 and DTS =
+    1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.5 Writing Data to the Serial Port
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Writing data to the serial port is done via the data I/O port. However, before
+    writing, the transmit FIFO queue has to be empty (all previous writes must have
+    finished). The transmit FIFO queue is empty if bit 5 of the line status I/O port
+    is equal to one.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Reading the contents of an I/O port is done via the `in` assembly code instruction.
+    There is no way to use the `in` assembly code instruction from C, therefore it
+    has to be wrapped (the same way as the `out` assembly code instruction):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE40]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE41]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Checking if the transmit FIFO is empty can then be done from C:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE42]'
+  prefs: []
+  type: TYPE_PRE
+- en: Writing to a serial port means spinning as long as the transmit FIFO queue isn’t
+    empty, and then writing the data to the data I/O port.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.6 Configuring Bochs
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To save the output from the first serial serial port the Bochs configuration
+    file `bochsrc.txt` must be updated. The `com1` configuration instructs Bochs how
+    to handle first serial port:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE43]'
+  prefs: []
+  type: TYPE_PRE
+- en: The output from serial port one will now be stored in the file `com1.out`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.3.7 The Driver
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: We recommend that you implement a `write` function for the serial port similar
+    to the `write` function in the driver for the framebuffer. To avoid name clashes
+    with the `write` function for the framebuffer it is a good idea to name the functions
+    `fb_write` and `serial_write` to distinguish them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We further recommend that you try to write a `printf`-like function, see section
+    7.3 in [8]. The `printf` function could take an additional argument to decide
+    to which device to write the output (framebuffer or serial).
+  prefs: []
+  type: TYPE_NORMAL
+- en: A final recommendation is that you create some way of distinguishing the severeness
+    of the log messages, for example by prepending the messages with `DEBUG`, `INFO`
+    or `ERROR`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4.4 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The book “Serial programming” (available on WikiBooks) has a great section on
+    programming the serial port, [http://en.wikibooks.org/wiki/Serial_Programming/8250_UART_Programming#UART_Registers](http://en.wikibooks.org/wiki/Serial_Programming/8250_UART_Programming#UART_Registers)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The OSDev wiki has a page with a lot of information about the serial ports,
+    [http://wiki.osdev.org/Serial_ports](http://wiki.osdev.org/Serial_ports)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 5 Segmentation
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Segmentation* in x86 means accessing the memory through segments. Segments
+    are portions of the address space, possibly overlapping, specified by a base address
+    and a limit. To address a byte in segmented memory you use a 48-bit *logical address*:
+    16 bits that specifies the segment and 32-bits that specifies what offset within
+    that segment you want. The offset is added to the base address of the segment,
+    and the resulting linear address is checked against the segment’s limit - see
+    the figure below. If everything works out fine (including access-rights checks
+    ignored for now) the result is a *linear address*. When paging is disabled, then
+    the linear address space is mapped 1:1 onto the *physical address* space, and
+    the physical memory can be accessed. (See the chapter [“Paging”](#paging) for
+    how to enable paging.)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Translation of logical addresses to linear addresses.](img/316873ad8130260306c4e96481a1c497.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Translation of logical addresses to linear addresses.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To enable segmentation you need to set up a table that describes each segment
+    - a *segment descriptor table*. In x86, there are two types of descriptor tables:
+    the *Global Descriptor Table* (GDT) and *Local Descriptor Tables* (LDT). An LDT
+    is set up and managed by user-space processes, and all processes have their own
+    LDT. LDTs can be used if a more complex segmentation model is desired - we won’t
+    use it. The GDT is shared by everyone - it’s global.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As we discuss in the sections on virtual memory and paging, segmentation is
+    rarely used more than in a minimal setup, similar to what we do below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.1 Accessing Memory
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Most of the time when accessing memory there is no need to explicitly specify
+    the segment to use. The processor has six 16-bit segment registers: `cs`, `ss`,
+    `ds`, `es`, `gs` and `fs`. The register `cs` is the code segment register and
+    specifies the segment to use when fetching instructions. The register `ss` is
+    used whenever accessing the stack (through the stack pointer `esp`), and `ds`
+    is used for other data accesses. The OS is free to use the registers `es`, `gs`
+    and `fs` however it want.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Below is an example showing implicit use of the segment registers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE44]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The above example can be compared with the following one that makes explicit
+    use of the segment registers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE45]'
+  prefs: []
+  type: TYPE_PRE
+- en: You don’t need to use `ss` for storing the stack segment selector, or `ds` for
+    the data segment selector. You could store the stack segment selector in `ds`
+    and vice versa. However, in order to use the implicit style shown above, you must
+    store the segment selectors in their indented registers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Segment descriptors and their fields are described in figure 3-8 in the Intel
+    manual [33].
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.2 The Global Descriptor Table (GDT)
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A GDT/LDT is an array of 8-byte segment descriptors. The first descriptor in
+    the GDT is always a null descriptor and can never be used to access memory. At
+    least two segment descriptors (plus the null descriptor) are needed for the GDT,
+    because the descriptor contains more information than just the base and limit
+    fields. The two most relevant fields for us are the *Type* field and the *Descriptor
+    Privilege Level* (DPL) field.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Table 3-1 in chapter 3 of the Intel manual [33] specifies the values for the
+    Type field. The table shows that the Type field can’t be both writable *and* executable
+    at the same time. Therefore, two segments are needed: one segment for executing
+    code to put in `cs` (Type is Execute-only or Execute-Read) and one segment for
+    reading and writing data (Type is Read/Write) to put in the other segment registers.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The DPL specifies the *privilege levels* required to use the segment. x86 allows
+    for four privilege levels (PL), 0 to 3, where PL0 is the most privileged. In most
+    operating systems (eg. Linux and Windows), only PL0 and PL3 are used. However,
+    some operating system, such as MINIX, make use of all levels. The kernel should
+    be able to do anything, therefore it uses segments with DPL set to 0 (also called
+    kernel mode). The current privilege level (CPL) is determined by the segment selector
+    in `cs`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The segments needed are described in the table below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The segment descriptors needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Index | Offset | Name | Address range | Type | DPL |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | --: | :-- | :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0 | `0x00` | null descriptor |  |  |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | `0x08` | kernel code segment | `0x00000000 - 0xFFFFFFFF` | RX | PL0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | `0x10` | kernel data segment | `0x00000000 - 0xFFFFFFFF` | RW | PL0 |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that the segments overlap - they both encompass the entire linear address
+    space. In our minimal setup we’ll only use segmentation to get privilege levels.
+    See the Intel manual [33], chapter 3, for details on the other descriptor fields.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.3 Loading the GDT
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Loading the GDT into the processor is done with the `lgdt` assembly code instruction,
+    which takes the address of a struct that specifies the start and size of the GDT.
+    It is easiest to encode this information using a [“packed struct”](#packing-structs)
+    as shown in the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE46]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If the content of the `eax` register is the address to such a struct, then
+    the GDT can be loaded with the assembly code shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE47]'
+  prefs: []
+  type: TYPE_PRE
+- en: It might be easier if you make this instruction available from C, the same way
+    as was done with the assembly code instructions `in` and `out`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'After the GDT has been loaded the segment registers needs to be loaded with
+    their corresponding segment selectors. The content of a segment selector is described
+    in the figure and table below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE48]'
+  prefs: []
+  type: TYPE_PRE
+- en: The layout of segment selectors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Name | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| rpl | Requested Privilege Level - we want to execute in PL0 for now. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ti | Table Indicator. 0 means that this specifies a GDT segment, 1 means
+    an LDT Segment. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| offset (index) | Offset within descriptor table. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'The offset of the segment selector is added to the start of the GDT to get
+    the address of the segment descriptor: `0x08` for the first descriptor and `0x10`
+    for the second, since each descriptor is 8 bytes. The Requested Privilege Level
+    (RPL) should be `0` since the kernel of the OS should execute in privilege level
+    0.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Loading the segment selector registers is easy for the data registers - just
+    copy the correct offsets to the registers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE49]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To load `cs` we have to do a “far jump”:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE50]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A far jump is a jump where we explicitly specify the full 48-bit logical address:
+    the segment selector to use and the absolute address to jump to. It will first
+    set `cs` to `0x08` and then jump to `flush_cs` using its absolute address.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.4 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Chapter 3 of the Intel manual [33] is filled with low-level and technical details
+    about segmentation.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The OSDev wiki has a page about segmentation: [http://wiki.osdev.org/Segmentation](http://wiki.osdev.org/Segmentation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The Wikipedia page on x86 segmentation might be worth looking into: [http://en.wikipedia.org/wiki/X86_memory_segmentation](http://en.wikipedia.org/wiki/X86_memory_segmentation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 6 Interrupts and Input
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Now that the OS can produce *output* it would be nice if it also could get some
+    *input*. (The operating system must be able to handle *interrupts* in order to
+    read information from the keyboard). An interrupt occurs when a hardware device,
+    such as the keyboard, the serial port or the timer, signals the CPU that the state
+    of the device has changed. The CPU itself can also send interrupts due to program
+    errors, for example when a program references memory it doesn’t have access to,
+    or when a program divides a number by zero. Finally, there are also *software
+    intterupts*, which are interrupts that are caused by the `int` assembly code instruction,
+    and they are often used for system calls.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.1 Interrupts Handlers
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Interrupts are handled via the *Interrupt Descriptor Table* (IDT). The IDT
+    describes a handler for each interrupt. The interrupts are numbered (0 - 255)
+    and the handler for interrupt *i* is defined at the *ith* position in the table.
+    There are three different kinds of handlers for interrupts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Task handler
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Interrupt handler
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Trap handler
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The task handlers use functionality specific to the Intel version of x86, so
+    they won’t be covered here (see the Intel manual [33], chapter 6, for more info).
+    The only difference between an interrupt handler and a trap handler is that the
+    interrupt handler disables interrupts, which means you cannot get an interrupt
+    while at the same time handling an interrupt. In this book, we will use trap handlers
+    and disable interrupts manually when we need to.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.2 Creating an Entry in the IDT
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'An entry in the IDT for an interrupt handler consists of 64 bits. The highest
+    32 bits are shown in the figure below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE51]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The lowest 32 bits are presented in the following figure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE52]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A description for each name can be found in the table below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Name | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| offset high | The 16 highest bits of the 32 bit address in the segment. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| offset low | The 16 lowest bits of the 32 bits address in the segment. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| p | If the handler is present in memory or not (1 = present, 0 = not present).
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| DPL | Descriptor Privilige Level, the privilege level the handler can be
+    called from (0, 1, 2, 3). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| D | Size of gate, (1 = 32 bits, 0 = 16 bits). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| segment selector | The offset in the GDT. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| r | Reserved. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'The offset is a pointer to code (preferably an assembly code label). For example,
+    to create an entry for a handler whose code starts at `0xDEADBEEF` and that runs
+    in privilege level 0 (therefore using the same code segment selector as the kernel)
+    the following two bytes would be used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE53]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If the IDT is represented as an `unsigned integer idt[512]` then to register
+    the above example as an handler for interrupt 0 (divide-by-zero), the following
+    code would be used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE54]'
+  prefs: []
+  type: TYPE_PRE
+- en: As written in the chapter [“Getting to C”](#getting-to-c), we recommend that
+    you instead of using bytes (or unsigned integers) use packed structures to make
+    the code more readable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.3 Handling an Interrupt
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When an interrupt occurs the CPU will push some information about the interrupt
+    onto the stack, then look up the appropriate interrupt hander in the IDT and jump
+    to it. The stack at the time of the interrupt will look like the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE55]'
+  prefs: []
+  type: TYPE_PRE
+- en: The reason for the question mark behind error code is that not all interrupts
+    create an *error code*. The specific CPU interrupts that put an error code on
+    the stack are 8, 10, 11, 12, 13, 14 and 17\. The error code can be used by the
+    interrupt handler to get more information on what has happened. Also, note that
+    the interrupt *number* is *not* pushed onto the stack. We can only determine what
+    interrupt has occurred by knowing what code is executing - if the handler registered
+    for interrupt 17 is executing, then interrupt 17 has occurred.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once the interrupt handler is done, it uses the `iret` instruction to return.
+    The instruction `iret` expects the stack to be the same as at the time of the
+    interrupt (see the figure above). Therefore, any values pushed onto the stack
+    by the interrupt handler must be popped. Before returning, `iret` restores `eflags`
+    by popping the value from the stack and then finally jumps to `cs:eip` as specified
+    by the values on the stack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The interrupt handler has to be written in assembly code, since all registers
+    that the interrupt handlers use must be preserved by pushing them onto the stack.
+    This is because the code that was interrupted doesn’t know about the interrupt
+    and will therefore expect that its registers stay the same. Writing all the logic
+    of the interrupt handler in assembly code will be tiresome. Creating a handler
+    in assembly code that saves the registers, calls a C function, restores the registers
+    and finally executes `iret` is a good idea!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The C handler should get the state of the registers, the state of the stack
+    and the number of the interrupt as arguments. The following definitions can for
+    example be used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE56]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.4 Creating a Generic Interrupt Handler
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Since the CPU does not push the interrupt number on the stack it is a little
+    tricky to write a generic interrupt handler. This section will use macros to show
+    how it can be done. Writing one version for each interrupt is tedious - it is
+    better to use the macro functionality of NASM [34]. And since not all interrupts
+    produce an error code the value 0 will be added as the “error code” for interrupts
+    without an error code. The following code shows an example of how this can be
+    done:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE57]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `common_interrupt_handler` does the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Push the registers on the stack.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Call the C function `interrupt_handler`.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Pop the registers from the stack.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Add 8 to `esp` (because of the error code and the interrupt number pushed earlier).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Execute `iret` to return to the interrupted code.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Since the macros declare global labels the addresses of the interrupt handlers
+    can be accessed from C or assembly code when creating the IDT.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.5 Loading the IDT
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The IDT is loaded with the `lidt` assembly code instruction which takes the
+    address of the first element in the table. It is easiest to wrap this instruction
+    and use it from C:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE58]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.6 Programmable Interrupt Controller (PIC)
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To start using hardware interrupts you must first configure the Programmable
+    Interrupt Controller (PIC). The PIC makes it possible to map signals from the
+    hardware to interrupts. The reasons for configuring the PIC are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remap the interrupts. The PIC uses interrupts 0 - 15 for hardware interrupts
+    by default, which conflicts with the CPU interrupts. Therefore the PIC interrupts
+    must be remapped to another interval.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Select which interrupts to receive. You probably don’t want to receive interrupts
+    from all devices since you don’t have code that handles these interrupts anyway.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Set up the correct mode for the PIC.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In the beginning there was only one PIC (PIC 1) and eight interrupts. As more
+    hardware were added, 8 interrupts were too few. The solution chosen was to chain
+    on another PIC (PIC 2) on the first PIC (see interrupt 2 on PIC 1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The hardware interrupts are shown in the table below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| PIC 1 | Hardware | PIC 2 | Hardware |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | :-- | --: | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 0 | Timer | 8 | Real Time Clock |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 1 | Keyboard | 9 | General I/O |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 2 | PIC 2 | 10 | General I/O |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 3 | COM 2 | 11 | General I/O |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | COM 1 | 12 | General I/O |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5 | LPT 2 | 13 | Coprocessor |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 6 | Floppy disk | 14 | IDE Bus |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 7 | LPT 1 | 15 | IDE Bus |'
+  prefs: []
+  type: TYPE_TB
+- en: A great tutorial for configuring the PIC can be found at the SigOPS website
+    [35]. We won’t repeat that information here.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Every interrupt from the PIC has to be acknowledged - that is, sending a message
+    to the PIC confirming that the interrupt has been handled. If this isn’t done
+    the PIC won’t generate any more interrupts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Acknowledging a PIC interrupt is done by sending the byte `0x20` to the PIC
+    that raised the interrupt. Implementing a `pic_acknowledge` function can thus
+    be done as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE59]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6.7 Reading Input from the Keyboard
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The keyboard does not generate ASCII characters, it generates scan codes. A
+    scan code represents a button - both presses and releases. The scan code representing
+    the just pressed button can be read from the keyboard’s data I/O port which has
+    address `0x60`. How this can be done is shown in the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE60]'
+  prefs: []
+  type: TYPE_PRE
+- en: The next step is to write a function that translates a scan code to the corresponding
+    ASCII character. If you want to map the scan codes to ASCII characters as is done
+    on an American keyboard then Andries Brouwer has a great tutorial [36].
+  prefs: []
+  type: TYPE_NORMAL
+- en: Remember, since the keyboard interrupt is raised by the PIC, you must call `pic_acknowledge`
+    at the end of the keyboard interrupt handler. Also, the keyboard will not send
+    you any more interrupts until you read the scan code from the keyboard.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6.8 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The OSDev wiki has a great page on interrupts, [http://wiki.osdev.org/Interrupts](http://wiki.osdev.org/Interrupts)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Chapter 6 of Intel Manual 3a [33] describes everything there is to know about
+    interrupts.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 7 The Road to User Mode
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Now that the kernel boots, prints to screen and reads from keyboard - what do
+    we do? Usually, a kernel is not supposed to do the application logic itself, but
+    leave that for applications. The kernel creates the proper abstractions (for memory,
+    files, devices) to make application development easier, performs tasks on behalf
+    of applications (system calls) and [schedules processes](#scheduling).
+  prefs: []
+  type: TYPE_NORMAL
+- en: User mode, in contrast with kernel mode, is the environment in which the user’s
+    programs execute. This environment is less privileged than the kernel, and will
+    prevent (badly written) user programs from messing with other programs or the
+    kernel. Badly written kernels are free to mess up what they want.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There’s quite a way to go until the OS created in this book can execute programs
+    in user mode, but this chapter will show how to easily execute a small program
+    in kernel mode.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.1 Loading an External Program
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Where do we get the external program from? Somehow we need to load the code
+    we want to execute into memory. More feature-complete operating systems usually
+    have drivers and file systems that enable them to load the software from a CD-ROM
+    drive, a hard disk or other persistent media.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Instead of creating all these drivers and file systems we will use a feature
+    in GRUB called modules to load the program.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.1.1 GRUB Modules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'GRUB can load arbitrary files into memory from the ISO image, and these files
+    are usually referred to as *modules*. To make GRUB load a module, edit the file
+    `iso/boot/grub/menu.lst` and add the following line at the end of the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE61]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now create the folder `iso/modules`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE62]'
+  prefs: []
+  type: TYPE_PRE
+- en: The application `program` will be created later in this chapter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The code that calls `kmain` must be updated to pass information to `kmain` about
+    where it can find the modules. We also want to tell GRUB that it should align
+    all the modules on page boundaries when loading them (see the chapter [“Paging”](#paging)
+    for details about page alignment).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To instruct GRUB how to load our modules, the “multiboot header” - the first
+    bytes of the kernel - must be updated as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE63]'
+  prefs: []
+  type: TYPE_PRE
+- en: GRUB will also store a pointer to a `struct` in the register `ebx` that, among
+    other things, describes at which addresses the modules are loaded. Therefore,
+    you probably want to push `ebx` on the stack before calling `kmain` to make it
+    an argument for `kmain`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.2 Executing a Program
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 7.2.1 A Very Simple Program
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'A program written at this stage can only perform a few actions. Therefore,
+    a very short program that writes a value to a register suffices as a test program.
+    Halting Bochs after a while and then check that register contains the correct
+    number by looking in the Bochs log will verify that the program has run. This
+    is an example of such a short program:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE64]'
+  prefs: []
+  type: TYPE_PRE
+- en: 7.2.2 Compiling
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Since our kernel cannot parse advanced executable formats we need to compile
+    the code into a flat binary. NASM can do this with the flag `-f`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE65]'
+  prefs: []
+  type: TYPE_PRE
+- en: This is all we need. You must now move the file `program` to the folder `iso/modules`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.2.3 Finding the Program in Memory
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Before jumping to the program we must find where it resides in memory. Assuming
+    that the contents of `ebx` is passed as an argument to `kmain`, we can do this
+    entirely from C.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The pointer in `ebx` points to a *multiboot* structure [19]. Download the `multiboot.h`
+    file from [http://www.gnu.org/software/grub/manual/multiboot/html_node/multiboot.h.html](http://www.gnu.org/software/grub/manual/multiboot/html_node/multiboot.h.html),
+    which describes the structure.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The pointer passed to `kmain` in the `ebx` register can be cast to a `multiboot_info_t`
+    pointer. The address of the first module is in the field `mods_addr`. The following
+    code shows an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE66]'
+  prefs: []
+  type: TYPE_PRE
+- en: However, before just blindly following the pointer, you should check that the
+    module got loaded correctly by GRUB. This can be done by checking the `flags`
+    field of the `multiboot_info_t` structure. You should also check the field `mods_count`
+    to make sure it is exactly 1\. For more details about the multiboot structure,
+    see the multiboot documentation [19].
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.2.4 Jumping to the Code
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The only thing left to do is to jump to the code loaded by GRUB. Since it is
+    easier to parse the multiboot structure in C than assembly code, calling the code
+    from C is more convenient (it can of course be done with `jmp` or `call` in assembly
+    code as well). The C code could look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE67]'
+  prefs: []
+  type: TYPE_PRE
+- en: If we start the kernel, wait until it has run and entered the infinite loop
+    in the program, and then halt Bochs, we should see `0xDEADBEEF` in the register
+    `eax` via the Bochs log. We have successfully started a program in our OS!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7.3 The Beginning of User Mode
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The program we’ve written now runs at the same privilege level as the kernel
+    - we’ve just entered it in a somewhat peculiar way. To enable applications to
+    execute at a different privilege level we’ll need to, beside [*segmentation*](#segmentation),
+    do [*paging*](#paging) and [*page frame allocation*](#page-frame-allocation).
+  prefs: []
+  type: TYPE_NORMAL
+- en: It’s quite a lot of work and technical details to go through, but in a few chapters
+    you’ll have working user mode programs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8 A Short Introduction to Virtual Memory
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*Virtual memory* is an abstraction of physical memory. The purpose of virtual
+    memory is generally to simplify application development and to let processes address
+    more memory than what is actually physically present in the machine. We also don’t
+    want applications messing with the kernel or other applications’ memory due to
+    security.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In the x86 architecture, virtual memory can be accomplished in two ways: *segmentation*
+    and *paging*. Paging is by far the most common and versatile technique, and we’ll
+    implement it the next chapter. Some use of segmentation is still necessary to
+    allow for code to execute under different privilege levels.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Managing memory is a big part of what an operating system does. [Paging](#paging)
+    and [page frame allocation](#page-frame-allocation) deals with that.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Segmentation and paging is described in the [33], chapter 3 and 4.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.1 Virtual Memory Through Segmentation?
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You could skip paging entirely and just use segmentation for virtual memory.
+    Each user mode process would get its own segment, with base address and limit
+    properly set up. This way no process can see the memory of another process. A
+    problem with this is that the physical memory for a process needs to be contiguous
+    (or at least it is very convenient if it is). Either we need to know in advance
+    how much memory the program will require (unlikely), or we can move the memory
+    segments to places where they can grow when the limit is reached (expensive, causes
+    fragmentation - can result in “out of memory” even though enough memory is available).
+    Paging solves both these problems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is interesting to note that in x86_64 (the 64-bit version of the x86 architecture),
+    segmentation is almost completely removed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8.2 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'LWN.net has an article on virtual memory: [http://lwn.net/Articles/253361/](http://lwn.net/Articles/253361/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Gustavo Duarte has also written an article about virtual memory: [http://duartes.org/gustavo/blog/post/memory-translation-and-segmentation](http://duartes.org/gustavo/blog/post/memory-translation-and-segmentation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 9 Paging
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Segmentation translates a logical address into a linear address. *Paging* translates
+    these linear addresses onto the physical address space, and determines access
+    rights and how the memory should be cached.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.1 Why Paging?
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Paging is the most common technique used in x86 to enable virtual memory. Virtual
+    memory through paging means that each process will get the impression that the
+    available memory range is `0x00000000` - `0xFFFFFFFF` even though the actual size
+    of the memory might be much less. It also means that when a process addresses
+    a byte of memory it will use a virtual (linear) address instead of physical one.
+    The code in the user process won’t notice any difference (except for execution
+    delays). The linear address gets translated to a physical address by the MMU and
+    the page table. If the virtual address isn’t mapped to a physical address, the
+    CPU will raise a page fault interrupt.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Paging is optional, and some operating systems do not make use of it. But if
+    we want to mark certain areas of memory accessible only to code running at a certain
+    privilege level (to be able to have processes running at different privilege levels),
+    paging is the neatest way to do it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.2 Paging in x86
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Paging in x86 (chapter 4 in the Intel manual [33]) consists of a *page directory*
+    (PDT) that can contain references to 1024 *page tables* (PT), each of which can
+    point to 1024 sections of physical memory called *page frames* (PF). Each page
+    frame is 4096 byte large. In a virtual (linear) address, the highest 10 bits specifies
+    the offset of a page directory entry (PDE) in the current PDT, the next 10 bits
+    the offset of a page table entry (PTE) within the page table pointed to by that
+    PDE. The lowest 12 bits in the address is the offset within the page frame to
+    be addressed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All page directories, page tables and page frames need to be aligned on 4096
+    byte addresses. This makes it possible to address a PDT, PT or PF with just the
+    highest 20 bits of a 32 bit address, since the lowest 12 need to be zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The PDE and PTE structure is very similar to each other: 32 bits (4 bytes),
+    where the highest 20 bits points to a PTE or PF, and the lowest 12 bits control
+    access rights and other configurations. 4 bytes times 1024 equals 4096 bytes,
+    so a page directory and page table both fit in a page frame themselves.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The translation of linear addresses to physical addresses is described in the
+    figure below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: While pages are normally 4096 bytes, it is also possible to use 4 MB pages.
+    A PDE then points directly to a 4 MB page frame, which needs to be aligned on
+    a 4 MB address boundary. The address translation is almost the same as in the
+    figure, with just the page table step removed. It is possible to mix 4 MB and
+    4 KB pages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Translating virtual addresses (linear addresses) to physical addresses.](img/8a5c324efa415f1a6e2fa86960549158.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Translating virtual addresses (linear addresses) to physical addresses.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The 20 bits pointing to the current PDT is stored in the register `cr3`. The
+    lower 12 bits of `cr3` are used for configuration.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For more details on the paging structures, see chapter 4 in the Intel manual
+    [33]. The most interesting bits are *U/S*, which determine what privilege levels
+    can access this page (PL0 or PL3), and *R/W*, which makes the memory in the page
+    read-write or read-only.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.2.1 Identity Paging
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The simplest kind of paging is when we map each virtual address onto the same
+    physical address, called *identity paging*. This can be done at compile time by
+    creating a page directory where each entry points to its corresponding 4 MB frame.
+    In NASM this can be done with macros and commands (`%rep`, `times` and `dd`).
+    It can of course also be done at run-time by using ordinary assembly code instructions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.2.2 Enabling Paging
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Paging is enabled by first writing the address of a page directory to `cr3`
+    and then setting bit 31 (the PG “paging-enable” bit) of `cr0` to `1`. To use 4
+    MB pages, set the PSE bit (Page Size Extensions, bit 4) of `cr4`. The following
+    assembly code shows an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE68]'
+  prefs: []
+  type: TYPE_PRE
+- en: 9.2.3 A Few Details
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It is important to note that all addresses within the page directory, page tables
+    and in `cr3` need to be physical addresses to the structures, never virtual. This
+    will be more relevant in later sections where we dynamically update the paging
+    structures (see the chapter [“User Mode”](#user-mode)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: An instruction that is useful when an updating a PDT or PT is `invlpg`. It invalidates
+    the *Translation Lookaside Buffer* (TLB) entry for a virtual address. The TLB
+    is a cache for translated addresses, mapping physical addresses corresponding
+    to virtual addresses. This is only required when changing a PDE or PTE that was
+    previously mapped to something else. If the PDE or PTE had previously been marked
+    as not present (bit 0 was set to 0), executing `invlpg` is unnecessary. Changing
+    the value of `cr3` will cause all entries in the TLB to be invalidated.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'An example of invalidating a TLB entry is shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE69]'
+  prefs: []
+  type: TYPE_PRE
+- en: 9.3 Paging and the Kernel
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This section will describe how paging affects the OS kernel. We encourage you
+    to run your OS using identity paging before trying to implement a more advanced
+    paging setup, since it can be hard to debug a malfunctioning page table that is
+    set up via assembly code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.1 Reasons to Not Identity Map the Kernel
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If the kernel is placed at the beginning of the virtual address space - that
+    is, the virtual address space (`0x00000000`, `"size of kernel"`) maps to the location
+    of the kernel in memory - there will be issues when linking the user mode process
+    code. Normally, during linking, the linker assumes that the code will be loaded
+    into the memory position `0x00000000`. Therefore, when resolving absolute references,
+    `0x00000000` will be the base address for calculating the exact position. But
+    if the kernel is mapped onto the virtual address space (`0x00000000`, `"size of
+    kernel"`), the user mode process cannot be loaded at virtual address `0x00000000`
+    - it must be placed somewhere else. Therefore, the assumption from the linker
+    that the user mode process is loaded into memory at position `0x00000000` is wrong.
+    This can be corrected by using a linker script which tells the linker to assume
+    a different starting address, but that is a very cumbersome solution for the users
+    of the operating system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This also assumes that we want the kernel to be part of the user mode process’
+    address space. As we will see later, this is a nice feature, since during system
+    calls we don’t have to change any paging structures to get access to the kernel’s
+    code and data. The kernel pages will of course require privilege level 0 for access,
+    to prevent a user process from reading or writing kernel memory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.2 The Virtual Address for the Kernel
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Preferably, the kernel should be placed at a very high virtual memory address,
+    for example `0xC0000000` (3 GB). The user mode process is not likely to be 3 GB
+    large, which is now the only way that it can conflict with the kernel. When the
+    kernel uses virtual addresses at 3 GB and above it is called a *higher-half kernel*.
+    `0xC0000000` is just an example, the kernel can be placed at any address higher
+    than 0 to get the same benefits. Choosing the correct address depends on how much
+    virtual memory should be available for the kernel (it is easiest if all memory
+    above the kernel virtual address should belong to the kernel) and how much virtual
+    memory should be available for the process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the user mode process is larger than 3 GB, some pages will need to be swapped
+    out by the kernel. Swapping pages is not part of this book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.3 Placing the Kernel at `0xC0000000`
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To start with, it is better to place the kernel at `0xC0100000` than `0xC0000000`,
+    since this makes it possible to map (`0x00000000`, `0x00100000`) to (`0xC0000000`,
+    `0xC0100000`). This way, the entire range (`0x00000000`, `"size of kernel"`) of
+    memory is mapped to the range (`0xC0000000`, `0xC0000000 + "size of kernel"`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Placing the kernel at `0xC0100000` isn’t hard, but it does require some thought.
+    This is once again a linking problem. When the linker resolves all absolute references
+    in the kernel, it will assume that our kernel is loaded at physical memory location
+    `0x00100000`, not `0x00000000`, since relocation is used in the linker script
+    (see the section [“Linking the kernel”](#linking-the-kernel)). However, we want
+    the jumps to be resolved using `0xC0100000` as base address, since otherwise a
+    kernel jump will jump straight into the user mode process code (remember that
+    the user mode process is loaded at virtual memory `0x00000000`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: However, we can’t simply tell the linker to assume that the kernel starts (is
+    loaded) at `0xC01000000`, since we want it to be loaded at the physical address
+    `0x00100000`. The reason for having the kernel loaded at 1 MB is because it can’t
+    be loaded at `0x00000000`, since there is BIOS and GRUB code loaded below 1 MB.
+    Furthermore, we cannot assume that we can load the kernel at `0xC0100000`, since
+    the machine might not have 3 GB of physical memory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This can be solved by using both relocation (`.=0xC0100000`) and the `AT` instruction
+    in the linker script. Relocation specifies that non-relative memory-references
+    should should use the relocation address as base in address calculations. `AT`
+    specifies where the kernel should be loaded into memory. Relocation is done at
+    link time by GNU ld [37], the load address specified by `AT` is handled by GRUB
+    when loading the kernel, and is part of the ELF format [18].
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.4 Higher-half Linker Script
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'We can modify the [first linker script](#linking-the-kernel) to implement this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE70]'
+  prefs: []
+  type: TYPE_PRE
+- en: 9.3.5 Entering the Higher Half
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When GRUB jumps to the kernel code, there is no paging table. Therefore, all
+    references to `0xC0100000 + X` won’t be mapped to the correct physical address,
+    and will therefore cause a general protection exception (GPE) at the very best,
+    otherwise (if the computer has more than 3 GB of memory) the computer will just
+    crash.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Therefore, assembly code that doesn’t use relative jumps or relative memory
+    addressing must be used to do the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Set up a page table.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Add identity mapping for the first 4 MB of the virtual address space.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Add an entry for `0xC0100000` that maps to `0x0010000`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'If we skip the identity mapping for the first 4 MB, the CPU would generate
+    a page fault immediately after paging was enabled when trying to fetch the next
+    instruction from memory. After the table has been created, an jump can be done
+    to a label to make `eip` point to a virtual address in the higher half:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE71]'
+  prefs: []
+  type: TYPE_PRE
+- en: The register `eip` will now point to a memory location somewhere right after
+    `0xC0100000` - all the code can now execute as if it were located at `0xC0100000`,
+    the higher-half. The entry mapping of the first 4 MB of virtual memory to the
+    first 4 MB of physical memory can now be removed from the page table and its corresponding
+    entry in the TLB invalidated with `invlpg [0]`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.3.6 Running in the Higher Half
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: There are a few more details we must deal with when using a higher-half kernel.
+    We must be careful when using memory-mapped I/O that uses specific memory locations.
+    For example, the frame buffer is located at `0x000B8000`, but since there is no
+    entry in the page table for the address `0x000B8000` any longer, the address `0xC00B8000`
+    must be used, since the virtual address `0xC0000000` maps to the physical address
+    `0x00000000`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Any explicit references to addresses within the multiboot structure needs to
+    be changed to reflect the new virtual addresses as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Mapping 4 MB pages for the kernel is simple, but wastes memory (unless you have
+    a really big kernel). Creating a higher-half kernel mapped in as 4 KB pages saves
+    memory but is harder to set up. Memory for the page directory and one page table
+    can be reserved in the `.data` section, but one needs to configure the mappings
+    from virtual to physical addresses at run-time. The size of the kernel can be
+    determined by exporting labels from the linker script [37], which we’ll need to
+    do later anyway when writing the page frame allocator (see the chapter [“Page
+    Frame Allocation](#page-frame-allocation)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.4 Virtual Memory Through Paging
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Paging enables two things that are good for virtual memory. First, it allows
+    for fine-grained access control to memory. You can mark pages as read-only, read-write,
+    only for PL0 etc. Second, it creates the illusion of contiguous memory. User mode
+    processes, and the kernel, can access memory as if it were contiguous, and the
+    contiguous memory can be extended without the need to move data around in memory.
+    We can also allow the user mode programs access to all memory below 3 GB, but
+    unless they actually use it, we don’t have to assign page frames to the pages.
+    This allows processes to have code located near `0x00000000` and the stack at
+    just below `0xC0000000`, and still not require more than two actual pages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9.5 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Chapter 4 (and to some extent chapter 3) of the Intel manual [33] are your definitive
+    sources for the details about paging.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Wikipedia has an article on paging: [http://en.wikipedia.org/wiki/Paging](http://en.wikipedia.org/wiki/Paging)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The OSDev wiki has a page on paging: [http://wiki.osdev.org/Paging](http://wiki.osdev.org/Paging)
+    and a tutorial for making a higher-half kernel: [http://wiki.osdev.org/Higher_Half_bare_bones](http://wiki.osdev.org/Higher_Half_bare_bones)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Gustavo Duarte’s article on how a kernel manages memory is well worth a read:
+    [http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory](http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Details on the linker command language can be found at Steve Chamberlain’s website
+    [37].
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'More details on the ELF format can be found in this presentation: [http://flint.cs.yale.edu/cs422/doc/ELF_Format.pdf](http://flint.cs.yale.edu/cs422/doc/ELF_Format.pdf)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 10 Page Frame Allocation
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: When using virtual memory, how does the OS know which parts of memory are free
+    to use? That is the role of the page frame allocator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10.1 Managing Available Memory
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 10.1.1 How Much Memory is There?
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'First we need to know how much memory is available on the computer the OS is
+    running on. The easiest way to do this is to read it from the multiboot structure
+    [19] passed to us by GRUB. GRUB collects the information we need about the memory
+    - what is reserved, I/O mapped, read-only etc. We must also make sure that we
+    don’t mark the part of memory used by the kernel as free (since GRUB doesn’t mark
+    this memory as reserved). One way to know how much memory the kernel uses is to
+    export labels at the beginning and the end of the kernel binary from the linker
+    script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE72]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'These labels can directly be read from assembly code and pushed on the stack
+    to make them available to C code:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE73]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This way we get the labels as arguments to `kmain`. If you want to use C instead
+    of assembly code, one way to do it is to declare the labels as functions and take
+    the addresses of these functions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE74]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you use GRUB modules you need to make sure the memory they use is marked
+    as reserved as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that the available memory does not need to be contiguous. In the first
+    1 MB there are several I/O-mapped memory sections, as well as memory used by GRUB
+    and the BIOS. Other parts of the memory might be similarly unavailable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It’s convenient to divide the memory sections into complete page frames, as
+    we can’t map part of pages into memory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10.1.2 Managing Available Memory
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'How do we know which page frames are in use? The page frame allocator needs
+    to keep track of which are free and which aren’t. There are several ways to do
+    this: bitmaps, linked lists, trees, the Buddy System (used by Linux) etc. For
+    more information about the different algorithms see the article on OSDev [38].'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bitmaps are quite easy to implement. One bit is used for each page frame and
+    one (or more) page frames are dedicated to store the bitmap. (Note that this is
+    just one way to do it, other designs might be better and/or more fun to implement.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10.2 How Can We Access a Page Frame?
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The page frame allocator returns the physical start address of the page frame.
+    This page frame is not mapped in - no page table points to this page frame. How
+    can we read and write data to the frame?
+  prefs: []
+  type: TYPE_NORMAL
+- en: We need to map the page frame into virtual memory, by updating the PDT and/or
+    PT used by the kernel. What if all available page tables are full? Then we can’t
+    map the page frame into memory, because we’d need a new page table - which takes
+    up an entire page frame - and to write to this page frame we’d need to map its
+    page frame… Somehow this circular dependency must be broken.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One solution is to reserve a part of the first page table used by the kernel
+    (or some other higher-half page table) for temporarily mapping page frames to
+    make them accessible. If the kernel is mapped at `0xC0000000` (page directory
+    entry with index 768), and 4 KB page frames are used, then the kernel has at least
+    one page table. If we assume - or limit us to - a kernel of size at most 4 MB
+    minus 4 KB we can dedicate the last entry (entry 1023) of this page table for
+    temporary mappings. The virtual address of pages mapped in using the last entry
+    of the kernel’s PT will be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE75]'
+  prefs: []
+  type: TYPE_PRE
+- en: After we’ve temporarily mapped the page frame we want to use as a page table,
+    and set it up to map in our first page frame, we can add it to the paging directory,
+    and remove the temporary mapping.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10.3 A Kernel Heap
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: So far we’ve only been able to work with fixed-size data, or directly with raw
+    memory. Now that we have a page frame allocator we can implement `malloc` and
+    `free` to use in the kernel.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Kernighan and Ritchie [8] have an example implementation in their book [8] that
+    we can draw inspiration from. The only modification we need to do is to replace
+    calls to `sbrk`/`brk` with calls to the page frame allocator when more memory
+    is needed. We must also make sure to map the page frames returned by the page
+    frame allocator to virtual addresses. A correct implementation should also return
+    page frames to the page frame allocator on call to `free`, whenever sufficiently
+    large blocks of memory are freed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10.4 Further reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The OSDev wiki page on page frame allocation: [http://wiki.osdev.org/Page_Frame_Allocation](http://wiki.osdev.org/Page_Frame_Allocation)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 11 User Mode
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: User mode is now almost within our reach, there are just a few more steps required
+    to get there. Although these steps might seem easy they way they are presented
+    in this chapter, they can be tricky to implement, since there are a lot of places
+    where small errors will cause bugs that are hard to find.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.1 Segments for User Mode
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To enable user mode we need to add two more segments to the GDT. They are very
+    similar to the kernel segments we added when we [set up the GDT](#the-global-descriptor-table-gdt)
+    in the [chapter about segmentation](#segmentation):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The segment descriptors needed for user mode.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Index | Offset | Name | Address range | Type | DPL |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --: | --: | :-- | :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 3 | `0x18` | user code segment | `0x00000000 - 0xFFFFFFFF` | RX | PL3 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | `0x20` | user data segment | `0x00000000 - 0xFFFFFFFF` | RW | PL3 |'
+  prefs: []
+  type: TYPE_TB
+- en: The difference is the DPL, which now allows code to execute in PL3\. The segments
+    can still be used to address the entire address space, just using these segments
+    for user mode code will not protect the kernel. For that we need paging.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.2 Setting Up For User Mode
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'There are a few things every user mode process needs:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Page frames for code, data and stack. At the moment it suffices to allocate
+    one page frame for the stack and enough page frames to fit the program’s code.
+    Don’t worry about setting up a stack that can be grow and shrink at this point
+    in time, focus on getting a basic implementation work first.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The binary from the GRUB module has to be copied to the page frames used for
+    the programs code.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: A page directory and page tables are needed to map the page frames described
+    above into memory. At least two page tables are needed, because the code and data
+    should be mapped in at `0x00000000` and increasing, and the stack should start
+    just below the kernel, at `0xBFFFFFFB`, growing towards lower addresses. The U/S
+    flag has to be set to allow PL3 access.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: It might be convenient to store this information in a `struct` representing
+    a process. This process `struct` can be dynamically allocated with the kernel’s
+    `malloc` function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.3 Entering User Mode
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The only way to execute code with a lower privilege level than the current privilege
+    level (CPL) is to execute an `iret` or `lret` instruction - interrupt return or
+    long return, respectively.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To enter user mode we set up the stack as if the processor had raised an inter-privilege
+    level interrupt. The stack should look like the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE76]'
+  prefs: []
+  type: TYPE_PRE
+- en: See the Intel manual [33], section 6.2.1, figure 6-4 for more information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The instruction `iret` will then read these values from the stack and fill in
+    the corresponding registers. Before we execute `iret` we need to change to the
+    page directory we setup for the user mode process. It is important to remember
+    that to continue executing kernel code after we’ve switched PDT, the kernel needs
+    to be mapped in. One way to accomplish this is to have a separate PDT for the
+    kernel, which maps all data at `0xC0000000` and above, and merge it with the user
+    PDT (which only maps below `0xC0000000`) when performing the switch. Remember
+    that physical address of the PDT has to be used when setting the register `cr3`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The register `eflags` contains a set of different flags, specified in section
+    2.3 of the Intel manual [33]. Most important for us is the interrupt enable (IF)
+    flag. The assembly code instruction `sti` can’t be used in privilege level 3 for
+    enabling interrupts. If interrupts are disabled when entering user mode, then
+    interrupts can’t enabled once user mode is entered. Setting the IF flag in the
+    `eflags` entry on the stack will enable interrupts in user mode, since the assembly
+    code instruction `iret` will set the register `eflags` to the corresponding value
+    on the stack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For now, we should have interrupts disabled, as it requires a little more work
+    to get inter-privilege level interrupts to work properly (see the section [“System
+    calls”](#system-calls)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The value `eip` on the stack should point to the entry point for the user code
+    - `0x00000000` in our case. The value `esp` on the stack should be where the stack
+    starts - `0xBFFFFFFB` (`0xC0000000 - 4`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The values `cs` and `ss` on the stack should be the segment selectors for the
+    user code and user data segments, respectively. As we saw in the [segmentation
+    chapter](#creating-and-loading-the-gdt), the lowest two bits of a segment selector
+    is the RPL - the Requested Privilege Level. When using `iret` to enter PL3, the
+    RPL of `cs` and `ss` should be `0x3`. The following code shows an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE77]'
+  prefs: []
+  type: TYPE_PRE
+- en: The register `ds`, and the other data segment registers, should be set to the
+    same segment selector as `ss`. They can be set the ordinary way, with the `mov`
+    assembly code instruction.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We are now ready to execute `iret`. If everything has been set up right, we
+    should now have a kernel that can enter user mode.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.4 Using C for User Mode Programs
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When C is used as the programming language for user mode programs, it is important
+    to think about the structure of the file that will be the result of the compilation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The reason we can use ELF [18] as the file format for for the kernel executable
+    is because GRUB knows how to parse and interpret the ELF file format. If we implemented
+    an ELF parser, we could compile the user mode programs into ELF binaries as well.
+    We leave this as an exercise for the reader.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One thing we can do to make it easier to develop user mode programs is to allow
+    the programs to be written in C, but compile them to flat binaries instead of
+    ELF binaries. In C the layout of the generated code is more unpredictable and
+    the entry point, `main`, might not be at offset 0 in the binary. One common way
+    to work around this is to add a few assembly code lines placed at offset 0 which
+    calls `main`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE78]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If this code is saved in a file called `start.s`, then the following code show
+    an example of a linker script that places these instructions first in executable
+    (remember that `start.s` gets compiled to `start.o`):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE79]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Note*: `*(.text)` will not include the `.text` section of `start.o` again.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: With this script we can write programs in C or assembler (or any other language
+    that compiles to object files linkable with `ld`), and it is easy to load and
+    map for the kernel (`.rodata` will be mapped in as writeable, though).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When we compile user programs we want the following GCC flags:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE80]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For linking, the followings flags should be used:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE81]'
+  prefs: []
+  type: TYPE_PRE
+- en: The option `-T` instructs the linker to use the linker script `link.ld`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.4.1 A C Library
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It might now be interesting to start thinking about writing a small “standard
+    library” for your programs. Some of the functionality requires [system calls](#system-calls)
+    to work, but some, such as the functions in `string.h`, does not.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 11.5 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Gustavo Duarte has an article on privilege levels: [http://duartes.org/gustavo/blog/post/cpu-rings-privilege-and-protection](http://duartes.org/gustavo/blog/post/cpu-rings-privilege-and-protection)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 12 File Systems
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: We are not required to have file systems in our operating system, but it is
+    a very usable abstraction, and it often plays a central part of many operating
+    systems, especially UNIX-like operating systems. Before we start the process of
+    supporting multiple processes and system calls we might want to consider implementing
+    a simple file system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.1 Why a File System?
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: How do we specify what programs to run in our OS? Which is the first program
+    to run? How do programs output data or read input?
+  prefs: []
+  type: TYPE_NORMAL
+- en: In UNIX-like systems, with their almost-everything-is-a-file convention, these
+    problems are solved by the file system. (It might also be interesting to read
+    a bit about the Plan 9 project, which takes this idea one step further.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.2 A Simple Read-Only File System
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The simplest file system might be what we already have - one file, existing
+    only in RAM, loaded by GRUB before the kernel starts. When the kernel and operating
+    system grows this is probably too limiting.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A file system that is slightly more advanced than just the bits of one file
+    is a file with metadata. The metadata can describe the type of the file, the size
+    of the file and so on. A utility program can be created that runs at build time,
+    adding this metadata to a file. This way, a “file system in a file” can be constructed
+    by concatenating several files with metadata into one large file. The result of
+    this technique is a read-only file system that resides in memory (once GRUB has
+    loaded the file).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The program constructing the file system can traverse a directory on the host
+    system and add all subdirectories and files as part of the target file system.
+    Each object in the file system (directory or file) can consist of a header and
+    a body, where the body of a file is the actual file and the body of a directory
+    is a list of entries - names and “addresses” of other files and directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each object in this file system will become contiguous, so they will be easy
+    to read from memory for the kernel. All objects will also have a fixed size (except
+    for the last one, which can grow), therefore it is difficult to add new files
+    or modify existing ones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.3 Inodes and Writable File Systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When the need for a writable file system arises, then it is a good idea to look
+    into the concept of an *inode*. See the section [“Further Reading”](#further-reading-6)
+    for recommended reading.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.4 A Virtual File System
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: What abstraction should be used for reading and writing to devices such as the
+    screen and the keyboard?
+  prefs: []
+  type: TYPE_NORMAL
+- en: A virtual file system (VFS) creates an abstraction on top of the concrete file
+    systems. A VFS mainly supplies the path system and file hierarchy, it delegates
+    operations on files to the underlying file systems. The original paper on VFS
+    is succinct and well worth a read. See the section [“Further Reading”](#further-reading-6)
+    for a reference.
+  prefs: []
+  type: TYPE_NORMAL
+- en: With a VFS we could mount a special file system on the path `/dev`. This file
+    system would handle all devices such as keyboards and the console. However, one
+    could also take the traditional UNIX approach, with major/minor device numbers
+    and `mknod` to create special files for devices. Which approach you think is the
+    most appropriate is up to you, there is no right or wrong when building abstraction
+    layers (although some abstractions turn out way more useful than others).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12.5 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The ideas behind the Plan 9 operating systems is worth taking a look at: [http://plan9.bell-labs.com/plan9/index.html](http://plan9.bell-labs.com/plan9/index.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Wikipedia’s page on inodes: [http://en.wikipedia.org/wiki/Inode](http://en.wikipedia.org/wiki/Inode)
+    and the inode pointer structure: [http://en.wikipedia.org/wiki/Inode_pointer_structure](http://en.wikipedia.org/wiki/Inode_pointer_structure).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The original paper on the concept of vnodes and a virtual file system is quite
+    interesting: [http://www.arl.wustl.edu/~fredk/Courses/cs523/fall01/Papers/kleiman86vnodes.pdf](http://www.arl.wustl.edu/~fredk/Courses/cs523/fall01/Papers/kleiman86vnodes.pdf)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Poul-Henning Kamp discusses the idea of a special file system for `/dev` in
+    [http://static.usenix.org/publications/library/proceedings/bsdcon02/full_papers/kamp/kamp_html/index.html](http://static.usenix.org/publications/library/proceedings/bsdcon02/full_papers/kamp/kamp_html/index.html)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 13 System Calls
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '*System calls* is the way user-mode applications interact with the kernel -
+    to ask for resources, request operations to be performed, etc. The system call
+    API is the part of the kernel that is most exposed to the users, therefore its
+    design requires some thought.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13.1 Designing System Calls
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It is up to us, the kernel developers, to design the system calls that application
+    developers can use. We can draw inspiration from the POSIX standards or, if they
+    seem like too much work, just look at the ones for Linux, and pick and choose.
+    See the section [“Further Reading”](#further-reading-7) at the end of the chapter
+    for references.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13.2 Implementing System Calls
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: System calls are traditionally invoked with software interrupts. The user applications
+    put the appropriate values in registers or on the stack and then initiates a pre-defined
+    interrupt which transfers execution to the kernel. The interrupt number used is
+    dependent on the kernel, Linux uses the number `0x80` to identify that an interrupt
+    is intended as a system call.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When system calls are executed, the current privilege level is typically changed
+    from PL3 to PL0 (if the application is running in user mode). To allow this, the
+    DPL of the entry in the IDT for the system call interrupt needs to allow PL3 access.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Whenever inter-privilege level interrupts occur, the processor pushes a few
+    important registers onto the stack - the same ones we used to enter user mode
+    [before](#user-mode), see figure 6-4, section 6.12.1, in the Intel manual [33].
+    What stack is used? The same section in [33] specifies that if an interrupt leads
+    to code executing at a numerically lower privilege level, a stack switch occurs.
+    The new values for the registers `ss` and `esp` is loaded from the current Task
+    State Segment (TSS). The TSS structure is specified in figure 7-2, section 7.2.1
+    of the Intel manual [33].
+  prefs: []
+  type: TYPE_NORMAL
+- en: To enable system calls we need to setup a TSS before entering user mode. Setting
+    it up can be done in C by setting the `ss0` and `esp0` fields of a “packed struct”
+    that represents a TSS. Before loading the “packed struct” into the processor,
+    a TSS descriptor has to be added to the GDT. The structure of the TSS descriptor
+    is described in section 7.2.2 in [33].
+  prefs: []
+  type: TYPE_NORMAL
+- en: You specify the current TSS segment selector by loading it into the `tr` register
+    with the `ltr` assembly code instruction. If the TSS segment descriptor has index
+    5, and thus offset `5 * 8 = 40 = 0x28`, this is the value that should be loaded
+    into the register `tr`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When we entered user mode before in the chapter [“Entering User Mode”](#entering-user-mode)
+    we disabled interrupts when executing in PL3\. Since system calls are implemented
+    using interrupts, interrupts must be enabled in user mode. Setting the IF flag
+    bit in the `eflags` value on the stack will make `iret` enable interrupts (since
+    the `eflags` value on the stack will be loaded into the `eflags` register by the
+    assembly code instruction `iret`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 13.3 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The Wikipedia page on POSIX, with links to the specifications: [http://en.wikipedia.org/wiki/POSIX](http://en.wikipedia.org/wiki/POSIX)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'A list of system calls used in Linux: [http://bluemaster.iu.hio.no/edu/dark/lin-asm/syscalls.html](http://bluemaster.iu.hio.no/edu/dark/lin-asm/syscalls.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The Wikipedia page on system calls: [http://en.wikipedia.org/wiki/System_call](http://en.wikipedia.org/wiki/System_call)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The Intel manual [33] sections on interrupts (chapter 6) and TSS (chapter 7)
+    are where you get all the details you need.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 14 Multitasking
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'How do you make multiple processes appear to run at the same time? Today, this
+    question has two answers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: With the availability of multi-core processors, or on system with multiple processors,
+    two processes can actually run at the same time by running two processes on different
+    cores or processors.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Fake it. That is, switch rapidly (faster than a human can notice) between the
+    processes. At any given moment there is only one process executing, but the rapid
+    switching gives the impression that they are running “at the same time”.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Since the operating system created in this book does not support multi-core
+    processors or multiple processors the only option is to fake it. The part of the
+    operating system responsible for rapidly switching between the processes is called
+    the *scheduling algorithm*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.1 Creating New Processes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Creating new processes is usually done with two different system calls: `fork`
+    and `exec`. `fork` creates an exact copy of the currently running process, while
+    `exec` replaces the current process with one that is specified by a path to the
+    location of a program in the file system. Of these two we recommend that you start
+    implementing `exec`, since this system call will do almost exactly the same steps
+    as described in the section [“Setting up for user mode”](#setting-up-for-user-mode)
+    in the chapter [“User Mode”](#user-mode).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.2 Cooperative Scheduling with Yielding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The easiest way to achieve rapid switching between processes is if the processes
+    themselves are responsible for the switching. The processes run for a while and
+    then tell the OS (via a system call) that it can now switch to another process.
+    Giving up the control of CPU to another process is called *yielding* and when
+    the processes themselves are responsible for the scheduling it’s called *cooperative
+    scheduling*, since all the processes must cooperate with each other.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When a process yields the process’ entire state must be saved (all the registers),
+    preferably on the kernel heap in a structure that represents a process. When changing
+    to a new process all the registers must be restored from the saved values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Scheduling can be implemented by keeping a list of which processes are running.
+    The system call `yield` should then run the next process in the list and put the
+    current one last (other schemes are possible, but this is a simple one).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The transfer of control to the new process is done via the `iret` assembly code
+    instruction in exactly the same way as explained in the section [“Entering user
+    mode”](#entering-user-mode) in the chapter [“User Mode”](#user-mode).
+  prefs: []
+  type: TYPE_NORMAL
+- en: We **strongly** recommend that you start to implement support for multiple processes
+    by implementing cooperative scheduling. We further recommend that you have a working
+    solution for both `exec`, `fork` and `yield` before implementing preemptive scheduling.
+    Since cooperative scheduling is deterministic, it is much easier to debug than
+    preemptive scheduling.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.3 Preemptive Scheduling with Interrupts
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Instead of letting the processes themselves manage when to change to another
+    process the OS can switch processes automatically after a short period of time.
+    The OS can set up the *programmable interval timer* (PIT) to raise an interrupt
+    after a short period of time, for example 20 ms. In the interrupt handler for
+    the PIT interrupt the OS will change the running process to a new one. This way
+    the processes themselves don’t need to worry about scheduling. This kind of scheduling
+    is called *preemptive scheduling*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.3.1 Programmable Interval Timer
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To be able to do preemptive scheduling the PIT must first be configured to raise
+    interrupts every *x* milliseconds, where *x* should be configurable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The configuration of the PIT is very similar to the configuration of other
+    hardware devices: a byte is sent to an I/O port. The command port of the PIT is
+    `0x43`. To read about all the configuration options, see the article about the
+    PIT on OSDev [39]. We use the following options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Raise interrupts (use channel 0)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Send the divider as low byte then high byte (see next section for an explanation)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use a square wave
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use binary mode
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This results in the configuration byte `00110110`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting the interval for how often interrupts are to be raised is done via a
+    *divider*, the same way as for the serial port. Instead of sending the PIT a value
+    (e.g. in milliseconds) that says how often an interrupt should be raised you send
+    the divider. The PIT operates at 1193182 Hz as default. Sending the divider 10
+    results in the PIT running at `1193182 / 10 = 119318` Hz. The divider can only
+    be 16 bits, so it is only possible to configure the timer’s frequency between
+    1193182 Hz and `1193182 / 65535 = 18.2` Hz. We recommend that you create a function
+    that takes an interval in milliseconds and converts it to the correct divider.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The divider is sent to the channel 0 data I/O port of the PIT, but since only
+    one byte can be sent at at a time, the lowest 8 bits of the divider has to sent
+    first, then the highest 8 bits of the divider can be sent. The channel 0 data
+    I/O port is located at `0x40`. Again, see the article on OSDev [39] for more details.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.3.2 Separate Kernel Stacks for Processes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If all processes uses the same kernel stack (the stack exposed by the TSS) there
+    will be trouble if a process is interrupted while still in kernel mode. The process
+    that is being switched to will now use the same kernel stack and will overwrite
+    what the previous process have written on the stack (remember that TSS data structure
+    points to the *beginning* of the stack).
+  prefs: []
+  type: TYPE_NORMAL
+- en: To solve this problem every process should have it’s own kernel stack, the same
+    way that each process have their own user mode stack. When switching process the
+    TSS must be updated to point to the new process’ kernel stack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.3.3 Difficulties with Preemptive Scheduling
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When using preemptive scheduling one problem arises that doesn’t exist with
+    cooperative scheduling. With cooperative scheduling every time a process yields,
+    it must be in user mode (privilege level 3), since yield is a system call. With
+    preemptive scheduling, the processes can be interrupted in either user mode or
+    kernel mode (privilege level 0), since the process itself does not control when
+    it gets interrupted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Interrupting a process in kernel mode is a little bit different than interrupting
+    a process in user mode, due to the way the CPU sets up the stack at interrupts.
+    If a privilege level change occurred (the process was interrupted in user mode)
+    the CPU will push the value of the process `ss` and `esp` register on the stack.
+    If *no* privilege level change occurs (the process was interrupted in kernel mode)
+    the CPU won’t push the `esp` register on the stack. Furthermore, if there was
+    no privilege level change, the CPU won’t change stack to the one defined it the
+    TSS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This problem is solved by calculating what the value of `esp` was *before* the
+    interrupt. Since you know that the CPU pushes 3 things on the stack when no privilege
+    change happens and you know how much you have pushed on the stack, you can calculate
+    what the value of `esp` was at the time of the interrupt. This is possible since
+    the CPU won’t change stacks if there is no privilege level change, so the content
+    of `esp` will be the same as at the time of the interrupt.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To further complicate things, one must think of how to handle case when switching
+    to a new process that should be running in kernel mode. Since `iret` is being
+    used without a privilege level change the CPU won’t update the value of `esp`
+    with the one placed on the stack - you must update `esp` yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 14.4 Further Reading
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: For more information about different scheduling algorithms, see [http://wiki.osdev.org/Scheduling_Algorithms](http://wiki.osdev.org/Scheduling_Algorithms)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 14.4 References
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '[1] Andrew Tanenbaum, 2007\. *Modern operating systems, 3rd edition*. Prentice
+    Hall, Inc.,'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[2] *The royal institute of technology*, [http://www.kth.se](http://www.kth.se),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[3] Wikipedia, *Hexadecimal*, [http://en.wikipedia.org/wiki/Hexadecimal](http://en.wikipedia.org/wiki/Hexadecimal),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[4] OSDev, *OSDev*, [http://wiki.osdev.org/Main_Page](http://wiki.osdev.org/Main_Page),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[5] James Molloy, *James m’s kernel development tutorial*, [http://www.jamesmolloy.co.uk/tutorial_html/](http://www.jamesmolloy.co.uk/tutorial_html/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[6] Canonical Ltd, *Ubuntu*, [http://www.ubuntu.com/](http://www.ubuntu.com/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[7] Oracle, *Oracle vM virtualBox*, [http://www.virtualbox.org/](http://www.virtualbox.org/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[8] Dennis M. Ritchie Brian W. Kernighan, 1988\. *The c programming language,
+    second edition*. Prentice Hall, Inc.,'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[9] Wikipedia, *C (programming language)*, [http://en.wikipedia.org/wiki/C_(programming_language)](http://en.wikipedia.org/wiki/C_(programming_language)),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[10] Free Software Foundation, *GCC, the gNU compiler collection*, [http://gcc.gnu.org/](http://gcc.gnu.org/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[11] NASM, *NASM: The netwide assembler*, [http://www.nasm.us/](http://www.nasm.us/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[12] Wikipedia, *Bash*, [http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29](http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[13] Free Software Foundation, *GNU make*, [http://www.gnu.org/software/make/](http://www.gnu.org/software/make/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[14] Volker Ruppert, *bochs: The open souce iA-32 emulation project*, [http://bochs.sourceforge.net/](http://bochs.sourceforge.net/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[15] QEMU, *QEMU*, [http://wiki.qemu.org/Main_Page](http://wiki.qemu.org/Main_Page),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[16] Wikipedia, *BIOS*, [https://en.wikipedia.org/wiki/BIOS](https://en.wikipedia.org/wiki/BIOS),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[17] Free Software Foundation, *GNU gRUB*, [http://www.gnu.org/software/grub/](http://www.gnu.org/software/grub/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[18] Wikipedia, *Executable and linkable format*, [http://en.wikipedia.org/wiki/Executable_and_Linkable_Format](http://en.wikipedia.org/wiki/Executable_and_Linkable_Format),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[19] Free Software Foundation, *Multiboot specification version 0.6.96*, [http://www.gnu.org/software/
+    grub/manual/multiboot/multiboot.html](http://www.gnu.org/software/'
+  prefs: []
+  type: TYPE_NORMAL
+- en: grub/manual/multiboot/multiboot.html),
+  prefs:
+  - PREF_IND
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '[20] GNU, *GNU binutils*, [http://www.gnu.org/software/binutils/](http://www.gnu.org/software/binutils/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[21] Lars Nodeen, *Bug #426419: configure: error: GRUB requires a working absolute
+    objcopy*, [https://bugs.launchpad.net/ubuntu/+source/grub/+bug/426419](https://bugs.launchpad.net/ubuntu/+source/grub/+bug/426419),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[22] Wikipedia, *ISO image*, [http://en.wikipedia.org/wiki/ISO_image](http://en.wikipedia.org/wiki/ISO_image),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[23] Bochs, *bochsrc*, [http://bochs.sourceforge.net/doc/docbook/user/bochsrc.html](http://bochs.sourceforge.net/doc/docbook/user/bochsrc.html),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[24] NASM, *RESB and friends: Declaring uninitialized data*, [http://www.nasm.us/doc/nasmdoc3.htm](http://www.nasm.us/doc/nasmdoc3.htm),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[25] Wikipedia, *x86 calling conventions*, [http://en.wikipedia.org/wiki/X86_calling_conventions](http://en.wikipedia.org/wiki/X86_calling_conventions),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[26] Wikipedia, *Framebuffer*, [http://en.wikipedia.org/wiki/Framebuffer](http://en.wikipedia.org/wiki/Framebuffer),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[27] Wikipedia, *VGA-compatible text mode*, [http://en.wikipedia.org/wiki/VGA-compatible_text_mode](http://en.wikipedia.org/wiki/VGA-compatible_text_mode),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[28] Wikipedia, *ASCII*, [https://en.wikipedia.org/wiki/Ascii](https://en.wikipedia.org/wiki/Ascii),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[29] OSDev, *VGA hardware*, [http://wiki.osdev.org/VGA_Hardware](http://wiki.osdev.org/VGA_Hardware),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[30] Wikipedia, *Serial port*, [http://en.wikipedia.org/wiki/Serial_port](http://en.wikipedia.org/wiki/Serial_port),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[31] OSDev, *Serial ports*, [http://wiki.osdev.org/Serial_ports](http://wiki.osdev.org/Serial_ports),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[32] WikiBooks, *Serial programming/8250 uART programming*, [http://en.wikibooks.org/wiki/Serial_Programming/
+    8250_UART_Programming](http://en.wikibooks.org/wiki/Serial_Programming/'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8250_UART_Programming),
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '[33] Intel, *Intel 64 and iA-32 architectures software developer’s manual vol.
+    3A*, [http://www.intel.com/content/ www/us/en/architecture-and-technology/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.html/](http://www.intel.com/content/'
+  prefs: []
+  type: TYPE_NORMAL
+- en: www/us/en/architecture-and-technology/64-ia-32-architectures-software-developer-vol-3a-part-1-manual.html/),
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[34] NASM, *Multi-line macros*, [http://www.nasm.us/doc/nasmdoc4.html#section-4.3](http://www.nasm.us/doc/nasmdoc4.html#section-4.3),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[35] SIGOPS, *i386 interrupt handling*, [http://www.acm.uiuc.edu/sigops/roll_your_own/i386/irq.html](http://www.acm.uiuc.edu/sigops/roll_your_own/i386/irq.html),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[36] Andries Brouwer, *Keyboard scancodes*, [http://www.win.tue.nl/](http://www.win.tue.nl/),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[37] Steve Chamberlain, *Using ld, the gNU linker*, [http://www.math.utah.edu/docs/info/ld_toc.html](http://www.math.utah.edu/docs/info/ld_toc.html),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[38] OSDev, *Page frame allocation*, [http://wiki.osdev.org/Page_Frame_Allocation](http://wiki.osdev.org/Page_Frame_Allocation),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[39] OSDev, *Programmable interval timer*, [http://wiki.osdev.org/Programmable_Interval_Timer](http://wiki.osdev.org/Programmable_Interval_Timer),'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The bootloader must fit into the *master boot record* (MBR) boot sector of a
+    hard drive, which is only 512 bytes large.[↩](#fnref1)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
