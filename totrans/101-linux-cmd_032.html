@@ -1,0 +1,112 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>mv</code> command</h1>
+    <p>The <code>mv</code> command lets you <strong>move one or more files or directories</strong> from one place to another in a file system like UNIX.
+It can be used for two distinct functions:</p>
+    <ul>
+      <li>To rename a file or folder.</li>
+      <li>To move a group of files to a different directory.</li>
+    </ul>
+    <p>
+      <em><strong>Note:</strong> No additional space is consumed on a disk during renaming, and the mv command doesn't provide a prompt for confirmation</em>
+    </p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language-[linux]">mv [options] source (file or directory)  destination
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To rename a file called old_name.txt:</li>
+    </ol>
+    <pre>
+      <code class="language-[linux]">mv old_name.txt new_name.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>To move a file called <em>essay.txt</em> from the current directory to a directory called <em>assignments</em> and rename it <em>essay1.txt</em>:</li>
+    </ol>
+    <pre>
+      <code class="language-[linux]">mv essay.txt assignments/essay1.txt
+</code>
+    </pre>
+    <ol start="3">
+      <li>To move a file called <em>essay.txt</em> from the current directory to a directory called <em>assignments</em> without renaming it</li>
+    </ol>
+    <pre>
+      <code class="language-[linux]">mv essay.txt assignments
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">
+            <code>--force</code>
+          </td>
+          <td align="left">Force move by overwriting destination file without prompt</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-i</code>
+          </td>
+          <td align="left">
+            <code>--interactive</code>
+          </td>
+          <td align="left">Interactive prompt before overwrite</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <code>--update</code>
+          </td>
+          <td align="left">Move only when the source file is newer than the destination file or when the destination file is missing</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <code>--no-clobber</code>
+          </td>
+          <td align="left">Do not overwrite an existing file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--verbose</code>
+          </td>
+          <td align="left">Print source and destination files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-b</code>
+          </td>
+          <td align="left">
+            <code>--backup</code>
+          </td>
+          <td align="left">Create a Backup of Existing Destination File</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

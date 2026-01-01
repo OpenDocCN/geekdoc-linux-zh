@@ -1,0 +1,623 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>lspci</code> command</h1>
+    <p>The <code>lspci</code> command lists all PCI (Peripheral Component Interconnect) devices connected to the system. It provides detailed information about hardware components including graphics cards, network adapters, sound cards, storage controllers, and other PCI-based devices.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">lspci [options]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Hardware Detection</strong>: Lists all PCI devices</li>
+      <li><strong>Detailed Information</strong>: Vendor, device, class, and capabilities</li>
+      <li><strong>Tree View</strong>: Shows device hierarchy and relationships</li>
+      <li><strong>Filtering Options</strong>: Search by vendor, device, or class</li>
+      <li><strong>Verbose Output</strong>: Multiple levels of detail</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Simple Device Listing</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># List all PCI devices</span>
+lspci
+
+<span class="hljs-comment"># Example output:</span>
+<span class="hljs-comment"># 00:00.0 Host bridge: Intel Corporation Device 9b61</span>
+<span class="hljs-comment"># 00:01.0 PCI bridge: Intel Corporation Device 1901</span>
+<span class="hljs-comment"># 00:02.0 VGA compatible controller: Intel Corporation Device 9bc4</span>
+<span class="hljs-comment"># 00:14.0 USB controller: Intel Corporation Device a36d</span>
+</code>
+    </pre>
+    <h3>Human-Readable Output</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show device names instead of just IDs</span>
+lspci -nn
+
+<span class="hljs-comment"># More verbose output</span>
+lspci -v
+
+<span class="hljs-comment"># Very verbose output (includes everything)</span>
+lspci -vv
+
+<span class="hljs-comment"># Extremely verbose output</span>
+lspci -vvv
+</code>
+    </pre>
+    <h2>Common Options</h2>
+    <h3>Basic Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -v: Verbose (show detailed info)</span>
+lspci -v
+
+<span class="hljs-comment"># -vv: Very verbose</span>
+lspci -vv
+
+<span class="hljs-comment"># -n: Show numeric IDs instead of names</span>
+lspci -n
+
+<span class="hljs-comment"># -nn: Show both names and numeric IDs</span>
+lspci -nn
+
+<span class="hljs-comment"># -k: Show kernel drivers</span>
+lspci -k
+</code>
+    </pre>
+    <h3>Display Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -t: Tree format</span>
+lspci -t
+
+<span class="hljs-comment"># -tv: Tree format with verbose info</span>
+lspci -tv
+
+<span class="hljs-comment"># -x: Show hex dump of config space</span>
+lspci -x
+
+<span class="hljs-comment"># -xxx: Show full hex dump</span>
+lspci -xxx
+</code>
+    </pre>
+    <h2>Filtering and Selection</h2>
+    <h3>1. By Device Type</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Graphics cards</span>
+lspci | grep -i vga
+lspci | grep -i display
+
+<span class="hljs-comment"># Network adapters</span>
+lspci | grep -i network
+lspci | grep -i ethernet
+
+<span class="hljs-comment"># USB controllers</span>
+lspci | grep -i usb
+
+<span class="hljs-comment"># Sound cards</span>
+lspci | grep -i audio
+lspci | grep -i sound
+
+<span class="hljs-comment"># Storage controllers</span>
+lspci | grep -i storage
+lspci | grep -i sata
+</code>
+    </pre>
+    <h3>2. By Vendor</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Intel devices</span>
+lspci | grep -i intel
+
+<span class="hljs-comment"># AMD devices</span>
+lspci | grep -i amd
+
+<span class="hljs-comment"># NVIDIA devices</span>
+lspci | grep -i nvidia
+
+<span class="hljs-comment"># Broadcom devices</span>
+lspci | grep -i broadcom
+</code>
+    </pre>
+    <h3>3. Specific Device Selection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Select specific device by bus ID</span>
+lspci -s 00:02.0
+
+<span class="hljs-comment"># Select multiple devices</span>
+lspci -s 00:02.0,00:14.0
+
+<span class="hljs-comment"># Select by vendor ID</span>
+lspci -d 8086:
+
+<span class="hljs-comment"># Select by vendor and device ID</span>
+lspci -d 8086:9bc4
+</code>
+    </pre>
+    <h2>Detailed Information</h2>
+    <h3>1. Verbose Device Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show capabilities and features</span>
+lspci -v
+
+<span class="hljs-comment"># Example output includes:</span>
+<span class="hljs-comment"># - Memory addresses</span>
+<span class="hljs-comment"># - IRQ assignments</span>
+<span class="hljs-comment"># - Capabilities (MSI, Power Management, etc.)</span>
+<span class="hljs-comment"># - Kernel modules/drivers</span>
+
+<span class="hljs-comment"># Very detailed information</span>
+lspci -vv
+<span class="hljs-comment"># Includes:</span>
+<span class="hljs-comment"># - Extended capabilities</span>
+<span class="hljs-comment"># - Configuration registers</span>
+<span class="hljs-comment"># - Link status and speeds</span>
+</code>
+    </pre>
+    <h3>2. Driver Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show which kernel drivers are in use</span>
+lspci -k
+
+<span class="hljs-comment"># Example output:</span>
+<span class="hljs-comment"># 00:02.0 VGA compatible controller: Intel Corporation Device 9bc4</span>
+<span class="hljs-comment">#         Subsystem: Dell Device 097d</span>
+<span class="hljs-comment">#         Kernel driver in use: i915</span>
+<span class="hljs-comment">#         Kernel modules: i915</span>
+
+<span class="hljs-comment"># Combine with verbose for more detail</span>
+lspci -vk
+</code>
+    </pre>
+    <h3>3. Configuration Space</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show configuration space (hex dump)</span>
+lspci -x
+
+<span class="hljs-comment"># Full configuration space</span>
+lspci -xxx
+
+<span class="hljs-comment"># Specific device configuration</span>
+lspci -s 00:02.0 -xxx
+</code>
+    </pre>
+    <h2>Tree View and Topology</h2>
+    <h3>1. Device Hierarchy</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show device tree structure</span>
+lspci -t
+
+<span class="hljs-comment"># Example output:</span>
+<span class="hljs-comment"># -[0000:00]-+-00.0  Intel Corporation Device 9b61</span>
+<span class="hljs-comment">#            +-01.0-[01]--</span>
+<span class="hljs-comment">#            +-02.0  Intel Corporation Device 9bc4</span>
+<span class="hljs-comment">#            +-14.0  Intel Corporation Device a36d</span>
+
+<span class="hljs-comment"># Tree with device names</span>
+lspci -tv
+</code>
+    </pre>
+    <h3>2. Bus Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show bridges and connections</span>
+lspci -tv | grep -E <span class="hljs-string">"(bridge|Bridge)"</span>
+
+<span class="hljs-comment"># PCI Express information</span>
+lspci -vv | grep -A 5 -B 5 <span class="hljs-string">"Express"</span>
+
+<span class="hljs-comment"># Link capabilities and status</span>
+lspci -vv | grep -E <span class="hljs-string">"(Link|Speed|Width)"</span>
+</code>
+    </pre>
+    <h2>Hardware Analysis</h2>
+    <h3>1. Graphics Card Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># List graphics devices</span><span class="hljs-function"><span class="hljs-title">get_gpu_info</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Graphics Cards ==="</span>
+    lspci | grep -i -E <span class="hljs-string">"(vga|display|3d)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Detailed GPU Information ==="</span>
+    lspci -v | grep -A 10 -B 2 -i -E <span class="hljs-string">"(vga|display)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== GPU Drivers ==="</span>
+    lspci -k | grep -A 3 -B 1 -i -E <span class="hljs-string">"(vga|display)"</span>
+}
+
+get_gpu_info
+</code>
+    </pre>
+    <h3>2. Network Interface Analysis</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Network adapter details</span><span class="hljs-function"><span class="hljs-title">get_network_info</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Network Adapters ==="</span>
+    lspci | grep -i -E <span class="hljs-string">"(network|ethernet|wireless)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Network Driver Information ==="</span>
+    lspci -k | grep -A 3 -B 1 -i -E <span class="hljs-string">"(network|ethernet)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Wireless Capabilities ==="</span>
+    lspci -vv | grep -A 20 -B 5 -i wireless
+}
+
+get_network_info
+</code>
+    </pre>
+    <h3>3. Storage Controller Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Storage device details</span><span class="hljs-function"><span class="hljs-title">get_storage_info</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Storage Controllers ==="</span>
+    lspci | grep -i -E <span class="hljs-string">"(storage|sata|ide|scsi|nvme)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Storage Driver Information ==="</span>
+    lspci -k | grep -A 3 -B 1 -i -E <span class="hljs-string">"(storage|sata|ahci)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== SATA Capabilities ==="</span>
+    lspci -vv | grep -A 10 -B 2 -i sata
+}
+
+get_storage_info
+</code>
+    </pre>
+    <h2>System Analysis Scripts</h2>
+    <h3>1. Hardware Inventory</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Complete hardware inventory using lspci</span><span class="hljs-function"><span class="hljs-title">hardware_inventory</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== PCI Hardware Inventory ==="</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Generated: <span class="hljs-variable">$(date)</span>"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- System Overview ---"</span>
+    lspci | wc -l | xargs <span class="hljs-built_in">echo</span> <span class="hljs-string">"Total PCI devices:"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Graphics ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(vga|display|3d)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No graphics devices found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Network ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(network|ethernet|wireless)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No network devices found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Storage ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(storage|sata|ide|nvme)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No storage controllers found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Audio ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(audio|sound|multimedia)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No audio devices found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- USB Controllers ---"</span>
+    lspci | grep -i usb || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No USB controllers found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Other Devices ---"</span>
+    lspci | grep -v -i -E <span class="hljs-string">"(vga|display|3d|network|ethernet|wireless|storage|sata|ide|nvme|audio|sound|multimedia|usb|bridge|host)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No other devices"</span>
+}
+
+hardware_inventory &gt; hardware_inventory.txt
+</code>
+    </pre>
+    <h3>2. Driver Status Check</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Check driver status for all PCI devices</span><span class="hljs-function"><span class="hljs-title">check_drivers</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== PCI Driver Status ==="</span>
+
+    lspci | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        device_id=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">' '</span> -f1)
+        device_name=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">' '</span> -f2-)
+
+        driver_info=$(lspci -k -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> | grep <span class="hljs-string">"Kernel driver in use"</span>)
+
+        <span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$driver_info</span>"</span> ]; <span class="hljs-keyword">then</span>
+            driver=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$driver_info</span>"</span> | cut -d<span class="hljs-string">':'</span> -f2 | xargs)
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"✓ <span class="hljs-variable">$device_id</span>: <span class="hljs-variable">$device_name</span> -&gt; <span class="hljs-variable">$driver</span>"</span>
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"✗ <span class="hljs-variable">$device_id</span>: <span class="hljs-variable">$device_name</span> -&gt; NO DRIVER"</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+}
+
+check_drivers
+</code>
+    </pre>
+    <h3>3. Performance Analysis</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Analyze PCI device performance capabilities</span><span class="hljs-function"><span class="hljs-title">analyze_performance</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== PCI Performance Analysis ==="</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- PCIe Link Speeds ---"</span>
+    lspci -vv | grep -A 1 -B 1 <span class="hljs-string">"Link.*Speed"</span> | grep -E <span class="hljs-string">"(:|Speed|Width)"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Memory Mappings ---"</span>
+    lspci -v | grep -E <span class="hljs-string">"(Memory at|I/O ports at)"</span> | sort | uniq -c | sort -nr
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Power Management ---"</span>
+    lspci -vv | grep -c <span class="hljs-string">"Power Management"</span> | xargs <span class="hljs-built_in">echo</span> <span class="hljs-string">"Devices with power management:"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- MSI Capabilities ---"</span>
+    lspci -vv | grep -c <span class="hljs-string">"MSI:"</span> | xargs <span class="hljs-built_in">echo</span> <span class="hljs-string">"Devices with MSI support:"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- 64-bit Devices ---"</span>
+    lspci -vv | grep -c <span class="hljs-string">"64-bit"</span> | xargs <span class="hljs-built_in">echo</span> <span class="hljs-string">"64-bit capable devices:"</span>
+}
+
+analyze_performance
+</code>
+    </pre>
+    <h2>Troubleshooting</h2>
+    <h3>1. Device Detection Issues</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check if device is detected</span><span class="hljs-function"><span class="hljs-title">check_device_detection</span></span>() {
+    <span class="hljs-built_in">local</span> search_term=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Searching for: <span class="hljs-variable">$search_term</span>"</span>
+
+    devices=$(lspci | grep -i <span class="hljs-string">"<span class="hljs-variable">$search_term</span>"</span>)
+    <span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$devices</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"✓ Device(s) found:"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$devices</span>"</span>
+        <span class="hljs-built_in">echo</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Driver information:"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$devices</span>"</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+            device_id=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">' '</span> -f1)
+            lspci -k -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> | grep -E <span class="hljs-string">"(driver|module)"</span>
+        <span class="hljs-keyword">done</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"✗ No devices found matching '<span class="hljs-variable">$search_term</span>'"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Try checking:"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  - Physical connections"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  - BIOS/UEFI settings"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  - Power supply"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-comment"># Usage examples</span>
+check_device_detection <span class="hljs-string">"graphics"</span>
+check_device_detection <span class="hljs-string">"network"</span>
+</code>
+    </pre>
+    <h3>2. Driver Issues</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Find devices without drivers</span><span class="hljs-function"><span class="hljs-title">find_missing_drivers</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Devices Without Drivers ==="</span>
+
+    lspci | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        device_id=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">' '</span> -f1)
+        device_name=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">' '</span> -f2-)
+
+        <span class="hljs-keyword">if</span> ! lspci -k -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> | grep -q <span class="hljs-string">"Kernel driver in use"</span>; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"Missing driver: <span class="hljs-variable">$device_id</span> - <span class="hljs-variable">$device_name</span>"</span>
+
+            <span class="hljs-comment"># Try to find available modules</span>
+            modules=$(lspci -k -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> | grep <span class="hljs-string">"Kernel modules:"</span> | cut -d<span class="hljs-string">':'</span> -f2)
+            <span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$modules</span>"</span> ]; <span class="hljs-keyword">then</span>
+                <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Available modules:<span class="hljs-variable">$modules</span>"</span>
+            <span class="hljs-keyword">fi</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+}
+
+find_missing_drivers
+</code>
+    </pre>
+    <h3>3. Hardware Compatibility</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check hardware compatibility</span><span class="hljs-function"><span class="hljs-title">check_compatibility</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Hardware Compatibility Check ==="</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Unsupported Devices ---"</span>
+    lspci -nn | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | grep -q <span class="hljs-string">"\[ffff:"</span>; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"Possible unsupported device: <span class="hljs-variable">$line</span>"</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Legacy Devices ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(legacy|isa|parallel|serial|floppy)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No legacy devices found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Vendor Support ---"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Intel devices: <span class="hljs-variable">$(lspci | grep -i intel | wc -l)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"AMD devices: <span class="hljs-variable">$(lspci | grep -i amd | wc -l)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"NVIDIA devices: <span class="hljs-variable">$(lspci | grep -i nvidia | wc -l)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Other vendors: <span class="hljs-variable">$(lspci | grep -v -i -E "(intel|amd|nvidia)</span>"</span> | wc -l)<span class="hljs-string">"
+}
+
+check_compatibility
+</span></code>
+    </pre>
+    <h2>Advanced Usage</h2>
+    <h3>1. Configuration Space Analysis</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Analyze specific device configuration</span><span class="hljs-function"><span class="hljs-title">analyze_device_config</span></span>() {
+    <span class="hljs-built_in">local</span> device_id=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Configuration Analysis for <span class="hljs-variable">$device_id</span> ==="</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Basic Information ---"</span>
+    lspci -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> -v
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Configuration Space ---"</span>
+    lspci -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> -x
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Capabilities ---"</span>
+    lspci -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> -vv | grep -A 20 <span class="hljs-string">"Capabilities:"</span>
+}
+
+<span class="hljs-comment"># Usage: analyze_device_config "00:02.0"</span>
+</code>
+    </pre>
+    <h3>2. Bandwidth Analysis</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Analyze PCIe bandwidth</span><span class="hljs-function"><span class="hljs-title">analyze_bandwidth</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== PCIe Bandwidth Analysis ==="</span>
+
+    lspci -vv | grep -A 2 -B 2 <span class="hljs-string">"Express.*Root Port\|Express.*Endpoint"</span> | \
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | grep -q <span class="hljs-string">"Express"</span>; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"Device: <span class="hljs-variable">$line</span>"</span>
+        <span class="hljs-keyword">elif</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | grep -q <span class="hljs-string">"Link.*Speed"</span>; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"  <span class="hljs-variable">$line</span>"</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+}
+
+analyze_bandwidth
+</code>
+    </pre>
+    <h3>3. Power Management</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check power management capabilities</span><span class="hljs-function"><span class="hljs-title">check_power_management</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Power Management Status ==="</span>
+
+    lspci -vv | grep -B 5 -A 10 <span class="hljs-string">"Power Management"</span> | \
+    grep -E <span class="hljs-string">"(^[0-9a-f]{2}:[0-9a-f]{2}\.[0-9]|Power Management|PME)"</span>
+}
+
+check_power_management
+</code>
+    </pre>
+    <h2>Integration with Other Tools</h2>
+    <h3>1. Combining with lsmod</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Match PCI devices with loaded modules</span><span class="hljs-function"><span class="hljs-title">match_devices_modules</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== PCI Devices and Kernel Modules ==="</span>
+
+    lspci -k | grep -E <span class="hljs-string">"(^[0-9a-f]{2}:|Kernel driver|Kernel modules)"</span> | \
+    <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> =~ ^[0-9a<span class="hljs-_">-f</span>]{2}: ]]; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span>
+        <span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> =~ <span class="hljs-string">"Kernel driver in use:"</span> ]]; <span class="hljs-keyword">then</span>
+            driver=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | cut -d<span class="hljs-string">':'</span> -f2 | xargs)
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Active driver: <span class="hljs-variable">$driver</span>"</span>
+            lsmod | grep <span class="hljs-string">"^<span class="hljs-variable">$driver</span>"</span> &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"    ✓ Module loaded"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"    ✗ Module not found"</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">done</span>
+}
+</code>
+    </pre>
+    <h3>2. Combining with udev</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check udev rules for PCI devices</span><span class="hljs-function"><span class="hljs-title">check_udev_rules</span></span>() {
+    <span class="hljs-built_in">local</span> device_id=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Checking udev rules for device: <span class="hljs-variable">$device_id</span>"</span>
+
+    <span class="hljs-comment"># Get vendor and device IDs</span>
+    vendor_device=$(lspci -n -s <span class="hljs-string">"<span class="hljs-variable">$device_id</span>"</span> | awk <span class="hljs-string">'{print $3}'</span>)
+    vendor_id=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$vendor_device</span>"</span> | cut -d<span class="hljs-string">':'</span> -f1)
+    device_id_hex=$(<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$vendor_device</span>"</span> | cut -d<span class="hljs-string">':'</span> -f2)
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Vendor ID: <span class="hljs-variable">$vendor_id</span>, Device ID: <span class="hljs-variable">$device_id_hex</span>"</span>
+
+    <span class="hljs-comment"># Search udev rules</span>
+    find /etc/udev/rules.d /lib/udev/rules.d -name <span class="hljs-string">"*.rules"</span> -<span class="hljs-built_in">exec</span> grep -l <span class="hljs-string">"<span class="hljs-variable">$vendor_id</span>\|<span class="hljs-variable">$device_id_hex</span>"</span> {} \; 2&gt;/dev/null
+}
+</code>
+    </pre>
+    <h2>Security Considerations</h2>
+    <h3>1. Hardware Security</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check for security-relevant hardware</span><span class="hljs-function"><span class="hljs-title">check_security_hardware</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Security Hardware Check ==="</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- TPM Devices ---"</span>
+    lspci | grep -i tpm || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No TPM devices found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Virtualization Support ---"</span>
+    lspci -vv | grep -i -E <span class="hljs-string">"(vt-x|amd-v|virtualization)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Check CPU flags for virtualization"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- IOMMU Support ---"</span>
+    lspci -vv | grep -i iommu || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No explicit IOMMU references found"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"--- Hardware Security Modules ---"</span>
+    lspci | grep -i -E <span class="hljs-string">"(security|crypto|hsm)"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No HSM devices found"</span>
+}
+
+check_security_hardware
+</code>
+    </pre>
+    <h2>Best Practices</h2>
+    <h3>1. Regular Hardware Monitoring</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create hardware monitoring script</span><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Monitor hardware changes</span>
+
+BASELINE_FILE=<span class="hljs-string">"/var/lib/hardware_baseline.txt"</span>
+CURRENT_FILE=<span class="hljs-string">"/tmp/current_hardware.txt"</span>
+
+<span class="hljs-comment"># Generate current state</span>
+lspci -nn &gt; <span class="hljs-string">"<span class="hljs-variable">$CURRENT_FILE</span>"</span>
+
+<span class="hljs-comment"># Compare with baseline</span>
+<span class="hljs-keyword">if</span> [ -f <span class="hljs-string">"<span class="hljs-variable">$BASELINE_FILE</span>"</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-keyword">if</span> ! diff -q <span class="hljs-string">"<span class="hljs-variable">$BASELINE_FILE</span>"</span> <span class="hljs-string">"<span class="hljs-variable">$CURRENT_FILE</span>"</span> &gt;/dev/null; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hardware configuration changed!"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Changes:"</span>
+        diff <span class="hljs-string">"<span class="hljs-variable">$BASELINE_FILE</span>"</span> <span class="hljs-string">"<span class="hljs-variable">$CURRENT_FILE</span>"</span>
+    <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Creating hardware baseline"</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># Update baseline</span>
+cp <span class="hljs-string">"<span class="hljs-variable">$CURRENT_FILE</span>"</span> <span class="hljs-string">"<span class="hljs-variable">$BASELINE_FILE</span>"</span>
+</code>
+    </pre>
+    <h3>2. Documentation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Generate hardware documentation</span><span class="hljs-function"><span class="hljs-title">document_hardware</span></span>() {
+    <span class="hljs-built_in">local</span> output_file=<span class="hljs-string">"hardware_documentation_<span class="hljs-variable">$(date +%Y%m%d)</span>.txt"</span>
+
+    {
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hardware Documentation"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Generated: <span class="hljs-variable">$(date)</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hostname: <span class="hljs-variable">$(hostname)</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"========================="</span>
+        <span class="hljs-built_in">echo</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"PCI Device Summary:"</span>
+        lspci | wc -l | xargs <span class="hljs-built_in">echo</span> <span class="hljs-string">"Total devices:"</span>
+        <span class="hljs-built_in">echo</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Detailed Device List:"</span>
+        lspci -nn
+        <span class="hljs-built_in">echo</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Driver Status:"</span>
+        lspci -k
+        <span class="hljs-built_in">echo</span>
+
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Device Tree:"</span>
+        lspci -tv
+
+    } &gt; <span class="hljs-string">"<span class="hljs-variable">$output_file</span>"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Documentation saved to: <span class="hljs-variable">$output_file</span>"</span>
+}
+</code>
+    </pre>
+    <h2>Important Notes</h2>
+    <ul>
+      <li><strong>Root Access</strong>: Some detailed information requires root privileges</li>
+      <li><strong>Hardware Detection</strong>: Only shows devices connected to PCI bus</li>
+      <li><strong>Driver Status</strong>: Shows currently loaded drivers, not all available drivers</li>
+      <li><strong>Updates</strong>: Device information is read from kernel, may require hardware rescan</li>
+      <li><strong>Vendor IDs</strong>: Numeric IDs are standardized, names come from PCI ID database</li>
+      <li><strong>Tree View</strong>: Shows physical bus topology and device relationships</li>
+    </ul>
+    <p>The <code>lspci</code> command is essential for hardware troubleshooting, driver management, and system analysis.</p>
+    <p>For more details, check the manual: <code>man lspci</code></p>
+  </body></html>

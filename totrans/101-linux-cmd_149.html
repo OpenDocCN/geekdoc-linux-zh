@@ -1,0 +1,449 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>badblocks</code> command</h1>
+    <p>The <code>badblocks</code> command is used to search for bad blocks on a storage device. It can scan hard drives, SSDs, USB drives, and other storage media to identify sectors that cannot reliably store data. This is essential for maintaining data integrity and system reliability.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">badblocks [options] device [last-block] [first-block]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Non-destructive Testing</strong>: Read-only tests by default</li>
+      <li><strong>Destructive Testing</strong>: Write tests for thorough checking</li>
+      <li><strong>Pattern Testing</strong>: Uses specific patterns to detect errors</li>
+      <li><strong>Progress Reporting</strong>: Shows scan progress and results</li>
+      <li><strong>Output Options</strong>: Various formats for different use cases</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Simple Read Test</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Basic read test (non-destructive)</span>
+sudo badblocks /dev/sdb
+
+<span class="hljs-comment"># Test specific partition</span>
+sudo badblocks /dev/sdb1
+
+<span class="hljs-comment"># Verbose output</span>
+sudo badblocks -v /dev/sdb
+</code>
+    </pre>
+    <h3>Show Progress</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show progress during scan</span>
+sudo badblocks -s /dev/sdb
+
+<span class="hljs-comment"># Show progress with verbose output</span>
+sudo badblocks -sv /dev/sdb
+</code>
+    </pre>
+    <h2>Testing Modes</h2>
+    <h3>1. Read-Only Test (Default)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Non-destructive read test</span>
+sudo badblocks /dev/sdb
+
+<span class="hljs-comment"># Read test with verbose output</span>
+sudo badblocks -v /dev/sdb
+
+<span class="hljs-comment"># Read test showing progress</span>
+sudo badblocks -sv /dev/sdb
+</code>
+    </pre>
+    <h3>2. Non-Destructive Read-Write Test</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Non-destructive read-write test</span>
+sudo badblocks -n /dev/sdb
+
+<span class="hljs-comment"># Backup original data, test, then restore</span>
+sudo badblocks -nv /dev/sdb
+</code>
+    </pre>
+    <h3>3. Destructive Write Test</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># WARNING: This will destroy all data!</span>
+sudo badblocks -w /dev/sdb
+
+<span class="hljs-comment"># Destructive test with verbose output</span>
+sudo badblocks -wv /dev/sdb
+
+<span class="hljs-comment"># Write test with progress</span>
+sudo badblocks -wsv /dev/sdb
+</code>
+    </pre>
+    <h2>Common Options</h2>
+    <h3>Basic Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -v: Verbose output</span>
+sudo badblocks -v /dev/sdb
+
+<span class="hljs-comment"># -s: Show progress</span>
+sudo badblocks -s /dev/sdb
+
+<span class="hljs-comment"># -o: Output bad blocks to file</span>
+sudo badblocks -o badblocks.txt /dev/sdb
+
+<span class="hljs-comment"># -b: Specify block size (default 1024)</span>
+sudo badblocks -b 4096 /dev/sdb
+</code>
+    </pre>
+    <h3>Advanced Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -c: Number of blocks to test at once</span>
+sudo badblocks -c 65536 /dev/sdb
+
+<span class="hljs-comment"># -p: Number of passes (for write tests)</span>
+sudo badblocks -w -p 2 /dev/sdb
+
+<span class="hljs-comment"># -t: Test pattern for write tests</span>
+sudo badblocks -w -t 0xaa /dev/sdb
+
+<span class="hljs-comment"># -f: Force operation even if mounted</span>
+sudo badblocks -f /dev/sdb
+</code>
+    </pre>
+    <h2>Practical Examples</h2>
+    <h3>1. Basic Drive Health Check</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Unmount the device first</span>
+sudo umount /dev/sdb1
+
+<span class="hljs-comment"># Run basic read test</span>
+sudo badblocks -sv /dev/sdb
+
+<span class="hljs-comment"># Save results to file</span>
+sudo badblocks -sv -o badblocks_sdb.txt /dev/sdb
+</code>
+    </pre>
+    <h3>2. Thorough Drive Testing</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Full destructive test (destroys data!)</span><span class="hljs-comment"># Make sure to backup first!</span>
+sudo badblocks -wsv /dev/sdb
+
+<span class="hljs-comment"># Multiple pass destructive test</span>
+sudo badblocks -wsv -p 3 /dev/sdb
+</code>
+    </pre>
+    <h3>3. Testing Specific Range</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Test blocks 1000 to 2000</span>
+sudo badblocks -sv /dev/sdb 2000 1000
+
+<span class="hljs-comment"># Test first 1GB (assuming 4K blocks)</span>
+sudo badblocks -sv -b 4096 /dev/sdb 262144 0
+</code>
+    </pre>
+    <h3>4. Integration with fsck</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create bad blocks file</span>
+sudo badblocks -sv -o /tmp/badblocks /dev/sdb1
+
+<span class="hljs-comment"># Use with fsck to mark bad blocks</span>
+sudo fsck.ext4 -l /tmp/badblocks /dev/sdb1
+
+<span class="hljs-comment"># For new filesystem</span>
+sudo mke2fs -l /tmp/badblocks /dev/sdb1
+</code>
+    </pre>
+    <h2>Different Block Sizes</h2>
+    <h3>Choosing Block Size</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># 1KB blocks (default)</span>
+sudo badblocks -b 1024 /dev/sdb
+
+<span class="hljs-comment"># 4KB blocks (common for modern drives)</span>
+sudo badblocks -b 4096 /dev/sdb
+
+<span class="hljs-comment"># 512 byte blocks (traditional sector size)</span>
+sudo badblocks -b 512 /dev/sdb
+
+<span class="hljs-comment"># Match filesystem block size</span>
+sudo tune2fs -l /dev/sdb1 | grep <span class="hljs-string">"Block size"</span>
+sudo badblocks -b 4096 /dev/sdb1
+</code>
+    </pre>
+    <h2>Test Patterns</h2>
+    <h3>Write Test Patterns</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Alternating pattern (0xaa = 10101010)</span>
+sudo badblocks -w -t 0xaa /dev/sdb
+
+<span class="hljs-comment"># All ones pattern</span>
+sudo badblocks -w -t 0xff /dev/sdb
+
+<span class="hljs-comment"># All zeros pattern</span>
+sudo badblocks -w -t 0x00 /dev/sdb
+
+<span class="hljs-comment"># Random pattern</span>
+sudo badblocks -w -t random /dev/sdb
+</code>
+    </pre>
+    <h3>Multiple Patterns</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Test with multiple patterns</span>
+sudo badblocks -w -t 0xaa -t 0x55 -t 0xff -t 0x00 /dev/sdb
+
+<span class="hljs-comment"># Four-pass test with different patterns</span>
+sudo badblocks -wsv -p 4 -t 0xaa -t 0x55 -t 0xff -t 0x00 /dev/sdb
+</code>
+    </pre>
+    <h2>Output and Reporting</h2>
+    <h3>Standard Output</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Basic output (just bad block numbers)</span>
+sudo badblocks /dev/sdb
+
+<span class="hljs-comment"># Verbose output with details</span>
+sudo badblocks -v /dev/sdb
+
+<span class="hljs-comment"># Progress indicator</span>
+sudo badblocks -s /dev/sdb
+</code>
+    </pre>
+    <h3>Save Results to File</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Save bad blocks list</span>
+sudo badblocks -o badblocks.txt /dev/sdb
+
+<span class="hljs-comment"># Append to existing file</span>
+sudo badblocks -o badblocks.txt /dev/sdb &gt;&gt; all_badblocks.txt
+
+<span class="hljs-comment"># Save with verbose output to different files</span>
+sudo badblocks -v -o badblocks.txt /dev/sdb 2&gt; scan_log.txt
+</code>
+    </pre>
+    <h2>Working with Different Storage Types</h2>
+    <h3>1. Traditional Hard Drives</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Standard test for HDDs</span>
+sudo badblocks -sv /dev/sda
+
+<span class="hljs-comment"># Thorough test with multiple passes</span>
+sudo badblocks -wsv -p 4 /dev/sda
+</code>
+    </pre>
+    <h3>2. Solid State Drives</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Read-only test (preferred for SSDs)</span>
+sudo badblocks -sv /dev/sdb
+
+<span class="hljs-comment"># Non-destructive test</span>
+sudo badblocks -nsv /dev/sdb
+
+<span class="hljs-comment"># Avoid excessive write tests on SSDs</span>
+</code>
+    </pre>
+    <h3>3. USB Drives</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Test USB drive</span>
+sudo badblocks -sv /dev/sdc
+
+<span class="hljs-comment"># Fast test for quick verification</span>
+sudo badblocks -sv -c 65536 /dev/sdc
+</code>
+    </pre>
+    <h3>4. SD Cards</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Test SD card</span>
+sudo badblocks -sv /dev/mmcblk0
+
+<span class="hljs-comment"># Write test for fake capacity detection</span>
+sudo badblocks -wsv /dev/mmcblk0
+</code>
+    </pre>
+    <h2>Integration with File Systems</h2>
+    <h3>1. ext2/ext3/ext4</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create filesystem with bad block check</span>
+sudo mke2fs -c /dev/sdb1
+
+<span class="hljs-comment"># Check existing filesystem</span>
+sudo fsck.ext4 -c /dev/sdb1
+
+<span class="hljs-comment"># Thorough check</span>
+sudo fsck.ext4 -cc /dev/sdb1
+</code>
+    </pre>
+    <h3>2. Using with e2fsck</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create bad blocks list</span>
+sudo badblocks -sv -o /tmp/badblocks /dev/sdb1
+
+<span class="hljs-comment"># Apply to filesystem</span>
+sudo e2fsck -l /tmp/badblocks /dev/sdb1
+</code>
+    </pre>
+    <h2>Monitoring and Automation</h2>
+    <h3>1. Scheduled Checking</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create script for regular checking</span><span class="hljs-meta">#!/bin/bash</span>
+DEVICE=<span class="hljs-string">"/dev/sdb"</span>
+LOGFILE=<span class="hljs-string">"/var/log/badblocks_<span class="hljs-variable">$(date +%Y%m%d)</span>.log"</span>
+
+sudo badblocks -sv -o /tmp/badblocks <span class="hljs-string">"<span class="hljs-variable">$DEVICE</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$LOGFILE</span>"</span> 2&gt;&amp;1
+
+<span class="hljs-keyword">if</span> [ -s /tmp/badblocks ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Bad blocks found on <span class="hljs-variable">$DEVICE</span>!"</span> | mail -s <span class="hljs-string">"Bad Blocks Alert"</span> admin@domain.com
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h3>2. SMART Integration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check SMART status first</span>
+sudo smartctl -a /dev/sdb
+
+<span class="hljs-comment"># Run badblocks if SMART shows issues</span>
+sudo smartctl -t short /dev/sdb
+sleep 300
+sudo smartctl -a /dev/sdb
+sudo badblocks -sv /dev/sdb
+</code>
+    </pre>
+    <h2>Performance Considerations</h2>
+    <h3>1. Speed Optimization</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Increase block count for faster scanning</span>
+sudo badblocks -c 65536 /dev/sdb
+
+<span class="hljs-comment"># Use larger block size</span>
+sudo badblocks -b 4096 -c 16384 /dev/sdb
+
+<span class="hljs-comment"># Combine options for maximum speed</span>
+sudo badblocks -sv -b 4096 -c 65536 /dev/sdb
+</code>
+    </pre>
+    <h3>2. System Impact</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Run with lower priority</span>
+sudo nice -n 19 badblocks -sv /dev/sdb
+
+<span class="hljs-comment"># Limit I/O impact</span>
+sudo ionice -c 3 badblocks -sv /dev/sdb
+
+<span class="hljs-comment"># Combine nice and ionice</span>
+sudo nice -n 19 ionice -c 3 badblocks -sv /dev/sdb
+</code>
+    </pre>
+    <h2>Interpreting Results</h2>
+    <h3>1. No Bad Blocks</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Output: "Pass completed, 0 bad blocks found."</span>
+        <span class="hljs-comment"># This indicates a healthy drive</span>
+      </code>
+    </pre>
+    <h3>2. Bad Blocks Found</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Output shows block numbers of bad sectors</span>
+        <span class="hljs-comment"># Example:</span>
+        <span class="hljs-comment"># Pass completed, 5 bad blocks found. (0/0/5 errors)</span>
+        <span class="hljs-comment"># 1024</span>
+        <span class="hljs-comment"># 2048</span>
+        <span class="hljs-comment"># 4096</span>
+        <span class="hljs-comment"># 8192</span>
+        <span class="hljs-comment"># 16384</span>
+      </code>
+    </pre>
+    <h3>3. Understanding Block Numbers</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Convert block numbers to byte offsets</span>
+        <span class="hljs-comment"># Block 1024 with 4KB block size = 1024 * 4096 = 4,194,304 bytes</span>
+        <span class="hljs-comment"># This helps locate physical position on drive</span>
+      </code>
+    </pre>
+    <h2>Troubleshooting</h2>
+    <h3>1. Permission Denied</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Must run as root</span>
+sudo badblocks /dev/sdb
+
+<span class="hljs-comment"># Check device permissions</span>
+ls -l /dev/sdb
+</code>
+    </pre>
+    <h3>2. Device Busy</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Unmount all partitions first</span>
+sudo umount /dev/sdb1
+sudo umount /dev/sdb2
+
+<span class="hljs-comment"># Check for active processes</span>
+lsof /dev/sdb*
+
+<span class="hljs-comment"># Use force option if necessary</span>
+sudo badblocks -f /dev/sdb
+</code>
+    </pre>
+    <h3>3. Slow Performance</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Increase block count</span>
+sudo badblocks -c 65536 /dev/sdb
+
+<span class="hljs-comment"># Use appropriate block size</span>
+sudo badblocks -b 4096 /dev/sdb
+
+<span class="hljs-comment"># Check system load</span>
+iostat 1
+</code>
+    </pre>
+    <h2>Safety Considerations</h2>
+    <h3>1. Data Backup</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always backup before destructive tests</span>
+sudo dd <span class="hljs-keyword">if</span>=/dev/sdb of=/backup/sdb_backup.img bs=1M
+
+<span class="hljs-comment"># Or use filesystem-level backup</span>
+sudo rsync -av /mount/point/ /backup/location/
+</code>
+    </pre>
+    <h3>2. Drive Health Assessment</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check SMART data first</span>
+sudo smartctl -a /dev/sdb
+
+<span class="hljs-comment"># Look for reallocated sectors</span>
+sudo smartctl -A /dev/sdb | grep Reallocated
+</code>
+    </pre>
+    <h3>3. When to Replace Drive</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Replace if:</span>
+        <span class="hljs-comment"># - Many bad blocks found (&gt;50-100)</span>
+        <span class="hljs-comment"># - Bad blocks increasing over time</span>
+        <span class="hljs-comment"># - SMART indicates drive failure</span>
+        <span class="hljs-comment"># - Critical system drive affected</span>
+      </code>
+    </pre>
+    <h2>Alternative Tools</h2>
+    <h3>1. SMART Tools</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use smartctl for health monitoring</span>
+sudo smartctl -t long /dev/sdb
+sudo smartctl -a /dev/sdb
+</code>
+    </pre>
+    <h3>2. Manufacturer Tools</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Many manufacturers provide specific tools</span>
+        <span class="hljs-comment"># - Western Digital: WD Data Lifeguard</span>
+        <span class="hljs-comment"># - Seagate: SeaTools</span>
+        <span class="hljs-comment"># - Samsung: Samsung Magician</span>
+      </code>
+    </pre>
+    <h2>Important Notes</h2>
+    <ul>
+      <li>Read tests are safe and non-destructive</li>
+      <li>Write tests destroy all data on the device</li>
+      <li>Always unmount devices before testing</li>
+      <li>Test results should be interpreted with other health indicators</li>
+      <li>Regular testing helps prevent data loss</li>
+      <li>Consider drive replacement if many bad blocks are found</li>
+      <li>Modern drives have spare sectors for bad block management</li>
+    </ul>
+    <p>The <code>badblocks</code> command is an essential tool for maintaining storage device health and preventing data loss.</p>
+    <p>For more details, check the manual: <code>man badblocks</code></p>
+  </body></html>

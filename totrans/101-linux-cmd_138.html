@@ -1,0 +1,174 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>systemctl</code> command</h1>
+    <p>The <code>systemctl</code> command is used to control and manage systemd services and the systemd system and service manager in Linux. It's the primary tool for managing services in modern Linux distributions.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl [options] <span class="hljs-built_in">command</span> [service-name]
+</code>
+    </pre>
+    <h2>Common Commands</h2>
+    <h3>Service Management</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">start [service]         Start a service
+stop [service]          Stop a service
+restart [service]       Restart a service
+reload [service]        Reload service configuration
+status [service]        Show service status
+<span class="hljs-built_in">enable</span> [service]        Enable service to start at boot
+<span class="hljs-built_in">disable</span> [service]       Disable service from starting at boot
+</code>
+    </pre>
+    <h3>System Commands</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">reboot                  Restart the system
+poweroff               Shutdown the system
+<span class="hljs-built_in">suspend</span>                Suspend the system
+hibernate              Hibernate the system
+</code>
+    </pre>
+    <h2>Options</h2>
+    <p>Some popular option flags include:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">-l          Show full output (don<span class="hljs-string">'t truncate)
+--no-pager  Don'</span>t pipe output into a pager
+--failed    Show only failed units
+--all       Show all units, including inactive ones
+-q          Quiet mode, suppress output
+-t          Specify unit <span class="hljs-built_in">type</span> (service, socket, etc.)
+</code>
+    </pre>
+    <h2>Examples</h2>
+    <ol>
+      <li>Start a service</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl start nginx
+</code>
+    </pre>
+    <ol start="2">
+      <li>Stop a service</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl stop apache2
+</code>
+    </pre>
+    <ol start="3">
+      <li>Check service status</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl status ssh
+</code>
+    </pre>
+    <ol start="4">
+      <li>Enable a service to start at boot</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl <span class="hljs-built_in">enable</span> mysql
+</code>
+    </pre>
+    <ol start="5">
+      <li>Disable a service from starting at boot</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl <span class="hljs-built_in">disable</span> bluetooth
+</code>
+    </pre>
+    <ol start="6">
+      <li>Restart a service</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl restart networking
+</code>
+    </pre>
+    <ol start="7">
+      <li>Reload service configuration without stopping</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl reload nginx
+</code>
+    </pre>
+    <ol start="8">
+      <li>List all active services</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl list-units --<span class="hljs-built_in">type</span>=service
+</code>
+    </pre>
+    <ol start="9">
+      <li>List all services (active and inactive)</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl list-units --<span class="hljs-built_in">type</span>=service --all
+</code>
+    </pre>
+    <ol start="10">
+      <li>List failed services</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl --failed
+</code>
+    </pre>
+    <ol start="11">
+      <li>Show service dependencies</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl list-dependencies nginx
+</code>
+    </pre>
+    <ol start="12">
+      <li>Check if a service is enabled</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl is-enabled ssh
+</code>
+    </pre>
+    <ol start="13">
+      <li>Check if a service is active</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl is-active mysql
+</code>
+    </pre>
+    <ol start="14">
+      <li>Restart the system</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl reboot
+</code>
+    </pre>
+    <ol start="15">
+      <li>Shutdown the system</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">systemctl poweroff
+</code>
+    </pre>
+    <h2>Service Status Information</h2>
+    <p>When checking status, you'll see:</p>
+    <ul>
+      <li><strong>Active (running)</strong>: Service is currently running</li>
+      <li><strong>Active (exited)</strong>: Service completed successfully</li>
+      <li><strong>Inactive (dead)</strong>: Service is not running</li>
+      <li><strong>Failed</strong>: Service failed to start</li>
+    </ul>
+    <h2>Use Cases</h2>
+    <ul>
+      <li>Managing web servers (nginx, apache)</li>
+      <li>Controlling database services (mysql, postgresql)</li>
+      <li>Managing system services (ssh, networking)</li>
+      <li>Troubleshooting service issues</li>
+      <li>Automating service management in scripts</li>
+      <li>System administration and maintenance</li>
+    </ul>
+    <h2>Important Notes</h2>
+    <ul>
+      <li>Requires root privileges for most operations (use <code>sudo</code>)</li>
+      <li>Services are called "units" in systemd terminology</li>
+      <li>Configuration files are located in <code>/etc/systemd/system/</code></li>
+      <li>Always check service status after making changes</li>
+      <li>Use <code>journalctl</code> to view detailed service logs</li>
+    </ul>
+    <p>The <code>systemctl</code> command is essential for modern Linux system administration and service management.</p>
+    <p>For more details, check the manual: <code>man systemctl</code></p>
+  </body></html>

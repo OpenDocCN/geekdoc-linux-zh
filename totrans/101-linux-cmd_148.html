@@ -1,0 +1,396 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>nmcli</code> command</h1>
+    <p>The <code>nmcli</code> command is used for managing network connections by controlling the NetworkManager, a daemon that handles networking, through command line.
+The command stands for Network Manager Command Line Interface.</p>
+    <h3>Installation:</h3>
+    <p>The <code>nmcli</code> command is already installed by default on most Linux distros. To check if it is installed on your system type:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">nmcli --version
+</code>
+    </pre>
+    <p>If you don't have nmcli installed you can do it by using the package manager:</p>
+    <p>Ubuntu or Debian:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt install network manager
+</code>
+    </pre>
+    <p>This will install NetworkManageron in your system.
+Now we have to start the network managing service.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo systemctl start NetworkManager
+</code>
+    </pre>
+    <p>Red Hat-based System(such as Fedora, CentOS, REHL):</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo dnf install NetworkManager
+</code>
+    </pre>
+    <p>This will install NetworkManager in your system.
+Now we have to start the network managing service.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo systemctl start NetworkManager
+</code>
+    </pre>
+    <p>Arch Linux:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo pacman -S networkmanager
+</code>
+    </pre>
+    <p>This will install NetworkManager in your system.
+Now we have to start the network managing service.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo systemctl start NetworkManager
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>List all available Wifi networks</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">nmcli device wifi <span class="hljs-keyword">list</span>
+</code>
+    </pre>
+    <ol start="2">
+      <li>View Network Status</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nmcli device status
+</code>
+    </pre>
+    <ol start="3">
+      <li>Connect to a Wifi Network</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">nmcli device wifi connect <span class="hljs-string">"SSID_NAME"</span> password <span class="hljs-string">"YOUR_PASSWORD"</span>
+</code>
+    </pre>
+    <ol start="4">
+      <li>Disconnect from a Wifi Network</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">nmcli connection down <span class="hljs-string">"CONNECTION_NAME"</span>
+</code>
+    </pre>
+    <ol start="5">
+      <li>Turn Wifi On/Off</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nmcli radio wifi on
+nmcli radio wifi off
+</code>
+    </pre>
+    <p>, respectively.</p>
+    <ol start="6">
+      <li>Turn Bluetooth On/Off</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nmcli radio bluetooth on
+nmcli radio bluetooth off
+</code>
+    </pre>
+    <p>, respectively.</p>
+    <ol start="7">
+      <li>To show all connections</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nmcli connection show
+</code>
+    </pre>
+    <ol start="8">
+      <li>To show detailed info about specific connections</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">nmcli connection show <span class="hljs-string">"CONNECTION_NAME"</span>
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <p>The general syntax for the nmcli command is as follows:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">nmcli [OPTIONS...] { <span class="hljs-built_in">help</span> | general | networking | radio | connection | device | agent | monitor } [COMMAND] [ARGUMENTS...]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <h4>Options</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">
+            <code>--ask</code>
+          </td>
+          <td align="left">nmcli will stop and ask for any missing required argument(do not use for non interactive options)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left"><code>--color</code>{yes/no}</td>
+          <td align="left">It controls color output. yes enables colors, while no disables colors</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">Prints help information</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-p</code>
+          </td>
+          <td align="left">
+            <code>--pretty</code>
+          </td>
+          <td align="left">This causes nmcli to produce more user friendly output, eg with headers, and values are aligned</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">Shows the nmcli version</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left"><code>--fields</code>{field1,...}</td>
+          <td align="left">This option is used to specify what fields should be printed. Valid fields names differ for specific commands.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left"><code>--get-value</code>{field1,.}</td>
+          <td align="left">This option is used to print values from specific field.  It is a shortcut for --mode tabular --terse --fields</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>General Commands</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>nmcli general status</code>
+          </td>
+          <td align="left">Show overall NetworkManager status</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli general hostname</code>
+          </td>
+          <td align="left">Display current hostname</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Networking Commands</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>nmcli networking on</code>
+          </td>
+          <td align="left">Enable all networking</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli networking off</code>
+          </td>
+          <td align="left">Disable all networking</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli networking connectivity</code>
+          </td>
+          <td align="left">Check network connectivity status</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Radio Commands</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>nmcli radio wifi on</code>
+          </td>
+          <td align="left">Enable Wi-Fi radio</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli radio wifi off</code>
+          </td>
+          <td align="left">Disable Wi-Fi radio</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli radio all</code>
+          </td>
+          <td align="left">Show status of all radio switches</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli radio wifi</code>
+          </td>
+          <td align="left">Show Wi-Fi radio status</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Connection Management Commands</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>nmcli connection show</code>
+          </td>
+          <td align="left">List all saved connection profiles</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection show --active</code>
+          </td>
+          <td align="left">List only active connections</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection show "NAME"</code>
+          </td>
+          <td align="left">Show detailed info about specific connection</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection up "NAME"</code>
+          </td>
+          <td align="left">Activate a connection</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection down "NAME"</code>
+          </td>
+          <td align="left">Deactivate a connection</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection modify "NAME" [OPTIONS]</code>
+          </td>
+          <td align="left">Modify connection settings</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection delete "NAME"</code>
+          </td>
+          <td align="left">Delete a connection profile</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli connection reload</code>
+          </td>
+          <td align="left">Reload all connection files from disk</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Device Management Commands</h4>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>nmcli device status</code>
+          </td>
+          <td align="left">Show status of all devices</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli device show "DEVICE"</code>
+          </td>
+          <td align="left">Show detailed info for specific device</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli device disconnect "DEVICE"</code>
+          </td>
+          <td align="left">Disconnect from a device</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli device wifi list</code>
+          </td>
+          <td align="left">List all available Wi-Fi networks</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>nmcli device wifi connect "SSID" password "PWD"</code>
+          </td>
+          <td align="left">Connect to password-protected Wi-Fi</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

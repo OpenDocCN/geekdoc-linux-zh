@@ -1,0 +1,79 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>chmod</code> command</h1>
+    <p>The <code>chmod</code> command allows you to change the permissions on a file using either a symbolic or numeric mode or a reference file.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Change the permission of a file using symbolic mode:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">chmod u=rwx,g=rx,o=r myfile
+</code>
+    </pre>
+    <p>The command above means :</p>
+    <ul>
+      <li>user can read, write, execute <code>myfile</code></li>
+      <li>group can read, execute <code>myfile</code></li>
+      <li>other can read <code>myfile</code></li>
+    </ul>
+    <ol start="2">
+      <li>Change the permission of a file using numeric mode</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">chmod 754 myfile user:group file.txt
+</code>
+    </pre>
+    <p>The command above means :</p>
+    <ul>
+      <li>user can read, write, execute <code>myfile</code></li>
+      <li>group can read, execute <code>myfile</code></li>
+      <li>other can read <code>myfile</code></li>
+    </ul>
+    <ol start="3">
+      <li>Change the permission of a folder recursively</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">chmod -R 754 folder
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">chmod [OPTIONS] MODE FILE(s)
+</code>
+    </pre>
+    <ul>
+      <li>
+        <p><code>[OPTIONS]</code> :
+<code>-R</code>: recursive, mean all file inside directory</p>
+      </li>
+      <li>
+        <p><code>MODE</code>: different way to set permissions:</p>
+      </li>
+      <li>
+        <p>
+          <strong>Symbolic mode explained</strong>
+        </p>
+        <ul>
+          <li>u: user</li>
+          <li>g: group</li>
+          <li>o: other</li>
+          <li>=: set the permission</li>
+          <li>r: read</li>
+          <li>w: write</li>
+          <li>x: execute</li>
+          <li>example <code>u=rwx</code> means user can read write and execute</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Numeric mode explained</strong>:</p>
+      </li>
+    </ul>
+    <p>The <strong>numeric mode</strong> is based off of a binary representation of the permissions for user, group, and others, for more information please look at this <a href="https://www.digitalocean.com/community/tutorials/linux-permissions-basics-and-how-to-use-umask-on-a-vps#types-of-permissions">explanation</a> from Digital Ocean's community section:</p>
+    <ul>
+      <li>4 stands for "read",</li>
+      <li>2 stands for "write",</li>
+      <li>1 stands for "execute", and</li>
+      <li>0 stands for "no permission."</li>
+      <li>example 7 mean read + write + execute</li>
+    </ul>
+  </body></html>

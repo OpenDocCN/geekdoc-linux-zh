@@ -1,0 +1,50 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>nslookup</code> command</h1>
+    <p>The <code>nslookup</code> command is a network administration command-line tool for querying the Domain Name System (DNS) to obtain domain name or IP address mapping or any other specific DNS record.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">nslookup [options] [host]
+</code>
+    </pre>
+    <h2>Options</h2>
+    <p>Some popular option flags include:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">-domain=[domain-name]	Change the default DNS name.
+-debug	Show debugging information.
+-port=[port-number]	Specify the port <span class="hljs-keyword">for</span> queries. The default port number is 53.
+-timeout=[seconds]	Specify the time allowed <span class="hljs-keyword">for</span> the server to respond.
+-<span class="hljs-built_in">type</span>=a	View information about the DNS A address records.
+-<span class="hljs-built_in">type</span>=any	View all available records.
+-<span class="hljs-built_in">type</span>=hinfo	View hardware-related information about the host.
+-<span class="hljs-built_in">type</span>=mx	View Mail Exchange server information.
+-<span class="hljs-built_in">type</span>=ns	View Name Server records.
+-<span class="hljs-built_in">type</span>=ptr	View Pointer records. Used <span class="hljs-keyword">in</span> reverse DNS lookups.
+-<span class="hljs-built_in">type</span>=soa	View Start of Authority records.
+</code>
+    </pre>
+    <h2>Few Examples:</h2>
+    <ol>
+      <li>Query DNS Server</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nslookup www.google.com
+</code>
+    </pre>
+    <ol start="2">
+      <li>Specify a port to query</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nslookup -port=53 www.google.com
+</code>
+    </pre>
+    <ol start="3">
+      <li>Get the MX Record</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">nslookup -<span class="hljs-built_in">type</span>=mx google.com
+</code>
+    </pre>
+    <p>Here I showed you how to use the nslookup command in Linux. Although there are other DNS lookup tools, such as dig, nslookup could be a better choice as it is a powerful tool present in almost every system.</p>
+    <p>For more details: <a href="https://en.wikipedia.org/wiki/Nslookup">Nslookup on Wikipedia</a></p>
+  </body></html>

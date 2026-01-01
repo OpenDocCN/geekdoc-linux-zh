@@ -1,0 +1,225 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>vim</code> command</h1>
+    <p>The <a href="https://www.vim.org/">vim</a> is a text editor for Unix that comes with Linux, BSD, and macOS. It is known to be fast and powerful, partly because it is a small program that can run in a terminal (although it has a graphical interface).
+Vim text editor is developed by <a href="https://en.wikipedia.org/wiki/Bram_Moolenaar">Bram Moolenaar</a>. It supports most file types and the vim editor is also known as a programmer's editor. It is mainly because it can be managed entirely without menus or a mouse with a keyboard.</p>
+    <p><strong>Note:</strong> Do not confuse <code>vim</code> with <code>vi</code>. <code>vi</code>, which stands for "Visual", is a text editor that was developed by <a href="https://en.wikipedia.org/wiki/Bill_Joy">Bill Joy</a> in 1976. <code>vim</code> stands for "Vi Improved", and is an improved clone of the <code>vi</code> editor.</p>
+    <h3>The most searched question about <code>vim</code> :</h3>
+    <p>
+      <code>How to exit vim editor?</code>
+    </p>
+    <p>The most searched question about vim editor looks very funny but it's true that the new user gets stuck at the very beginning when using vim editor.</p>
+    <p>The command to save the file and exit vim editor: <code>:wq</code> or <code>:x</code></p>
+    <p>The command to exit vim editor without saving the file: <code>:q!</code></p>
+    <h4>Fun reading:</h4>
+    <p>Here's a <a href="https://stackoverflow.blog/2017/05/23/stack-overflow-helping-one-million-developers-exit-vim/">survey</a> for the same question, look at this and do not think to quit the vim editor.</p>
+    <h3>Installation:</h3>
+    <p>First check if vim is already installed or not, enter the following command:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">vim --version
+</code>
+    </pre>
+    <p>If it is already installed it will show its version, else we can run the below commands for the installations:</p>
+    <p>On Ubuntu/Debian:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">sudo apt-<span class="hljs-keyword">get</span> install vim
+</code>
+    </pre>
+    <p>On Arch:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo pacman -S vim
+</code>
+    </pre>
+    <p>On CentOS/Fedora:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo yum install vim
+</code>
+    </pre>
+    <p>If you want to use advanced features on CentOS/Fedora, you'll need to install enhanced vim editor, to do this run the following command:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo yum install -y vim-enhanced
+</code>
+    </pre>
+    <p>On macOS:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">brew install vim
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">vim [FILE_PATH/FILE_NAME]
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To open the file named "demo.txt" from your current directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">vim demo.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>To open the file in a specific directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">vim {File_Path/filename}
+</code>
+    </pre>
+    <ol start="3">
+      <li>To open the file starting on a specific line in the file:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">vim {File_Path/filename} +LINE_NUMBER
+</code>
+    </pre>
+    <h3>Modes in vim editor:</h3>
+    <p>There are some arguments as to how many modes that vim has, but the modes you're most likely to use are <code>command mode</code> and <code>insert mode</code>. These <a href="https://www.freecodecamp.org/news/vim-editor-modes-explained/">modes</a> will allow you to do just about anything you need, including creating your document, saving your document, and doing advanced editing, including taking advantage of search and replace functions.</p>
+    <h3>Workflow of <code>vim</code> editor:</h3>
+    <ol>
+      <li>Open a new or existing file with <code>vim filename</code>.</li>
+      <li>Type <code>i</code> to switch into insert mode so that you can start editing the file.</li>
+      <li>Enter or modify the text of your file.</li>
+      <li>When you're done, press the <code>Esc</code> key to exit insert mode and back to command mode.</li>
+      <li>Type :w or :wq to save the file or save and exit from the file respectively.</li>
+    </ol>
+    <h3>Navigate in vim</h3>
+    <p>Some common commands:</p>
+    <ul>
+      <li><code>j</code> : move down one line</li>
+      <li><code>k</code> : move up one line</li>
+      <li><code>h</code> : Move left one character</li>
+      <li><code>l</code> : move right one character</li>
+      <li><code>w</code> : move forward one word</li>
+      <li><code>b</code> : move backward one word</li>
+      <li><code>e</code> : Move to the end of your word</li>
+      <li><code>0</code> : move to begining of line</li>
+      <li><code>$</code> : move to end of line</li>
+      <li><code>gg</code> : go to begining of file</li>
+      <li><code>G</code> : go to end of file</li>
+      <li><code>:linenumber</code> : go to a specific line number</li>
+    </ul>
+    <h3>Copy, Paste and Delete</h3>
+    <ol>
+      <li>Copy(Yank):
+Copying in vim is called "yanking":</li>
+    </ol>
+    <ul>
+      <li><code>yy</code> : yank (copy) the current line</li>
+      <li><code>2yy</code> : yank 2 lines</li>
+      <li><code>y$</code> : yank from cursor to end of line</li>
+      <li><code>y^</code> : yank from cursor to begining of line</li>
+      <li><code>yw</code> : yank one word</li>
+      <li><code>y}</code> : yank until end of paragraph</li>
+    </ul>
+    <ol start="2">
+      <li>Paste:</li>
+    </ol>
+    <ul>
+      <li><code>p</code> : paste after the cursor</li>
+      <li><code>P</code> : paste before the cursor</li>
+    </ul>
+    <ol start="3">
+      <li>Delete:</li>
+    </ol>
+    <ul>
+      <li><code>x</code> : delete a single character</li>
+      <li><code>dd</code> : delete the whole current line</li>
+      <li><code>2dd</code> : delete 2 lines (or use any number <code>n dd</code>)</li>
+      <li><code>d$</code> : delete from cursor to end of line</li>
+      <li><code>d^</code> : delete from cursor to begining of line</li>
+      <li><code>dG</code> : delete from cursor to end of file</li>
+      <li><code>dgg</code>:  delete from cursor to begining of file</li>
+      <li><code>dw</code> : delete from cursor to end of word</li>
+      <li><code>di"</code> : delete inside double quotes</li>
+      <li><code>diw</code> : delete inner word (without spaces)</li>
+      <li><code>dip</code> : delete inner paragraph (no newline)</li>
+    </ul>
+    <h3>Selection (visual mode)</h3>
+    <ul>
+      <li><code>v</code> : start character-wise selection</li>
+      <li><code>V</code> : start line-wise selection</li>
+      <li><code>ctrl + v</code>  : start block-wise selection</li>
+    </ul>
+    <h3>Interactive training</h3>
+    <p>In this interactive tutorial, you will learn the different ways to use the <code>vim</code> command:</p>
+    <p>
+      <a href="https://www.openvim.com/">The Open vim Tutorial</a>
+    </p>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Flags/Options</strong>
+          </th>
+          <th align="left">
+            <center>
+              <strong>Description</strong>
+            </center>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">Start in Ex mode (see <a href="http://vimdoc.sourceforge.net/htmldoc/intro.html#Ex-mode">Ex-mode</a>)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-R</code>
+          </td>
+          <td align="left">Start in read-only mode</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-R</code>
+          </td>
+          <td align="left">Start in read-only mode</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left">Start the <a href="http://vimdoc.sourceforge.net/htmldoc/gui.html#GUI">GUI</a></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-eg</code>
+          </td>
+          <td align="left">Start the GUI in Ex mode</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-Z</code>
+          </td>
+          <td align="left">Like "vim", but in restricted mode</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">Start in diff mode <a href="http://vimdoc.sourceforge.net/htmldoc/diff.html#diff-mode">diff-mode</a></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">Give usage (help) message and exit</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>+NUMBER</code>
+          </td>
+          <td align="left">Open a file and place the cursor on the line number specified by NUMBER</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Read more about vim:</h3>
+    <p>vim can not be learned in a single day, use in day-to-day tasks to get hands-on in vim editor.</p>
+    <p>To learn more about <code>vim</code> follow the given article:</p>
+    <p>
+      <a href="https://danielmiessler.com/study/vim/">Article By Daniel Miessler</a>
+    </p>
+  </body></html>

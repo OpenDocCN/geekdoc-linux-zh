@@ -1,0 +1,77 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>apt</code> command</h1>
+    <p><code>apt</code> (Advantage package system) command is used for interacting with <code>dpkg</code> (packaging system used by debian). There is already the <code>dpkg</code> command to manage <code>.deb</code> packages. But <code>apt</code> is a more user-friendly and efficient way.</p>
+    <p>In simple terms <code>apt</code> is a command used for installing, deleting and performing other operations on debian based Linux.</p>
+    <p>You will be using the <code>apt</code> command mostly with <code>sudo</code> privileges.</p>
+    <h3>Installing packages:</h3>
+    <p><code>install</code> followed by <code>package_name</code> is used with <code>apt</code> to install a new package.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt install package_name
+</code>
+    </pre>
+    <h5>Example:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt install g++
+</code>
+    </pre>
+    <p>This command will install g++ on your system.</p>
+    <h3>Removing packages:</h3>
+    <p><code>remove</code> followed by <code>package_name</code> is used with <code>apt</code> to remove a specific package.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt remove package_name
+</code>
+    </pre>
+    <h5>Example:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt remove g++
+</code>
+    </pre>
+    <p>This command will remove g++ from your system.</p>
+    <h3>Searching for a package:</h3>
+    <p><code>search</code> followed by the <code>package_name</code> used with apt to search a package across all repositories.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">apt search package_name
+</code>
+    </pre>
+    <p>note: sudo not required</p>
+    <h5>Example:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">apt search g++
+</code>
+    </pre>
+    <h3>Removing unused packages:</h3>
+    <p>Whenever a new package that depends on other packages is installed on the system, the package dependencies will be installed too. When the package is removed, the dependencies will stay on the system. This leftover packages are no longer used by anything else and can be removed.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt autoremove
+</code>
+    </pre>
+    <p>This command will remove all unused from your system.</p>
+    <h3>Updating package index:</h3>
+    <p><code>apt</code> package index is nothing but a database that stores records of available packages that are enabled on your system.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt update
+</code>
+    </pre>
+    <p>This command will update the package index on your system.</p>
+    <h3>Upgrading packages:</h3>
+    <p>If you want to install the latest updates for your installed packages you may want to run this command.</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt upgrade
+</code>
+    </pre>
+    <p>The command doesn't upgrade any packages that require removal of installed packages.</p>
+    <p>If you want to upgrade a single package, pass the package name:</p>
+    <h5>Syntax:</h5>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo apt upgrade package_name
+</code>
+    </pre>
+    <p>This command will upgrade your packages to the latest version.</p>
+  </body></html>

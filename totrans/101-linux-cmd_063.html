@@ -1,0 +1,314 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>tar</code> command</h1>
+    <p>The <code>tar</code> command  stands for tape archive, is used to create Archive and extract the Archive files. This command  provides archiving functionality in Linux. We can use tar command to create compressed or uncompressed Archive files and also maintain and modify them.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To create a tar file in abel directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">tar -cvf file-14-09-12.tar /home/abel/
+</code>
+    </pre>
+    <ol start="2">
+      <li>To un-tar a file in the current directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang=""> tar -xvf file-14-09-12.tar
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">tar [options] [archive-file] [file or directory to be archived
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Use Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">Creates Archive</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-x</code>
+          </td>
+          <td align="left">Extract the archive</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">Creates archive with given filename</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-t</code>
+          </td>
+          <td align="left">Displays or lists files in archived file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">Archives and adds to an existing archive file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">Displays Verbose Information</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-A</code>
+          </td>
+          <td align="left">Concatenates the archive files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-z</code>
+          </td>
+          <td align="left">zip, tells tar command that creates tar file using gzip</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-j</code>
+          </td>
+          <td align="left">Filter archive tar file using tbzip</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>w</code>
+          </td>
+          <td align="left">Verify a archive file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>r</code>
+          </td>
+          <td align="left">update or add file or directory in already existed .tar file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-?</code>
+          </td>
+          <td align="left">Displays a short summary of the project</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">Find the difference between an archive and file system</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--usage</code>
+          </td>
+          <td align="left">shows available tar options</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">Displays the installed tar version</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--show-defaults</code>
+          </td>
+          <td align="left">Shows default enabled options</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Option Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>--check-device</code>
+          </td>
+          <td align="left">Check device numbers during incremental archive</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left">Used to allow compatibility with GNU-format incremental ackups</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--hole-detection</code>
+          </td>
+          <td align="left">Used to detect holes in the sparse files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-G</code>
+          </td>
+          <td align="left">Used to allow compatibility with old GNU-format incremental backups</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--ignore-failed-read</code>
+          </td>
+          <td align="left">Don't exit the program on file read errors</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--level</code>
+          </td>
+          <td align="left">Set the dump level for created archives</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">Assume the archive is seekable</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--no-check-device</code>
+          </td>
+          <td align="left">Do not check device numbers when creating archives</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--no-seek</code>
+          </td>
+          <td align="left">Assume the archive is not seekable</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--occurrence=N</code>
+          </td>
+          <td align="left">`Process only the Nth occurrence of each file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--restrict</code>
+          </td>
+          <td align="left">`Disable use of potentially harmful options</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--sparse-version=MAJOR,MINOR</code>
+          </td>
+          <td align="left">Set version of the sparce format to use</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-S</code>
+          </td>
+          <td align="left">Handle sparse files efficiently.</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Overwright control Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-k</code>
+          </td>
+          <td align="left">Don't replace existing files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--keep-newer-files</code>
+          </td>
+          <td align="left">Don't replace existing files that are newer than the archives version</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--keep-directory-symlink</code>
+          </td>
+          <td align="left">Don't replace existing symlinks</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--no-overwrite-dir</code>
+          </td>
+          <td align="left">Preserve metadata of existing directories</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--one-top-level=DIR</code>
+          </td>
+          <td align="left">Extract all files into a DIR</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--overwrite</code>
+          </td>
+          <td align="left">Overwrite existing files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--overwrite-dir</code>
+          </td>
+          <td align="left">Overwrite metadata of directories</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--recursive-unlink</code>
+          </td>
+          <td align="left">Recursivly remove all files in the directory before extracting</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--remove-files</code>
+          </td>
+          <td align="left">Remove files after adding them to a directory</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--skip-old-files</code>
+          </td>
+          <td align="left">Don't replace existing files when extracting</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">Remove each file before extracting over it</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">Verify the archive after writing it</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

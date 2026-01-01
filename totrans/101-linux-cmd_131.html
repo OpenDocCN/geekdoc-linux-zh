@@ -1,0 +1,153 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>shuf</code> command</h1>
+    <p>The <code>shuf</code> command in Linux writes a random permutation of the input lines to standard output. It pseudo randomizes an input in the same way as the cards are shuffled. It is a part of GNU Coreutils and is not a part of POSIX. This command reads either from a file or standard input in bash and randomizes those input lines and displays the output.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-php hljs php" data-lang="php"><span class="hljs-comment"># file shuf</span>
+shuf [OPTION] [FILE]
+
+<span class="hljs-comment"># list shuf</span>
+shuf -e [OPTION]... [ARG]
+
+<span class="hljs-comment"># range shuf</span>
+shuf -i LO-HI [OPTION]
+</code>
+    </pre>
+    <p>Like other Linux commands, <code>shuf</code> command comes with <code>-–help</code> option:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">[user@home ~]$ shuf --help
+<span class="hljs-attr">Usage</span>: shuf [OPTION]... [FILE]
+  <span class="hljs-attr">or</span>:  shuf -e [OPTION]... [ARG]...
+  or:  shuf -i LO-HI [OPTION]...
+Write a random permutation <span class="hljs-keyword">of</span> the input lines to standard output.
+
+With no FILE, or when FILE is -, read standard input.
+
+Mandatory <span class="hljs-built_in">arguments</span> to long options are mandatory <span class="hljs-keyword">for</span> short options too.
+  -e, --echo                treat each ARG <span class="hljs-keyword">as</span> an input line
+  -i, --input-range=LO-HI   treat each number LO through HI <span class="hljs-keyword">as</span> an input line
+  -n, --head-count=COUNT    output at most COUNT lines
+  -o, --output=FILE         write result to FILE instead <span class="hljs-keyword">of</span> standard output
+      --random-source=FILE  <span class="hljs-keyword">get</span> random bytes from FILE
+  -r, --repeat              output lines can be repeated
+  -z, --zero-terminated     line delimiter is NUL, not newline
+</code>
+    </pre>
+    <h2>Examples:</h2>
+    <h3>shuf command without any option or argument.</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">shuf
+</code>
+    </pre>
+    <p>When <code>shuf</code> command is used without any argument in the command line, it takes input from the user until <code>CTRL-D</code> is entered to terminate the set of inputs. It displays the input lines in a shuffled form. If <code>1, 2, 3, 4 and 5</code> are entered as input lines, then it generates <code>1, 2, 3, 4 and 5</code> in random order in the output as seen in the illustration below:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">[user@home ~]$ shuf
+1
+2
+3
+4
+5
+
+4
+5
+1
+2
+3
+</code>
+    </pre>
+    <p>Consider an example where Input is taken  from the pipe:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">{
+seq 5 | shuf
+}
+</code>
+    </pre>
+    <p><code>seq 5</code> returns the integers sequentially from <code>1</code> to <code>5</code> while the <code>shuf</code> command takes it as input and shuffles the content i.e, the integers from <code>1</code> to <code>5</code>. Hence, <code>1</code> to <code>5</code> is displayed as output in random order.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">[user@home ~]$ {
+&gt; seq 5 | shuf
+&gt; }
+5
+4
+2
+3
+1
+</code>
+    </pre>
+    <h3>File shuf</h3>
+    <p>When <code>shuf</code> command is used without <code>-e</code> or <code>-i</code> option, then it operates as a file shuf i.e, it shuffles the contents of the file. The <code>&lt;file_name&gt;</code> is the last parameter of the <code>shuf</code> command and if it is not given, then input has to be provided from the shell or pipe.</p>
+    <p>Consider an example where input is taken from a file:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">shuf file.txt
+</code>
+    </pre>
+    <p>Suppose file.txt contains 6 lines, then the shuf command displays the input lines in random order as output.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">[user@home ~]$ cat file.txt
+line-1
+line-2
+line-3
+line-4
+line-5
+
+[user@home ~]$ shuf file.txt
+line-5
+line-4
+line-1
+line-3
+line-2
+</code>
+    </pre>
+    <p>Any number of lines can be randomized by using <code>-n</code> option.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">shuf -n 2 file.txt
+</code>
+    </pre>
+    <p>This will display any two random lines from the file.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">line-5
+line-2
+</code>
+    </pre>
+    <h3>List shuf</h3>
+    <p>When <code>-e</code> option is used with shuf command, it works as a list shuf. The arguments of the command are taken as the input line for the shuf.</p>
+    <p>Consider an example:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">shuf -e A B C D E
+</code>
+    </pre>
+    <p>It will take <code>A, B, C, D, E</code> as input lines, and will shuffle them to display the output.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">A
+C
+B
+D
+E
+</code>
+    </pre>
+    <p>Any number of input lines can be displayed using the <code>-n</code> option along with <code>-e</code> option.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">shuf -e -n 2 A B C D E
+</code>
+    </pre>
+    <p>This will display any two of the inputs.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">E
+A
+</code>
+    </pre>
+    <h3>Range shuf</h3>
+    <p>When <code>-i</code> option is used along with <code>shuf</code> command, it acts as a <code>range shuf</code>. It requires a range of input as input where <code>L0</code> is the lower bound while <code>HI</code> is the upper bound. It displays integers from <code>L0-HI</code> in shuffled form.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">[user@home ~]$ shuf -i 1-5
+4
+1
+3
+2
+5
+</code>
+    </pre>
+    <h2>Conclusion</h2>
+    <p>The <code>shuf</code> command helps you randomize input lines. And there are features to limit the number of output lines, repeat lines and even generate random positive integers. Once you're done practicing whatever we've discussed here, head to the tool's <a href="https://linux.die.net/man/1/shuf">man page</a> to know more about it.</p>
+  </body></html>

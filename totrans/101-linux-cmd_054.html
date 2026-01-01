@@ -1,0 +1,78 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>zip</code> command</h1>
+    <p>The <code>zip</code> command is used to compress files and reduce their size.
+It outputs an archive containing one or more compressed files or directories.</p>
+    <h3>Examples:</h3>
+    <p>In order to compress a single file with the <code>zip</code> command the syntax would be the following:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">zip myZipFile.zip filename.txt
+</code>
+    </pre>
+    <p>This also works with multiple files as well:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">zip multipleFiles.zip file1.txt file2.txt
+</code>
+    </pre>
+    <p>If you are compressing a whole directory, don't forget to add the <code>-r</code> flag:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">zip -r zipFolder.zip myFolder/
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">zip [OPTION] zipFileName filesList
+</code>
+    </pre>
+    <h3>Possible options:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">Removes the file from the zip archive.  After creating a zip file, you can remove a file from the archive using the <code>-d</code> option</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">Updates the file in the zip archive. This option can be used to update the specified list of files or add new files to the existing zip file. Update an existing entry in the zip archive only if it has been modified more recently than the version already in the zip archive.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m</code>
+          </td>
+          <td align="left">Deletes the original files after zipping.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">To zip a directory recursively, it will recursively zip the files in a directory. This option helps to zip all the files present in the specified directory.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-x</code>
+          </td>
+          <td align="left">Exclude the files in creating the zip</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">Verbose mode or print diagnostic version info. Normally, when applied to real operations, this option enables the display of a progress indicator during compression and requests verbose diagnostic info about zip file structure oddities</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

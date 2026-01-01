@@ -1,0 +1,47 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>crontab</code> command</h1>
+    <p><code>crontab</code> is used to maintain crontab files for individual users (Vixie Cron)</p>
+    <p>crontab is the program used to install, uninstall or list the tables used to drive the cron(8) daemon in Vixie Cron.  Each user can have their own crontab, and though these are files in <code>/var/spool/cron/crontabs</code>, they are not intended to be edited directly.</p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">crontab [ -u user ] file
+crontab [ -u user ] [ -i ] { -e | -l | -r }
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>The -l option causes the current crontab to be displayed on standard output.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">crontab -l
+</code>
+    </pre>
+    <ol start="2">
+      <li>The -r option causes the current crontab to be removed.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">crontab -r
+</code>
+    </pre>
+    <ol start="3">
+      <li>The -e option is used to edit the current crontab using the editor specified by the VISUAL or EDITOR environment variables.  After you exit from the editor,  the modified crontab will be installed automatically.  If neither of the environment variables is defined, then the default editor /usr/bin/editor is used.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">crontab -e
+</code>
+    </pre>
+    <ol start="4">
+      <li>You can specify the user you want to edit the crontab for.  Every user has its own crontab.  Assume you have a <code>www-data</code> user, which is in fact the user Apache is default running as. If you want to edit the crontab for this user you can run the following command</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">crontab -u www-data -e 
+</code>
+    </pre>
+    <h3>Help Command</h3>
+    <p>Run below command to view the complete guide to <code>crontab</code> command.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">man crontab
+</code>
+    </pre>
+  </body></html>

@@ -1,0 +1,90 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>expr</code> command</h1>
+    <p>The <code>expr</code> command evaluates a given expression and displays its corresponding output. It is used for basic operations like addition, subtraction, multiplication, division, and modulus on integers and Evaluating regular expressions, string operations like substring, length of strings etc.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">expr expression
+</code>
+    </pre>
+    <h2>Few Examples:</h2>
+    <ol>
+      <li>
+        <h3>Perform basic arithmetic operations using expr command</h3>
+      </li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">expr 7 + 14
+expr 7 * 8
+</code>
+    </pre>
+    <ol start="2">
+      <li>
+        <h3>Comparing two expressions</h3>
+      </li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">x=<span class="hljs-number">10</span>
+y=<span class="hljs-number">20</span>
+res=`expr $x = $y`
+<span class="hljs-keyword">echo</span> $res
+</code>
+    </pre>
+    <ol start="3">
+      <li>
+        <h3>Match the numbers of characters in two strings</h3>
+      </li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">expr alphabet : alpha
+</code>
+    </pre>
+    <ol start="4">
+      <li>
+        <h3>Find the modulus value</h3>
+      </li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">expr 20 % 30  
+</code>
+    </pre>
+    <ol start="5">
+      <li>
+        <h3>Extract the substring</h3>
+      </li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">a=HelloWorld
+b=`expr substr $a <span class="hljs-number">6</span> <span class="hljs-number">10</span>`
+<span class="hljs-keyword">echo</span> $b
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">output version information and exit</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">Display this help and exit</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>For more details: <a href="https://en.wikipedia.org/wiki/Expr">Expr on Wikipedia</a></p>
+  </body></html>

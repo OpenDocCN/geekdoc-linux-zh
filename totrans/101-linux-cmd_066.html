@@ -1,0 +1,398 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>iptables</code> command</h1>
+    <p>The <code>iptables</code> command is a powerful firewall administration tool for Linux systems. It allows you to configure the Linux kernel firewall (netfilter) by setting up, maintaining, and inspecting the tables of IP packet filter rules.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">iptables [options] [chain] [rule-specification] [target]
+</code>
+    </pre>
+    <h2>Basic Concepts</h2>
+    <h3>Tables</h3>
+    <ul>
+      <li><strong>filter</strong>: Default table for packet filtering (INPUT, OUTPUT, FORWARD)</li>
+      <li><strong>nat</strong>: Network Address Translation (PREROUTING, POSTROUTING, OUTPUT)</li>
+      <li><strong>mangle</strong>: Packet alteration (PREROUTING, POSTROUTING, INPUT, OUTPUT, FORWARD)</li>
+      <li><strong>raw</strong>: Connection tracking exemption (PREROUTING, OUTPUT)</li>
+    </ul>
+    <h3>Chains</h3>
+    <ul>
+      <li><strong>INPUT</strong>: Incoming packets to local system</li>
+      <li><strong>OUTPUT</strong>: Outgoing packets from local system</li>
+      <li><strong>FORWARD</strong>: Packets routed through the system</li>
+      <li><strong>PREROUTING</strong>: Packets before routing decision</li>
+      <li><strong>POSTROUTING</strong>: Packets after routing decision</li>
+    </ul>
+    <h3>Targets</h3>
+    <ul>
+      <li><strong>ACCEPT</strong>: Allow the packet</li>
+      <li><strong>DROP</strong>: Silently discard the packet</li>
+      <li><strong>REJECT</strong>: Discard and send error message</li>
+      <li><strong>LOG</strong>: Log the packet and continue processing</li>
+      <li><strong>DNAT</strong>: Destination NAT</li>
+      <li><strong>SNAT</strong>: Source NAT</li>
+      <li><strong>MASQUERADE</strong>: Dynamic source NAT</li>
+    </ul>
+    <h2>Basic Commands</h2>
+    <h3>Listing Rules</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># List all rules</span>
+sudo iptables -L
+
+<span class="hljs-comment"># List rules with line numbers</span>
+sudo iptables -L --line-numbers
+
+<span class="hljs-comment"># List rules in specific table</span>
+sudo iptables -t nat -L
+sudo iptables -t mangle -L
+
+<span class="hljs-comment"># Show packet and byte counters</span>
+sudo iptables -L -v
+
+<span class="hljs-comment"># Show rules in iptables-save format</span>
+sudo iptables -S
+</code>
+    </pre>
+    <h3>Basic Rule Operations</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Add rule to end of chain</span>
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="hljs-comment"># Insert rule at specific position</span>
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+
+<span class="hljs-comment"># Delete specific rule</span>
+sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="hljs-comment"># Delete rule by line number</span>
+sudo iptables -D INPUT 3
+
+<span class="hljs-comment"># Replace rule at specific position</span>
+sudo iptables -R INPUT 1 -p tcp --dport 443 -j ACCEPT
+</code>
+    </pre>
+    <h2>Common Rule Examples</h2>
+    <h3>1. Allow/Block Specific Ports</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow SSH (port 22)</span>
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="hljs-comment"># Allow HTTP (port 80)</span>
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+<span class="hljs-comment"># Allow HTTPS (port 443)</span>
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+<span class="hljs-comment"># Block specific port</span>
+sudo iptables -A INPUT -p tcp --dport 8080 -j DROP
+</code>
+    </pre>
+    <h3>2. Allow/Block by IP Address</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow specific IP</span>
+sudo iptables -A INPUT -s 192.168.1.100 -j ACCEPT
+
+<span class="hljs-comment"># Block specific IP</span>
+sudo iptables -A INPUT -s 192.168.1.50 -j DROP
+
+<span class="hljs-comment"># Allow subnet</span>
+sudo iptables -A INPUT -s 192.168.1.0/24 -j ACCEPT
+
+<span class="hljs-comment"># Block IP range</span>
+sudo iptables -A INPUT -m iprange --src-range 192.168.1.100-192.168.1.200 -j DROP
+</code>
+    </pre>
+    <h3>3. Allow/Block by Interface</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow traffic on loopback</span>
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+<span class="hljs-comment"># Allow on specific interface</span>
+sudo iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+
+<span class="hljs-comment"># Block on specific interface</span>
+sudo iptables -A INPUT -i eth1 -j DROP
+</code>
+    </pre>
+    <h2>Advanced Rules</h2>
+    <h3>1. Stateful Connections</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow established and related connections</span>
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Allow new connections on specific ports</span>
+sudo iptables -A INPUT -m state --state NEW -p tcp --dport 22 -j ACCEPT
+</code>
+    </pre>
+    <h3>2. Rate Limiting</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Limit SSH connections (6 per minute)</span>
+sudo iptables -A INPUT -p tcp --dport 22 -m <span class="hljs-built_in">limit</span> --<span class="hljs-built_in">limit</span> 6/min -j ACCEPT
+
+<span class="hljs-comment"># Limit ping requests</span>
+sudo iptables -A INPUT -p icmp --icmp-type <span class="hljs-built_in">echo</span>-request -m <span class="hljs-built_in">limit</span> --<span class="hljs-built_in">limit</span> 1/sec -j ACCEPT
+</code>
+    </pre>
+    <h3>3. Time-based Rules</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow access during business hours</span>
+sudo iptables -A INPUT -p tcp --dport 80 -m time --timestart 09:00 --timestop 17:00 -j ACCEPT
+
+<span class="hljs-comment"># Allow access on weekdays</span>
+sudo iptables -A INPUT -p tcp --dport 22 -m time --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
+</code>
+    </pre>
+    <h3>4. Multiport Rules</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Allow multiple ports</span>
+sudo iptables -A INPUT -p tcp -m multiport --dports 22,80,443 -j ACCEPT
+
+<span class="hljs-comment"># Block multiple ports</span>
+sudo iptables -A INPUT -p tcp -m multiport --dports 135,445,1433 -j DROP
+</code>
+    </pre>
+    <h2>NAT Configuration</h2>
+    <h3>1. Source NAT (SNAT)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Static SNAT</span>
+sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j SNAT --to-source 203.0.113.1
+
+<span class="hljs-comment"># Dynamic SNAT (Masquerading)</span>
+sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
+</code>
+    </pre>
+    <h3>2. Destination NAT (DNAT)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Port forwarding</span>
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to-destination 192.168.1.100:80
+
+<span class="hljs-comment"># Forward to different IP</span>
+sudo iptables -t nat -A PREROUTING -d 203.0.113.1 -j DNAT --to-destination 192.168.1.100
+</code>
+    </pre>
+    <h2>Policy Configuration</h2>
+    <h3>Default Policies</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Set default policies</span>
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+
+<span class="hljs-comment"># View current policies</span>
+sudo iptables -L | grep <span class="hljs-string">"policy"</span>
+</code>
+    </pre>
+    <h3>Chain Management</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create custom chain</span>
+sudo iptables -N CUSTOM_CHAIN
+
+<span class="hljs-comment"># Delete custom chain (must be empty)</span>
+sudo iptables -X CUSTOM_CHAIN
+
+<span class="hljs-comment"># Flush specific chain</span>
+sudo iptables -F INPUT
+
+<span class="hljs-comment"># Flush all chains</span>
+sudo iptables -F
+</code>
+    </pre>
+    <h2>Logging</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Log dropped packets</span>
+sudo iptables -A INPUT -j LOG --<span class="hljs-built_in">log</span>-prefix <span class="hljs-string">"DROPPED: "</span> --<span class="hljs-built_in">log</span>-level 4
+
+<span class="hljs-comment"># Log before dropping</span>
+sudo iptables -A INPUT -p tcp --dport 23 -j LOG --<span class="hljs-built_in">log</span>-prefix <span class="hljs-string">"TELNET_ATTEMPT: "</span>
+sudo iptables -A INPUT -p tcp --dport 23 -j DROP
+
+<span class="hljs-comment"># View logs</span>
+sudo tail -f /var/<span class="hljs-built_in">log</span>/syslog | grep <span class="hljs-string">"DROPPED:"</span>
+</code>
+    </pre>
+    <h2>Common Firewall Configurations</h2>
+    <h3>1. Basic Desktop Firewall</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Clear existing rules</span>
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+
+<span class="hljs-comment"># Default policies</span>
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+
+<span class="hljs-comment"># Allow loopback</span>
+sudo iptables -A INPUT -i lo -j ACCEPT
+
+<span class="hljs-comment"># Allow established connections</span>
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Allow SSH</span>
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="hljs-comment"># Allow ping</span>
+sudo iptables -A INPUT -p icmp --icmp-type <span class="hljs-built_in">echo</span>-request -j ACCEPT
+</code>
+    </pre>
+    <h3>2. Web Server Firewall</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Basic web server configuration</span>
+sudo iptables -F
+
+<span class="hljs-comment"># Default policies</span>
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+
+<span class="hljs-comment"># Allow loopback and established connections</span>
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Allow SSH (limit attempts)</span>
+sudo iptables -A INPUT -p tcp --dport 22 -m <span class="hljs-built_in">limit</span> --<span class="hljs-built_in">limit</span> 6/min -j ACCEPT
+
+<span class="hljs-comment"># Allow HTTP/HTTPS</span>
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+<span class="hljs-comment"># Allow ping</span>
+sudo iptables -A INPUT -p icmp --icmp-type <span class="hljs-built_in">echo</span>-request -j ACCEPT
+</code>
+    </pre>
+    <h3>3. Router/Gateway Configuration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Enable IP forwarding</span><span class="hljs-built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward
+
+<span class="hljs-comment"># NAT for internal network</span>
+sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth0 -j MASQUERADE
+
+<span class="hljs-comment"># Allow forwarding for established connections</span>
+sudo iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Allow forwarding from internal network</span>
+sudo iptables -A FORWARD -s 192.168.1.0/24 -j ACCEPT
+</code>
+    </pre>
+    <h2>Persistence</h2>
+    <h3>1. Save/Restore Rules</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Save current rules</span>
+sudo iptables-save &gt; /etc/iptables/rules.v4
+
+<span class="hljs-comment"># Restore rules</span>
+sudo iptables-restore &lt; /etc/iptables/rules.v4
+
+<span class="hljs-comment"># Install persistence package (Ubuntu/Debian)</span>
+sudo apt install iptables-persistent
+</code>
+    </pre>
+    <h3>2. Automatic Loading</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create systemd service</span>
+sudo vim /etc/systemd/system/iptables-restore.service
+
+[Unit]
+Description=Restore iptables firewall rules
+Before=network-pre.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables-restore /etc/iptables/rules.v4
+
+[Install]
+WantedBy=multi-user.target
+
+<span class="hljs-comment"># Enable service</span>
+sudo systemctl <span class="hljs-built_in">enable</span> iptables-restore.service
+</code>
+    </pre>
+    <h2>Troubleshooting</h2>
+    <h3>1. Testing Rules</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Test connectivity</span>
+telnet target-ip port
+nc -zv target-ip port
+
+<span class="hljs-comment"># Check if rule matches</span>
+sudo iptables -L -v -n | grep <span class="hljs-string">"rule-description"</span>
+
+<span class="hljs-comment"># Monitor rule usage</span>
+watch <span class="hljs-string">"sudo iptables -L -v -n"</span>
+</code>
+    </pre>
+    <h3>2. Debugging</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Enable all logging temporarily</span>
+sudo iptables -A INPUT -j LOG --<span class="hljs-built_in">log</span>-prefix <span class="hljs-string">"INPUT: "</span>
+sudo iptables -A OUTPUT -j LOG --<span class="hljs-built_in">log</span>-prefix <span class="hljs-string">"OUTPUT: "</span>
+sudo iptables -A FORWARD -j LOG --<span class="hljs-built_in">log</span>-prefix <span class="hljs-string">"FORWARD: "</span>
+
+<span class="hljs-comment"># Monitor logs</span>
+sudo tail -f /var/<span class="hljs-built_in">log</span>/syslog | grep <span class="hljs-string">"INPUT:\|OUTPUT:\|FORWARD:"</span>
+</code>
+    </pre>
+    <h3>3. Emergency Access</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Temporary rule to allow all (emergency)</span>
+sudo iptables -I INPUT 1 -j ACCEPT
+
+<span class="hljs-comment"># Flush all rules (removes all protection)</span>
+sudo iptables -F
+sudo iptables -X
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+</code>
+    </pre>
+    <h2>Security Best Practices</h2>
+    <h3>1. Default Deny Policy</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always start with deny-all policy</span>
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+<span class="hljs-comment"># Keep OUTPUT as ACCEPT for normal operation</span>
+</code>
+    </pre>
+    <h3>2. Order Matters</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># More specific rules should come first</span>
+sudo iptables -I INPUT 1 -s 192.168.1.100 -p tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+</code>
+    </pre>
+    <h3>3. Rate Limiting Critical Services</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Protect SSH from brute force</span>
+sudo iptables -A INPUT -p tcp --dport 22 -m recent --<span class="hljs-built_in">set</span> --name SSH
+sudo iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 60 --hitcount 3 --name SSH -j DROP
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+</code>
+    </pre>
+    <h2>Performance Considerations</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use connection tracking for better performance</span>
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Place frequently matched rules first</span>
+sudo iptables -I INPUT 1 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="hljs-comment"># Use specific matches to reduce processing</span>
+sudo iptables -A INPUT -p tcp --dport 80 -s 192.168.1.0/24 -j ACCEPT
+</code>
+    </pre>
+    <h2>Important Notes</h2>
+    <ul>
+      <li>Always test rules before making them permanent</li>
+      <li>Keep a way to access the system if rules block you out</li>
+      <li>Use specific protocols and ports rather than blanket rules</li>
+      <li>Monitor logs to understand traffic patterns</li>
+      <li>Document your firewall rules for future reference</li>
+      <li>Regular backup of working configurations</li>
+      <li>Consider using UFW for simpler firewall management</li>
+    </ul>
+    <p>The <code>iptables</code> command provides comprehensive firewall capabilities but requires careful planning and testing to avoid security issues or system lockouts.</p>
+    <p>For more details, check the manual: <code>man iptables</code></p>
+  </body></html>

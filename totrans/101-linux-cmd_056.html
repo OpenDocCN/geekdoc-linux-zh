@@ -1,0 +1,70 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>shutdown</code> command</h1>
+    <p>The <code>shutdown</code> command lets you bring your system down in a secure way. When <code>shutdown</code> is executed the system will notify all logged-in users and disallow further logins.
+You have the option to shut down your system immediately or after a specific time.</p>
+    <p>Only users with root (or sudo) privileges can use the <code>shutdown</code> command.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Shut down your system immediately:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo shutdown now
+</code>
+    </pre>
+    <ol start="2">
+      <li>Shut down your system after 10 minutes:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo shutdown +10
+</code>
+    </pre>
+    <ol start="3">
+      <li>Shut down your system with a message after 5 minutes:</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">sudo shutdown +<span class="hljs-number">5</span> <span class="hljs-string">"System will shutdown in 5 minutes"</span>
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">shutdown [OPTIONS] [TIME] [MESSAGE]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Reboot the system</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Cancel an scheduled shut down</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

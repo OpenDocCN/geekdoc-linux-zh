@@ -1,0 +1,448 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>su</code> command</h1>
+    <p>The <code>su</code> (substitute user) command allows you to run commands as another user account. It's commonly used to switch to the root account for administrative tasks or to run commands as a different user without logging out and logging back in.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">su [OPTIONS] [-] [USER [ARGUMENT...]]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>User Switching</strong>: Switch to any user account on the system</li>
+      <li><strong>Environment Control</strong>: Choose whether to inherit or reset environment variables</li>
+      <li><strong>Shell Selection</strong>: Specify which shell to use</li>
+      <li><strong>Group Management</strong>: Switch primary and supplementary groups</li>
+      <li><strong>Command Execution</strong>: Run specific commands as another user</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Switching to Root</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Switch to root user (requires root password)</span>
+su
+
+<span class="hljs-comment"># Switch to root with login shell (recommended)</span>
+su -
+
+<span class="hljs-comment"># Alternative syntax for login shell</span>
+su -l
+su --login
+</code>
+    </pre>
+    <h3>Switching to Specific User</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Switch to specific user</span>
+su username
+
+<span class="hljs-comment"># Switch to user with login shell</span>
+su - username
+su -l username
+
+<span class="hljs-comment"># Switch to user and run specific command</span>
+su - username -c <span class="hljs-string">"whoami"</span>
+</code>
+    </pre>
+    <h2>Environment Handling</h2>
+    <h3>Login Shell vs Non-Login Shell</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Non-login shell (keeps current environment)</span>
+su username
+<span class="hljs-comment"># Current directory and environment variables are preserved</span>
+
+<span class="hljs-comment"># Login shell (starts fresh environment)</span>
+su - username
+<span class="hljs-comment"># Changes to user's home directory and loads their profile</span>
+</code>
+    </pre>
+    <h3>Environment Variable Control</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Preserve current environment</span>
+su -m username
+su --preserve-environment username
+
+<span class="hljs-comment"># Preserve specific environment variables</span>
+su -w HOME,TERM username
+su --whitelist-environment=HOME,TERM username
+
+<span class="hljs-comment"># Reset environment but preserve specific variables</span>
+su - username --preserve-environment=PATH
+</code>
+    </pre>
+    <h2>Advanced Usage</h2>
+    <h3>Group Management</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Switch user and primary group</span>
+su -g developers username
+
+<span class="hljs-comment"># Switch with supplementary groups</span>
+su -G developers,admins username
+
+<span class="hljs-comment"># Check current groups</span>
+su - username -c <span class="hljs-string">"groups"</span>
+</code>
+    </pre>
+    <h3>Shell Selection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use specific shell</span>
+su -s /bin/bash username
+su --shell=/bin/zsh username
+
+<span class="hljs-comment"># Use shell if allowed by /etc/shells</span>
+su -s /usr/bin/fish username
+
+<span class="hljs-comment"># Check available shells</span>
+cat /etc/shells
+</code>
+    </pre>
+    <h3>Command Execution</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Run single command as another user</span>
+su - username -c <span class="hljs-string">"ls -la /home/username"</span>
+
+<span class="hljs-comment"># Run multiple commands</span>
+su - username -c <span class="hljs-string">"cd /tmp &amp;&amp; ls -la &amp;&amp; pwd"</span>
+
+<span class="hljs-comment"># Run script as another user</span>
+su - username -c <span class="hljs-string">"/path/to/script.sh"</span>
+
+<span class="hljs-comment"># Run command with arguments</span>
+su - username -c <span class="hljs-string">"grep 'pattern' /var/log/syslog"</span>
+</code>
+    </pre>
+    <h2>Practical Examples</h2>
+    <h3>System Administration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Switch to root for administrative tasks</span>
+su -
+<span class="hljs-comment"># Now you can run administrative commands</span>
+
+<span class="hljs-comment"># Run single administrative command</span>
+su -c <span class="hljs-string">"systemctl restart apache2"</span>
+
+<span class="hljs-comment"># Edit system configuration file</span>
+su -c <span class="hljs-string">"nano /etc/hosts"</span>
+
+<span class="hljs-comment"># Check system logs</span>
+su -c <span class="hljs-string">"tail -f /var/log/syslog"</span>
+</code>
+    </pre>
+    <h3>Development Workflows</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Switch to application user for deployment</span>
+su - appuser -c <span class="hljs-string">"cd /opt/myapp &amp;&amp; ./deploy.sh"</span>
+
+<span class="hljs-comment"># Run application as specific user</span>
+su - www-data -c <span class="hljs-string">"/usr/bin/php /var/www/html/script.php"</span>
+
+<span class="hljs-comment"># Test permissions as different user</span>
+su - testuser -c <span class="hljs-string">"ls -la /shared/directory"</span>
+</code>
+    </pre>
+    <h3>User Management Tasks</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create file as specific user</span>
+su - username -c <span class="hljs-string">"touch /home/username/newfile.txt"</span>
+
+<span class="hljs-comment"># Check user's environment</span>
+su - username -c <span class="hljs-string">"env | sort"</span>
+
+<span class="hljs-comment"># Run user's shell configuration</span>
+su - username -c <span class="hljs-string">"source ~/.bashrc &amp;&amp; echo \$PATH"</span>
+</code>
+    </pre>
+    <h2>Security Considerations</h2>
+    <h3>Password Requirements</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># su requires the target user's password</span>
+su username  <span class="hljs-comment"># Requires username's password</span>
+
+<span class="hljs-comment"># Root can switch to any user without password</span>
+sudo su - username  <span class="hljs-comment"># Uses sudo authentication</span>
+
+<span class="hljs-comment"># Check who can use su</span>
+grep su /etc/group
+</code>
+    </pre>
+    <h3>Audit and Logging</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check su usage in logs</span>
+sudo grep su /var/<span class="hljs-built_in">log</span>/auth.log
+
+<span class="hljs-comment"># Monitor current su sessions</span>
+w
+who
+
+<span class="hljs-comment"># Check login history</span>
+last
+</code>
+    </pre>
+    <h3>Safe Usage Patterns</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always use login shell for administrative tasks</span>
+su -  <span class="hljs-comment"># Better than just 'su'</span>
+
+<span class="hljs-comment"># Use sudo instead of su when possible</span>
+sudo <span class="hljs-built_in">command</span>  <span class="hljs-comment"># Better than 'su -c command'</span>
+
+<span class="hljs-comment"># Limit time as root</span>
+su -c <span class="hljs-string">"command1 &amp;&amp; command2 &amp;&amp; exit"</span>
+</code>
+    </pre>
+    <h2>Comparison with Sudo</h2>
+    <h3>When to Use <code>su</code></h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Multiple administrative commands</span>
+su -
+<span class="hljs-comment"># Run several commands as root</span>
+<span class="hljs-built_in">exit</span>
+
+<span class="hljs-comment"># Interactive root session</span>
+su -
+<span class="hljs-comment"># Work as root for extended period</span>
+</code>
+    </pre>
+    <h3>When to Use <code>sudo</code></h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Single command execution</span>
+sudo systemctl restart service
+
+<span class="hljs-comment"># Better security and logging</span>
+sudo -u username <span class="hljs-built_in">command</span>
+
+<span class="hljs-comment"># Temporary privilege escalation</span>
+sudo apt update &amp;&amp; sudo apt upgrade
+</code>
+    </pre>
+    <h2>Configuration and Customization</h2>
+    <h3>PAM Configuration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check PAM configuration for su</span>
+cat /etc/pam.d/su
+
+<span class="hljs-comment"># Restrict su to wheel group (some distributions)</span>
+<span class="hljs-comment"># Edit /etc/pam.d/su and uncomment:</span>
+<span class="hljs-comment"># auth required pam_wheel.so use_uid</span>
+</code>
+    </pre>
+    <h3>Shell Configuration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check if shell is allowed</span>
+grep username /etc/passwd
+cat /etc/shells
+
+<span class="hljs-comment"># Set shell for user</span>
+sudo chsh -s /bin/bash username
+</code>
+    </pre>
+    <h3>Environment Customization</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Customize login environment</span>
+        <span class="hljs-comment"># Edit ~/.profile, ~/.bashrc, or ~/.bash_profile</span>
+        <span class="hljs-comment"># Set specific environment for su sessions</span>
+        <span class="hljs-comment"># Create ~/.surc or modify shell configuration</span>
+      </code>
+    </pre>
+    <h2>Troubleshooting</h2>
+    <h3>Common Issues</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Authentication failure</span>
+su: Authentication failure
+<span class="hljs-comment"># Check password, user existence, account status</span>
+
+<span class="hljs-comment"># Permission denied</span>
+su: Permission denied
+<span class="hljs-comment"># Check PAM configuration, wheel group membership</span>
+
+<span class="hljs-comment"># Shell not allowed</span>
+su: Warning: shell not allowed
+<span class="hljs-comment"># Add shell to /etc/shells or use -s option</span>
+</code>
+    </pre>
+    <h3>Debugging</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check user account status</span>
+sudo passwd -S username
+
+<span class="hljs-comment"># Verify user existence</span>
+id username
+grep username /etc/passwd
+
+<span class="hljs-comment"># Check group membership</span>
+groups username
+
+<span class="hljs-comment"># Test with verbose output</span>
+su -v username
+</code>
+    </pre>
+    <h2>Script Integration</h2>
+    <h3>Using su in Scripts</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Script to run commands as different user</span><span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$EUID</span>"</span> -ne 0 ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Please run as root"</span>
+    <span class="hljs-built_in">exit</span> 1
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># Switch to app user and run commands</span>
+su - appuser -c <span class="hljs-string">"
+    cd /opt/myapp
+    ./backup.sh
+    ./cleanup.sh
+"</span>
+</code>
+    </pre>
+    <h3>Automated Tasks</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Cron job running as specific user</span><span class="hljs-comment"># Add to root's crontab:</span><span class="hljs-comment"># 0 2 * * * su - backupuser -c '/usr/local/bin/backup.sh'</span><span class="hljs-comment"># System service running as user</span>
+su - serviceuser -c <span class="hljs-string">'/opt/service/start.sh'</span> &amp;
+</code>
+    </pre>
+    <h2>Options Reference</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Option</strong>
+          </th>
+          <th align="left">
+            <strong>Long Form</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-</code>
+          </td>
+          <td align="left">
+            <code>--login</code>
+          </td>
+          <td align="left">Start login shell, load user's environment</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c CMD</code>
+          </td>
+          <td align="left">
+            <code>--command=CMD</code>
+          </td>
+          <td align="left">Execute command and exit</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">
+            <code>--fast</code>
+          </td>
+          <td align="left">Pass -f to shell (for csh/tcsh)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g GRP</code>
+          </td>
+          <td align="left">
+            <code>--group=GRP</code>
+          </td>
+          <td align="left">Specify primary group</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-G GRP</code>
+          </td>
+          <td align="left">
+            <code>--supp-group=GRP</code>
+          </td>
+          <td align="left">Specify supplementary group</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">
+            <code>--login</code>
+          </td>
+          <td align="left">Same as <code>-</code> option</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m</code>
+          </td>
+          <td align="left">
+            <code>--preserve-environment</code>
+          </td>
+          <td align="left">Don't reset environment variables</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-p</code>
+          </td>
+          <td align="left">
+            <code>--preserve-environment</code>
+          </td>
+          <td align="left">Same as <code>-m</code> option</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s SHL</code>
+          </td>
+          <td align="left">
+            <code>--shell=SHL</code>
+          </td>
+          <td align="left">Use specified shell</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w VAR</code>
+          </td>
+          <td align="left">
+            <code>--whitelist-environment=VAR</code>
+          </td>
+          <td align="left">Don't reset specified variables</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">-</td>
+          <td align="left">Display help message</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">-</td>
+          <td align="left">Display version information</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Best Practices</h2>
+    <h3>Security Best Practices</h3>
+    <ul>
+      <li>Use <code>sudo</code> instead of <code>su</code> when possible for better logging</li>
+      <li>Always use login shell (<code>su -</code>) for administrative tasks</li>
+      <li>Limit time spent as root user</li>
+      <li>Use specific commands rather than interactive sessions when possible</li>
+      <li>Regularly audit su usage through system logs</li>
+    </ul>
+    <h3>Operational Best Practices</h3>
+    <ul>
+      <li>Use descriptive comments when switching users in scripts</li>
+      <li>Verify user existence before attempting to switch</li>
+      <li>Handle authentication failures gracefully in scripts</li>
+      <li>Document user switching requirements in system documentation</li>
+    </ul>
+    <h2>Important Notes</h2>
+    <ul>
+      <li><code>su</code> requires the target user's password (unless run as root)</li>
+      <li>Using <code>su -</code> is recommended for administrative tasks as it provides a clean environment</li>
+      <li><code>su</code> sessions are logged in <code>/var/log/auth.log</code> or similar system logs</li>
+      <li>The <code>wheel</code> group restriction may be enabled on some systems</li>
+      <li>Always exit su sessions when finished to return to original user</li>
+    </ul>
+    <p>The <code>su</code> command is essential for user switching and privilege management in Linux systems, but should be used carefully with proper security considerations.</p>
+    <p>For more details, check the manual: <code>man su</code></p>
+  </body></html>

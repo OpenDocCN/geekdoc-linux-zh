@@ -1,0 +1,78 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>basename</code> command</h1>
+    <p>The <code>basename</code> is a command-line utility that strips directory from given file names. Optionally, it can also remove any trailing suffix. It is a simple command that accepts only a few options.</p>
+    <h3>Examples</h3>
+    <p>The most basic example is to print the file name with the leading directories removed:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename /etc/bar/foo.txt
+</code>
+    </pre>
+    <p>The output will include the file name:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">foo.txt
+</code>
+    </pre>
+    <p>If you run basename on a path string that points to a directory, you will get the last segment of the path. In this example, /etc/bar is a directory.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename /etc/bar
+</code>
+    </pre>
+    <p>Output</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bar
+</code>
+    </pre>
+    <p>The basename command removes any trailing <code>/</code> characters:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename /etc/bar/foo.txt/
+</code>
+    </pre>
+    <p>Output</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">foo.txt
+</code>
+    </pre>
+    <h3>Options</h3>
+    <ol>
+      <li>By default, each output line ends in a newline character. To end the lines with NUL, use the -z (--zero) option.</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ basename -z /etc/bar/foo.txt
+foo.txt$
+</code>
+    </pre>
+    <ol start="2">
+      <li>The <code>basename</code> command can accept multiple names as arguments. To do so, invoke the command with the <code>-a</code> (<code>--multiple</code>) option, followed by the list of files separated by space. For example, to get the file names of <code>/etc/bar/foo.txt</code> and <code>/etc/spam/eggs.docx</code> you would run:</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename -a /etc/bar/foo.txt /etc/spam/eggs.docx
+</code>
+    </pre>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">foo.txt
+eggs.docx
+</code>
+    </pre>
+    <h3>Syntax</h3>
+    <p>The basename command supports two syntax formats:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename NAME [SUFFIX]
+basename OPTION... NAME...
+</code>
+    </pre>
+    <h3>Additional functionalities</h3>
+    <p><strong>Removing a Trailing Suffix</strong>: To remove any trailing suffix from the file name, pass the suffix as a second argument:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">basename /etc/hostname name
+host
+</code>
+    </pre>
+    <p>Generally, this feature is used to strip file extensions</p>
+    <h3>Help Command</h3>
+    <p>Run the following command to view the complete guide to <code>basename</code> command.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">man basename
+</code>
+    </pre>
+  </body></html>

@@ -1,0 +1,247 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>split</code> command</h1>
+    <p>The <code>split</code> command in Linux is used to split a file into smaller files.</p>
+    <h3>Examples</h3>
+    <ol>
+      <li>Split a file into a smaller file using file name</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">split filename.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>Split a file named filename into segments of 200 lines beginning with prefix file</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">split -l 200 filename file
+</code>
+    </pre>
+    <p>This will create files of the name fileaa, fileab, fileac, filead, etc. of 200 lines.</p>
+    <ol start="3">
+      <li>Split a file named filename into segments of 40 bytes with prefix file</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">split -b 40 filename file
+</code>
+    </pre>
+    <p>This will create files of the name fileaa, fileab, fileac, filead, etc. of 40 bytes.</p>
+    <ol start="4">
+      <li>Split a file using --verbose to see the files being created.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">split filename.txt --verbose
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">split [options] filename [prefix]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">
+            <code>--suffix-length=N</code>
+          </td>
+          <td align="left">Generate suffixes of length N (default 2)</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--additional-suffix=SUFFIX</code>
+          </td>
+          <td align="left">Append an additional SUFFIX to file names</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-b</code>
+          </td>
+          <td align="left">
+            <code>--bytes=SIZE</code>
+          </td>
+          <td align="left">Put SIZE bytes per output file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-C</code>
+          </td>
+          <td align="left">
+            <code>--line-bytes=SIZE</code>
+          </td>
+          <td align="left">Put at most SIZE bytes of records per output file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left"/>
+          <td align="left">Use numeric suffixes starting at 0, not alphabetic</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--numeric-suffixes[=FROM]</code>
+          </td>
+          <td align="left">Same as -d, but allow setting the start value</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-x</code>
+          </td>
+          <td align="left"/>
+          <td align="left">Use hex suffixes starting at 0, not alphabetic</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--hex-suffixes[=FROM]</code>
+          </td>
+          <td align="left">Same as -x, but allow setting the start value</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">
+            <code>--elide-empty-files</code>
+          </td>
+          <td align="left">Do not generate empty output files with '-n'</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--filter=COMMAND</code>
+          </td>
+          <td align="left">Write to shell COMMAND;<br/>file name is $FILE</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">
+            <code>--lines=NUMBER</code>
+          </td>
+          <td align="left">Put NUMBER lines/records per output file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <code>--number=CHUNKS</code>
+          </td>
+          <td align="left">Generate CHUNKS output files;<br/>see explanation below</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-t</code>
+          </td>
+          <td align="left">
+            <code>--separator=SEP</code>
+          </td>
+          <td align="left">Use SEP instead of newline as the record separator;<br/>'\0' (zero) specifies the NUL character</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <code>--unbuffered</code>
+          </td>
+          <td align="left">Immediately copy input to output with '-n r/...'</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--verbose</code>
+          </td>
+          <td align="left">Print a diagnostic just before each<br/>output file is opened</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">Display this help and exit</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">Output version information and exit</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The SIZE argument is an integer and optional unit (example: 10K is 10*1024).
+Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).</p>
+    <p>CHUNKS may be:</p>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>CHUNKS</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>N</code>
+          </td>
+          <td align="left">Split into N files based on size of input</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>K/N</code>
+          </td>
+          <td align="left">Output Kth of N to stdout</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>l/N</code>
+          </td>
+          <td align="left">Split into N files without splitting lines/records</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>l/K/N</code>
+          </td>
+          <td align="left">Output Kth of N to stdout without splitting lines/records</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>r/N</code>
+          </td>
+          <td align="left">Like 'l' but use round robin distribution</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>r/K/N</code>
+          </td>
+          <td align="left">Likewise but only output Kth of N to stdout</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

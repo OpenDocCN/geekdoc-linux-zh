@@ -1,0 +1,85 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>wget</code> command</h1>
+    <p>The <code>wget</code> command is used for downloading files from the Internet. It supports downloading files using HTTP, HTTPS and FTP protocols. It allows you to download several files at once, download in the background, resume downloads, limit the bandwidth, mirror a website, and much more.</p>
+    <h2>Syntax</h2>
+    <p>The <code>wget</code> syntax requires you to define the downloading options and the URL the to be downloaded file is coming from.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ wget [options] [URL]
+</code>
+    </pre>
+    <h3>Examples</h3>
+    <p>In this example we will download the Ubuntu 20.04 desktop iso file from different sources. Go over to your terminal or open a new one and type in the below <code>wget</code>. This will stat the download. The download may take a few minutes to complete.</p>
+    <ol>
+      <li>Starting a regular download</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">wget https://releases.ubuntu.com/20.04/ubuntu-20.04.3-desktop-amd64.iso
+</code>
+    </pre>
+    <ol start="2">
+      <li>You can resume a download using the <code>-c</code> option</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">wget -c https://mirrors.piconets.webwerks.in/ubuntu-mirror/ubuntu-releases/20.04.3/ubuntu-20.04.3-desktop-amd64.iso
+</code>
+    </pre>
+    <ol start="3">
+      <li>To download in the background, use the <code>-b</code> option</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">wget -b https://mirrors.piconets.webwerks.in/ubuntu-mirror/ubuntu-releases/20.04.3/ubuntu-20.04.3-desktop-amd64.iso
+</code>
+    </pre>
+    <h2>More options</h2>
+    <p>On top of downloading, <code>wget</code> provides many more features, such as downloading multiple files, dowloading in the background, limiting download bandwith and resuming stopped downloads. View all <code>wget</code> options in its man page.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">man wget
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <strong>Short Flag</strong>
+          </th>
+          <th>
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-v</code>
+          </td>
+          <td>prints version of the wget available on your system</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-h</code>
+          </td>
+          <td>print help message displaying all the possible options</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b</code>
+          </td>
+          <td>This option is used to send a process to the background as soon as it starts.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-t</code>
+          </td>
+          <td>This option is used to set number of retries to a specified number of times</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-c</code>
+          </td>
+          <td>This option is used to resume a partially downloaded file</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

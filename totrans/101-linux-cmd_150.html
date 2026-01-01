@@ -1,0 +1,440 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>fsck</code> command</h1>
+    <p>The <code>fsck</code> (file system check) command is used to check and repair Linux file systems. It can detect and fix various file system inconsistencies, corruption issues, and structural problems. It's an essential tool for maintaining file system integrity and recovering from system crashes.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">fsck [options] [filesystem...]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Multiple File System Support</strong>: Works with ext2, ext3, ext4, XFS, and more</li>
+      <li><strong>Automatic Detection</strong>: Can auto-detect file system type</li>
+      <li><strong>Interactive Repair</strong>: Prompts for confirmation before fixes</li>
+      <li><strong>Batch Mode</strong>: Can run automatically without user interaction</li>
+      <li><strong>Read-Only Mode</strong>: Check without making changes</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Simple File System Check</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check specific partition</span>
+sudo fsck /dev/sdb1
+
+<span class="hljs-comment"># Check by mount point</span>
+sudo fsck /home
+
+<span class="hljs-comment"># Check with verbose output</span>
+sudo fsck -v /dev/sdb1
+</code>
+    </pre>
+    <h3>Check All File Systems</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check all file systems in /etc/fstab</span>
+sudo fsck -A
+
+<span class="hljs-comment"># Check all except root</span>
+sudo fsck -AR
+
+<span class="hljs-comment"># Check all with progress</span>
+sudo fsck -AV
+</code>
+    </pre>
+    <h2>Common Options</h2>
+    <h3>Basic Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -y: Answer "yes" to all questions</span>
+sudo fsck -y /dev/sdb1
+
+<span class="hljs-comment"># -n: Answer "no" to all questions (read-only)</span>
+sudo fsck -n /dev/sdb1
+
+<span class="hljs-comment"># -f: Force check even if file system seems clean</span>
+sudo fsck -f /dev/sdb1
+
+<span class="hljs-comment"># -v: Verbose output</span>
+sudo fsck -v /dev/sdb1
+</code>
+    </pre>
+    <h3>Advanced Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -p: Automatically repair (preen mode)</span>
+sudo fsck -p /dev/sdb1
+
+<span class="hljs-comment"># -r: Interactive repair mode</span>
+sudo fsck -r /dev/sdb1
+
+<span class="hljs-comment"># -t: Specify file system type</span>
+sudo fsck -t ext4 /dev/sdb1
+
+<span class="hljs-comment"># -C: Show progress bar</span>
+sudo fsck -C /dev/sdb1
+</code>
+    </pre>
+    <h2>File System Specific Commands</h2>
+    <h3>1. ext2/ext3/ext4 (e2fsck)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check ext4 file system</span>
+sudo fsck.ext4 /dev/sdb1
+
+<span class="hljs-comment"># Force check</span>
+sudo e2fsck -f /dev/sdb1
+
+<span class="hljs-comment"># Fix bad blocks</span>
+sudo e2fsck -c /dev/sdb1
+
+<span class="hljs-comment"># Thorough check with bad block scan</span>
+sudo e2fsck -cc /dev/sdb1
+</code>
+    </pre>
+    <h3>2. XFS (xfs_repair)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check XFS file system (read-only)</span>
+sudo xfs_repair -n /dev/sdb1
+
+<span class="hljs-comment"># Repair XFS file system</span>
+sudo xfs_repair /dev/sdb1
+
+<span class="hljs-comment"># Verbose repair</span>
+sudo xfs_repair -v /dev/sdb1
+</code>
+    </pre>
+    <h3>3. FAT32 (fsck.fat)</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check FAT32 file system</span>
+sudo fsck.fat /dev/sdb1
+
+<span class="hljs-comment"># Repair FAT32</span>
+sudo fsck.fat -r /dev/sdb1
+
+<span class="hljs-comment"># Verbose check</span>
+sudo fsck.fat -v /dev/sdb1
+</code>
+    </pre>
+    <h2>Practical Examples</h2>
+    <h3>1. Check Before Mounting</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always check before mounting suspicious drives</span>
+sudo fsck -n /dev/sdb1
+
+<span class="hljs-comment"># If clean, mount normally</span>
+sudo mount /dev/sdb1 /mnt/usb
+
+<span class="hljs-comment"># If errors found, repair first</span>
+sudo fsck -y /dev/sdb1
+sudo mount /dev/sdb1 /mnt/usb
+</code>
+    </pre>
+    <h3>2. System Recovery After Crash</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Boot from live CD/USB</span><span class="hljs-comment"># Check root file system</span>
+sudo fsck -f /dev/sda1
+
+<span class="hljs-comment"># Check other partitions</span>
+sudo fsck -f /dev/sda2
+sudo fsck -f /dev/sda3
+
+<span class="hljs-comment"># Reboot if repairs were made</span>
+sudo reboot
+</code>
+    </pre>
+    <h3>3. Scheduled Maintenance</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Force check on all file systems</span>
+sudo fsck -Af
+
+<span class="hljs-comment"># Check with automatic repair</span>
+sudo fsck -Ap
+
+<span class="hljs-comment"># Check with progress indicators</span>
+sudo fsck -AVC
+</code>
+    </pre>
+    <h2>Working with Different Scenarios</h2>
+    <h3>1. Read-Only Check</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check without making changes</span>
+sudo fsck -n /dev/sdb1
+
+<span class="hljs-comment"># Verbose read-only check</span>
+sudo fsck -nv /dev/sdb1
+
+<span class="hljs-comment"># Generate report only</span>
+sudo fsck -n /dev/sdb1 &gt; fsck_report.txt 2&gt;&amp;1
+</code>
+    </pre>
+    <h3>2. Automatic Repair</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Repair automatically (dangerous!)</span>
+sudo fsck -y /dev/sdb1
+
+<span class="hljs-comment"># Safer automatic repair</span>
+sudo fsck -p /dev/sdb1
+
+<span class="hljs-comment"># Batch mode for multiple file systems</span>
+sudo fsck -Ap
+</code>
+    </pre>
+    <h3>3. Interactive Repair</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Interactive mode (default)</span>
+sudo fsck /dev/sdb1
+
+<span class="hljs-comment"># Ask before each fix</span>
+sudo fsck -r /dev/sdb1
+
+<span class="hljs-comment"># Show detailed information</span>
+sudo fsck -rv /dev/sdb1
+</code>
+    </pre>
+    <h2>Boot-Time File System Checks</h2>
+    <h3>1. Automatic Checks</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Configure automatic checks in /etc/fstab</span>
+        <span class="hljs-comment"># Sixth field controls fsck behavior:</span>
+        <span class="hljs-comment"># 0 = no check</span>
+        <span class="hljs-comment"># 1 = check first (root filesystem)</span>
+        <span class="hljs-comment"># 2 = check after root filesystem</span>
+        <span class="hljs-comment"># Example /etc/fstab entry:</span>
+        <span class="hljs-comment"># /dev/sda1 / ext4 defaults 1 1</span>
+        <span class="hljs-comment"># /dev/sda2 /home ext4 defaults 1 2</span>
+      </code>
+    </pre>
+    <h3>2. Force Check on Next Boot</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Create forcefsck file (traditional method)</span>
+sudo touch /forcefsck
+
+<span class="hljs-comment"># Or use tune2fs for ext filesystems</span>
+sudo tune2fs -C 1 -c 1 /dev/sda1
+
+<span class="hljs-comment"># Set maximum mount count</span>
+sudo tune2fs -c 30 /dev/sda1
+</code>
+    </pre>
+    <h3>3. Check Intervals</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Set check interval (ext filesystems)</span>
+sudo tune2fs -i 30d /dev/sda1  <span class="hljs-comment"># Check every 30 days</span>
+sudo tune2fs -i 0 /dev/sda1    <span class="hljs-comment"># Disable time-based checks</span>
+
+<span class="hljs-comment"># Set mount count interval</span>
+sudo tune2fs -c 25 /dev/sda1   <span class="hljs-comment"># Check every 25 mounts</span>
+sudo tune2fs -c 0 /dev/sda1    <span class="hljs-comment"># Disable mount-based checks</span>
+</code>
+    </pre>
+    <h2>Troubleshooting Common Issues</h2>
+    <h3>1. Unmountable File System</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Try read-only check first</span>
+sudo fsck -n /dev/sdb1
+
+<span class="hljs-comment"># If errors found, try repair</span>
+sudo fsck -y /dev/sdb1
+
+<span class="hljs-comment"># For severe corruption</span>
+sudo fsck -f /dev/sdb1
+</code>
+    </pre>
+    <h3>2. Bad Superblock</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># List backup superblocks</span>
+sudo mke2fs -n /dev/sdb1
+
+<span class="hljs-comment"># Use backup superblock</span>
+sudo e2fsck -b 32768 /dev/sdb1
+
+<span class="hljs-comment"># Try different backup</span>
+sudo e2fsck -b 98304 /dev/sdb1
+</code>
+    </pre>
+    <h3>3. Lost+Found Directory</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Recovered files appear in lost+found</span>
+ls -la /mnt/partition/lost+found/
+
+<span class="hljs-comment"># Files are numbered by inode</span>
+<span class="hljs-comment"># Use file command to identify type</span>
+file /mnt/partition/lost+found/*
+
+<span class="hljs-comment"># Restore files based on content</span>
+</code>
+    </pre>
+    <h2>Advanced Repair Options</h2>
+    <h3>1. Bad Block Handling</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Scan for bad blocks during check</span>
+sudo e2fsck -c /dev/sdb1
+
+<span class="hljs-comment"># Thorough bad block scan</span>
+sudo e2fsck -cc /dev/sdb1
+
+<span class="hljs-comment"># Use existing bad block list</span>
+sudo badblocks -sv /dev/sdb1 &gt; badblocks.list
+sudo e2fsck -l badblocks.list /dev/sdb1
+</code>
+    </pre>
+    <h3>2. Journal Recovery</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># ext3/ext4 journal recovery</span>
+sudo e2fsck -y /dev/sdb1
+
+<span class="hljs-comment"># Force journal recovery</span>
+sudo tune2fs -O ^has_journal /dev/sdb1
+sudo e2fsck -f /dev/sdb1
+sudo tune2fs -j /dev/sdb1
+</code>
+    </pre>
+    <h3>3. Inode Problems</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check inode usage</span>
+sudo e2fsck -D /dev/sdb1
+
+<span class="hljs-comment"># Rebuild directory index</span>
+sudo e2fsck -D -f /dev/sdb1
+
+<span class="hljs-comment"># Fix inode count problems</span>
+sudo e2fsck -f /dev/sdb1
+</code>
+    </pre>
+    <h2>Monitoring and Logging</h2>
+    <h3>1. Check Results</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># View fsck results</span>
+dmesg | grep -i fsck
+
+<span class="hljs-comment"># Check system logs</span>
+journalctl | grep fsck
+tail -f /var/<span class="hljs-built_in">log</span>/messages | grep fsck
+</code>
+    </pre>
+    <h3>2. File System Status</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check filesystem status</span>
+sudo tune2fs -l /dev/sda1 | grep -i <span class="hljs-string">"filesystem state"</span>
+
+<span class="hljs-comment"># Check last fsck time</span>
+sudo tune2fs -l /dev/sda1 | grep -i <span class="hljs-string">"last checked"</span>
+
+<span class="hljs-comment"># Check mount count</span>
+sudo tune2fs -l /dev/sda1 | grep -i <span class="hljs-string">"mount count"</span>
+</code>
+    </pre>
+    <h3>3. Automated Monitoring</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Script to check filesystem health</span><span class="hljs-meta">#!/bin/bash</span><span class="hljs-keyword">for</span> fs <span class="hljs-keyword">in</span> $(awk <span class="hljs-string">'$3 ~ /^ext[234]$/ &amp;&amp; $2 != "/" {print $1}'</span> /etc/fstab); <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Checking <span class="hljs-variable">$fs</span>..."</span>
+    sudo fsck -n <span class="hljs-string">"<span class="hljs-variable">$fs</span>"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Errors found on <span class="hljs-variable">$fs</span>"</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <h2>Prevention and Best Practices</h2>
+    <h3>1. Regular Maintenance</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Schedule regular checks</span>
+        <span class="hljs-comment"># Add to crontab for non-critical systems</span>
+        <span class="hljs-comment"># 0 3 * * 0 /sbin/fsck -Ap &gt; /var/log/fsck.log 2&gt;&amp;1</span>
+      </code>
+    </pre>
+    <h3>2. Proper Shutdown</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always shutdown properly</span>
+sudo shutdown -h now
+
+<span class="hljs-comment"># Use sync before emergency shutdown</span>
+sync
+sudo shutdown -h now
+</code>
+    </pre>
+    <h3>3. UPS Protection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Install UPS monitoring</span>
+sudo apt install apcupsd  <span class="hljs-comment"># For APC UPS</span>
+sudo apt install nut      <span class="hljs-comment"># Network UPS Tools</span>
+
+<span class="hljs-comment"># Configure automatic shutdown on power loss</span>
+</code>
+    </pre>
+    <h2>Recovery Scenarios</h2>
+    <h3>1. Boot Failure</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Boot from live USB/CD</span><span class="hljs-comment"># Mount root filesystem read-only</span>
+sudo mount -o ro /dev/sda1 /mnt
+
+<span class="hljs-comment"># Copy important data</span>
+sudo cp -r /mnt/home/user/important /backup/
+
+<span class="hljs-comment"># Unmount and check</span>
+sudo umount /mnt
+sudo fsck -f /dev/sda1
+</code>
+    </pre>
+    <h3>2. Data Recovery</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use ddrescue for severely damaged drives</span>
+sudo ddrescue /dev/sdb /backup/disk.img /backup/disk.log
+
+<span class="hljs-comment"># Then fsck the image</span>
+sudo fsck -f /backup/disk.img
+
+<span class="hljs-comment"># Mount and recover data</span>
+sudo mount -o loop /backup/disk.img /mnt/recovery
+</code>
+    </pre>
+    <h3>3. Multiple Errors</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Progressive repair approach</span>
+sudo fsck -n /dev/sdb1           <span class="hljs-comment"># Check first</span>
+sudo fsck -p /dev/sdb1           <span class="hljs-comment"># Auto-repair safe issues</span>
+sudo fsck -y /dev/sdb1           <span class="hljs-comment"># Force repair remaining issues</span>
+sudo fsck -f /dev/sdb1           <span class="hljs-comment"># Final thorough check</span>
+</code>
+    </pre>
+    <h2>Performance Considerations</h2>
+    <h3>1. Speed Optimization</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use progress indicator</span>
+sudo fsck -C /dev/sdb1
+
+<span class="hljs-comment"># Parallel checking (careful with dependencies)</span>
+sudo fsck -A -P
+
+<span class="hljs-comment"># Skip time-consuming checks when appropriate</span>
+sudo fsck -p /dev/sdb1
+</code>
+    </pre>
+    <h3>2. System Impact</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Run during low-activity periods</span><span class="hljs-comment"># Schedule during maintenance windows</span><span class="hljs-comment"># Use ionice for lower priority</span>
+sudo ionice -c 3 fsck /dev/sdb1
+</code>
+    </pre>
+    <h2>Important Safety Notes</h2>
+    <ul>
+      <li><strong>Always unmount</strong> file systems before checking</li>
+      <li><strong>Backup important data</strong> before repairs</li>
+      <li><strong>Never interrupt</strong> fsck during operation</li>
+      <li><strong>Use read-only mode</strong> first to assess damage</li>
+      <li><strong>Understand risks</strong> of automatic repair modes</li>
+      <li><strong>Boot from live media</strong> for root filesystem checks</li>
+      <li><strong>Have recovery plan</strong> ready before starting repairs</li>
+    </ul>
+    <h2>Exit Codes</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># fsck exit codes:</span>
+        <span class="hljs-comment"># 0: No errors</span>
+        <span class="hljs-comment"># 1: Filesystem errors corrected</span>
+        <span class="hljs-comment"># 2: System should be rebooted</span>
+        <span class="hljs-comment"># 4: Filesystem errors left uncorrected</span>
+        <span class="hljs-comment"># 8: Operational error</span>
+        <span class="hljs-comment"># 16: Usage or syntax error</span>
+        <span class="hljs-comment"># 32: Checking canceled by user request</span>
+        <span class="hljs-comment"># 128: Shared-library error</span>
+      </code>
+    </pre>
+    <p>The <code>fsck</code> command is crucial for maintaining file system integrity and recovering from corruption issues.</p>
+    <p>For more details, check the manual: <code>man fsck</code></p>
+  </body></html>

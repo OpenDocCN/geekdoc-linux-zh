@@ -1,0 +1,68 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>login</code> Command</h1>
+    <p>The <code>login</code> command initiates a user session.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ login [-p] [-h host] [-H] [-f username|username]
+</code>
+    </pre>
+    <h2>Flags and their functionalities</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <strong>Short Flag</strong>
+          </th>
+          <th>
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-f</code>
+          </td>
+          <td>Used to skip a login authentication. This option is usually used by the getty(8) autologin feature.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-h</code>
+          </td>
+          <td>Used by other servers (such as telnetd(8) to pass the name of the remote host to login so that it can be placed in utmp and wtmp. Only the superuser is allowed use this option.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p</code>
+          </td>
+          <td>Used by getty(8) to tell login to preserve the environment.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-H</code>
+          </td>
+          <td>Used by other servers (for example, telnetd(8)) to tell login that printing the hostname should be suppressed in the login: prompt.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--help</code>
+          </td>
+          <td>Display help text and exit.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-v</code>
+          </td>
+          <td>Display version information and exit.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Examples</h2>
+    <p>To log in to the system as user abhishek, enter the following at the login prompt:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ login: abhishek
+</code>
+    </pre>
+    <p>If a password is defined, the password prompt appears. Enter your password at this prompt.</p>
+  </body></html>

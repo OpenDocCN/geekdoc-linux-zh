@@ -1,0 +1,254 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>grep</code> command</h1>
+    <p>The <code>grep</code> filter searches a file for a particular pattern of characters, and displays all lines that contain that pattern.
+grep stands for globally search for regular expression and print out. The pattern that is searched in the file is referred to as the regular expression.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To search the contents of the destination.txt file for a string("KeY") case insensitively.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">grep -i <span class="hljs-string">"KeY"</span> destination.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>Displaying the count of number of matches</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">grep -c <span class="hljs-string">"key"</span> destination.txt
+</code>
+    </pre>
+    <ol start="3">
+      <li>We can search multiple files and only display the files that contains the given string/pattern.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">grep -l <span class="hljs-string">"key"</span> destination1.txt destination2.txt destination3.xt destination4.txt
+</code>
+    </pre>
+    <ol start="4">
+      <li>To show the line number of file with the line matched.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">grep -n <span class="hljs-string">"key"</span> destination.txt
+</code>
+    </pre>
+    <ol start="5">
+      <li>If you want to grep the monitored log files, you can add the <code>--line-buffered</code> to search them in real time.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">tail -f destination.txt | grep --line-buffered <span class="hljs-string">"key"</span>
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <p>The general syntax for the grep command is as follows:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">grep [options] pattern [files]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">
+            <code>--count</code>
+          </td>
+          <td align="left">print a count of matching lines for each input file</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">
+            <code>--no-filename</code>
+          </td>
+          <td align="left">Display the matched lines, but do not display the filenames</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-i</code>
+          </td>
+          <td align="left">
+            <code>--ignore-case</code>
+          </td>
+          <td align="left">Ignores, case for matching</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">
+            <code>--files-with-matches</code>
+          </td>
+          <td align="left">Displays list of a filenames only.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <code>--line-number</code>
+          </td>
+          <td align="left">Display the matched lines and their line numbers.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--invert-match</code>
+          </td>
+          <td align="left">This prints out all the lines that do not matches the pattern</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">
+            <code>--regexp=</code>
+          </td>
+          <td align="left">Specifies expression with this option. Can use multiple times</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">
+            <code>--file=</code>
+          </td>
+          <td align="left">Takes patterns from file, one per line.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-F</code>
+          </td>
+          <td align="left">
+            <code>--fixed-strings=</code>
+          </td>
+          <td align="left">Interpret patterns as fixed strings, not regular expressions.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-E</code>
+          </td>
+          <td align="left">
+            <code>--extended-regexp</code>
+          </td>
+          <td align="left">Treats pattern as an extended regular expression (ERE)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">
+            <code>--word-regexp</code>
+          </td>
+          <td align="left">Match whole word</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-o</code>
+          </td>
+          <td align="left">
+            <code>--only-matching</code>
+          </td>
+          <td align="left">Print only the matched parts of a matching line, with each such part on a separate output line.</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">
+            <code>--line-buffered</code>
+          </td>
+          <td align="left">Force output to be line buffered.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Additional Practical Examples:</h3>
+    <ol start="6">
+      <li>Search recursively in all files within a directory</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">grep -r <span class="hljs-string">"pattern"</span> /path/to/directory
+</code>
+    </pre>
+    <ol start="7">
+      <li>Search for whole words only (not partial matches)</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">grep -w <span class="hljs-string">"key"</span> destination.txt
+</code>
+    </pre>
+    <ol start="8">
+      <li>Display lines that do NOT contain the pattern (invert match)</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">grep -v <span class="hljs-string">"unwanted"</span> destination.txt
+</code>
+    </pre>
+    <ol start="9">
+      <li>Search for multiple patterns using extended regex</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">grep -E <span class="hljs-string">"pattern1|pattern2"</span> destination.txt
+</code>
+    </pre>
+    <ol start="10">
+      <li>Search and show context lines (lines before and after match)</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show 2 lines before and 2 lines after each match</span>
+grep -C 2 <span class="hljs-string">"error"</span> logfile.txt
+
+<span class="hljs-comment"># Show only 3 lines before each match</span>
+grep -B 3 <span class="hljs-string">"error"</span> logfile.txt
+
+<span class="hljs-comment"># Show only 3 lines after each match</span>
+grep -A 3 <span class="hljs-string">"error"</span> logfile.txt
+</code>
+    </pre>
+    <ol start="11">
+      <li>Search for pattern at the beginning or end of line</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Lines starting with "Error"</span>
+grep <span class="hljs-string">"^Error"</span> logfile.txt
+
+<span class="hljs-comment"># Lines ending with ".txt"</span>
+grep <span class="hljs-string">"\.txt$"</span> filelist.txt
+</code>
+    </pre>
+    <ol start="12">
+      <li>Count total matches across multiple files</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">grep -c <span class="hljs-string">"pattern"</span> file1.txt file2.txt file3.txt
+</code>
+    </pre>
+    <ol start="13">
+      <li>Find files containing a pattern and pipe to other commands</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Find all Python files containing "import numpy"</span>
+grep -r <span class="hljs-string">"import numpy"</span> --include=<span class="hljs-string">"*.py"</span> .
+
+<span class="hljs-comment"># Search in compressed log files</span>
+zgrep <span class="hljs-string">"error"</span> /var/<span class="hljs-built_in">log</span>/syslog.*.gz
+```|
+</code>
+    </pre>
+  </body></html>

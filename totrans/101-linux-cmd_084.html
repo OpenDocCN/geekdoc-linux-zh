@@ -1,0 +1,92 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>du</code> command</h1>
+    <p>The <code>du</code> command, which is short for <code>disk usage</code> lets you retrieve information about disk space usage information in a specified directory. In order to customize the output according to the information you need, this command can be paired with the appropriate options or flags.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To show the estimated size of sub-directories in the current directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">du
+</code>
+    </pre>
+    <ol start="2">
+      <li>To show the estimated size of sub-directories inside a specified directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">du {PATH_TO_DIRECTORY}
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">du [OPTION]... [FILE]...
+du [OPTION]... --files0-<span class="hljs-keyword">from</span>=F
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <p>
+      <em>Note: This does not include an exhaustive list of options.</em>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">
+            <code>--all</code>
+          </td>
+          <td align="left">Includes information for both files and directories</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">
+            <code>--total</code>
+          </td>
+          <td align="left">Provides a grand total at the end of the list of files/directories</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">
+            <code>--max-depth=N</code>
+          </td>
+          <td align="left">Provides information up to <code>N</code> levels from the directory where the command was executed</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">
+            <code>--human-readable</code>
+          </td>
+          <td align="left">Displays file size in human-readable units, not in bytes</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--summarize</code>
+          </td>
+          <td align="left">Display only the total filesize instead of a list of files/directories</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

@@ -1,0 +1,195 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>bg</code> command</h1>
+    <p>The <code>bg</code> command is used to put stopped jobs in the background, allowing them to continue running while you use the terminal for other tasks. It's part of the job control features in Unix-like shells.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">bg</span> [job_spec]
+</code>
+    </pre>
+    <p>If no job specification is provided, <code>bg</code> operates on the current job (most recent job).</p>
+    <h2>Job Specifications</h2>
+    <p>You can refer to jobs using different formats:</p>
+    <ul>
+      <li><code>%1</code> - Job number 1</li>
+      <li><code>%+</code> or <code>%%</code> - Current job (most recent)</li>
+      <li><code>%-</code> - Previous job</li>
+      <li><code>%string</code> - Job whose command line starts with string</li>
+      <li><code>%?string</code> - Job whose command line contains string</li>
+    </ul>
+    <h2>Examples</h2>
+    <ol>
+      <li>Put the current stopped job in background</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-built_in">bg</span>
+      </code>
+    </pre>
+    <ol start="2">
+      <li>Put specific job in background</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">bg</span> %1
+</code>
+    </pre>
+    <ol start="3">
+      <li>Put multiple jobs in background</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">bg</span> %1 %2 %3
+</code>
+    </pre>
+    <h2>Complete Job Control Workflow</h2>
+    <p>Here's a typical workflow demonstrating <code>bg</code> usage:</p>
+    <ol>
+      <li>Start a long-running command</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">find / -name <span class="hljs-string">"*.log"</span> &gt; /tmp/findlogs.txt 2&gt;/dev/null
+</code>
+    </pre>
+    <ol start="2">
+      <li>Stop the job with Ctrl+Z</li>
+    </ol>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">^Z
+[<span class="hljs-number">1</span>]+  Stopped    find / -name <span class="hljs-string">"*.log"</span> &gt; <span class="hljs-regexp">/tmp/</span>findlogs.txt <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+</code>
+    </pre>
+    <ol start="3">
+      <li>Check jobs</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-built_in">jobs</span>
+      </code>
+    </pre>
+    <p>Output:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">[<span class="hljs-number">1</span>]+  Stopped    find / -name <span class="hljs-string">"*.log"</span> &gt; <span class="hljs-regexp">/tmp/</span>findlogs.txt <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span>
+</code>
+    </pre>
+    <ol start="4">
+      <li>Put the stopped job in background</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">bg</span> %1
+</code>
+    </pre>
+    <p>Output:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">[<span class="hljs-number">1</span>]+ find / -name <span class="hljs-string">"*.log"</span> &gt; <span class="hljs-regexp">/tmp/</span>findlogs.txt <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span> &amp;
+</code>
+    </pre>
+    <ol start="5">
+      <li>Verify the job is running in background</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-built_in">jobs</span>
+      </code>
+    </pre>
+    <p>Output:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">[<span class="hljs-number">1</span>]+  Running    find / -name <span class="hljs-string">"*.log"</span> &gt; <span class="hljs-regexp">/tmp/</span>findlogs.txt <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/</span><span class="hljs-literal">null</span> &amp;
+</code>
+    </pre>
+    <h2>Practical Examples</h2>
+    <ol>
+      <li>Working with a text editor</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Start editing a file</span>
+vim myfile.txt
+
+<span class="hljs-comment"># Stop with Ctrl+Z</span>
+<span class="hljs-comment"># Put it in background</span>
+<span class="hljs-built_in">bg</span>
+
+<span class="hljs-comment"># Now you can run other commands while vim runs in background</span>
+ls -la
+
+<span class="hljs-comment"># Bring vim back to foreground when needed</span>
+<span class="hljs-built_in">fg</span> %1
+</code>
+    </pre>
+    <ol start="2">
+      <li>Managing multiple background tasks</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Start several tasks and stop them</span>
+ping google.com &gt; /tmp/ping1.txt
+<span class="hljs-comment"># Ctrl+Z</span>
+sleep 300
+<span class="hljs-comment"># Ctrl+Z</span>
+tar czf backup.tar.gz /home/user/documents
+<span class="hljs-comment"># Ctrl+Z</span>
+
+<span class="hljs-comment"># Check all stopped jobs</span>
+<span class="hljs-built_in">jobs</span>
+
+<span class="hljs-comment"># Put all in background</span>
+<span class="hljs-built_in">bg</span> %1
+<span class="hljs-built_in">bg</span> %2
+<span class="hljs-built_in">bg</span> %3
+
+<span class="hljs-comment"># Or put specific ones</span>
+<span class="hljs-built_in">bg</span> %ping    <span class="hljs-comment"># Job starting with "ping"</span>
+</code>
+    </pre>
+    <ol start="3">
+      <li>Starting command directly in background vs using bg</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Method 1: Start directly in background</span>
+find /usr -name <span class="hljs-string">"*.conf"</span> &gt; /tmp/configs.txt &amp;
+
+<span class="hljs-comment"># Method 2: Start normally, stop, then background</span>
+find /usr -name <span class="hljs-string">"*.conf"</span> &gt; /tmp/configs.txt
+<span class="hljs-comment"># Ctrl+Z</span>
+<span class="hljs-built_in">bg</span>
+</code>
+    </pre>
+    <h2>Related Commands</h2>
+    <ul>
+      <li><code>fg</code> - Bring job to foreground</li>
+      <li><code>jobs</code> - List active jobs</li>
+      <li><code>kill</code> - Terminate job</li>
+      <li><code>nohup</code> - Run command immune to hangups</li>
+      <li><code>disown</code> - Remove job from job table</li>
+    </ul>
+    <h2>Use Cases</h2>
+    <ul>
+      <li><strong>Multitasking</strong>: Run multiple tasks simultaneously</li>
+      <li><strong>Long processes</strong>: Let time-consuming tasks run while working on other things</li>
+      <li><strong>Interactive programs</strong>: Temporarily background editors or interactive tools</li>
+      <li><strong>Development</strong>: Background compilation while coding</li>
+      <li><strong>System administration</strong>: Background monitoring while performing other tasks</li>
+    </ul>
+    <h2>Important Notes</h2>
+    <ul>
+      <li>Jobs put in background with <code>bg</code> are still attached to the terminal</li>
+      <li>If you close the terminal, background jobs may be terminated</li>
+      <li>Use <code>nohup</code> or <code>disown</code> for persistent background processes</li>
+      <li>Background jobs cannot read from stdin (keyboard input)</li>
+      <li>You can use <code>fg</code> to bring background jobs back to foreground</li>
+      <li>Background jobs continue to write to stdout/stderr unless redirected</li>
+    </ul>
+    <h2>Error Handling</h2>
+    <p>If <code>bg</code> fails, common reasons include:</p>
+    <ul>
+      <li>Job doesn't exist</li>
+      <li>Job is already running</li>
+      <li>Job cannot be put in background (some interactive programs)</li>
+    </ul>
+    <h2>Tips</h2>
+    <ul>
+      <li>Always check job status with <code>jobs</code> before and after using <code>bg</code></li>
+      <li>Redirect output for background jobs to avoid cluttering the terminal</li>
+      <li>Use job control responsibly to avoid system resource issues</li>
+      <li>Consider using terminal multiplexers like <code>screen</code> or <code>tmux</code> for persistent sessions</li>
+    </ul>
+    <p>The <code>bg</code> command is essential for effective multitasking and job management in the shell environment.</p>
+    <p>For more details, check the manual: <code>help bg</code></p>
+  </body></html>

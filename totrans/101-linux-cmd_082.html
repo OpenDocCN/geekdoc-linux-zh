@@ -1,0 +1,169 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>usermod</code> command</h1>
+    <p>The <code>usermod</code> command lets you change the properties of a user in Linux through the command line. After creating a user we sometimes have to change their attributes, like their password or login directory etc. So in order to do that we use the <code>usermod</code> command.</p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">usermod [options] USER
+</code>
+    </pre>
+    <h4>Note : Only superuser (root) is allowed to execute <code>usermod</code> command</h4>
+    <h3>Options and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Option</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">to add anyone of the group to a secondary group</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">to add comment field for the useraccount</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">to modify the directory for any existing user account</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left">change the primary group for a User</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-G</code>
+          </td>
+          <td align="left">to add supplementary groups</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">to change existing user login name</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-L</code>
+          </td>
+          <td align="left">to lock system user account</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m</code>
+          </td>
+          <td align="left">to move the contents of the home directory from existing home dir to new dir</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-p</code>
+          </td>
+          <td align="left">to create an un-encrypted password</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">to create a specified shell for new accounts</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">to assigned UID for the user account</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-U</code>
+          </td>
+          <td align="left">to unlock any locked user</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To add a comment/description for a user:</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">sudo usermod -c <span class="hljs-string">"This is test user"</span> test_user
+</code>
+    </pre>
+    <ol start="2">
+      <li>To change the home directory of a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -d /home/sam test_user
+</code>
+    </pre>
+    <ol start="3">
+      <li>To change the expiry date of a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -e 2021-10-05 test_user
+</code>
+    </pre>
+    <ol start="4">
+      <li>To change the group of a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -g sam test_user
+</code>
+    </pre>
+    <ol start="5">
+      <li>To change user login name:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -l test_account test_user
+</code>
+    </pre>
+    <ol start="6">
+      <li>To lock a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -L test_user
+</code>
+    </pre>
+    <ol start="7">
+      <li>To unlock a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -U test_user
+</code>
+    </pre>
+    <ol start="8">
+      <li>To set an unencrypted password for the user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -p test_password test_user
+</code>
+    </pre>
+    <ol start="9">
+      <li>To create a shell for the user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -s /bin/sh test_user
+</code>
+    </pre>
+    <ol start="10">
+      <li>To change the user id of a user:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo usermod -u 1234 test_user
+</code>
+    </pre>
+  </body></html>

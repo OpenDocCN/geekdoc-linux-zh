@@ -1,0 +1,465 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>date</code> command</h1>
+    <p>The <code>date</code> command is used to print the system current date and time.</p>
+    <p><code>date</code> command is also used to set the date and time of the system, but you need to be the super-user <em>(root)</em> to do it.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To show the current date and time:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">date
+</code>
+    </pre>
+    <ol start="2">
+      <li>You can use -u option to show the date and time in UTC <em>(Coordinated Universal Time)</em> time zone</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">date -u
+</code>
+    </pre>
+    <ol>
+      <li>To display any given date string in formatted date:</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">date --date=<span class="hljs-string">"2/02/2010"</span>
+date --date=<span class="hljs-string">"2 years ago"</span>
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">date [OPTION]... [+FORMAT]
+date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">
+            <code>--date=STRING</code>
+          </td>
+          <td align="left">convert the provided string into formatted date</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">
+            <code>--file=DATEFILE</code>
+          </td>
+          <td align="left">like <code>--date</code> but for files</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-I[FMT]</code>
+          </td>
+          <td align="left">
+            <code>--iso-8601[=FMT]</code>
+          </td>
+          <td align="left">Display date and time in ISO 8601 format</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <code>--reference=FILE</code>
+          </td>
+          <td align="left">Display the last modification time of FILE</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--set=STRING</code>
+          </td>
+          <td align="left">sets the time to the one described by STRING</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <code>--universal</code>
+          </td>
+          <td align="left">show the date and time in UTC <em>(Coordinated Universal Time)</em> time zone</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-R</code>
+          </td>
+          <td align="left">
+            <code>--rfc-email</code>
+          </td>
+          <td align="left">Display date and time in ISO 8601 format Example: (Fri, 22 Oct 2021 05:18:42 +0200)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-<center/></center>
+          </td>
+          <td align="left">
+            <code>rfc-3339=FMT</code>
+          </td>
+          <td align="left">Display date and time in RFC 3339 format</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-<center/></center>
+          </td>
+          <td align="left">
+            <code>--debug</code>
+          </td>
+          <td align="left">Usually used with <code>--date</code> to annotate the parsed date and warn about questionable  usage  to stderr</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Control The output:</h3>
+    <p>You can use Format specifiers to control the output date and time.</p>
+    <h3>Examples:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Output</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>$ date "+%D"</code>
+          </td>
+          <td align="left">
+            <code>10/22/21</code>
+          </td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>$ date "+%D %T"</code>
+          </td>
+          <td align="left">
+            <code>10/22/21 05:33:51</code>
+          </td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>$ date "+%A %B %d %T %y"</code>
+          </td>
+          <td align="left">
+            <code>Friday October 22 05:34:47 21</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">date <span class="hljs-string">"+%[format-options ...]"</span>
+</code>
+    </pre>
+    <h3>List of Format specifiers to control the output:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Specifiers</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>%a</code>
+          </td>
+          <td align="left">abbreviated weekday name <em>(e.g., Sun)</em></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%A</code>
+          </td>
+          <td align="left">full weekday name <em>(e.g., Sunday)</em></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%b</code>
+          </td>
+          <td align="left">abbreviated month name <em>(e.g., Jan)</em></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%B</code>
+          </td>
+          <td align="left">full month name <em>(e.g., January)</em></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%c</code>
+          </td>
+          <td align="left">date and time <em>(e.g., Thu Mar  3 23:05:25 2005)</em></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%C</code>
+          </td>
+          <td align="left">century; like %Y, except omit last two digits (e.g., 20)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%d</code>
+          </td>
+          <td align="left">day of month (e.g., 01)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%D</code>
+          </td>
+          <td align="left">date; same as %m/%d/%y</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%e</code>
+          </td>
+          <td align="left">day of month, space padded; same as %_d</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%F</code>
+          </td>
+          <td align="left">full date; same as %Y-%m-%d</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%g</code>
+          </td>
+          <td align="left">last two digits of year of ISO week number (see %G)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%G</code>
+          </td>
+          <td align="left">year of ISO week number (see %V); normally useful only with %V</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%h</code>
+          </td>
+          <td align="left">same as %b</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%H</code>
+          </td>
+          <td align="left">hour (00..23)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%I</code>
+          </td>
+          <td align="left">hour (01..12)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%j</code>
+          </td>
+          <td align="left">day of year (001..366)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%k</code>
+          </td>
+          <td align="left">hour, space padded ( 0..23); same as %_H</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%l</code>
+          </td>
+          <td align="left">hour, space padded ( 1..12); same as %_I</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%m</code>
+          </td>
+          <td align="left">month (01..12)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%M</code>
+          </td>
+          <td align="left">minute (00..59)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%n</code>
+          </td>
+          <td align="left">a newline</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%N</code>
+          </td>
+          <td align="left">nanoseconds (000000000..999999999)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%p</code>
+          </td>
+          <td align="left">locale's equivalent of either AM or PM; blank if not known</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%P</code>
+          </td>
+          <td align="left">like %p, but lower case</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%q</code>
+          </td>
+          <td align="left">quarter of year (1..4)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%r</code>
+          </td>
+          <td align="left">locale's 12-hour clock time (e.g., 11:11:04 PM)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%R</code>
+          </td>
+          <td align="left">24-hour hour and minute; same as %H:%M</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%s</code>
+          </td>
+          <td align="left">seconds since 1970-01-01 00:00:00 UTC</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%S</code>
+          </td>
+          <td align="left">second (00..60)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%t</code>
+          </td>
+          <td align="left">a tab</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%T</code>
+          </td>
+          <td align="left">time; same as %H:%M:%S</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%u</code>
+          </td>
+          <td align="left">day of week (1..7); 1 is Monday</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%U</code>
+          </td>
+          <td align="left">week number of year, with Sunday as first day of week (00..53)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%V</code>
+          </td>
+          <td align="left">ISO week number, with Monday as first day of week (01..53)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%w</code>
+          </td>
+          <td align="left">day of week (0..6); 0 is Sunday</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%W</code>
+          </td>
+          <td align="left">week number of year, with Monday as first day of week (00..53)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%x</code>
+          </td>
+          <td align="left">locale's date representation (e.g., 12/31/99)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%X</code>
+          </td>
+          <td align="left">locale's time representation (e.g., 23:13:48)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%y</code>
+          </td>
+          <td align="left">last two digits of year (00..99)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%Y</code>
+          </td>
+          <td align="left">year</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%z</code>
+          </td>
+          <td align="left">+hhmm numeric time zone (e.g., -0400)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%:z</code>
+          </td>
+          <td align="left">+hh:mm numeric time zone (e.g., -04:00)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%::z</code>
+          </td>
+          <td align="left">+hh:mm:ss numeric time zone (e.g., -04:00:00)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%:::z</code>
+          </td>
+          <td align="left">numeric  time  zone  with  :  to necessary precision (e.g., -04, +05:30)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>%Z</code>
+          </td>
+          <td align="left">alphabetic time zone abbreviation (e.g., EDT)</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

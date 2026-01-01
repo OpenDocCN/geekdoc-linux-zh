@@ -1,0 +1,117 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>gunzip</code> command</h1>
+    <p>The <code>gunzip</code> command is an antonym command of <a href="015-the-gzip-command.md"><code>gzip</code> command</a>. In other words, it decompresses files deflated by the <code>gzip</code> command.</p>
+    <p>"<code>gunzip</code> takes a list of files as arguments. It replaces each file whose name ends with <code>.gz</code>, <code>-gz</code>, <code>.z</code>, <code>-z</code>, or <code>_z</code> (case-insensitive) and which begins with the correct magic number with an uncompressed file, removing the original extension."</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Uncompress a file</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">gunzip filename.gz
+</code>
+    </pre>
+    <ol start="2">
+      <li>"Recursively uncompress all files inside a directory that match the compressed file formats supported by <code>gunzip</code>:"</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">gunzip -r directory_name/
+</code>
+    </pre>
+    <ol start="3">
+      <li>"Uncompress all files in the current working directory whose suffix matches <code>.tgz</code>:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">gunzip -S .tgz *
+</code>
+    </pre>
+    <ol start="4">
+      <li>List compressed and uncompressed sizes, compression ratio and uncompressed name of input compressed file/s:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">gunzip -l file_1 file_2
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">gunzip [ -acfhklLnNrtvV ] [-S suffix] [ name ...  ]
+</code>
+    </pre>
+    <h3>Video tutorial about using gzip, gunzip and tar commands:</h3>
+    <p><a href="https://www.youtube.com/watch?v=OBtG8zfVwuI">This video</a> shows how to compress and decompress in a Unix shell. It uses <code>gunzip</code> as decompression command.</p>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">-c</td>
+          <td align="left">--stdout</td>
+          <td align="left">write on standard output, keep original files unchanged</td>
+        </tr>
+        <tr>
+          <td align="left">-h</td>
+          <td align="left">--help</td>
+          <td align="left">give help information</td>
+        </tr>
+        <tr>
+          <td align="left">-k</td>
+          <td align="left">--keep</td>
+          <td align="left">keep (don't delete) input files</td>
+        </tr>
+        <tr>
+          <td align="left">-l</td>
+          <td align="left">--list</td>
+          <td align="left">list compressed file contents</td>
+        </tr>
+        <tr>
+          <td align="left">-q</td>
+          <td align="left">--quiet</td>
+          <td align="left">suppress all warnings</td>
+        </tr>
+        <tr>
+          <td align="left">-r</td>
+          <td align="left">--recursive</td>
+          <td align="left">operate recursively on directories</td>
+        </tr>
+        <tr>
+          <td align="left">-S</td>
+          <td align="left">--suffix=SUF</td>
+          <td align="left">use suffix SUF on compressed files</td>
+        </tr>
+        <tr>
+          <td align="left"/>
+          <td align="left">--synchronous</td>
+          <td align="left">synchronous output (safer if system crashes, but slower)</td>
+        </tr>
+        <tr>
+          <td align="left">-t</td>
+          <td align="left">--test</td>
+          <td align="left">test compressed file integrity</td>
+        </tr>
+        <tr>
+          <td align="left">-v</td>
+          <td align="left">--verbose</td>
+          <td align="left">verbose mode</td>
+        </tr>
+        <tr>
+          <td align="left">-V</td>
+          <td align="left">--version</td>
+          <td align="left">display version number</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>**Note: gunzip filename.gz is equivalent to gzip -d filename.gz.</h3>
+    <h3>Warning: Running gunzip without -c deletes the original compressed file by default.</h3>
+  </body></html>

@@ -1,0 +1,325 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>cat</code> command</h1>
+    <hr/>
+    <p>The <code>cat</code> command allows us to create single or multiple files, to view the content of a file or to concatenate files and redirect the output to the terminal or files.</p>
+    <p>The "cat" stands for 'concatenate.' and it's one of the most frequently used commands in the Linux terminal.</p>
+    <h3>Examples of uses:</h3>
+    <ol>
+      <li>To display the content of a file in terminal:</li>
+    </ol>
+    <pre>
+      <code class="language-xml hljs xml" data-lang="xml">cat <span class="hljs-tag">&lt;<span class="hljs-name">specified_file_name</span>&gt;</span>
+</code>
+    </pre>
+    <ol start="2">
+      <li>To display the content of multiple files in terminal:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat file1 file2 ...
+</code>
+    </pre>
+    <ol start="3">
+      <li>To create a file with the cat command:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat &gt; file_name
+</code>
+    </pre>
+    <ol start="4">
+      <li>To display all files in current directory with the same filetype:</li>
+    </ol>
+    <pre>
+      <code class="language-xml hljs xml" data-lang="xml">cat *.<span class="hljs-tag">&lt;<span class="hljs-name">filetype</span>&gt;</span>
+</code>
+    </pre>
+    <ol start="5">
+      <li>To display the content of all the files in current directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat *
+</code>
+    </pre>
+    <ol start="6">
+      <li>To put the output of a given file into another file:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat old_file_name &gt; new_file_name
+</code>
+    </pre>
+    <ol start="7">
+      <li>Use cat command with <code>more</code> and <code>less</code> options:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat filename | more
+cat filename | less
+</code>
+    </pre>
+    <ol start="8">
+      <li>Append the contents of file1 to file2:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat file1 &gt;&gt; file2
+</code>
+    </pre>
+    <ol start="9">
+      <li>To concatenate two files together in a new file:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat file1_name file2_name merge_file_name
+</code>
+    </pre>
+    <ol start="10">
+      <li>Some implementations of cat, with option -n, it's possible to show line numbers:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cat -n file1_name file2_name &gt; new_numbered_file_name
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">cat [OPTION] [FILE]...
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-A</code>
+          </td>
+          <td align="left">
+            <code>--show-all</code>
+          </td>
+          <td align="left">equivalent to -vET</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-b</code>
+          </td>
+          <td align="left">
+            <code>--number-nonblank</code>
+          </td>
+          <td align="left">number nonempty output lines, overrides -n</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">equivalent to -vE</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-T</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Display tab separated lines in file opened with <code>cat</code> command.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-E</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">To show $ at the end of each file.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-E</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Display file with line numbers.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <code>--number</code>
+          </td>
+          <td align="left">number all output lines</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--squeeze-blank</code>
+          </td>
+          <td align="left">suppress repeated empty output lines</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">(ignored)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--show-nonprinting</code>
+          </td>
+          <td align="left">use ^ and M- notation, except for LFD and TAB</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">display this help and exit</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">output version information and exit</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr/>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>tac</code> command</h1>
+    <p><code>tac</code> is a Linux command that allows you to view files line-by-line, beginning from the last line. (tac doesn't reverse the contents of each individual line, only the order in which the lines are presented.) It is named by analogy with <code>cat</code>.</p>
+    <h3>Examples of uses:</h3>
+    <ol>
+      <li>To display the content of a file in terminal:</li>
+    </ol>
+    <pre>
+      <code class="language-xml hljs xml" data-lang="xml">tac <span class="hljs-tag">&lt;<span class="hljs-name">specified_file_name</span>&gt;</span>
+</code>
+    </pre>
+    <ol start="2">
+      <li>This option attaches the separator before instead of after.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">tac -b concat_file_name tac_example_file_name
+</code>
+    </pre>
+    <ol start="3">
+      <li>This option will interpret the separator as a regular expression.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">tac -r concat_file_name tac_example_file_name
+</code>
+    </pre>
+    <ol start="4">
+      <li>This option uses STRING as the separator instead of newline.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">tac -s concat_file_name tac_example_file_name
+</code>
+    </pre>
+    <ol start="5">
+      <li>This option will display the help text and exit.</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">tac --<span class="hljs-built_in">help</span>
+</code>
+    </pre>
+    <ol start="6">
+      <li>This option will give the version information and exit.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">tac --version
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">tac [OPTION]... [FILE]...
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-b</code>
+          </td>
+          <td align="left">
+            <code>--before</code>
+          </td>
+          <td align="left">attach the separator before instead of after</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <code>--regex</code>
+          </td>
+          <td align="left">interpret the separator as a regular expression</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--separator=STRING</code>
+          </td>
+          <td align="left">use STRING as the separator instead of newline</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">display this help and exit</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">output version information and exit</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

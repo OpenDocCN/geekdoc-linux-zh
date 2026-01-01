@@ -1,0 +1,115 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>env</code> command</h1>
+    <p>The <code>env</code> command in Linux/Unix is used to either print a list of the current environment variables or to run a program in a custom environment without changing the current one.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
+</code>
+    </pre>
+    <h2>Usage</h2>
+    <ol>
+      <li>Print out the set of current environment variables
+<pre><code class="language-bash hljs bash" data-lang="bash">env 
+</code></pre>
+</li>
+      <li>Run a command with an empty environment
+<pre><code class="language-bash hljs bash" data-lang="bash"> env -i command_name
+</code></pre>
+</li>
+      <li>Remove variable from the environment
+<pre><code class="language-bash hljs bash" data-lang="bash">env -u variable_name
+</code></pre>
+</li>
+      <li>End each output with NULL
+<pre><code class="language-bash hljs bash" data-lang="bash">env -0 
+</code></pre>
+</li>
+    </ol>
+    <h2>Full List of Options</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-i</code>
+          </td>
+          <td align="left">
+            <code>--ignore-environment</code>
+          </td>
+          <td align="left">Start with an empty environment</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-0</code>
+          </td>
+          <td align="left">
+            <code>--null</code>
+          </td>
+          <td align="left">End each output line with NUL, not newline</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <code>--unset=NAME </code>
+          </td>
+          <td align="left">Remove variable from the environment</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-C</code>
+          </td>
+          <td align="left">
+            <code>--chdir=DIR</code>
+          </td>
+          <td align="left">Change working directory to DIR</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-S</code>
+          </td>
+          <td align="left">
+            <code>--split-string=S</code>
+          </td>
+          <td align="left">Process and split S into separate arguments. It's used to pass multiple arguments on shebang lines</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--debug</code>
+          </td>
+          <td align="left">Print verbose information for each processing step</td>
+        </tr>
+        <tr>
+          <td align="left">-</td>
+          <td align="left">
+            <code>--help</code>
+          </td>
+          <td align="left">Print a help message</td>
+        </tr>
+        <tr>
+          <td align="left">-</td>
+          <td align="left">
+            <code>--version</code>
+          </td>
+          <td align="left">Print the version information</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

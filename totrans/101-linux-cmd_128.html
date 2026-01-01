@@ -1,0 +1,113 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>parted</code> command</h1>
+    <p>The <code>parted</code> command is used to manage hard disk partitions on Linux. It can be used to add, delete, shrink and extend disk partitions along with the file systems located on them.
+You will need root access to the system to run <code>parted</code> commands.</p>
+    <p><strong>NOTE:</strong> Parted writes the changes immediately to your disk, be careful when you are modifying the disk partitions.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Displays partition layout of all block devices:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo parted -l
+</code>
+    </pre>
+    <ol start="2">
+      <li>Display partition table of a specific <code>disk</code></li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">sudo parted disk <span class="hljs-keyword">print</span>
+</code>
+    </pre>
+    <p>Examples of <code>disk</code> are /dev/sda, /dev/sdb</p>
+    <ol start="3">
+      <li>Create a new disk label of <code>label-type</code> for a specific disk</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo parted mklabel disk label-type
+</code>
+    </pre>
+    <p><code>label-type</code> can take values "aix", "amiga", "bsd", "dvh", "gpt", "loop", "mac", "msdos", "pc98", or "sun" <br/></p>
+    <ol start="4">
+      <li>Create a new partition in a specific <code>disk</code> of type <code>part-time</code>, file system is <code>fs-type</code> and of size <code>size</code> Mb.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo parted disk mkpart part-time fs-type 1 size
+</code>
+    </pre>
+    <p><code>part-time</code> can take values "primary", "logical", "extended".<br/>
+<code>fs-type</code> is optional. It can take values "btrfs", "ext2", "ext3", "ext4", "fat16", "fat32", "hfs", "hfs+", "linux-swap", "ntfs", "reiserfs", "udf", or "xfs"<br/>
+<code>size</code> has to less than the total size of the specified disk. To create a partition of size 50Mb, <size> will take the value of 50</size></p>
+    <ol start="5">
+      <li><code>parted</code> can also be run in an interactive format. Operations to manage the disk partitions can be performed by entering appropriate commands in the interactive session.
+<code>help</code> command in the interactive session shows a list of all possible disk management operations which can be performed.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">  $ sudo parted
+  GNU Parted <span class="hljs-number">3.3</span>
+  Using /dev/sda
+  Welcome to GNU Parted! Type <span class="hljs-string">'help'</span> to view a <span class="hljs-keyword">list</span> of commands.
+  (parted) <span class="hljs-keyword">print</span>  <span class="hljs-comment"># prints the partition table of the default selected disk - /dev/sda                                                  </span>
+  Model: ATA VBOX HARDDISK (scsi)
+  Disk /dev/sda: <span class="hljs-number">53.7</span>GB
+  Sector size (logical/physical): <span class="hljs-number">512</span>B/<span class="hljs-number">512</span>B
+  Partition Table: msdos
+  Disk Flags: 
+
+  Number  Start   End     Size    Type     File system  Flags
+   <span class="hljs-number">1</span>      <span class="hljs-number">1049</span>kB  <span class="hljs-number">53.7</span>GB  <span class="hljs-number">53.7</span>GB  primary  ext4         boot
+
+  (parted) select /dev/sdb  <span class="hljs-comment"># change the current disk on which operations have to be performed                                                </span>
+  Using /dev/sdb
+  (parted) quit  <span class="hljs-comment"># exit the interactive session</span>
+</code>
+    </pre>
+    <h3>Syntax Forms:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">parted [options] [device [<span class="hljs-built_in">command</span> [options...]...]]
+</code>
+    </pre>
+    <h3>Options:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">-h</td>
+          <td align="left">--help</td>
+          <td align="left">displays a help message listing all possible <code>commands [options]</code></td>
+        </tr>
+        <tr>
+          <td align="left">-l</td>
+          <td align="left">--list</td>
+          <td align="left">lists partition layout on all block devices</td>
+        </tr>
+        <tr>
+          <td align="left">-m</td>
+          <td align="left">--machine</td>
+          <td align="left">displays machine parseable output</td>
+        </tr>
+        <tr>
+          <td align="left">-v</td>
+          <td align="left">--version</td>
+          <td align="left">displays the version</td>
+        </tr>
+        <tr>
+          <td align="left">-a</td>
+          <td align="left">--align</td>
+          <td align="left">set alignment type for newly created partition. It can take the following values:<br/> <code>none</code>: Use the minimum alignment allowed by the disk type<br/> <code>cylinder</code>: Align partitions to cylinders<br/> <code>minimal</code>: Use minimum alignment as given by the disk topology information<br/> <code>optimal</code>: Use optimum alignment as given by the disk topology information</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

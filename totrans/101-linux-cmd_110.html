@@ -1,0 +1,42 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>make</code> command</h1>
+    <p>The <code>make</code> command is used to automate the reuse of multiple commands in certain directory structure.</p>
+    <p>An example for that would be the use of <code>terraform init</code>, <code>terraform plan</code>, and <code>terraform validate</code> while having to change different subscriptions in Azure. This is usually done in the following steps:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">az account <span class="hljs-built_in">set</span> --subscription <span class="hljs-string">"Subscription - Name"</span>
+terraform init
+</code>
+    </pre>
+    <p>How the <code>make</code> command can help us is it can automate all of that in just one go:
+<code>make tf-init</code></p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">make [ -f makefile ] [ options ] ... [ targets ] ...
+</code>
+    </pre>
+    <h3>Example use (guide):</h3>
+    <h4>1. Create <code>Makefile</code> in your guide directory</h4>
+    <h4>2. Include the following in your <code>Makefile</code> :</h4>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">hello-world:
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, World!"</span>
+
+hello-bobby:
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hello, Bobby!"</span>
+
+touch-letter:
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"This is a text that is being inputted into our letter!"</span> &gt; letter.txt
+
+clean-letter:
+        rm letter.txt
+</code>
+    </pre>
+    <h4>3. Execute <code>make hello-world</code> - this echoes "Hello, World" in our terminal.</h4>
+    <h4>4. Execute <code>make hello-bobby</code> - this echoes "Hello, Bobby!" in our terminal.</h4>
+    <h4>5. Execute <code>make touch-letter</code> - This creates a text file named <code>letter.txt</code> and populates a line in it.</h4>
+    <h4>6. Execute <code>make clean-letter</code></h4>
+    <h3>References to lenghtier and more contentful tutorials:</h3>
+    <p>(linoxide - linux make command examples)[https://linoxide.com/linux-make-command-examples/]
+(makefiletutorial.com - the name itself gives it out)[https://makefiletutorial.com/]</p>
+  </body></html>

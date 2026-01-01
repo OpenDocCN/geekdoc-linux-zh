@@ -1,0 +1,138 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>sed</code> command</h1>
+    <p><code>sed</code> command stands for stream editor. A stream editor is used to perform basic text transformations on an input stream (a file or input from a pipeline). For instance, it can perform lot’s of functions on files like searching, find and replace, insertion or deletion. While in some ways it is similar to an editor which permits scripted edits (such as <code>ed</code>), <code>sed</code> works by making only one pass over the input(s), and is consequently more efficient. But it is sed's ability to filter text in a pipeline that particularly distinguishes it from other types of editors.</p>
+    <p>The most common use of <code>sed</code> command is for a substitution or for find and replace. By using sed you can edit files even without opening it, which is a much quicker way to find and replace something in the file. It supports basic and extended regular expressions that allow you to match complex patterns. Most Linux distributions come with GNU and <code>sed</code> is pre-installed by default.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To Find and Replace String with <code>sed</code></li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">sed -i <span class="hljs-string">'s/{search_regex}/{replace_value}/g'</span> input-file
+</code>
+    </pre>
+    <ol start="2">
+      <li>For Recursive Find and Replace <em>(along with <code>find</code>)</em></li>
+    </ol>
+    <blockquote>
+      <p>Sometimes you may want to recursively search directories for files containing a string and replace the string in all files. This can be done using commands such as find to recursively find files in the directory and piping the file names to <code>sed</code>.
+The following command will recursively search for files in the current working directory and pass the file names to <code>sed</code>. It will recursively search for files in the current working directory and pass the file names to <code>sed</code>.</p>
+    </blockquote>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">find . -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> sed -i <span class="hljs-string">'s/{search_regex}/{replace_value}/g'</span> {} +
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">sed [OPTION]... {script-only-if-no-other-script} [INPUT-FILE]... 
+</code>
+    </pre>
+    <ul>
+      <li><code>OPTION</code> - sed options in-place, silent, follow-symlinks, line-length, null-data ...etc.</li>
+      <li><code>{script-only-if-no-other-script}</code> - Add the script to command if available.</li>
+      <li><code>INPUT-FILE</code> - Input Stream, A file or input from a pipeline.</li>
+    </ul>
+    <p>If no option is given, then the first non-option argument is taken as the sed script to interpret. All remaining arguments are names of input files; if no input files are specified, then the standard input is read.</p>
+    <p>GNU sed home page: <a href="http://www.gnu.org/software/sed/">http://www.gnu.org/software/sed/</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-i[SUFFIX]</code>
+          </td>
+          <td align="left">
+            <center>--in-place[=SUFFIX]</center>
+          </td>
+          <td align="left">Edit files in place (makes backup if SUFFIX supplied).</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <center>--quiet, --silent</center>
+          </td>
+          <td align="left">Suppress automatic printing of pattern space.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e script</code>
+          </td>
+          <td align="left">
+            <center>--expression=script</center>
+          </td>
+          <td align="left">Add the script to the commands to be executed.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f script-file</code>
+          </td>
+          <td align="left">
+            <center>--file=script-file</center>
+          </td>
+          <td align="left">Add the contents of script-file to the commands to be executed.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l N</code>
+          </td>
+          <td align="left">
+            <center>--line-length=N</center>
+          </td>
+          <td align="left">Specify the desired line-wrap length for the <code>l</code> command.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <center>--regexp-extended</center>
+          </td>
+          <td align="left">Use extended regular expressions in the script.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <center>--separate</center>
+          </td>
+          <td align="left">Consider files as separate rather than as a single continuous long stream.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <center>--unbuffered</center>
+          </td>
+          <td align="left">Load minimal amounts of data from the input files and flush the output buffers more often.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-z</code>
+          </td>
+          <td align="left">
+            <center>--null-data</center>
+          </td>
+          <td align="left">Separate lines by NULL characters.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Before you begin</h3>
+    <p>It may seem complicated and complex at first, but searching and replacing text in files with sed is very simple.</p>
+    <p>To find out more: <a href="https://www.gnu.org/software/sed/manual/sed.html">https://www.gnu.org/software/sed/manual/sed.html</a></p>
+  </body></html>

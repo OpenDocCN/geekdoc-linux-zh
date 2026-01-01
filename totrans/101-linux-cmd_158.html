@@ -1,0 +1,526 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>tty</code> command</h1>
+    <p>The <code>tty</code> command prints the filename of the terminal connected to standard input. It shows which terminal device you're currently using and can determine if the input is coming from a terminal or being redirected from a file or pipe.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">tty [options]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Terminal Identification</strong>: Shows current terminal device</li>
+      <li><strong>Redirection Detection</strong>: Determines if input is from terminal or file</li>
+      <li><strong>Session Information</strong>: Helps identify terminal sessions</li>
+      <li><strong>Scripting Support</strong>: Exit codes indicate terminal vs non-terminal</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Show Current Terminal</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Display current terminal device</span>
+tty
+
+<span class="hljs-comment"># Example outputs:</span>
+<span class="hljs-comment"># /dev/pts/0    (pseudo-terminal)</span>
+<span class="hljs-comment"># /dev/tty1     (console terminal)</span>
+<span class="hljs-comment"># /dev/ttys000  (macOS terminal)</span>
+</code>
+    </pre>
+    <h3>Check If Terminal</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Silent mode - just check if it's a terminal</span>
+tty -s
+
+<span class="hljs-comment"># Check exit code</span>
+tty -s &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running in terminal"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Not in terminal"</span>
+
+<span class="hljs-comment"># Example usage in scripts</span>
+<span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Interactive mode"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Non-interactive mode"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h2>Common Options</h2>
+    <h3>Basic Options</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># -s: Silent mode (no output, just exit code)</span>
+tty -s
+
+<span class="hljs-comment"># --help: Show help information</span>
+tty --<span class="hljs-built_in">help</span>
+
+<span class="hljs-comment"># --version: Show version information</span>
+tty --version
+</code>
+    </pre>
+    <h2>Understanding Terminal Types</h2>
+    <h3>1. Physical Terminals</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Console terminals (virtual consoles)</span><span class="hljs-comment"># /dev/tty1, /dev/tty2, /dev/tty3, etc.</span><span class="hljs-comment"># Switch to virtual console and check</span><span class="hljs-comment"># Ctrl+Alt+F1 (then login)</span>
+tty
+<span class="hljs-comment"># Output: /dev/tty1</span>
+</code>
+    </pre>
+    <h3>2. Pseudo Terminals</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Most common in desktop environments</span><span class="hljs-comment"># /dev/pts/0, /dev/pts/1, /dev/pts/2, etc.</span><span class="hljs-comment"># In terminal emulator</span>
+tty
+<span class="hljs-comment"># Output: /dev/pts/0</span>
+
+<span class="hljs-comment"># Each new terminal window gets new pts number</span>
+</code>
+    </pre>
+    <h3>3. Serial Terminals</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-comment"># Serial console connections</span>
+        <span class="hljs-comment"># /dev/ttyS0, /dev/ttyS1, etc.</span>
+        <span class="hljs-comment"># USB serial devices</span>
+        <span class="hljs-comment"># /dev/ttyUSB0, /dev/ttyUSB1, etc.</span>
+      </code>
+    </pre>
+    <h2>Practical Examples</h2>
+    <h3>1. Session Identification</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Identify current session</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Current session: <span class="hljs-variable">$(tty)</span>"</span>
+
+<span class="hljs-comment"># Show user and terminal</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"User: <span class="hljs-variable">$(whoami)</span> on <span class="hljs-variable">$(tty)</span>"</span>
+
+<span class="hljs-comment"># Show all users and their terminals</span>
+who
+
+<span class="hljs-comment"># Show current user's terminals</span>
+who | grep $(whoami)
+</code>
+    </pre>
+    <h3>2. Multi-Terminal Scripts</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Script that behaves differently based on terminal</span>
+
+current_tty=$(tty)
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Running on: <span class="hljs-variable">$current_tty</span>"</span>
+
+<span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> <span class="hljs-keyword">in</span>
+    /dev/tty[1-6])
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running on virtual console"</span>
+        <span class="hljs-comment"># Console-specific behavior</span>
+        ;;
+    /dev/pts/*)
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running in terminal emulator"</span>
+        <span class="hljs-comment"># Terminal emulator behavior</span>
+        ;;
+    *)
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Unknown terminal type"</span>
+        ;;
+<span class="hljs-keyword">esac</span>
+</code>
+    </pre>
+    <h3>3. Interactive vs Non-Interactive Detection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Detect if script is running interactively</span><span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Interactive mode - can prompt user"</span>
+    <span class="hljs-built_in">read</span> -p <span class="hljs-string">"Enter your name: "</span> name
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, <span class="hljs-variable">$name</span>!"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Non-interactive mode - using defaults"</span>
+    name=<span class="hljs-string">"User"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, <span class="hljs-variable">$name</span>!"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h3>4. Terminal-Specific Configuration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Configure based on terminal capabilities</span>
+
+current_tty=$(tty)
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> =~ ^/dev/pts/ ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-comment"># Modern terminal emulator</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\e[32mGreen text\e[0m"</span>
+    <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\e[1mBold text\e[0m"</span>
+<span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> =~ ^/dev/tty[1-6]$ ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-comment"># Virtual console - limited capabilities</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Plain text output"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Unknown terminal - safe output"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h2>Scripting Applications</h2>
+    <h3>1. Conditional User Interaction</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Only prompt if running in terminal</span><span class="hljs-function"><span class="hljs-title">ask_confirmation</span></span>() {
+    <span class="hljs-built_in">local</span> message=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+
+    <span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">read</span> -p <span class="hljs-string">"<span class="hljs-variable">$message</span> (y/n): "</span> response
+        <span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$response</span>"</span> <span class="hljs-keyword">in</span>
+            [Yy]|[Yy][Ee][Ss]) <span class="hljs-built_in">return</span> 0 ;;
+            *) <span class="hljs-built_in">return</span> 1 ;;
+        <span class="hljs-keyword">esac</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-comment"># Non-interactive - assume yes</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$message</span>: Assumed yes (non-interactive)"</span>
+        <span class="hljs-built_in">return</span> 0
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-comment"># Usage</span>
+<span class="hljs-keyword">if</span> ask_confirmation <span class="hljs-string">"Delete old files?"</span>; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Deleting files..."</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Keeping files..."</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h3>2. Progress Indicators</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Show progress only in terminal</span><span class="hljs-function"><span class="hljs-title">show_progress</span></span>() {
+    <span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Processing: "</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..10}; <span class="hljs-keyword">do</span>
+            <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"."</span>
+            sleep 0.5
+        <span class="hljs-keyword">done</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">" Done!"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Processing... Done!"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+show_progress
+</code>
+    </pre>
+    <h3>3. Logging Behavior</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-comment"># Different logging based on terminal</span><span class="hljs-function"><span class="hljs-title">log_message</span></span>() {
+    <span class="hljs-built_in">local</span> level=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+    <span class="hljs-built_in">local</span> message=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
+    <span class="hljs-built_in">local</span> timestamp=$(date <span class="hljs-string">'+%Y-%m-%d %H:%M:%S'</span>)
+
+    <span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-comment"># Terminal output - colored</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$level</span>"</span> <span class="hljs-keyword">in</span>
+            INFO)  <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\e[32m[<span class="hljs-variable">$timestamp</span>] INFO: <span class="hljs-variable">$message</span>\e[0m"</span> ;;
+            WARN)  <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\e[33m[<span class="hljs-variable">$timestamp</span>] WARN: <span class="hljs-variable">$message</span>\e[0m"</span> ;;
+            ERROR) <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\e[31m[<span class="hljs-variable">$timestamp</span>] ERROR: <span class="hljs-variable">$message</span>\e[0m"</span> ;;
+        <span class="hljs-keyword">esac</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-comment"># Non-terminal output - plain</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"[<span class="hljs-variable">$timestamp</span>] <span class="hljs-variable">$level</span>: <span class="hljs-variable">$message</span>"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-comment"># Usage</span>
+log_message <span class="hljs-string">"INFO"</span> <span class="hljs-string">"Script started"</span>
+log_message <span class="hljs-string">"WARN"</span> <span class="hljs-string">"Low disk space"</span>
+log_message <span class="hljs-string">"ERROR"</span> <span class="hljs-string">"Connection failed"</span>
+</code>
+    </pre>
+    <h2>Terminal Session Management</h2>
+    <h3>1. Session Information</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Get detailed session info</span><span class="hljs-function"><span class="hljs-title">get_session_info</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Session Information ==="</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal: <span class="hljs-variable">$(tty)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"User: <span class="hljs-variable">$(whoami)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Shell: <span class="hljs-variable">$SHELL</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"PID: $$"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"PPID: <span class="hljs-variable">$PPID</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Session ID: <span class="hljs-variable">$(ps -o sid= -p $$)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Process Group: <span class="hljs-variable">$(ps -o pgid= -p $$)</span>"</span>
+}
+
+get_session_info
+</code>
+    </pre>
+    <h3>2. Multiple Terminal Detection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Count user's active terminals</span><span class="hljs-function"><span class="hljs-title">count_user_terminals</span></span>() {
+    <span class="hljs-built_in">local</span> user=$(whoami)
+    <span class="hljs-built_in">local</span> count=$(who | grep <span class="hljs-string">"^<span class="hljs-variable">$user</span> "</span> | wc -l)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"User <span class="hljs-variable">$user</span> has <span class="hljs-variable">$count</span> active terminals"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Active sessions:"</span>
+    who | grep <span class="hljs-string">"^<span class="hljs-variable">$user</span> "</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  <span class="hljs-variable">$line</span>"</span>
+    <span class="hljs-keyword">done</span>
+}
+
+count_user_terminals
+</code>
+    </pre>
+    <h3>3. Terminal Communication</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Send message to specific terminal</span><span class="hljs-function"><span class="hljs-title">send_to_terminal</span></span>() {
+    <span class="hljs-built_in">local</span> target_tty=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
+    <span class="hljs-built_in">local</span> message=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
+
+    <span class="hljs-keyword">if</span> [ -w <span class="hljs-string">"<span class="hljs-variable">$target_tty</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Message from <span class="hljs-variable">$(tty)</span>: <span class="hljs-variable">$message</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$target_tty</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Message sent to <span class="hljs-variable">$target_tty</span>"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Cannot write to <span class="hljs-variable">$target_tty</span>"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+<span class="hljs-comment"># Usage (if permissions allow)</span>
+<span class="hljs-comment"># send_to_terminal "/dev/pts/1" "Hello from another terminal!"</span>
+</code>
+    </pre>
+    <h2>Integration with Other Commands</h2>
+    <h3>1. Combining with ps</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Find processes in current terminal</span>
+current_tty=$(tty | sed <span class="hljs-string">'s|/dev/||'</span>)
+ps -t <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span>
+
+<span class="hljs-comment"># Show process tree for current terminal</span>
+pstree -p $(ps -t <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> -o pid --no-headers | head -1)
+</code>
+    </pre>
+    <h3>2. Combining with who/w</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Show who is on the same terminal type</span>
+current_tty_type=$(tty | cut -d<span class="hljs-string">'/'</span> -f3 | sed <span class="hljs-string">'s/[0-9]*$//'</span>)
+who | grep <span class="hljs-string">"<span class="hljs-variable">$current_tty_type</span>"</span>
+
+<span class="hljs-comment"># Detailed information about current session</span>
+w | grep <span class="hljs-string">"<span class="hljs-variable">$(tty | sed 's|/dev/||')</span>"</span>
+</code>
+    </pre>
+    <h3>3. System Monitoring</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Monitor terminal activity</span><span class="hljs-function"><span class="hljs-title">monitor_terminals</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Active terminals:"</span>
+    ls -la /dev/pts/
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Users and terminals:"</span>
+    who
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Current session:"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"  TTY: <span class="hljs-variable">$(tty)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Uptime: <span class="hljs-variable">$(uptime)</span>"</span>
+}
+
+monitor_terminals
+</code>
+    </pre>
+    <h2>Security and Permissions</h2>
+    <h3>1. Terminal Permissions</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check terminal permissions</span><span class="hljs-function"><span class="hljs-title">check_tty_permissions</span></span>() {
+    <span class="hljs-built_in">local</span> current_tty=$(tty)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal: <span class="hljs-variable">$current_tty</span>"</span>
+    ls -la <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span>
+
+    <span class="hljs-comment"># Check if others can write to terminal</span>
+    <span class="hljs-keyword">if</span> [ -w <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal is writable"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal is not writable"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+check_tty_permissions
+</code>
+    </pre>
+    <h3>2. Secure Terminal Check</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Verify secure terminal environment</span><span class="hljs-function"><span class="hljs-title">check_secure_terminal</span></span>() {
+    <span class="hljs-keyword">if</span> ! tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"WARNING: Not running in a terminal"</span>
+        <span class="hljs-built_in">return</span> 1
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-built_in">local</span> current_tty=$(tty)
+    <span class="hljs-built_in">local</span> tty_perms=$(ls -la <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> | cut -d<span class="hljs-string">' '</span> -f1)
+
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$tty_perms</span>"</span> =~ .*w.*w.* ]]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"WARNING: Terminal is world-writable"</span>
+        <span class="hljs-built_in">return</span> 1
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal security check passed"</span>
+    <span class="hljs-built_in">return</span> 0
+}
+
+check_secure_terminal
+</code>
+    </pre>
+    <h2>Debugging and Troubleshooting</h2>
+    <h3>1. Terminal Issues</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Debug terminal problems</span><span class="hljs-function"><span class="hljs-title">debug_terminal</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"=== Terminal Debug Information ==="</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"TTY: <span class="hljs-variable">$(tty 2&gt;/dev/null || echo "No TTY")</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"TERM: <span class="hljs-variable">$TERM</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Interactive: <span class="hljs-variable">$(tty -s &amp;&amp; echo "Yes" || echo "No")</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Standard input: <span class="hljs-variable">$(file /proc/self/fd/0 | cut -d: -f2-)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Standard output: <span class="hljs-variable">$(file /proc/self/fd/1 | cut -d: -f2-)</span>"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Standard error: <span class="hljs-variable">$(file /proc/self/fd/2 | cut -d: -f2-)</span>"</span>
+}
+
+debug_terminal
+</code>
+    </pre>
+    <h3>2. Redirection Detection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Detect various input/output scenarios</span><span class="hljs-function"><span class="hljs-title">detect_io_redirection</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Input/Output Analysis:"</span>
+
+    <span class="hljs-keyword">if</span> tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard input: Terminal (<span class="hljs-variable">$(tty)</span>)"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard input: Redirected/Pipe"</span>
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-keyword">if</span> [ -t 1 ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard output: Terminal"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard output: Redirected/Pipe"</span>
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-keyword">if</span> [ -t 2 ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard error: Terminal"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Standard error: Redirected/Pipe"</span>
+    <span class="hljs-keyword">fi</span>
+}
+
+detect_io_redirection
+</code>
+    </pre>
+    <h3>3. Session Recovery</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Help recover lost terminal sessions</span><span class="hljs-function"><span class="hljs-title">find_my_sessions</span></span>() {
+    <span class="hljs-built_in">local</span> user=$(whoami)
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Finding sessions for user: <span class="hljs-variable">$user</span>"</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Current TTY: <span class="hljs-variable">$(tty)</span>"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"All active sessions:"</span>
+    who | grep <span class="hljs-string">"^<span class="hljs-variable">$user</span> "</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Screen sessions:"</span>
+    screen -ls 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No screen sessions"</span>
+    <span class="hljs-built_in">echo</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Tmux sessions:"</span>
+    tmux list-sessions 2&gt;/dev/null || <span class="hljs-built_in">echo</span> <span class="hljs-string">"No tmux sessions"</span>
+}
+
+find_my_sessions
+</code>
+    </pre>
+    <h2>Advanced Usage</h2>
+    <h3>1. Terminal Multiplexing Integration</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Detect if running inside multiplexer</span><span class="hljs-function"><span class="hljs-title">detect_multiplexer</span></span>() {
+    <span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$TMUX</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running inside tmux"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Session: <span class="hljs-variable">$(tmux display-message -p '#S')</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Window: <span class="hljs-variable">$(tmux display-message -p '#W')</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Pane: <span class="hljs-variable">$(tmux display-message -p '#P')</span>"</span>
+    <span class="hljs-keyword">elif</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$STY</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Running inside screen"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  Session: <span class="hljs-variable">$STY</span>"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Not in a multiplexer"</span>
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"TTY: <span class="hljs-variable">$(tty)</span>"</span>
+}
+
+detect_multiplexer
+</code>
+    </pre>
+    <h3>2. Remote Session Detection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Detect remote vs local sessions</span><span class="hljs-function"><span class="hljs-title">detect_session_type</span></span>() {
+    <span class="hljs-built_in">local</span> current_tty=$(tty)
+
+    <span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$SSH_CONNECTION</span>"</span> ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Remote SSH session"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  From: <span class="hljs-variable">$(echo $SSH_CONNECTION | cut -d' ' -f1,2)</span>"</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"  To: <span class="hljs-variable">$(echo $SSH_CONNECTION | cut -d' ' -f3,4)</span>"</span>
+    <span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> =~ ^/dev/tty[1-6]$ ]]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Local console session"</span>
+    <span class="hljs-keyword">elif</span> [[ <span class="hljs-string">"<span class="hljs-variable">$current_tty</span>"</span> =~ ^/dev/pts/ ]]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Local terminal emulator"</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Unknown session type"</span>
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"TTY: <span class="hljs-variable">$current_tty</span>"</span>
+}
+
+detect_session_type
+</code>
+    </pre>
+    <h2>Best Practices</h2>
+    <h3>1. Safe Scripting</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Always check for terminal before interactive operations</span><span class="hljs-function"><span class="hljs-title">safe_interactive</span></span>() {
+    <span class="hljs-keyword">if</span> ! tty -s; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Error: This script requires a terminal"</span> &gt;&amp;2
+        <span class="hljs-built_in">exit</span> 1
+    <span class="hljs-keyword">fi</span>
+
+    <span class="hljs-comment"># Proceed with interactive operations</span>
+    <span class="hljs-built_in">read</span> -p <span class="hljs-string">"Continue? (y/n): "</span> response
+}
+</code>
+    </pre>
+    <h3>2. Cross-Platform Compatibility</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Handle different systems</span><span class="hljs-function"><span class="hljs-title">get_terminal_info</span></span>() {
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">command</span> -v tty &gt;/dev/null 2&gt;&amp;1; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">local</span> terminal=$(tty 2&gt;/dev/null)
+        <span class="hljs-keyword">if</span> [ $? -eq 0 ]; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$terminal</span>"</span>
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-built_in">echo</span> <span class="hljs-string">"not a tty"</span>
+        <span class="hljs-keyword">fi</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"tty command not available"</span>
+    <span class="hljs-keyword">fi</span>
+}
+</code>
+    </pre>
+    <h3>3. Error Handling</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Robust terminal checking</span><span class="hljs-function"><span class="hljs-title">check_terminal_safe</span></span>() {
+    <span class="hljs-built_in">local</span> tty_output
+    tty_output=$(tty 2&gt;/dev/null)
+    <span class="hljs-built_in">local</span> exit_code=$?
+
+    <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$exit_code</span> -eq 0 ]; <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Terminal: <span class="hljs-variable">$tty_output</span>"</span>
+        <span class="hljs-built_in">return</span> 0
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Not a terminal (exit code: <span class="hljs-variable">$exit_code</span>)"</span>
+        <span class="hljs-built_in">return</span> 1
+    <span class="hljs-keyword">fi</span>
+}
+</code>
+    </pre>
+    <h2>Important Notes</h2>
+    <ul>
+      <li><strong>Exit Codes</strong>: tty returns 0 if stdin is a terminal, non-zero otherwise</li>
+      <li><strong>Silent Mode</strong>: Use <code>-s</code> for scripts that only need to check terminal status</li>
+      <li><strong>Redirection</strong>: Output changes when stdin is redirected from files or pipes</li>
+      <li><strong>Security</strong>: Be aware of terminal permissions and write access</li>
+      <li><strong>Portability</strong>: Available on most Unix-like systems</li>
+      <li><strong>Session Management</strong>: Useful for multiplexing and session tracking</li>
+    </ul>
+    <p>The <code>tty</code> command is essential for scripts that need to detect terminal environments and behave appropriately in interactive vs non-interactive contexts.</p>
+    <p>For more details, check the manual: <code>man tty</code></p>
+  </body></html>

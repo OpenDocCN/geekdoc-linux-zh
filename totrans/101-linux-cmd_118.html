@@ -1,0 +1,102 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>wc</code> command</h1>
+    <p>the <code>wc</code> command stands for word count. It's used to count the number of lines, words, and bytes <em>(characters)</em> in a file or standard input then prints the result to the standard output.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To count the number of lines, words and characters in a file in order:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">wc file.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>To count the number of directories in a directory:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ls -F | grep / | wc -l
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">wc [OPTION]... [FILE]...
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">
+            <code>--bytes</code>
+          </td>
+          <td align="left">print the byte counts</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m</code>
+          </td>
+          <td align="left">
+            <code>--chars</code>
+          </td>
+          <td align="left">print the character counts</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">
+            <code>--lines</code>
+          </td>
+          <td align="left">print the newline counts</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">
+            <code>--files0-from=F</code>
+          </td>
+          <td align="left">read  input  from the files specified by NUL-terminated names in file F. If F is <code>-</code> then read names from standard input</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-L</code>
+          </td>
+          <td align="left">
+            <code>--max-line-length</code>
+          </td>
+          <td align="left">print the maximum display width</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">
+            <code>--words</code>
+          </td>
+          <td align="left">print the word counts</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Additional Notes:</h3>
+    <ul>
+      <li>Passing more than one file to <code>wc</code> command prints the counts for each file and the total conuts of them.</li>
+      <li>you can combine more whan one flag to print the result as you want.</li>
+    </ul>
+  </body></html>

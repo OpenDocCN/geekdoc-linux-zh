@@ -1,0 +1,71 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>whatis</code> command</h1>
+    <p>The <code>whatis</code> command is used to display one-line manual page descriptions for commands.
+It can be used to get a basic understanding of what a (unknown) command is used for.</p>
+    <h3>Examples of uses:</h3>
+    <ol>
+      <li>To display what <code>ls</code> is used for:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">whatis ls
+</code>
+    </pre>
+    <ol start="2">
+      <li>To display the use of all commands which start with <code>make</code>, execute the following:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">whatis -w make*
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">whatis [-OPTION] [KEYWORD]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">
+            <code>--debug</code>
+          </td>
+          <td align="left">Show debugging messages</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <code>--regex</code>
+          </td>
+          <td align="left">Interpret each keyword as a regex</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">
+            <code>--wildcard</code>
+          </td>
+          <td align="left">The keyword(s) contain wildcards</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

@@ -1,0 +1,111 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>kill</code> command</h1>
+    <p><code>kill</code> command in Linux (located in /bin/kill), is a built-in command which is used to terminate processes manually. The <code>kill</code> command sends a signal to a process which terminates the process. If the user doesn’t specify any signal which is to be sent along with kill command then default <em>TERM</em> signal is sent that terminates the process.</p>
+    <p>Signals can be specified in three ways:</p>
+    <ul>
+      <li>
+        <strong>By number (e.g. -5)</strong>
+      </li>
+      <li>
+        <strong>With SIG prefix (e.g. -SIGkill)</strong>
+      </li>
+      <li>
+        <strong>Without SIG prefix (e.g. -kill)</strong>
+      </li>
+    </ul>
+    <h3>Syntax</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> [OPTIONS] [PID]...
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To display all the available signals you can use below command option:</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> -l
+</code>
+    </pre>
+    <ol start="2">
+      <li>To show how to use a <em>PID</em> with the <em>kill</em> command.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">$kill pid
+</code>
+    </pre>
+    <ol start="3">
+      <li>To show how to send signal to processes.</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> {-signal | -s signal} pid
+</code>
+    </pre>
+    <ol start="4">
+      <li>Specify Signal:</li>
+    </ol>
+    <ul>
+      <li>using numbers as signals</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> -9 pid
+</code>
+    </pre>
+    <ul>
+      <li>using SIG prefix in signals</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> -SIGHUP pid
+</code>
+    </pre>
+    <ul>
+      <li>without SIG prefix in signals</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">kill</span> -HUP pid
+</code>
+    </pre>
+    <h3>Arguments:</h3>
+    <p>The list of processes to be signaled can be a mixture of names and PIDs.</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">   pid    Each pid can be expressed <span class="hljs-keyword">in</span> one <span class="hljs-keyword">of</span> the following ways:
+
+          n      where n is larger than <span class="hljs-number">0.</span>  The process <span class="hljs-keyword">with</span> PID n is signaled.
+
+          <span class="hljs-number">0</span>      All processes <span class="hljs-keyword">in</span> the current process group are signaled.
+
+          <span class="hljs-number">-1</span>     All processes <span class="hljs-keyword">with</span> a PID larger than <span class="hljs-number">1</span> are signaled.
+
+          -n     where n is larger than <span class="hljs-number">1.</span>  All processes <span class="hljs-keyword">in</span> process group  n  are  signaled.
+                 When  an  argument  <span class="hljs-keyword">of</span>  the  form <span class="hljs-string">'-n'</span> is given, and it is meant to denote a
+                 process group, either a signal must be specified first, or the argument must
+                 be  preceded  by  a <span class="hljs-string">'--'</span> option, otherwise it will be taken <span class="hljs-keyword">as</span> the signal to
+                 send.
+
+   name   All processes invoked using <span class="hljs-keyword">this</span> name will be signaled.
+</code>
+    </pre>
+    <h3>Options:</h3>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">   -s, --signal signal
+          The signal to send.  It may be given <span class="hljs-keyword">as</span> a name <span class="hljs-keyword">or</span> a number.
+
+   -l, --<span class="hljs-keyword">list</span> [number]
+          <span class="hljs-keyword">Print</span> a <span class="hljs-keyword">list</span> of signal names, <span class="hljs-keyword">or</span> convert the given signal number to  a  name.   The
+          signals can be found in /usr/<span class="hljs-keyword">include</span>/linux/signal.h.
+
+   -L, --table
+          Similar to -l, but it will <span class="hljs-keyword">print</span> signal names <span class="hljs-keyword">and</span> their corresponding numbers.
+
+   -a, --all
+          <span class="hljs-keyword">Do</span>  not  restrict the command-name-to-PID conversion to processes with the same UID
+          <span class="hljs-keyword">as</span> the present process.
+
+   -p, --pid
+          Only <span class="hljs-keyword">print</span> the process ID (PID) of the named processes, <span class="hljs-keyword">do</span> not send any signals.
+
+   --verbose
+          <span class="hljs-keyword">Print</span> PID(s) that will be signaled with kill along with the signal.
+</code>
+    </pre>
+  </body></html>

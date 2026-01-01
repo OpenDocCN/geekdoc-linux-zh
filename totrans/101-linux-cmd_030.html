@@ -1,0 +1,47 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1><code>lscpu</code> command</h1>
+    <p><code>lscpu</code> in Linux/Unix is used to display CPU Architecture info. <code>lscpu</code> gathers CPU architecture information from <code>sysfs</code> and <code>/proc/cpuinfo</code> files.</p>
+    <p>For example :</p>
+    <pre>
+      <code class="language-php hljs php" data-lang="php"> manish@godsmack:~$ lscpu
+   Architecture:        x86_64
+   CPU op-mode(s):      <span class="hljs-number">32</span>-bit, <span class="hljs-number">64</span>-bit
+   Byte Order:          Little Endian
+   CPU(s):              <span class="hljs-number">4</span>
+   On-line CPU(s) <span class="hljs-keyword">list</span>: <span class="hljs-number">0</span><span class="hljs-number">-3</span>
+   Thread(s) per core:  <span class="hljs-number">2</span>
+   Core(s) per socket:  <span class="hljs-number">2</span>
+   Socket(s):           <span class="hljs-number">1</span>
+   NUMA node(s):        <span class="hljs-number">1</span>
+   Vendor ID:           GenuineIntel
+   CPU family:          <span class="hljs-number">6</span>
+   Model:               <span class="hljs-number">142</span>
+   Model name:          Intel(R) Core(TM) i5<span class="hljs-number">-7200</span>U CPU @ <span class="hljs-number">2.50</span>GHz
+   Stepping:            <span class="hljs-number">9</span>
+   CPU MHz:             <span class="hljs-number">700.024</span>
+   CPU max MHz:         <span class="hljs-number">3100.0000</span>
+   CPU min MHz:         <span class="hljs-number">400.0000</span>
+   BogoMIPS:            <span class="hljs-number">5399.81</span>
+   Virtualization:      VT-x   
+   L1d cache:           <span class="hljs-number">32</span>K
+   L1i cache:           <span class="hljs-number">32</span>K
+   L2 cache:            <span class="hljs-number">256</span>K
+   L3 cache:            <span class="hljs-number">3072</span>K
+   NUMA node0 CPU(s):   <span class="hljs-number">0</span><span class="hljs-number">-3</span>
+</code>
+    </pre>
+    <h2>Options</h2>
+    <p><code>-a, --all</code>
+Include lines for online and offline CPUs in the output (default for -e). This option may only specified together with option -e or -p.
+For example: <code>lsof -a</code></p>
+    <p><code>-b, --online</code>
+Limit the output to online CPUs (default for -p). This option may only be specified together with option -e or -p.
+For example: <code>lscpu -b</code></p>
+    <p><code>-c, --offline</code>
+Limit the output to offline CPUs. This option may only be specified together with option -e or -p.</p>
+    <p><code>-e, --extended [=list]</code>
+Display the CPU information in human readable format.
+For example: <code>lsof -e</code></p>
+    <p>For more info: use <code>man lscpu</code> or <code>lscpu --help</code></p>
+  </body></html>

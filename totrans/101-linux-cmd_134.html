@@ -1,0 +1,104 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>cmp</code> command</h1>
+    <p>The <code>cmp</code> command is a simple utility used to compare two files byte by byte.</p>
+    <p>If the files are identical, <code>cmp</code> produces no output and returns a successful exit status. If the files differ, it reports the byte and line number where the first difference occurred.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp [OPTION]... FILE1 [FILE2]
+</code>
+    </pre>
+    <h2>Examples :</h2>
+    <p>For the following examples, let's assume we have three files:</p>
+    <p>file1.txt:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">hello world
+</code>
+    </pre>
+    <p>file2.txt:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">hello world
+</code>
+    </pre>
+    <p>file3.txt:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">hello World
+</code>
+    </pre>
+    <h3>1. Comparing two identical files</h3>
+    <p>When the files are the same, cmp will produce no output. This is the standard way to confirm that two files are identical.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp file1.txt file2.txt
+</code>
+    </pre>
+    <p>(No output is shown)</p>
+    <h3>2. Comparing two different files</h3>
+    <p>When a difference is found, cmp reports the location of the first differing byte.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp file1.txt file3.txt
+file1.txt file3.txt differ: byte 7, line 1
+</code>
+    </pre>
+    <h3>3. Displaying all differing bytes (--verbose or -l)</h3>
+    <p>The -l (lowercase L) flag is very powerful. It prints the byte number (in decimal) and the value of the differing bytes (in octal) for every difference in the files.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp -l file1.txt file3.txt
+ 7 167 127
+</code>
+    </pre>
+    <h4>Explanation:</h4>
+    <p>This output means that at byte position 7, file1.txt has the octal value 167 (the letter 'w'), while file3.txt has the octal value 127 (the letter 'W').</p>
+    <h3>4. Comparing only the first "n" bytes (--bytes or -n)</h3>
+    <p>You can limit the comparison to a certain number of bytes. Here, we only compare the first 5 bytes. Since "hello" is the same in both files, cmp finds no difference.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp -n 5 file1.txt file3.txt
+</code>
+    </pre>
+    <p>(No output is shown)</p>
+    <h3>5. Ignoring the initial "n" bytes (--ignore-initial or -i)</h3>
+    <p>You can tell cmp to skip a certain number of bytes at the beginning of the files before starting its comparison. Here, we skip the first 6 bytes, so the comparison starts at the letter 'w'.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">$ cmp -i 6 file1.txt file3.txt
+file1.txt file3.txt differ: byte 1, line 1
+</code>
+    </pre>
+    <h4>Explanation:</h4>
+    <p>The output now says the difference is at "byte 1" because the comparison started after the initial 6 bytes were ignored.</p>
+    <h3>Common Options</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Short Flag</th>
+          <th>Long Flag</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>-b</td>
+          <td>--print-bytes</td>
+          <td>Print the differing bytes.</td>
+        </tr>
+        <tr>
+          <td>-i SKIP</td>
+          <td>--ignore-initial=SKIP</td>
+          <td>Skip the first SKIP bytes of both files.</td>
+        </tr>
+        <tr>
+          <td>-l</td>
+          <td>--verbose</td>
+          <td>Output the byte number and the values of all differing bytes.</td>
+        </tr>
+        <tr>
+          <td>-n LIMIT</td>
+          <td>--bytes=LIMIT</td>
+          <td>Compare at most LIMIT bytes.</td>
+        </tr>
+        <tr>
+          <td>-s</td>
+          <td>--quiet, --silent</td>
+          <td>Suppress all output. Only return an exit status.</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

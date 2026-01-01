@@ -1,0 +1,64 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>ping</code> command</h1>
+    <p>The <code>ping</code> (Packet Internet Groper) command is a network utility used to check network connectivity between a host and a server or another host. It sends ICMP (Internet Control Message Protocol) echo requests to a specified IP address or URL and measures the time it takes to receive a response. This time delay is referred to as "latency." Ping is a fundamental tool for network troubleshooting and monitoring.</p>
+    <h2>Understanding Latency</h2>
+    <p>Latency, in the context of networking, is the time delay between sending a packet and receiving a response.</p>
+    <p>When you use the <code>ping</code> command, it measures the latency by sending a series of packets to the target host and calculating the time it takes for each packet to complete the round trip. The latency is typically measured in milliseconds (ms). Understanding latency is essential because:</p>
+    <ul>
+      <li>
+        <p><strong>Network Performance</strong>: Lower latency means faster data transmission and more responsive network connections, which is critical for real-time applications.</p>
+      </li>
+      <li>
+        <p><strong>Troubleshooting</strong>: High latency can indicate network congestion, packet loss, or connectivity issues that need attention.</p>
+      </li>
+      <li>
+        <p><strong>Quality of Service (QoS)</strong>: Service providers and network administrators use latency metrics to ensure that network services meet quality standards.</p>
+      </li>
+    </ul>
+    <p>The basic ping syntax includes ping followed by a hostname, a name of a website, or the exact IP address.</p>
+    <pre>
+      <code class="language- hljs " data-lang="">ping [option] [hostname] or [IP address]
+</code>
+    </pre>
+    <h3>Examples:</h3>
+    <ol>
+      <li>To get ping version installed on your system.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">sudo ping -v
+</code>
+    </pre>
+    <ol start="2">
+      <li>To check whether a remote host is up, in this case, google.com, type in your terminal:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ping google.com
+</code>
+    </pre>
+    <ol start="3">
+      <li>Controlling the number of packets to send:
+Earlier we did not define the number of packets to send to the server/host by using -c option we can do so.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ping -c 5 google.com
+</code>
+    </pre>
+    <ol start="4">
+      <li>Controlling the size of the packet:
+Earlier a default sized packets were sent to a host but we can send light and heavy packet by using
+-s option.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ping -s 40 -c 5 google.com
+</code>
+    </pre>
+    <ol start="5">
+      <li>Changing the time interval between ping packets:
+By default ping wait for 1 sec to send next packet we can change this time by using -i option.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ping -i 2 google.com
+</code>
+    </pre>
+  </body></html>

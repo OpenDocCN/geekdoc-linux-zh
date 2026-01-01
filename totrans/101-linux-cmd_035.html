@@ -1,0 +1,259 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>killall</code> command</h1>
+    <p><code>killall</code> sends a signal to <strong>all</strong> processes running any of the specified commands.  If no signal name is specified, <code>SIGTERM</code> is sent. In general, <code>killall</code> command kills all processes by knowing the name of the process.</p>
+    <p>Signals can be specified either by name (e.g. <code>-HUP</code> or <code>-SIGHUP</code>) or by number (e.g. <code>-1</code>) or by option <code>-s</code>.</p>
+    <p>If the command name is not a regular expression (option <code>-r</code>) and contains a slash (<code>/</code>), processes executing that particular file will be selected for killing, independent of their name.</p>
+    <p><code>killall</code> returns a zero return code if at least one process has been killed for each listed command, or no commands were listed and at least one process matched the <code>-u</code> and <code>-Z</code> search criteria. <code>killall</code> returns non-zero otherwise.</p>
+    <p>A <code>killall</code> process never kills itself (but may kill other <code>killall</code> processes).</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Kill all processes matching the name <code>conky</code> with <code>SIGTERM</code>:</li>
+    </ol>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">killall conky
+<span class="hljs-comment"># OR</span>
+killall -SIGTERM conky
+<span class="hljs-comment"># OR</span>
+killall -15 conky
+</code>
+    </pre>
+    <p>You can also kill Wine processes (Windows executable files running on Linux) this way.</p>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">killall TQ.exe
+</code>
+    </pre>
+    <ol start="2">
+      <li>List all the supported signals:</li>
+    </ol>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">$ killall -l
+HUP INT QUIT ILL TRAP ABRT BUS FPE KILL USR1 SEGV USR2 PIPE ALRM TERM STKFLT
+CHLD CONT STOP TSTP TTIN TTOU URG XCPU XFSZ VTALRM PROF WINCH POLL PWR SYS
+</code>
+    </pre>
+    <p>As for the numbers.</p>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">$ <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> $(killall -l); <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$s</span> "</span> &amp;&amp; <span class="hljs-built_in">kill</span> -l <span class="hljs-variable">$s</span>; <span class="hljs-keyword">done</span>
+HUP 1
+INT 2
+QUIT 3
+ILL 4
+TRAP 5
+ABRT 6
+BUS 7
+FPE 8
+KILL 9
+USR1 10
+SEGV 11
+USR2 12
+PIPE 13
+ALRM 14
+TERM 15
+STKFLT 16
+CHLD 17
+CONT 18
+STOP 19
+TSTP 20
+TTIN 21
+TTOU 22
+URG 23
+XCPU 24
+XFSZ 25
+VTALRM 26
+PROF 27
+WINCH 28
+POLL 29
+PWR 30
+SYS 31
+</code>
+    </pre>
+    <ol start="3">
+      <li>Ask before killing, to prevent unwanted kills:</li>
+    </ol>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">$ killall -i conky
+Kill conky(1685) ? (y/N)
+</code>
+    </pre>
+    <ol start="4">
+      <li>Kill all processes and wait until the processes die.</li>
+    </ol>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">killall -w conky
+</code>
+    </pre>
+    <ol start="5">
+      <li>Kill based on time:</li>
+    </ol>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh"><span class="hljs-comment"># Kill all firefox younger than 2 minutes</span>
+killall -y 2m  firefox
+
+<span class="hljs-comment"># Kill all firefox older than 2 hours</span>
+killall -o 2h  firefox
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language-sh hljs bash" data-lang="sh">killall [OPTION]... [--] NAME...
+killall -l, --list
+killall -V, --version
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">
+            <code>--exact</code>
+          </td>
+          <td align="left">require an exact match for very long names</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-I</code>
+          </td>
+          <td align="left">
+            <code>--ignore-case</code>
+          </td>
+          <td align="left">case insensitive process name match</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left">
+            <code>--process-group</code>
+          </td>
+          <td align="left">kill process group instead of process</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-y</code>
+          </td>
+          <td align="left">
+            <code>--younger-than</code>
+          </td>
+          <td align="left">kill processes younger than TIME</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-o</code>
+          </td>
+          <td align="left">
+            <code>--older-than</code>
+          </td>
+          <td align="left">kill processes older than TIME</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-i</code>
+          </td>
+          <td align="left">
+            <code>--interactive</code>
+          </td>
+          <td align="left">Prompt before killing processes to avoid accidental termination.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l</code>
+          </td>
+          <td align="left">
+            <code>--list</code>
+          </td>
+          <td align="left">list all known signal names</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-q</code>
+          </td>
+          <td align="left">
+            <code>--quiet</code>
+          </td>
+          <td align="left">don't print complaints</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <code>--regexp</code>
+          </td>
+          <td align="left">interpret NAME as an extended regular expression</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--signal SIGNAL</code>
+          </td>
+          <td align="left">send this signal instead of SIGTERM</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-u</code>
+          </td>
+          <td align="left">
+            <code>--user USER</code>
+          </td>
+          <td align="left">kill only process(es) running as USER</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">
+            <code>--verbose</code>
+          </td>
+          <td align="left">report if the signal was successfully sent</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">
+            <code>--wait</code>
+          </td>
+          <td align="left">wait for processes to die</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <code>--ns PID</code>
+          </td>
+          <td align="left">Match processes belonging to the same namespace as the specified PID.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-Z</code>
+          </td>
+          <td align="left">
+            <code>--context</code>
+          </td>
+          <td align="left">REGEXP kill only process(es) having context (must precede other arguments)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Related commands</h3>
+    <p><a href="/ebook/en/content/034-the-kill-command.md">kill</a>, <code>pidof</code></p>
+  </body></html>

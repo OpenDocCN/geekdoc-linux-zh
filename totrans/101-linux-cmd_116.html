@@ -1,0 +1,120 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>mount</code> command</h1>
+    <p>The <code>mount</code> command is used to mount 'attach' a filesystem and make it accessible by an existing directory structure tree.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Displays version information:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">mount -V
+</code>
+    </pre>
+    <ol start="2">
+      <li>Attaching filesystem found on device and of type type at the directory dir:</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">mount -t <span class="hljs-built_in">type</span> device dir
+</code>
+    </pre>
+    <h3>Syntax Forms:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">mount [-lhV]
+</code>
+    </pre>
+    <pre>
+      <code class="language- hljs " data-lang="">mount -a [-fFnrsvw] [-t vfstype] [-O optlist]
+</code>
+    </pre>
+    <pre>
+      <code class="language- hljs " data-lang="">mount [-fnrsvw] [-t fstype] [-o options] device dir
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">
+            <center>
+              <code>--help</code>
+            </center>
+          </td>
+          <td align="left">Dispaly a  help message and exists</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">
+            <center>
+              <code>--no-mtab</code>
+            </center>
+          </td>
+          <td align="left">Mount without writing in /etc/mtab</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">
+            <center>
+              <code>--all</code>
+            </center>
+          </td>
+          <td align="left">Mount all filesystems (of the given types) mentioned in fstab</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-r</code>
+          </td>
+          <td align="left">
+            <code>--read-only</code>
+          </td>
+          <td align="left">Mount the filesystem read-only</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w</code>
+          </td>
+          <td align="left">
+            <code>--rw</code>
+          </td>
+          <td align="left">Mount the filesystem as read/write.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-M</code>
+          </td>
+          <td align="left">
+            <code>--move</code>
+          </td>
+          <td align="left">Move a subtree to some other place.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-B</code>
+          </td>
+          <td align="left">
+            <code>--bind</code>
+          </td>
+          <td align="left">Remount a subtree somewhere else <em>(so that its contents are available in both places)</em>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

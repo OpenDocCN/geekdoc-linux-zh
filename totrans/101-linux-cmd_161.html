@@ -1,0 +1,260 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The ifplugstatus Command</h1>
+    <p>The <code>ifplugstatus</code> command is a diagnostic utility used to check the <strong>physical link status</strong> of network interfaces on Linux systems. It reports whether an interface (such as eth0, enp0s3, or wlan0) has a network cable connected or not. This tool is particularly useful for troubleshooting wired network connectivity and detecting unplugged cables.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus [options] [interface]
+</code>
+    </pre>
+    <h3>Parameters</h3>
+    <ul>
+      <li>
+        <p>interface — the network interface to check (e.g., eth0, enp0s3, wlan0).</p>
+      </li>
+      <li>
+        <p>options — optional flags for customizing output.</p>
+      </li>
+    </ul>
+    <h2>Installation</h2>
+    <p><code>ifplugstatus</code> is part of the <code>ifplugd</code> package.
+It can be installed using the following commands depending on your distribution:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Ubuntu/Debian</span>
+sudo apt update
+sudo apt install ifplugd
+
+<span class="hljs-comment"># CentOS/RHEL/Fedora</span>
+sudo yum install ifplugd
+<span class="hljs-comment"># or</span>
+sudo dnf install ifplugd
+</code>
+    </pre>
+    <h3>To verify installation:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">which</span> ifplugstatus
+</code>
+    </pre>
+    <h2>Basic Usage</h2>
+    <h3>1. Check the status of a single interface</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus eth0
+</code>
+    </pre>
+    <h3>Sample Output:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">eth0: link beat detected
+</code>
+    </pre>
+    <h3>or</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">eth0: link beat not detected
+</code>
+    </pre>
+    <h3>Explanation:</h3>
+    <ul>
+      <li>
+        <p>link beat detected → cable is plugged in and active.</p>
+      </li>
+      <li>
+        <p>link beat not detected → cable is unplugged or inactive.
+<em>Note: 'link beat' is a legacy term from older Ethernet (10/100 Mbps). Modern Gigabit or higher interfaces may use different link detection signals, but the command generally reports an active physical link.</em></p>
+      </li>
+    </ul>
+    <h3>2. Check multiple interfaces</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus eth0 wlan0
+</code>
+    </pre>
+    <h3>Sample Output:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">eth0: link beat detected
+wlan0: link beat not detected
+</code>
+    </pre>
+    <p>This allows quick verification of all available interfaces.</p>
+    <h2>Options</h2>
+    <p>Some popular option flags include:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-a</code>
+          </td>
+          <td>Show all interfaces (default behavior).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-i</code>
+          </td>
+          <td>Specify a particular interface.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-s</code>
+          </td>
+          <td>Display a short summary only.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-v</code>
+          </td>
+          <td>Verbose output with more details.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-q</code>
+          </td>
+          <td>Quiet mode — minimal output.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-h</code>
+          </td>
+          <td>Display help information.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Practical Examples</h2>
+    <h3>1. Check if the main Ethernet interface is connected</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus eth0
+</code>
+    </pre>
+    <p>Displays the current cable connection status for eth0.</p>
+    <h3>2. Check all available network interfaces</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus -a
+</code>
+    </pre>
+    <p>Lists link status for every detected interface.</p>
+    <h3>3. Use verbose mode for detailed results</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus -v eth0
+</code>
+    </pre>
+    <p>Provides more descriptive information about the link state.</p>
+    <h3>4. Quiet mode for scripting or automation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus -q eth0
+</code>
+    </pre>
+    <p>Outputs only the essential information, suitable for shell scripts.</p>
+    <h2>Understanding the Output</h2>
+    <p>A typical output may look like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">eth0: link beat detected
+enp0s3: link beat not detected
+</code>
+    </pre>
+    <ul>
+      <li>
+        <p>Interface Name: eth0, enp0s3, etc.</p>
+      </li>
+      <li>
+        <p>Link Status: Indicates whether a physical link (cable or signal) is present.</p>
+      </li>
+    </ul>
+    <p>When integrated into scripts, this helps automate detection of disconnected interfaces or faulty cabling.</p>
+    <h2>Common Use Cases</h2>
+    <h3>1. Cable Connectivity Testing</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus eth0
+</code>
+    </pre>
+    <p>Quickly verify if a cable is physically connected to the network port.</p>
+    <h3>2. Multi-Interface Monitoring</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ifplugstatus eth0 wlan0
+</code>
+    </pre>
+    <p>Check multiple interfaces simultaneously for link activity.</p>
+    <h3>3. Continuous Monitoring</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">watch -n 5 ifplugstatus eth0
+</code>
+    </pre>
+    <p>Updates the interface status every 5 seconds for real-time link monitoring.</p>
+    <h2>Troubleshooting Common Issues</h2>
+    <h3>1. Interface Not Found</h3>
+    <p>If an incorrect interface name is given:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">eth5: No such device
+</code>
+    </pre>
+    <p><strong>Fix:</strong> Use the ip a or ifconfig command to list valid interfaces.</p>
+    <h3>2. Permission Denied</h3>
+    <p>Some systems may require elevated privileges:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo ifplugstatus eth0
+</code>
+    </pre>
+    <h3>3. Command Not Found</h3>
+    <p>If the command is missing:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"> ifplugstatus: <span class="hljs-built_in">command</span> not found
+</code>
+    </pre>
+    <p><strong>Fix:</strong> Install the ifplugd package using your package manager.</p>
+    <p><strong>Tip:</strong> Always ensure the ifplugd package is installed and your user has permission to access network interfaces.</p>
+    <h2>Related Commands</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>ip a</code> (preferred) / <code>ifconfig</code></td>
+          <td>Display all network interfaces and details. <code>ip a</code> is the modern tool; <code>ifconfig</code> is legacy.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>ethtool eth0</code>
+          </td>
+          <td>Retrieve advanced information about the network interface.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>nmcli device status</code>
+          </td>
+          <td>Check connection status via NetworkManager.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>ping</code>
+          </td>
+          <td>Test network reachability after confirming cable connection.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Important Notes</h2>
+    <ul>
+      <li>
+        <p>Works best with wired Ethernet interfaces.</p>
+      </li>
+      <li>
+        <p>Wireless interfaces may not always report link status accurately.</p>
+      </li>
+      <li>
+        <p>The tool is read-only — it does not modify system settings.</p>
+      </li>
+      <li>
+        <p>Lightweight and safe for use in both desktop and server environments.</p>
+      </li>
+    </ul>
+    <h2>Manual Reference</h2>
+    <p>For additional information and advanced usage:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">man ifplugstatus
+</code>
+    </pre>
+  </body></html>

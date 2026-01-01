@@ -1,0 +1,321 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>ssh</code> command</h1>
+    <p>The <code>ssh</code> command in Linux stands for "Secure Shell". It is a protocol used to securely connect to a remote server/system. ssh is more secure in the sense that it transfers the data in encrypted form between the host and the client. ssh runs at TCP/IP port 22.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Use a Different Port Number for SSH Connection:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ssh test.server.com -p 3322
+</code>
+    </pre>
+    <ol start="2">
+      <li>-i ssh to remote server using a private key?</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">ssh -i <span class="hljs-keyword">private</span>.key user_name@host
+</code>
+    </pre>
+    <ol start="3">
+      <li>-l ssh specifying a different username</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">ssh -l alternative-username sample.ssh.com
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">ssh user_name@host(IP/Domain_Name)
+</code>
+    </pre>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">ssh -i <span class="hljs-keyword">private</span>.key user_name@host
+</code>
+    </pre>
+    <pre>
+      <code class="language- hljs " data-lang="">ssh sample.ssh.com  ls /tmp/doc
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-1</code>
+          </td>
+          <td align="left">Forces ssh to use protocol SSH-1 only.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-2</code>
+          </td>
+          <td align="left">Forces ssh to use protocol SSH-2 only.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-4</code>
+          </td>
+          <td align="left">Allows IPv4 addresses only.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-A</code>
+          </td>
+          <td align="left">Authentication agent connection forwarding is enabled..</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-a</code>
+          </td>
+          <td align="left">Authentication agent connection forwarding is disabled.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-B bind_interface</code>
+          </td>
+          <td align="left">Bind to the address of bind_interface before attempting to connect to the destination host.  This is only useful on systems with more than one address.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-b bind_address</code>
+          </td>
+          <td align="left">Use bind_address on the local machine as the source address of the connection.  Only useful on systems with more than one address.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-C</code>
+          </td>
+          <td align="left">Compresses all data (including stdin, stdout, stderr, and data for forwarded X11 and TCP connections) for a faster transfer of data.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c cipher_spec</code>
+          </td>
+          <td align="left">Selects the cipher specification for encrypting the session.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-D [bind_address:]port</code>
+          </td>
+          <td align="left">Dynamic application-level port forwarding. This allocates a socket to listen to port on the local side. When a connection is made to this port, the connection is forwarded over the secure channel, and the application protocol is then used to determine where to connect to from the remote machine.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-E log_file</code>
+          </td>
+          <td align="left">Append debug logs instead of standard error.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e escape_char</code>
+          </td>
+          <td align="left">Sets the escape character for sessions with a pty (default: ‘~’).  The escape character is only recognized at the beginning of a line.  The escape character followed by a dot (‘.’) closes the connection; followed by control-Z suspends the connection; and followed by itself sends the escape character once.  Setting the character to “none” disables any escapes and makes the session fully transparent.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-F configfile</code>
+          </td>
+          <td align="left">Specifies a per-user configuration file. The default for the per-user configuration file is ~/.ssh/config.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">Requests ssh to go to background just before command execution.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-G</code>
+          </td>
+          <td align="left">Causes ssh to print its configuration after evaluating Host and Match blocks and exit.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-g</code>
+          </td>
+          <td align="left">Allows remote hosts to connect to local forwarded ports.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-I pkcs11</code>
+          </td>
+          <td align="left">Specify the PKCS#11 shared library ssh should use to communicate with a PKCS#11 token providing keys.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-i identity_file</code>
+          </td>
+          <td align="left">A file from which the identity key (private key) for public key authentication is read.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-J [user@]host[:port]</code>
+          </td>
+          <td align="left">Connect to the target host by first making a ssh connection to the pjump host[(/iam/jump-host) and then establishing a TCP forwarding to the ultimate destination from there.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-K</code>
+          </td>
+          <td align="left">Enables GSSAPI-based authentication and forwarding (delegation) of GSSAPI credentials to the server.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-k</code>
+          </td>
+          <td align="left">Disables forwarding (delegation) of GSSAPI credentials to the server.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>-L [bind_address:]port:host:hostport</code>, <code>-L [bind_address:]port:remote_socket</code>, <code>-L local_socket:host:hostport</code>, <code>-L local_socket:remote_socket</code></td>
+          <td align="left">Specifies that connections to the given TCP port or Unix socket on the local (client) host are to be forwarded to the given host and port, or Unix socket, on the remote side.  This works by allocating a socket to listen to either a TCP port on the local side, optionally bound to the specified bind_address, or to a Unix socket.  Whenever a connection is made to the local port or socket, the connection is forwarded over the secure channel, and a connection is made to either host port hostport, or the Unix socket remote_socket, from the remote machine.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-l login_name</code>
+          </td>
+          <td align="left">Specifies the user to log in as on the remote machine.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-M</code>
+          </td>
+          <td align="left">Places the ssh client into “master” mode for connection sharing.  Multiple -M options places ssh into “master” mode but with confirmation required using ssh-askpass before each operation that changes the multiplexing state (e.g. opening a new session).</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m mac_spec</code>
+          </td>
+          <td align="left">A comma-separated list of MAC (message authentication code) algorithms, specified in order of preference.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-N</code>
+          </td>
+          <td align="left">Do not execute a remote command.  This is useful for just forwarding ports.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">Prevents reading from stdin.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-O ctl_cmd</code>
+          </td>
+          <td align="left">Control an active connection multiplexing master process.  When the -O option is specified, the ctl_cmd argument is interpreted and passed to the master process.  Valid commands are: “check” (check that the master process is running), “forward” (request forwardings without command execution), “cancel” (cancel forwardings), “exit” (request the master to exit), and “stop” (request the master to stop accepting further multiplexing requests).</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-o</code>
+          </td>
+          <td align="left">Can be used to give options in the format used in the configuration file.  This is useful for specifying options for which there is no separate command-line flag.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>-p</code>, <code>--port PORT</code></td>
+          <td align="left">Port to connect to on the remote host.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-Q query_option</code>
+          </td>
+          <td align="left">Queries ssh for the algorithms supported for the specified version 2.  The available features are: cipher (supported symmetric ciphers), cipher-auth (supported symmetric ciphers that support authenticated encryption), help (supported query terms for use with the -Q flag), mac (supported message integrity codes), kex (key exchange algorithms), kex-gss (GSSAPI key exchange algorithms), key (keytypes), key-cert (certificate key types), key-plain (non-certificate key types), key-sig (all keytypes and signature algorithms), protocol-version (supported SSH protocol versions), and sig (supported signature algorithms).  Alternatively, any keyword from ssh_config(5) or sshd_config(5) thattakes an algorithm list may be used as an alias for the corresponding query_option.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-q</code>
+          </td>
+          <td align="left">Qiet mode. Causes most warning and diagnostic messages to be suppressed.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-R [bind_address:]port:host:hostport, -R [bind_address:]port:local_socket, -R remote_socket:host:hostport, -R remote_socket:local_socket, -R [bind_address:]port</code>
+          </td>
+          <td align="left">Specifies that connections to the given TCP port or Unix socket on the remote (server) host are to be forwarded to the local side.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-S ctl_path</code>
+          </td>
+          <td align="left">Specifies the location of a control socket for connection sharing, or the string “none” to disable connection sharing.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">May be used to request invocation of a subsystem on the remote system.  Subsystems facilitate the use of SSH as a secure transport for other applications (e.g. sftp(1)).  The subsystem is specified as the remote command.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-T</code>
+          </td>
+          <td align="left">Disable pseudo-terminal allocation.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-t</code>
+          </td>
+          <td align="left">Force pseudo-terminal allocation.  This can be used to execute arbitrary screen-based programs on a remote machine, which can be very useful, e.g. when implementing menu services.  Multiple -t options force tty allocation, even if ssh has no local tty.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-V</code>
+          </td>
+          <td align="left">Display the version number.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-v</code>
+          </td>
+          <td align="left">Verbose mode. It echoes everything it is doing while establishing a connection. It is very useful in the debugging of connection failures.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-W host:port</code>
+          </td>
+          <td align="left">Requests that standard input and output on the client be forwarded to host on port over the secure channel.  Implies -N, -T, ExitOnForwardFailure and ClearAllForwardings, though these can be overridden in the configuration file or using -o command line options.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-w local_tun[remote_tun]</code>
+          </td>
+          <td align="left">Requests tunnel device forwarding with the specified tun devices between the client (local_tun) and the server (remote_tun).	The devices may be specified by numerical ID or the keyword “any”, which uses the next available tunnel device.  If remote_tun is not specified, it defaults to “any”.	If the Tunnel directive is unset, it will be set to the default tunnel mode, which is “point-to-point”.  If a different Tunnel forwarding mode it desired, then it should be specified before -w.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-X</code>
+          </td>
+          <td align="left">Enables X11 forwarding (GUI Forwarding).</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-x</code>
+          </td>
+          <td align="left">Disables X11 forwarding (GUI Forwarding).</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-Y</code>
+          </td>
+          <td align="left">Enables trusted X11 Forwarding.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-y</code>
+          </td>
+          <td align="left">Send log information using the syslog system module.  By default this information is sent to stderr.</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

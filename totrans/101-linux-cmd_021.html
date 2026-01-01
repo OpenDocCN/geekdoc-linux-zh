@@ -1,0 +1,463 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>echo</code> command</h1>
+    <p>The <code>echo</code> command is used to display text strings to the terminal. It's one of the most fundamental commands in Linux/Unix systems and is commonly used in shell scripts, command-line operations, and system administration tasks for outputting text, variables, and formatted content.</p>
+    <h2>Syntax</h2>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> [OPTIONS] [STRING...]
+</code>
+    </pre>
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Text Output</strong>: Display simple text strings</li>
+      <li><strong>Variable Expansion</strong>: Show values of environment variables</li>
+      <li><strong>Escape Sequences</strong>: Format output with special characters</li>
+      <li><strong>File Operations</strong>: Write or append text to files</li>
+      <li><strong>Script Integration</strong>: Essential for shell scripting</li>
+    </ul>
+    <h2>Basic Usage</h2>
+    <h3>Simple Text Output</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Display simple text</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, World!"</span>
+<span class="hljs-built_in">echo</span> Hello World
+
+<span class="hljs-comment"># Display multiple arguments</span>
+<span class="hljs-built_in">echo</span> Hello World Linux
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Multiple"</span> <span class="hljs-string">"words"</span> <span class="hljs-string">"here"</span>
+
+<span class="hljs-comment"># Empty line</span>
+<span class="hljs-built_in">echo</span>
+</code>
+    </pre>
+    <h3>Variable Display</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Display environment variables</span><span class="hljs-built_in">echo</span> <span class="hljs-variable">$HOME</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$USER</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span>
+
+<span class="hljs-comment"># Display custom variables</span>
+name=<span class="hljs-string">"John"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$name</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, <span class="hljs-variable">$name</span>"</span>
+
+<span class="hljs-comment"># Display with variable expansion</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Current user: <span class="hljs-variable">$USER</span>, Home: <span class="hljs-variable">$HOME</span>"</span>
+</code>
+    </pre>
+    <h2>Advanced Features</h2>
+    <h3>Escape Sequences</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Enable escape sequence interpretation</span><span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Hello\nWorld"</span>          <span class="hljs-comment"># New line</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Name:\tJohn"</span>           <span class="hljs-comment"># Tab</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Hello\bWorld"</span>          <span class="hljs-comment"># Backspace</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Hello\rWorld"</span>          <span class="hljs-comment"># Carriage return</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Line 1\vLine 2"</span>        <span class="hljs-comment"># Vertical tab</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\aAlert sound"</span>         <span class="hljs-comment"># Alert/bell</span>
+
+<span class="hljs-comment"># Display backslash literally</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Path: C:\\\\Users"</span>     <span class="hljs-comment"># Literal backslashes</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Quote: \"Hello\""</span>      <span class="hljs-comment"># Escaped quotes</span>
+</code>
+    </pre>
+    <h3>Output Control</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Suppress trailing newline</span><span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Enter your name: "</span>
+
+<span class="hljs-comment"># Multiple lines without newlines</span>
+<span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Loading"</span>
+<span class="hljs-built_in">echo</span> -n <span class="hljs-string">"."</span>
+<span class="hljs-built_in">echo</span> -n <span class="hljs-string">"."</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"."</span>
+
+<span class="hljs-comment"># Combine with read for user input</span>
+<span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Enter password: "</span>
+<span class="hljs-built_in">read</span> -s password
+</code>
+    </pre>
+    <h2>File Operations</h2>
+    <h3>Writing to Files</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Overwrite file content</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello World"</span> &gt; file.txt
+
+<span class="hljs-comment"># Create file with multiple lines</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Line 1\nLine 2\nLine 3"</span> &gt; multiline.txt
+
+<span class="hljs-comment"># Write variables to file</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Current date: <span class="hljs-variable">$(date)</span>"</span> &gt; info.txt
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Current user: <span class="hljs-variable">$USER</span>"</span> &gt;&gt; info.txt
+</code>
+    </pre>
+    <h3>Appending to Files</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Append to existing file</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"New line"</span> &gt;&gt; file.txt
+
+<span class="hljs-comment"># Append with timestamp</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$(date)</span>: Log entry"</span> &gt;&gt; logfile.txt
+
+<span class="hljs-comment"># Append multiple lines</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Error occurred\nTimestamp: <span class="hljs-variable">$(date)</span>"</span> &gt;&gt; error.log
+</code>
+    </pre>
+    <h2>String Formatting and Manipulation</h2>
+    <h3>Formatting Text</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Center text (simple approach)</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"        Centered Text        "</span>
+
+<span class="hljs-comment"># Create separators</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"================================"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"          IMPORTANT             "</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"================================"</span>
+
+<span class="hljs-comment"># Box drawing</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"┌─────────────────┐"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"│   System Info   │"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"└─────────────────┘"</span>
+</code>
+    </pre>
+    <h3>Color Output</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># ANSI color codes</span><span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[31mRed text\033[0m"</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[32mGreen text\033[0m"</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[33mYellow text\033[0m"</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[34mBlue text\033[0m"</span>
+
+<span class="hljs-comment"># Background colors</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[41mRed background\033[0m"</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[42mGreen background\033[0m"</span>
+
+<span class="hljs-comment"># Bold and italic</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[1mBold text\033[0m"</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\033[3mItalic text\033[0m"</span>
+</code>
+    </pre>
+    <h2>Practical Applications</h2>
+    <h3>System Information Display</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># System status script</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"=== System Information ==="</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hostname: <span class="hljs-variable">$(hostname)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Current User: <span class="hljs-variable">$USER</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Current Directory: <span class="hljs-variable">$(pwd)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Date/Time: <span class="hljs-variable">$(date)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Uptime: <span class="hljs-variable">$(uptime -p)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Memory Usage: <span class="hljs-variable">$(free -h | grep Mem | awk '{print $3"/"$2}')</span>"</span>
+</code>
+    </pre>
+    <h3>Configuration File Generation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Generate configuration file</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"# Generated configuration - <span class="hljs-variable">$(date)</span>"</span> &gt; app.conf
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"server_name=<span class="hljs-variable">$HOSTNAME</span>"</span> &gt;&gt; app.conf
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"port=8080"</span> &gt;&gt; app.conf
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"debug=false"</span> &gt;&gt; app.conf
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"log_level=info"</span> &gt;&gt; app.conf
+</code>
+    </pre>
+    <h3>Log File Management</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Structured logging</span><span class="hljs-function"><span class="hljs-title">log_info</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$(date '+%Y-%m-%d %H:%M:%S')</span> [INFO] <span class="hljs-variable">$1</span>"</span> &gt;&gt; application.log
+}
+
+<span class="hljs-function"><span class="hljs-title">log_error</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$(date '+%Y-%m-%d %H:%M:%S')</span> [ERROR] <span class="hljs-variable">$1</span>"</span> &gt;&gt; application.log
+}
+
+<span class="hljs-comment"># Usage</span>
+log_info <span class="hljs-string">"Application started"</span>
+log_error <span class="hljs-string">"Database connection failed"</span>
+</code>
+    </pre>
+    <h3>Menu Creation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Simple menu system</span><span class="hljs-function"><span class="hljs-title">show_menu</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"================================="</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"        Main Menu"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"================================="</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"1. View System Info"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"2. List Files"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"3. Check Disk Usage"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"4. Exit"</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"================================="</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Enter your choice: "</span>
+}
+</code>
+    </pre>
+    <h2>Command Substitution and Variables</h2>
+    <h3>Command Substitution</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Display command output</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Current date is: <span class="hljs-variable">$(date)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Number of files: <span class="hljs-variable">$(ls | wc -l)</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Free disk space: <span class="hljs-variable">$(df -h / | tail -1 | awk '{print $4}')</span>"</span>
+
+<span class="hljs-comment"># Multiple command substitution</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"System: <span class="hljs-variable">$(uname -s)</span>, Kernel: <span class="hljs-variable">$(uname -r)</span>, Architecture: <span class="hljs-variable">$(uname -m)</span>"</span>
+</code>
+    </pre>
+    <h3>Array and Variable Manipulation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Array display</span>
+fruits=(<span class="hljs-string">"apple"</span> <span class="hljs-string">"banana"</span> <span class="hljs-string">"orange"</span>)
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Fruits: <span class="hljs-variable">${fruits[@]}</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"First fruit: <span class="hljs-variable">${fruits[0]}</span>"</span>
+
+<span class="hljs-comment"># Variable with default values</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Editor: <span class="hljs-variable">${EDITOR:-nano}</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Shell: <span class="hljs-variable">${SHELL:-/bin/bash}</span>"</span>
+
+<span class="hljs-comment"># String length and manipulation</span>
+text=<span class="hljs-string">"Hello World"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Text: <span class="hljs-variable">$text</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Length: <span class="hljs-variable">${#text}</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Uppercase: <span class="hljs-variable">${text^^}</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Lowercase: <span class="hljs-variable">${text,,}</span>"</span>
+</code>
+    </pre>
+    <h2>Error Handling and Validation</h2>
+    <h3>Input Validation</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Check if variable is set</span><span class="hljs-keyword">if</span> [ -n <span class="hljs-string">"<span class="hljs-variable">$USER</span>"</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"User is set to: <span class="hljs-variable">$USER</span>"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"User variable is not set"</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-comment"># Conditional output</span>
+[ -d <span class="hljs-string">"/tmp"</span> ] &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">"Directory /tmp exists"</span> || <span class="hljs-built_in">echo</span> <span class="hljs-string">"Directory /tmp not found"</span>
+</code>
+    </pre>
+    <h3>Error Messages</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Error to stderr</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Error: Invalid input"</span> &gt;&amp;2
+
+<span class="hljs-comment"># Success/failure with exit codes</span>
+<span class="hljs-keyword">if</span> some_command; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"✓ Command succeeded"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"✗ Command failed"</span> &gt;&amp;2
+    <span class="hljs-built_in">exit</span> 1
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <h2>Interactive Features</h2>
+    <h3>User Prompts</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Simple prompt</span><span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Enter your name: "</span>
+<span class="hljs-built_in">read</span> name
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, <span class="hljs-variable">$name</span>!"</span>
+
+<span class="hljs-comment"># Yes/No prompt</span>
+<span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Do you want to continue? (y/n): "</span>
+<span class="hljs-built_in">read</span> -n 1 answer
+<span class="hljs-built_in">echo</span>
+<span class="hljs-keyword">case</span> <span class="hljs-variable">$answer</span> <span class="hljs-keyword">in</span>
+    y|Y) <span class="hljs-built_in">echo</span> <span class="hljs-string">"Continuing..."</span> ;;
+    n|N) <span class="hljs-built_in">echo</span> <span class="hljs-string">"Aborting..."</span> ;;
+    *) <span class="hljs-built_in">echo</span> <span class="hljs-string">"Invalid choice"</span> ;;
+<span class="hljs-keyword">esac</span>
+</code>
+    </pre>
+    <h3>Progress Indicators</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Simple progress bar</span><span class="hljs-built_in">echo</span> -n <span class="hljs-string">"Processing: "</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {1..20}; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"="</span>
+    sleep 0.1
+<span class="hljs-keyword">done</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">" Complete!"</span>
+
+<span class="hljs-comment"># Percentage progress</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {0..100..10}; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -ne <span class="hljs-string">"Progress: <span class="hljs-variable">$i</span>%\r"</span>
+    sleep 0.2
+<span class="hljs-keyword">done</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\nDone!"</span>
+</code>
+    </pre>
+    <h2>Integration with Other Commands</h2>
+    <h3>Piping and Redirection</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Pipe to other commands</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"hello world"</span> | tr <span class="hljs-string">'[:lower:]'</span> <span class="hljs-string">'[:upper:]'</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"one two three"</span> | wc -w
+
+<span class="hljs-comment"># Complex pipelines</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$PATH</span>"</span> | tr <span class="hljs-string">':'</span> <span class="hljs-string">'\n'</span> | sort | uniq
+
+<span class="hljs-comment"># Tee for simultaneous output and file writing</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Important message"</span> | tee -a important.log
+</code>
+    </pre>
+    <h3>Data Processing</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Generate data for processing</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"apple,5,red"</span> | cut -d<span class="hljs-string">','</span> -f2
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"one:two:three"</span> | awk -F<span class="hljs-string">':'</span> <span class="hljs-string">'{print $2}'</span>
+
+<span class="hljs-comment"># Create structured data</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Name,Age,City\nJohn,25,NYC\nJane,30,LA"</span> &gt; data.csv
+</code>
+    </pre>
+    <h2>Options and Flags Reference</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Option</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-n</code>
+          </td>
+          <td align="left">Do not output trailing newline</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-e</code>
+          </td>
+          <td align="left">Enable interpretation of backslash escapes</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-E</code>
+          </td>
+          <td align="left">Disable interpretation of backslash escapes (default)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Escape Sequences Reference</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Sequence</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>\a</code>
+          </td>
+          <td align="left">Alert (bell/beep)</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\b</code>
+          </td>
+          <td align="left">Backspace</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\c</code>
+          </td>
+          <td align="left">Suppress trailing newline</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\e</code>
+          </td>
+          <td align="left">Escape character</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\f</code>
+          </td>
+          <td align="left">Form feed</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\n</code>
+          </td>
+          <td align="left">New line</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\r</code>
+          </td>
+          <td align="left">Carriage return</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\t</code>
+          </td>
+          <td align="left">Horizontal tab</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\v</code>
+          </td>
+          <td align="left">Vertical tab</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\\</code>
+          </td>
+          <td align="left">Literal backslash</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\"</code>
+          </td>
+          <td align="left">Literal double quote</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\nnn</code>
+          </td>
+          <td align="left">Character with octal value nnn</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>\xhh</code>
+          </td>
+          <td align="left">Character with hex value hh</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Best Practices</h2>
+    <h3>Script Writing</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Use quotes to prevent word splitting</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Value: <span class="hljs-variable">$variable</span>"</span>  <span class="hljs-comment"># Good</span>
+<span class="hljs-built_in">echo</span> Value: <span class="hljs-variable">$variable</span>    <span class="hljs-comment"># Can cause issues</span>
+
+<span class="hljs-comment"># Use -e when needed</span>
+<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"Multi\nLine"</span>    <span class="hljs-comment"># Correct for escape sequences</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Multi\nLine"</span>       <span class="hljs-comment"># Literal backslash-n</span>
+
+<span class="hljs-comment"># Consistent formatting</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Starting process..."</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Process completed successfully."</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Results saved to: <span class="hljs-variable">$output_file</span>"</span>
+</code>
+    </pre>
+    <h3>Debugging and Logging</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Debug information</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"DEBUG: Variable value is '<span class="hljs-variable">$variable</span>'"</span> &gt;&amp;2
+
+<span class="hljs-comment"># Timestamped logs</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"[<span class="hljs-variable">$(date)</span>] Starting backup process"</span> &gt;&gt; backup.log
+
+<span class="hljs-comment"># Function for consistent logging</span>
+<span class="hljs-function"><span class="hljs-title">log</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"[<span class="hljs-variable">$(date '+%Y-%m-%d %H:%M:%S')</span>] $*"</span> | tee -a application.log
+}
+</code>
+    </pre>
+    <h2>Important Notes</h2>
+    <ul>
+      <li><code>echo</code> behavior may vary between different shells (bash, dash, zsh)</li>
+      <li>Use <code>printf</code> for more portable and precise formatting</li>
+      <li>Single quotes preserve literal values, double quotes allow variable expansion</li>
+      <li>Always quote variables to prevent word splitting</li>
+      <li>Use <code>echo -e</code> only when you need escape sequence interpretation</li>
+      <li><code>echo</code> adds a newline by default; use <code>-n</code> to suppress it</li>
+    </ul>
+    <p>The <code>echo</code> command is fundamental to shell scripting and command-line operations, providing flexible text output capabilities for various use cases.</p>
+    <p>For more details, check the manual: <code>man echo</code></p>
+  </body></html>

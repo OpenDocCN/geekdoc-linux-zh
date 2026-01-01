@@ -1,0 +1,130 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>cal</code> Command</h1>
+    <p>The <code>cal</code> command displays a formatted calendar in the terminal. If no options are specified, cal displays the current month, with the current day highlighted.</p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">cal [general options] [-jy] [[month] year]
+</code>
+    </pre>
+    <h3>Options:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Option</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-h</code>
+          </td>
+          <td align="left">Don't highlight today's date.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-m month</code>
+          </td>
+          <td align="left">Specify a month to display. The month specifier is a full month name (e.g., February), a month abbreviation of at least three letters (e.g., Feb), or a number (e.g., 2). If you specify a number, followed by the letter "f" or "p", the month of the following or previous year, respectively, display. For instance, <code>-m 2f</code> displays February of next year.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-y year</code>
+          </td>
+          <td align="left">Specify a year to display. For example, <code>-y 1970</code> displays the entire calendar of the year 1970.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-3</code>
+          </td>
+          <td align="left">Display last month, this month, and next month.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-1</code>
+          </td>
+          <td align="left">Display only this month. This is the default.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-A num</code>
+          </td>
+          <td align="left">Display num months occurring after any months already specified. For example, <code>-3 -A 3</code> displays last month, this month, and four months after this one; and <code>-y 1970 -A 2</code> displays every month in 1970, and the first two months of 1971.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-B num</code>
+          </td>
+          <td align="left">Display num months occurring before any months already specified. For example, <code>-3 -B 2</code> displays the previous three months, this month, and next month.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d YYYY-MM</code>
+          </td>
+          <td align="left">Operate as if the current month is number MM of year YYYY.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Display the calendar for this month, with today highlighted.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal
+</code>
+    </pre>
+    <ol start="2">
+      <li>Same as the previous command, but do not highlight today.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal -h
+</code>
+    </pre>
+    <ol start="3">
+      <li>Display last month, this month, and next month.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal -3
+</code>
+    </pre>
+    <ol start="4">
+      <li>Display this entire year's calendar.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal -y
+</code>
+    </pre>
+    <ol start="5">
+      <li>Display the entire year 2000 calendar.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal -y 2000
+</code>
+    </pre>
+    <ol start="6">
+      <li>Same as the previous command.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal 2000
+</code>
+    </pre>
+    <ol start="7">
+      <li>Display the calendar for December of this year.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal -m [December, Dec, or 12]
+</code>
+    </pre>
+    <ol start="10">
+      <li>Display the calendar for December 2000.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cal 12 2000
+</code>
+    </pre>
+  </body></html>

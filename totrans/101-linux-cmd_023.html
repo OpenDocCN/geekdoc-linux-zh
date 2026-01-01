@@ -1,0 +1,37 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>groups</code> command</h1>
+    <p>In Linux, there can be multiple users (those who use/operate the system), and groups (a collection of users).
+Groups make it easy to manage users with the same security and access privileges. A user can be part of different groups.</p>
+    <p>Important Points:</p>
+    <p>The <code>groups</code> command prints the names of the primary and any supplementary groups for each given username, or the current process if no names are given.
+If more than one name is given, the name of each user is printed before the list of that user’s groups and the username is separated from the group list by a colon.</p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">groups [username]
+</code>
+    </pre>
+    <h4>Example 1</h4>
+    <p>Provided with a username</p>
+    <pre>
+      <code class="language- hljs " data-lang="">groups demon
+</code>
+    </pre>
+    <p>In this example, username demon is passed with groups command and the output shows the groups in which the user demon is present, separated by a colon.</p>
+    <h4>Example 2</h4>
+    <p>When no username is passed then this will display the group membership for the current user:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">groups
+</code>
+    </pre>
+    <p>Here the current user is demon . So when we run the <code>groups</code> command without arguments we get the groups in which demon is a user.</p>
+    <h4>Example 3</h4>
+    <p>Passing root with groups command:</p>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">$demon<span class="hljs-comment"># groups</span>
+</code>
+    </pre>
+    <blockquote>
+      <p>Note: Primary and supplementary groups for a process are normally inherited from its parent and are usually unchanged since login. This means that if you change the group database after logging in, groups will not reflect your changes within your existing login session. The only options are –help and –version.</p>
+    </blockquote>
+  </body></html>

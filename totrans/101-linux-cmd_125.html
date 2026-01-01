@@ -1,0 +1,60 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>aplay</code> command</h1>
+    <p><code>aplay</code> is a command-line audio player for ALSA(Advanced Linux Sound Architecture) sound card drivers. It supports several file formats and multiple soundcards with multiple devices. It is basically used to play audio on command-line interface. aplay is much the same as arecord only it plays instead of recording. For supported soundfile formats, the sampling rate, bit depth, and so forth can be automatically determined from the soundfile header.</p>
+    <h2>Syntax:</h2>
+    <pre>
+      <code class="language- hljs " data-lang="">$ aplay [flags] [filename [filename]] ...
+</code>
+    </pre>
+    <h2>Options:</h2>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">-h, –help : Show the help information.
+-d, –duration=<span class="hljs-comment"># : Interrupt after # seconds.</span>
+-r, –rate=<span class="hljs-comment"># : Sampling rate in Hertz. The default rate is 8000 Hertz.</span>
+–version : <span class="hljs-keyword">Print</span> current version.
+-l, –<span class="hljs-keyword">list</span>-devices : <span class="hljs-keyword">List</span> all soundcards <span class="hljs-keyword">and</span> digital audio devices.
+-L, –<span class="hljs-keyword">list</span>-pcms : <span class="hljs-keyword">List</span> all PCMs(Pulse Code Modulation) defined.
+-D, –device=NAME : Select PCM by name.
+</code>
+    </pre>
+    <p>Note: This command contain various other options that we normally don’t need. If you want to know more about you can simply run following command on your terminal.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">aplay --<span class="hljs-built_in">help</span>
+</code>
+    </pre>
+    <h2>Examples :</h2>
+    <ol>
+      <li>
+        <p>To play audio for only 10 secs at 2500hz frequency.</p>
+        <pre>
+          <code class="language- hljs " data-lang="">$ aplay -d 10 -r 2500hz sample.mp3
+</code>
+        </pre>
+        <blockquote>
+          <p>Plays sample.mp3 file for only 10 secs at 2500hz frequency.</p>
+        </blockquote>
+      </li>
+      <li>
+        <p>To play full audio clip at 2500hz frezuency.</p>
+        <pre>
+          <code class="language- hljs " data-lang="">$ aplay -r 2500hz sample.mp3
+</code>
+        </pre>
+        <blockquote>
+          <p>Plays sample.mp3 file at 2500hz frezuency.</p>
+        </blockquote>
+      </li>
+      <li>
+        <p>To Display version information.</p>
+        <pre>
+          <code class="language- hljs " data-lang="">$ aplay --version
+</code>
+        </pre>
+        <blockquote>
+          <p>Displays version information. For me it shows aplay: vesrion 1.1.0</p>
+        </blockquote>
+      </li>
+    </ol>
+    <hr/>
+  </body></html>

@@ -1,0 +1,82 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>screen</code> command</h1>
+    <p><code>screen</code> - With screen you can start a screen session and then open any number of windows (virtual terminals) inside that session.
+Processes running in Screen will continue to run when their window is not visible even if you get disconnected.  This is very
+handy for running long during session such as bash scripts that run very long.</p>
+    <p>To start a screen session you type <code>screen</code>, this will open a new screen session with a virtual terminal open.</p>
+    <p>Below are some most common commands for managing Linux Screen Windows:</p>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Command</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>c</code></td>
+          <td align="left">Create a new window (with shell).</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>"</code></td>
+          <td align="left">List all windows.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>0</code></td>
+          <td align="left">Switch to window 0 (by number).</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>A</code></td>
+          <td align="left">Rename the current window.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>S</code></td>
+          <td align="left">Split current region horizontally into two regions.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>'</code></td>
+          <td align="left">Split current region vertically into two regions.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>tab</code></td>
+          <td align="left">Switch the input focus to the next region.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>Ctrl+a</code></td>
+          <td align="left">Toggle between the current and previous windows</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>Q</code></td>
+          <td align="left">Close all regions but the current one.</td>
+        </tr>
+        <tr>
+          <td align="left"><code>Ctrl+a</code>+ <code>X</code></td>
+          <td align="left">Close the current region.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Restore a Linux Screen</h2>
+    <p>To restore to a screen session you type <code>screen -r</code>, if you have more than one open screen session you have to add the
+session id to the command to connect to the right session.</p>
+    <h2>Listing all open screen sessions</h2>
+    <p>To find the session ID you can list the current running screen sessions with:</p>
+    <p>
+      <code>screen -ls</code>
+    </p>
+    <p>There are screens on:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">18787.pts-0.your-server   (Detached)
+15454.pts-0.your-server   (Detached)
+2 Sockets in /run/screens/S-yourserver.
+</code>
+    </pre>
+    <p>If you want to restore screen 18787.pts-0, then type the following command:</p>
+    <p>
+      <code>screen -r 18787</code>
+    </p>
+  </body></html>

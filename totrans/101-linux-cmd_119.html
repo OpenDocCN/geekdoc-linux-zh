@@ -1,0 +1,104 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>tr</code> command</h1>
+    <p>The tr command in UNIX is a command line utility for translating or deleting characters.
+It supports a range of transformations including uppercase to lowercase, squeezing repeating characters, deleting specific characters and basic find and replace.
+It can be used with UNIX pipes to support more complex translation. tr stands for translate.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Convert all lowercase letters in file1 to uppercase.</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">$ cat file1
+foo
+bar
+baz
+tr a-z A-Z &lt; file1
+FOO
+BAR
+BAZ
+</code>
+    </pre>
+    <ol start="2">
+      <li>Make consecutive line breaks into one.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">$ cat file1
+foo
+
+
+bar
+
+
+baz
+$ tr -s <span class="hljs-string">"\n"</span> &lt; file1
+foo
+bar
+baz
+</code>
+    </pre>
+    <ol start="3">
+      <li>Remove the newline code.</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">$ cat file1
+foo
+bar
+baz
+$ tr -d <span class="hljs-string">"\n"</span> &lt; file1
+foobarbaz%
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <p>The general syntax for the tr command is as follows:</p>
+    <pre>
+      <code class="language- hljs " data-lang="">tr [options] string1 [string2]
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-C</code>
+          </td>
+          <td align="left"/>
+          <td align="left">Complement the set of characters in string1, that is <code>-C ab</code> includes every character except for <code>a</code> and <code>b</code>.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left"/>
+          <td align="left">Same as -C.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left"/>
+          <td align="left">Delete characters in string1 from the input.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left"/>
+          <td align="left">If there is a sequence of characters in string1, combine them into one.</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

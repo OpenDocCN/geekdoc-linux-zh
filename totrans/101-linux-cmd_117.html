@@ -1,0 +1,62 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>nice/renice</code> command</h1>
+    <p>The <code>nice/renice</code> commands is used to modify the priority of the program to be executed.
+The priority range is between -20 and 19 where 19 is the lowest priority.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Running cc command in the background with a lower priority than default (slower):</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">nice -n 15 cc -c *.c &amp;
+</code>
+    </pre>
+    <ol start="2">
+      <li>Increase the priority to all processes belonging to group "test":</li>
+    </ol>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">renice --20 -g <span class="hljs-built_in">test</span>
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">nice [  -Increment|  -n Increment ] Command [ Argument ... ]
+</code>
+    </pre>
+    <h3>Flags :</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-Increment</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Increment is the value of priority you want to assign.</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-n Increment</code>
+          </td>
+          <td align="left">
+            <center>-</center>
+          </td>
+          <td align="left">Same as <code>-Increment</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

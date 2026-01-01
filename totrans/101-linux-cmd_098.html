@@ -1,0 +1,109 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>cut</code> command</h1>
+    <p>The <code>cut</code> command lets you remove sections from each line of files. Print selected parts of lines from each FILE to standard output. With no FILE, or when FILE is -, read standard input.</p>
+    <h3>Usage and Examples:</h3>
+    <ol>
+      <li>Selecting specific fields in a file</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">cut -d <span class="hljs-string">"delimiter"</span> -f (field number) file.txt
+</code>
+    </pre>
+    <ol start="2">
+      <li>Selecting specific characters:</li>
+    </ol>
+    <pre>
+      <code class="language- hljs " data-lang="">cut -c [(k)-(n)/(k),(n)/(n)] filename
+</code>
+    </pre>
+    <p>Here, <strong>k</strong> denotes the starting position of the character and <strong>n</strong> denotes the ending position of the character in each line, if <em>k</em> and <em>n</em> are separated by “-” otherwise they are only the position of character in each line from the file taken as an input.</p>
+    <ol start="3">
+      <li>Selecting specific bytes:</li>
+    </ol>
+    <pre>
+      <code class="language-php hljs php" data-lang="php">cut -b <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span> filename 			<span class="hljs-comment">//select bytes 1,2 and 3</span>
+cut -b <span class="hljs-number">1</span><span class="hljs-number">-4</span> filename				<span class="hljs-comment">//select bytes 1 through 4</span>
+cut -b <span class="hljs-number">1</span>- filename				<span class="hljs-comment">//select bytes 1 through the end of file</span>
+cut -b <span class="hljs-number">-4</span> filename				<span class="hljs-comment">//select bytes from the beginning till the 4th byte</span>
+</code>
+    </pre>
+    <p><strong>Tabs and backspaces</strong> are treated like as a character of 1 byte.</p>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">cut OPTION... [FILE]...
+</code>
+    </pre>
+    <h3>Additional Flags and their Functionalities:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th align="left">
+            <strong>Short Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Long Flag</strong>
+          </th>
+          <th align="left">
+            <strong>Description</strong>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+            <code>-b</code>
+          </td>
+          <td align="left">
+            <code>--bytes=LIST</code>
+          </td>
+          <td align="left">select only these bytes</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-c</code>
+          </td>
+          <td align="left">
+            <code>--characters=LIST</code>
+          </td>
+          <td align="left">select only these characters</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-d</code>
+          </td>
+          <td align="left">
+            <code>--delimiter=DELIM</code>
+          </td>
+          <td align="left">use DELIM instead of TAB for field delimiter</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-f</code>
+          </td>
+          <td align="left">
+            <code>--fields</code>
+          </td>
+          <td align="left">select only these fields;  also print any line that contains no delimiter character, unless the -s option is specified</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-s</code>
+          </td>
+          <td align="left">
+            <code>--only-delimited</code>
+          </td>
+          <td align="left">do not print lines not containing delimiters</td>
+        </tr>
+        <tr>
+          <td align="left">
+            <code>-z</code>
+          </td>
+          <td align="left">
+            <code>--zero-terminated</code>
+          </td>
+          <td align="left">line delimiter is NUL, not newline</td>
+        </tr>
+      </tbody>
+    </table>
+  </body></html>

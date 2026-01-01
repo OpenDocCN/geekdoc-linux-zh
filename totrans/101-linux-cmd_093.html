@@ -1,0 +1,19 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>The <code>nohup</code> command</h1>
+    <p>When a shell exits (maybe while logging out of an SSH session), the HUP ('hang up') signal is send to all of its child processes, causing them to terminate. If you require a long-running process to continue after exiting shell, you'll need the <code>nohup</code> command. Prefixing any command with <code>nohup</code> causes the command to become <em>immune</em> to HUP signals. Additionally, STDIN is being ignored and all output gets redirected to local file <code>./nohup.out</code>.</p>
+    <h3>Examples:</h3>
+    <ol>
+      <li>Applying nohup to a long-running debian upgrade:</li>
+    </ol>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">nohup apt-<span class="hljs-keyword">get</span> -y upgrade
+</code>
+    </pre>
+    <h3>Syntax:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">nohup COMMAND [ARG]...
+nohup OPTION
+</code>
+    </pre>
+  </body></html>
