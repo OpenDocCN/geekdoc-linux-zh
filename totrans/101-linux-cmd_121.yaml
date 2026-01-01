@@ -1,0 +1,97 @@
+- en: The `Wait` commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The wait command is a shell builtin that pauses script execution until a specific
+    background process, or all running child processes, have finished.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Its primary purpose is to synchronize tasks, ensuring that a script doesn't
+    continue to the next step until prerequisite background jobs are complete. A background
+    process is a command that is run with an ampersand (&) at the end, which tells
+    the shell to run it without waiting for it to finish.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PID] - An optional Process ID to wait for. If no PID is given, wait will wait
+    for all active child processes to complete.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Waiting for a Specific Process
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This example shows how to launch a single background process and wait for it
+    specifically.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Script:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Explanation:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '&: The ampersand runs the echo command in the background, allowing the script
+    to immediately continue to the next line.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '$!: This is a special shell variable that holds the Process ID (PID) of the
+    most recently executed background command. We save it to the process_id variable.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'wait $process_id: This is the key command. The script pauses here until the
+    process with that specific ID is complete.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '$?: This variable holds the exit status of the last command that finished.
+    An exit status of 0 means success.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Waiting for All Background Processes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is the most common use case. Here, we launch several background tasks and
+    then use a single wait command to pause until all of them are done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Script:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,150 @@
+- en: The `cmp` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `cmp` command is a simple utility used to compare two files byte by byte.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the files are identical, `cmp` produces no output and returns a successful
+    exit status. If the files differ, it reports the byte and line number where the
+    first difference occurred.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples :'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For the following examples, let''s assume we have three files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'file1.txt:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'file2.txt:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'file3.txt:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 1\. Comparing two identical files
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When the files are the same, cmp will produce no output. This is the standard
+    way to confirm that two files are identical.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: (No output is shown)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Comparing two different files
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When a difference is found, cmp reports the location of the first differing
+    byte.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Displaying all differing bytes (--verbose or -l)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The -l (lowercase L) flag is very powerful. It prints the byte number (in decimal)
+    and the value of the differing bytes (in octal) for every difference in the files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Explanation:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: This output means that at byte position 7, file1.txt has the octal value 167
+    (the letter 'w'), while file3.txt has the octal value 127 (the letter 'W').
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Comparing only the first "n" bytes (--bytes or -n)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can limit the comparison to a certain number of bytes. Here, we only compare
+    the first 5 bytes. Since "hello" is the same in both files, cmp finds no difference.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: (No output is shown)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Ignoring the initial "n" bytes (--ignore-initial or -i)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can tell cmp to skip a certain number of bytes at the beginning of the files
+    before starting its comparison. Here, we skip the first 6 bytes, so the comparison
+    starts at the letter 'w'.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Explanation:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: The output now says the difference is at "byte 1" because the comparison started
+    after the initial 6 bytes were ignored.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Common Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| Short Flag | Long Flag | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -b | --print-bytes | Print the differing bytes. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -i SKIP | --ignore-initial=SKIP | Skip the first SKIP bytes of both files.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -l | --verbose | Output the byte number and the values of all differing bytes.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -n LIMIT | --bytes=LIMIT | Compare at most LIMIT bytes. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -s | --quiet, --silent | Suppress all output. Only return an exit status.
+    |'
+  prefs: []
+  type: TYPE_TB

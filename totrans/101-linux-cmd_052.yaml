@@ -1,0 +1,159 @@
+- en: The `apt` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`apt` (Advantage package system) command is used for interacting with `dpkg`
+    (packaging system used by debian). There is already the `dpkg` command to manage
+    `.deb` packages. But `apt` is a more user-friendly and efficient way.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In simple terms `apt` is a command used for installing, deleting and performing
+    other operations on debian based Linux.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You will be using the `apt` command mostly with `sudo` privileges.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Installing packages:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`install` followed by `package_name` is used with `apt` to install a new package.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will install g++ on your system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Removing packages:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`remove` followed by `package_name` is used with `apt` to remove a specific
+    package.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will remove g++ from your system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Searching for a package:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`search` followed by the `package_name` used with apt to search a package across
+    all repositories.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'note: sudo not required'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Removing unused packages:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Whenever a new package that depends on other packages is installed on the system,
+    the package dependencies will be installed too. When the package is removed, the
+    dependencies will stay on the system. This leftover packages are no longer used
+    by anything else and can be removed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will remove all unused from your system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Updating package index:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`apt` package index is nothing but a database that stores records of available
+    packages that are enabled on your system.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will update the package index on your system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Upgrading packages:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If you want to install the latest updates for your installed packages you may
+    want to run this command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: The command doesn't upgrade any packages that require removal of installed packages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you want to upgrade a single package, pass the package name:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H5
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: This command will upgrade your packages to the latest version.
+  prefs: []
+  type: TYPE_NORMAL

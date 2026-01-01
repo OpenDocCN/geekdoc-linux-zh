@@ -1,0 +1,398 @@
+- en: The `printf` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This command lets you print the value of a variable by formatting it using rules.
+    It is pretty similar to the printf in C language.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Options:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| OPTION | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `FORMAT` | FORMAT controls the output, and defines the way that the ARGUMENTs
+    will be expressed in the output |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ARGUMENT` | An ARGUMENT will be inserted into the formatted output according
+    to the definition of FORMAT |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--help` | Display help and exit |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--version` | Output version information adn exit |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Formats:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The anatomy of the FORMAT string can be extracted into three different parts,
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*ordinary characters*, which are copied exactly the same characters as were
+    used originally to the output.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*interpreted character* sequences, which are escaped with a backslash ("\").'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*conversion specifications*, this one will define the way the ARGUMENTs will
+    be expressed as part of the output.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can see those parts in this example,
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: There are two conversion specifications `%s` and `%d`, and there are two escaped
+    characters which are the opening and closing double-quotes wrapping the words
+    of *the future of software*. Other than that are the ordinary characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Conversion Specifications:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Each conversion specification begins with a `%` and ends with a `conversion
+    character`. Between the `%` and the `conversion character` there may be, in order:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  |  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-` | A minus sign. This tells printf to left-adjust the conversion of the
+    argument |'
+  prefs: []
+  type: TYPE_TB
+- en: '| *number* | An integer that specifies field width; printf prints a conversion
+    of ARGUMENT in a field at least number characters wide. If necessary it will be
+    padded on the left (or right, if left-adjustment is called for) to make up the
+    field width |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `.` | A period, which separates the field width from the precision |'
+  prefs: []
+  type: TYPE_TB
+- en: '| *number* | An integer, the precision, which specifies the maximum number
+    of characters to be printed from a string, or the number of digits after the decimal
+    point of a floating-point value, or the minimum number of digits for an integer
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `h` or `l` | These differentiate between a short and a long integer, respectively,
+    and are generally only needed for computer programming |'
+  prefs: []
+  type: TYPE_TB
+- en: 'The conversion characters tell `printf` what kind of argument to print out,
+    are as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Conversion char | Argument type |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s` | A string |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `c` | An integer, expressed as a character corresponds ASCII code |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `d, i` | An integer as a decimal number |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `o` | An integer as an unsigned octal number |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `x, X` | An integer as an unsigned hexadecimal number |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `u` | An integer as an unsigned decimal number |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `f` | A floating-point number with a default precision of 6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `e, E` | A floating-point number in scientific notation |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `p` | A memory address pointer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%` | No conversion |'
+  prefs: []
+  type: TYPE_TB
+- en: Here is the list of some examples of the `printf` output the ARGUMENT. we can
+    put any word but in this one we put a 'linuxcommand` word and enclosed it with
+    quotes so we can see easier the position related to the whitespaces.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| FORMAT string | ARGUMENT string | Output string |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%s"` | `"linuxcommand"` | "linuxcommand" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%5s"` | `"linuxcommand"` | "linuxcommand" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%.5s"` | `"linuxcommand"` | "linux" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%-8s"` | `"linuxcommand"` | "linuxcommand" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%-15s"` | `"linuxcommand"` | "linuxcommand " |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%12.5s"` | `"linuxcommand"` | " linux" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%-12.5"` | `"linuxcommand"` | "linux " |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `"%-12.4"` | `"linuxcommand"` | "linu " |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Notes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`printf` requires the number of conversion strings to match the number of ARGUMENTs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`printf` maps the conversion strings one-to-one, and expects to find exactly
+    one ARGUMENT for each conversion string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Conversion strings are always interpreted from left to right.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here''s the example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The input
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: The example above shows 3 arguments, *12.07*, *larger than*, and *12*. Each
+    of them interpreted from left to right one-to-one with the given 3 conversion
+    strings (`%f`, `%d`, `%s`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Character sequences which are interpreted as special characters by `printf`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Escaped char | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\a` | issues an alert (plays a bell). Usually ASCII BEL characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\b` | prints a backspace |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\c` | instructs `printf` to produce no further output |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\e` | prints an escape character (ASCII code 27) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\f` | prints a form feed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\n` | prints a newline |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\r` | prints a carriage return |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\t` | prints a horizontal tab |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\v` | prints a vertical tab |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\"` | prints a double-quote (") |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\\` | prints a backslash () |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\NNN` | prints a byte with octal value `NNN` (1 to 3 digits) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\xHH` | prints a byte with hexadecimal value `HH` (1 to 2 digits) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\uHHHH` | prints the unicode character with hexadecimal value `HHHH` (4
+    digits) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\UHHHHHHHH` | prints the unicode character with hexadecimal value `HHHHHHHH`
+    (8 digits) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%b` | prints ARGUMENT as a string with "\" escapes interpreted as listed
+    above, with the exception that octal escapes take the form `\0` or `\0NN` |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The format specifiers usually used with printf are stated in the examples below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '%s'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will print `Printf command documentation!` in the shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Other important attributes of printf command:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`%b` - Prints arguments by expanding backslash escape sequences.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%q` - Prints arguments in a shell-quoted format which is reusable as input.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%d` , `%i` - Prints arguments in the format of signed decimal integers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%u` - Prints arguments in the format of unsigned decimal integers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%o` - Prints arguments in the format of unsigned octal(base 8) integers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%x`, `%X` - Prints arguments in the format of unsigned hexadecimal(base 16)
+    integers. %x prints lower-case letters and %X prints upper-case letters.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%e`, `%E` - Prints arguments in the format of floating-point numbers in exponential
+    notation. %e prints lower-case letters and %E prints upper-case.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%a`, `%A` - Prints arguments in the format of floating-point numbers in hexadecimal(base
+    16) fractional notation. %a prints lower-case letters and %A prints upper-case.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%g`, `%G` - Prints arguments in the format of floating-point numbers in normal
+    or exponential notation, whichever is more appropriate for the given value and
+    precision. %g prints lower-case letters and %G prints upper-case.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%c` - Prints arguments as single characters.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%f` - Prints arguments as floating-point numbers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%s` - Prints arguments as strings.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%%` - Prints a "%" symbol.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'More Examples:'
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'The input:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: The two `\n` break the sentence into 3 parts of words.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The input:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: The output
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `%f` specifier combined with the `\n` interpreted the two arguments in the
+    form of floating point in the seperated new lines.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,202 @@
+- en: The `cd` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `cd` command is used to change the current working directory *(i.e., the
+    directory in which the current user is working)*. The "cd" stands for "**c**hange
+    **d**irectory" and it is one of the most frequently used commands in the Linux
+    terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `cd` command is often combined with the `ls` command (see chapter 1) when
+    navigating through a system. You can also press the `TAB` key to auto-complete
+    directory names, or press `TAB` twice to list available directories in the current
+    location.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Basic Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Change to a specific directory:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Change to your home directory:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'OR simply:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Change to the previous directory:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will also print the absolute path of the previous directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Change to the system''s root directory:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Move up one directory level (parent directory):**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Move up multiple directory levels:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: This example moves up three levels.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Practical Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Using relative paths:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Using absolute paths:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Combining with home directory shortcut:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Navigate to a directory with spaces in the name:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: OR
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Switch between two directories:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Additional Flags and Their Functionalities
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short flag** | **Long flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-L` | - | Follow symbolic links (default behavior). The `cd` command will
+    follow symlinks and update the working directory to the target location. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-P` | - | Use the physical directory structure without following symbolic
+    links. Shows the actual path instead of the symlink path. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example of `-L` vs `-P` with symbolic links:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Errors and Troubleshooting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Permission denied:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Solution: You need appropriate permissions to access the directory. Try using
+    `sudo` if necessary.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**No such file or directory:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Solution: Verify the path exists using `ls` or check for typos. Remember that
+    paths are case-sensitive.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Not a directory:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Solution: Ensure you''re navigating to a directory, not a file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Important Notes:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Case sensitivity:** Linux file systems are case-sensitive. `cd Documents`
+    is different from `cd documents`.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Special characters:** Directory names with spaces or special characters need
+    to be quoted or escaped.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**The `cd` command is a shell built-in:** It''s not an external program, which
+    is why it can change the shell''s current directory.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**No output on success:** By default, `cd` produces no output when successful
+    (except `cd -` which prints the new path).'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

@@ -1,0 +1,87 @@
+- en: The `iostat` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `iostat` command in Linux is used for monitoring system input/output statistics
+    for devices and partitions. It monitors system input/output by observing the time
+    the devices are active in relation to their average transfer rates. The iostat
+    produce reports may be used to change the system configuration to raised balance
+    the input/output between the physical disks. iostat is being included in sysstat
+    package. If you don’t have it, you need to install first.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Display a single history-since-boot report for all CPU and Devices:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Display a continuous device report at two-second intervals:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '3.Display, for all devices, six reports at two-second intervals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '4.Display, for devices sda and sdb, six extended reports at two-second intervals:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-x` | Show more details statistics information. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c` | Show only the cpu statistic. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` | Display only the device report |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-xd | Show extended I/O statistic for device only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-k` | Capture the statistics in kilobytes or megabytes. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-k23` | Display cpu and device statistics with delay. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-j ID mmcbkl0 sda6 -x -m 2 2` | Display persistent device name statistics.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | Display statistics for block devices. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-N` | Display lvm2 statistic information. |'
+  prefs: []
+  type: TYPE_TB

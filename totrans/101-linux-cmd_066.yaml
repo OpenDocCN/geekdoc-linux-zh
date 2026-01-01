@@ -1,0 +1,353 @@
+- en: The `iptables` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `iptables` command is a powerful firewall administration tool for Linux
+    systems. It allows you to configure the Linux kernel firewall (netfilter) by setting
+    up, maintaining, and inspecting the tables of IP packet filter rules.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Basic Concepts
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Tables
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**filter**: Default table for packet filtering (INPUT, OUTPUT, FORWARD)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**nat**: Network Address Translation (PREROUTING, POSTROUTING, OUTPUT)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**mangle**: Packet alteration (PREROUTING, POSTROUTING, INPUT, OUTPUT, FORWARD)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**raw**: Connection tracking exemption (PREROUTING, OUTPUT)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Chains
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**INPUT**: Incoming packets to local system'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**OUTPUT**: Outgoing packets from local system'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**FORWARD**: Packets routed through the system'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**PREROUTING**: Packets before routing decision'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**POSTROUTING**: Packets after routing decision'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Targets
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**ACCEPT**: Allow the packet'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**DROP**: Silently discard the packet'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**REJECT**: Discard and send error message'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**LOG**: Log the packet and continue processing'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**DNAT**: Destination NAT'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**SNAT**: Source NAT'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**MASQUERADE**: Dynamic source NAT'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Basic Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Listing Rules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Basic Rule Operations
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Rule Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Allow/Block Specific Ports
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Allow/Block by IP Address
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Allow/Block by Interface
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Advanced Rules
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Stateful Connections
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Rate Limiting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Time-based Rules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 4\. Multiport Rules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: NAT Configuration
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Source NAT (SNAT)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Destination NAT (DNAT)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Policy Configuration
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Default Policies
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Chain Management
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Logging
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Firewall Configurations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Basic Desktop Firewall
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Web Server Firewall
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Router/Gateway Configuration
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Persistence
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Save/Restore Rules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Automatic Loading
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Troubleshooting
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Testing Rules
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Debugging
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Emergency Access
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Security Best Practices
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Default Deny Policy
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Order Matters
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Rate Limiting Critical Services
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: Performance Considerations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Always test rules before making them permanent
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Keep a way to access the system if rules block you out
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use specific protocols and ports rather than blanket rules
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Monitor logs to understand traffic patterns
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Document your firewall rules for future reference
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Regular backup of working configurations
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Consider using UFW for simpler firewall management
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `iptables` command provides comprehensive firewall capabilities but requires
+    careful planning and testing to avoid security issues or system lockouts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `man iptables`'
+  prefs: []
+  type: TYPE_NORMAL

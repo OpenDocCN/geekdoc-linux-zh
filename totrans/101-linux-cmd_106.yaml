@@ -1,0 +1,151 @@
+- en: The `chmod` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `chmod` command allows you to change the permissions on a file using either
+    a symbolic or numeric mode or a reference file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Change the permission of a file using symbolic mode:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The command above means :'
+  prefs: []
+  type: TYPE_NORMAL
+- en: user can read, write, execute `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: group can read, execute `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: other can read `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Change the permission of a file using numeric mode
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The command above means :'
+  prefs: []
+  type: TYPE_NORMAL
+- en: user can read, write, execute `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: group can read, execute `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: other can read `myfile`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Change the permission of a folder recursively
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`[OPTIONS]` : `-R`: recursive, mean all file inside directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`MODE`: different way to set permissions:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Symbolic mode explained**'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'u: user'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'g: group'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'o: other'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '=: set the permission'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'r: read'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'w: write'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'x: execute'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: example `u=rwx` means user can read write and execute
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Numeric mode explained**:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The **numeric mode** is based off of a binary representation of the permissions
+    for user, group, and others, for more information please look at this [explanation](https://www.digitalocean.com/community/tutorials/linux-permissions-basics-and-how-to-use-umask-on-a-vps#types-of-permissions)
+    from Digital Ocean''s community section:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4 stands for "read",
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 2 stands for "write",
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 1 stands for "execute", and
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 0 stands for "no permission."
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: example 7 mean read + write + execute
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

@@ -1,0 +1,90 @@
+- en: The `ping` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `ping` (Packet Internet Groper) command is a network utility used to check
+    network connectivity between a host and a server or another host. It sends ICMP
+    (Internet Control Message Protocol) echo requests to a specified IP address or
+    URL and measures the time it takes to receive a response. This time delay is referred
+    to as "latency." Ping is a fundamental tool for network troubleshooting and monitoring.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Understanding Latency
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Latency, in the context of networking, is the time delay between sending a packet
+    and receiving a response.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'When you use the `ping` command, it measures the latency by sending a series
+    of packets to the target host and calculating the time it takes for each packet
+    to complete the round trip. The latency is typically measured in milliseconds
+    (ms). Understanding latency is essential because:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Network Performance**: Lower latency means faster data transmission and more
+    responsive network connections, which is critical for real-time applications.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Troubleshooting**: High latency can indicate network congestion, packet loss,
+    or connectivity issues that need attention.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Quality of Service (QoS)**: Service providers and network administrators
+    use latency metrics to ensure that network services meet quality standards.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The basic ping syntax includes ping followed by a hostname, a name of a website,
+    or the exact IP address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To get ping version installed on your system.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To check whether a remote host is up, in this case, google.com, type in your
+    terminal:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Controlling the number of packets to send: Earlier we did not define the number
+    of packets to send to the server/host by using -c option we can do so.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Controlling the size of the packet: Earlier a default sized packets were sent
+    to a host but we can send light and heavy packet by using -s option.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Changing the time interval between ping packets: By default ping wait for 1
+    sec to send next packet we can change this time by using -i option.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,110 @@
+- en: The `xargs` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`xargs` is used to build and execute command lines from standard input'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some commands like grep can accept input as parameters, but some commands accepts
+    arguments, this is place where xargs came into picture.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Options:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Input items are terminated by a null character instead of by whitespace, and
+    the quotes and backslash are not special (every character is taken literal‐ly).
+    Disables the end of file string, which is treated like any other argument. Useful
+    when input items might contain white space, quote marks, or back‐slashes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Read items from file instead of standard input. If you use this option, stdin
+    remains unchanged when commands are run. Otherwise, stdin is redirected from /dev/null.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Reopen stdin as /dev/tty in the child process before executing the command.
+    This is useful if you want xargs to run an interactive application.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Input items are terminated by the specified character. The specified delimiter
+    may be a single character, a C-style character escape such as \n, or an octal
+    or hexadecimal escape code. Octal and hexadecimal escape codes are understood
+    as for the printf command. Multibyte characters are not supported. When processing
+    the input, quotes and backslash are not special; every character in the input
+    is taken literally. The -d option disables any end-of-file string, which is treated
+    like any other argument. You can use this option when the input consists of simply
+    newline-separated items, although it is al‐ most always better to design your
+    program to use --null where this is possible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Prompt the user about whether to run each command line and read a line from
+    the terminal. Only run the command line if the response starts with `y' or` Y'.
+    Implies -t.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files named core in or below the directory /tmp and delete them. Note that
+    this will work incorrectly if there are any filenames containing newlines or spaces.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files named core in or below the directory /tmp and delete them, processing
+    filenames in such a way that file or directory names containing spaces or new‐
+    lines are correctly handled.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files named core in or below the directory /tmp and delete them, but more
+    efficiently than in the previous example (because we avoid the need to use fork(2)
+    and exec(2) to launch rm and we don't need the extra xargs process).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Generates a compact listing of all the users on the system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Help Command
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Run below command to view the complete guide to `xargs` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE

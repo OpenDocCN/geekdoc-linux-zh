@@ -1,0 +1,150 @@
+- en: The `shuf` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `shuf` command in Linux writes a random permutation of the input lines to
+    standard output. It pseudo randomizes an input in the same way as the cards are
+    shuffled. It is a part of GNU Coreutils and is not a part of POSIX. This command
+    reads either from a file or standard input in bash and randomizes those input
+    lines and displays the output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Like other Linux commands, `shuf` command comes with `-–help` option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: shuf command without any option or argument.
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When `shuf` command is used without any argument in the command line, it takes
+    input from the user until `CTRL-D` is entered to terminate the set of inputs.
+    It displays the input lines in a shuffled form. If `1, 2, 3, 4 and 5` are entered
+    as input lines, then it generates `1, 2, 3, 4 and 5` in random order in the output
+    as seen in the illustration below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Consider an example where Input is taken from the pipe:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`seq 5` returns the integers sequentially from `1` to `5` while the `shuf`
+    command takes it as input and shuffles the content i.e, the integers from `1`
+    to `5`. Hence, `1` to `5` is displayed as output in random order.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: File shuf
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When `shuf` command is used without `-e` or `-i` option, then it operates as
+    a file shuf i.e, it shuffles the contents of the file. The `<file_name>` is the
+    last parameter of the `shuf` command and if it is not given, then input has to
+    be provided from the shell or pipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Consider an example where input is taken from a file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Suppose file.txt contains 6 lines, then the shuf command displays the input
+    lines in random order as output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Any number of lines can be randomized by using `-n` option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will display any two random lines from the file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: List shuf
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When `-e` option is used with shuf command, it works as a list shuf. The arguments
+    of the command are taken as the input line for the shuf.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Consider an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: It will take `A, B, C, D, E` as input lines, and will shuffle them to display
+    the output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Any number of input lines can be displayed using the `-n` option along with
+    `-e` option.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will display any two of the inputs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Range shuf
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: When `-i` option is used along with `shuf` command, it acts as a `range shuf`.
+    It requires a range of input as input where `L0` is the lower bound while `HI`
+    is the upper bound. It displays integers from `L0-HI` in shuffled form.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `shuf` command helps you randomize input lines. And there are features to
+    limit the number of output lines, repeat lines and even generate random positive
+    integers. Once you're done practicing whatever we've discussed here, head to the
+    tool's [man page](https://linux.die.net/man/1/shuf) to know more about it.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,119 @@
+- en: The `yum` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `yum`command is the primary package management tool for installing, updating,
+    removing, and managing software packages in Red Hat Enterprise Linux. It is an
+    acronym for *`Yellow Dog Updater, Modified`*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`yum` performs dependency resolution when installing, updating, and removing
+    software packages. It can manage packages from installed repositories in the system
+    or from .rpm packages.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To see an overview of what happened in past transactions:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To undo a previous transaction:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: To install firefox package with 'yes' as a response to all confirmations
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: To update the mysql package it to the latest stable version
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Commonly used commands along with yum:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `install` | Installs the specified packages |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `remove` | Removes the specified packages |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `search` | Searches package metadata for keywords |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `info` | Lists the description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `update` | Updates each package to the latest version |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `repolist` | Lists repositories |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `history` | Displays what has happened in past transactions |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `groupinstall` | To install a particular package group |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `clean` | To clean all cached files from enabled repository |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-C` | `--cacheonly` | Runs entirely from system cache, doesn’t update the
+    cache and use it even in case it is expired. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--security` | Includes packages that provide a fix for a security issue.
+    Applicable for the upgrade command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-y` | `--assumeyes` | Automatically answer yes for all questions. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--skip-broken` | Resolves depsolve problems by removing packages that
+    are causing problems from the transaction. It is an alias for the strict configuration
+    option with value False. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | `--verbose` | Verbose operation, show debug messages. |'
+  prefs: []
+  type: TYPE_TB

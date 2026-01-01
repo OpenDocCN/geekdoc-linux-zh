@@ -1,0 +1,150 @@
+- en: The `killall` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`killall` sends a signal to **all** processes running any of the specified
+    commands. If no signal name is specified, `SIGTERM` is sent. In general, `killall`
+    command kills all processes by knowing the name of the process.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Signals can be specified either by name (e.g. `-HUP` or `-SIGHUP`) or by number
+    (e.g. `-1`) or by option `-s`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the command name is not a regular expression (option `-r`) and contains a
+    slash (`/`), processes executing that particular file will be selected for killing,
+    independent of their name.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`killall` returns a zero return code if at least one process has been killed
+    for each listed command, or no commands were listed and at least one process matched
+    the `-u` and `-Z` search criteria. `killall` returns non-zero otherwise.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A `killall` process never kills itself (but may kill other `killall` processes).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Kill all processes matching the name `conky` with `SIGTERM`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can also kill Wine processes (Windows executable files running on Linux)
+    this way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'List all the supported signals:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: As for the numbers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Ask before killing, to prevent unwanted kills:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Kill all processes and wait until the processes die.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Kill based on time:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e` | `--exact` | require an exact match for very long names |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-I` | `--ignore-case` | case insensitive process name match |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-g` | `--process-group` | kill process group instead of process |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-y` | `--younger-than` | kill processes younger than TIME |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-o` | `--older-than` | kill processes older than TIME |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | `--interactive` | Prompt before killing processes to avoid accidental
+    termination. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | `--list` | list all known signal names |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-q` | `--quiet` | don''t print complaints |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r` | `--regexp` | interpret NAME as an extended regular expression |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | `--signal SIGNAL` | send this signal instead of SIGTERM |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | `--user USER` | kill only process(es) running as USER |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | `--verbose` | report if the signal was successfully sent |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-w` | `--wait` | wait for processes to die |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | `--ns PID` | Match processes belonging to the same namespace as the
+    specified PID. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-Z` | `--context` | REGEXP kill only process(es) having context (must precede
+    other arguments) |'
+  prefs: []
+  type: TYPE_TB
+- en: Related commands
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[kill](/ebook/en/content/034-the-kill-command.md), `pidof`'
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,162 @@
+- en: The `ifconfig` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`ifconfig` is used to configure the kernel-resident network interfaces. It
+    is used at boot time to set up interfaces as necessary. After that, it is usually
+    only needed when debugging or when system tuning is needed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If no arguments are given, `ifconfig` displays the status of the currently active
+    interfaces. If a single interface argument is given, it displays the status of
+    the given interface only; if a single -a argument is given, it displays the status
+    of all interfaces, even those that are down. Otherwise, it configures an interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To display the currently active interfaces:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To show all interfaces which are currently active, even if down:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To show all the error conditions:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To show a short list:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To display details of the specific network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To activate the driver for a interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To deactivate the driver for a interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To assign a specific IP address to a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To change MAC(Media Access Control) address of a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To define a netmask for a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To enable promiscous mode on a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: In normal mode, when a packet is received by a network card, it verifies that
+    it belongs to itself. If not, it drops the packet normally. However, in the promiscuous
+    mode, it accepts all the packets that flow through the network card.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To disable promiscous mode on a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To set the maximum transmission unit to a network interface (say `eth0`):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: The MTU allows you to set the limit size of packets that are transmitted on
+    an interface. The MTU is able to handle a maximum number of octets to an interface
+    in one single transaction.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To add additional IP addresses to a network interface, you can configure a
+    network alias to the network interface:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Please note that the alias network address is in the same subnet mask of the
+    network interface. For example, if your eth0 network ip address is `10.10.1.23`,
+    then the alias ip address can be `10.10.1.24`. Example of an invalid IP address
+    is `10.10.2.24` since the interface subnet mask is `255.255.255.224`
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To remove a network alias:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Remember that for every scope (i.e. same net with address/netmask combination)
+    all aiases are deleted, if you delete the first alias.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Help Command
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Run below command to view the complete guide to `ifconfig` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE

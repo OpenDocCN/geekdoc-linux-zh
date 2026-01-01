@@ -1,0 +1,312 @@
+- en: The `find` Command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `find` command is one of the most powerful Linux utilities that lets you
+    search for files and directories based on various conditions like name, size,
+    modification time, permissions, and more.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Basic Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**In simple words:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: “Search starting from `[path]`, apply `[options or filters]`, and then perform
+    an `[action]` on the result.”
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This searches for all `.log` files under `/home/user`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Common Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Search a File by Exact Name
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Finds `sample.txt` inside `directory1` and all its subdirectories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Case-insensitive search:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Search Files by Pattern (Wildcard)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Find all `.txt` files under `directory1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'More examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Find Directories by Name
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Lists all directories named `test` from the root `/`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Find Empty Files and Directories
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Finds both empty files and directories in the current folder.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Only empty files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 5\. Find Files by Modification or Access Time
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| Option | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-mtime n` | Modified *n* days ago |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-atime n` | Accessed *n* days ago |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-ctime n` | Changed *n* days ago |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-mmin n` | Modified *n* minutes ago |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Find files modified within the last 2 days.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files modified within the last hour.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 6\. Find Files by Size
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| Expression | Meaning |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `+n` | Greater than n |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | Less than n |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `n` | Exactly n |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Find files larger than 100 MB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files smaller than 10 KB.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 7\. Find Files Modified More Recently than Another File
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Lists files modified after `reference.txt`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. Find Files by Type
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| Type | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `f` | Regular file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `d` | Directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `l` | Symbolic link |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `b` | Block device |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `c` | Character device |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Find all block devices.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 9\. Find Files by Permission
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Find files with exactly 644 permissions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files executable by anyone.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 10\. Execute Commands on Found Files
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can use the `-exec` option to run a command on each file found:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Deletes all `.log` files under the current directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Alternative (faster):**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 11\. Combine Multiple Conditions
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can combine filters together:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Finds `.log` files larger than 50 MB and modified within the last 2 days.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 12\. Print Only File Names (Quiet Output)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `-print` flag ensures output is displayed (it’s the default in most systems).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Quick Reference Table
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Task | Command |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Find files with specific name | `find . -name filename.txt` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Case-insensitive search | `find . -iname filename.txt` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Find directories only | `find . -type d` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Find empty files | `find . -type f -empty` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Find files > 1 GB | `find . -size +1G` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Find modified in last day | `find . -mtime -1` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Delete `.tmp` files | `find . -name "*.tmp" -delete` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| Search and execute | `find . -name "*.log" -exec gzip {} \;` |'
+  prefs: []
+  type: TYPE_TB
+- en: Getting Help
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To view the complete guide for the `find` command, run:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE

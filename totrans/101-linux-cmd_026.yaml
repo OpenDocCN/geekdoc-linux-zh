@@ -1,0 +1,125 @@
+- en: The `w` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `w` command displays information about the users that are currently active
+    on the machine and their [processes](https://www.computerhope.com/jargon/p/process.htm).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Running the `w` command without [arguments](https://www.computerhope.com/jargon/a/argument.htm)
+    shows a list of logged on users and their processes.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show information for the user named *hope*.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--no-header` | Don''t print the header. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | `--no-current` | Ignores the username while figuring out the current
+    process and cpu times. *(To see an example of this, switch to the root user with
+    `su` and then run both `w` and `w -u`.)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | `--short` | Display abbreviated output *(don''t print the login time,
+    JCPU or PCPU times).* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | `--from` | Toggle printing the from *(remote hostname)* field. The
+    default as released is for the from field to not be printed, although your system
+    administrator or distribution maintainer may have compiled a version where the
+    from field is shown by default. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--help` | - | Display a help message, and exit. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-V` | `--version` | Display version information, and exit. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-o` | `--old-style` | Old style output *(prints blank space for idle times
+    less than one minute)*. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| *`user`* | - | Show information about the specified the user only. |'
+  prefs: []
+  type: TYPE_TB
+- en: Additional Information
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The [header](https://www.computerhope.com/jargon/h/header.htm) of the output
+    shows (in this order): the current time, how long the system has been running,
+    how many users are currently logged on, and the system [load](https://www.computerhope.com/jargon/l/load.htm)
+    averages for the past 1, 5, and 15 minutes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The following entries are displayed for each user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: login name the [tty](https://www.computerhope.com/jargon/t/tty.htm)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: name the [remote](https://www.computerhope.com/jargon/r/remote.htm)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[host](https://www.computerhope.com/jargon/h/hostcomp.htm) they are'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: logged in from the amount of time they are logged in their
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[idle](https://www.computerhope.com/jargon/i/idle.htm) time JCPU'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: PCPU
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[command line](https://www.computerhope.com/jargon/c/commandi.htm) of their
+    current process'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The JCPU time is the time used by all processes attached to the tty. It does
+    not include past background jobs, but does include currently running background
+    jobs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The PCPU time is the time used by the current process, named in the "what" field.
+  prefs: []
+  type: TYPE_NORMAL

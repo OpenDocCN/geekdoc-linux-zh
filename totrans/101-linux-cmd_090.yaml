@@ -1,0 +1,113 @@
+- en: The `awk` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Awk is a general-purpose scripting language designed for advanced text processing.
+    It is mostly used as a reporting and analysis tool.
+  prefs: []
+  type: TYPE_NORMAL
+- en: WHAT CAN WE DO WITH AWK?
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'AWK Operations: (a) Scans a file line by line (b) Splits each input line into
+    fields (c) Compares input line/fields to pattern (d) Performs action(s) on matched
+    lines'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Useful For: (a) Transform data files (b) Produce formatted reports'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Programming Constructs: (a) Format output lines (b) Arithmetic and string operations
+    (c) Conditionals and loops'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Example
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Consider the following text file as the input file for below example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Default behavior of Awk: By default Awk prints every line of data from the
+    specified file.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above example, no pattern is given. So the actions are applicable to
+    all the lines. Action print without any argument prints the whole line by default,
+    so it prints all the lines of the file without failure.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Print the lines which match the given pattern.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the above example, the awk command prints all the line which matches with
+    the ‘manager’.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Splitting a Line Into Fields : For each record i.e line, the awk command splits
+    the record delimited by whitespace character by default and stores it in the $n
+    variables. If the line has 4 words, it will be stored in $1, $2, $3 and $4 respectively.
+    Also, $0 represents the whole line.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Built-In Variables In Awk
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Awk’s built-in variables include the field variables—$1, $2, $3, and so on ($0
+    is the entire line) — that break a line of text into individual words or pieces
+    called fields.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'NR: NR command keeps a current count of the number of input records. Remember
+    that records are usually lines. Awk command performs the pattern/action statements
+    once for each record in a file. NF: NF command keeps a count of the number of
+    fields within the current input record. FS: FS command contains the field separator
+    character which is used to divide fields on the input line. The default is “white
+    space”, meaning space and tab characters. FS can be reassigned to another character
+    (typically in BEGIN) to change the field separator. RS: RS command stores the
+    current record separator character. Since, by default, an input line is the input
+    record, the default record separator character is a newline. OFS: OFS command
+    stores the output field separator, which separates the fields when Awk prints
+    them. The default is a blank space. Whenever print has several parameters separated
+    with commas, it will print the value of OFS in between each parameter. ORS: ORS
+    command stores the output record separator, which separates the output lines when
+    Awk prints them. The default is a newline character. print automatically outputs
+    the contents of ORS at the end of whatever it is given to print.'
+  prefs: []
+  type: TYPE_NORMAL

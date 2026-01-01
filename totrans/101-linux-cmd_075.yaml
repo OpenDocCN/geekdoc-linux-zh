@@ -1,0 +1,123 @@
+- en: The `RPM` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`rpm` - RPM Package Manager'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`rpm` is a powerful **Package Manager**, which can be used to build, install,
+    query, verify, update, and erase individual software packages. A **package** consists
+    of an archive of files and meta-data used to install and erase the archive files.
+    The meta-data includes helper scripts, file attributes, and descriptive information
+    about the package. Packages come in two varieties: binary packages, used to encapsulate
+    software to be installed, and source packages, containing the source code and
+    recipe necessary to produce binary packages.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'One of the following basic modes must be selected: **Query, Verify, Signature
+    Check, Install/Upgrade/Freshen, Uninstall, Initialize Database, Rebuild Database,
+    Resign, Add Signature, Set Owners/Groups, Show Querytags, and Show Configuration.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**General Options**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: These options can be used in all the different modes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Short Flag | Long Flag | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -? | --help | Print a longer usage message then normal. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --version | Print a single line containing the version number of rpm
+    being used. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --quiet | Print as little as possible - normally only error messages
+    will be displayed. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -v | - | Print verbose information - normally routine progress messages will
+    be displayed. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -vv | - | Print lots of ugly debugging information. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --rcfile FILELIST | Each of the files in the colon separated FILELIST
+    is read sequentially by rpm for configuration information. Only the first file
+    in the list must exist, and tildes will be expanded to the value of $HOME. The
+    default FILELIST is /usr/lib/rpm/rpmrc:/usr/lib/rpm/redhat/rpmrc:/etc/rpmrc:~/.rpmrc.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --pipe CMD | Pipes the output of rpm to the command CMD. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --dbpath DIRECTORY | Use the database in DIRECTORY rather than the default
+    path /var/lib/rpm |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | --root DIRECTORY | Use the file system tree rooted at DIRECTORY for all
+    operations. Note that this means the database within DIRECTORY will be used for
+    dependency checks and any scriptlet(s) (e.g. %post if installing, or %prep if
+    building, a package) will be run after a chroot(2) to DIRECTORY. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -D | --define=''MACRO EXPR'' | Defines MACRO with value EXPR. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -E | --eval=''EXPR'' | Prints macro expansion of EXPR. |'
+  prefs: []
+  type: TYPE_TB
+- en: Synopsis
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Querying and Verifying Packages:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Installing, Upgrading, and Removing Packages:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Miscellaneous:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: query-options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: verify-options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: install-options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE

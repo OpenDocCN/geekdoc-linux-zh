@@ -1,0 +1,126 @@
+- en: The `pstree` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `pstree` command is similar to `ps`, but instead of listing the running
+    processes, it shows them as a tree. The tree-like format is sometimes more suitable
+    way to display the processes hierarchy which is a much simpler way to visualize
+    running processes. The root of the tree is either init or the process with the
+    given pid.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To display a hierarchical tree structure of all running processes:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To display a tree with the given process as the root of the tree:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To show only those processes that have been started by a user:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To show the parent processes of the given process:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To view the output one page at a time, pipe it to the `less` command:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Syntax
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`ps [OPTIONS] [USER or PID]`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Additional Flags and their Functionalities
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | `--arguments` | Show command line arguments |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-A` | `--ascii` | use ASCII line drawing characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c` | `--compact` | Don''t compact identical subtrees |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--highlight-all` | Highlight current process and its ancestors |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-H PID` | `--highlight-pid=PID` | highlight this process and its ancestors
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-g` | `--show-pgids` | show process group ids; implies `-c` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-G` | `--vt100` | use VT100 line drawing characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | `--long` | Don''t truncate long lines |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | `--numeric-sort` | Sort output by PID |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-N type` | `--ns-sort=type` | Sort by namespace type (cgroup, ipc, mnt,
+    net, pid, user, uts) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | `--show-pids` | show PIDs; implies -c |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | `--show-parents` | Show parents of the selected process |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-S` | `--ns-changes` | show namespace transitions |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-t` | `--thread-names` | Show full thread names |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-T` | `--hide-threads` | Hide threads, show only processes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | `--uid-changes` | Show uid transitions |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-U` | `--unicode` | Use UTF-8 (Unicode) line drawing characters |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-V` | `--version` | Display version information |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-Z` | `--security-context` | Show SELinux security contexts |'
+  prefs: []
+  type: TYPE_TB

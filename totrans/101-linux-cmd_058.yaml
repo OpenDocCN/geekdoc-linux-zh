@@ -1,0 +1,106 @@
+- en: The `reboot` Command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `reboot` command is used to restart a Linux system. However, it requires
+    elevated permission using the [sudo](https://github.com/bobbyiliev/101-linux-commands/blob/main/ebook/en/content/051-the-sudo-command.md)
+    command. Necessity to use this command usually arises after significant system
+    or network updates have been made to the system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**–help** : This option prints a short help text and exit.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**-halt** : This command will stop the machine.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**-w**, **–wtmp-only** : This option only writes wtmp shutdown entry, it does
+    not actually halt, power-off, reboot.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Basic Usage. Mainly used to restart without any further details
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: However, alternatively the shutdown command with the `-r` option
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note** that the usage of the reboot, halt and power off is almost similar
+    in syntax and effect. Run each of these commands with –-help to see the details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `reboot` command has limited usage, and the `shutdown` command is being
+    used instead of reboot command to fulfill much more advanced reboot and shutdown
+    requirements. One of those situations is a scheduled restart. Syntax is as follows
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here the TIME has various formats. The simplest one is `now`, already been listed
+    in the previous section, and tells the system to restart immediately. Other valid
+    formats we have are +m, where m is the number of minutes we need to wait until
+    restart and HH:MM which specifies the TIME in a 24hr clock.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example to reboot the system in 2 minutes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Example of a scheduled restart at 03:00 A.M**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Cancelling a Reboot. Usually happens in case one wants to cancel a scheduled
+    restart
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Syntax**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Usage**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Shows a history of system reboots **Syntax**
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,307 @@
+- en: The `jobs` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `jobs` command is used to display information about active jobs in the current
+    shell session. Jobs are processes that have been started from the shell and can
+    be managed using job control commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Some popular option flags include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Job States
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Jobs can be in different states:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Running**: Job is currently executing'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Stopped**: Job is suspended (paused)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Done**: Job has completed successfully'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Terminated**: Job was killed or ended abnormally'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: List all current jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: List jobs with process IDs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: List only process IDs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: List only running jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: List only stopped jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show status of specific job
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Job Control Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Start a background job
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Start multiple background jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: View all jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output might look like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Stop a running job (Ctrl+Z)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Bring job to foreground
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Send job to background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Kill a specific job
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Job Specifications
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can refer to jobs using different formats:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`%1` - Job number 1'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%+` or `%%` - Current job (most recent)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%-` - Previous job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%string` - Job whose command line starts with string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%?string` - Job whose command line contains string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples with Job Control
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Start and manage multiple jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with stopped jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Multitasking**: Running multiple commands simultaneously'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Long-running processes**: Managing tasks that take time to complete'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Background processing**: Running tasks while working on other things'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Job monitoring**: Keeping track of running processes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Process management**: Controlling and organizing shell processes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Related Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`fg` - Bring job to foreground'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`bg` - Send job to background'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`nohup` - Run command immune to hangups'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`disown` - Remove job from job table'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`kill` - Terminate job or process'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Jobs are specific to the current shell session
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Job numbers are assigned sequentially
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Jobs disappear when they complete or when you exit the shell
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use `&` at the end of a command to run it in background
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Press `Ctrl+Z` to stop (suspend) a running job
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use `Ctrl+C` to terminate a running job
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Advanced Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Run command in background and disown it
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check for completed jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Kill all jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `jobs` command is essential for managing multiple processes and implementing
+    effective workflow management in the shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `man jobs` or `help jobs`'
+  prefs: []
+  type: TYPE_NORMAL

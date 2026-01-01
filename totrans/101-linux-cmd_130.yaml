@@ -1,0 +1,85 @@
+- en: The `pidof` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `pidof` is a command-line utility that allows you to find the process ID
+    of a running program.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To view the help message and all options of the command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To find the PID of the SSH server, you would run:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: If there are running processes with names matching `sshd`, their PIDs will be
+    displayed on the screen. If no matches are found, the output will be empty.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`pidof` returns `0` when at least one running program matches with the requested
+    name. Otherwise, the exit code is `1`. This can be useful when writing shell scripts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To be sure that only the PIDs of the program you are searching for are displayed,
+    use the full pathname to the program as an argument. For example, if you have
+    two running programs with the same name located in two different directories pidof
+    will show PIDs of both running programs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'By default, all PIDs of the matching running programs are displayed. Use the
+    `-s` option to force pidof to display only one PID:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-o` option allows you to exclude a process with a given PID from the command
+    output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: When pidof is invoked with the `-o` option, you can use a special PID named
+    %PPID that represents the calling shell or shell script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To return only the PIDs of the processes that are running with the same root
+    directory, use the `-c` option. This option works only pidof is run as `root`
+    or `sudo` user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `pidof` command is used to find out the PIDs of a specific running program.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`pidof` is a simple command that doesn’t have a lot of options. Typically you
+    will invoke pidof only with the name of the program you are searching for.'
+  prefs: []
+  type: TYPE_NORMAL

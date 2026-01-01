@@ -1,0 +1,71 @@
+- en: The `groups` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In Linux, there can be multiple users (those who use/operate the system), and
+    groups (a collection of users). Groups make it easy to manage users with the same
+    security and access privileges. A user can be part of different groups.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Important Points:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `groups` command prints the names of the primary and any supplementary groups
+    for each given username, or the current process if no names are given. If more
+    than one name is given, the name of each user is printed before the list of that
+    user’s groups and the username is separated from the group list by a colon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Example 1
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: Provided with a username
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: In this example, username demon is passed with groups command and the output
+    shows the groups in which the user demon is present, separated by a colon.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example 2
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'When no username is passed then this will display the group membership for
+    the current user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here the current user is demon . So when we run the `groups` command without
+    arguments we get the groups in which demon is a user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Example 3
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: 'Passing root with groups command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Note: Primary and supplementary groups for a process are normally inherited
+    from its parent and are usually unchanged since login. This means that if you
+    change the group database after logging in, groups will not reflect your changes
+    within your existing login session. The only options are –help and –version.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

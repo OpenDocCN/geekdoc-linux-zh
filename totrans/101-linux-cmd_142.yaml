@@ -1,0 +1,280 @@
+- en: The `bg` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `bg` command is used to put stopped jobs in the background, allowing them
+    to continue running while you use the terminal for other tasks. It's part of the
+    job control features in Unix-like shells.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: If no job specification is provided, `bg` operates on the current job (most
+    recent job).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Job Specifications
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can refer to jobs using different formats:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`%1` - Job number 1'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%+` or `%%` - Current job (most recent)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%-` - Previous job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%string` - Job whose command line starts with string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%?string` - Job whose command line contains string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Put the current stopped job in background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Put specific job in background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Put multiple jobs in background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Complete Job Control Workflow
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here''s a typical workflow demonstrating `bg` usage:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Start a long-running command
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Stop the job with Ctrl+Z
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Put the stopped job in background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Verify the job is running in background
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Practical Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Working with a text editor
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Managing multiple background tasks
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Starting command directly in background vs using bg
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Related Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`fg` - Bring job to foreground'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`jobs` - List active jobs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`kill` - Terminate job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`nohup` - Run command immune to hangups'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`disown` - Remove job from job table'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Multitasking**: Run multiple tasks simultaneously'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Long processes**: Let time-consuming tasks run while working on other things'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Interactive programs**: Temporarily background editors or interactive tools'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Development**: Background compilation while coding'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**System administration**: Background monitoring while performing other tasks'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Jobs put in background with `bg` are still attached to the terminal
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If you close the terminal, background jobs may be terminated
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use `nohup` or `disown` for persistent background processes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Background jobs cannot read from stdin (keyboard input)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can use `fg` to bring background jobs back to foreground
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Background jobs continue to write to stdout/stderr unless redirected
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Error Handling
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If `bg` fails, common reasons include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Job doesn't exist
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Job is already running
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Job cannot be put in background (some interactive programs)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Tips
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Always check job status with `jobs` before and after using `bg`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Redirect output for background jobs to avoid cluttering the terminal
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use job control responsibly to avoid system resource issues
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Consider using terminal multiplexers like `screen` or `tmux` for persistent
+    sessions
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `bg` command is essential for effective multitasking and job management
+    in the shell environment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `help bg`'
+  prefs: []
+  type: TYPE_NORMAL

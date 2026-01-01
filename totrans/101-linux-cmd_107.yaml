@@ -1,0 +1,181 @@
+- en: The `grep` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `grep` filter searches a file for a particular pattern of characters, and
+    displays all lines that contain that pattern. grep stands for globally search
+    for regular expression and print out. The pattern that is searched in the file
+    is referred to as the regular expression.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To search the contents of the destination.txt file for a string("KeY") case
+    insensitively.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Displaying the count of number of matches
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: We can search multiple files and only display the files that contains the given
+    string/pattern.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: To show the line number of file with the line matched.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you want to grep the monitored log files, you can add the `--line-buffered`
+    to search them in real time.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The general syntax for the grep command is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c` | `--count` | print a count of matching lines for each input file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--no-filename` | Display the matched lines, but do not display the
+    filenames |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | `--ignore-case` | Ignores, case for matching |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | `--files-with-matches` | Displays list of a filenames only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | `--line-number` | Display the matched lines and their line numbers.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | `--invert-match` | This prints out all the lines that do not matches
+    the pattern |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e` | `--regexp=` | Specifies expression with this option. Can use multiple
+    times |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | `--file=` | Takes patterns from file, one per line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-F` | `--fixed-strings=` | Interpret patterns as fixed strings, not regular
+    expressions. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-E` | `--extended-regexp` | Treats pattern as an extended regular expression
+    (ERE) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-w` | `--word-regexp` | Match whole word |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-o` | `--only-matching` | Print only the matched parts of a matching line,
+    with each such part on a separate output line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--line-buffered` | Force output to be line buffered. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Additional Practical Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Search recursively in all files within a directory
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Search for whole words only (not partial matches)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Display lines that do NOT contain the pattern (invert match)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Search for multiple patterns using extended regex
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Search and show context lines (lines before and after match)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Search for pattern at the beginning or end of line
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Count total matches across multiple files
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Find files containing a pattern and pipe to other commands
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '```'
+  prefs: []
+  type: TYPE_NORMAL

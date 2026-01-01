@@ -1,0 +1,329 @@
+- en: The `fg` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `fg` command is used to bring background or stopped jobs to the foreground,
+    making them the active process in your terminal. It's an essential part of job
+    control in Unix-like shells.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: If no job specification is provided, `fg` operates on the current job (most
+    recent job).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Job Specifications
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can refer to jobs using different formats:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`%1` - Job number 1'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%+` or `%%` - Current job (most recent)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%-` - Previous job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%string` - Job whose command line starts with string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%?string` - Job whose command line contains string'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Bring the current job to foreground
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Bring specific job to foreground
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Bring job by partial command name
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Bring job containing specific text
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Complete Job Control Workflow
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here''s a typical workflow demonstrating `fg` usage:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Start a background job
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Start another job and stop it
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check current jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Bring vim to foreground
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Work in vim, then stop again (Ctrl+Z) and bring ping to foreground
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Practical Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Working with editors
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Managing multiple development tasks
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Interactive debugging session
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with multiple terminals/sessions
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Advanced Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Switching between multiple stopped jobs
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Using with job control in scripts
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Related Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`bg` - Put job in background'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`jobs` - List active jobs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`kill` - Terminate job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+Z` - Stop (suspend) current job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`Ctrl+C` - Terminate current job'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Code editing**: Switch between multiple open editors'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Development**: Alternate between compilation and editing'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**System monitoring**: Switch between monitoring tools'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Remote sessions**: Resume SSH or other remote connections'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Interactive programs**: Return to paused interactive applications'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Debugging**: Resume debugger sessions'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When a job is brought to foreground, it becomes the active process
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can only have one foreground job at a time
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Foreground jobs can receive keyboard input
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use Ctrl+Z to stop (suspend) a foreground job
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use Ctrl+C to terminate a foreground job
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Background jobs continue running even when not in foreground
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Error Handling
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Common issues with `fg`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Job doesn''t exist: `fg: %3: no such job`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'No jobs available: `fg: no current job`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Job already in foreground
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Tips for Effective Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Use job numbers**: More reliable than partial names'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Check jobs first**: Always run `jobs` to see current status'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Consistent workflow**: Develop a routine for job switching'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Redirect output**: Background jobs should redirect output to avoid interference'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: Integration with Other Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`fg` works well with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Terminal multiplexers**: `screen`, `tmux`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Development environments**: IDEs, editors'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**System monitoring**: `top`, `htop`, `tail`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Network tools**: `ssh`, `ping`, `netstat`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `fg` command is crucial for efficient terminal multitasking and provides
+    seamless switching between different tasks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `help fg`'
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,150 @@
+- en: The `cp` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `cp` is a command-line utility for copying files and directory. `cp` stands
+    for copy. This command is used to copy files or group of files or directory. It
+    creates an exact image of a file on a disk with different file name. The cp command
+    requires at least two filenames in its arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To copy the contents of the source file to the destination file.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: If the destination file doesn't exist then the file is created and the content
+    is copied to it. If it exists then the file is overwritten.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To copy a file to another directory specify the absolute or the relative path
+    to the destination directory.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: To copy a directory, including all its files and subdirectories
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: The command above creates the destination directory and recursively copies all
+    files and subdirectories from the source to the destination directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the destination directory already exists, the source directory itself and
+    its content are copied inside the destination directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To copy only the files and subdirectories but not the source directory
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The general syntax for the cp command is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: The first and second syntax is used to copy Source file to Destination file
+    or Directory. The third syntax is used to copy multiple Sources(files) to Directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some useful options
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '`-i` (interactive) `i` stands for Interactive copying. With this option system
+    first warns the user before overwriting the destination file. cp prompts for a
+    response, if you press y then it overwrites the file and with any other option
+    leave it uncopied.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-b`(backup) -b(backup): With this option cp command creates the backup of
+    the destination file in the same folder with the different name and in different
+    format.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-f`(force) If the system is unable to open destination file for writing operation
+    because the user doesn''t have writing permission for this file then by using
+    -f option with cp command, destination file is deleted first and then copying
+    of content is done from source to destination file.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: User, group and others doesn't have writing permission.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Without `-f` option, command not executed
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: With -f option, command executed successfully
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | --interactive | prompt before overwrite |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | --force | If an existing destination file cannot be opened, remove
+    it and try again |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-b` | - | Creates the backup of the destination file in the same folder
+    with the different name and in different format. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r or -R` | `--recursive` | **cp** command shows its recursive behavior
+    by copying the entire directory structure recursively. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | `--no-clobber` | do not overwrite an existing file (overrides a previous
+    -i option) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | - | preserve the specified attributes (default: mode,ownership,timestamps),
+    if possible additional attributes: context, links, xattr, all |'
+  prefs: []
+  type: TYPE_TB

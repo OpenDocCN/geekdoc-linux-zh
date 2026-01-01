@@ -1,0 +1,68 @@
+- en: The `crontab` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`crontab` is used to maintain crontab files for individual users (Vixie Cron)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: crontab is the program used to install, uninstall or list the tables used to
+    drive the cron(8) daemon in Vixie Cron. Each user can have their own crontab,
+    and though these are files in `/var/spool/cron/crontabs`, they are not intended
+    to be edited directly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The -l option causes the current crontab to be displayed on standard output.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: The -r option causes the current crontab to be removed.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: The -e option is used to edit the current crontab using the editor specified
+    by the VISUAL or EDITOR environment variables. After you exit from the editor,
+    the modified crontab will be installed automatically. If neither of the environment
+    variables is defined, then the default editor /usr/bin/editor is used.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can specify the user you want to edit the crontab for. Every user has its
+    own crontab. Assume you have a `www-data` user, which is in fact the user Apache
+    is default running as. If you want to edit the crontab for this user you can run
+    the following command
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Help Command
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Run below command to view the complete guide to `crontab` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE

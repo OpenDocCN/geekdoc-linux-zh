@@ -1,0 +1,265 @@
+- en: The `date` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `date` command is used to print the system current date and time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`date` command is also used to set the date and time of the system, but you
+    need to be the super-user *(root)* to do it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To show the current date and time:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use -u option to show the date and time in UTC *(Coordinated Universal
+    Time)* time zone
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To display any given date string in formatted date:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` | `--date=STRING` | convert the provided string into formatted date
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | `--file=DATEFILE` | like `--date` but for files |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-I[FMT]` | `--iso-8601[=FMT]` | Display date and time in ISO 8601 format
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r` | `--reference=FILE` | Display the last modification time of FILE |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | `--set=STRING` | sets the time to the one described by STRING |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | `--universal` | show the date and time in UTC *(Coordinated Universal
+    Time)* time zone |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-R` | `--rfc-email` | Display date and time in ISO 8601 format Example:
+    (Fri, 22 Oct 2021 05:18:42 +0200) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `rfc-3339=FMT` | Display date and time in RFC 3339 format |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--debug` | Usually used with `--date` to annotate the parsed date and
+    warn about questionable usage to stderr |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Control The output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can use Format specifiers to control the output date and time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Command** | **Output** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `$ date "+%D"` | `10/22/21` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `$ date "+%D %T"` | `10/22/21 05:33:51` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `$ date "+%A %B %d %T %y"` | `Friday October 22 05:34:47 21` |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'List of Format specifiers to control the output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Specifiers** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%a` | abbreviated weekday name *(e.g., Sun)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%A` | full weekday name *(e.g., Sunday)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%b` | abbreviated month name *(e.g., Jan)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%B` | full month name *(e.g., January)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%c` | date and time *(e.g., Thu Mar 3 23:05:25 2005)* |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%C` | century; like %Y, except omit last two digits (e.g., 20) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%d` | day of month (e.g., 01) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%D` | date; same as %m/%d/%y |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%e` | day of month, space padded; same as %_d |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%F` | full date; same as %Y-%m-%d |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%g` | last two digits of year of ISO week number (see %G) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%G` | year of ISO week number (see %V); normally useful only with %V |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%h` | same as %b |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%H` | hour (00..23) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%I` | hour (01..12) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%j` | day of year (001..366) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%k` | hour, space padded ( 0..23); same as %_H |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%l` | hour, space padded ( 1..12); same as %_I |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%m` | month (01..12) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%M` | minute (00..59) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%n` | a newline |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%N` | nanoseconds (000000000..999999999) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%p` | locale''s equivalent of either AM or PM; blank if not known |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%P` | like %p, but lower case |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%q` | quarter of year (1..4) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%r` | locale''s 12-hour clock time (e.g., 11:11:04 PM) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%R` | 24-hour hour and minute; same as %H:%M |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%s` | seconds since 1970-01-01 00:00:00 UTC |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%S` | second (00..60) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%t` | a tab |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%T` | time; same as %H:%M:%S |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%u` | day of week (1..7); 1 is Monday |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%U` | week number of year, with Sunday as first day of week (00..53) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%V` | ISO week number, with Monday as first day of week (01..53) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%w` | day of week (0..6); 0 is Sunday |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%W` | week number of year, with Monday as first day of week (00..53) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%x` | locale''s date representation (e.g., 12/31/99) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%X` | locale''s time representation (e.g., 23:13:48) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%y` | last two digits of year (00..99) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%Y` | year |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%z` | +hhmm numeric time zone (e.g., -0400) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%:z` | +hh:mm numeric time zone (e.g., -04:00) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%::z` | +hh:mm:ss numeric time zone (e.g., -04:00:00) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%:::z` | numeric time zone with : to necessary precision (e.g., -04, +05:30)
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%Z` | alphabetic time zone abbreviation (e.g., EDT) |'
+  prefs: []
+  type: TYPE_TB

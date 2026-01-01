@@ -1,0 +1,178 @@
+- en: The `ln` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `ln` command is used to create links between files in Linux. It can create
+    both hard links and symbolic (soft) links, which are essential for file system
+    management and organization.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Types of Links
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Hard Links
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Point directly to the file's inode
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Cannot span across different filesystems
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Cannot link to directories
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If original file is deleted, hard link still contains the data
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Symbolic (Soft) Links
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Point to the file path (like shortcuts)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Can span across different filesystems
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Can link to directories
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If original file is deleted, symbolic link becomes broken
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Some popular option flags include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Create a hard link
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create a symbolic link
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create a symbolic link to a directory
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create multiple symbolic links in a directory
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create a relative symbolic link
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Force create a link (overwrite existing)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Create links with verbose output
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Creating shortcuts to frequently used files or directories
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Maintaining multiple versions of configuration files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Organizing files without duplicating storage space
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Creating backup references to important files
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Setting up development environments with shared libraries
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Use `ls -l` to see if a file is a symbolic link (indicated by `->`)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use `ls -i` to see inode numbers for hard links
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Be careful with symbolic links to avoid creating circular references
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Hard links share the same inode and disk space
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Symbolic links take minimal disk space (just the path information)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `ln` command is essential for efficient file system organization and is
+    widely used in system administration and development workflows.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `man ln`'
+  prefs: []
+  type: TYPE_NORMAL

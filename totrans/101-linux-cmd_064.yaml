@@ -1,0 +1,117 @@
+- en: The `gunzip` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `gunzip` command is an antonym command of [`gzip` command](015-the-gzip-command.md).
+    In other words, it decompresses files deflated by the `gzip` command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '"`gunzip` takes a list of files as arguments. It replaces each file whose name
+    ends with `.gz`, `-gz`, `.z`, `-z`, or `_z` (case-insensitive) and which begins
+    with the correct magic number with an uncompressed file, removing the original
+    extension."'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Uncompress a file
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '"Recursively uncompress all files inside a directory that match the compressed
+    file formats supported by `gunzip`:"'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '"Uncompress all files in the current working directory whose suffix matches
+    `.tgz`:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'List compressed and uncompressed sizes, compression ratio and uncompressed
+    name of input compressed file/s:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Video tutorial about using gzip, gunzip and tar commands:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[This video](https://www.youtube.com/watch?v=OBtG8zfVwuI) shows how to compress
+    and decompress in a Unix shell. It uses `gunzip` as decompression command.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -c | --stdout | write on standard output, keep original files unchanged |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -h | --help | give help information |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -k | --keep | keep (don''t delete) input files |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -l | --list | list compressed file contents |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -q | --quiet | suppress all warnings |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -r | --recursive | operate recursively on directories |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -S | --suffix=SUF | use suffix SUF on compressed files |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | --synchronous | synchronous output (safer if system crashes, but slower)
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -t | --test | test compressed file integrity |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -v | --verbose | verbose mode |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -V | --version | display version number |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Note: gunzip filename.gz is equivalent to gzip -d filename.gz.'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Warning: Running gunzip without -c deletes the original compressed file by
+    default.'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL

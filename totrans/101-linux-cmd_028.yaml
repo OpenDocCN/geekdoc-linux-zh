@@ -1,0 +1,241 @@
+- en: The `history` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `history` command displays a list of previously executed commands from your
+    current shell session and past sessions. This allows you to review, search, and
+    re-execute commands without retyping them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command Syntax
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: How History Works
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Your command history is stored in a file in your home directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Bash**: `~/.bash_history`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Zsh**: `~/.zsh_history`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'The number of commands stored is controlled by shell variables:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`HISTSIZE`: Maximum number of commands to keep in memory during a session'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`HISTFILESIZE`: Maximum number of commands to keep in the history file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'You can check these values with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '`history n` - Display the last `n` commands'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`history -c` - Clear the history list (current session only)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`history -d offset` - Delete the history entry at position `offset`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`history -a` - Append new history lines to the history file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`history -w` - Write the current history to the history file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**1\. Display your full command history:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**2\. Show only the last 10 commands:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**3\. Search for specific commands in your history:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**4\. Execute a command by its history number:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: This re-runs the command at position 123 in your history.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**5\. Execute the most recent command starting with a specific string:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: This runs the most recent command that started with "git".
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**6\. Execute the previous command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**7\. Execute the previous command with sudo:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**8\. Reuse arguments from the previous command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**9\. Clear your command history:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**10\. Delete a specific entry from history:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Reverse Search (Ctrl+R)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'One of the most powerful features is **reverse incremental search**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Press `Ctrl+R`
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Start typing part of a command
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The most recent matching command appears
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Press `Ctrl+R` again to cycle through older matches
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Press `Enter` to execute, or `Esc` to edit the command
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: History Control Variables
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'You can customize history behavior using these variables in your `~/.bashrc`
+    or `~/.zshrc`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Security Considerations
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Preventing sensitive commands from being saved:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Prefix with a space** (if `HISTCONTROL=ignorespace` is set):'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Temporarily disable history:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Remove specific entries:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Clear history before logging out:**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Practical Use Cases
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Debugging**: Review the sequence of commands that led to an error'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Documentation**: Copy command sequences for scripts or documentation'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Efficiency**: Quickly re-execute complex commands without retyping'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Learning**: Review commands used by others when sharing a system (in appropriate
+    contexts)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Audit trail**: Track what commands were executed and when (with timestamps
+    enabled)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

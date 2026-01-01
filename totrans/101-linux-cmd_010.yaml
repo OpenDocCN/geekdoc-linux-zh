@@ -1,0 +1,178 @@
+- en: The `df` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `df` command in Linux/Unix is used to show the disk usage & information.
+    `df` is an abbreviation for "disk free".
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`df` displays the amount of disk space available on the file system containing
+    each file name argument. If no file name is given, the space available on all
+    currently mounted file systems is shown.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | `--all` | Include pseudo, duplicate, inaccessible file systems. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-B` | `--block-size=SIZE` | Scale sizes by SIZE before printing them; e.g.,
+    `-BM` prints sizes in units of 1,048,576 bytes; see SIZE format below. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--human-readable` | Print sizes in powers of 1024 (e.g., 1023M).
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-H` | `--si` | Print sizes in powers of 1000 (e.g., 1.1G). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | `--inodes` | List inode information instead of block usage. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-k` | - | Like `--block-size=1K`. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | `--local` | Limit listing to local file systems. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--no-sync` | Do not invoke `sync` before getting usage info (default).
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--output[=FIELD_LIST]` | Use the output format defined by `FIELD_LIST`,
+    or print all fields if FIELD_LIST is omitted. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-P` | `--portability` | Use the `POSIX` output format |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--sync` | Invoke sync before getting usage info. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--total` | Elide all entries insignificant to available space, and produce
+    a grand total. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-t` | `--type=TYPE` | Limit listing to file systems of type `TYPE`. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-T` | `--print-type` | Print file system type. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-x` | `--exclude-type=TYPE` | Limit listing to file systems not of type
+    `TYPE`. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | - | Ignored; included for compatibility reasons. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--help` | Display help message and exit. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--version` | Output version information and exit. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Show available disk space **Action:** --- Output the available disk space and
+    where the directory is mounted
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values are not human-readable (are in bytes)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show available disk space in human-readable form **Action:** --- Output the
+    available disk space and where the directory is mounted
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values ARE human-readable (are in GBs/MBs)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show available disk space for the specific file system **Action:** --- Output
+    the available disk space and where the directory is mounted
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values are only for the selected file system'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show available inodes **Action:** --- Output the available inodes for all file
+    systems
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values are for inodes and not available space'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show file system type **Action:** --- Output the file system types
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values are for all file systems'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Exclude file system type from the output **Action:** --- Output the information
+    while excluding the chosen file system type
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Details:** --- Outputted values are for all file systems EXCEPT the chosen
+    file system type'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,266 @@
+- en: The `ssh` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `ssh` command in Linux stands for "Secure Shell". It is a protocol used
+    to securely connect to a remote server/system. ssh is more secure in the sense
+    that it transfers the data in encrypted form between the host and the client.
+    ssh runs at TCP/IP port 22.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Use a Different Port Number for SSH Connection:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: -i ssh to remote server using a private key?
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: -l ssh specifying a different username
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-1` | Forces ssh to use protocol SSH-1 only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-2` | Forces ssh to use protocol SSH-2 only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-4` | Allows IPv4 addresses only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-A` | Authentication agent connection forwarding is enabled.. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | Authentication agent connection forwarding is disabled. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-B bind_interface` | Bind to the address of bind_interface before attempting
+    to connect to the destination host. This is only useful on systems with more than
+    one address. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-b bind_address` | Use bind_address on the local machine as the source address
+    of the connection. Only useful on systems with more than one address. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-C` | Compresses all data (including stdin, stdout, stderr, and data for
+    forwarded X11 and TCP connections) for a faster transfer of data. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c cipher_spec` | Selects the cipher specification for encrypting the session.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-D [bind_address:]port` | Dynamic application-level port forwarding. This
+    allocates a socket to listen to port on the local side. When a connection is made
+    to this port, the connection is forwarded over the secure channel, and the application
+    protocol is then used to determine where to connect to from the remote machine.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-E log_file` | Append debug logs instead of standard error. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e escape_char` | Sets the escape character for sessions with a pty (default:
+    ‘~’). The escape character is only recognized at the beginning of a line. The
+    escape character followed by a dot (‘.’) closes the connection; followed by control-Z
+    suspends the connection; and followed by itself sends the escape character once.
+    Setting the character to “none” disables any escapes and makes the session fully
+    transparent. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-F configfile` | Specifies a per-user configuration file. The default for
+    the per-user configuration file is ~/.ssh/config. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | Requests ssh to go to background just before command execution. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-G` | Causes ssh to print its configuration after evaluating Host and Match
+    blocks and exit. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-g` | Allows remote hosts to connect to local forwarded ports. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-I pkcs11` | Specify the PKCS#11 shared library ssh should use to communicate
+    with a PKCS#11 token providing keys. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i identity_file` | A file from which the identity key (private key) for
+    public key authentication is read. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-J [user@]host[:port]` | Connect to the target host by first making a ssh
+    connection to the pjump host[(/iam/jump-host) and then establishing a TCP forwarding
+    to the ultimate destination from there. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-K` | Enables GSSAPI-based authentication and forwarding (delegation) of
+    GSSAPI credentials to the server. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-k` | Disables forwarding (delegation) of GSSAPI credentials to the server.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-L [bind_address:]port:host:hostport`, `-L [bind_address:]port:remote_socket`,
+    `-L local_socket:host:hostport`, `-L local_socket:remote_socket` | Specifies that
+    connections to the given TCP port or Unix socket on the local (client) host are
+    to be forwarded to the given host and port, or Unix socket, on the remote side.
+    This works by allocating a socket to listen to either a TCP port on the local
+    side, optionally bound to the specified bind_address, or to a Unix socket. Whenever
+    a connection is made to the local port or socket, the connection is forwarded
+    over the secure channel, and a connection is made to either host port hostport,
+    or the Unix socket remote_socket, from the remote machine. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l login_name` | Specifies the user to log in as on the remote machine.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-M` | Places the ssh client into “master” mode for connection sharing. Multiple
+    -M options places ssh into “master” mode but with confirmation required using
+    ssh-askpass before each operation that changes the multiplexing state (e.g. opening
+    a new session). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-m mac_spec` | A comma-separated list of MAC (message authentication code)
+    algorithms, specified in order of preference. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-N` | Do not execute a remote command. This is useful for just forwarding
+    ports. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | Prevents reading from stdin. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-O ctl_cmd` | Control an active connection multiplexing master process.
+    When the -O option is specified, the ctl_cmd argument is interpreted and passed
+    to the master process. Valid commands are: “check” (check that the master process
+    is running), “forward” (request forwardings without command execution), “cancel”
+    (cancel forwardings), “exit” (request the master to exit), and “stop” (request
+    the master to stop accepting further multiplexing requests). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-o` | Can be used to give options in the format used in the configuration
+    file. This is useful for specifying options for which there is no separate command-line
+    flag. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p`, `--port PORT` | Port to connect to on the remote host. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-Q query_option` | Queries ssh for the algorithms supported for the specified
+    version 2\. The available features are: cipher (supported symmetric ciphers),
+    cipher-auth (supported symmetric ciphers that support authenticated encryption),
+    help (supported query terms for use with the -Q flag), mac (supported message
+    integrity codes), kex (key exchange algorithms), kex-gss (GSSAPI key exchange
+    algorithms), key (keytypes), key-cert (certificate key types), key-plain (non-certificate
+    key types), key-sig (all keytypes and signature algorithms), protocol-version
+    (supported SSH protocol versions), and sig (supported signature algorithms). Alternatively,
+    any keyword from ssh_config(5) or sshd_config(5) thattakes an algorithm list may
+    be used as an alias for the corresponding query_option. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-q` | Qiet mode. Causes most warning and diagnostic messages to be suppressed.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-R [bind_address:]port:host:hostport, -R [bind_address:]port:local_socket,
+    -R remote_socket:host:hostport, -R remote_socket:local_socket, -R [bind_address:]port`
+    | Specifies that connections to the given TCP port or Unix socket on the remote
+    (server) host are to be forwarded to the local side. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-S ctl_path` | Specifies the location of a control socket for connection
+    sharing, or the string “none” to disable connection sharing. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | May be used to request invocation of a subsystem on the remote system.
+    Subsystems facilitate the use of SSH as a secure transport for other applications
+    (e.g. sftp(1)). The subsystem is specified as the remote command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-T` | Disable pseudo-terminal allocation. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-t` | Force pseudo-terminal allocation. This can be used to execute arbitrary
+    screen-based programs on a remote machine, which can be very useful, e.g. when
+    implementing menu services. Multiple -t options force tty allocation, even if
+    ssh has no local tty. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-V` | Display the version number. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | Verbose mode. It echoes everything it is doing while establishing
+    a connection. It is very useful in the debugging of connection failures. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-W host:port` | Requests that standard input and output on the client be
+    forwarded to host on port over the secure channel. Implies -N, -T, ExitOnForwardFailure
+    and ClearAllForwardings, though these can be overridden in the configuration file
+    or using -o command line options. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-w local_tun[remote_tun]` | Requests tunnel device forwarding with the specified
+    tun devices between the client (local_tun) and the server (remote_tun). The devices
+    may be specified by numerical ID or the keyword “any”, which uses the next available
+    tunnel device. If remote_tun is not specified, it defaults to “any”. If the Tunnel
+    directive is unset, it will be set to the default tunnel mode, which is “point-to-point”.
+    If a different Tunnel forwarding mode it desired, then it should be specified
+    before -w. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-X` | Enables X11 forwarding (GUI Forwarding). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-x` | Disables X11 forwarding (GUI Forwarding). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-Y` | Enables trusted X11 Forwarding. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-y` | Send log information using the syslog system module. By default this
+    information is sent to stderr. |'
+  prefs: []
+  type: TYPE_TB

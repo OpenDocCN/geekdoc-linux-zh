@@ -1,0 +1,131 @@
+- en: The `touch` Command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `touch` command modifies a file's timestamps. If the file specified doesn't
+    exist, an empty file with that name is created.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | - | Change only the access time. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c` | `--no-create` | Do not create any files. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` STRING | `--date=STRING` | Parse *STRING* and use it instead of the
+    current time. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | - | (Ignored) This option does nothing but is accepted to provide
+    compatibility with BSD versions of the `touch` command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--no-dereference` | Affect each symbolic link instead of any referenced
+    file (useful only on systems that can change the timestamps of a symlink). This
+    option implies `-c`, nothing is created if the file does not exist. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-m` | - | Change only the modification time. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r=FILE` | `--reference=FILE` | Use this file''s times instead of the current
+    time. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-t STAMP` | - | Use the numeric time *STAMP* instead of the current time.
+    The format of *STAMP* is [[**CC**]**YY**]**MMDDhhmm**[**.ss**]. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--time=WORD` | An alternate way to specify which type of time is set
+    (e.g. *access*, *modification*, or *change*). This is equivalent to specifying
+    `-a` or `-m`. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'WORD is `access`, `atime`, or `use`: equivalent to `-a`.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'WORD is `modify` or `mtime`: equivalent to `-m`.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: An alternate way to specify what type of time to set (as with **-a** and **-m**).|
+    |
+  prefs: []
+  type: TYPE_NORMAL
+- en: -|`--help`|Display a help message, and exit.| |-|`--version`|Display version
+    information, and exit.|
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If **file.txt** exists, set all of its timestamps to the current system time.
+    If **file.txt** doesn't exist, create an empty file with that name.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: If **file.txt** exists, set its times to the current system time. If it does
+    not exist, do nothing.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Change the *access* time of **file.txt**. The *modification* time is not changed.
+    The *change* time is set to the current system time. If **file.txt** does not
+    exist, it is created.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Change the times of file **symboliclink**. If it's a symbolic link, change the
+    times of the symlink, ***NOT*** the times of the referenced file.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Change the *access* and *modification* times of **file-b.txt** to match the
+    times of **file-a.txt**. The *change* time will be set to the current system time.
+    If **file-b.txt** does not exist, it is not created. Note, **file-a.txt** must
+    already exist in this context.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Set the *access* time and *modification* time of **file.txt** to ***February
+    1st*** of the current year. The *change* time is set to the current system time.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE

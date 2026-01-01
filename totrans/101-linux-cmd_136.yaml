@@ -1,0 +1,98 @@
+- en: The `wall` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `wall` command (short for *write all*) is used to send a message to all
+    logged-in users on a Linux system. It is commonly used by system administrators
+    to broadcast important information, such as planned maintenance or urgent announcements.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: If a [message] is not provided on the command line, wall will read from standard
+    input until it receives an end-of-file character (Ctrl+D).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Option | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -n | Suppress the banner (which shows who sent the message) and only show
+    the message text. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -t [seconds] | Set a timeout, in seconds. `wall` will try to write to a user''s
+    terminal for this duration before giving up. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Examples:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Broadcast a message to all users
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This command sends a message directly to all logged-in users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output (on other users'' terminals):'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Broadcast a message from a text file
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You can redirect the contents of a file to be used as the message.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Contents of message.txt:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Command:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Send a multi-line message from standard input
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: If you run wall without a message, you can type a multi-line message directly
+    in the terminal. Press Ctrl+D when you are finished to send it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output (on other users'' terminals):'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE

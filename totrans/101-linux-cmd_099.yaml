@@ -1,0 +1,128 @@
+- en: The `sed` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`sed` command stands for stream editor. A stream editor is used to perform
+    basic text transformations on an input stream (a file or input from a pipeline).
+    For instance, it can perform lot’s of functions on files like searching, find
+    and replace, insertion or deletion. While in some ways it is similar to an editor
+    which permits scripted edits (such as `ed`), `sed` works by making only one pass
+    over the input(s), and is consequently more efficient. But it is sed''s ability
+    to filter text in a pipeline that particularly distinguishes it from other types
+    of editors.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The most common use of `sed` command is for a substitution or for find and replace.
+    By using sed you can edit files even without opening it, which is a much quicker
+    way to find and replace something in the file. It supports basic and extended
+    regular expressions that allow you to match complex patterns. Most Linux distributions
+    come with GNU and `sed` is pre-installed by default.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To Find and Replace String with `sed`
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: For Recursive Find and Replace *(along with `find`)*
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Sometimes you may want to recursively search directories for files containing
+    a string and replace the string in all files. This can be done using commands
+    such as find to recursively find files in the directory and piping the file names
+    to `sed`. The following command will recursively search for files in the current
+    working directory and pass the file names to `sed`. It will recursively search
+    for files in the current working directory and pass the file names to `sed`.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`OPTION` - sed options in-place, silent, follow-symlinks, line-length, null-data
+    ...etc.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`{script-only-if-no-other-script}` - Add the script to command if available.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`INPUT-FILE` - Input Stream, A file or input from a pipeline.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: If no option is given, then the first non-option argument is taken as the sed
+    script to interpret. All remaining arguments are names of input files; if no input
+    files are specified, then the standard input is read.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'GNU sed home page: [http://www.gnu.org/software/sed/](http://www.gnu.org/software/sed/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i[SUFFIX]` | --in-place[=SUFFIX] | Edit files in place (makes backup if
+    SUFFIX supplied). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | --quiet, --silent | Suppress automatic printing of pattern space.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e script` | --expression=script | Add the script to the commands to be
+    executed. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f script-file` | --file=script-file | Add the contents of script-file to
+    the commands to be executed. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l N` | --line-length=N | Specify the desired line-wrap length for the `l`
+    command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r` | --regexp-extended | Use extended regular expressions in the script.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | --separate | Consider files as separate rather than as a single continuous
+    long stream. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | --unbuffered | Load minimal amounts of data from the input files and
+    flush the output buffers more often. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-z` | --null-data | Separate lines by NULL characters. |'
+  prefs: []
+  type: TYPE_TB
+- en: Before you begin
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: It may seem complicated and complex at first, but searching and replacing text
+    in files with sed is very simple.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To find out more: [https://www.gnu.org/software/sed/manual/sed.html](https://www.gnu.org/software/sed/manual/sed.html)'
+  prefs: []
+  type: TYPE_NORMAL

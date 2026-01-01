@@ -1,0 +1,156 @@
+- en: The `split` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `split` command in Linux is used to split a file into smaller files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Examples
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Split a file into a smaller file using file name
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Split a file named filename into segments of 200 lines beginning with prefix
+    file
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will create files of the name fileaa, fileab, fileac, filead, etc. of 200
+    lines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Split a file named filename into segments of 40 bytes with prefix file
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will create files of the name fileaa, fileab, fileac, filead, etc. of 40
+    bytes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Split a file using --verbose to see the files being created.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Additional Flags and their Functionalities
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | `--suffix-length=N` | Generate suffixes of length N (default 2) |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--additional-suffix=SUFFIX` | Append an additional SUFFIX to file names
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-b` | `--bytes=SIZE` | Put SIZE bytes per output file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-C` | `--line-bytes=SIZE` | Put at most SIZE bytes of records per output
+    file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` |  | Use numeric suffixes starting at 0, not alphabetic |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--numeric-suffixes[=FROM]` | Same as -d, but allow setting the start
+    value |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-x` |  | Use hex suffixes starting at 0, not alphabetic |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--hex-suffixes[=FROM]` | Same as -x, but allow setting the start value
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e` | `--elide-empty-files` | Do not generate empty output files with ''-n''
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--filter=COMMAND` | Write to shell COMMAND; file name is $FILE |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | `--lines=NUMBER` | Put NUMBER lines/records per output file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-n` | `--number=CHUNKS` | Generate CHUNKS output files; see explanation
+    below |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-t` | `--separator=SEP` | Use SEP instead of newline as the record separator;
+    ''\0'' (zero) specifies the NUL character |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u` | `--unbuffered` | Immediately copy input to output with ''-n r/...''
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--verbose` | Print a diagnostic just before each output file is opened
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--help` | Display this help and exit |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  | `--version` | Output version information and exit |'
+  prefs: []
+  type: TYPE_TB
+- en: 'The SIZE argument is an integer and optional unit (example: 10K is 10*1024).
+    Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'CHUNKS may be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **CHUNKS** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `N` | Split into N files based on size of input |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `K/N` | Output Kth of N to stdout |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `l/N` | Split into N files without splitting lines/records |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `l/K/N` | Output Kth of N to stdout without splitting lines/records |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `r/N` | Like ''l'' but use round robin distribution |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `r/K/N` | Likewise but only output Kth of N to stdout |'
+  prefs: []
+  type: TYPE_TB

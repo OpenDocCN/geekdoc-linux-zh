@@ -1,0 +1,334 @@
+- en: The ifplugstatus Command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `ifplugstatus` command is a diagnostic utility used to check the **physical
+    link status** of network interfaces on Linux systems. It reports whether an interface
+    (such as eth0, enp0s3, or wlan0) has a network cable connected or not. This tool
+    is particularly useful for troubleshooting wired network connectivity and detecting
+    unplugged cables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Parameters
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: interface — the network interface to check (e.g., eth0, enp0s3, wlan0).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: options — optional flags for customizing output.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Installation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`ifplugstatus` is part of the `ifplugd` package. It can be installed using
+    the following commands depending on your distribution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To verify installation:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Basic Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Check the status of a single interface
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Sample Output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: or
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Explanation:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: link beat detected → cable is plugged in and active.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'link beat not detected → cable is unplugged or inactive. *Note: ''link beat''
+    is a legacy term from older Ethernet (10/100 Mbps). Modern Gigabit or higher interfaces
+    may use different link detection signals, but the command generally reports an
+    active physical link.*'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 2\. Check multiple interfaces
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Sample Output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: This allows quick verification of all available interfaces.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Some popular option flags include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Option | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | Show all interfaces (default behavior). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | Specify a particular interface. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | Display a short summary only. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | Verbose output with more details. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-q` | Quiet mode — minimal output. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | Display help information. |'
+  prefs: []
+  type: TYPE_TB
+- en: Practical Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Check if the main Ethernet interface is connected
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Displays the current cable connection status for eth0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Check all available network interfaces
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Lists link status for every detected interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Use verbose mode for detailed results
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Provides more descriptive information about the link state.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Quiet mode for scripting or automation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Outputs only the essential information, suitable for shell scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Understanding the Output
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'A typical output may look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Interface Name: eth0, enp0s3, etc.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Link Status: Indicates whether a physical link (cable or signal) is present.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When integrated into scripts, this helps automate detection of disconnected
+    interfaces or faulty cabling.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Common Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Cable Connectivity Testing
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Quickly verify if a cable is physically connected to the network port.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Multi-Interface Monitoring
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check multiple interfaces simultaneously for link activity.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Continuous Monitoring
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Updates the interface status every 5 seconds for real-time link monitoring.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Troubleshooting Common Issues
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Interface Not Found
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'If an incorrect interface name is given:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Fix:** Use the ip a or ifconfig command to list valid interfaces.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Permission Denied
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Some systems may require elevated privileges:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Command Not Found
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'If the command is missing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Fix:** Install the ifplugd package using your package manager.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Tip:** Always ensure the ifplugd package is installed and your user has permission
+    to access network interfaces.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Related Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Command | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ip a` (preferred) / `ifconfig` | Display all network interfaces and details.
+    `ip a` is the modern tool; `ifconfig` is legacy. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ethtool eth0` | Retrieve advanced information about the network interface.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device status` | Check connection status via NetworkManager. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ping` | Test network reachability after confirming cable connection. |'
+  prefs: []
+  type: TYPE_TB
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Works best with wired Ethernet interfaces.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Wireless interfaces may not always report link status accurately.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The tool is read-only — it does not modify system settings.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Lightweight and safe for use in both desktop and server environments.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Manual Reference
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For additional information and advanced usage:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE

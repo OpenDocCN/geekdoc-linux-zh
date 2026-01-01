@@ -1,0 +1,296 @@
+- en: The `nmcli` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `nmcli` command is used for managing network connections by controlling
+    the NetworkManager, a daemon that handles networking, through command line. The
+    command stands for Network Manager Command Line Interface.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Installation:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The `nmcli` command is already installed by default on most Linux distros.
+    To check if it is installed on your system type:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you don''t have nmcli installed you can do it by using the package manager:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Ubuntu or Debian:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will install NetworkManageron in your system. Now we have to start the
+    network managing service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Red Hat-based System(such as Fedora, CentOS, REHL):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will install NetworkManager in your system. Now we have to start the network
+    managing service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Arch Linux:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: This will install NetworkManager in your system. Now we have to start the network
+    managing service.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: List all available Wifi networks
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: View Network Status
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Connect to a Wifi Network
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Disconnect from a Wifi Network
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Turn Wifi On/Off
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: ', respectively.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Turn Bluetooth On/Off
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: ', respectively.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To show all connections
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: To show detailed info about specific connections
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'The general syntax for the nmcli command is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Options
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | `--ask` | nmcli will stop and ask for any missing required argument(do
+    not use for non interactive options) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-c` | `--color`{yes/no} | It controls color output. yes enables colors,
+    while no disables colors |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-h` | `--help` | Prints help information |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | `--pretty` | This causes nmcli to produce more user friendly output,
+    eg with headers, and values are aligned |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | `--version` | Shows the nmcli version |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | `--fields`{field1,...} | This option is used to specify what fields
+    should be printed. Valid fields names differ for specific commands. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-g` | `--get-value`{field1,.} | This option is used to print values from
+    specific field. It is a shortcut for --mode tabular --terse --fields |'
+  prefs: []
+  type: TYPE_TB
+- en: General Commands
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli general status` | Show overall NetworkManager status |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli general hostname` | Display current hostname |'
+  prefs: []
+  type: TYPE_TB
+- en: Networking Commands
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli networking on` | Enable all networking |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli networking off` | Disable all networking |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli networking connectivity` | Check network connectivity status |'
+  prefs: []
+  type: TYPE_TB
+- en: Radio Commands
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli radio wifi on` | Enable Wi-Fi radio |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli radio wifi off` | Disable Wi-Fi radio |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli radio all` | Show status of all radio switches |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli radio wifi` | Show Wi-Fi radio status |'
+  prefs: []
+  type: TYPE_TB
+- en: Connection Management Commands
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection show` | List all saved connection profiles |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection show --active` | List only active connections |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection show "NAME"` | Show detailed info about specific connection
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection up "NAME"` | Activate a connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection down "NAME"` | Deactivate a connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection modify "NAME" [OPTIONS]` | Modify connection settings |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection delete "NAME"` | Delete a connection profile |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli connection reload` | Reload all connection files from disk |'
+  prefs: []
+  type: TYPE_TB
+- en: Device Management Commands
+  prefs:
+  - PREF_H4
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device status` | Show status of all devices |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device show "DEVICE"` | Show detailed info for specific device |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device disconnect "DEVICE"` | Disconnect from a device |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device wifi list` | List all available Wi-Fi networks |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `nmcli device wifi connect "SSID" password "PWD"` | Connect to password-protected
+    Wi-Fi |'
+  prefs: []
+  type: TYPE_TB

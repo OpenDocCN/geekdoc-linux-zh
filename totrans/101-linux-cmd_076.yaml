@@ -1,0 +1,141 @@
+- en: The `scp` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: SCP (secure copy) is a command-line utility that allows you to securely copy
+    files and directories between two locations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Both the files and passwords are encrypted so that anyone snooping on the traffic
+    doesn't get anything sensitive.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Different ways to copy a file or directory:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: From local system to a remote system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: From a remote system to a local system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Between two remote systems from the local system.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To copy the files from a local system to a remote system:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To copy the files from a remote system to the local system:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: To copy the files between two remote systems from the local system.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: To copy file through a jump host server.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: On newer version of scp on some machines you can use the above command with
+    a `-J` flag.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`OPTION` - scp options such as cipher, ssh configuration, ssh port, limit,
+    recursive copy …etc.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[user@]SRC_HOST:]file1` - Source file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`[user@]DEST_HOST:]file2` - Destination file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Local files should be specified using an absolute or relative path, while remote
+    file names should include a user and host specification.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'scp provides several that control every aspect of its behaviour. The most widely
+    used options are:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-P` | - | Specifies the remote host ssh port. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | - | Preserves files modification and access times. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-q` | - | Use this option if you want to suppress the progress meter and
+    non-error messages. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-C` | - | This option forces scp to compresses the data as it is sent to
+    the destination machine. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r` | - | This option tells scp to copy directories recursively. |'
+  prefs: []
+  type: TYPE_TB
+- en: Before you begin
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The `scp` command relies on `ssh` for data transfer, so it requires an `ssh
+    key` or `password` to authenticate on the remote systems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `colon (:)` is how scp distinguish between local and remote locations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To be able to copy files, you must have at least read permissions on the source
+    file and write permission on the target system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Be careful when copying files that share the same name and location on both
+    systems, `scp` will overwrite files without warning.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When transferring large files, it is recommended to run the scp command inside
+    a `screen` or `tmux` session.
+  prefs: []
+  type: TYPE_NORMAL

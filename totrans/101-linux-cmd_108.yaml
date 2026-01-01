@@ -1,0 +1,85 @@
+- en: The `screen` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`screen` - With screen you can start a screen session and then open any number
+    of windows (virtual terminals) inside that session. Processes running in Screen
+    will continue to run when their window is not visible even if you get disconnected.
+    This is very handy for running long during session such as bash scripts that run
+    very long.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To start a screen session you type `screen`, this will open a new screen session
+    with a virtual terminal open.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Below are some most common commands for managing Linux Screen Windows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| **Command** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `c` | Create a new window (with shell). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `"` | List all windows. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `0` | Switch to window 0 (by number). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `A` | Rename the current window. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `S` | Split current region horizontally into two regions. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `''` | Split current region vertically into two regions. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `tab` | Switch the input focus to the next region. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `Ctrl+a` | Toggle between the current and previous windows |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `Q` | Close all regions but the current one. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctrl+a`+ `X` | Close the current region. |'
+  prefs: []
+  type: TYPE_TB
+- en: Restore a Linux Screen
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To restore to a screen session you type `screen -r`, if you have more than one
+    open screen session you have to add the session id to the command to connect to
+    the right session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Listing all open screen sessions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To find the session ID you can list the current running screen sessions with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`screen -ls`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are screens on:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you want to restore screen 18787.pts-0, then type the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`screen -r 18787`'
+  prefs: []
+  type: TYPE_NORMAL

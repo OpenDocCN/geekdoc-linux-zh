@@ -1,0 +1,183 @@
+- en: The `finger` Command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `finger` command displays information about local system users by querying
+    files such as `/etc/passwd`, `/var/run/utmp`, and `/var/log/wtmp`. It is a local
+    command and does not rely on any service or daemon to run. This command helps
+    to quickly retrieve user-related details such as login times, idle status, and
+    other system information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: View details about a particular user.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Output*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: View login details and idle status about a user.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '*Output*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Additional Flags and Their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-l` | Force long output format. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-m` | Match arguments only on username (not first or last name). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p` | Suppress printing of the .plan file in a long format printout. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-s` | Force short output format. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Additional Information:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Default Format**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The default format includes items like login name, full username, terminal name,
+    and write status. The command provides details like idle time, login time, and
+    site-specific information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Longer Format**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a long format, the command adds details such as the user’s home directory,
+    login shell, and the contents of `.plan` and `.project` files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Privacy Considerations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'While the `finger` command is useful for retrieving information about system
+    users, it may also expose sensitive details in shared or multi-user environments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Usernames and Login Times**: Displays login times, which can be used to track
+    user activity.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Home Directories**: Exposes paths to users’ home directories.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Idle Status**: Shows how long a user has been inactive, potentially signaling
+    whether they are actively using their system.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Mail Status**: Displays mail information, which may inadvertently reveal
+    user engagement.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'Potential Risks:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'In environments with untrusted users, the information exposed by `finger` could
+    be exploited for:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Social Engineering Attacks**: Malicious actors could use this information
+    to craft personalized phishing attacks.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Timing Attacks**: Knowing when a user is idle or active could give attackers
+    an advantage in timing their attempts.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Targeted Attacks**: Knowledge of user home directories can focus attacks
+    on those locations.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Mitigating Privacy Risks:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: To mitigate these risks, consider limiting access to the `finger` command in
+    environments where user privacy is important.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '* * *'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `in.fingerd` Service
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It’s important to distinguish between the `finger` command and the **`in.fingerd`
+    service**. The `finger` command is local, while `in.fingerd` is a network daemon
+    that allows remote queries of user information. This service is typically disabled
+    by default in modern systems due to potential security risks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If enabled, the `in.fingerd` service can expose user information over the network,
+    which could be exploited by attackers. To mitigate this risk, system administrators
+    should ensure the service is disabled if it is not needed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Disabling the `in.fingerd` Service:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'If you are concerned about remote queries, you can disable the `in.fingerd`
+    service:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: By disabling the `in.fingerd` service, you prevent remote querying of user information,
+    enhancing system security.
+  prefs: []
+  type: TYPE_NORMAL

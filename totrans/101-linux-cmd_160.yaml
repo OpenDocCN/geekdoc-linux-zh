@@ -1,0 +1,414 @@
+- en: The `cfdisk` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `cfdisk` command is a curses-based disk partitioning tool for Linux. It
+    provides a user-friendly, text-based interface for creating, deleting, and managing
+    disk partitions. Unlike `fdisk`, `cfdisk` offers a more intuitive menu-driven
+    approach.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Key Features
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Interactive Interface**: Menu-driven partition management'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Real-time Display**: Shows current partition table'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Safe Operations**: Requires explicit write command to save changes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Multiple File Systems**: Supports various partition types'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Resize Support**: Can resize existing partitions'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Basic Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Starting cfdisk
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Navigation
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Up/Down Arrows**: Navigate between partitions'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Left/Right Arrows**: Navigate between menu options'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Enter**: Select menu option'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Tab**: Move between interface elements'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Menu Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Main Operations
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**New**: Create a new partition'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Delete**: Delete selected partition'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Resize**: Resize selected partition'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Type**: Change partition type'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Write**: Write changes to disk'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Quit**: Exit without saving (if no changes written)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Additional Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Bootable**: Toggle bootable flag'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Verify**: Check partition table consistency'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Print**: Display partition information'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Common Tasks
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Creating a New Partition
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Deleting a Partition
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Changing Partition Type
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Partition Types
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Linux Partition Types
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**83**: Linux filesystem'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**82**: Linux swap'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**8e**: Linux LVM'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**fd**: Linux RAID autodetect'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Other Common Types
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**07**: NTFS/HPFS'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**0c**: FAT32 LBA'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**ef**: EFI System Partition'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**01**: FAT12'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Command Line Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Practical Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Partitioning a New USB Drive
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Adding Swap Partition
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Preparing Disk for LVM
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Safety Features
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Change Tracking
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Confirmation Required
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Verification
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with Different Partition Tables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. GPT (GUID Partition Table)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. MBR/DOS Partition Table
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Integration with Other Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. After Partitioning
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Backup Before Changes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: Troubleshooting
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Permission Issues
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Device Busy
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Partition Table Corruption
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Best Practices
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Always Backup
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Verify Device
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Plan Partition Layout
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 4\. Consider Alignment
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Comparison with Other Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: vs fdisk
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**cfdisk**: Menu-driven, user-friendly'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**fdisk**: Command-driven, more scriptable'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: vs parted
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**cfdisk**: Simpler interface, basic operations'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**parted**: More advanced features, command-line scriptable'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: vs gparted
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**cfdisk**: Text-based, lightweight'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**gparted**: Graphical interface, requires X11'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Always unmount partitions before modifying them
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Changes are not written until you explicitly choose "Write"
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Backup important data before making partition changes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Some operations may require a system reboot to take effect
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Be extremely careful when working with system disks
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Consider using LVM for more flexible partition management
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The `cfdisk` command provides an excellent balance between ease of use and functionality
+    for disk partitioning tasks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `man cfdisk`'
+  prefs: []
+  type: TYPE_NORMAL

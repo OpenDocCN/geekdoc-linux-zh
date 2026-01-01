@@ -1,0 +1,119 @@
+- en: The `parted` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `parted` command is used to manage hard disk partitions on Linux. It can
+    be used to add, delete, shrink and extend disk partitions along with the file
+    systems located on them. You will need root access to the system to run `parted`
+    commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**NOTE:** Parted writes the changes immediately to your disk, be careful when
+    you are modifying the disk partitions.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Displays partition layout of all block devices:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Display partition table of a specific `disk`
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Examples of `disk` are /dev/sda, /dev/sdb
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a new disk label of `label-type` for a specific disk
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`label-type` can take values "aix", "amiga", "bsd", "dvh", "gpt", "loop", "mac",
+    "msdos", "pc98", or "sun"'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a new partition in a specific `disk` of type `part-time`, file system
+    is `fs-type` and of size `size` Mb.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`part-time` can take values "primary", "logical", "extended".'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`fs-type` is optional. It can take values "btrfs", "ext2", "ext3", "ext4",
+    "fat16", "fat32", "hfs", "hfs+", "linux-swap", "ntfs", "reiserfs", "udf", or "xfs"'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`size` has to less than the total size of the specified disk. To create a partition
+    of size 50Mb, <size>will take the value of 50</size>'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`parted` can also be run in an interactive format. Operations to manage the
+    disk partitions can be performed by entering appropriate commands in the interactive
+    session. `help` command in the interactive session shows a list of all possible
+    disk management operations which can be performed.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Syntax Forms:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Options:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Short Flag** | **Long Flag** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -h | --help | displays a help message listing all possible `commands [options]`
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -l | --list | lists partition layout on all block devices |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -m | --machine | displays machine parseable output |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -v | --version | displays the version |'
+  prefs: []
+  type: TYPE_TB
+- en: '| -a | --align | set alignment type for newly created partition. It can take
+    the following values: `none`: Use the minimum alignment allowed by the disk type'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`cylinder`: Align partitions to cylinders'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`minimal`: Use minimum alignment as given by the disk topology information'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`optimal`: Use optimum alignment as given by the disk topology information
+    |'
+  prefs: []
+  type: TYPE_NORMAL

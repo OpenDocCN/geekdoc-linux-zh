@@ -1,0 +1,103 @@
+- en: The `rm` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`rm` which stands for "remove" is a command used to remove *(delete)* specific
+    files. It can also be used to remove directories by using the appropriate flag.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Syntax
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Flags and their Functionalities:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| Short Flag | Long Flag | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-f` | `--force` | Ignore nonexistance of files or directories, never prompt
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-i` | - | Prompt before every removal |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-I` | - | Prompt once before removal of more than 3 files, or when removing
+    recursively |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` | `--dir` | remove empty directories |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-v` | `--verbose` | explain what is being done |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-r` or `-R` | `--recursive` | remove directories and their contents recursively
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--help` | Display help then exit |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--version` | First, Print version Information, Then exit |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--no-preserve-root` | do not treat `/` specially |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `-preserve-root[=all]` | do not remove `/` (default) with ''all'', reject
+    any command line argument on a separate device from its parent |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--interactive[=WHEN]` | prompt according to WHEN, never, once `-I`,
+    or always `-i`, without WHEN, prompt always |'
+  prefs: []
+  type: TYPE_TB
+- en: '| - | `--one-file-system` | when removing a hierarchy recursively, skip any
+    directory that is on a file system different from that of the corresponding command
+    line argument0 |'
+  prefs: []
+  type: TYPE_TB
+- en: '***IMPORTANT NOTICE:***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`rm` doesn''t remove directories by default, so use `-r`, `-R`, `--recursive`
+    options to remove each listed directory, along with all of its contents.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: 'To remove a file whose name starts with `-` such as `-foo`, use one of the
+    following commands:'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`rm -- -foo`'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`rm ./-foo`'
+  prefs:
+  - PREF_IND
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To ensure that files/directories being deleted are truly unrecoverable, consider
+    using the `shred` command.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL

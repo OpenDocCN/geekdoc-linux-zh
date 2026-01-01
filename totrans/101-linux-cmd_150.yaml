@@ -1,0 +1,366 @@
+- en: The `fsck` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `fsck` (file system check) command is used to check and repair Linux file
+    systems. It can detect and fix various file system inconsistencies, corruption
+    issues, and structural problems. It's an essential tool for maintaining file system
+    integrity and recovering from system crashes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Key Features
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Multiple File System Support**: Works with ext2, ext3, ext4, XFS, and more'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Automatic Detection**: Can auto-detect file system type'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Interactive Repair**: Prompts for confirmation before fixes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Batch Mode**: Can run automatically without user interaction'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Read-Only Mode**: Check without making changes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Basic Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Simple File System Check
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check All File Systems
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Basic Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Advanced Options
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: File System Specific Commands
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. ext2/ext3/ext4 (e2fsck)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. XFS (xfs_repair)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. FAT32 (fsck.fat)
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Practical Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Check Before Mounting
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. System Recovery After Crash
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Scheduled Maintenance
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: Working with Different Scenarios
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Read-Only Check
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Automatic Repair
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Interactive Repair
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Boot-Time File System Checks
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Automatic Checks
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Force Check on Next Boot
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Check Intervals
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Troubleshooting Common Issues
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Unmountable File System
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Bad Superblock
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Lost+Found Directory
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Advanced Repair Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Bad Block Handling
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Journal Recovery
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Inode Problems
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Monitoring and Logging
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Check Results
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. File System Status
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Automated Monitoring
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: Prevention and Best Practices
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Regular Maintenance
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Proper Shutdown
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. UPS Protection
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: Recovery Scenarios
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Boot Failure
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Data Recovery
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Multiple Errors
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: Performance Considerations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Speed Optimization
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE32]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. System Impact
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE33]'
+  prefs: []
+  type: TYPE_PRE
+- en: Important Safety Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Always unmount** file systems before checking'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Backup important data** before repairs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Never interrupt** fsck during operation'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Use read-only mode** first to assess damage'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Understand risks** of automatic repair modes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Boot from live media** for root filesystem checks'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Have recovery plan** ready before starting repairs'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Exit Codes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE34]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `fsck` command is crucial for maintaining file system integrity and recovering
+    from corruption issues.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `man fsck`'
+  prefs: []
+  type: TYPE_NORMAL

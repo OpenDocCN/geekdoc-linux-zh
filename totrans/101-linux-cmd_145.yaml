@@ -1,0 +1,342 @@
+- en: The `export` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `export` command is used to set environment variables that will be available
+    to child processes. It makes variables available to all processes started from
+    the current shell session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: How Environment Variables Work
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Local variables**: Only available in the current shell'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Environment variables**: Available to current shell and all child processes'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`export` converts local variables to environment variables'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Some popular option flags include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Export a simple variable
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Export multiple variables at once
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Export an existing local variable
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show all exported variables
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Export PATH modifications
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Export with command substitution
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Unexport a variable (remove from environment)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Export function
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Common Environment Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**PATH** - Executable search paths'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**HOME** - User''s home directory'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**EDITOR** - Default text editor'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**LANG** - System language and locale'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**PS1** - Primary prompt string'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**JAVA_HOME** - Java installation directory'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**NODE_ENV** - Node.js environment'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Development Environment Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Python development**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Node.js development**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Go development**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Database configuration**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: Shell Configuration Files
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Make exports permanent by adding them to configuration files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Bash** - `~/.bashrc` or `~/.bash_profile`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Zsh** - `~/.zshrc`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**System-wide** - `/etc/environment` or `/etc/profile`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: Checking Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Check if variable is exported
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: Check variable scope
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: Advanced Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Conditional exports**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Export with default values**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Export arrays (Bash 4+)**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Export with validation**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE29]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use Cases
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Development environments**: Setting up language-specific paths'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Application configuration**: Database URLs, API keys, feature flags'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**System administration**: Custom PATH modifications, proxy settings'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**CI/CD pipelines**: Build configuration, deployment targets'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Security**: Sensitive data that shouldn''t be in scripts'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Important Notes
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Exported variables are inherited by child processes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Changes to exported variables in child processes don't affect parent
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Use quotes for values with spaces or special characters
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Environment variables are typically uppercase by convention
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Be careful with sensitive data in environment variables
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Some variables (like PATH) should be appended to, not replaced
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Security Considerations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**Avoid sensitive data in exports**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE30]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Use temporary exports for sensitive operations**'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[PRE31]'
+  prefs: []
+  type: TYPE_PRE
+- en: The `export` command is fundamental for shell scripting and system administration,
+    enabling proper environment configuration for applications and processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more details, check the manual: `help export` or `man bash`'
+  prefs: []
+  type: TYPE_NORMAL

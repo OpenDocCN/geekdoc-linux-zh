@@ -1,0 +1,285 @@
+- en: The `ps` command
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `ps` command (process status) is used to display information about running
+    processes on a Linux system — such as their PID, memory usage, CPU time, and associated
+    users.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It’s often **piped** with commands like `grep` to search for a specific process
+    or `less` to scroll through large outputs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Why Use `ps`
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Imagine your system feels slow or an app becomes unresponsive — you can use
+    `ps` to:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Identify processes consuming high CPU/memory
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Find a program’s PID (Process ID)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Kill or debug a stuck process
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Check who’s running what on a shared system
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Basic Syntax
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Without any options, `ps` only shows processes in the current terminal session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Essential Usage
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**The one combo to remember:** `ps aux`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`a` = all processes (all users)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`u` = show user/owner info'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`x` = include processes without terminals'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Some More Practical Day to Day Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Finding and Killing a process
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: You want to stop a frozen **OpenShot** process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now, kill it:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Show Processes by User
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Filtering & Sorting Output
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Show top 10 memory-consuming processes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Show top 10 CPU-consuming processes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Checking Parent/Child Process Hierarchy
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: This gives a tree-like structure showing parent-child relationships — useful
+    when debugging service spawns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Custom Output Format
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'To Show only PID, user, memory, and command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Real-Life DevOps Examples
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 1\. Checking which process uses a specific port
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 2\. Monitoring Jenkins, Nginx, or Docker processes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 3\. Find Zombie Processes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: Key Options for Quick Reference
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Option | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `aux` | All processes with detailed info |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-ef` | Full listing (alternative to aux) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-eo format` | Custom output columns |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--sort` | Sort by column (-%mem, -%cpu) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-p PID` | Show specific PID |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-C name` | Show processes by command name |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-u user` | Show user''s processes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `f` | ASCII art process tree |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Additional Options:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| **Option** | **Description** |'
+  prefs: []
+  type: TYPE_TB
+- en: '| :-- | :-- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `a` | Shows list all processes with a terminal (tty) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-A` | Lists all processes. Identical to `-e` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-a` | Shows all processes except both session leaders and processes not
+    associated with a terminal |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-d` | Select all processes except session leaders |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--deselect` | Shows all processes except those that fulfill the specified
+    conditions. Identical to `-N` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-e` | Lists all processes. Identical to `-A` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `-N` | Shows all processes except those that fulfill the specified conditions.
+    Identical to `-deselect` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `T` | Select all processes associated with this terminal. Identical to the
+    `-t` option without any argument |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `r` | Restrict the selection to only running processes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--help simple` | Shows all the basic options |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `--help all` | Shows every available options |'
+  prefs: []
+  type: TYPE_TB
+- en: Related Tools
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you need **real-time** monitoring, use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'or the more user-friendly modern version:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
