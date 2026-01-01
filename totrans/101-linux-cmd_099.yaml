@@ -1,7 +1,9 @@
 - en: The `sed` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`sed` 命令'
 - en: '`sed` command stands for stream editor. A stream editor is used to perform
     basic text transformations on an input stream (a file or input from a pipeline).
     For instance, it can perform lot’s of functions on files like searching, find
@@ -10,119 +12,180 @@
     over the input(s), and is consequently more efficient. But it is sed''s ability
     to filter text in a pipeline that particularly distinguishes it from other types
     of editors.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sed` 命令代表流编辑器。流编辑器用于对输入流（文件或来自管道的输入）执行基本的文本转换。例如，它可以对文件执行许多功能，如搜索、查找和替换、插入或删除。虽然它在某些方面与允许脚本编辑的编辑器（如
+    `ed`）类似，但 `sed` 通过仅对输入（s）进行一次遍历来工作，因此效率更高。但它过滤文本在管道中的能力特别区别于其他类型的编辑器。'
 - en: The most common use of `sed` command is for a substitution or for find and replace.
     By using sed you can edit files even without opening it, which is a much quicker
     way to find and replace something in the file. It supports basic and extended
     regular expressions that allow you to match complex patterns. Most Linux distributions
     come with GNU and `sed` is pre-installed by default.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sed` 命令最常用的用途是用于替换或查找和替换。通过使用 `sed`，即使不打开文件也可以编辑文件，这是一种更快的方法来在文件中查找和替换内容。它支持基本和扩展的正则表达式，允许您匹配复杂的模式。大多数
+    Linux 发行版都预装了 GNU `sed`。'
 - en: 'Examples:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: To Find and Replace String with `sed`
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 `sed` 查找和替换字符串
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: For Recursive Find and Replace *(along with `find`)*
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对于递归查找和替换（与 `find` 一起使用）
 - en: Sometimes you may want to recursively search directories for files containing
     a string and replace the string in all files. This can be done using commands
     such as find to recursively find files in the directory and piping the file names
     to `sed`. The following command will recursively search for files in the current
     working directory and pass the file names to `sed`. It will recursively search
     for files in the current working directory and pass the file names to `sed`.
+  id: totrans-7
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 有时您可能想要递归地搜索目录以查找包含字符串的文件，并在所有文件中替换该字符串。这可以通过使用 `find` 命令递归地查找目录中的文件并将文件名传递给
+    `sed` 来完成。以下命令将递归地搜索当前工作目录中的文件并将文件名传递给 `sed`。它将递归地搜索当前工作目录中的文件并将文件名传递给 `sed`。
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Syntax:'
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '`OPTION` - sed options in-place, silent, follow-symlinks, line-length, null-data
     ...etc.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`OPTION` - 在原地、静默、跟随符号链接、行长度、null-data 等sed选项。'
 - en: '`{script-only-if-no-other-script}` - Add the script to command if available.'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`{script-only-if-no-other-script}` - 如果可用，将脚本添加到命令中。'
 - en: '`INPUT-FILE` - Input Stream, A file or input from a pipeline.'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`INPUT-FILE` - 输入流，文件或来自管道的输入。'
 - en: If no option is given, then the first non-option argument is taken as the sed
     script to interpret. All remaining arguments are names of input files; if no input
     files are specified, then the standard input is read.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有提供选项，则第一个非选项参数被视为要解释的 sed 脚本。所有剩余的参数都是输入文件名；如果没有指定输入文件，则读取标准输入。
 - en: 'GNU sed home page: [http://www.gnu.org/software/sed/](http://www.gnu.org/software/sed/)'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: GNU `sed` 主页：[http://www.gnu.org/software/sed/](http://www.gnu.org/software/sed/)
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-i[SUFFIX]` | --in-place[=SUFFIX] | Edit files in place (makes backup if
     SUFFIX supplied). |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-i[SUFFIX]` | --in-place[=SUFFIX] | 在原地编辑文件（如果提供后缀，则创建备份）。 |'
 - en: '| `-n` | --quiet, --silent | Suppress automatic printing of pattern space.
     |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | --quiet, --silent | 抑制自动打印模式空间。 |'
 - en: '| `-e script` | --expression=script | Add the script to the commands to be
     executed. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-e script` | --expression=script | 将脚本添加到要执行的命令中。 |'
 - en: '| `-f script-file` | --file=script-file | Add the contents of script-file to
     the commands to be executed. |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-f script-file` | --file=script-file | 将脚本文件的内容添加到要执行的命令中。 |'
 - en: '| `-l N` | --line-length=N | Specify the desired line-wrap length for the `l`
     command. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-l N` | --line-length=N | 为 `l` 命令指定所需的行换行长度。 |'
 - en: '| `-r` | --regexp-extended | Use extended regular expressions in the script.
     |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | --regexp-extended | 在脚本中使用扩展正则表达式。 |'
 - en: '| `-s` | --separate | Consider files as separate rather than as a single continuous
     long stream. |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | --separate | 将文件视为单独的，而不是单个连续的长流。 |'
 - en: '| `-u` | --unbuffered | Load minimal amounts of data from the input files and
     flush the output buffers more often. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | --unbuffered | 从输入文件中加载最小量的数据，并更频繁地刷新输出缓冲区。 |'
 - en: '| `-z` | --null-data | Separate lines by NULL characters. |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-z` | --null-data | 使用 NULL 字符分隔行。 |'
 - en: Before you begin
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 在开始之前
 - en: It may seem complicated and complex at first, but searching and replacing text
     in files with sed is very simple.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 最初可能看起来复杂且难以理解，但使用 sed 在文件中搜索和替换文本其实非常简单。
 - en: 'To find out more: [https://www.gnu.org/software/sed/manual/sed.html](https://www.gnu.org/software/sed/manual/sed.html)'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 想要了解更多信息：[https://www.gnu.org/software/sed/manual/sed.html](https://www.gnu.org/software/sed/manual/sed.html)

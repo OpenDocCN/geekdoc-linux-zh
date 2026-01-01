@@ -1,10 +1,14 @@
 - en: The `RPM` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`RPM` 命令'
 - en: '`rpm` - RPM Package Manager'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rpm` - RPM 软件包管理器'
 - en: '`rpm` is a powerful **Package Manager**, which can be used to build, install,
     query, verify, update, and erase individual software packages. A **package** consists
     of an archive of files and meta-data used to install and erase the archive files.
@@ -12,112 +16,175 @@
     about the package. Packages come in two varieties: binary packages, used to encapsulate
     software to be installed, and source packages, containing the source code and
     recipe necessary to produce binary packages.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rpm` 是一个强大的 **软件包管理器**，可用于构建、安装、查询、验证、更新和擦除单个软件包。**软件包**由用于安装和擦除存档文件的文件存档和元数据组成。元数据包括辅助脚本、文件属性和有关软件包的描述性信息。软件包有两种类型：二进制软件包，用于封装要安装的软件，和源软件包，包含生成二进制软件包所需的源代码和配方。'
 - en: 'One of the following basic modes must be selected: **Query, Verify, Signature
     Check, Install/Upgrade/Freshen, Uninstall, Initialize Database, Rebuild Database,
     Resign, Add Signature, Set Owners/Groups, Show Querytags, and Show Configuration.**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 必须选择以下基本模式之一：**查询、验证、签名检查、安装/升级/刷新、卸载、初始化数据库、重建数据库、重新签名、添加签名、设置所有者/组、显示查询标签和显示配置。**
 - en: '**General Options**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**通用选项**'
 - en: These options can be used in all the different modes.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些选项可以在所有不同的模式下使用。
 - en: '| Short Flag | Long Flag | Description |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 短标志 | 长标志 | 描述 |'
 - en: '| --- | --- | --- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| -? | --help | Print a longer usage message then normal. |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| -? | --help | 打印比正常更长的使用消息。 |'
 - en: '| - | --version | Print a single line containing the version number of rpm
     being used. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| - | --version | 打印使用中的 rpm 版本号的单行信息。 |'
 - en: '| - | --quiet | Print as little as possible - normally only error messages
     will be displayed. |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| - | --quiet | 尽可能少地打印信息 - 通常只显示错误消息。 |'
 - en: '| -v | - | Print verbose information - normally routine progress messages will
     be displayed. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| -v | - | 打印详细信息 - 通常显示常规进度消息。 |'
 - en: '| -vv | - | Print lots of ugly debugging information. |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| -vv | - | 打印大量丑陋的调试信息。 |'
 - en: '| - | --rcfile FILELIST | Each of the files in the colon separated FILELIST
     is read sequentially by rpm for configuration information. Only the first file
     in the list must exist, and tildes will be expanded to the value of $HOME. The
     default FILELIST is /usr/lib/rpm/rpmrc:/usr/lib/rpm/redhat/rpmrc:/etc/rpmrc:~/.rpmrc.
     |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| - | --rcfile FILELIST | rpm 将按顺序读取冒号分隔的 FILELIST 中的每个文件以获取配置信息。列表中的第一个文件必须存在，波浪号将被展开为
+    $HOME 的值。默认的 FILELIST 是 /usr/lib/rpm/rpmrc:/usr/lib/rpm/redhat/rpmrc:/etc/rpmrc:~/.rpmrc。
+    |'
 - en: '| - | --pipe CMD | Pipes the output of rpm to the command CMD. |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| - | --pipe CMD | 将 rpm 的输出管道传输到命令 CMD。 |'
 - en: '| - | --dbpath DIRECTORY | Use the database in DIRECTORY rather than the default
     path /var/lib/rpm |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| - | --dbpath DIRECTORY | 使用 DIRECTORY 中的数据库而不是默认路径 /var/lib/rpm |'
 - en: '| - | --root DIRECTORY | Use the file system tree rooted at DIRECTORY for all
     operations. Note that this means the database within DIRECTORY will be used for
     dependency checks and any scriptlet(s) (e.g. %post if installing, or %prep if
     building, a package) will be run after a chroot(2) to DIRECTORY. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| - | --root DIRECTORY | 使用根目录为 DIRECTORY 的文件系统树进行所有操作。请注意，这意味着 DIRECTORY 内的数据库将用于依赖性检查，并且任何脚本（例如，如果安装则运行
+    %post，如果构建则运行 %prep 的软件包）将在 chroot(2) 到 DIRECTORY 之后运行。 |'
 - en: '| -D | --define=''MACRO EXPR'' | Defines MACRO with value EXPR. |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| -D | --define=''MACRO EXPR'' | 定义具有值 EXPR 的宏 MACRO。 |'
 - en: '| -E | --eval=''EXPR'' | Prints macro expansion of EXPR. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| -E | --eval=''EXPR'' | 打印 EXPR 的宏展开。 |'
 - en: Synopsis
+  id: totrans-19
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 概述
 - en: 'Querying and Verifying Packages:'
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 查询和验证软件包：
 - en: '[PRE0]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Installing, Upgrading, and Removing Packages:'
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安装、升级和删除软件包：
 - en: '[PRE1]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Miscellaneous:'
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 杂项：
 - en: '[PRE2]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: query-options
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 查询选项
 - en: '[PRE3]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: verify-options
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 验证选项
 - en: '[PRE4]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: install-options
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 安装选项
 - en: '[PRE5]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'

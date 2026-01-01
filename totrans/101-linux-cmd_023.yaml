@@ -1,71 +1,107 @@
 - en: The `groups` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`groups`命令'
 - en: In Linux, there can be multiple users (those who use/operate the system), and
     groups (a collection of users). Groups make it easy to manage users with the same
     security and access privileges. A user can be part of different groups.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Linux中，可以有多个用户（那些使用/操作系统的人）和组（用户的集合）。组使得管理具有相同安全和访问权限的用户变得容易。一个用户可以是不同组的成员。
 - en: 'Important Points:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 重要要点：
 - en: The `groups` command prints the names of the primary and any supplementary groups
     for each given username, or the current process if no names are given. If more
     than one name is given, the name of each user is printed before the list of that
     user’s groups and the username is separated from the group list by a colon.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`groups`命令打印出每个给定用户名的首要组和任何补充组，或者如果没有给出名称，则打印当前进程的组。如果给出了多个名称，则在用户组的列表之前打印每个用户的名称，并且用户名与组列表之间用冒号分隔。'
 - en: 'Syntax:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Example 1
+  id: totrans-6
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例1
 - en: Provided with a username
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 提供用户名
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: In this example, username demon is passed with groups command and the output
     shows the groups in which the user demon is present, separated by a colon.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个示例中，使用groups命令传递了用户名demon，输出显示了用户demon所在的组，组名之间用冒号分隔。
 - en: Example 2
+  id: totrans-10
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例2
 - en: 'When no username is passed then this will display the group membership for
     the current user:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 当没有传递用户名时，这将显示当前用户的组成员资格：
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Here the current user is demon . So when we run the `groups` command without
     arguments we get the groups in which demon is a user.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里当前用户是demon。因此，当我们不带参数运行`groups`命令时，我们得到demon是用户的组。
 - en: Example 3
+  id: totrans-14
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例3
 - en: 'Passing root with groups command:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用groups命令传递root权限：
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Note: Primary and supplementary groups for a process are normally inherited
     from its parent and are usually unchanged since login. This means that if you
     change the group database after logging in, groups will not reflect your changes
     within your existing login session. The only options are –help and –version.'
+  id: totrans-17
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 注意：进程的首要组和补充组通常从其父进程继承，并且通常在登录后不会改变。这意味着如果您在登录后更改组数据库，组将不会反映您在现有登录会话中的更改。唯一的选择是–help和–version。

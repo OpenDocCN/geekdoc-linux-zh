@@ -1,103 +1,158 @@
 - en: The `rm` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`rm` 命令'
 - en: '`rm` which stands for "remove" is a command used to remove *(delete)* specific
     files. It can also be used to remove directories by using the appropriate flag.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rm` 代表 "删除"，是一个用于删除（删除）特定文件的命令。它也可以通过使用适当的标志来删除目录。'
 - en: 'Example:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Syntax
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Flags and their Functionalities:'
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 标志及其功能：
 - en: '| Short Flag | Long Flag | Description |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 短标志 | 长标志 | 描述 |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-f` | `--force` | Ignore nonexistance of files or directories, never prompt
     |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--force` | 忽略文件或目录不存在的情况，从不提示 |'
 - en: '| `-i` | - | Prompt before every removal |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | - | 在每次删除之前提示 |'
 - en: '| `-I` | - | Prompt once before removal of more than 3 files, or when removing
     recursively |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `-I` | - | 在删除超过 3 个文件之前提示一次，或在递归删除时提示 |'
 - en: '| `-d` | `--dir` | remove empty directories |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | `--dir` | 删除空目录 |'
 - en: '| `-v` | `--verbose` | explain what is being done |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--verbose` | 解释正在执行的操作 |'
 - en: '| `-r` or `-R` | `--recursive` | remove directories and their contents recursively
     |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` 或 `-R` | `--recursive` | 递归删除目录及其内容 |'
 - en: '| - | `--help` | Display help then exit |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--help` | 显示帮助信息然后退出 |'
 - en: '| - | `--version` | First, Print version Information, Then exit |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--version` | 首先打印版本信息，然后退出 |'
 - en: '| - | `--no-preserve-root` | do not treat `/` specially |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--no-preserve-root` | 不特别处理 `/` |'
 - en: '| - | `-preserve-root[=all]` | do not remove `/` (default) with ''all'', reject
     any command line argument on a separate device from its parent |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| - | `-preserve-root[=all]` | 不删除 `/`（默认），使用 ''all'' 时，拒绝任何来自其父设备的命令行参数 |'
 - en: '| - | `--interactive[=WHEN]` | prompt according to WHEN, never, once `-I`,
     or always `-i`, without WHEN, prompt always |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--interactive[=WHEN]` | 根据 WHEN 提示，从不提示，仅 `-I` 提示一次，或始终提示 `-i`，如果没有
+    WHEN，则始终提示 |'
 - en: '| - | `--one-file-system` | when removing a hierarchy recursively, skip any
     directory that is on a file system different from that of the corresponding command
     line argument0 |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--one-file-system` | 当递归删除层次结构时，跳过任何位于与相应命令行参数不同的文件系统上的目录 |'
 - en: '***IMPORTANT NOTICE:***'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '***重要通知：***'
 - en: '`rm` doesn''t remove directories by default, so use `-r`, `-R`, `--recursive`
     options to remove each listed directory, along with all of its contents.'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`rm` 默认不删除目录，因此请使用 `-r`、`-R`、`--recursive` 选项来删除每个列出的目录及其所有内容。'
 - en: 'To remove a file whose name starts with `-` such as `-foo`, use one of the
     following commands:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要删除以 `-` 开头的文件，例如 `-foo`，请使用以下命令之一：
 - en: '`rm -- -foo`'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rm -- -foo`'
 - en: '`rm ./-foo`'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rm ./-foo`'
 - en: To ensure that files/directories being deleted are truly unrecoverable, consider
     using the `shred` command.
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了确保被删除的文件/目录真的无法恢复，请考虑使用 `shred` 命令。

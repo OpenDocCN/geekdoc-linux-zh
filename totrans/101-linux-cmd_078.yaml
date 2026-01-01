@@ -1,156 +1,246 @@
 - en: The `split` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`split`命令'
 - en: The `split` command in Linux is used to split a file into smaller files.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux中的`split`命令用于将文件分割成更小的文件。
 - en: Examples
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: Split a file into a smaller file using file name
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用文件名将文件分割成更小的文件。
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Split a file named filename into segments of 200 lines beginning with prefix
     file
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从前缀file开始将名为filename的文件分割成200行的段。
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This will create files of the name fileaa, fileab, fileac, filead, etc. of 200
     lines.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将创建名为fileaa、fileab、fileac、filead等，每文件200行的文件。
 - en: Split a file named filename into segments of 40 bytes with prefix file
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用前缀file将名为filename的文件分割成40字节的段。
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This will create files of the name fileaa, fileab, fileac, filead, etc. of 40
     bytes.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将创建名为fileaa、fileab、fileac、filead等，大小为40字节的文件。
 - en: Split a file using --verbose to see the files being created.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用`--verbose`标志分割文件以查看正在创建的文件。
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Syntax:'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Additional Flags and their Functionalities
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | `--suffix-length=N` | Generate suffixes of length N (default 2) |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | `--suffix-length=N` | 生成长度为N的后缀（默认2） |'
 - en: '|  | `--additional-suffix=SUFFIX` | Append an additional SUFFIX to file names
     |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--additional-suffix=SUFFIX` | 将额外的SUFFIX附加到文件名上 |'
 - en: '| `-b` | `--bytes=SIZE` | Put SIZE bytes per output file |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | `--bytes=SIZE` | 每个输出文件放置SIZE字节 |'
 - en: '| `-C` | `--line-bytes=SIZE` | Put at most SIZE bytes of records per output
     file |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-C` | `--line-bytes=SIZE` | 每个输出文件放置最多SIZE字节的记录 |'
 - en: '| `-d` |  | Use numeric suffixes starting at 0, not alphabetic |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` |  | 使用从0开始的数字后缀，而不是字母 |'
 - en: '|  | `--numeric-suffixes[=FROM]` | Same as -d, but allow setting the start
     value |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--numeric-suffixes[=FROM]` | 与-d相同，但允许设置起始值 |'
 - en: '| `-x` |  | Use hex suffixes starting at 0, not alphabetic |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` |  | 使用从0开始的十六进制后缀，而不是字母 |'
 - en: '|  | `--hex-suffixes[=FROM]` | Same as -x, but allow setting the start value
     |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--hex-suffixes[=FROM]` | 与-x相同，但允许设置起始值 |'
 - en: '| `-e` | `--elide-empty-files` | Do not generate empty output files with ''-n''
     |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | `--elide-empty-files` | 不要在''-n''时生成空输出文件 |'
 - en: '|  | `--filter=COMMAND` | Write to shell COMMAND; file name is $FILE |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--filter=COMMAND` | 将命令写入shell；文件名为$FILE |'
 - en: '| `-l` | `--lines=NUMBER` | Put NUMBER lines/records per output file |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--lines=NUMBER` | 每个输出文件放置NUMBER行/记录 |'
 - en: '| `-n` | `--number=CHUNKS` | Generate CHUNKS output files; see explanation
     below |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--number=CHUNKS` | 生成CHUNKS个输出文件；见下文解释 |'
 - en: '| `-t` | `--separator=SEP` | Use SEP instead of newline as the record separator;
     ''\0'' (zero) specifies the NUL character |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | `--separator=SEP` | 使用SEP代替换行符作为记录分隔符；''\0''（零）指定空字符 |'
 - en: '| `-u` | `--unbuffered` | Immediately copy input to output with ''-n r/...''
     |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | `--unbuffered` | 在''-n r/...''时立即将输入复制到输出 |'
 - en: '|  | `--verbose` | Print a diagnostic just before each output file is opened
     |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--verbose` | 在每个输出文件打开前打印诊断信息 |'
 - en: '|  | `--help` | Display this help and exit |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--help` | 显示此帮助信息并退出 |'
 - en: '|  | `--version` | Output version information and exit |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--version` | 输出版本信息并退出 |'
 - en: 'The SIZE argument is an integer and optional unit (example: 10K is 10*1024).
     Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: SIZE参数是一个整数和可选的单位（例如：10K是10*1024）。单位是K,M,G,T,P,E,Z,Y（1024的幂）或KB,MB,...（1000的幂）。
 - en: 'CHUNKS may be:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: CHUNKS可以是：
 - en: '| **CHUNKS** | **Description** |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| **CHUNKS** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `N` | Split into N files based on size of input |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `N` | 根据输入大小分割成N个文件 |'
 - en: '| `K/N` | Output Kth of N to stdout |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `K/N` | 输出N中的第K个到stdout |'
 - en: '| `l/N` | Split into N files without splitting lines/records |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `l/N` | 不分割行/记录分割成N个文件 |'
 - en: '| `l/K/N` | Output Kth of N to stdout without splitting lines/records |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `l/K/N` | 输出N中的第K个到stdout而不分割行/记录 |'
 - en: '| `r/N` | Like ''l'' but use round robin distribution |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `r/N` | 类似于''l''，但使用轮询分配 |'
 - en: '| `r/K/N` | Likewise but only output Kth of N to stdout |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `r/K/N` | 同样，但只输出N中的第K个到stdout |'

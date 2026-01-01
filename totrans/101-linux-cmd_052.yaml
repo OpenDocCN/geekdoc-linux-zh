@@ -1,159 +1,247 @@
 - en: The `apt` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`apt`命令'
 - en: '`apt` (Advantage package system) command is used for interacting with `dpkg`
     (packaging system used by debian). There is already the `dpkg` command to manage
     `.deb` packages. But `apt` is a more user-friendly and efficient way.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`apt`（优势软件包系统）命令用于与`dpkg`（由debian使用的软件包系统）交互。已经存在`dpkg`命令来管理`.deb`软件包。但`apt`是一个更用户友好且高效的途径。'
 - en: In simple terms `apt` is a command used for installing, deleting and performing
     other operations on debian based Linux.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 简而言之，`apt`是一个用于在基于debian的Linux上安装、删除和执行其他操作的命令。
 - en: You will be using the `apt` command mostly with `sudo` privileges.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您将主要使用带有`sudo`权限的`apt`命令。
 - en: 'Installing packages:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 安装软件包：
 - en: '`install` followed by `package_name` is used with `apt` to install a new package.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`install`后跟`package_name`与`apt`一起安装新软件包。
 - en: 'Syntax:'
+  id: totrans-6
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Example:'
+  id: totrans-8
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This command will install g++ on your system.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将在您的系统上安装g++。
 - en: 'Removing packages:'
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 移除软件包：
 - en: '`remove` followed by `package_name` is used with `apt` to remove a specific
     package.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`remove`后跟`package_name`与`apt`一起移除特定的软件包。
 - en: 'Syntax:'
+  id: totrans-13
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Example:'
+  id: totrans-15
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: This command will remove g++ from your system.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将从您的系统中移除g++。
 - en: 'Searching for a package:'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 搜索软件包：
 - en: '`search` followed by the `package_name` used with apt to search a package across
     all repositories.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`apt`搜索`package_name`，以在所有仓库中搜索软件包。
 - en: 'Syntax:'
+  id: totrans-20
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'note: sudo not required'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意：无需sudo权限
 - en: 'Example:'
+  id: totrans-23
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Removing unused packages:'
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 移除未使用的软件包：
 - en: Whenever a new package that depends on other packages is installed on the system,
     the package dependencies will be installed too. When the package is removed, the
     dependencies will stay on the system. This leftover packages are no longer used
     by anything else and can be removed.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在系统上安装依赖于其他软件包的新软件包时，也会安装这些软件包的依赖项。当软件包被移除时，依赖项将保留在系统中。这些遗留的软件包不再被其他任何东西使用，可以移除。
 - en: 'Syntax:'
+  id: totrans-27
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE6]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: This command will remove all unused from your system.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将从您的系统中移除所有未使用的软件包。
 - en: 'Updating package index:'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 更新软件包索引：
 - en: '`apt` package index is nothing but a database that stores records of available
     packages that are enabled on your system.'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '`apt`软件包索引实际上是一个数据库，存储了在您的系统上启用的可用软件包的记录。'
 - en: 'Syntax:'
+  id: totrans-32
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE7]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: This command will update the package index on your system.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将更新系统上的软件包索引。
 - en: 'Upgrading packages:'
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 升级软件包：
 - en: If you want to install the latest updates for your installed packages you may
     want to run this command.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想为已安装的软件包安装最新更新，您可能需要运行此命令。
 - en: 'Syntax:'
+  id: totrans-37
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The command doesn't upgrade any packages that require removal of installed packages.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令不会升级需要移除已安装软件包的软件包。
 - en: 'If you want to upgrade a single package, pass the package name:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想升级单个软件包，请传递软件包名称：
 - en: 'Syntax:'
+  id: totrans-41
   prefs:
   - PREF_H5
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE9]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: This command will upgrade your packages to the latest version.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将升级您的软件包到最新版本。

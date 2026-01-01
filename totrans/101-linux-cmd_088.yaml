@@ -1,149 +1,235 @@
 - en: The `whois` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`whois` 命令'
 - en: The `whois` command in Linux to find out information about a domain, such as
     the owner of the domain, the owner’s contact information, and the nameservers
     that the domain is using.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 中的 `whois` 命令用于查找有关域的信息，例如域的所有者、所有者的联系信息和域使用的名称服务器。
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Performs a whois query for the domain name:'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 执行对域名的 whois 查询：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: -H option omits the lengthy legal disclaimers that many domain registries deliver
     along with the domain information.
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '- 使用 `-H` 选项可以省略许多域名注册商与域名信息一起提供的冗长法律免责声明。'
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Syntax:'
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[PRE3]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '[PRE4]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '[PRE5]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Flag** | **Description** |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| **标志** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `-h HOST`, `--host HOST` | Connect to HOST. |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `-h HOST`, `--host HOST` | 连接到主机（HOST）。 |'
 - en: '| `-H` | Do not display the legal disclaimers some registries like to show
     you. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-H` | 不显示一些注册商喜欢显示的法律免责声明。 |'
 - en: '| `-p`, `--port PORT` | Connect to PORT. |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-p`, `--port PORT` | 连接到端口（PORT）。 |'
 - en: '| `--verbose` | Be verbose. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `--verbose` | 详细输出。 |'
 - en: '| `--help` | Display online help. |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `--help` | 显示在线帮助。 |'
 - en: '| `--version` | Display client version information. Other options are flags
     understood by whois.ripe.net and some other RIPE-like servers. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `--version` | 显示客户端版本信息。其他选项是 whois.ripe.net 和一些其他 RIPE 类似的服务器所理解的标志。 |'
 - en: '| `-a` | Also search all the mirrored databases. |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | 也搜索所有镜像数据库。 |'
 - en: '| `-b` | Return brief IP address ranges with abuse contact. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | 返回带有滥用联系人的简短 IP 地址范围。 |'
 - en: '| `-B` | Disable object filtering *(show the e-mail addresses)* |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-B` | 禁用对象过滤（显示电子邮件地址）。 |'
 - en: '| `-c` | Return the smallest IP address range with a reference to an irt object.
     |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | 返回带有对 irt 对象引用的最小 IP 地址范围。 |'
 - en: '| `-d` | Return the reverse DNS delegation object too. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | 返回反向 DNS 委派对象。 |'
 - en: '| `-g SOURCE:FIRST-LAST` | Search updates from SOURCE database between FIRST
     and LAST update serial number. It''s useful to obtain Near Real Time Mirroring
     stream. |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-g SOURCE:FIRST-LAST` | 在 FIRST 和 LAST 更新序列号之间搜索来自源数据库的更新。这对于获取近实时镜像流很有用。
+    |'
 - en: '| `-G` | Disable grouping of associated objects. |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `-G` | 禁用关联对象的分组。 |'
 - en: '| `-i ATTR[,ATTR]...` | Search objects having associated attributes. ATTR is
     attribute name. Attribute value is positional OBJECT argument. |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-i ATTR[,ATTR]...` | 搜索具有关联属性的对象。ATTR 是属性名称。属性值是位置对象参数。 |'
 - en: '| `-K` | Return primary key attributes only. Exception is members attribute
     of set object which is always returned. Another exceptions are all attributes
     of objects organisation, person, and role that are never returned. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-K` | 仅返回主键属性。例外是集合对象的成员属性始终返回。其他例外是组织、人员和角色对象的所有属性永远不会返回。 |'
 - en: '| `-l` | Return the one level less specific object. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | 返回一级不太具体对象。 |'
 - en: '| `-L` | Return all levels of less specific objects. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-L` | 返回所有级别的不太具体对象。 |'
 - en: '| `-m` | Return all one level more specific objects. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-m` | 返回更具体一级的所有对象。 |'
 - en: '| `-M` | Return all levels of more specific objects. |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-M` | 返回所有级别更具体对象。 |'
 - en: '| `-q KEYWORD` | Return list of keywords supported by server. KEYWORD can be
     version for server version, sources for list of source databases, or types for
     object types. |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-q KEYWORD` | 返回服务器支持的键词列表。KEYWORD 可以是服务器版本，源数据库列表，或对象类型。 |'
 - en: '| `-r` | Disable recursive look-up for contact information. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | 禁用联系信息的递归查找。 |'
 - en: '| `-R` | Disable following referrals and force showing the object from the
     local copy in the server. |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-R` | 禁用引用跟随并强制显示服务器本地副本中的对象。 |'
 - en: '| `-s SOURCE[,SOURCE]...` | Request the server to search for objects mirrored
     from SOURCES. Sources are delimited by comma and the order is significant. Use
     `-q` sources option to obtain list of valid sources. |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-s SOURCE[,SOURCE]...` | 请求服务器搜索从源（SOURCES）镜像的对象。源由逗号分隔，顺序很重要。使用 `-q` 源选项以获取有效源列表。
+    |'
 - en: '| `-t TYPE` | Return the template for a object of TYPE. |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `-t TYPE` | 返回 TYPE 类型的对象的模板。 |'
 - en: '| `-T TYPE[,TYPE]...` | Restrict the search to objects of TYPE. Multiple types
     are separated by a comma. |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `-T TYPE[,TYPE]...` | 限制搜索到 TYPE 类型的对象。多个类型由逗号分隔。 |'
 - en: '| `-v TYPE` | Return the verbose template for a object of TYPE. |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `-v TYPE` | 返回 TYPE 类型的对象的详细模板。 |'
 - en: '| `-x` | Search for only exact match on network address prefix. |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` | 仅在网络地址前缀上搜索精确匹配。 |'

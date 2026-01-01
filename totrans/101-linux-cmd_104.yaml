@@ -1,271 +1,424 @@
 - en: The `lsblk` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`lsblk` 命令'
 - en: Summary
+  id: totrans-1
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 概述
 - en: The `lsblk` command displays the block and loop devices on the system. It is
     especially useful when you want to format disks, write filesystems, check the
     filesystem and know the mount point of a device.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`lsblk` 命令显示系统上的块和循环设备。当您想要格式化磁盘、写入文件系统、检查文件系统以及了解设备的挂载点时，它特别有用。'
 - en: Examples
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: Basic usage is fairly simple - just execute 'lsblk' sans any option.
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 基本用法相当简单 - 只需执行 'lsblk' 而不使用任何选项。
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Make lsblk display empty devices as well
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 显示空设备
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Make lsblk print size info in bytes
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 以字节为单位打印大小信息
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Make lsblk print zone model for each device
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 打印每个设备的地域模型
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Make lsblk skip entries for slaves
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 跳过从属设备的条目
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Make lsblk use ascii characters for tree formatting
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 在树格式化中使用 ASCII 字符
 - en: '[PRE5]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Make lsblk display info about device owner, group, and mode
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 显示设备所有者、组和模式信息
 - en: '[PRE6]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Make lsblk output select columns
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使 `lsblk` 输出选择列
 - en: '[PRE7]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Syntax
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE8]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Reading information given by `lsblk`
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 读取 `lsblk` 提供的信息
 - en: 'On running `lsblk` with no flags or command-line arguments, it writes general
     disk information to the STDOUT. Here is a table that interpretes that information:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 在不使用标志或命令行参数运行 `lsblk` 时，它将通用磁盘信息写入 STDOUT。以下是一个解释该信息的表格：
 - en: '| Column Name | Meaning | Interpretation |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| 列表名称 | 含义 | 解释 |'
 - en: '| :-: | :-- | :-- |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| :-: | :-- | :-- |'
 - en: '| NAME | Name of the device. | Shows name of the device. |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| NAME | 设备的名称。 | 显示设备的名称。 |'
 - en: '| RM | Removable. | Shows 1 if the device is removable, 0 if not. |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| RM | 可移动。 | 如果设备是可移动的显示 1，如果不是则显示 0。 |'
 - en: '| SIZE | Size of the device. | Shows size of the device. |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| SIZE | 设备的大小。 | 显示设备的大小。 |'
 - en: '| RO | Read-Only. | Shows 1 if read-only, 0 if not. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| RO | 只读。 | 如果为只读显示 1，如果不是则显示 0。 |'
 - en: '| TYPE | The type of block or loop device. | Shows `disk` for entire disk and
     `part` for partitions. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| TYPE | 块或循环设备的类型。 | 显示整个磁盘为 `disk`，分区为 `part`。 |'
 - en: '| MOUNTPOINTS | Where the device is mounted. | Shows where the device is mounted.
     Empty if not mounted. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| MOUNTPOINTS | 设备挂载的位置。 | 显示设备挂载的位置。如果没有挂载则为空。 |'
 - en: Reading information of a specific device
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 读取特定设备的信息
 - en: '`lsblk` can display information of a specific device when the device''s absolute
     path is passed to it. For example, `lsblk` command for displaying the information
     of the `sda` disk is:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 当将设备的绝对路径传递给 `lsblk` 时，`lsblk` 可以显示特定设备的信息。例如，显示 `sda` 磁盘信息的 `lsblk` 命令是：
 - en: '[PRE9]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Useful flags for `lsblk`
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`lsblk` 的有用标志'
 - en: Here is a table that show some of the useful flags that can be used with lsblk
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一个表格，展示了可以与 `lsblk` 一起使用的某些有用标志：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-: | :-- | :-- |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| :-: | :-- | :-- |'
 - en: '| `-a` | `--all` | `lsblk` does not list empty devices by default. This option
     disables this restriction. |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | `--all` | `lsblk` 默认不列出空设备。此选项禁用此限制。 |'
 - en: '| `-b` | `--bytes` | Print the SIZE column in bytes rather than in human-readable
     format. |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | `--bytes` | 以字节为单位打印 SIZE 列，而不是以可读格式。 |'
 - en: '| `-d` | `--nodeps` | Don''t print device holders or slaves. |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | `--nodeps` | 不打印设备持有者或从属设备。 |'
 - en: '| `-D` | `--discard` | Print information about the discard (TRIM, UNMAP) capabilities
     for each device. |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `-D` | `--discard` | 打印每个设备的 discard（TRIM、UNMAP）功能信息。 |'
 - en: '| `-E` | `--dedup column` | Use column as a de-duplication key to de-duplicate
     output tree. If the key is not available for the device, or the device is a partition
     and parental whole-disk device provides the same key than the device is always
     printed. |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `-E` | `--dedup column` | 将列用作去重键以去重输出树。如果设备没有此键，或者设备是分区且父整个磁盘设备提供与设备相同的键，则设备始终被打印。
+    |'
 - en: '| `-e` | `--exclude list` | xclude the devices specified by a comma-separated
     list of major device numbers. Note that RAM disks (major=1) are excluded by default.
     The filter is applied to the top-level devices only. |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | `--exclude list` | 排除由逗号分隔的设备主设备号列表指定的设备。请注意，RAM 磁盘（主设备号=1）默认排除。此过滤器仅应用于顶级设备。
+    |'
 - en: '| `-f` | `--fs` | Displays information about filesystem. |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--fs` | 显示有关文件系统的信息。 |'
 - en: '| `-h` | `--help` | Print a help text and exit. |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | `--help` | 打印帮助文本并退出。 |'
 - en: '| `-l` | `--include list` | Displays all the information in List Format. |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--include list` | 以列表格式显示所有信息。 |'
 - en: '| `-J` | `--json` | Displays all the information in JSON Format. |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `-J` | `--json` | 以 JSON 格式显示所有信息。 |'
 - en: '| `-l` | `--list` | Displays all the information in List Format. |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--list` | 以列表格式显示所有信息。 |'
 - en: '| `-m` | `--perms` | Displays info about device owner, group and mode. |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `-m` | `--perms` | 显示设备所有者、组和模式的信息。 |'
 - en: '| `-M` | `--merge` | Group parents of sub-trees to provide more readable output
     for RAIDs and Multi-path devices. The tree-like output is required. |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `-M` | `--merge` | 将子树的父节点分组，以提供更易于阅读的输出，用于 RAID 和多路径设备。需要树形输出。|'
 - en: '| `-n` | `--noheadings` | Do not print a header line. |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--noheadings` | 不打印标题行。|'
 - en: '| `-o` | `--output list` | Specify which output columns to print. Use `--help`
     to get a list of all supported columns. |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `-o` | `--output 列` | 指定要打印的输出列。使用 `--help` 获取所有受支持列的列表。|'
 - en: '| `-O` | `--output-all` | Displays all available columns. |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `-O` | `--output-all` | 显示所有可用的列。|'
 - en: '| `-p` | `--paths` | Displays absolute device paths. |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | `--paths` | 显示绝对设备路径。|'
 - en: '| `-P` | `--pairs` | Use key="value" output format. All potentially unsafe
     characters are hex-escaped (\x`)` |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `-P` | `--pairs` | 使用 key="value" 输出格式。所有潜在的不安全字符都使用十六进制转义（\x`）表示。|'
 - en: '| `-r` | `--raw` | Use the raw output format. All potentially unsafe characters
     are hex-escaped (\x`) in NAME, KNAME, LABEL, PARTLABEL and MOUNTPOINT columns.`
     |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | `--raw` | 使用原始输出格式。在 NAME、KNAME、LABEL、PARTLABEL 和 MOUNTPOINT 列中，所有潜在的不安全字符都使用十六进制转义（\x`）表示。|'
 - en: '| `-S` | `--scsi` | Output info about SCSI devices only. All partitions, slaves
     and holder devices are ignored. |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `-S` | `--scsi` | 仅输出关于 SCSI 设备的信息。所有分区、从属设备和持有设备都被忽略。|'
 - en: '| `-s` | `--inverse` | Print dependencies in inverse order. |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | `--inverse` | 以相反的顺序打印依赖关系。|'
 - en: '| `-t` | `--topology` | Output info about block device topology. This option
     is equivalent to "-o NAME,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE".
     |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | `--topology` | 输出关于块设备拓扑的信息。此选项等同于 "-o NAME,ALIGNMENT,MIN-IO,OPT-IO,PHY-SEC,LOG-SEC,ROTA,SCHED,RQ-SIZE"。|'
 - en: '| `-T` | `--tree[=column]` | Displays all the information in Tree Format. |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `-T` | `--tree[=列]` | 以树形格式显示所有信息。|'
 - en: '| `-V` | `--version` | Output version information and exit. |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `-V` | `--version` | 输出版本信息并退出。|'
 - en: '| `-w` | `--width` | pecifies output width as a number of characters. The default
     is the number of the terminal columns, and if not executed ona terminal, then
     output width is not restricted at all by default. |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `-w` | `--width` | 指定输出宽度为字符数。默认值是终端列数，如果没有在终端上执行，则默认不限制输出宽度。|'
 - en: '| `-x` | `--sort [column]` | Sort output lines by column. This option enables
     `--list` output format by default. It is possible to use the option `--tree` to
     force tree-like output and than the tree branches are sorted by the column. |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` | `--sort [列]` | 按列排序输出行。此选项默认启用 `--list` 输出格式。可以使用 `--tree` 选项强制以树形输出，然后树分支按列排序。|'
 - en: '| `-z` | `--zoned` | Print the zone model for each device. |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `-z` | `--zoned` | 为每个设备打印区域模型。|'
 - en: '| `-` | `--sysroot directory` | Gather data for a Linux instance other than
     the instance from which the lsblk command is issued. The specified directory is
     the system root of the Linux instance to be inspected. |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `-` | `--sysroot 目录` | 收集除发出 lsblk 命令的实例之外的 Linux 实例的数据。指定的目录是要检查的 Linux
+    实例的系统根目录。|'
 - en: Exit Codes
+  id: totrans-67
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 退出码
 - en: Like every Unix / Linux Program, `lslbk` returns an exit code to the environment.
     Here is a table of all the exit codes.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 与每个 Unix / Linux 程序一样，`lslbk` 会向环境返回一个退出码。以下是所有退出码的表格。
 - en: '| Exit Code | Meaning |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| 退出码 | 含义 |'
 - en: '| :-: | :-- |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| :-: | :-- |'
 - en: '| 0 | Exit with success. |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| 0 | 成功退出。|'
 - en: '| 1 | Exit with failure. |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | 失败退出。|'
 - en: '| 32 | Specified device(s) not found. |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| 32 | 指定的设备（们）未找到。|'
 - en: '| 64 | Some of the specified devices were found while some not. |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| 64 | 找到了一些指定的设备，但也有一些没有找到。|'

@@ -1,90 +1,133 @@
 - en: The `ping` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`ping` 命令'
 - en: The `ping` (Packet Internet Groper) command is a network utility used to check
     network connectivity between a host and a server or another host. It sends ICMP
     (Internet Control Message Protocol) echo requests to a specified IP address or
     URL and measures the time it takes to receive a response. This time delay is referred
     to as "latency." Ping is a fundamental tool for network troubleshooting and monitoring.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ping`（数据包互联网探索器）命令是一个网络工具，用于检查主机和服务器或另一个主机之间的网络连通性。它向指定的 IP 地址或 URL 发送 ICMP（互联网控制消息协议）回显请求，并测量接收响应所需的时间。这个时间延迟被称为“延迟”。Ping
+    是网络故障排除和监控的基本工具。'
 - en: Understanding Latency
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 理解延迟
 - en: Latency, in the context of networking, is the time delay between sending a packet
     and receiving a response.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在网络环境中，延迟是指发送数据包和接收响应之间的时间延迟。
 - en: 'When you use the `ping` command, it measures the latency by sending a series
     of packets to the target host and calculating the time it takes for each packet
     to complete the round trip. The latency is typically measured in milliseconds
     (ms). Understanding latency is essential because:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您使用 `ping` 命令时，它通过向目标主机发送一系列数据包并计算每个数据包完成往返所需的时间来测量延迟。延迟通常以毫秒（ms）为单位。理解延迟至关重要，因为：
 - en: '**Network Performance**: Lower latency means faster data transmission and more
     responsive network connections, which is critical for real-time applications.'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**网络性能**：较低的延迟意味着更快的数据传输和更响应的网络连接，这对于实时应用至关重要。'
 - en: '**Troubleshooting**: High latency can indicate network congestion, packet loss,
     or connectivity issues that need attention.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**故障排除**：高延迟可能表明网络拥塞、数据包丢失或需要关注的连接问题。'
 - en: '**Quality of Service (QoS)**: Service providers and network administrators
     use latency metrics to ensure that network services meet quality standards.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**服务质量（QoS）**：服务提供商和网络管理员使用延迟指标来确保网络服务满足质量标准。'
 - en: The basic ping syntax includes ping followed by a hostname, a name of a website,
     or the exact IP address.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本的 ping 语法包括 ping 后跟一个主机名、网站名称或确切的 IP 地址。
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: To get ping version installed on your system.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在您的系统上安装 ping 版本。
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To check whether a remote host is up, in this case, google.com, type in your
     terminal:'
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要检查远程主机是否运行，在这个例子中是 google.com，请在您的终端中输入：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Controlling the number of packets to send: Earlier we did not define the number
     of packets to send to the server/host by using -c option we can do so.'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 控制发送的数据包数量：以前我们没有通过使用 -c 选项定义发送到服务器/主机的数据包数量，现在我们可以这样做。
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Controlling the size of the packet: Earlier a default sized packets were sent
     to a host but we can send light and heavy packet by using -s option.'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 控制数据包大小：以前我们向主机发送默认大小的数据包，但我们可以通过使用 -s 选项发送轻量级和重型数据包。
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Changing the time interval between ping packets: By default ping wait for 1
     sec to send next packet we can change this time by using -i option.'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 改变 ping 数据包之间的时间间隔：默认情况下，ping 等待 1 秒发送下一个数据包，我们可以通过使用 -i 选项来改变这个时间。
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'

@@ -1,119 +1,189 @@
 - en: The `yum` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`yum`命令'
 - en: The `yum`command is the primary package management tool for installing, updating,
     removing, and managing software packages in Red Hat Enterprise Linux. It is an
     acronym for *`Yellow Dog Updater, Modified`*.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`yum`命令是Red Hat Enterprise Linux中安装、更新、删除和管理软件包的主要包管理工具。它是*`Yellow Dog Updater,
+    Modified`*的缩写。'
 - en: '`yum` performs dependency resolution when installing, updating, and removing
     software packages. It can manage packages from installed repositories in the system
     or from .rpm packages.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`yum`在安装、更新和删除软件包时执行依赖关系解析。它可以管理系统中的已安装仓库或.rpm软件包中的软件包。'
 - en: 'Syntax:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To see an overview of what happened in past transactions:'
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要查看过去事务中发生的情况概览：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To undo a previous transaction:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要撤销之前的交易：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: To install firefox package with 'yes' as a response to all confirmations
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要使用“是”作为所有确认的响应来安装firefox软件包
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: To update the mysql package it to the latest stable version
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将mysql软件包更新到最新稳定版本
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Commonly used commands along with yum:'
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 常用命令与yum一起使用：
 - en: '| **Command** | **Description** |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `install` | Installs the specified packages |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `install` | 安装指定的软件包 |'
 - en: '| `remove` | Removes the specified packages |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `remove` | 删除指定的软件包 |'
 - en: '| `search` | Searches package metadata for keywords |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `search` | 在软件包元数据中搜索关键字 |'
 - en: '| `info` | Lists the description |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `info` | 列出描述 |'
 - en: '| `update` | Updates each package to the latest version |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `update` | 将每个软件包更新到最新版本 |'
 - en: '| `repolist` | Lists repositories |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `repolist` | 列出仓库 |'
 - en: '| `history` | Displays what has happened in past transactions |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `history` | 显示过去事务中发生的情况 |'
 - en: '| `groupinstall` | To install a particular package group |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `groupinstall` | 安装特定的软件包组 |'
 - en: '| `clean` | To clean all cached files from enabled repository |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `clean` | 清除所有启用仓库中的缓存文件 |'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-C` | `--cacheonly` | Runs entirely from system cache, doesn’t update the
     cache and use it even in case it is expired. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-C` | `--cacheonly` | 完全从系统缓存运行，不更新缓存，即使缓存已过期也使用它。 |'
 - en: '| - | `--security` | Includes packages that provide a fix for a security issue.
     Applicable for the upgrade command. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--security` | 包括提供安全问题的修复的软件包。适用于升级命令。 |'
 - en: '| `-y` | `--assumeyes` | Automatically answer yes for all questions. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-y` | `--assumeyes` | 自动对所有问题回答“是”。 |'
 - en: '| - | `--skip-broken` | Resolves depsolve problems by removing packages that
     are causing problems from the transaction. It is an alias for the strict configuration
     option with value False. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--skip-broken` | 通过从事务中删除导致问题的软件包来解决depsolve问题。它是具有False值的严格配置选项的别名。
+    |'
 - en: '| `-v` | `--verbose` | Verbose operation, show debug messages. |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--verbose` | 详细操作，显示调试信息。 |'

@@ -1,141 +1,217 @@
 - en: The `scp` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`scp` 命令'
 - en: SCP (secure copy) is a command-line utility that allows you to securely copy
     files and directories between two locations.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: SCP（安全复制）是一个命令行实用程序，允许您在两个位置之间安全地复制文件和目录。
 - en: Both the files and passwords are encrypted so that anyone snooping on the traffic
     doesn't get anything sensitive.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件和密码都进行了加密，这样任何窃听流量的人都不会得到任何敏感信息。
 - en: 'Different ways to copy a file or directory:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 复制文件或目录的不同方式：
 - en: From local system to a remote system.
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从本地系统到远程系统。
 - en: From a remote system to a local system.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从远程系统到本地系统。
 - en: Between two remote systems from the local system.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从本地系统复制到两个远程系统。
 - en: 'Examples:'
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To copy the files from a local system to a remote system:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将文件从本地系统复制到远程系统：
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'To copy the files from a remote system to the local system:'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将文件从远程系统复制到本地系统：
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: To copy the files between two remote systems from the local system.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要在本地系统之间复制两个远程系统中的文件。
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: To copy file through a jump host server.
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过跳转主机服务器复制文件。
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: On newer version of scp on some machines you can use the above command with
     a `-J` flag.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在某些机器上较新版本的 scp 中，您可以使用上述命令并带有 `-J` 标志。
 - en: '[PRE4]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Syntax:'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '`OPTION` - scp options such as cipher, ssh configuration, ssh port, limit,
     recursive copy …etc.'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`OPTION` - scp 选项，如加密、ssh 配置、ssh 端口、限制、递归复制等。'
 - en: '`[user@]SRC_HOST:]file1` - Source file'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[用户@]源主机:]文件1` - 源文件'
 - en: '`[user@]DEST_HOST:]file2` - Destination file'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[用户@]目标主机:]文件2` - 目标文件'
 - en: Local files should be specified using an absolute or relative path, while remote
     file names should include a user and host specification.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 应使用绝对或相对路径指定本地文件，而远程文件名应包括用户和主机指定。
 - en: 'scp provides several that control every aspect of its behaviour. The most widely
     used options are:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: scp 提供了多种选项来控制其行为的各个方面。最常用的选项包括：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-P` | - | Specifies the remote host ssh port. |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '`-P` | - | 指定远程主机的 ssh 端口。|'
 - en: '| `-p` | - | Preserves files modification and access times. |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | - | 保留文件的修改时间和访问时间。|'
 - en: '| `-q` | - | Use this option if you want to suppress the progress meter and
     non-error messages. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '`-q` | - | 如果您想抑制进度条和非错误消息，请使用此选项。|'
 - en: '| `-C` | - | This option forces scp to compresses the data as it is sent to
     the destination machine. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '`-C` | - | 此选项强制 scp 在发送到目标机器时压缩数据。|'
 - en: '| `-r` | - | This option tells scp to copy directories recursively. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '`-r` | - | 这个选项告诉 scp 递归地复制目录。|'
 - en: Before you begin
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 在开始之前
 - en: The `scp` command relies on `ssh` for data transfer, so it requires an `ssh
     key` or `password` to authenticate on the remote systems.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '`scp` 命令依赖于 `ssh` 进行数据传输，因此它需要在远程系统上进行 `ssh 密钥` 或 `密码` 认证。'
 - en: The `colon (:)` is how scp distinguish between local and remote locations.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '`冒号 (:)` 是 scp 区分本地和远程位置的方式。'
 - en: To be able to copy files, you must have at least read permissions on the source
     file and write permission on the target system.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 要能够复制文件，您必须在源文件上至少有读取权限，在目标系统上有写入权限。
 - en: Be careful when copying files that share the same name and location on both
     systems, `scp` will overwrite files without warning.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在复制两个系统上具有相同名称和位置的文件时，请小心，`scp` 会无警告地覆盖文件。
 - en: When transferring large files, it is recommended to run the scp command inside
     a `screen` or `tmux` session.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 在传输大文件时，建议在 `screen` 或 `tmux` 会话中运行 scp 命令。

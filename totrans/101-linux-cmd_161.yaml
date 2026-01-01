@@ -1,334 +1,523 @@
 - en: The ifplugstatus Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: ifplugstatus 命令
 - en: The `ifplugstatus` command is a diagnostic utility used to check the **physical
     link status** of network interfaces on Linux systems. It reports whether an interface
     (such as eth0, enp0s3, or wlan0) has a network cable connected or not. This tool
     is particularly useful for troubleshooting wired network connectivity and detecting
     unplugged cables.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ifplugstatus` 命令是一个诊断工具，用于检查 Linux 系统上网络接口的**物理链路状态**。它报告接口（如 eth0、enp0s3
+    或 wlan0）是否有网络电缆连接。此工具特别适用于故障排除有线网络连接和检测未插拔的电缆。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Parameters
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 参数
 - en: interface — the network interface to check (e.g., eth0, enp0s3, wlan0).
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: interface — 要检查的网络接口（例如，eth0、enp0s3、wlan0）。
 - en: options — optional flags for customizing output.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 选项 — 用于自定义输出的可选标志。
 - en: Installation
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安装
 - en: '`ifplugstatus` is part of the `ifplugd` package. It can be installed using
     the following commands depending on your distribution:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ifplugstatus` 是 `ifplugd` 软件包的一部分。您可以使用以下命令根据您的发行版进行安装：'
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To verify installation:'
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 要验证安装：
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Basic Usage
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本用法
 - en: 1\. Check the status of a single interface
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 检查单个接口的状态
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Sample Output:'
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 样本输出：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: or
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 或
 - en: '[PRE5]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Explanation:'
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 说明：
 - en: link beat detected → cable is plugged in and active.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 链路检测到链接 → 电缆已插入并激活。
 - en: 'link beat not detected → cable is unplugged or inactive. *Note: ''link beat''
     is a legacy term from older Ethernet (10/100 Mbps). Modern Gigabit or higher interfaces
     may use different link detection signals, but the command generally reports an
     active physical link.*'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 链路检测未检测到 → 电缆未插拔或未激活。*注意：'链路检测'是旧式以太网（10/100 Mbps）的术语。现代千兆位或更高接口可能使用不同的链路检测信号，但命令通常报告一个活动的物理链路。*
 - en: 2\. Check multiple interfaces
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 检查多个接口
 - en: '[PRE6]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Sample Output:'
+  id: totrans-24
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 样本输出：
 - en: '[PRE7]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: This allows quick verification of all available interfaces.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 这允许快速验证所有可用接口。
 - en: Options
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选项
 - en: 'Some popular option flags include:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些流行的选项标志包括：
 - en: '| Option | Description |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `-a` | Show all interfaces (default behavior). |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | 显示所有接口（默认行为）。 |'
 - en: '| `-i` | Specify a particular interface. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | 指定特定接口。 |'
 - en: '| `-s` | Display a short summary only. |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | 仅显示简短摘要。 |'
 - en: '| `-v` | Verbose output with more details. |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | 详细输出，包含更多详细信息。 |'
 - en: '| `-q` | Quiet mode — minimal output. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-q` | 静默模式 — 最小输出。 |'
 - en: '| `-h` | Display help information. |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | 显示帮助信息。 |'
 - en: Practical Examples
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 实际示例
 - en: 1\. Check if the main Ethernet interface is connected
+  id: totrans-38
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 检查主以太网接口是否连接
 - en: '[PRE8]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Displays the current cable connection status for eth0.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示 eth0 的当前电缆连接状态。
 - en: 2\. Check all available network interfaces
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 检查所有可用网络接口
 - en: '[PRE9]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Lists link status for every detected interface.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出每个检测到的接口的链路状态。
 - en: 3\. Use verbose mode for detailed results
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 使用详细模式以获取详细信息
 - en: '[PRE10]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Provides more descriptive information about the link state.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 提供有关链路状态的更多描述性信息。
 - en: 4\. Quiet mode for scripting or automation
+  id: totrans-47
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 脚本或自动化模式的静默模式
 - en: '[PRE11]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Outputs only the essential information, suitable for shell scripts.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 仅输出必要信息，适用于 shell 脚本。
 - en: Understanding the Output
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 理解输出
 - en: 'A typical output may look like this:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 典型输出可能如下所示：
 - en: '[PRE12]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Interface Name: eth0, enp0s3, etc.'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 接口名称：eth0、enp0s3 等。
 - en: 'Link Status: Indicates whether a physical link (cable or signal) is present.'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 链路状态：指示是否存在物理链路（电缆或信号）。
 - en: When integrated into scripts, this helps automate detection of disconnected
     interfaces or faulty cabling.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 当集成到脚本中时，这有助于自动化检测断开连接的接口或故障布线。
 - en: Common Use Cases
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见用例
 - en: 1\. Cable Connectivity Testing
+  id: totrans-57
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 电缆连接测试
 - en: '[PRE13]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Quickly verify if a cable is physically connected to the network port.
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 快速验证电缆是否物理连接到网络端口。
 - en: 2\. Multi-Interface Monitoring
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 多接口监控
 - en: '[PRE14]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Check multiple interfaces simultaneously for link activity.
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 同时检查多个接口的链路活动。
 - en: 3\. Continuous Monitoring
+  id: totrans-63
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 持续监控
 - en: '[PRE15]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Updates the interface status every 5 seconds for real-time link monitoring.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 每隔 5 秒更新接口状态，以进行实时链路监控。
 - en: Troubleshooting Common Issues
+  id: totrans-66
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见问题故障排除
 - en: 1\. Interface Not Found
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 接口未找到
 - en: 'If an incorrect interface name is given:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果提供了错误的接口名称：
 - en: '[PRE16]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: '**Fix:** Use the ip a or ifconfig command to list valid interfaces.'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '**修复方法：** 使用 ip a 或 ifconfig 命令列出有效接口。'
 - en: 2\. Permission Denied
+  id: totrans-71
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 权限拒绝
 - en: 'Some systems may require elevated privileges:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些系统可能需要提升权限：
 - en: '[PRE17]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 3\. Command Not Found
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 命令未找到
 - en: 'If the command is missing:'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果命令缺失：
 - en: '[PRE18]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: '**Fix:** Install the ifplugd package using your package manager.'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**修复方法：** 使用您的包管理器安装 ifplugd 软件包。'
 - en: '**Tip:** Always ensure the ifplugd package is installed and your user has permission
     to access network interfaces.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**提示**：始终确保已安装ifplugd软件包，并且您的用户有权访问网络接口。'
 - en: Related Commands
+  id: totrans-79
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相关命令
 - en: '| Command | Description |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| 命令 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `ip a` (preferred) / `ifconfig` | Display all network interfaces and details.
     `ip a` is the modern tool; `ifconfig` is legacy. |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| `ip a`（推荐）/ `ifconfig` | 显示所有网络接口及其详细信息。`ip a`是现代工具；`ifconfig`是旧版工具。|'
 - en: '| `ethtool eth0` | Retrieve advanced information about the network interface.
     |'
+  id: totrans-83
   prefs: []
   type: TYPE_TB
+  zh: '| `ethtool eth0` | 获取关于网络接口的高级信息。|'
 - en: '| `nmcli device status` | Check connection status via NetworkManager. |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device status` | 通过NetworkManager检查连接状态。|'
 - en: '| `ping` | Test network reachability after confirming cable connection. |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| `ping` | 在确认电缆连接后测试网络可达性。|'
 - en: Important Notes
+  id: totrans-86
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要注意事项
 - en: Works best with wired Ethernet interfaces.
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与有线以太网接口配合使用最佳。
 - en: Wireless interfaces may not always report link status accurately.
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 无线接口可能不会总是准确报告链路状态。
 - en: The tool is read-only — it does not modify system settings.
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 工具为只读模式 — 它不会修改系统设置。
 - en: Lightweight and safe for use in both desktop and server environments.
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 轻量级且适用于桌面和服务器环境的安全使用。
 - en: Manual Reference
+  id: totrans-91
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 手册参考
 - en: 'For additional information and advanced usage:'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于更多信息和高阶使用：
 - en: '[PRE19]'
+  id: totrans-93
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'

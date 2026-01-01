@@ -1,151 +1,225 @@
 - en: The `chmod` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`chmod` 命令'
 - en: The `chmod` command allows you to change the permissions on a file using either
     a symbolic or numeric mode or a reference file.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`chmod` 命令允许您使用符号、数字或参考文件的方式更改文件的权限。'
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Change the permission of a file using symbolic mode:'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用符号模式更改文件的权限：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The command above means :'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令表示：
 - en: user can read, write, execute `myfile`
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户可以读取、写入、执行 `myfile`
 - en: group can read, execute `myfile`
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 组可以读取、执行 `myfile`
 - en: other can read `myfile`
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 其他用户可以读取 `myfile`
 - en: Change the permission of a file using numeric mode
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用数字模式更改文件的权限
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The command above means :'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令表示：
 - en: user can read, write, execute `myfile`
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 用户可以读取、写入、执行 `myfile`
 - en: group can read, execute `myfile`
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 组可以读取、执行 `myfile`
 - en: other can read `myfile`
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 其他用户可以读取 `myfile`
 - en: Change the permission of a folder recursively
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 递归更改文件夹的权限
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Syntax:'
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`[OPTIONS]` : `-R`: recursive, mean all file inside directory'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`[OPTIONS]` : `-R`: 递归，表示目录中的所有文件'
 - en: '`MODE`: different way to set permissions:'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`MODE`: 设置权限的不同方式：'
 - en: '**Symbolic mode explained**'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**符号权限模式解释**：'
 - en: 'u: user'
+  id: totrans-22
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'u: 用户'
 - en: 'g: group'
+  id: totrans-23
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'g: 组'
 - en: 'o: other'
+  id: totrans-24
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'o: 其它用户'
 - en: '=: set the permission'
+  id: totrans-25
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '=: 设置权限'
 - en: 'r: read'
+  id: totrans-26
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'r: 读取'
 - en: 'w: write'
+  id: totrans-27
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'w: 写入'
 - en: 'x: execute'
+  id: totrans-28
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'x: 执行'
 - en: example `u=rwx` means user can read write and execute
+  id: totrans-29
   prefs:
   - PREF_IND
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 例如 `u=rwx` 表示用户可以读取、写入和执行
 - en: '**Numeric mode explained**:'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**数字权限模式解释**：'
 - en: 'The **numeric mode** is based off of a binary representation of the permissions
     for user, group, and others, for more information please look at this [explanation](https://www.digitalocean.com/community/tutorials/linux-permissions-basics-and-how-to-use-umask-on-a-vps#types-of-permissions)
     from Digital Ocean''s community section:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**数字权限模式**基于用户、组和其它权限的二进制表示，更多信息请参阅Digital Ocean社区部分提供的[解释](https://www.digitalocean.com/community/tutorials/linux-permissions-basics-and-how-to-use-umask-on-a-vps#types-of-permissions)：'
 - en: 4 stands for "read",
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 4 代表 "读取",
 - en: 2 stands for "write",
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 2 代表 "写入",
 - en: 1 stands for "execute", and
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 1 代表 "执行"，并且
 - en: 0 stands for "no permission."
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 0 代表 "无权限。"
 - en: example 7 mean read + write + execute
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 例如 7 表示读取 + 写入 + 执行

@@ -1,162 +1,249 @@
 - en: The `ifconfig` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`ifconfig` 命令'
 - en: '`ifconfig` is used to configure the kernel-resident network interfaces. It
     is used at boot time to set up interfaces as necessary. After that, it is usually
     only needed when debugging or when system tuning is needed.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ifconfig` 用于配置内核驻留的网络接口。它在启动时用于根据需要设置接口。之后，通常只有在调试或需要系统调整时才需要使用。'
 - en: If no arguments are given, `ifconfig` displays the status of the currently active
     interfaces. If a single interface argument is given, it displays the status of
     the given interface only; if a single -a argument is given, it displays the status
     of all interfaces, even those that are down. Otherwise, it configures an interface.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有给出参数，`ifconfig` 将显示当前激活接口的状态。如果给出单个接口参数，它将只显示该接口的状态；如果给出单个 -a 参数，它将显示所有接口的状态，即使它们处于关闭状态。否则，它将配置一个接口。
 - en: 'Syntax:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To display the currently active interfaces:'
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示当前激活的接口：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To show all interfaces which are currently active, even if down:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示所有当前激活的接口，即使它们处于关闭状态：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'To show all the error conditions:'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示所有错误条件：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'To show a short list:'
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示简短列表：
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'To display details of the specific network interface (say `eth0`):'
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示特定网络接口的详细信息（例如 `eth0`）：
 - en: '[PRE5]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'To activate the driver for a interface (say `eth0`):'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要激活接口的驱动程序（例如 `eth0`）：
 - en: '[PRE6]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'To deactivate the driver for a interface (say `eth0`):'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要停用接口的驱动程序（例如 `eth0`）：
 - en: '[PRE7]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'To assign a specific IP address to a network interface (say `eth0`):'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将特定 IP 地址分配给网络接口（例如 `eth0`）：
 - en: '[PRE8]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'To change MAC(Media Access Control) address of a network interface (say `eth0`):'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要更改网络接口的 MAC（媒体访问控制）地址（例如 `eth0`）：
 - en: '[PRE9]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'To define a netmask for a network interface (say `eth0`):'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要为网络接口定义子网掩码（例如 `eth0`）：
 - en: '[PRE10]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'To enable promiscous mode on a network interface (say `eth0`):'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要在网络上启用混杂模式（例如 `eth0`）：
 - en: '[PRE11]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: In normal mode, when a packet is received by a network card, it verifies that
     it belongs to itself. If not, it drops the packet normally. However, in the promiscuous
     mode, it accepts all the packets that flow through the network card.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在正常模式下，当网络卡收到一个数据包时，它会验证该数据包是否属于自己。如果不是，它将正常丢弃该数据包。然而，在混杂模式下，它接受通过网络卡流过的所有数据包。
 - en: 'To disable promiscous mode on a network interface (say `eth0`):'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要在网络上禁用混杂模式（例如 `eth0`）：
 - en: '[PRE12]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'To set the maximum transmission unit to a network interface (say `eth0`):'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将最大传输单元设置到网络接口（例如 `eth0`）：
 - en: '[PRE13]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: The MTU allows you to set the limit size of packets that are transmitted on
     an interface. The MTU is able to handle a maximum number of octets to an interface
     in one single transaction.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: MTU 允许您设置在接口上传输的数据包的最大大小。MTU 能够在一次单独的事务中处理一个接口的最大字节数。
 - en: 'To add additional IP addresses to a network interface, you can configure a
     network alias to the network interface:'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要向网络接口添加额外的 IP 地址，您可以配置网络别名到网络接口：
 - en: '[PRE14]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Please note that the alias network address is in the same subnet mask of the
     network interface. For example, if your eth0 network ip address is `10.10.1.23`,
     then the alias ip address can be `10.10.1.24`. Example of an invalid IP address
     is `10.10.2.24` since the interface subnet mask is `255.255.255.224`
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 请注意，别名网络地址与网络接口的子网掩码相同。例如，如果您的 eth0 网络 IP 地址是 `10.10.1.23`，则别名 IP 地址可以是 `10.10.1.24`。一个无效的
+    IP 地址示例是 `10.10.2.24`，因为接口子网掩码是 `255.255.255.224`。
 - en: 'To remove a network alias:'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要删除网络别名：
 - en: '[PRE15]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Remember that for every scope (i.e. same net with address/netmask combination)
     all aiases are deleted, if you delete the first alias.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，对于每个作用域（即具有相同地址/子网掩码组合的同一网络），如果删除第一个别名，则所有别名都将被删除。
 - en: Help Command
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 帮助命令
 - en: Run below command to view the complete guide to `ifconfig` command.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行以下命令以查看 `ifconfig` 命令的完整指南。
 - en: '[PRE16]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'

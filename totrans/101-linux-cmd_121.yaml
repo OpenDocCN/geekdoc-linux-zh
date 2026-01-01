@@ -1,97 +1,145 @@
 - en: The `Wait` commands
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`Wait`命令'
 - en: The wait command is a shell builtin that pauses script execution until a specific
     background process, or all running child processes, have finished.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: wait命令是一个shell内建命令，它会在特定的后台进程或所有正在运行的后台子进程完成之前暂停脚本执行。
 - en: Its primary purpose is to synchronize tasks, ensuring that a script doesn't
     continue to the next step until prerequisite background jobs are complete. A background
     process is a command that is run with an ampersand (&) at the end, which tells
     the shell to run it without waiting for it to finish.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 它的主要目的是同步任务，确保脚本在所有先决条件后台作业完成之前不会继续到下一步。后台进程是一个以与号（&）结尾运行的命令，这告诉shell在不等待它完成的情况下运行它。
 - en: Syntax
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '[PID] - An optional Process ID to wait for. If no PID is given, wait will wait
     for all active child processes to complete.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PID] - 可选的等待进程ID。如果没有提供PID，wait将等待所有活动的子进程完成。'
 - en: Examples
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: 1\. Waiting for a Specific Process
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 等待特定进程
 - en: This example shows how to launch a single background process and wait for it
     specifically.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 本例展示了如何启动单个后台进程并等待其完成。
 - en: 'Script:'
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 脚本：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Explanation:'
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 解释：
 - en: '&: The ampersand runs the echo command in the background, allowing the script
     to immediately continue to the next line.'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '&: 与号运行echo命令在后台，允许脚本立即继续到下一行。'
 - en: '$!: This is a special shell variable that holds the Process ID (PID) of the
     most recently executed background command. We save it to the process_id variable.'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '$!: 这是一个特殊的shell变量，它保存了最近执行的后台命令的进程ID（PID）。我们将其保存到process_id变量中。'
 - en: 'wait $process_id: This is the key command. The script pauses here until the
     process with that specific ID is complete.'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 'wait $process_id: 这是关键命令。脚本在这里暂停，直到具有该特定ID的进程完成。'
 - en: '$?: This variable holds the exit status of the last command that finished.
     An exit status of 0 means success.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '$?: 这个变量保存了最后一个完成的命令的退出状态。退出状态为0表示成功。'
 - en: 'Output:'
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 2\. Waiting for All Background Processes
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 等待所有后台进程
 - en: This is the most common use case. Here, we launch several background tasks and
     then use a single wait command to pause until all of them are done.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是最常见的使用场景。在这里，我们启动几个后台任务，然后使用单个wait命令暂停，直到它们全部完成。
 - en: 'Script:'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 脚本：
 - en: '[PRE3]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Output:'
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE4]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

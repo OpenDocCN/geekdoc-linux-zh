@@ -1,296 +1,473 @@
 - en: The `nmcli` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`nmcli` 命令'
 - en: The `nmcli` command is used for managing network connections by controlling
     the NetworkManager, a daemon that handles networking, through command line. The
     command stands for Network Manager Command Line Interface.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nmcli` 命令通过控制 NetworkManager（一个处理网络的后台守护进程）来管理网络连接，该命令代表网络管理器命令行界面。'
 - en: 'Installation:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 安装：
 - en: 'The `nmcli` command is already installed by default on most Linux distros.
     To check if it is installed on your system type:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nmcli` 命令默认已安装在大多数 Linux 发行版中。要检查它是否已安装在您的系统上，请输入：'
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If you don''t have nmcli installed you can do it by using the package manager:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您没有安装 nmcli，您可以使用包管理器进行安装：
 - en: 'Ubuntu or Debian:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: Ubuntu 或 Debian：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This will install NetworkManageron in your system. Now we have to start the
     network managing service.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在您的系统中安装 NetworkManager。现在我们必须启动网络管理服务。
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Red Hat-based System(such as Fedora, CentOS, REHL):'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 基于 Red Hat 的系统（如 Fedora、CentOS、REHL）：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: This will install NetworkManager in your system. Now we have to start the network
     managing service.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在您的系统中安装 NetworkManager。现在我们必须启动网络管理服务。
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Arch Linux:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: Arch Linux：
 - en: '[PRE5]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: This will install NetworkManager in your system. Now we have to start the network
     managing service.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在您的系统中安装 NetworkManager。现在我们必须启动网络管理服务。
 - en: '[PRE6]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Examples:'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: List all available Wifi networks
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 列出所有可用的 Wi-Fi 网络
 - en: '[PRE7]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: View Network Status
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 查看网络状态
 - en: '[PRE8]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Connect to a Wifi Network
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 连接到 Wi-Fi 网络
 - en: '[PRE9]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Disconnect from a Wifi Network
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从 Wi-Fi 网络断开连接
 - en: '[PRE10]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Turn Wifi On/Off
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开/关闭 Wi-Fi
 - en: '[PRE11]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: ', respectively.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: ，分别。
 - en: Turn Bluetooth On/Off
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打开/关闭蓝牙
 - en: '[PRE12]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: ', respectively.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: ，分别。
 - en: To show all connections
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示所有连接
 - en: '[PRE13]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: To show detailed info about specific connections
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示特定连接的详细信息
 - en: '[PRE14]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Syntax:'
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: 'The general syntax for the nmcli command is as follows:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: nmcli 命令的一般语法如下：
 - en: '[PRE15]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: Options
+  id: totrans-41
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 选项
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | `--ask` | nmcli will stop and ask for any missing required argument(do
     not use for non interactive options) |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | `--ask` | nmcli 将停止并请求任何缺少的必需参数（不要用于非交互式选项） |'
 - en: '| `-c` | `--color`{yes/no} | It controls color output. yes enables colors,
     while no disables colors |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `--color`{yes/no} | 它控制颜色输出。yes 启用颜色，而 no 禁用颜色 |'
 - en: '| `-h` | `--help` | Prints help information |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | `--help` | 打印帮助信息 |'
 - en: '| `-p` | `--pretty` | This causes nmcli to produce more user friendly output,
     eg with headers, and values are aligned |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | `--pretty` | 这将导致 nmcli 生成更用户友好的输出，例如带有标题，并且值对齐 |'
 - en: '| `-v` | `--version` | Shows the nmcli version |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--version` | 显示 nmcli 版本 |'
 - en: '| `-f` | `--fields`{field1,...} | This option is used to specify what fields
     should be printed. Valid fields names differ for specific commands. |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--fields`{field1,...} | 此选项用于指定应打印哪些字段。有效字段名称因特定命令而异。 |'
 - en: '| `-g` | `--get-value`{field1,.} | This option is used to print values from
     specific field. It is a shortcut for --mode tabular --terse --fields |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `-g` | `--get-value`{field1,.} | 此选项用于打印特定字段的值。它是 --mode tabular --terse
+    --fields 的快捷方式 |'
 - en: General Commands
+  id: totrans-51
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 通用命令
 - en: '| **Command** | **Description** |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli general status` | Show overall NetworkManager status |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli general status` | 显示 NetworkManager 的总体状态 |'
 - en: '| `nmcli general hostname` | Display current hostname |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli general hostname` | 显示当前主机名 |'
 - en: Networking Commands
+  id: totrans-56
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 网络命令
 - en: '| **Command** | **Description** |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli networking on` | Enable all networking |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli networking on` | 启用所有网络 |'
 - en: '| `nmcli networking off` | Disable all networking |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli networking off` | 禁用所有网络 |'
 - en: '| `nmcli networking connectivity` | Check network connectivity status |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli networking connectivity` | 检查网络连接状态 |'
 - en: Radio Commands
+  id: totrans-62
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 无线电命令
 - en: '| **Command** | **Description** |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli radio wifi on` | Enable Wi-Fi radio |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli radio wifi on` | 启用 Wi-Fi 无线电 |'
 - en: '| `nmcli radio wifi off` | Disable Wi-Fi radio |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli radio wifi off` | 禁用 Wi-Fi 无线电 |'
 - en: '| `nmcli radio all` | Show status of all radio switches |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli radio all` | 显示所有无线电开关的状态 |'
 - en: '| `nmcli radio wifi` | Show Wi-Fi radio status |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli radio wifi` | 显示 Wi-Fi 无线电状态 |'
 - en: Connection Management Commands
+  id: totrans-69
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 连接管理命令
 - en: '| **Command** | **Description** |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli connection show` | List all saved connection profiles |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection show` | 列出所有已保存的连接配置文件 |'
 - en: '| `nmcli connection show --active` | List only active connections |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection show --active` | 仅列出活动连接 |'
 - en: '| `nmcli connection show "NAME"` | Show detailed info about specific connection
     |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection show "名称"` | 显示特定连接的详细信息 |'
 - en: '| `nmcli connection up "NAME"` | Activate a connection |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection up "名称"` | 激活连接 |'
 - en: '| `nmcli connection down "NAME"` | Deactivate a connection |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection down "名称"` | 使连接失效 |'
 - en: '| `nmcli connection modify "NAME" [OPTIONS]` | Modify connection settings |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection modify "名称" [选项]` | 修改连接设置 |'
 - en: '| `nmcli connection delete "NAME"` | Delete a connection profile |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection delete "名称"` | 删除连接配置文件 |'
 - en: '| `nmcli connection reload` | Reload all connection files from disk |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli connection reload` | 从磁盘重新加载所有连接文件 |'
 - en: Device Management Commands
+  id: totrans-80
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 设备管理命令
 - en: '| **Command** | **Description** |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli device status` | Show status of all devices |'
+  id: totrans-83
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device status` | 显示所有设备的状态 |'
 - en: '| `nmcli device show "DEVICE"` | Show detailed info for specific device |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device show "设备名称"` | 显示特定设备的详细信息 |'
 - en: '| `nmcli device disconnect "DEVICE"` | Disconnect from a device |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device disconnect "设备名称"` | 从设备断开连接 |'
 - en: '| `nmcli device wifi list` | List all available Wi-Fi networks |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device wifi list` | 列出所有可用的Wi-Fi网络 |'
 - en: '| `nmcli device wifi connect "SSID" password "PWD"` | Connect to password-protected
     Wi-Fi |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli device wifi connect "SSID" password "密码"` | 连接到受密码保护的Wi-Fi |'

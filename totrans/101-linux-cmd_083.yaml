@@ -1,221 +1,335 @@
 - en: The `ionice` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`ionice` 命令'
 - en: The `ionice` command is used to set or get process I/O scheduling class and
     priority.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ionice` 命令用于设置或获取进程I/O调度类和优先级。'
 - en: If no arguments are given , `ionice` will query the current I/O scheduling class
     and priority for that process.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有给出参数，`ionice` 将查询该进程当前的I/O调度类和优先级。
 - en: Usage
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '[PRE2]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[PRE3]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'A process can be of three scheduling classes:'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 进程可以是三种调度类之一：
 - en: Idle
+  id: totrans-9
   prefs:
   - PREF_UL
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 空闲
 - en: A program with idle I/O priority will only get disk time when `no other program
     has asked for disk I/O for a defined grace period`.
+  id: totrans-10
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 空闲I/O优先级的程序只有在没有其他程序在定义的宽限期请求磁盘I/O时才会获得磁盘时间。
 - en: The impact of idle processes on normal system actively should be `zero`.
+  id: totrans-11
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 空闲进程对正常系统活动的影响应该是“零”。
 - en: This scheduling class `doesn’t take priority` argument.
+  id: totrans-12
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 此调度类不接收优先级参数。
 - en: Presently this scheduling class is permitted for an `ordinary user (since kernel
     2.6.25)`.
+  id: totrans-13
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 目前，此调度类允许普通用户（自内核2.6.25以来）使用。
 - en: Best Effort
+  id: totrans-14
   prefs:
   - PREF_UL
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 尽力而为
 - en: This is `effective` scheduling class for any process that has `not asked for
     a specific I/O priority`.
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 这是一个适用于任何未请求特定I/O优先级的进程的有效调度类。
 - en: This class `takes priority argument from 0-7`, with `lower` number being `higher
     priority`.
+  id: totrans-16
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 此类从0-7的优先级参数中获取优先级，数字越低优先级越高。
 - en: Programs running at the same best effort priority are served in `round- robbin
     fashion`.
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 具有相同尽力而为优先级的程序将以轮询方式服务。
 - en: Note that before kernel 2.6.26 a process that has not asked for an I/O priority
     formally uses “None” as scheduling class , but the io schedular will treat such
     processes as if it were in the best effort class.
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 注意，在2.6.26之前的内核中，未请求I/O优先级的进程正式使用“None”作为调度类，但I/O调度器会将此类进程视为尽力而为类。
 - en: 'The priority within best effort class will be dynamically derived form the
     CPU nice level of the process : io_priority = ( cpu_nice + 20 ) / 5/ for kernels
     after 2.6.26 with CFQ I/O schedular a process that has not asked for sn io priority
     inherits CPU scheduling class.'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 尽力而为类中的优先级将动态地从进程的CPU nice级别中推导出来：io_priority = ( cpu_nice + 20 ) / 5，对于2.6.26之后的内核以及CFQ
+    I/O调度器的进程，未请求sn io优先级的进程将继承CPU调度类。
 - en: '`The I/O priority is derived from the CPU nice level of the process` ( smr
     sd before kernel 2.6.26 ).'
+  id: totrans-20
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: I/O优先级来自进程的CPU nice级别（在2.6.26之前的内核中为smr sd）。
 - en: Real Time
+  id: totrans-21
   prefs:
   - PREF_UL
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 实时
 - en: The real time schedular class is `given first access to disk, regardless of
     what else is going on in the system`.
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 实时调度类将首先获得对磁盘的访问，无论系统中的其他操作如何。
 - en: Thus the real time class needs to be used with some care, as it cans tarve other
     processes .
+  id: totrans-23
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 因此，实时类需要谨慎使用，因为它可能会影响其他进程。
 - en: As with the best effort class, `8 priority levels are defined denoting how big
     a time slice a given process will receive on each scheduling window`.
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 与尽力而为类一样，定义了8个优先级级别，表示每个调度窗口中给定进程将获得的时间片大小。
 - en: This scheduling class is `not permitted for an ordinary user(non-root)`.
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 此调度类不允许普通用户（非root）使用。
 - en: Options
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选项
 - en: '| Options | Description |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| -c, --class<class></class> | name or number of scheduling class, 0: none,
     1: realtime, 2: best-effort, 3: idle |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| -c, --class<class></class> | 调度类的名称或编号，0：无，1：实时，2：尽力而为，3：空闲 |'
 - en: '| -n, --classdata | priority (0..7) in the specified scheduling class,only
     for the realtime and best-effort classes |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| -n, --classdata | 指定调度类中的优先级（0..7），仅适用于实时和尽力而为类 |'
 - en: '| -p, --pid <pid>...</pid> | act on these already running processes |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| -p, --pid <pid>...</pid> | 对这些已运行的进程进行操作 |'
 - en: '| -P, --pgid <pgrp>...</pgrp> | act on already running processes in these groups
     |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| -P, --pgid <pgrp>...</pgrp> | 对这些组中已运行的进程进行操作 |'
 - en: '| -t, --ignore | ignore failures |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| -t, --ignore | 忽略失败 |'
 - en: '| -u, --uid <uid>...</uid> | act on already running processes owned by these
     users |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| -u, --uid <uid>...</uid> | 对这些用户拥有的已运行进程进行操作 |'
 - en: '| -h, --help | display this help |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| -h, --help | 显示此帮助 |'
 - en: '| -V, --version | display version |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| -V, --version | 显示版本 |'
 - en: For more details see ionice(1).
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息请参阅 ionice(1)。
 - en: Examples
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: '| Command | O/P | Explanation |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| 命令 | 输出 | 说明 |'
 - en: '| --- | --- | --- |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `$ ionice` | *none: prio 4* | Running alone `ionice` will give the class
     and priority of current process |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `$ ionice` | *无：优先级4* | 单独运行 `ionice` 将给出当前进程的类和优先级 |'
 - en: '| `$ ionice -p 101` | *none : prio 4* | Give the details(*class : priority*)
     of the process specified by given process id |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `$ ionice -p 101` | *无：优先级4* | 给出指定进程ID的进程的详细信息（*类：优先级*） |'
 - en: '| `$ ionice -p 2` | *none: prio 4* | Check the class and priority of process
     with pid 2 it is none and 4 resp. |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `$ ionice -p 2` | *none: prio 4* | 检查具有pid 2的进程的类和优先级，它是none和4相应地 |'
 - en: '| `$ ionice -c2 -n0 -p2` | 2 ( best-effort ) priority 0 process 2 | Now lets
     set process(pid) 2 as a best-effort program with highest priority |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `$ ionice -c2 -n0 -p2` | 2 ( best-effort ) priority 0 process 2 | 现在让我们将进程(pid)
+    2设置为具有最高优先级的best-effort程序 |'
 - en: '| $ `ionice` -p 2 | best-effort : prio 0 | Now if I check details of Process
     2 you can see the updated one |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` -p 2 | best-effort : prio 0 | 现在如果检查进程2的详细信息，你可以看到更新后的信息 |'
 - en: '| $ `ionice` /bin/ls |  | get priority and class info of bin/ls |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` /bin/ls |  | 获取/bin/ls的优先级和类信息 |'
 - en: '| $ `ionice` -n4 -p2 |  | set priority 4 of process with pid 2 |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` -n4 -p2 |  | 为进程2设置优先级4 |'
 - en: '| $ `ionice` -p 2 | best-effort: prio 4 | Now observe the difference between
     the command ran above and this one we have changed priority from 0 to 4 |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` -p 2 | best-effort: prio 4 | 现在观察上面运行的命令和这个命令之间的区别，我们将优先级从0改为4
+    |'
 - en: '| $ `ionice` -c0 -n4 -p2 | ionice: ignoring given class data for none class
     | (Note that before kernel 2.6.26 a process that has not asked for an I/O priority
     formally uses “None” as scheduling class , |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` -c0 -n4 -p2 | ionice: ignoring given class data for none class
+    | （注意，在内核2.6.26之前，未正式请求I/O优先级的进程使用“None”作为调度类， |'
 - en: '|  |  | but the io schedular will treat such processes as if it were in the
     best effort class. ) |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '|  |  | 但I/O调度器将此类进程视为在best-effort类中。 ）|'
 - en: '|  |  | -t option : ignore failure |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '|  |  | -t option : ignore failure |'
 - en: '| $ `ionice` -c0 -n4 -p2 -t |  | For ignoring the warning shown above we can
     use -t option so it will ignore failure |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| $ `ionice` -c0 -n4 -p2 -t |  | 为了忽略上面显示的警告，我们可以使用-t选项，这样它将忽略失败 |'
 - en: Conclusion
+  id: totrans-53
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: Thus we have successfully learnt about `ionice` command.
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，我们已经成功学习了`ionice`命令。

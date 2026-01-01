@@ -1,37 +1,51 @@
 - en: The `whereis` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`whereis`命令'
 - en: The `whereis` command is used to find the location of source/binary file of
     a command and manuals sections for a specified file in Linux system. If we compare
     `whereis` command with find command they will appear similar to each other as
     both can be used for the same purposes but `whereis` command produces the result
     more accurately by consuming less time comparatively.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`whereis`命令用于在Linux系统中查找指定文件的源/二进制文件位置和手册部分。如果我们比较`whereis`命令和`find`命令，它们看起来很相似，因为两者都可以用于相同的目的，但`whereis`命令通过消耗更少的时间产生更准确的结果。'
 - en: 'Points to be kept on mind while using the whereis command:'
+  id: totrans-2
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 使用`whereis`命令时应注意的要点：
 - en: Since the `whereis` command uses chdir(change directory 2V) to give you the
     result in the fastest possible way, the pathnames given with the -M, -S, or -B
     must be full and well-defined i.e. they must begin with a `/` and should be a
     valid path that exist in the system’s directories, else it exits without any valid
     result. `whereis` command has a hard-coded(code which is not dynamic and changes
     with specification) path, so you may not always find what you’re looking for.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于`whereis`命令使用`chdir`（更改目录2V）以尽可能快的方式给出结果，因此使用`-M`、`-S`或`-B`选项提供的路径必须是完整且定义良好的，即它们必须以`/`开头，并且应该是系统中存在的有效路径，否则将不会输出任何有效结果。`whereis`命令有一个硬编码的路径（这种路径不是动态的，不会随着指定而改变），因此您可能并不总能找到您想要的东西。
 - en: Syntax
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Options
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '-b : This option is used when we only want to search for binaries. -m : This
     option is used when we only want to search for manual sections. -s : This option
     is used when we only want to search for source files. -u: This option search for
@@ -39,16 +53,23 @@
     not have any existence in system as per [-bmsu] described along with “–u”. Thus
     `whereis -m -u *‘ asks for those files in the current directory which have unsual
     entries.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: -b：当只想搜索二进制文件时使用此选项。-m：当只想搜索手册部分时使用此选项。-s：当只想搜索源文件时使用此选项。-u：此选项用于搜索不寻常的条目。如果一个源文件或二进制文件按照[-bmsu]描述的没有在系统中存在，那么它就被认为是“不寻常的”。因此，`whereis
+    -m -u *`请求的是当前目录中具有不寻常条目的文件。
 - en: '-B : This option is used to change or otherwise limit the places where whereis
     searches for binaries. -M : This option is used to change or otherwise limit the
     places where whereis searches for manual sections. -S : This option is used to
     change or otherwise limit the places where whereis searches for source files.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: -B：此选项用于更改或限制`whereis`搜索二进制文件的位置。-M：此选项用于更改或限制`whereis`搜索手册部分的位置。-S：此选项用于更改或限制`whereis`搜索源文件的位置。
 - en: '-f : This option simply terminate the last directory list and signals the start
     of file names. This must be used when any of the -B, -M, or -S options are used.
     -V: Displays version information and exit. -h: Displays the help and exit.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: -f：此选项简单地终止最后一个目录列表并标志着文件名的开始。当使用任何-B、-M或-S选项时必须使用此选项。-V：显示版本信息并退出。-h：显示帮助信息并退出。

@@ -1,99 +1,147 @@
 - en: The `awk` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`awk`命令'
 - en: Awk is a general-purpose scripting language designed for advanced text processing.
     It is mostly used as a reporting and analysis tool.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Awk是一种通用脚本语言，专为高级文本处理设计。它主要用作报告和分析工具。
 - en: WHAT CAN WE DO WITH AWK?
+  id: totrans-2
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 我们可以用AWK做什么？
 - en: 'AWK Operations: (a) Scans a file line by line (b) Splits each input line into
     fields (c) Compares input line/fields to pattern (d) Performs action(s) on matched
     lines'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: AWK操作：(a) 逐行扫描文件 (b) 将每行输入分割成字段 (c) 将输入行/字段与模式比较 (d) 对匹配的行执行动作
 - en: 'Useful For: (a) Transform data files (b) Produce formatted reports'
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 适用于：(a) 转换数据文件 (b) 生成格式化报告
 - en: 'Programming Constructs: (a) Format output lines (b) Arithmetic and string operations
     (c) Conditionals and loops'
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 编程结构：(a) 格式化输出行 (b) 算术和字符串操作 (c) 条件和循环
 - en: Syntax
+  id: totrans-6
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Example
+  id: totrans-8
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'Consider the following text file as the input file for below example:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑以下文本文件作为以下示例的输入文件：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Default behavior of Awk: By default Awk prints every line of data from the
     specified file.'
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Awk的默认行为：默认情况下，Awk打印出指定文件中的每一行数据。
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: In the above example, no pattern is given. So the actions are applicable to
     all the lines. Action print without any argument prints the whole line by default,
     so it prints all the lines of the file without failure.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述示例中，没有给出模式。因此，这些操作适用于所有行。没有参数的动作默认打印整行，因此它默认打印出文件的所有行而不会失败。
 - en: Print the lines which match the given pattern.
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 打印出与给定模式匹配的行。
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '[PRE5]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: In the above example, the awk command prints all the line which matches with
     the ‘manager’.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述示例中，awk命令打印出所有与“manager”匹配的行。
 - en: 'Splitting a Line Into Fields : For each record i.e line, the awk command splits
     the record delimited by whitespace character by default and stores it in the $n
     variables. If the line has 4 words, it will be stored in $1, $2, $3 and $4 respectively.
     Also, $0 represents the whole line.'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将行分割成字段：对于每个记录（即行），awk命令默认通过空白字符分隔记录，并将其存储在$n变量中。如果行有4个单词，它将分别存储在$1, $2, $3和$4中。此外，$0代表整行。
 - en: '[PRE6]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '[PRE7]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Built-In Variables In Awk
+  id: totrans-22
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: Awk的内置变量
 - en: Awk’s built-in variables include the field variables—$1, $2, $3, and so on ($0
     is the entire line) — that break a line of text into individual words or pieces
     called fields.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: Awk的内置变量包括字段变量—$1, $2, $3，等等（$0是整行）—它们将文本行分割成单独的单词或称为字段的片段。
 - en: 'NR: NR command keeps a current count of the number of input records. Remember
     that records are usually lines. Awk command performs the pattern/action statements
     once for each record in a file. NF: NF command keeps a count of the number of
@@ -109,5 +157,7 @@
     command stores the output record separator, which separates the output lines when
     Awk prints them. The default is a newline character. print automatically outputs
     the contents of ORS at the end of whatever it is given to print.'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: NR：NR命令保持当前输入记录数的计数。记住，记录通常是行。awk命令对文件中的每一行记录执行一次模式/动作语句。NF：NF命令保持当前输入记录中字段数的计数。FS：FS命令包含字段分隔符字符，用于在输入行上分割字段。默认是“空白”，意味着空格和制表符字符。FS可以被重新分配到另一个字符（通常在BEGIN中）以更改字段分隔符。RS：RS命令存储当前记录分隔符字符。由于默认情况下，输入行是输入记录，默认记录分隔符字符是换行符。OFS：OFS命令存储输出字段分隔符，当Awk打印时用于分隔字段。默认是一个空格。每当print有几个用逗号分隔的参数时，它将在每个参数之间打印OFS的值。ORS：ORS命令存储输出记录分隔符，当Awk打印时用于分隔输出行。默认是换行符字符。print自动在打印内容的末尾输出ORS的内容。

@@ -1,183 +1,277 @@
 - en: The `finger` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`finger` 命令'
 - en: The `finger` command displays information about local system users by querying
     files such as `/etc/passwd`, `/var/run/utmp`, and `/var/log/wtmp`. It is a local
     command and does not rely on any service or daemon to run. This command helps
     to quickly retrieve user-related details such as login times, idle status, and
     other system information.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`finger` 命令通过查询 `/etc/passwd`、`/var/run/utmp` 和 `/var/log/wtmp` 等文件来显示本地系统用户的信息。这是一个本地命令，不依赖于任何服务或守护进程来运行。此命令有助于快速检索与登录时间、空闲状态和其他系统信息相关的用户相关细节。'
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: View details about a particular user.
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 查看特定用户的详细信息。
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '*Output*'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '*输出*'
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: View login details and idle status about a user.
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 查看用户的登录详情和空闲状态。
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '*Output*'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '*输出*'
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Syntax:'
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Additional Flags and Their Functionalities:'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Flag** | **Description** |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| **标志** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `-l` | Force long output format. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | 强制长输出格式。|'
 - en: '| `-m` | Match arguments only on username (not first or last name). |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-m` | 仅匹配用户名（不是名字或姓氏）。|'
 - en: '| `-p` | Suppress printing of the .plan file in a long format printout. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | 在长格式打印输出中抑制打印 .plan 文件。|'
 - en: '| `-s` | Force short output format. |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | 强制短输出格式。|'
 - en: 'Additional Information:'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他信息：
 - en: '**Default Format**:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**默认格式**：'
 - en: The default format includes items like login name, full username, terminal name,
     and write status. The command provides details like idle time, login time, and
     site-specific information.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认格式包括登录名、全名、终端名和写入状态等项目。该命令提供有关空闲时间、登录时间和特定站点信息的详细信息。
 - en: '**Longer Format**:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**长格式**：'
 - en: In a long format, the command adds details such as the user’s home directory,
     login shell, and the contents of `.plan` and `.project` files.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在长格式中，命令会添加有关用户主目录、登录外壳以及 `.plan` 和 `.project` 文件内容的详细信息。
 - en: '* * *'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: Privacy Considerations
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 隐私考虑
 - en: 'While the `finger` command is useful for retrieving information about system
     users, it may also expose sensitive details in shared or multi-user environments:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然 `finger` 命令对于检索系统用户信息很有用，但它可能在共享或多用户环境中暴露敏感细节：
 - en: '**Usernames and Login Times**: Displays login times, which can be used to track
     user activity.'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**用户名和登录时间**：显示登录时间，可用于跟踪用户活动。'
 - en: '**Home Directories**: Exposes paths to users’ home directories.'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**主目录**：暴露用户主目录的路径。'
 - en: '**Idle Status**: Shows how long a user has been inactive, potentially signaling
     whether they are actively using their system.'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**空闲状态**：显示用户多久没有活动，可能表明他们是否正在积极使用系统。'
 - en: '**Mail Status**: Displays mail information, which may inadvertently reveal
     user engagement.'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**邮件状态**：显示邮件信息，可能无意中透露用户参与情况。'
 - en: 'Potential Risks:'
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 潜在风险：
 - en: 'In environments with untrusted users, the information exposed by `finger` could
     be exploited for:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 在不受信任用户的环境中，`finger` 命令暴露的信息可能被用于：
 - en: '**Social Engineering Attacks**: Malicious actors could use this information
     to craft personalized phishing attacks.'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**社会工程攻击**：恶意行为者可能利用这些信息来制作个性化的钓鱼攻击。'
 - en: '**Timing Attacks**: Knowing when a user is idle or active could give attackers
     an advantage in timing their attempts.'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**时间攻击**：知道用户何时空闲或活跃可能会给攻击者在时间上尝试攻击带来优势。'
 - en: '**Targeted Attacks**: Knowledge of user home directories can focus attacks
     on those locations.'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**针对性攻击**：了解用户主目录的知识可以集中攻击那些位置。'
 - en: 'Mitigating Privacy Risks:'
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 缓解隐私风险：
 - en: To mitigate these risks, consider limiting access to the `finger` command in
     environments where user privacy is important.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了缓解这些风险，考虑在用户隐私重要的环境中限制对 `finger` 命令的访问。
 - en: '* * *'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: The `in.fingerd` Service
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`in.fingerd` 服务'
 - en: It’s important to distinguish between the `finger` command and the **`in.fingerd`
     service**. The `finger` command is local, while `in.fingerd` is a network daemon
     that allows remote queries of user information. This service is typically disabled
     by default in modern systems due to potential security risks.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 区分 `finger` 命令和 **`in.fingerd` 服务** 很重要。`finger` 命令是本地的，而 `in.fingerd` 是一个网络守护进程，允许远程查询用户信息。由于潜在的安全风险，此服务在现代系统中通常默认禁用。
 - en: If enabled, the `in.fingerd` service can expose user information over the network,
     which could be exploited by attackers. To mitigate this risk, system administrators
     should ensure the service is disabled if it is not needed.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果启用，`in.fingerd` 服务可能会通过网络暴露用户信息，这可能被攻击者利用。为了缓解这种风险，系统管理员应确保在不需要该服务时禁用该服务。
 - en: 'Disabling the `in.fingerd` Service:'
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 禁用 `in.fingerd` 服务：
 - en: 'If you are concerned about remote queries, you can disable the `in.fingerd`
     service:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您担心远程查询，您可以禁用`in.fingerd`服务：
 - en: '[PRE5]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: By disabling the `in.fingerd` service, you prevent remote querying of user information,
     enhancing system security.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过禁用`in.fingerd`服务，您可以防止远程查询用户信息，从而增强系统安全性。

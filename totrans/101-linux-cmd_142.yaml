@@ -1,280 +1,430 @@
 - en: The `bg` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`bg` 命令'
 - en: The `bg` command is used to put stopped jobs in the background, allowing them
     to continue running while you use the terminal for other tasks. It's part of the
     job control features in Unix-like shells.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `bg` 命令可以将停止的作业放入后台，允许它们在您使用终端进行其他任务时继续运行。这是类 Unix shell 中的作业控制功能的一部分。
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If no job specification is provided, `bg` operates on the current job (most
     recent job).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有提供作业说明，`bg` 将作用于当前作业（最近的作业）。
 - en: Job Specifications
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 职位说明
 - en: 'You can refer to jobs using different formats:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用不同的格式引用作业：
 - en: '`%1` - Job number 1'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%1` - 第 1 个作业号'
 - en: '`%+` or `%%` - Current job (most recent)'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%+` 或 `%%` - 当前作业（最近的）'
 - en: '`%-` - Previous job'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%-` - 前一个作业'
 - en: '`%string` - Job whose command line starts with string'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%string` - 命令行以字符串开头的作业'
 - en: '`%?string` - Job whose command line contains string'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%?string` - 包含字符串的命令行作业'
 - en: Examples
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: Put the current stopped job in background
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将当前停止的作业放入后台
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Put specific job in background
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将特定作业放入后台
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Put multiple jobs in background
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将多个作业放入后台
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Complete Job Control Workflow
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 完整的作业控制工作流程
 - en: 'Here''s a typical workflow demonstrating `bg` usage:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个典型的流程，展示了 `bg` 的使用：
 - en: Start a long-running command
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动长时间运行的命令
 - en: '[PRE4]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Stop the job with Ctrl+Z
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 Ctrl+Z 停止作业
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Check jobs
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 检查作业
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Output:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE7]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Put the stopped job in background
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将停止的作业放入后台
 - en: '[PRE8]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Output:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE9]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Verify the job is running in background
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 验证作业是否在后台运行
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Output:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE11]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Practical Examples
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 实际示例
 - en: Working with a text editor
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用文本编辑器工作
 - en: '[PRE12]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Managing multiple background tasks
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 管理多个后台任务
 - en: '[PRE13]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Starting command directly in background vs using bg
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 直接在后台启动命令与使用 bg
 - en: '[PRE14]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Related Commands
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相关命令
 - en: '`fg` - Bring job to foreground'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`fg` - 将作业带到前台'
 - en: '`jobs` - List active jobs'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`jobs` - 列出活动作业'
 - en: '`kill` - Terminate job'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`kill` - 终止作业'
 - en: '`nohup` - Run command immune to hangups'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`nohup` - 运行不受挂起影响的命令'
 - en: '`disown` - Remove job from job table'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`disown` - 从作业表中删除作业'
 - en: Use Cases
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用例
 - en: '**Multitasking**: Run multiple tasks simultaneously'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**多任务处理**：同时运行多个任务'
 - en: '**Long processes**: Let time-consuming tasks run while working on other things'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**长时间进程**：在处理其他事情的同时运行耗时任务'
 - en: '**Interactive programs**: Temporarily background editors or interactive tools'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**交互式程序**：暂时将编辑器或交互式工具放入后台'
 - en: '**Development**: Background compilation while coding'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**开发**：编码时的后台编译'
 - en: '**System administration**: Background monitoring while performing other tasks'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**系统管理**：在执行其他任务的同时进行后台监控'
 - en: Important Notes
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要提示
 - en: Jobs put in background with `bg` are still attached to the terminal
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `bg` 放入后台的作业仍然连接到终端
 - en: If you close the terminal, background jobs may be terminated
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果您关闭终端，后台作业可能会被终止
 - en: Use `nohup` or `disown` for persistent background processes
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `nohup` 或 `disown` 进行持久后台进程
 - en: Background jobs cannot read from stdin (keyboard input)
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后台作业无法从 stdin（键盘输入）读取
 - en: You can use `fg` to bring background jobs back to foreground
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 您可以使用 `fg` 将后台作业恢复到前台
 - en: Background jobs continue to write to stdout/stderr unless redirected
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后台作业将继续写入 stdout/stderr，除非重定向
 - en: Error Handling
+  id: totrans-63
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 错误处理
 - en: 'If `bg` fails, common reasons include:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 `bg` 失败，常见原因包括：
 - en: Job doesn't exist
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 作业不存在
 - en: Job is already running
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 作业已经在运行
 - en: Job cannot be put in background (some interactive programs)
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 作业无法放入后台（某些交互式程序）
 - en: Tips
+  id: totrans-68
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 小贴士
 - en: Always check job status with `jobs` before and after using `bg`
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在使用 `bg` 之前和之后，始终使用 `jobs` 检查作业状态
 - en: Redirect output for background jobs to avoid cluttering the terminal
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将后台作业的输出重定向以避免终端混乱
 - en: Use job control responsibly to avoid system resource issues
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 负责任地使用作业控制以避免系统资源问题
 - en: Consider using terminal multiplexers like `screen` or `tmux` for persistent
     sessions
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑使用 `screen` 或 `tmux` 等终端多路复用器进行持久会话
 - en: The `bg` command is essential for effective multitasking and job management
     in the shell environment.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '`bg` 命令对于在 shell 环境中有效地进行多任务处理和作业管理至关重要。'
 - en: 'For more details, check the manual: `help bg`'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请查看手册：`help bg`

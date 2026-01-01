@@ -1,285 +1,453 @@
 - en: The `ps` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`ps` 命令'
 - en: The `ps` command (process status) is used to display information about running
     processes on a Linux system — such as their PID, memory usage, CPU time, and associated
     users.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ps` 命令（进程状态）用于显示 Linux 系统上运行进程的信息——例如它们的 PID、内存使用情况、CPU 时间以及关联的用户。'
 - en: It’s often **piped** with commands like `grep` to search for a specific process
     or `less` to scroll through large outputs.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 它通常与 `grep` 等命令一起使用，以搜索特定进程或使用 `less` 滚动大量输出。
 - en: Why Use `ps`
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 为什么使用 `ps`
 - en: 'Imagine your system feels slow or an app becomes unresponsive — you can use
     `ps` to:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 想象你的系统感觉变慢或应用程序变得无响应——你可以使用 `ps` 来：
 - en: Identify processes consuming high CPU/memory
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 识别消耗大量 CPU/内存的进程
 - en: Find a program’s PID (Process ID)
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查找程序的 PID（进程 ID）
 - en: Kill or debug a stuck process
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 杀死或调试挂起的进程
 - en: Check who’s running what on a shared system
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查共享系统上谁在运行什么
 - en: Basic Syntax
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本语法
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Without any options, `ps` only shows processes in the current terminal session.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有指定任何选项时，`ps` 命令只显示当前终端会话中的进程。
 - en: 'Example:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Output:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Essential Usage
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: essential 使用
 - en: '**The one combo to remember:** `ps aux`'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**要记住的一个组合：** `ps aux`'
 - en: '`a` = all processes (all users)'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`a` = 所有进程（所有用户）'
 - en: '`u` = show user/owner info'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`u` = 显示用户/所有者信息'
 - en: '`x` = include processes without terminals'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`x` = 包括没有终端的进程'
 - en: '[PRE3]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Output example:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出示例：
 - en: '[PRE4]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Some More Practical Day to Day Examples
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一些更实用的日常示例
 - en: Finding and Killing a process
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 查找并杀死进程
 - en: You want to stop a frozen **OpenShot** process.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 你想要停止一个冻结的 **OpenShot** 进程。
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Output:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE6]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Now, kill it:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，杀死它：
 - en: '[PRE7]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Show Processes by User
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 通过用户显示进程
 - en: '[PRE8]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Output:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE9]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Filtering & Sorting Output
+  id: totrans-36
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 过滤和排序输出
 - en: 'Show top 10 memory-consuming processes:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示前 10 个内存消耗最多的进程：
 - en: '[PRE10]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Show top 10 CPU-consuming processes:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示前 10 个 CPU 消耗最多的进程：
 - en: '[PRE11]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Checking Parent/Child Process Hierarchy
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 检查父/子进程层次结构
 - en: '[PRE12]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: This gives a tree-like structure showing parent-child relationships — useful
     when debugging service spawns.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 这会显示一个树状结构，显示父子关系——在调试服务启动时非常有用。
 - en: Custom Output Format
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 自定义输出格式
 - en: 'To Show only PID, user, memory, and command:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 要仅显示 PID、用户、内存和命令：
 - en: '[PRE13]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Real-Life DevOps Examples
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 真实生活中的 DevOps 示例
 - en: 1\. Checking which process uses a specific port
+  id: totrans-48
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 检查哪个进程使用了特定的端口
 - en: '[PRE14]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 2\. Monitoring Jenkins, Nginx, or Docker processes
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 监控 Jenkins、Nginx 或 Docker 进程
 - en: '[PRE15]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 3\. Find Zombie Processes
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 查找僵尸进程
 - en: '[PRE16]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Key Options for Quick Reference
+  id: totrans-54
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 快速参考的关键选项
 - en: '| Option | Description |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| :-- | :-- |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `aux` | All processes with detailed info |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `aux` | 所有具有详细信息的进程 |'
 - en: '| `-ef` | Full listing (alternative to aux) |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `-ef` | 完整列表（替代 aux）|'
 - en: '| `-eo format` | Custom output columns |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `-eo format` | 自定义输出列 |'
 - en: '| `--sort` | Sort by column (-%mem, -%cpu) |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `--sort` | 按列排序（-%mem, -%cpu）|'
 - en: '| `-p PID` | Show specific PID |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `-p PID` | 显示特定的 PID |'
 - en: '| `-C name` | Show processes by command name |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `-C name` | 通过命令名显示进程 |'
 - en: '| `-u user` | Show user''s processes |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `-u user` | 显示用户的进程 |'
 - en: '| `f` | ASCII art process tree |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `f` | ASCII 艺术进程树 |'
 - en: 'Additional Options:'
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他选项：
 - en: '| **Option** | **Description** |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| **选项** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `a` | Shows list all processes with a terminal (tty) |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `a` | 显示具有终端（tty）的所有进程列表 |'
 - en: '| `-A` | Lists all processes. Identical to `-e` |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `-A` | 列出所有进程。等同于 `-e` |'
 - en: '| `-a` | Shows all processes except both session leaders and processes not
     associated with a terminal |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | 显示除会话领导者和与终端不关联的进程之外的所有进程 |'
 - en: '| `-d` | Select all processes except session leaders |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | 选择除会话领导者之外的所有进程 |'
 - en: '| `--deselect` | Shows all processes except those that fulfill the specified
     conditions. Identical to `-N` |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `--deselect` | 显示除满足指定条件之外的进程。等同于 `-N` |'
 - en: '| `-e` | Lists all processes. Identical to `-A` |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | 列出所有进程。等同于 `-A` |'
 - en: '| `-N` | Shows all processes except those that fulfill the specified conditions.
     Identical to `-deselect` |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `-N` | 显示除满足指定条件之外的进程。等同于 `-deselect` |'
 - en: '| `T` | Select all processes associated with this terminal. Identical to the
     `-t` option without any argument |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `T` | 选择与该终端关联的所有进程。等同于没有参数的 `-t` 选项 |'
 - en: '| `r` | Restrict the selection to only running processes |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `r` | 仅选择运行中的进程 |'
 - en: '| `--help simple` | Shows all the basic options |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `--help simple` | 显示所有基本选项 |'
 - en: '| `--help all` | Shows every available options |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `--help all` | 显示所有可用选项 |'
 - en: Related Tools
+  id: totrans-79
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相关工具
 - en: 'If you need **real-time** monitoring, use:'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要 **实时** 监控，请使用：
 - en: '[PRE17]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'or the more user-friendly modern version:'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者更用户友好的现代版本：
 - en: '[PRE18]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'

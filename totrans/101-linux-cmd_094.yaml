@@ -1,126 +1,202 @@
 - en: The `pstree` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`pstree` 命令'
 - en: The `pstree` command is similar to `ps`, but instead of listing the running
     processes, it shows them as a tree. The tree-like format is sometimes more suitable
     way to display the processes hierarchy which is a much simpler way to visualize
     running processes. The root of the tree is either init or the process with the
     given pid.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pstree` 命令类似于 `ps`，但它不是列出运行进程，而是以树形结构显示它们。树形格式有时是显示进程层次结构的更合适方式，这是一种更简单的方式来可视化运行进程。树的根是
+    init 或给定 pid 的进程。'
 - en: Examples
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'To display a hierarchical tree structure of all running processes:'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示所有运行进程的分层树结构：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'To display a tree with the given process as the root of the tree:'
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示以给定进程为根的树形结构：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To show only those processes that have been started by a user:'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要仅显示由用户启动的进程：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'To show the parent processes of the given process:'
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示给定进程的父进程：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'To view the output one page at a time, pipe it to the `less` command:'
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要逐页查看输出，将其管道传输到 `less` 命令：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Syntax
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '`ps [OPTIONS] [USER or PID]`'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ps [选项] [用户或 PID]`'
 - en: Additional Flags and their Functionalities
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | `--arguments` | Show command line arguments |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | `--arguments` | 显示命令行参数 |'
 - en: '| `-A` | `--ascii` | use ASCII line drawing characters |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-A` | `--ascii` | 使用 ASCII 行绘图字符 |'
 - en: '| `-c` | `--compact` | Don''t compact identical subtrees |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `--compact` | 不压缩相同的子树 |'
 - en: '| `-h` | `--highlight-all` | Highlight current process and its ancestors |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | `--highlight-all` | 高亮显示当前进程及其祖先 |'
 - en: '| `-H PID` | `--highlight-pid=PID` | highlight this process and its ancestors
     |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-H PID` | `--highlight-pid=PID` | 高亮显示此进程及其祖先 |'
 - en: '| `-g` | `--show-pgids` | show process group ids; implies `-c` |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-g` | `--show-pgids` | 显示进程组 ID；隐含 `-c` |'
 - en: '| `-G` | `--vt100` | use VT100 line drawing characters |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-G` | `--vt100` | 使用 VT100 行绘图字符 |'
 - en: '| `-l` | `--long` | Don''t truncate long lines |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--long` | 不截断长行 |'
 - en: '| `-n` | `--numeric-sort` | Sort output by PID |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--numeric-sort` | 按 PID 排序输出 |'
 - en: '| `-N type` | `--ns-sort=type` | Sort by namespace type (cgroup, ipc, mnt,
     net, pid, user, uts) |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `-N type` | `--ns-sort=type` | 按命名空间类型（cgroup、ipc、mnt、net、pid、user、uts）排序
+    |'
 - en: '| `-p` | `--show-pids` | show PIDs; implies -c |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | `--show-pids` | 显示 PIDs；隐含 -c |'
 - en: '| `-s` | `--show-parents` | Show parents of the selected process |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | `--show-parents` | 显示选定进程的父进程 |'
 - en: '| `-S` | `--ns-changes` | show namespace transitions |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-S` | `--ns-changes` | 显示命名空间转换 |'
 - en: '| `-t` | `--thread-names` | Show full thread names |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | `--thread-names` | 显示完整的线程名称 |'
 - en: '| `-T` | `--hide-threads` | Hide threads, show only processes |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-T` | `--hide-threads` | 隐藏线程，只显示进程 |'
 - en: '| `-u` | `--uid-changes` | Show uid transitions |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | `--uid-changes` | 显示 uid 转换 |'
 - en: '| `-U` | `--unicode` | Use UTF-8 (Unicode) line drawing characters |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-U` | `--unicode` | 使用 UTF-8（Unicode）行绘图字符 |'
 - en: '| `-V` | `--version` | Display version information |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-V` | `--version` | 显示版本信息 |'
 - en: '| `-Z` | `--security-context` | Show SELinux security contexts |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-Z` | `--security-context` | 显示 SELinux 安全上下文 |'

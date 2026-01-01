@@ -1,353 +1,543 @@
 - en: The `iptables` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`iptables` 命令'
 - en: The `iptables` command is a powerful firewall administration tool for Linux
     systems. It allows you to configure the Linux kernel firewall (netfilter) by setting
     up, maintaining, and inspecting the tables of IP packet filter rules.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`iptables` 命令是 Linux 系统的强大防火墙管理工具。它允许您通过设置、维护和检查 IP 数据包过滤规则表来配置 Linux 内核防火墙（netfilter）。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Basic Concepts
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本概念
 - en: Tables
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 表
 - en: '**filter**: Default table for packet filtering (INPUT, OUTPUT, FORWARD)'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**filter**: 数据包过滤的默认表（INPUT, OUTPUT, FORWARD）'
 - en: '**nat**: Network Address Translation (PREROUTING, POSTROUTING, OUTPUT)'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**nat**: 网络地址转换（PREROUTING, POSTROUTING, OUTPUT）'
 - en: '**mangle**: Packet alteration (PREROUTING, POSTROUTING, INPUT, OUTPUT, FORWARD)'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**mangle**: 数据包修改（PREROUTING, POSTROUTING, INPUT, OUTPUT, FORWARD）'
 - en: '**raw**: Connection tracking exemption (PREROUTING, OUTPUT)'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**raw**: 连接跟踪豁免（PREROUTING, OUTPUT）'
 - en: Chains
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 链
 - en: '**INPUT**: Incoming packets to local system'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**INPUT**: 发往本地系统的入站数据包'
 - en: '**OUTPUT**: Outgoing packets from local system'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**OUTPUT**: 来自本地系统的出站数据包'
 - en: '**FORWARD**: Packets routed through the system'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**FORWARD**: 通过系统路由的数据包'
 - en: '**PREROUTING**: Packets before routing decision'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**PREROUTING**: 路由决策之前的数据包'
 - en: '**POSTROUTING**: Packets after routing decision'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**POSTROUTING**: 路由决策之后的数据包'
 - en: Targets
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 目标
 - en: '**ACCEPT**: Allow the packet'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**ACCEPT**: 允许数据包'
 - en: '**DROP**: Silently discard the packet'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**DROP**: 静默丢弃数据包'
 - en: '**REJECT**: Discard and send error message'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**REJECT**: 丢弃并发送错误消息'
 - en: '**LOG**: Log the packet and continue processing'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**LOG**: 记录数据包并继续处理'
 - en: '**DNAT**: Destination NAT'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**DNAT**: 目标网络地址转换'
 - en: '**SNAT**: Source NAT'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**SNAT**: 源网络地址转换'
 - en: '**MASQUERADE**: Dynamic source NAT'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**MASQUERADE**: 动态源网络地址转换'
 - en: Basic Commands
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本命令
 - en: Listing Rules
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 列出规则
 - en: '[PRE1]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Basic Rule Operations
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 基本规则操作
 - en: '[PRE2]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Common Rule Examples
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见规则示例
 - en: 1\. Allow/Block Specific Ports
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 允许/阻止特定端口
 - en: '[PRE3]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 2\. Allow/Block by IP Address
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 通过 IP 地址允许/阻止
 - en: '[PRE4]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 3\. Allow/Block by Interface
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 通过接口允许/阻止
 - en: '[PRE5]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Advanced Rules
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 高级规则
 - en: 1\. Stateful Connections
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 状态连接
 - en: '[PRE6]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 2\. Rate Limiting
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 速率限制
 - en: '[PRE7]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 3\. Time-based Rules
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 基于时间的规则
 - en: '[PRE8]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 4\. Multiport Rules
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 多端口规则
 - en: '[PRE9]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: NAT Configuration
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: NAT 配置
 - en: 1\. Source NAT (SNAT)
+  id: totrans-46
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 源网络地址转换（SNAT）
 - en: '[PRE10]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 2\. Destination NAT (DNAT)
+  id: totrans-48
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 目标网络地址转换（DNAT）
 - en: '[PRE11]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Policy Configuration
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 政策配置
 - en: Default Policies
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 默认策略
 - en: '[PRE12]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Chain Management
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 链管理
 - en: '[PRE13]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Logging
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 记录
 - en: '[PRE14]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Common Firewall Configurations
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见防火墙配置
 - en: 1\. Basic Desktop Firewall
+  id: totrans-58
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 基本桌面防火墙
 - en: '[PRE15]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 2\. Web Server Firewall
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 网络服务器防火墙
 - en: '[PRE16]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 3\. Router/Gateway Configuration
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 路由器/网关配置
 - en: '[PRE17]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Persistence
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 持久性
 - en: 1\. Save/Restore Rules
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 保存/恢复规则
 - en: '[PRE18]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 2\. Automatic Loading
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 自动加载
 - en: '[PRE19]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Troubleshooting
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 故障排除
 - en: 1\. Testing Rules
+  id: totrans-70
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 测试规则
 - en: '[PRE20]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 2\. Debugging
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 调试
 - en: '[PRE21]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 3\. Emergency Access
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 紧急访问
 - en: '[PRE22]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Security Best Practices
+  id: totrans-76
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安全最佳实践
 - en: 1\. Default Deny Policy
+  id: totrans-77
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 默认拒绝策略
 - en: '[PRE23]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 2\. Order Matters
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 顺序问题
 - en: '[PRE24]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 3\. Rate Limiting Critical Services
+  id: totrans-81
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 限制关键服务的速率
 - en: '[PRE25]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Performance Considerations
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 性能考虑
 - en: '[PRE26]'
+  id: totrans-84
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: Important Notes
+  id: totrans-85
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要注意事项
 - en: Always test rules before making them permanent
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在使规则永久化之前始终测试规则
 - en: Keep a way to access the system if rules block you out
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 保持一种方法，以防规则阻止你访问系统
 - en: Use specific protocols and ports rather than blanket rules
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用特定的协议和端口而不是泛洪规则
 - en: Monitor logs to understand traffic patterns
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 监控日志以了解流量模式
 - en: Document your firewall rules for future reference
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 记录你的防火墙规则以供将来参考
 - en: Regular backup of working configurations
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 定期备份工作配置
 - en: Consider using UFW for simpler firewall management
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑使用 UFW 以简化防火墙管理
 - en: The `iptables` command provides comprehensive firewall capabilities but requires
     careful planning and testing to avoid security issues or system lockouts.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '`iptables` 命令提供了全面的防火墙功能，但需要仔细规划和测试，以避免安全问题和系统锁定。'
 - en: 'For more details, check the manual: `man iptables`'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请参阅手册：`man iptables`

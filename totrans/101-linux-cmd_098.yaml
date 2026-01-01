@@ -1,81 +1,125 @@
 - en: The `cut` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`cut` 命令'
 - en: The `cut` command lets you remove sections from each line of files. Print selected
     parts of lines from each FILE to standard output. With no FILE, or when FILE is
     -, read standard input.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cut` 命令让您可以从文件的每一行中删除部分内容。从每个文件中打印所选行的部分到标准输出。如果没有文件，或者当文件为 - 时，读取标准输入。'
 - en: 'Usage and Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用方法和示例：
 - en: Selecting specific fields in a file
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在文件中选择特定字段
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Selecting specific characters:'
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择特定字符：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Here, **k** denotes the starting position of the character and **n** denotes
     the ending position of the character in each line, if *k* and *n* are separated
     by “-” otherwise they are only the position of character in each line from the
     file taken as an input.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，**k** 表示字符的起始位置，**n** 表示字符的结束位置，如果 *k* 和 *n* 由“-”分隔，否则它们仅表示文件输入中每行字符的位置。
 - en: 'Selecting specific bytes:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择特定字节：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Tabs and backspaces** are treated like as a character of 1 byte.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**制表符和退格符**被视为1个字节的字符。'
 - en: 'Syntax:'
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-b` | `--bytes=LIST` | select only these bytes |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '`-b` | `--bytes=LIST` | 仅选择这些字节 |'
 - en: '| `-c` | `--characters=LIST` | select only these characters |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '`-c` | `--characters=LIST` | 仅选择这些字符 |'
 - en: '| `-d` | `--delimiter=DELIM` | use DELIM instead of TAB for field delimiter
     |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '`-d` | `--delimiter=DELIM` | 使用 DELIM 作为字段分隔符，而不是制表符 |'
 - en: '| `-f` | `--fields` | select only these fields; also print any line that contains
     no delimiter character, unless the -s option is specified |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '`-f` | `--fields` | 仅选择这些字段；还打印任何不包含分隔符字符的行，除非指定了 -s 选项 |'
 - en: '| `-s` | `--only-delimited` | do not print lines not containing delimiters
     |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '`-s` | `--only-delimited` | 不打印不包含分隔符的行 |'
 - en: '| `-z` | `--zero-terminated` | line delimiter is NUL, not newline |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '`-z` | `--zero-terminated` | 行分隔符是 NUL，而不是换行符 |'

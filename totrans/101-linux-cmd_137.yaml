@@ -1,178 +1,272 @@
 - en: The `ln` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`ln` 命令'
 - en: The `ln` command is used to create links between files in Linux. It can create
     both hard links and symbolic (soft) links, which are essential for file system
     management and organization.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ln` 命令用于在 Linux 中创建文件之间的链接。它可以创建硬链接和符号（软）链接，这对于文件系统的管理和组织至关重要。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Types of Links
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 链接类型
 - en: Hard Links
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 硬链接
 - en: Point directly to the file's inode
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 直接指向文件的inode
 - en: Cannot span across different filesystems
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不能跨越不同的文件系统
 - en: Cannot link to directories
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不能链接到目录
 - en: If original file is deleted, hard link still contains the data
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果原始文件被删除，硬链接仍然包含数据
 - en: Symbolic (Soft) Links
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 符号（软）链接
 - en: Point to the file path (like shortcuts)
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 指向文件路径（如快捷方式）
 - en: Can span across different filesystems
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可以跨越不同的文件系统
 - en: Can link to directories
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可以链接到目录
 - en: If original file is deleted, symbolic link becomes broken
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果原始文件被删除，符号链接会损坏
 - en: Options
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选项
 - en: 'Some popular option flags include:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些流行的选项标志包括：
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Examples
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: Create a hard link
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建硬链接
 - en: '[PRE2]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Create a symbolic link
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建符号链接
 - en: '[PRE3]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Create a symbolic link to a directory
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建指向目录的符号链接
 - en: '[PRE4]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Create multiple symbolic links in a directory
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在目录中创建多个符号链接
 - en: '[PRE5]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Create a relative symbolic link
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建相对符号链接
 - en: '[PRE6]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Force create a link (overwrite existing)
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 强制创建链接（覆盖现有）
 - en: '[PRE7]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Create links with verbose output
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 创建带有详细输出的链接
 - en: '[PRE8]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Use Cases
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用例
 - en: Creating shortcuts to frequently used files or directories
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建对常用文件或目录的快捷方式
 - en: Maintaining multiple versions of configuration files
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 维护配置文件的多个版本
 - en: Organizing files without duplicating storage space
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 组织文件而不重复存储空间
 - en: Creating backup references to important files
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 创建对重要文件的备份引用
 - en: Setting up development environments with shared libraries
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用共享库设置开发环境
 - en: Important Notes
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要注意事项
 - en: Use `ls -l` to see if a file is a symbolic link (indicated by `->`)
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `ls -l` 查看文件是否为符号链接（由 `->` 表示）
 - en: Use `ls -i` to see inode numbers for hard links
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `ls -i` 查看硬链接的inode编号
 - en: Be careful with symbolic links to avoid creating circular references
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在处理符号链接时要小心，以避免创建循环引用
 - en: Hard links share the same inode and disk space
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 硬链接共享相同的inode和磁盘空间
 - en: Symbolic links take minimal disk space (just the path information)
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 符号链接占用最小的磁盘空间（仅路径信息）
 - en: The `ln` command is essential for efficient file system organization and is
     widely used in system administration and development workflows.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '`ln` 命令对于高效的文件系统组织至关重要，在系统管理和开发工作流程中得到广泛应用。'
 - en: 'For more details, check the manual: `man ln`'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请查看手册：`man ln`

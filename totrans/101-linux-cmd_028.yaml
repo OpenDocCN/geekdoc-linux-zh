@@ -1,241 +1,377 @@
 - en: The `history` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`history`命令'
 - en: The `history` command displays a list of previously executed commands from your
     current shell session and past sessions. This allows you to review, search, and
     re-execute commands without retyping them.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`history`命令显示您当前shell会话和过去会话中之前执行过的命令列表。这允许您回顾、搜索和重新执行命令，而无需重新输入。'
 - en: Command Syntax
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 命令语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: How History Works
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 历史如何工作
 - en: 'Your command history is stored in a file in your home directory:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 您的命令历史记录存储在您的主目录中的一个文件中：
 - en: '**Bash**: `~/.bash_history`'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Bash**：`~/.bash_history`'
 - en: '**Zsh**: `~/.zsh_history`'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Zsh**：`~/.zsh_history`'
 - en: 'The number of commands stored is controlled by shell variables:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 存储的命令数由shell变量控制：
 - en: '`HISTSIZE`: Maximum number of commands to keep in memory during a session'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`HISTSIZE`: 在会话期间保留在内存中的最大命令数'
 - en: '`HISTFILESIZE`: Maximum number of commands to keep in the history file'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`HISTFILESIZE`: 在历史文件中保留的最大命令数'
 - en: 'You can check these values with:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下命令检查这些值：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Common Options
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 常见选项
 - en: '`history n` - Display the last `n` commands'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`history n` - 显示最后`n`个命令'
 - en: '`history -c` - Clear the history list (current session only)'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`history -c` - 清除历史记录列表（仅当前会话）'
 - en: '`history -d offset` - Delete the history entry at position `offset`'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`history -d offset` - 删除位置`offset`的历史条目'
 - en: '`history -a` - Append new history lines to the history file'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`history -a` - 将新历史行追加到历史文件'
 - en: '`history -w` - Write the current history to the history file'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`history -w` - 将当前历史记录写入历史文件'
 - en: Examples
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: '**1\. Display your full command history:**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1. 显示您的完整命令历史：**'
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**2\. Show only the last 10 commands:**'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2. 仅显示最后10个命令：**'
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**3\. Search for specific commands in your history:**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3. 在您的历史记录中搜索特定命令：**'
 - en: '[PRE4]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**4\. Execute a command by its history number:**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**4. 通过历史编号执行命令：**'
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: This re-runs the command at position 123 in your history.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在您的历史记录中重新运行位置123的命令。
 - en: '**5\. Execute the most recent command starting with a specific string:**'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '**5. 执行以特定字符串开头的最新命令：**'
 - en: '[PRE6]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: This runs the most recent command that started with "git".
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将运行以"git"开头的最新命令。
 - en: '**6\. Execute the previous command:**'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**6. 执行上一个命令：**'
 - en: '[PRE7]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '**7\. Execute the previous command with sudo:**'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '**7. 使用sudo执行上一个命令：**'
 - en: '[PRE8]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: '**8\. Reuse arguments from the previous command:**'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**8. 重复使用上一个命令的参数：**'
 - en: '[PRE9]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**9\. Clear your command history:**'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**9. 清除您的命令历史记录：**'
 - en: '[PRE10]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '**10\. Delete a specific entry from history:**'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**10. 从历史中删除特定条目：**'
 - en: '[PRE11]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Reverse Search (Ctrl+R)
+  id: totrans-42
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 反向搜索（Ctrl+R）
 - en: 'One of the most powerful features is **reverse incremental search**:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 最强大的功能之一是**反向增量搜索**：
 - en: Press `Ctrl+R`
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 按`Ctrl+R`
 - en: Start typing part of a command
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 开始输入命令的一部分
 - en: The most recent matching command appears
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 最新的匹配命令出现
 - en: Press `Ctrl+R` again to cycle through older matches
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 再次按`Ctrl+R`以循环查看较旧匹配项
 - en: Press `Enter` to execute, or `Esc` to edit the command
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 按`Enter`执行，或按`Esc`编辑命令
 - en: History Control Variables
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 历史控制变量
 - en: 'You can customize history behavior using these variables in your `~/.bashrc`
     or `~/.zshrc`:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用这些变量在`~/.bashrc`或`~/.zshrc`中自定义历史行为：
 - en: '[PRE12]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Security Considerations
+  id: totrans-52
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 安全考虑
 - en: '**Preventing sensitive commands from being saved:**'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**防止敏感命令被保存：**'
 - en: '**Prefix with a space** (if `HISTCONTROL=ignorespace` is set):'
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**前缀为空格**（如果`HISTCONTROL=ignorespace`已设置）：'
 - en: '[PRE13]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: '**Temporarily disable history:**'
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**暂时禁用历史记录：**'
 - en: '[PRE14]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: '**Remove specific entries:**'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**删除特定条目：**'
 - en: '[PRE15]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: '**Clear history before logging out:**'
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**在登出前清除历史记录：**'
 - en: '[PRE16]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Practical Use Cases
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 实际应用案例
 - en: '**Debugging**: Review the sequence of commands that led to an error'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**调试**：检查导致错误的命令序列'
 - en: '**Documentation**: Copy command sequences for scripts or documentation'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**文档**：复制脚本或文档中的命令序列'
 - en: '**Efficiency**: Quickly re-execute complex commands without retyping'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**效率**：快速重新执行复杂命令而无需重新输入'
 - en: '**Learning**: Review commands used by others when sharing a system (in appropriate
     contexts)'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**学习**：在共享系统时回顾他人使用的命令（在适当的情况下）'
 - en: '**Audit trail**: Track what commands were executed and when (with timestamps
     enabled)'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**审计跟踪**：跟踪执行了哪些命令以及何时执行（启用时间戳）'

@@ -1,30 +1,46 @@
 - en: The `nohup` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`nohup` 命令'
 - en: When a shell exits (maybe while logging out of an SSH session), the HUP ('hang
     up') signal is send to all of its child processes, causing them to terminate.
     If you require a long-running process to continue after exiting shell, you'll
     need the `nohup` command. Prefixing any command with `nohup` causes the command
     to become *immune* to HUP signals. Additionally, STDIN is being ignored and all
     output gets redirected to local file `./nohup.out`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 shell 退出（可能在退出 SSH 会话时），HUP（挂起）信号会被发送到其所有子进程，导致它们终止。如果你需要在退出 shell 后继续运行长时间运行的过程，你需要使用
+    `nohup` 命令。在任意命令前加上 `nohup` 会使得该命令对 HUP 信号具有 *免疫性*。此外，标准输入（STDIN）将被忽略，所有输出都会被重定向到本地文件
+    `./nohup.out`。
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Applying nohup to a long-running debian upgrade:'
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将 `nohup` 应用于长时间运行的 Debian 升级：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Syntax:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

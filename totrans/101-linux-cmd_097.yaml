@@ -1,398 +1,624 @@
 - en: The `printf` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`printf` 命令'
 - en: This command lets you print the value of a variable by formatting it using rules.
     It is pretty similar to the printf in C language.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令允许你通过使用规则格式化变量值来打印变量的值。它与 C 语言中的 printf 非常相似。
 - en: 'Syntax:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Options:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项：
 - en: '| OPTION | Description |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| OPTION | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `FORMAT` | FORMAT controls the output, and defines the way that the ARGUMENTs
     will be expressed in the output |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `FORMAT` | FORMAT 控制输出，并定义了 ARGUMENTs 在输出中的表达方式 |'
 - en: '| `ARGUMENT` | An ARGUMENT will be inserted into the formatted output according
     to the definition of FORMAT |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `ARGUMENT` | ARGUMENT 将根据 FORMAT 的定义插入到格式化输出中 |'
 - en: '| `--help` | Display help and exit |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `--help` | 显示帮助并退出 |'
 - en: '| `--version` | Output version information adn exit |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `--version` | 输出版本信息并退出 |'
 - en: 'Formats:'
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 格式：
 - en: The anatomy of the FORMAT string can be extracted into three different parts,
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: FORMAT 字符串的解剖结构可以提取为三个不同的部分，
 - en: '*ordinary characters*, which are copied exactly the same characters as were
     used originally to the output.'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*普通字符*，它们被原封不动地复制到输出中。'
 - en: '*interpreted character* sequences, which are escaped with a backslash ("\").'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*解释字符序列*，它们通过反斜杠 ("\" ) 转义。'
 - en: '*conversion specifications*, this one will define the way the ARGUMENTs will
     be expressed as part of the output.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '*转换指定符*，这个指定符将定义 ARGUMENTs 作为输出部分的表达方式。'
 - en: You can see those parts in this example,
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在这个例子中看到这些部分，
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The output:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: There are two conversion specifications `%s` and `%d`, and there are two escaped
     characters which are the opening and closing double-quotes wrapping the words
     of *the future of software*. Other than that are the ordinary characters.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 有两种转换指定符 `%s` 和 `%d`，以及两种转义字符，即包围着 *软件未来* 词语的开头和结尾的双引号。除此之外，还有普通字符。
 - en: 'Conversion Specifications:'
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 转换指定符：
 - en: 'Each conversion specification begins with a `%` and ends with a `conversion
     character`. Between the `%` and the `conversion character` there may be, in order:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个转换指定符以 `%` 开始，以 `转换字符` 结束。在 `%` 和 `转换字符` 之间，可能按顺序出现：
 - en: '|  |  |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '|  |  |'
 - en: '| --- | --- |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `-` | A minus sign. This tells printf to left-adjust the conversion of the
     argument |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-` | 一个减号。这告诉 printf 将参数转换左对齐 |'
 - en: '| *number* | An integer that specifies field width; printf prints a conversion
     of ARGUMENT in a field at least number characters wide. If necessary it will be
     padded on the left (or right, if left-adjustment is called for) to make up the
     field width |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| *数字* | 一个整数，指定字段宽度；printf 在至少 number 个字符宽度的字段中打印 ARGUMENT 的转换。如果需要，它将在左侧（或右侧，如果需要左对齐）填充，以补足字段宽度。'
 - en: '| `.` | A period, which separates the field width from the precision |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `.` | 一个点，用于分隔字段宽度和精度 |'
 - en: '| *number* | An integer, the precision, which specifies the maximum number
     of characters to be printed from a string, or the number of digits after the decimal
     point of a floating-point value, or the minimum number of digits for an integer
     |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| *数字* | 一个整数，精度，指定从字符串中打印的最大字符数，或浮点值小数点后的位数，或整数的最小位数 |'
 - en: '| `h` or `l` | These differentiate between a short and a long integer, respectively,
     and are generally only needed for computer programming |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `h` 或 `l` | 这些分别区分短整数和长整数，通常仅用于计算机编程 |'
 - en: 'The conversion characters tell `printf` what kind of argument to print out,
     are as follows:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 转换字符告诉 `printf` 要打印哪种类型的参数，如下所示：
 - en: '| Conversion char | Argument type |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| 转换字符 | 参数类型 |'
 - en: '| --- | --- |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `s` | A string |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `s` | 字符串 |'
 - en: '| `c` | An integer, expressed as a character corresponds ASCII code |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `c` | 一个整数，表示为字符对应 ASCII 码 |'
 - en: '| `d, i` | An integer as a decimal number |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `d, i` | 作为十进制数的整数 |'
 - en: '| `o` | An integer as an unsigned octal number |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `o` | 作为无符号八进制数的整数 |'
 - en: '| `x, X` | An integer as an unsigned hexadecimal number |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `x, X` | 作为无符号十六进制数的整数 |'
 - en: '| `u` | An integer as an unsigned decimal number |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `u` | 作为无符号十进制数的整数 |'
 - en: '| `f` | A floating-point number with a default precision of 6 |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `f` | 默认精度为 6 的浮点数 |'
 - en: '| `e, E` | A floating-point number in scientific notation |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `e, E` | 以科学记数法表示的浮点数 |'
 - en: '| `p` | A memory address pointer |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `p` | 内存地址指针 |'
 - en: '| `%` | No conversion |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `%` | 无转换 |'
 - en: Here is the list of some examples of the `printf` output the ARGUMENT. we can
     put any word but in this one we put a 'linuxcommand` word and enclosed it with
     quotes so we can see easier the position related to the whitespaces.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是 `printf` 输出 ARGUMENT 的例子列表。我们可以放任何单词，但在这个例子中我们放了一个 'linuxcommand' 单词，并用引号括起来，这样我们可以更容易地看到与空格相关的位置。
 - en: '| FORMAT string | ARGUMENT string | Output string |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| 格式字符串 | ARGUMENT 字符串 | 输出字符串 |'
 - en: '| --- | --- | --- |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `"%s"` | `"linuxcommand"` | "linuxcommand" |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `"%s"` | `"linuxcommand"` | "linuxcommand" |'
 - en: '| `"%5s"` | `"linuxcommand"` | "linuxcommand" |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `"%5s"` | `"linuxcommand"` | "linuxcommand" |'
 - en: '| `"%.5s"` | `"linuxcommand"` | "linux" |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `"%.5s"` | `"linuxcommand"` | "linux" |'
 - en: '| `"%-8s"` | `"linuxcommand"` | "linuxcommand" |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `"%-8s"` | `"linuxcommand"` | "linuxcommand" |'
 - en: '| `"%-15s"` | `"linuxcommand"` | "linuxcommand " |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `"%-15s"` | `"linuxcommand"` | "linuxcommand " |'
 - en: '| `"%12.5s"` | `"linuxcommand"` | " linux" |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `"%12.5s"` | `"linuxcommand"` | " linux" |'
 - en: '| `"%-12.5"` | `"linuxcommand"` | "linux " |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `"%-12.5"` | `"linuxcommand"` | "linux " |'
 - en: '| `"%-12.4"` | `"linuxcommand"` | "linu " |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `"%-12.4"` | `"linuxcommand"` | "linu " |'
 - en: 'Notes:'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意事项：
 - en: '`printf` requires the number of conversion strings to match the number of ARGUMENTs'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`printf` 需要转换字符串的数量与 ARGUMENT 的数量相匹配'
 - en: '`printf` maps the conversion strings one-to-one, and expects to find exactly
     one ARGUMENT for each conversion string'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`printf` 将转换字符串一对一映射，并期望为每个转换字符串找到 exactly one ARGUMENT'
 - en: Conversion strings are always interpreted from left to right.
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 转换字符串始终从左到右解释。
 - en: 'Here''s the example:'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个例子：
 - en: The input
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 输入
 - en: '[PRE3]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The output:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE4]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: The example above shows 3 arguments, *12.07*, *larger than*, and *12*. Each
     of them interpreted from left to right one-to-one with the given 3 conversion
     strings (`%f`, `%d`, `%s`).
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的例子显示了 3 个 ARGUMENT，*12.07*，*larger than*，和 *12*。它们都从左到右一对一与给定的 3 个转换字符串（`%f`，`%d`，`%s`）进行解释。
 - en: 'Character sequences which are interpreted as special characters by `printf`:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '`printf` 解释为特殊字符的字符序列：'
 - en: '| Escaped char | Description |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| 转义字符 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `\a` | issues an alert (plays a bell). Usually ASCII BEL characters |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `\a` | 发出警报（播放铃声）。通常是 ASCII BEL 字符 |'
 - en: '| `\b` | prints a backspace |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `\b` | 打印一个退格符 |'
 - en: '| `\c` | instructs `printf` to produce no further output |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `\c` | 指示 `printf` 不再产生输出 |'
 - en: '| `\e` | prints an escape character (ASCII code 27) |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `\e` | 打印一个转义字符（ASCII 码 27） |'
 - en: '| `\f` | prints a form feed |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `\f` | 打印一个换页符 |'
 - en: '| `\n` | prints a newline |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `\n` | 打印一个换行符 |'
 - en: '| `\r` | prints a carriage return |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `\r` | 打印一个回车符 |'
 - en: '| `\t` | prints a horizontal tab |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `\t` | 打印一个水平制表符 |'
 - en: '| `\v` | prints a vertical tab |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `\v` | 打印一个垂直制表符 |'
 - en: '| `\"` | prints a double-quote (") |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `\"` | 打印一个双引号 (") |'
 - en: '| `\\` | prints a backslash () |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `\\` | 打印一个反斜杠 () |'
 - en: '| `\NNN` | prints a byte with octal value `NNN` (1 to 3 digits) |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `\NNN` | 打印八进制值为 `NNN`（1到3位）的字节 |'
 - en: '| `\xHH` | prints a byte with hexadecimal value `HH` (1 to 2 digits) |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `\xHH` | 打印十六进制值为 `HH`（1到2位）的字节 |'
 - en: '| `\uHHHH` | prints the unicode character with hexadecimal value `HHHH` (4
     digits) |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `\uHHHH` | 打印十六进制值为 `HHHH`（4位）的 unicode 字符 |'
 - en: '| `\UHHHHHHHH` | prints the unicode character with hexadecimal value `HHHHHHHH`
     (8 digits) |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| `\UHHHHHHHH` | 打印十六进制值为 `HHHHHHHH`（8位）的 unicode 字符 |'
 - en: '| `%b` | prints ARGUMENT as a string with "\" escapes interpreted as listed
     above, with the exception that octal escapes take the form `\0` or `\0NN` |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| `%b` | 以字符串形式打印 ARGUMENT，其中 "\ " 转义符的解释如上所述，但八进制转义符的形式为 `\0` 或 `\0NN` |'
 - en: 'Examples:'
+  id: totrans-83
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'The format specifiers usually used with printf are stated in the examples below:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面列出了与 printf 一起通常使用的格式说明符的例子：
 - en: '%s'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '%s'
 - en: '[PRE5]'
+  id: totrans-86
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: This will print `Printf command documentation!` in the shell.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在 shell 中打印 `Printf 命令文档！`
 - en: 'Other important attributes of printf command:'
+  id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: printf 命令的其他重要属性：
 - en: '`%b` - Prints arguments by expanding backslash escape sequences.'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%b` - 通过展开反斜杠转义序列来打印 ARGUMENT。'
 - en: '`%q` - Prints arguments in a shell-quoted format which is reusable as input.'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%q` - 以 shell 引用格式打印 ARGUMENT，该格式可作为输入重复使用。'
 - en: '`%d` , `%i` - Prints arguments in the format of signed decimal integers.'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%d` , `%i` - 以有符号十进制整数的格式打印 ARGUMENT。'
 - en: '`%u` - Prints arguments in the format of unsigned decimal integers.'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%u` - 以无符号十进制整数的格式打印 ARGUMENT。'
 - en: '`%o` - Prints arguments in the format of unsigned octal(base 8) integers.'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%o` - 以无符号八进制（基数为8）整数的格式打印 ARGUMENT。'
 - en: '`%x`, `%X` - Prints arguments in the format of unsigned hexadecimal(base 16)
     integers. %x prints lower-case letters and %X prints upper-case letters.'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%x`, `%X` - 以无符号十六进制（基数为16）整数的格式打印 ARGUMENT。%x 打印小写字母，而 %X 打印大写字母。'
 - en: '`%e`, `%E` - Prints arguments in the format of floating-point numbers in exponential
     notation. %e prints lower-case letters and %E prints upper-case.'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%e`, `%E` - 以指数记数法格式打印参数。%e 打印小写字母，%E 打印大写字母。'
 - en: '`%a`, `%A` - Prints arguments in the format of floating-point numbers in hexadecimal(base
     16) fractional notation. %a prints lower-case letters and %A prints upper-case.'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%a`, `%A` - 以十六进制（基数为16）分数记数法格式打印参数。%a 打印小写字母，%A 打印大写字母。'
 - en: '`%g`, `%G` - Prints arguments in the format of floating-point numbers in normal
     or exponential notation, whichever is more appropriate for the given value and
     precision. %g prints lower-case letters and %G prints upper-case.'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%g`, `%G` - 以正常或指数记数法格式打印参数，根据给定值和精度选择更合适的形式。%g 打印小写字母，%G 打印大写字母。'
 - en: '`%c` - Prints arguments as single characters.'
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%c` - 将参数作为单个字符打印。'
 - en: '`%f` - Prints arguments as floating-point numbers.'
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%f` - 将参数作为浮点数打印。'
 - en: '`%s` - Prints arguments as strings.'
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%s` - 将参数作为字符串打印。'
 - en: '`%%` - Prints a "%" symbol.'
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%%` - 打印一个 "%" 符号。'
 - en: 'More Examples:'
+  id: totrans-102
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 更多示例：
 - en: 'The input:'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 输入：
 - en: '[PRE6]'
+  id: totrans-104
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The output:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE7]'
+  id: totrans-106
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The two `\n` break the sentence into 3 parts of words.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 两个 `\n` 将句子分成三个单词部分。
 - en: 'The input:'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 输入：
 - en: '[PRE8]'
+  id: totrans-109
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The output
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出
 - en: '[PRE9]'
+  id: totrans-111
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: The `%f` specifier combined with the `\n` interpreted the two arguments in the
     form of floating point in the seperated new lines.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '`%f` 说明符与 `\n` 结合解释，将两个参数以浮点数的形式分别打印在新行上。'

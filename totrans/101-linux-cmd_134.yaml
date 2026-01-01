@@ -1,150 +1,234 @@
 - en: The `cmp` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`cmp` 命令'
 - en: The `cmp` command is a simple utility used to compare two files byte by byte.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cmp` 命令是一个简单的实用工具，用于逐字节比较两个文件。'
 - en: If the files are identical, `cmp` produces no output and returns a successful
     exit status. If the files differ, it reports the byte and line number where the
     first difference occurred.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果文件相同，`cmp` 不会产生输出并返回成功的退出状态。如果文件不同，它会报告第一个差异发生的字节和行号。
 - en: Syntax
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples :'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'For the following examples, let''s assume we have three files:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在以下示例中，让我们假设我们有三个文件：
 - en: 'file1.txt:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 'file1.txt:'
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'file2.txt:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 'file2.txt:'
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'file3.txt:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 'file3.txt:'
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 1\. Comparing two identical files
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 比较两个相同的文件
 - en: When the files are the same, cmp will produce no output. This is the standard
     way to confirm that two files are identical.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当文件相同，`cmp` 不会产生输出。这是确认两个文件相同的标准方式。
 - en: '[PRE4]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: (No output is shown)
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: (无输出显示)
 - en: 2\. Comparing two different files
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 比较两个不同的文件
 - en: When a difference is found, cmp reports the location of the first differing
     byte.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 当发现差异时，`cmp` 会报告第一个不同字节的地址。
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 3\. Displaying all differing bytes (--verbose or -l)
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 显示所有不同的字节 (--verbose 或 -l)
 - en: The -l (lowercase L) flag is very powerful. It prints the byte number (in decimal)
     and the value of the differing bytes (in octal) for every difference in the files.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: -l（小写 L）标志非常强大。它为文件中的每个差异打印字节编号（十进制）和不同字节的值（八进制）。
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Explanation:'
+  id: totrans-23
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 说明：
 - en: This output means that at byte position 7, file1.txt has the octal value 167
     (the letter 'w'), while file3.txt has the octal value 127 (the letter 'W').
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个输出意味着在字节位置 7，file1.txt 有八进制值 167（字母 'w'），而 file3.txt 有八进制值 127（字母 'W'）。
 - en: 4\. Comparing only the first "n" bytes (--bytes or -n)
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 仅比较前 "n" 个字节 (--bytes 或 -n)
 - en: You can limit the comparison to a certain number of bytes. Here, we only compare
     the first 5 bytes. Since "hello" is the same in both files, cmp finds no difference.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以将比较限制在特定数量的字节。在这里，我们只比较前 5 个字节。由于 "hello" 在两个文件中都是相同的，`cmp` 没有找到差异。
 - en: '[PRE7]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: (No output is shown)
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: (无输出显示)
 - en: 5\. Ignoring the initial "n" bytes (--ignore-initial or -i)
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5. 忽略初始 "n" 个字节 (--ignore-initial 或 -i)
 - en: You can tell cmp to skip a certain number of bytes at the beginning of the files
     before starting its comparison. Here, we skip the first 6 bytes, so the comparison
     starts at the letter 'w'.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以告诉 `cmp` 在开始比较之前跳过文件开头的特定数量的字节。在这里，我们跳过了前 6 个字节，因此比较从字母 'w' 开始。
 - en: '[PRE8]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Explanation:'
+  id: totrans-32
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 说明：
 - en: The output now says the difference is at "byte 1" because the comparison started
     after the initial 6 bytes were ignored.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出现在显示差异在 "字节 1"，因为比较是在忽略最初的 6 个字节之后开始的。
 - en: Common Options
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 常用选项
 - en: '| Short Flag | Long Flag | Description |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| 短标志 | 长标志 | 描述 |'
 - en: '| --- | --- | --- |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| -b | --print-bytes | Print the differing bytes. |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| -b | --print-bytes | 打印不同的字节。 |'
 - en: '| -i SKIP | --ignore-initial=SKIP | Skip the first SKIP bytes of both files.
     |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| -i SKIP | --ignore-initial=SKIP | 跳过两个文件开头的 SKIP 个字节。 |'
 - en: '| -l | --verbose | Output the byte number and the values of all differing bytes.
     |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| -l | --verbose | 输出字节编号和所有不同字节的值。 |'
 - en: '| -n LIMIT | --bytes=LIMIT | Compare at most LIMIT bytes. |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| -n LIMIT | --bytes=LIMIT | 比较最多 LIMIT 字节。 |'
 - en: '| -s | --quiet, --silent | Suppress all output. Only return an exit status.
     |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| -s | --quiet, --silent | 抑制所有输出。仅返回退出状态。 |'

@@ -1,414 +1,633 @@
 - en: The `cfdisk` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`cfdisk` 命令'
 - en: The `cfdisk` command is a curses-based disk partitioning tool for Linux. It
     provides a user-friendly, text-based interface for creating, deleting, and managing
     disk partitions. Unlike `fdisk`, `cfdisk` offers a more intuitive menu-driven
     approach.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cfdisk` 命令是 Linux 的基于 curses 的磁盘分区工具。它提供了一个用户友好的、基于文本的界面，用于创建、删除和管理磁盘分区。与
+    `fdisk` 不同，`cfdisk` 提供了一个更直观的菜单驱动方法。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Key Features
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 关键特性
 - en: '**Interactive Interface**: Menu-driven partition management'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**交互式界面**: 菜单驱动分区管理'
 - en: '**Real-time Display**: Shows current partition table'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**实时显示**: 显示当前分区表'
 - en: '**Safe Operations**: Requires explicit write command to save changes'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**安全操作**: 需要显式写入命令以保存更改'
 - en: '**Multiple File Systems**: Supports various partition types'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**多种文件系统**: 支持各种分区类型'
 - en: '**Resize Support**: Can resize existing partitions'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**调整大小支持**: 可以调整现有分区的大小'
 - en: Basic Usage
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本用法
 - en: Starting cfdisk
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 启动 cfdisk
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Navigation
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 导航
 - en: '**Up/Down Arrows**: Navigate between partitions'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**上/下箭头**: 在分区之间导航'
 - en: '**Left/Right Arrows**: Navigate between menu options'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**左/右箭头**: 在菜单选项之间导航'
 - en: '**Enter**: Select menu option'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Enter**: 选择菜单选项'
 - en: '**Tab**: Move between interface elements'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Tab**: 在界面元素之间移动'
 - en: Menu Options
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 菜单选项
 - en: Main Operations
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 主要操作
 - en: '**New**: Create a new partition'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**新**: 创建新分区'
 - en: '**Delete**: Delete selected partition'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**删除**: 删除所选分区'
 - en: '**Resize**: Resize selected partition'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**调整大小**: 调整所选分区的大小'
 - en: '**Type**: Change partition type'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**类型**: 更改分区类型'
 - en: '**Write**: Write changes to disk'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**写入**: 将更改写入磁盘'
 - en: '**Quit**: Exit without saving (if no changes written)'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**退出**: 退出而不保存（如果没有写入更改）'
 - en: Additional Options
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他选项
 - en: '**Bootable**: Toggle bootable flag'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**可引导**: 切换可引导标志'
 - en: '**Verify**: Check partition table consistency'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**验证**: 检查分区表一致性'
 - en: '**Print**: Display partition information'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**打印**: 显示分区信息'
 - en: Common Tasks
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见任务
 - en: 1\. Creating a New Partition
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 创建新分区
 - en: '[PRE2]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 2\. Deleting a Partition
+  id: totrans-33
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 删除分区
 - en: '[PRE3]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 3\. Changing Partition Type
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 更改分区类型
 - en: '[PRE4]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Common Partition Types
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见分区类型
 - en: Linux Partition Types
+  id: totrans-38
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Linux 分区类型
 - en: '**83**: Linux filesystem'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**83**: Linux 文件系统'
 - en: '**82**: Linux swap'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**82**: Linux 交换分区'
 - en: '**8e**: Linux LVM'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**8e**: Linux LVM'
 - en: '**fd**: Linux RAID autodetect'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**fd**: Linux RAID 自动检测'
 - en: Other Common Types
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他常见类型
 - en: '**07**: NTFS/HPFS'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**07**: NTFS/HPFS'
 - en: '**0c**: FAT32 LBA'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**0c**: FAT32 LBA'
 - en: '**ef**: EFI System Partition'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**ef**: EFI 系统分区'
 - en: '**01**: FAT12'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**01**: FAT12'
 - en: Command Line Options
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令行选项
 - en: '[PRE5]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Practical Examples
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 实际示例
 - en: 1\. Partitioning a New USB Drive
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 分区新 USB 驱动器
 - en: '[PRE6]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 2\. Adding Swap Partition
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 添加交换分区
 - en: '[PRE7]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 3\. Preparing Disk for LVM
+  id: totrans-55
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 为 LVM 准备磁盘
 - en: '[PRE8]'
+  id: totrans-56
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Safety Features
+  id: totrans-57
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安全特性
 - en: 1\. Change Tracking
+  id: totrans-58
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 变更跟踪
 - en: '[PRE9]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 2\. Confirmation Required
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 需要确认
 - en: '[PRE10]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 3\. Verification
+  id: totrans-62
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 验证
 - en: '[PRE11]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Working with Different Partition Tables
+  id: totrans-64
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 与不同分区表一起工作
 - en: 1\. GPT (GUID Partition Table)
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. GPT (GUID 分区表)
 - en: '[PRE12]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 2\. MBR/DOS Partition Table
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. MBR/DOS 分区表
 - en: '[PRE13]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Integration with Other Tools
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 与其他工具的集成
 - en: 1\. After Partitioning
+  id: totrans-70
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 分区后
 - en: '[PRE14]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 2\. Backup Before Changes
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 变更前备份
 - en: '[PRE15]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Troubleshooting
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 故障排除
 - en: 1\. Permission Issues
+  id: totrans-75
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 权限问题
 - en: '[PRE16]'
+  id: totrans-76
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 2\. Device Busy
+  id: totrans-77
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 设备忙碌
 - en: '[PRE17]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 3\. Partition Table Corruption
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 分区表损坏
 - en: '[PRE18]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Best Practices
+  id: totrans-81
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 最佳实践
 - en: 1\. Always Backup
+  id: totrans-82
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 总是备份
 - en: '[PRE19]'
+  id: totrans-83
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: 2\. Verify Device
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 验证设备
 - en: '[PRE20]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 3\. Plan Partition Layout
+  id: totrans-86
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 计划分区布局
 - en: '[PRE21]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 4\. Consider Alignment
+  id: totrans-88
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 考虑对齐
 - en: '[PRE22]'
+  id: totrans-89
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Comparison with Other Tools
+  id: totrans-90
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 与其他工具的比较
 - en: vs fdisk
+  id: totrans-91
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 与 fdisk 对比
 - en: '**cfdisk**: Menu-driven, user-friendly'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**cfdisk**: 菜单驱动，用户友好'
 - en: '**fdisk**: Command-driven, more scriptable'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**fdisk**: 命令驱动，更可脚本化'
 - en: vs parted
+  id: totrans-94
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 与 parted 对比
 - en: '**cfdisk**: Simpler interface, basic operations'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**cfdisk**: 简单的界面，基本操作'
 - en: '**parted**: More advanced features, command-line scriptable'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**parted**: 更高级的功能，可命令行脚本化'
 - en: vs gparted
+  id: totrans-97
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 与 gparted 对比
 - en: '**cfdisk**: Text-based, lightweight'
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**cfdisk**: 基于文本，轻量级'
 - en: '**gparted**: Graphical interface, requires X11'
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**gparted**: 图形界面，需要 X11'
 - en: Important Notes
+  id: totrans-100
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要注意事项
 - en: Always unmount partitions before modifying them
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在修改分区之前始终卸载分区
 - en: Changes are not written until you explicitly choose "Write"
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 除非你明确选择“写入”，否则更改不会写入
 - en: Backup important data before making partition changes
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在进行分区更改之前备份重要数据
 - en: Some operations may require a system reboot to take effect
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一些操作可能需要系统重启才能生效
 - en: Be extremely careful when working with system disks
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在处理系统磁盘时请格外小心
 - en: Consider using LVM for more flexible partition management
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑使用 LVM 进行更灵活的分区管理
 - en: The `cfdisk` command provides an excellent balance between ease of use and functionality
     for disk partitioning tasks.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cfdisk` 命令在易用性和功能之间提供了优秀的平衡，适用于磁盘分区任务。'
 - en: 'For more details, check the manual: `man cfdisk`'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请查看手册：`man cfdisk`

@@ -1,98 +1,152 @@
 - en: The `wall` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`wall`命令'
 - en: The `wall` command (short for *write all*) is used to send a message to all
     logged-in users on a Linux system. It is commonly used by system administrators
     to broadcast important information, such as planned maintenance or urgent announcements.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`wall`命令（简称*write all*）用于向Linux系统上所有已登录用户发送消息。它通常由系统管理员用于广播重要信息，例如计划维护或紧急公告。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If a [message] is not provided on the command line, wall will read from standard
     input until it receives an end-of-file character (Ctrl+D).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果命令行上未提供[消息]，wall将从标准输入读取，直到接收到文件结束字符（Ctrl+D）。
 - en: Options
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选项
 - en: '| Option | Description |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| -n | Suppress the banner (which shows who sent the message) and only show
     the message text. |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| -n | 抑制显示发送者信息的横幅（显示谁发送了消息），只显示消息文本。 |'
 - en: '| -t [seconds] | Set a timeout, in seconds. `wall` will try to write to a user''s
     terminal for this duration before giving up. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| -t [秒数] | 设置超时时间（秒）。`wall`将尝试在此期间向用户的终端写入，如果失败则放弃。 |'
 - en: 'Examples:'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 1\. Broadcast a message to all users
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 向所有用户广播消息
 - en: This command sends a message directly to all logged-in users.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令直接向所有已登录用户发送消息。
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Output (on other users'' terminals):'
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 输出（在其他用户的终端上）：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 2\. Broadcast a message from a text file
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 从文本文件广播消息
 - en: You can redirect the contents of a file to be used as the message.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以将文件内容重定向到用作消息的内容。
 - en: 'Contents of message.txt:'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 消息.txt的内容：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Command:'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 命令：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 3\. Send a multi-line message from standard input
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 从标准输入发送多行消息
 - en: If you run wall without a message, you can type a multi-line message directly
     in the terminal. Press Ctrl+D when you are finished to send it.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你运行wall命令而不带消息，你可以在终端中直接输入多行消息。完成输入后按Ctrl+D发送。
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Output (on other users'' terminals):'
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 输出（在其他用户的终端上）：
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'

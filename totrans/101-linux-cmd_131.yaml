@@ -1,150 +1,236 @@
 - en: The `shuf` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`shuf` 命令'
 - en: The `shuf` command in Linux writes a random permutation of the input lines to
     standard output. It pseudo randomizes an input in the same way as the cards are
     shuffled. It is a part of GNU Coreutils and is not a part of POSIX. This command
     reads either from a file or standard input in bash and randomizes those input
     lines and displays the output.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 中的 `shuf` 命令将输入行的随机排列写入标准输出。它以与洗牌相同的方式伪随机化输入。它是 GNU Coreutils 的一部分，不是
+    POSIX 的一部分。此命令从文件或 bash 的标准输入读取，随机化这些输入行并显示输出。
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Like other Linux commands, `shuf` command comes with `-–help` option:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其他 Linux 命令一样，`shuf` 命令带有 `-–help` 选项：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Examples:'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: shuf command without any option or argument.
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 无选项或参数的 shuf 命令。
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'When `shuf` command is used without any argument in the command line, it takes
     input from the user until `CTRL-D` is entered to terminate the set of inputs.
     It displays the input lines in a shuffled form. If `1, 2, 3, 4 and 5` are entered
     as input lines, then it generates `1, 2, 3, 4 and 5` in random order in the output
     as seen in the illustration below:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 `shuf` 命令在命令行中没有任何参数时，它会从用户那里获取输入，直到输入 `CTRL-D` 以终止输入集。它以打乱的形式显示输入行。如果输入行是
+    `1, 2, 3, 4 和 5`，那么它将在输出中以随机顺序生成 `1, 2, 3, 4 和 5`，如下面的插图所示：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Consider an example where Input is taken from the pipe:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个从管道获取输入的例子：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '`seq 5` returns the integers sequentially from `1` to `5` while the `shuf`
     command takes it as input and shuffles the content i.e, the integers from `1`
     to `5`. Hence, `1` to `5` is displayed as output in random order.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`seq 5` 返回从 `1` 到 `5` 的连续整数，而 `shuf` 命令将其作为输入并打乱内容，即从 `1` 到 `5` 的整数。因此，以随机顺序显示
+    `1` 到 `5` 作为输出。'
 - en: '[PRE5]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: File shuf
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 文件 shuf
 - en: When `shuf` command is used without `-e` or `-i` option, then it operates as
     a file shuf i.e, it shuffles the contents of the file. The `<file_name>` is the
     last parameter of the `shuf` command and if it is not given, then input has to
     be provided from the shell or pipe.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 `shuf` 命令使用时没有 `-e` 或 `-i` 选项，那么它作为文件 shuf 运行，即它打乱文件的内容。`<file_name>` 是 `shuf`
+    命令的最后一个参数，如果没有提供，则必须从 shell 或管道提供输入。
 - en: 'Consider an example where input is taken from a file:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个从文件获取输入的例子：
 - en: '[PRE6]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Suppose file.txt contains 6 lines, then the shuf command displays the input
     lines in random order as output.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设 file.txt 包含 6 行，那么 shuf 命令会以随机顺序显示输入行作为输出。
 - en: '[PRE7]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Any number of lines can be randomized by using `-n` option.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用 `-n` 选项随机化任意数量的行。
 - en: '[PRE8]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: This will display any two random lines from the file.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将显示文件中的任意两行。
 - en: '[PRE9]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: List shuf
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 列出 shuf 命令
 - en: When `-e` option is used with shuf command, it works as a list shuf. The arguments
     of the command are taken as the input line for the shuf.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 `-e` 选项与 shuf 命令一起时，它作为列表 shuf 运行。命令的参数被视为 shuf 的输入行。
 - en: 'Consider an example:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑一个例子：
 - en: '[PRE10]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: It will take `A, B, C, D, E` as input lines, and will shuffle them to display
     the output.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将 `A, B, C, D, E` 作为输入行，并将它们打乱以显示输出。
 - en: '[PRE11]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Any number of input lines can be displayed using the `-n` option along with
     `-e` option.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用 `-n` 选项与 `-e` 选项一起显示任意数量的输入行。
 - en: '[PRE12]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: This will display any two of the inputs.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将显示任意两个输入。
 - en: '[PRE13]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Range shuf
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 范围 shuf
 - en: When `-i` option is used along with `shuf` command, it acts as a `range shuf`.
     It requires a range of input as input where `L0` is the lower bound while `HI`
     is the upper bound. It displays integers from `L0-HI` in shuffled form.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 当与 `shuf` 命令一起使用 `-i` 选项时，它作为 `range shuf` 运行。它需要一个输入范围作为输入，其中 `L0` 是下限，而 `HI`
+    是上限。它以打乱的形式显示从 `L0-HI` 的整数。
 - en: '[PRE14]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Conclusion
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: The `shuf` command helps you randomize input lines. And there are features to
     limit the number of output lines, repeat lines and even generate random positive
     integers. Once you're done practicing whatever we've discussed here, head to the
     tool's [man page](https://linux.die.net/man/1/shuf) to know more about it.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '`shuf` 命令可以帮助您随机化输入行。并且有功能来限制输出行的数量、重复行甚至生成随机正整数。一旦您完成了在这里讨论的练习，请转到工具的 [man
+    页面](https://linux.die.net/man/1/shuf) 以了解更多信息。'

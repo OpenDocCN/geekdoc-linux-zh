@@ -1,366 +1,566 @@
 - en: The `fsck` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`fsck` 命令'
 - en: The `fsck` (file system check) command is used to check and repair Linux file
     systems. It can detect and fix various file system inconsistencies, corruption
     issues, and structural problems. It's an essential tool for maintaining file system
     integrity and recovering from system crashes.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fsck`（文件系统检查）命令用于检查和修复Linux文件系统。它可以检测和修复各种文件系统不一致性、损坏问题和结构问题。它是维护文件系统完整性和从系统崩溃中恢复的必备工具。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Key Features
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 关键特性
 - en: '**Multiple File System Support**: Works with ext2, ext3, ext4, XFS, and more'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**多种文件系统支持**：支持ext2, ext3, ext4, XFS等'
 - en: '**Automatic Detection**: Can auto-detect file system type'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**自动检测**：可以自动检测文件系统类型'
 - en: '**Interactive Repair**: Prompts for confirmation before fixes'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**交互式修复**：在修复前提示确认'
 - en: '**Batch Mode**: Can run automatically without user interaction'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**批处理模式**：可以在没有用户交互的情况下自动运行'
 - en: '**Read-Only Mode**: Check without making changes'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**只读模式**：检查而不做更改'
 - en: Basic Usage
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本用法
 - en: Simple File System Check
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 简单文件系统检查
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Check All File Systems
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 检查所有文件系统
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Common Options
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见选项
 - en: Basic Options
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 基本选项
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Advanced Options
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 高级选项
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: File System Specific Commands
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 文件系统特定命令
 - en: 1\. ext2/ext3/ext4 (e2fsck)
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. ext2/ext3/ext4 (e2fsck)
 - en: '[PRE5]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 2\. XFS (xfs_repair)
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. XFS (xfs_repair)
 - en: '[PRE6]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 3\. FAT32 (fsck.fat)
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. FAT32 (fsck.fat)
 - en: '[PRE7]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Practical Examples
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 实际示例
 - en: 1\. Check Before Mounting
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 在挂载前检查
 - en: '[PRE8]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 2\. System Recovery After Crash
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 系统崩溃后的恢复
 - en: '[PRE9]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 3\. Scheduled Maintenance
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 定期维护
 - en: '[PRE10]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Working with Different Scenarios
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 处理不同场景
 - en: 1\. Read-Only Check
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 只读检查
 - en: '[PRE11]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 2\. Automatic Repair
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 自动修复
 - en: '[PRE12]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 3\. Interactive Repair
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 交互式修复
 - en: '[PRE13]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Boot-Time File System Checks
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 启动时文件系统检查
 - en: 1\. Automatic Checks
+  id: totrans-42
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 自动检查
 - en: '[PRE14]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 2\. Force Check on Next Boot
+  id: totrans-44
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 在下一次启动时强制检查
 - en: '[PRE15]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 3\. Check Intervals
+  id: totrans-46
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 检查间隔
 - en: '[PRE16]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Troubleshooting Common Issues
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见问题故障排除
 - en: 1\. Unmountable File System
+  id: totrans-49
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 无法卸载的文件系统
 - en: '[PRE17]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 2\. Bad Superblock
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 超级块损坏
 - en: '[PRE18]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 3\. Lost+Found Directory
+  id: totrans-53
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. Lost+Found 目录
 - en: '[PRE19]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Advanced Repair Options
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 高级修复选项
 - en: 1\. Bad Block Handling
+  id: totrans-56
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 损坏块处理
 - en: '[PRE20]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: 2\. Journal Recovery
+  id: totrans-58
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 日志恢复
 - en: '[PRE21]'
+  id: totrans-59
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: 3\. Inode Problems
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. Inode 问题
 - en: '[PRE22]'
+  id: totrans-61
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Monitoring and Logging
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 监控和日志记录
 - en: 1\. Check Results
+  id: totrans-63
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 检查结果
 - en: '[PRE23]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: 2\. File System Status
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 文件系统状态
 - en: '[PRE24]'
+  id: totrans-66
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: 3\. Automated Monitoring
+  id: totrans-67
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 自动监控
 - en: '[PRE25]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Prevention and Best Practices
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 预防和最佳实践
 - en: 1\. Regular Maintenance
+  id: totrans-70
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 定期维护
 - en: '[PRE26]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: 2\. Proper Shutdown
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 正确关机
 - en: '[PRE27]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'
 - en: 3\. UPS Protection
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. UPS 保护
 - en: '[PRE28]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE28]'
 - en: Recovery Scenarios
+  id: totrans-76
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 恢复场景
 - en: 1\. Boot Failure
+  id: totrans-77
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 启动失败
 - en: '[PRE29]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE29]'
 - en: 2\. Data Recovery
+  id: totrans-79
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 数据恢复
 - en: '[PRE30]'
+  id: totrans-80
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE30]'
 - en: 3\. Multiple Errors
+  id: totrans-81
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 多个错误
 - en: '[PRE31]'
+  id: totrans-82
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE31]'
 - en: Performance Considerations
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 性能考虑
 - en: 1\. Speed Optimization
+  id: totrans-84
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 速度优化
 - en: '[PRE32]'
+  id: totrans-85
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE32]'
 - en: 2\. System Impact
+  id: totrans-86
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 系统影响
 - en: '[PRE33]'
+  id: totrans-87
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE33]'
 - en: Important Safety Notes
+  id: totrans-88
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要安全提示
 - en: '**Always unmount** file systems before checking'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**始终在检查前卸载**文件系统'
 - en: '**Backup important data** before repairs'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**在修复前备份重要数据**'
 - en: '**Never interrupt** fsck during operation'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**在操作期间切勿中断** fsck'
 - en: '**Use read-only mode** first to assess damage'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**首先使用只读模式**来评估损坏情况'
 - en: '**Understand risks** of automatic repair modes'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**理解自动修复模式的风险**'
 - en: '**Boot from live media** for root filesystem checks'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**从可启动介质启动**以检查根文件系统'
 - en: '**Have recovery plan** ready before starting repairs'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**在开始修复前准备好恢复计划**'
 - en: Exit Codes
+  id: totrans-96
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 退出代码
 - en: '[PRE34]'
+  id: totrans-97
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE34]'
 - en: The `fsck` command is crucial for maintaining file system integrity and recovering
     from corruption issues.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fsck` 命令对于维护文件系统完整性和从损坏问题中恢复至关重要。'
 - en: 'For more details, check the manual: `man fsck`'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请查看手册：`man fsck`

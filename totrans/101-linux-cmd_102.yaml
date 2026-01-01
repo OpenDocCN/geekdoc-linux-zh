@@ -1,312 +1,506 @@
 - en: The `find` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`find` 命令'
 - en: The `find` command is one of the most powerful Linux utilities that lets you
     search for files and directories based on various conditions like name, size,
     modification time, permissions, and more.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`find` 命令是 Linux 中最强大的实用工具之一，它允许您根据名称、大小、修改时间、权限等多种条件搜索文件和目录。'
 - en: Basic Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 基本语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**In simple words:**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**简单来说：**'
 - en: “Search starting from `[path]`, apply `[options or filters]`, and then perform
     an `[action]` on the result.”
+  id: totrans-5
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: “从 `[path]` 开始搜索，应用 `[options or filters]`，然后对结果执行 `[action]`。”
 - en: 'Example:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This searches for all `.log` files under `/home/user`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在 `/home/user` 下搜索所有 `.log` 文件。
 - en: Common Use Cases
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见用例
 - en: 1\. Search a File by Exact Name
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 通过精确名称搜索文件
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Finds `sample.txt` inside `directory1` and all its subdirectories.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 `directory1` 和其所有子目录中查找 `sample.txt`。
 - en: 'Case-insensitive search:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 不区分大小写的搜索：
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 2\. Search Files by Pattern (Wildcard)
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 通过模式（通配符）搜索文件
 - en: Find all `.txt` files under `directory1`.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找 `directory1` 下的所有 `.txt` 文件。
 - en: '[PRE4]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'More examples:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多示例：
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 3\. Find Directories by Name
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 通过名称查找目录
 - en: '[PRE6]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Lists all directories named `test` from the root `/`.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出从根目录 `/` 开始的所有名为 `test` 的目录。
 - en: 4\. Find Empty Files and Directories
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 4. 查找空文件和目录
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Finds both empty files and directories in the current folder.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 在当前文件夹中查找空文件和目录。
 - en: 'Only empty files:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 仅查找空文件：
 - en: '[PRE8]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 5\. Find Files by Modification or Access Time
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 5. 通过修改或访问时间查找文件
 - en: '| Option | Description |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `-mtime n` | Modified *n* days ago |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-mtime n` | n 天前修改 |'
 - en: '| `-atime n` | Accessed *n* days ago |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-atime n` | n 天前访问 |'
 - en: '| `-ctime n` | Changed *n* days ago |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-ctime n` | n 天前更改 |'
 - en: '| `-mmin n` | Modified *n* minutes ago |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-mmin n` | n 分钟前修改 |'
 - en: 'Examples:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Find files modified within the last 2 days.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找过去两天内修改的文件。
 - en: '[PRE9]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Find files modified within the last hour.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找过去一小时内修改的文件。
 - en: '[PRE10]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 6\. Find Files by Size
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 6. 通过大小查找文件
 - en: '| Expression | Meaning |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| 表达式 | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `+n` | Greater than n |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `+n` | 大于 n |'
 - en: '| `-n` | Less than n |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | 小于 n |'
 - en: '| `n` | Exactly n |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `n` | 精确等于 n |'
 - en: 'Examples:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Find files larger than 100 MB.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找大于 100 MB 的文件。
 - en: '[PRE11]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Find files smaller than 10 KB.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找小于 10 KB 的文件。
 - en: '[PRE12]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 7\. Find Files Modified More Recently than Another File
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 7. 查找比另一个文件修改时间更近的文件
 - en: '[PRE13]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Lists files modified after `reference.txt`.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出在 `reference.txt` 之后修改的文件。
 - en: 8\. Find Files by Type
+  id: totrans-54
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 8. 通过类型查找文件
 - en: '| Type | Description |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| 类型 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `f` | Regular file |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `f` | 普通文件 |'
 - en: '| `d` | Directory |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `d` | 目录 |'
 - en: '| `l` | Symbolic link |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `l` | 符号链接 |'
 - en: '| `b` | Block device |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `b` | 块设备 |'
 - en: '| `c` | Character device |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `c` | 字符设备 |'
 - en: 'Example:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Find all block devices.
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找所有块设备。
 - en: '[PRE14]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 9\. Find Files by Permission
+  id: totrans-65
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 9. 通过权限查找文件
 - en: Find files with exactly 644 permissions.
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找权限精确为 644 的文件。
 - en: '[PRE15]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Find files executable by anyone.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找任何人可执行的文件。
 - en: '[PRE16]'
+  id: totrans-69
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 10\. Execute Commands on Found Files
+  id: totrans-70
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 10. 执行找到的文件上的命令
 - en: 'You can use the `-exec` option to run a command on each file found:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `-exec` 选项对每个找到的文件运行命令：
 - en: '[PRE17]'
+  id: totrans-72
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Deletes all `.log` files under the current directory.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 删除当前目录下的所有 `.log` 文件。
 - en: '**Alternative (faster):**'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '**替代方案（更快）：**'
 - en: '[PRE18]'
+  id: totrans-75
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: 11\. Combine Multiple Conditions
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 11. 对找到的文件执行命令
 - en: 'You can combine filters together:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以将过滤器组合在一起：
 - en: '[PRE19]'
+  id: totrans-78
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Finds `.log` files larger than 50 MB and modified within the last 2 days.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 查找大于 50 MB 且在过去两天内修改的 `.log` 文件。
 - en: 12\. Print Only File Names (Quiet Output)
+  id: totrans-80
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 12. 仅打印文件名（静默输出）
 - en: '[PRE20]'
+  id: totrans-81
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: The `-print` flag ensures output is displayed (it’s the default in most systems).
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-print` 标志确保输出显示（在大多数系统中是默认设置）。'
 - en: Quick Reference Table
+  id: totrans-83
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 快速参考表
 - en: '| Task | Command |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| 任务 | 命令 |'
 - en: '| --- | --- |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| Find files with specific name | `find . -name filename.txt` |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| 查找具有特定名称的文件 | `find . -name filename.txt` |'
 - en: '| Case-insensitive search | `find . -iname filename.txt` |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| 不区分大小写的搜索 | `find . -iname filename.txt` |'
 - en: '| Find directories only | `find . -type d` |'
+  id: totrans-88
   prefs: []
   type: TYPE_TB
+  zh: '| 仅查找目录 | `find . -type d` |'
 - en: '| Find empty files | `find . -type f -empty` |'
+  id: totrans-89
   prefs: []
   type: TYPE_TB
+  zh: '| 查找空文件 | `find . -type f -empty` |'
 - en: '| Find files > 1 GB | `find . -size +1G` |'
+  id: totrans-90
   prefs: []
   type: TYPE_TB
+  zh: '| 查找大于 1 GB 的文件 | `find . -size +1G` |'
 - en: '| Find modified in last day | `find . -mtime -1` |'
+  id: totrans-91
   prefs: []
   type: TYPE_TB
+  zh: '| 查找昨天修改的文件 | `find . -mtime -1` |'
 - en: '| Delete `.tmp` files | `find . -name "*.tmp" -delete` |'
+  id: totrans-92
   prefs: []
   type: TYPE_TB
+  zh: '| 删除 `.tmp` 文件 | `find . -name "*.tmp" -delete` |'
 - en: '| Search and execute | `find . -name "*.log" -exec gzip {} \;` |'
+  id: totrans-93
   prefs: []
   type: TYPE_TB
+  zh: '| 搜索并执行 | `find . -name "*.log" -exec gzip {} \;` |'
 - en: Getting Help
+  id: totrans-94
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 获取帮助
 - en: 'To view the complete guide for the `find` command, run:'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看 `find` 命令的完整指南，请运行：
 - en: '[PRE21]'
+  id: totrans-96
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'

@@ -1,117 +1,182 @@
 - en: The `gunzip` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`gunzip` 命令'
 - en: The `gunzip` command is an antonym command of [`gzip` command](015-the-gzip-command.md).
     In other words, it decompresses files deflated by the `gzip` command.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`gunzip` 命令是 `gzip` 命令的反义词。换句话说，它解压缩由 `gzip` 命令压缩的文件。'
 - en: '"`gunzip` takes a list of files as arguments. It replaces each file whose name
     ends with `.gz`, `-gz`, `.z`, `-z`, or `_z` (case-insensitive) and which begins
     with the correct magic number with an uncompressed file, removing the original
     extension."'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '"`gunzip` 接受一系列文件作为参数。它将每个以 `.gz`、`-gz`、`.z`、`-z` 或 `_z`（不区分大小写）结尾且以正确的魔数开头的文件替换为未压缩文件，并移除原始扩展名。"'
 - en: 'Examples:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Uncompress a file
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 解压缩文件
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '"Recursively uncompress all files inside a directory that match the compressed
     file formats supported by `gunzip`:"'
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '"递归地解压缩目录内所有与 `gunzip` 支持的压缩文件格式匹配的文件：'
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '"Uncompress all files in the current working directory whose suffix matches
     `.tgz`:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '"解压缩当前工作目录中所有后缀匹配 `.tgz` 的文件：'
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'List compressed and uncompressed sizes, compression ratio and uncompressed
     name of input compressed file/s:'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 列出压缩和未压缩的大小、压缩比以及输入压缩文件的未压缩名称：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Syntax:'
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Video tutorial about using gzip, gunzip and tar commands:'
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 关于使用 gzip、gunzip 和 tar 命令的视频教程：
 - en: '[This video](https://www.youtube.com/watch?v=OBtG8zfVwuI) shows how to compress
     and decompress in a Unix shell. It uses `gunzip` as decompression command.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '[本视频](https://www.youtube.com/watch?v=OBtG8zfVwuI) 展示了如何在 Unix shell 中进行压缩和解压缩。它使用
+    `gunzip` 作为解压缩命令。'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| -c | --stdout | write on standard output, keep original files unchanged |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| -c | --stdout | 写入标准输出，保持原始文件不变 |'
 - en: '| -h | --help | give help information |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| -h | --help | 提供帮助信息 |'
 - en: '| -k | --keep | keep (don''t delete) input files |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| -k | --keep | 保持（不删除）输入文件 |'
 - en: '| -l | --list | list compressed file contents |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| -l | --list | 列出压缩文件内容 |'
 - en: '| -q | --quiet | suppress all warnings |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| -q | --quiet | 抑制所有警告 |'
 - en: '| -r | --recursive | operate recursively on directories |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| -r | --recursive | 递归地对目录进行操作 |'
 - en: '| -S | --suffix=SUF | use suffix SUF on compressed files |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| -S | --suffix=SUF | 在压缩文件上使用后缀 SUF |'
 - en: '|  | --synchronous | synchronous output (safer if system crashes, but slower)
     |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '|  | --synchronous | 同步输出（如果系统崩溃更安全，但速度较慢） |'
 - en: '| -t | --test | test compressed file integrity |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| -t | --test | 测试压缩文件完整性 |'
 - en: '| -v | --verbose | verbose mode |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| -v | --verbose | 详细模式 |'
 - en: '| -V | --version | display version number |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| -V | --version | 显示版本号 |'
 - en: '**Note: gunzip filename.gz is equivalent to gzip -d filename.gz.'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**注意：gunzip filename.gz 等同于 gzip -d filename.gz。'
 - en: 'Warning: Running gunzip without -c deletes the original compressed file by
     default.'
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 警告：默认情况下，不使用 -c 选项运行 gunzip 会删除原始压缩文件。

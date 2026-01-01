@@ -1,138 +1,222 @@
 - en: The `stat` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`stat` 命令'
 - en: The `stat` command lets you display file or file system status. It gives you
     useful information about the file (or directory) on which you use it.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`stat` 命令让您显示文件或文件系统的状态。它提供了关于您使用它的文件（或目录）的有用信息。'
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Basic command usage
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 基本命令用法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Use the `-c` (or `--format`) argument to only display information you want to
     see (here, the total size, in bytes)
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 `-c`（或 `--format`）参数仅显示您想看到的信息（在此处，总大小，以字节为单位）
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Syntax:'
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-9
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| Short Flag | Long Flag | Description |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 短标志 | 长标志 | 描述 |'
 - en: '| --- | --- | --- |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `-L` | `--dereference` | Follow links |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `-L` | `--dereference` | 跟随链接 |'
 - en: '| `-f` | `--file-system` | Display file system status instead of file status
     |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--file-system` | 显示文件系统状态而不是文件状态 |'
 - en: '| `-c` | `--format=FORMAT` | Specify the format (see below) |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `--format=FORMAT` | 指定格式（见下文） |'
 - en: '| `-t` | `--terse` | Print the information in terse form |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | `--terse` | 以简洁形式打印信息 |'
 - en: '| - | `--cached=MODE` | Specify how to use cached attributes. Can be: `always`,
     `never`, or `default` |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--cached=MODE` | 指定如何使用缓存属性。可以是：`always`，`never` 或 `default` |'
 - en: '| - | `--printf=FORMAT` | Like `--format`, but interpret backslash escapes
     (`\n`, `\t`, ...) |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--printf=FORMAT` | 与 `--format` 类似，但解释反斜杠转义（`\n`, `\t`, ...） |'
 - en: '| - | `--help` | Display the help and exit |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--help` | 显示帮助信息并退出 |'
 - en: '| - | `--version` | Output version information and exit |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--version` | 输出版本信息并退出 |'
 - en: 'Example of Valid Format Sequences for Files:'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 文件的有效格式序列示例：
 - en: '| Format | Description |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| 格式 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `%a` | Permission bits in octal |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `%a` | 八进制权限位 |'
 - en: '| `%A` | Permission bits and file type in human readable form |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `%A` | 以人类可读形式显示权限位和文件类型 |'
 - en: '| `%d` | Device number in decimal |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `%d` | 十进制中的设备号 |'
 - en: '| `%D` | Device number in hex |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `%D` | 十六进制中的设备号 |'
 - en: '| `%F` | File type |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `%F` | 文件类型 |'
 - en: '| `%g` | Group ID of owner |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `%g` | 所有者的组ID |'
 - en: '| `%G` | Group name of owner |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `%G` | 所有者的组名 |'
 - en: '| `%h` | Number of hard links |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `%h` | 硬链接数 |'
 - en: '| `%i` | Inode number |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `%i` | 索引节点号 |'
 - en: '| `%m` | Mount point |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `%m` | 挂载点 |'
 - en: '| `%n` | File name |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `%n` | 文件名 |'
 - en: '| `%N` | Quoted file name with dereference if symbolic link |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `%N` | 如果是符号链接则取消引用的引号文件名 |'
 - en: '| `%s` | Total size, in bytes |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `%s` | 总大小，以字节为单位 |'
 - en: '| `%u` | User ID of owner |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `%u` | 所有者的用户ID |'
 - en: '| `%U` | User name of owner |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `%U` | 所有者的用户名 |'
 - en: '| `%w` | Time of file birth, human-readable; - if unknown |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `%w` | 文件创建时间，可读格式；- 如果未知 |'
 - en: '| `%x` | Time of last access, human-readable |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `%x` | 最后访问时间，可读格式 |'
 - en: '| `%y` | Time of last data modification, human-readable |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `%y` | 最后数据修改时间，可读格式 |'
 - en: '| `%z` | Time of last status change, human-readable |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `%z` | 最后状态更改时间，可读格式 |'

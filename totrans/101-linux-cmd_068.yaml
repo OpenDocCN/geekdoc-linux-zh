@@ -1,95 +1,147 @@
 - en: The `lsof` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`lsof`命令'
 - en: The `lsof` command shows **file infomation** of all the files opened by a running
     process. It's name is also derived from the fact that, list open files > `lsof`
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`lsof`命令显示所有运行进程打开的**文件信息**。它的名字也来源于“列出打开文件 > `lsof`”的事实。'
 - en: An open file may be a regular file, a directory, a block special file, a character
     special file, an executing text reference, a library , a stream or a network file
     (Internet socket, NFS file or UNIX domain socket). A specific file or all the
     files in a file system may be selected by path.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 打开的文件可能是一个普通文件、一个目录、一个块特殊文件、一个字符特殊文件、一个执行中的文本引用、一个库、一个流或一个网络文件（互联网套接字、NFS文件或UNIX域套接字）。可以通过路径选择特定的文件或文件系统中的所有文件。
 - en: 'Syntax:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To show all the files opened by all active processes:'
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示所有活动进程打开的所有文件：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To show the files opened by a particular user:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示特定用户打开的文件：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'To list the processes with opened files under a specified directory:'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要列出指定目录下打开文件的进程：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Options and their Functionalities:'
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项及其功能：
 - en: '| **Option** | **Additional Options** | **Description** |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| **选项** | **附加选项** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-i` | `tcp`/ `udp`/ `:port` | List all network connections running, Additionally,
     on udp/tcp or on specified port. |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | `tcp`/ `udp`/ `:port` | 列出所有正在运行的网络连接，另外，在 udp/tcp 或指定端口上。 |'
 - en: '| `-i4` | - | List all processes with ipv4 connections. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-i4` | - | 列出所有具有ipv4连接的进程。 |'
 - en: '| `-i6` | - | List all processes with ipv6 connections. |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-i6` | - | 列出所有具有ipv6连接的进程。 |'
 - en: '| `-c` | `[PROCESS_NAME]` | List all the files of a particular process with
     given name. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `[进程名称]` | 列出具有给定名称的特定进程的所有文件。 |'
 - en: '| `-p` | `[PROCESS_ID]` | List all the files opened by a specified process
     id. |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | `[进程ID]` | 列出由指定进程ID打开的所有文件。 |'
 - en: '| `-p` | `^[PROCESS_ID]` | List all the files that are not opened by a specified
     process id. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | `^[进程ID]` | 列出所有未由指定进程ID打开的文件。 |'
 - en: '| `+d` | `[PATH]` | List the processes with opened files under a specified
     directory |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `+d` | `[路径]` | 列出指定目录下打开文件的进程 |'
 - en: '| `+R` | - | List the files opened by parent process Id. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `+R` | - | 列出父进程ID打开的文件。 |'
 - en: Help Command
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 帮助命令
 - en: Run below command to view the complete guide to `lsof` command.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行以下命令以查看`lsof`命令的完整指南。
 - en: '[PRE4]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

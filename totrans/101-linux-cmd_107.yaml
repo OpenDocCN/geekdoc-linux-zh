@@ -1,181 +1,281 @@
 - en: The `grep` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`grep` 命令'
 - en: The `grep` filter searches a file for a particular pattern of characters, and
     displays all lines that contain that pattern. grep stands for globally search
     for regular expression and print out. The pattern that is searched in the file
     is referred to as the regular expression.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`grep` 过滤器在文件中搜索特定的字符模式，并显示所有包含该模式的行。grep 代表全局搜索正则表达式并打印出来。在文件中搜索的模式被称为正则表达式。'
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: To search the contents of the destination.txt file for a string("KeY") case
     insensitively.
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为了在 destination.txt 文件的内容中搜索字符串("KeY")而不区分大小写。
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Displaying the count of number of matches
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示匹配项的数量
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: We can search multiple files and only display the files that contains the given
     string/pattern.
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们可以搜索多个文件，并且只显示包含给定字符串/模式的文件。
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: To show the line number of file with the line matched.
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示包含匹配行的文件的行号。
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: If you want to grep the monitored log files, you can add the `--line-buffered`
     to search them in real time.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果你想搜索监控的日志文件，可以添加 `--line-buffered` 来实时搜索它们。
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Syntax:'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: 'The general syntax for the grep command is as follows:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: grep 命令的一般语法如下：
 - en: '[PRE5]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-c` | `--count` | print a count of matching lines for each input file |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `--count` | 为每个输入文件打印匹配行的计数 |'
 - en: '| `-h` | `--no-filename` | Display the matched lines, but do not display the
     filenames |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | `--no-filename` | 显示匹配行，但不显示文件名 |'
 - en: '| `-i` | `--ignore-case` | Ignores, case for matching |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | `--ignore-case` | 忽略大小写进行匹配 |'
 - en: '| `-l` | `--files-with-matches` | Displays list of a filenames only. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--files-with-matches` | 仅显示文件名列表。 |'
 - en: '| `-n` | `--line-number` | Display the matched lines and their line numbers.
     |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--line-number` | 显示匹配行及其行号。 |'
 - en: '| `-v` | `--invert-match` | This prints out all the lines that do not matches
     the pattern |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--invert-match` | 此选项将打印出所有不匹配模式的行 |'
 - en: '| `-e` | `--regexp=` | Specifies expression with this option. Can use multiple
     times |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | `--regexp=` | 使用此选项指定表达式。可以多次使用 |'
 - en: '| `-f` | `--file=` | Takes patterns from file, one per line. |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--file=` | 从文件中读取模式，每行一个。 |'
 - en: '| `-F` | `--fixed-strings=` | Interpret patterns as fixed strings, not regular
     expressions. |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `-F` | `--fixed-strings=` | 将模式解释为固定字符串，而不是正则表达式。 |'
 - en: '| `-E` | `--extended-regexp` | Treats pattern as an extended regular expression
     (ERE) |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-E` | `--extended-regexp` | 将模式视为扩展正则表达式（ERE） |'
 - en: '| `-w` | `--word-regexp` | Match whole word |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-w` | `--word-regexp` | 匹配整个单词 |'
 - en: '| `-o` | `--only-matching` | Print only the matched parts of a matching line,
     with each such part on a separate output line. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-o` | `--only-matching` | 仅打印匹配行的匹配部分，每个部分单独一行输出。 |'
 - en: '|  | `--line-buffered` | Force output to be line buffered. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--line-buffered` | 强制输出为行缓冲。 |'
 - en: 'Additional Practical Examples:'
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他实用示例：
 - en: Search recursively in all files within a directory
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在目录中的所有文件中进行递归搜索
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Search for whole words only (not partial matches)
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 仅搜索整个单词（不匹配部分单词）
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Display lines that do NOT contain the pattern (invert match)
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示不包含该模式的行（反向匹配）
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Search for multiple patterns using extended regex
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用扩展正则表达式搜索多个模式
 - en: '[PRE9]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Search and show context lines (lines before and after match)
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 搜索并显示匹配的前后文行（匹配前后的行）
 - en: '[PRE10]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Search for pattern at the beginning or end of line
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在行的开始或结束处搜索模式
 - en: '[PRE11]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Count total matches across multiple files
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在多个文件中计算总匹配数
 - en: '[PRE12]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Find files containing a pattern and pipe to other commands
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 查找包含模式的文件并将结果传递给其他命令
 - en: '[PRE13]|'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '[PRE13]|'
 - en: '```'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '```'

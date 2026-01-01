@@ -1,144 +1,228 @@
 - en: The `nc` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`nc`命令'
 - en: The `nc` (or netcat) command is used to perform any operation involving TCP
     (Transmission Control Protocol, connection oriented), UDP (User Datagram Protocol,
     connection-less, no guarantee of data delivery) or UNIX-domain sockets. It can
     be thought of as swiss-army knife for communication protocol utilities.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nc`（或netcat）命令用于执行涉及TCP（传输控制协议，面向连接）、UDP（用户数据报协议，无连接，不保证数据传输）或UNIX域套接字的任何操作。它可以被视为通信协议工具的瑞士军刀。'
 - en: 'Syntax:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '1\. Open a TCP connection to port 80 of host, using port 1337 as source port
     with timeout of 5s:'
+  id: totrans-5
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 1. 使用源端口1337和5秒超时打开到主机80端口的TCP连接：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '2\. Open a UDP connection to port 80 on host:'
+  id: totrans-7
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 2. 打开到主机80端口的UDP连接：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '3\. Create and listen on UNIX-domain stream socket:'
+  id: totrans-9
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 3. 创建并监听UNIX域流套接字：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '4\. Create a basic server/client model:'
+  id: totrans-11
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 4. 创建基本的客户端/服务器模型：
 - en: This creates a connection, with no specific server/client sides with respect
     to nc, once the connection is established.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在建立连接后创建一个连接，nc没有特定的服务器/客户端端，一旦连接建立。
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '5\. Build a basic data transfer model:'
+  id: totrans-14
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 5. 构建基本的数据传输模型：
 - en: After the file has been transferred, sequentially, the connection closes automatically
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件传输完成后，连接将自动按顺序关闭
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '6\. Talk to servers:'
+  id: totrans-17
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 6. 与服务器通信：
 - en: Basic example of retrieving the homepage of the host, along with headers.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 获取主机主页的基本示例，包括头部信息。
 - en: '[PRE6]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '7\. Port scanning:'
+  id: totrans-20
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 7. 端口扫描：
 - en: Checking which ports are open and running services on target machines. `-z`
     flag commands to inform about those rather than initiate a connection.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 检查目标机器上哪些端口开放并运行服务。使用`-z`标志命令来通知这些信息，而不是发起连接。
 - en: '[PRE7]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Flags and their Functionalities:'
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 标志及其功能：
 - en: '| **Short Flag** | **Description** |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **描述** |'
 - en: '| --- | --- |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `-4` | Forces nc to use IPv4 addresses |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-4` | 强制nc使用IPv4地址 |'
 - en: '| `-6` | Forces nc to use IPv6 addresses |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `-6` | 强制nc使用IPv6地址 |'
 - en: '| `-b` | Allow broadcast |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | 允许广播 |'
 - en: '| `-D` | Enable debugging on the socket |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-D` | 在套接字上启用调试 |'
 - en: '| `-i` | Specify time interval delay between lines sent and received |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | 指定发送和接收行之间的时间间隔延迟 |'
 - en: '| `-k` | Stay listening for another connection after current is over |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-k` | 在当前连接结束后继续监听另一个连接 |'
 - en: '| `-l` | Listen for incoming connection instead of initiate one to remote |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | 监听传入连接而不是向远程发起连接 |'
 - en: '| `-T` | Specify length of TCP |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-T` | 指定TCP的长度 |'
 - en: '| `-p` | Specify source port to be used |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | 指定要使用的源端口 |'
 - en: '| `-r` | Specify source and/or destination ports randomly |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | 随机指定源端口和/或目标端口 |'
 - en: '| `-s` | Specify IP of interface which is used to send the packets |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | 指定用于发送数据包的接口的IP地址 |'
 - en: '| `-U` | Use UNIX-domain sockets |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-U` | 使用UNIX域套接字 |'
 - en: '| `-u` | Use UDP instead of TCP as protocol |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | 使用UDP而不是TCP作为协议 |'
 - en: '| `-w` | Declare a timeout threshold for idle or unestablished connections
     |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `-w` | 声明空闲或未建立的连接的超时阈值 |'
 - en: '| `-x` | Should use specified protocol when talking to proxy server |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` | 与代理服务器通信时使用指定的协议 |'
 - en: '| `-z` | Specify to scan for listening daemons, without sending any data |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `-z` | 指定扫描监听守护进程，但不发送任何数据 |'

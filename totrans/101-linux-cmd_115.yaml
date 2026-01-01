@@ -1,265 +1,430 @@
 - en: The `date` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`date` 命令'
 - en: The `date` command is used to print the system current date and time.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `date` 命令来打印系统当前日期和时间。
 - en: '`date` command is also used to set the date and time of the system, but you
     need to be the super-user *(root)* to do it.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`date` 命令也用于设置系统的日期和时间，但您需要是超级用户 (root) 才能这样做。'
 - en: 'Examples:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To show the current date and time:'
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示当前日期和时间：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: You can use -u option to show the date and time in UTC *(Coordinated Universal
     Time)* time zone
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 您可以使用 -u 选项来显示 UTC (协调世界时) 时区的日期和时间
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To display any given date string in formatted date:'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示任何给定的日期字符串的格式化日期：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Syntax:'
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-d` | `--date=STRING` | convert the provided string into formatted date
     |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | `--date=STRING` | 将提供的字符串转换为格式化日期 |'
 - en: '| `-f` | `--file=DATEFILE` | like `--date` but for files |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--file=DATEFILE` | 与 `--date` 类似，但用于文件 |'
 - en: '| `-I[FMT]` | `--iso-8601[=FMT]` | Display date and time in ISO 8601 format
     |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-I[FMT]` | `--iso-8601[=FMT]` | 以 ISO 8601 格式显示日期和时间 |'
 - en: '| `-r` | `--reference=FILE` | Display the last modification time of FILE |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | `--reference=FILE` | 显示 FILE 的最后修改时间 |'
 - en: '| `-s` | `--set=STRING` | sets the time to the one described by STRING |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | `--set=STRING` | 将时间设置为 STRING 描述的时间 |'
 - en: '| `-u` | `--universal` | show the date and time in UTC *(Coordinated Universal
     Time)* time zone |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | `--universal` | 以 UTC (协调世界时) 时区显示日期和时间 |'
 - en: '| `-R` | `--rfc-email` | Display date and time in ISO 8601 format Example:
     (Fri, 22 Oct 2021 05:18:42 +0200) |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-R` | `--rfc-email` | 以 ISO 8601 格式显示日期和时间示例：(Fri, 22 Oct 2021 05:18:42
+    +0200) |'
 - en: '| - | `rfc-3339=FMT` | Display date and time in RFC 3339 format |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| - | `rfc-3339=FMT` | 以 RFC 3339 格式显示日期和时间 |'
 - en: '| - | `--debug` | Usually used with `--date` to annotate the parsed date and
     warn about questionable usage to stderr |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--debug` | 通常与 `--date` 一起使用，用于注释解析的日期并警告关于可疑使用的 stderr |'
 - en: 'Control The output:'
+  id: totrans-24
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 控制输出：
 - en: You can use Format specifiers to control the output date and time.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用格式指定符来控制输出日期和时间。
 - en: 'Examples:'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '| **Command** | **Output** |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **输出** |'
 - en: '| :-- | :-- |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `$ date "+%D"` | `10/22/21` |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `$ date "+%D"` | `10/22/21` |'
 - en: '| `$ date "+%D %T"` | `10/22/21 05:33:51` |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `$ date "+%D %T"` | `10/22/21 05:33:51` |'
 - en: '| `$ date "+%A %B %d %T %y"` | `Friday October 22 05:34:47 21` |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `$ date "+%A %B %d %T %y"` | `Friday October 22 05:34:47 21` |'
 - en: 'Syntax:'
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE4]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'List of Format specifiers to control the output:'
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 控制输出格式的格式指定符列表：
 - en: '| **Specifiers** | **Description** |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| **指定符** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `%a` | abbreviated weekday name *(e.g., Sun)* |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `%a` | 缩写的星期名称 (例如，Sun) |'
 - en: '| `%A` | full weekday name *(e.g., Sunday)* |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `%A` | 完整的星期名称 (例如，Sunday) |'
 - en: '| `%b` | abbreviated month name *(e.g., Jan)* |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `%b` | 缩写月份名称 (例如，Jan) |'
 - en: '| `%B` | full month name *(e.g., January)* |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `%B` | 完整的月份名称 (例如，January) |'
 - en: '| `%c` | date and time *(e.g., Thu Mar 3 23:05:25 2005)* |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `%c` | 日期和时间 (例如，Thu Mar 3 23:05:25 2005) |'
 - en: '| `%C` | century; like %Y, except omit last two digits (e.g., 20) |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `%C` | 世纪；与 %Y 相同，但省略最后两位数字 (例如，20) |'
 - en: '| `%d` | day of month (e.g., 01) |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `%d` | 月份中的天数 (例如，01) |'
 - en: '| `%D` | date; same as %m/%d/%y |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `%D` | 日期；与 %m/%d/%y 相同 |'
 - en: '| `%e` | day of month, space padded; same as %_d |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `%e` | 月份中的天数，空格填充；与 %_d 相同 |'
 - en: '| `%F` | full date; same as %Y-%m-%d |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `%F` | 完整日期；与 %Y-%m-%d 相同 |'
 - en: '| `%g` | last two digits of year of ISO week number (see %G) |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `%g` | ISO 周数年份的最后两位数字 (见 %G) |'
 - en: '| `%G` | year of ISO week number (see %V); normally useful only with %V |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `%G` | ISO 周数年份 (见 %V)；通常只有与 %V 一起使用时才有用 |'
 - en: '| `%h` | same as %b |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `%h` | 与 %b 相同 |'
 - en: '| `%H` | hour (00..23) |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `%H` | 小时 (00..23) |'
 - en: '| `%I` | hour (01..12) |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `%I` | 小时 (01..12) |'
 - en: '| `%j` | day of year (001..366) |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `%j` | 年中的天数 (001..366) |'
 - en: '| `%k` | hour, space padded ( 0..23); same as %_H |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `%k` | 小时，空格填充 ( 0..23)；与 %_H 相同 |'
 - en: '| `%l` | hour, space padded ( 1..12); same as %_I |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `%l` | 小时，空格填充 ( 1..12)；与 %_I 相同 |'
 - en: '| `%m` | month (01..12) |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `%m` | 月份 (01..12) |'
 - en: '| `%M` | minute (00..59) |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `%M` | 分钟 (00..59) |'
 - en: '| `%n` | a newline |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `%n` | 一个换行符 |'
 - en: '| `%N` | nanoseconds (000000000..999999999) |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `%N` | 纳秒 (000000000..999999999) |'
 - en: '| `%p` | locale''s equivalent of either AM or PM; blank if not known |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `%p` | 本地 AM 或 PM 的等效值；如果不知道则为空格 |'
 - en: '| `%P` | like %p, but lower case |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `%P` | 类似 %p，但为小写 |'
 - en: '| `%q` | quarter of year (1..4) |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `%q` | 年度的季度 (1..4) |'
 - en: '| `%r` | locale''s 12-hour clock time (e.g., 11:11:04 PM) |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `%r` | 本地 12 小时制时间 (例如，11:11:04 PM) |'
 - en: '| `%R` | 24-hour hour and minute; same as %H:%M |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `%R` | 24 小时小时和分钟；与 %H:%M 相同 |'
 - en: '| `%s` | seconds since 1970-01-01 00:00:00 UTC |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `%s` | 自 1970-01-01 00:00:00 UTC 以来经过的秒数 |'
 - en: '| `%S` | second (00..60) |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `%S` | 秒 (00..60) |'
 - en: '| `%t` | a tab |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `%t` | 一个制表符 |'
 - en: '| `%T` | time; same as %H:%M:%S |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `%T` | 时间；与 %H:%M 相同 |'
 - en: '| `%u` | day of week (1..7); 1 is Monday |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `%u` | 星期中的天数（1..7）；1 是星期一|'
 - en: '| `%U` | week number of year, with Sunday as first day of week (00..53) |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `%U` | 一年中的周数，以星期日为一周的第一天（00..53）|'
 - en: '| `%V` | ISO week number, with Monday as first day of week (01..53) |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `%V` | ISO 周数，以星期一为一周的第一天（01..53）|'
 - en: '| `%w` | day of week (0..6); 0 is Sunday |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `%w` | 星期中的天数（0..6）；0 是星期日|'
 - en: '| `%W` | week number of year, with Monday as first day of week (00..53) |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `%W` | 一年中的周数，以星期一为一周的第一天（00..53）|'
 - en: '| `%x` | locale''s date representation (e.g., 12/31/99) |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `%x` | 语言的日期表示（例如，12/31/99）|'
 - en: '| `%X` | locale''s time representation (e.g., 23:13:48) |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `%X` | 语言的日期表示（例如，23:13:48）|'
 - en: '| `%y` | last two digits of year (00..99) |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `%y` | 年份的最后两位数字（00..99）|'
 - en: '| `%Y` | year |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `%Y` | 年份|'
 - en: '| `%z` | +hhmm numeric time zone (e.g., -0400) |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `%z` | +hhmm 数值时区（例如，-0400）|'
 - en: '| `%:z` | +hh:mm numeric time zone (e.g., -04:00) |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `%:z` | +hh:mm 数值时区（例如，-04:00）|'
 - en: '| `%::z` | +hh:mm:ss numeric time zone (e.g., -04:00:00) |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `%::z` | +hh:mm:ss 数值时区（例如，-04:00:00）|'
 - en: '| `%:::z` | numeric time zone with : to necessary precision (e.g., -04, +05:30)
     |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `%:::z` | 以 : 表示的数值时区，精确到必要的精度（例如，-04，+05:30）|'
 - en: '| `%Z` | alphabetic time zone abbreviation (e.g., EDT) |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| `%Z` | 字母时区缩写（例如，EDT）|'

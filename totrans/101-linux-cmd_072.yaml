@@ -1,112 +1,176 @@
 - en: The `mpstat` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`mpstat`命令'
 - en: The `mpstat` command is used to report processor related statistics. It accurately
     displays the statistics of the CPU usage of the system and information about CPU
     utilization and performance.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`mpstat`命令用于报告处理器相关统计信息。它准确显示系统CPU使用率的统计信息以及CPU利用率和性能信息。'
 - en: 'Syntax:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Note : It initializes the first processor with CPU 0, the second one with CPU
     1, and so on.'
+  id: totrans-4
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 注意：它将第一个处理器初始化为CPU 0，第二个处理器为CPU 1，依此类推。
 - en: 'Options and their Functionalities:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项及其功能：
 - en: '| **Option** | **Description** |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| **选项** | **描述** |'
 - en: '| --- | --- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `-A` | to display all the detailed statistics |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `-A` | 显示所有详细统计信息 |'
 - en: '| `-h` | to display mpstat help |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | 显示mpstat帮助信息 |'
 - en: '| `-I` | to display detailed interrupts statistics |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `-I` | 显示详细的中断统计信息 |'
 - en: '| `-n` | to report summary CPU statistics based on NUMA node placement |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | 根据NUMA节点位置报告总结CPU统计信息 |'
 - en: '| `-N` | to indicate the NUMA nodes for which statistics are to be reported
     |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `-N` | 指定要报告统计信息的NUMA节点 |'
 - en: '| `-P` | to indicate the processors for which statistics are to be reported
     |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `-P` | 指定要报告统计信息的处理器 |'
 - en: '| `-o` | to display the statistics in JSON (Javascript Object Notation) format
     |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `-o` | 以JSON（JavaScript对象表示法）格式显示统计信息 |'
 - en: '| `-T` | to display topology elements in the CPU report |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `-T` | 在CPU报告中显示拓扑元素 |'
 - en: '| `-u` | to report CPU utilization |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | 报告CPU利用率 |'
 - en: '| `-v` | to display utilization statistics at the virtual processor level |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | 在虚拟处理器级别显示利用率统计信息 |'
 - en: '| `-V` | to display mpstat version |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-V` | 显示mpstat版本 |'
 - en: '| `-ALL` | to display detailed statistics about all CPUs |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-ALL` | 显示所有CPU的详细统计信息 |'
 - en: 'Examples:'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To display processor and CPU statistics:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示处理器和CPU统计信息：
 - en: '[PRE1]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'To display processor number of all CPUs:'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示所有CPU的处理器编号：
 - en: '[PRE2]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'To get all the information which the tool may collect:'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 获取工具可能收集的所有信息：
 - en: '[PRE3]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'To display CPU utilization by a specific processor:'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示特定处理器的CPU利用率：
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'To display CPU usage with a time interval:'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以时间间隔显示CPU使用情况：
 - en: '[PRE5]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Note: This command will print 5 reports with 1 second time interval**'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：此命令将以1秒的时间间隔打印5个报告**'

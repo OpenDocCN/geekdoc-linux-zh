@@ -1,51 +1,77 @@
 - en: The `xargs` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`xargs` 命令'
 - en: '`xargs` is used to build and execute command lines from standard input'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`xargs` 用于从标准输入构建和执行命令行'
 - en: Some commands like grep can accept input as parameters, but some commands accepts
     arguments, this is place where xargs came into picture.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些命令，如 grep，可以接受作为参数的输入，但有些命令接受参数，这就是 xargs 出现的地方。
 - en: 'Syntax:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Options:'
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Input items are terminated by a null character instead of by whitespace, and
     the quotes and backslash are not special (every character is taken literal‐ly).
     Disables the end of file string, which is treated like any other argument. Useful
     when input items might contain white space, quote marks, or back‐slashes.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 输入项以空字符终止，而不是以空白字符终止，引号和反斜杠不是特殊字符（每个字符都被当作字面意思）。禁用文件结束字符串，它被当作任何其他参数处理。当输入项可能包含空格、引号或反斜杠时很有用。
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Read items from file instead of standard input. If you use this option, stdin
     remains unchanged when commands are run. Otherwise, stdin is redirected from /dev/null.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 从文件读取项目而不是标准输入。如果你使用此选项，当运行命令时，stdin 保持不变。否则，stdin 将从 /dev/null 重定向。
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Reopen stdin as /dev/tty in the child process before executing the command.
     This is useful if you want xargs to run an interactive application.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在执行命令之前，在子进程中重新打开 stdin 为 /dev/tty。如果你想让 xargs 运行交互式应用程序，这很有用。
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Input items are terminated by the specified character. The specified delimiter
     may be a single character, a C-style character escape such as \n, or an octal
     or hexadecimal escape code. Octal and hexadecimal escape codes are understood
@@ -55,56 +81,89 @@
     like any other argument. You can use this option when the input consists of simply
     newline-separated items, although it is al‐ most always better to design your
     program to use --null where this is possible.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 输入项以指定的字符终止。指定的分隔符可以是一个字符，一个 C 风格的字符转义，如 \n，或一个八进制或十六进制转义代码。八进制和十六进制转义代码与 printf
+    命令相同。不支持多字节字符。在处理输入时，引号和反斜杠不是特殊字符；输入中的每个字符都被当作字面意思。-d 选项禁用任何文件结束字符串，它被当作任何其他参数处理。当输入仅由换行符分隔的项目组成时，可以使用此选项，尽管几乎总是更好的设计程序以使用
+    --null，如果可能的话。
 - en: '[PRE5]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Prompt the user about whether to run each command line and read a line from
     the terminal. Only run the command line if the response starts with `y' or` Y'.
     Implies -t.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示用户是否运行每个命令行，并从终端读取一行。只有当响应以 `y` 或 `Y` 开头时才运行命令行。隐含 -t。
 - en: 'Examples:'
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE6]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Find files named core in or below the directory /tmp and delete them. Note that
     this will work incorrectly if there are any filenames containing newlines or spaces.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在目录 /tmp 中或其下方查找名为 core 的文件并删除它们。请注意，如果存在包含换行符或空格的文件名，这将无法正确工作。
 - en: '[PRE7]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Find files named core in or below the directory /tmp and delete them, processing
     filenames in such a way that file or directory names containing spaces or new‐
     lines are correctly handled.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在目录 /tmp 中或其下方查找名为 core 的文件并删除它们，以这种方式处理文件名，使得包含空格或换行符的文件名或目录名能够正确处理。
 - en: '[PRE8]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Find files named core in or below the directory /tmp and delete them, but more
     efficiently than in the previous example (because we avoid the need to use fork(2)
     and exec(2) to launch rm and we don't need the extra xargs process).
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在目录 /tmp 中或其下方查找名为 core 的文件并删除它们，但比上一个示例更高效（因为我们避免了使用 fork(2) 和 exec(2) 来启动
+    rm 的需要，并且我们不需要额外的 xargs 进程）。
 - en: '[PRE9]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Generates a compact listing of all the users on the system.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 生成系统上所有用户的紧凑列表。
 - en: Help Command
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 帮助命令
 - en: Run below command to view the complete guide to `xargs` command.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行以下命令以查看 `xargs` 命令的完整指南。
 - en: '[PRE10]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'

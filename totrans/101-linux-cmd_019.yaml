@@ -1,178 +1,275 @@
 - en: The `top/htop` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`top/htop` 命令'
 - en: '`top` is the default command-line utility that comes pre-installed on Linux
     distributions and Unix-like operating systems. It is used for displaying information
     about the system and its top CPU-consuming processes as well as RAM usage.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`top` 是预安装在 Linux 发行版和类 Unix 操作系统中的默认命令行实用程序。它用于显示有关系统和其最高CPU消耗进程以及RAM使用情况的信息。'
 - en: '`htop` is interactive process-viewer and process-manager for Linux and Unix-like
     operating system based on ncurses. If you take top and put it on steroids, you
     get htop.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`htop` 是基于 ncurses 的 Linux 和类 Unix 操作系统的交互式进程查看器和进程管理器。如果你把 top 放在类固醇上，你就得到了
+    htop。'
 - en: 'Comparison between top and htop:'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: top 和 htop 的比较：
 - en: '| **Feature** | **top** | **htop** |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| **特性** | **top** | **htop** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| Type | Interactive system-monitor, process-viewer and process-manager | Interactive
     system-monitor, process-viewer and process-manager |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 类型 | 交互式系统监控器、进程查看器和进程管理器 | 交互式系统监控器、进程查看器和进程管理器 |'
 - en: '| Operating System | Linux distributions, macOS | Linux distributions, macOS
     |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 操作系统 | Linux发行版，macOS | Linux发行版，macOS |'
 - en: '| Installation | Built-in and is always there. Also has more adoption due to
     this fact. | Doesn''t come preinstalled on most Linux distros. Manual installation
     is needed |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| 安装 | 内置且始终存在。也因为这一点而得到更广泛的采用。 | 大多数Linux发行版中未预安装。需要手动安装 |'
 - en: '| User Interface | Basic text only | Colorful and nicer text-graphics interface
     |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| 用户界面 | 仅基本文本 | 颜色丰富且更美观的文本图形界面 |'
 - en: '| Scrolling Support | No | Yes, supports horizontal and vertical scrolling
     |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 滚动支持 | 否 | 是，支持水平和垂直滚动 |'
 - en: '| Mouse Support | No | Yes |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| 鼠标支持 | 否 | 是 |'
 - en: '| Process utilization | Displays processes but not in tree format | Yes, including
     user and kernel threads |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| 进程利用率 | 显示进程，但不是以树形格式显示 | 是的，包括用户和内核线程 |'
 - en: '| Scrolling Support | No | Yes, supports horizontal and vertical scrolling
     |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| 滚动支持 | 否 | 是，支持水平和垂直滚动 |'
 - en: '| Mouse Support | No | Yes |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| 鼠标支持 | 否 | 是 |'
 - en: '| Process utilization | Displays processes but not in tree format | Yes, including
     user and kernel threads |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 进程利用率 | 显示进程，但不是以树形格式显示 | 是的，包括用户和内核线程 |'
 - en: '| Network Utilization | No | No |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| 网络利用率 | 否 | 否 |'
 - en: '| Disk Utilization | No | No |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| 磁盘利用率 | 否 | 否 |'
 - en: '| Comments | Has a learning curve for some advanced options like searching,
     sending messages to processes, etc. It is good to have some knowledge of top because
     it is the default process viewer on many systems. | Easier to use and supports
     vi like searching with `/`. Sending messages to processes (kill, renice) is easier
     and doesn''t require typing in the process number like top. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| 评论 | 对于一些高级选项（如搜索、向进程发送消息等）有一个学习曲线。了解 top 是好的，因为它是许多系统上的默认进程查看器。 | 更易于使用，并支持类似
+    vi 的搜索，使用 `/`。向进程发送消息（kill、renice）更容易，不需要像 top 那样输入进程号。 |'
 - en: 'Examples:'
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '`top`'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`top`'
 - en: 'To display dynamic real-time information about running processes:'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示运行进程的动态实时信息：
 - en: '[PRE0]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Sorting processes by internal memory size (default order - process ID):'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 按内部内存大小排序进程（默认顺序 - 进程ID）：
 - en: '[PRE1]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Sorting processes first by CPU, then by running time:'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 首先按CPU排序，然后按运行时间排序：
 - en: '[PRE2]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Display only processes owned by given user:'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 仅显示指定用户的进程：
 - en: '[PRE3]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`htop`'
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`htop`'
 - en: Display dynamic real-time information about running processes. An enhanced version
     of `top`.
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示运行进程的动态实时信息。`top` 的增强版本。
 - en: '[PRE4]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'displaying processes owned by a specific user:'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示特定用户的进程：
 - en: '[PRE5]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Sort processes by a specified `sort_item` (use `htop --sort help` for available
     options):'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 按指定的 `sort_item` 排序进程（使用 `htop --sort help` 查看可用选项）：
 - en: '[PRE6]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Syntax:'
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE7]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 额外的标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | - | Sort by memory usage. |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | - | 按内存使用量排序。 |'
 - en: '| `-b` | - | Batch mode operation. Starts top in ''Batch mode'', which could
     be useful for sending output from top to other programs or to a file. In this
     mode, top will not accept input and runs until the iterations limit you''ve set
     with the ''-n'' command-line option or until killed. |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | - | 批量模式操作。以 ''批量模式'' 启动 top，这在将 top 的输出发送到其他程序或文件时可能很有用。在此模式下，top
+    不会接受输入，直到达到您使用 ''-n'' 命令行选项设置的迭代限制或被终止。 |'
 - en: '| `-h` | - | `top --user {user_name}` Only display processes owned by user.
     |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | - | `top --user {用户名}` 仅显示属于用户的进程。 |'
 - en: '| `-U` | -user | Help. |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `-U` | -user | 帮助。 |'
 - en: '| `-u` | - | This is an alias equivalent to: -o cpu -O time. |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | - | 这是一个与：-o cpu -O time 等效的别名。 |'

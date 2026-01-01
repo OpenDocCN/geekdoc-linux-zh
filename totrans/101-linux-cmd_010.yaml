@@ -1,178 +1,281 @@
 - en: The `df` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`df` 命令'
 - en: The `df` command in Linux/Unix is used to show the disk usage & information.
     `df` is an abbreviation for "disk free".
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux/Unix 中的 `df` 命令用于显示磁盘使用情况和信息。`df` 是 "disk free" 的缩写。
 - en: '`df` displays the amount of disk space available on the file system containing
     each file name argument. If no file name is given, the space available on all
     currently mounted file systems is shown.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`df` 显示包含每个文件名参数的文件系统上的可用磁盘空间。如果没有提供文件名，则显示所有当前挂载的文件系统上的可用空间。'
 - en: Syntax
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Options
+  id: totrans-5
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '**短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | `--all` | Include pseudo, duplicate, inaccessible file systems. |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '`-a` | `--all` | 包含伪、重复、不可访问的文件系统。'
 - en: '| `-B` | `--block-size=SIZE` | Scale sizes by SIZE before printing them; e.g.,
     `-BM` prints sizes in units of 1,048,576 bytes; see SIZE format below. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '`-B` | `--block-size=SIZE` | 在打印之前按 SIZE 缩放大小；例如，`-BM` 以 1,048,576 字节为单位打印大小；请参阅下面的
+    SIZE 格式。'
 - en: '| `-h` | `--human-readable` | Print sizes in powers of 1024 (e.g., 1023M).
     |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '`-h` | `--human-readable` | 以 1024 的幂次打印大小（例如，1023M）。'
 - en: '| `-H` | `--si` | Print sizes in powers of 1000 (e.g., 1.1G). |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '`-H` | `--si` | 以 1000 的幂次打印大小（例如，1.1G）。'
 - en: '| `-i` | `--inodes` | List inode information instead of block usage. |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '`-i` | `--inodes` | 列出inode信息而不是块使用情况。'
 - en: '| `-k` | - | Like `--block-size=1K`. |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '`-k` | - | 类似于 `--block-size=1K`。'
 - en: '| `-l` | `--local` | Limit listing to local file systems. |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '`-l` | `--local` | 限制列出本地文件系统。'
 - en: '| - | `--no-sync` | Do not invoke `sync` before getting usage info (default).
     |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--no-sync` | 在获取使用信息之前不调用 `sync`（默认）。'
 - en: '| - | `--output[=FIELD_LIST]` | Use the output format defined by `FIELD_LIST`,
     or print all fields if FIELD_LIST is omitted. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--output[=FIELD_LIST]` | 使用由 `FIELD_LIST` 定义的输出格式，或者如果省略 `FIELD_LIST`，则打印所有字段。'
 - en: '| `-P` | `--portability` | Use the `POSIX` output format |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '`-P` | `--portability` | 使用 `POSIX` 输出格式'
 - en: '| - | `--sync` | Invoke sync before getting usage info. |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--sync` | 在获取使用信息之前调用同步。'
 - en: '| - | `--total` | Elide all entries insignificant to available space, and produce
     a grand total. |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--total` | 省略对可用空间不重要的所有条目，并生成总计数。'
 - en: '| `-t` | `--type=TYPE` | Limit listing to file systems of type `TYPE`. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '`-t` | `--type=TYPE` | 限制列出类型为 `TYPE` 的文件系统。'
 - en: '| `-T` | `--print-type` | Print file system type. |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '`-T` | `--print-type` | 打印文件系统类型。'
 - en: '| `-x` | `--exclude-type=TYPE` | Limit listing to file systems not of type
     `TYPE`. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '`-x` | `--exclude-type=TYPE` | 限制列出不是类型 `TYPE` 的文件系统。'
 - en: '| `-v` | - | Ignored; included for compatibility reasons. |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '`-v` | - | 忽略；包含以兼容性原因。'
 - en: '| - | `--help` | Display help message and exit. |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--help` | 显示帮助信息并退出。'
 - en: '| - | `--version` | Output version information and exit. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '`-` | `--version` | 输出版本信息并退出。'
 - en: 'Examples:'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: Show available disk space **Action:** --- Output the available disk space and
     where the directory is mounted
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示可用磁盘空间 **操作：** --- 输出可用磁盘空间和目录挂载位置
 - en: '**Details:** --- Outputted values are not human-readable (are in bytes)'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值不可读（以字节为单位）'
 - en: '**Command:**'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE1]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Show available disk space in human-readable form **Action:** --- Output the
     available disk space and where the directory is mounted
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以可读形式显示可用磁盘空间 **操作：** --- 输出可用磁盘空间和目录挂载位置
 - en: '**Details:** --- Outputted values ARE human-readable (are in GBs/MBs)'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值是可读的（以 GBs/MBs 为单位）'
 - en: '**Command:**'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE2]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Show available disk space for the specific file system **Action:** --- Output
     the available disk space and where the directory is mounted
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示特定文件系统的可用磁盘空间 **操作：** --- 输出可用磁盘空间和目录挂载位置
 - en: '**Details:** --- Outputted values are only for the selected file system'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值仅适用于选定的文件系统'
 - en: '**Command:**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE3]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Show available inodes **Action:** --- Output the available inodes for all file
     systems
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示可用inode **操作：** --- 输出所有文件系统的可用inode
 - en: '**Details:** --- Outputted values are for inodes and not available space'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值适用于inode而不是可用空间'
 - en: '**Command:**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE4]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Show file system type **Action:** --- Output the file system types
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示文件系统类型 **操作：** --- 输出文件系统类型
 - en: '**Details:** --- Outputted values are for all file systems'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值适用于所有文件系统'
 - en: '**Command:**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE5]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Exclude file system type from the output **Action:** --- Output the information
     while excluding the chosen file system type
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从输出中排除文件系统类型 **操作：** --- 输出信息时排除选定的文件系统类型
 - en: '**Details:** --- Outputted values are for all file systems EXCEPT the chosen
     file system type'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '**详情：** --- 输出的值适用于所有文件系统，除了选定的文件系统类型'
 - en: '**Command:**'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令：**'
 - en: '[PRE6]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'

@@ -1,120 +1,187 @@
 - en: The `curl` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`curl`命令'
 - en: In Linux, curl is a powerful command-line tool used to transfer data from or
     to a server using a wide variety of protocols, including HTTP, HTTPS, and FTP.
     It is often used for testing APIs, downloading files, and automating web-related
     tasks.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Linux中，curl是一个功能强大的命令行工具，用于使用广泛的协议（包括HTTP、HTTPS和FTP）从服务器或向服务器传输数据。它通常用于测试API、下载文件和自动化与Web相关的任务。
 - en: 'The syntax of the `curl` command :'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`curl`命令的语法：'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The command will print the source code of the example.com homepage in the terminal
     window.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 该命令将在终端窗口中打印出example.com主页的源代码。
 - en: 'Common Options :'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常用选项：
 - en: curl has over 200 options! Here are some of the most common and useful ones.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: curl有超过200个选项！以下是一些最常见和有用的选项。
 - en: '| Option | Long Version | Description |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 长版本 | 描述 |'
 - en: '| --- | --- | --- |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `-O` | `--remote-name` | Downloads the file and saves it with the same name
     as the remote file. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `-O` | `--remote-name` | 下载文件并使用与远程文件相同的名称保存。 |'
 - en: '| `-o <file>` | `--output <file>` | Saves the downloaded output to a specific
     filename. |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `-o <file>` | `--output <file>` | 将下载的输出保存到特定的文件名。 |'
 - en: '| `-L` | `--location` | Follows redirects if the server reports that the requested
     page has moved. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `-L` | `--location` | 如果服务器报告请求的页面已移动，则跟随重定向。 |'
 - en: '| `-X <METHOD>` | `--request <METHOD>` | Specifies the HTTP request method
     to use (e.g., POST, PUT, DELETE). |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `-X <METHOD>` | `--request <METHOD>` | 指定要使用的HTTP请求方法（例如，POST、PUT、DELETE）。
+    |'
 - en: '| `-H <header>` | `--header <header>` | Allows you to add a custom HTTP header
     to your request. |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `-H <header>` | `--header <header>` | 允许您向请求添加自定义HTTP头。 |'
 - en: 'Examples :'
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 1\. View the source code of a webpage
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 1. 查看网页的源代码
 - en: This is the simplest use of curl. It will fetch the content from the URL and
     print its HTML source code directly to your terminal.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是curl最简单的用法。它将从URL获取内容，并将其HTML源代码直接打印到您的终端。
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 2\. Download a file
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 2. 下载一个文件
 - en: The -O flag is used to download a file. curl will save it in your current directory
     using the same name as the remote file.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-O`标志用于下载文件。curl会使用与远程文件相同的名称将其保存在您的当前目录中。'
 - en: '[PRE2]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 3\. Download a file and rename it
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 3. 下载文件并重命名
 - en: Using the -o flag, you can specify a new name for the downloaded file.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`-o`标志，您可以指定下载文件的新的名称。
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Installation:'
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安装：
 - en: 'The curl command comes with most of the Linux distributions. But, if the system
     does not carry the curl by default. You need to install it manually. To install
     the curl, execute the following commands:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: curl命令包含在大多数Linux发行版中。但是，如果系统默认没有携带curl，您需要手动安装。要安装curl，请执行以下命令：
 - en: 'Update the system by executing the following commands:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过执行以下命令来更新系统：
 - en: '[PRE4]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Now, install the curl utility by executing the below command:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，通过执行以下命令来安装curl实用工具：
 - en: '[PRE5]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Verify the installation by executing the below command:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过执行以下命令来验证安装：
 - en: '[PRE6]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: The above command will display the installed version of the curl command.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令将显示curl命令的安装版本。

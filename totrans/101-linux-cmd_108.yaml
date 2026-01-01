@@ -1,85 +1,136 @@
 - en: The `screen` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`screen` 命令'
 - en: '`screen` - With screen you can start a screen session and then open any number
     of windows (virtual terminals) inside that session. Processes running in Screen
     will continue to run when their window is not visible even if you get disconnected.
     This is very handy for running long during session such as bash scripts that run
     very long.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`screen` - 使用 `screen`，你可以启动一个屏幕会话，并在该会话中打开任意数量的窗口（虚拟终端）。在 Screen 中运行的进程，即使窗口不可见，也会继续运行，即使你断开连接。这对于运行长时间会话，如运行时间非常长的
+    bash 脚本等，非常有用。'
 - en: To start a screen session you type `screen`, this will open a new screen session
     with a virtual terminal open.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 要启动屏幕会话，请输入 `screen`，这将打开一个新的屏幕会话，并打开一个虚拟终端。
 - en: 'Below are some most common commands for managing Linux Screen Windows:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是管理 Linux Screen 窗口的一些最常用命令：
 - en: '| **Command** | **Description** |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `Ctrl+a`+ `c` | Create a new window (with shell). |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `c` | 创建一个新的窗口（带有 shell）。 |'
 - en: '| `Ctrl+a`+ `"` | List all windows. |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `"` | 列出所有窗口。 |'
 - en: '| `Ctrl+a`+ `0` | Switch to window 0 (by number). |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `0` | 切换到窗口 0（按数字）。 |'
 - en: '| `Ctrl+a`+ `A` | Rename the current window. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `A` | 重命名当前窗口。 |'
 - en: '| `Ctrl+a`+ `S` | Split current region horizontally into two regions. |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `S` | 将当前区域水平分割成两个区域。 |'
 - en: '| `Ctrl+a`+ `''` | Split current region vertically into two regions. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `''` | 将当前区域垂直分割成两个区域。 |'
 - en: '| `Ctrl+a`+ `tab` | Switch the input focus to the next region. |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `tab` | 切换输入焦点到下一个区域。 |'
 - en: '| `Ctrl+a`+ `Ctrl+a` | Toggle between the current and previous windows |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `Ctrl+a` | 在当前窗口和上一个窗口之间切换 |'
 - en: '| `Ctrl+a`+ `Q` | Close all regions but the current one. |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `Q` | 关闭除当前区域外的所有区域。 |'
 - en: '| `Ctrl+a`+ `X` | Close the current region. |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctrl+a`+ `X` | 关闭当前区域。 |'
 - en: Restore a Linux Screen
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 恢复 Linux Screen
 - en: To restore to a screen session you type `screen -r`, if you have more than one
     open screen session you have to add the session id to the command to connect to
     the right session.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 要恢复到屏幕会话，请输入 `screen -r`，如果你有多个打开的屏幕会话，你必须将会话 ID 添加到命令中，以连接到正确的会话。
 - en: Listing all open screen sessions
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 列出所有打开的屏幕会话
 - en: 'To find the session ID you can list the current running screen sessions with:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查找会话 ID，你可以使用以下命令列出当前运行的屏幕会话：
 - en: '`screen -ls`'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '`screen -ls`'
 - en: 'There are screens on:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在以下位置有屏幕：
 - en: '[PRE0]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If you want to restore screen 18787.pts-0, then type the following command:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要恢复屏幕 18787.pts-0，请输入以下命令：
 - en: '`screen -r 18787`'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '`screen -r 18787`'

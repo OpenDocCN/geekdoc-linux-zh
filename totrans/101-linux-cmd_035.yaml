@@ -1,150 +1,236 @@
 - en: The `killall` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`killall` 命令'
 - en: '`killall` sends a signal to **all** processes running any of the specified
     commands. If no signal name is specified, `SIGTERM` is sent. In general, `killall`
     command kills all processes by knowing the name of the process.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`killall` 向运行指定命令的所有进程发送信号。如果没有指定信号名称，则发送 `SIGTERM`。通常，`killall` 命令通过进程名称来杀死所有进程。'
 - en: Signals can be specified either by name (e.g. `-HUP` or `-SIGHUP`) or by number
     (e.g. `-1`) or by option `-s`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 信号可以通过名称（例如 `-HUP` 或 `-SIGHUP`）、数字（例如 `-1`）或选项 `-s` 来指定。
 - en: If the command name is not a regular expression (option `-r`) and contains a
     slash (`/`), processes executing that particular file will be selected for killing,
     independent of their name.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果命令名称不是正则表达式（选项 `-r`）且包含斜杠（`/`），则将选择执行该特定文件的进程进行杀死，无论其名称如何。
 - en: '`killall` returns a zero return code if at least one process has been killed
     for each listed command, or no commands were listed and at least one process matched
     the `-u` and `-Z` search criteria. `killall` returns non-zero otherwise.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果每个列出的命令至少有一个进程被杀死，或者没有列出命令但至少有一个进程匹配 `-u` 和 `-Z` 搜索标准，则 `killall` 返回零退出代码。否则返回非零。
 - en: A `killall` process never kills itself (but may kill other `killall` processes).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`killall` 进程永远不会杀死自己（但可能会杀死其他 `killall` 进程）。'
 - en: 'Examples:'
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Kill all processes matching the name `conky` with `SIGTERM`:'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 `SIGTERM` 杀死匹配名称 `conky` 的所有进程：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: You can also kill Wine processes (Windows executable files running on Linux)
     this way.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以用这种方法杀死 Wine 进程（在 Linux 上运行的 Windows 可执行文件）。
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'List all the supported signals:'
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 列出所有支持的信号：
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: As for the numbers.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于数字。
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Ask before killing, to prevent unwanted kills:'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在杀死之前询问，以防止意外杀死：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Kill all processes and wait until the processes die.
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 杀死所有进程并等待进程结束。
 - en: '[PRE5]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Kill based on time:'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 根据时间杀死：
 - en: '[PRE6]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Syntax:'
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE7]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-e` | `--exact` | require an exact match for very long names |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | `--exact` | 对于非常长的名称要求精确匹配 |'
 - en: '| `-I` | `--ignore-case` | case insensitive process name match |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `-I` | `--ignore-case` | 不区分大小写的进程名称匹配 |'
 - en: '| `-g` | `--process-group` | kill process group instead of process |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-g` | `--process-group` | 杀死进程组而不是进程 |'
 - en: '| `-y` | `--younger-than` | kill processes younger than TIME |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-y` | `--younger-than` | 杀死比指定时间年轻的进程 |'
 - en: '| `-o` | `--older-than` | kill processes older than TIME |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-o` | `--older-than` | 杀死超过指定时间的进程 |'
 - en: '| `-i` | `--interactive` | Prompt before killing processes to avoid accidental
     termination. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | `--interactive` | 在杀死进程之前提示，以避免意外终止。 |'
 - en: '| `-l` | `--list` | list all known signal names |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-l` | `--list` | 列出所有已知的信号名称 |'
 - en: '| `-q` | `--quiet` | don''t print complaints |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-q` | `--quiet` | 不打印抱怨信息 |'
 - en: '| `-r` | `--regexp` | interpret NAME as an extended regular expression |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | `--regexp` | 将名称解释为扩展正则表达式 |'
 - en: '| `-s` | `--signal SIGNAL` | send this signal instead of SIGTERM |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | `--signal SIGNAL` | 发送此信号而不是 SIGTERM |'
 - en: '| `-u` | `--user USER` | kill only process(es) running as USER |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | `--user USER` | 只杀死以用户身份运行的进程 |'
 - en: '| `-v` | `--verbose` | report if the signal was successfully sent |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--verbose` | 报告信号是否成功发送 |'
 - en: '| `-w` | `--wait` | wait for processes to die |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `-w` | `--wait` | 等待进程结束 |'
 - en: '| `-n` | `--ns PID` | Match processes belonging to the same namespace as the
     specified PID. |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--ns PID` | 匹配属于指定 PID 的同一命名空间的进程。 |'
 - en: '| `-Z` | `--context` | REGEXP kill only process(es) having context (must precede
     other arguments) |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `-Z` | `--context` | REGEXP 只杀死具有上下文的进程（必须先于其他参数） |'
 - en: Related commands
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 相关命令
 - en: '[kill](/ebook/en/content/034-the-kill-command.md), `pidof`'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '[kill](/ebook/en/content/034-the-kill-command.md), `pidof`'

@@ -1,150 +1,229 @@
 - en: The `cp` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`cp` 命令'
 - en: The `cp` is a command-line utility for copying files and directory. `cp` stands
     for copy. This command is used to copy files or group of files or directory. It
     creates an exact image of a file on a disk with different file name. The cp command
     requires at least two filenames in its arguments.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cp` 是一个用于复制文件和目录的命令行实用程序。`cp` 代表复制。此命令用于复制文件或文件组或目录。它创建一个磁盘上文件的精确镜像，具有不同的文件名。cp
+    命令在其参数中至少需要两个文件名。'
 - en: 'Examples:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: To copy the contents of the source file to the destination file.
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将源文件的内容复制到目标文件。
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If the destination file doesn't exist then the file is created and the content
     is copied to it. If it exists then the file is overwritten.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果目标文件不存在，则创建该文件并将内容复制到其中。如果它已存在，则覆盖该文件。
 - en: To copy a file to another directory specify the absolute or the relative path
     to the destination directory.
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要将文件复制到另一个目录，指定目标目录的绝对路径或相对路径。
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: To copy a directory, including all its files and subdirectories
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要复制一个目录，包括其所有文件和子目录
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The command above creates the destination directory and recursively copies all
     files and subdirectories from the source to the destination directory.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令创建目标目录，并递归地从源目录复制所有文件和子目录到目标目录。
 - en: If the destination directory already exists, the source directory itself and
     its content are copied inside the destination directory.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果目标目录已存在，则将源目录及其内容复制到目标目录内部。
 - en: To copy only the files and subdirectories but not the source directory
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要复制文件和子目录，但不复制源目录
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Syntax:'
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: 'The general syntax for the cp command is as follows:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: cp 命令的一般语法如下：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: The first and second syntax is used to copy Source file to Destination file
     or Directory. The third syntax is used to copy multiple Sources(files) to Directory.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一种和第二种语法用于将源文件复制到目标文件或目录。第三种语法用于将多个源（文件）复制到目录。
 - en: Some useful options
+  id: totrans-18
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 一些有用的选项
 - en: '`-i` (interactive) `i` stands for Interactive copying. With this option system
     first warns the user before overwriting the destination file. cp prompts for a
     response, if you press y then it overwrites the file and with any other option
     leave it uncopied.'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`-i` (交互式) `i` 代表交互式复制。使用此选项时，系统在覆盖目标文件之前会先警告用户。cp 会提示用户进行响应，如果按 y 则覆盖文件，而按其他任何选项则不复制。'
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '`-b`(backup) -b(backup): With this option cp command creates the backup of
     the destination file in the same folder with the different name and in different
     format.'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`-b`(备份) `-b`(备份)：使用此选项，cp 命令在相同文件夹中以不同的名称和格式创建目标文件的备份。'
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '`-f`(force) If the system is unable to open destination file for writing operation
     because the user doesn''t have writing permission for this file then by using
     -f option with cp command, destination file is deleted first and then copying
     of content is done from source to destination file.'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`-f`(强制) 如果系统无法打开目标文件进行写操作，因为用户没有对此文件的写权限，则使用 -f 选项与 cp 命令一起，首先删除目标文件，然后从源文件到目标文件复制内容。'
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: User, group and others doesn't have writing permission.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户、组和其他人没有写权限。
 - en: Without `-f` option, command not executed
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有使用 `-f` 选项，命令未执行
 - en: '[PRE8]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: With -f option, command executed successfully
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 -f 选项，命令执行成功
 - en: '[PRE9]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 其他标志及其功能：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-i` | --interactive | prompt before overwrite |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | --interactive | 在覆盖前提示 |'
 - en: '| `-f` | --force | If an existing destination file cannot be opened, remove
     it and try again |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | --force | 如果无法打开现有目标文件进行写操作，因为用户没有对此文件的写权限，则使用 -f 选项与 cp 命令一起，首先删除目标文件，然后从源文件到目标文件复制内容。'
 - en: '| `-b` | - | Creates the backup of the destination file in the same folder
     with the different name and in different format. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | - | 在同一文件夹中以不同的名称和格式创建目标文件的备份。 |'
 - en: '| `-r or -R` | `--recursive` | **cp** command shows its recursive behavior
     by copying the entire directory structure recursively. |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-r or -R` | `--recursive` | **cp** 命令通过递归复制整个目录结构来显示其递归行为。 |'
 - en: '| `-n` | `--no-clobber` | do not overwrite an existing file (overrides a previous
     -i option) |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--no-clobber` | 不覆盖现有文件（覆盖之前的 -i 选项） |'
 - en: '| `-p` | - | preserve the specified attributes (default: mode,ownership,timestamps),
     if possible additional attributes: context, links, xattr, all |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | - | 尽可能保留指定的属性（默认：模式、所有权、时间戳），如果可能，还可以保留其他属性：上下文、链接、xattr、全部 |'

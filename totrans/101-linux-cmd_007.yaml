@@ -1,131 +1,200 @@
 - en: The `touch` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`touch` 命令'
 - en: The `touch` command modifies a file's timestamps. If the file specified doesn't
     exist, an empty file with that name is created.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`touch` 命令修改文件的时间戳。如果指定的文件不存在，则创建一个具有该名称的空文件。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Options
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-a` | - | Change only the access time. |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | - | 仅更改访问时间。|'
 - en: '| `-c` | `--no-create` | Do not create any files. |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | `--no-create` | 不创建任何文件。|'
 - en: '| `-d` STRING | `--date=STRING` | Parse *STRING* and use it instead of the
     current time. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` STRING | `--date=STRING` | 解析 *STRING* 并使用它代替当前时间。|'
 - en: '| `-f` | - | (Ignored) This option does nothing but is accepted to provide
     compatibility with BSD versions of the `touch` command. |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | - | （忽略）此选项不执行任何操作，但接受以与 BSD 版本的 `touch` 命令保持兼容。|'
 - en: '| `-h` | `--no-dereference` | Affect each symbolic link instead of any referenced
     file (useful only on systems that can change the timestamps of a symlink). This
     option implies `-c`, nothing is created if the file does not exist. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | `--no-dereference` | 仅影响符号链接本身，而不是任何引用的文件（仅在可以更改符号链接时间戳的系统中使用）。此选项意味着
+    `-c`，如果文件不存在则不创建任何内容。|'
 - en: '| `-m` | - | Change only the modification time. |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `-m` | - | 仅更改修改时间。|'
 - en: '| `-r=FILE` | `--reference=FILE` | Use this file''s times instead of the current
     time. |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `-r=FILE` | `--reference=FILE` | 使用此文件的时间代替当前时间。|'
 - en: '| `-t STAMP` | - | Use the numeric time *STAMP* instead of the current time.
     The format of *STAMP* is [[**CC**]**YY**]**MMDDhhmm**[**.ss**]. |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `-t STAMP` | - | 使用数字时间 *STAMP* 而不是当前时间。*STAMP* 的格式为 [[**CC**]**YY**]**MMDDhhmm**[**.ss**]。|'
 - en: '| - | `--time=WORD` | An alternate way to specify which type of time is set
     (e.g. *access*, *modification*, or *change*). This is equivalent to specifying
     `-a` or `-m`. |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| - | `--time=WORD` | 另一种指定要设置哪种类型的时间的方法（例如 *访问*、*修改* 或 *更改*）。这与指定 `-a` 或 `-m`
+    等效。|'
 - en: 'WORD is `access`, `atime`, or `use`: equivalent to `-a`.'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: WORD 是 `access`、`atime` 或 `use`：等同于 `-a`。
 - en: 'WORD is `modify` or `mtime`: equivalent to `-m`.'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: WORD 是 `modify` 或 `mtime`：等同于 `-m`。
 - en: An alternate way to specify what type of time to set (as with **-a** and **-m**).|
     |
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种指定要设置哪种类型的时间的方法（与 **-a** 和 **-m** 相同）。| |
 - en: -|`--help`|Display a help message, and exit.| |-|`--version`|Display version
     information, and exit.|
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: -|`--help`|显示帮助信息，并退出.| |-|`--version`|显示版本信息，并退出。|
 - en: Examples
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: If **file.txt** exists, set all of its timestamps to the current system time.
     If **file.txt** doesn't exist, create an empty file with that name.
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 **file.txt** 存在，则将其所有时间戳设置为当前系统时间。如果 **file.txt** 不存在，则创建一个具有该名称的空文件。
 - en: '[PRE1]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: If **file.txt** exists, set its times to the current system time. If it does
     not exist, do nothing.
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 如果 **file.txt** 存在，则将其时间设置为当前系统时间。如果它不存在，则不执行任何操作。
 - en: '[PRE2]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Change the *access* time of **file.txt**. The *modification* time is not changed.
     The *change* time is set to the current system time. If **file.txt** does not
     exist, it is created.
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 仅更改 **file.txt** 的 *访问* 时间。*修改* 时间不更改。*更改* 时间设置为当前系统时间。如果 **file.txt** 不存在，则创建。
 - en: '[PRE3]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Change the times of file **symboliclink**. If it's a symbolic link, change the
     times of the symlink, ***NOT*** the times of the referenced file.
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 更改符号链接文件 **symboliclink** 的时间。如果是符号链接，则更改符号链接的时间，***而不是*** 引用文件的时间。
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Change the *access* and *modification* times of **file-b.txt** to match the
     times of **file-a.txt**. The *change* time will be set to the current system time.
     If **file-b.txt** does not exist, it is not created. Note, **file-a.txt** must
     already exist in this context.
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将 **file-b.txt** 的 *访问* 和 *修改* 时间更改为与 **file-a.txt** 的时间匹配。*更改* 时间将设置为当前系统时间。如果
+    **file-b.txt** 不存在，则不会创建。注意，在此上下文中，**file-a.txt** 必须已经存在。
 - en: '[PRE5]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Set the *access* time and *modification* time of **file.txt** to ***February
     1st*** of the current year. The *change* time is set to the current system time.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将 **file.txt** 的 *访问* 时间和 *修改* 时间设置为当前年份的 **2月1日**。*更改* 时间设置为当前系统时间。
 - en: '[PRE6]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'

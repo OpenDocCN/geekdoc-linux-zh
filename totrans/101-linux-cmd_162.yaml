@@ -1,155 +1,235 @@
 - en: The `column` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`column` 命令'
 - en: The `column` command is used to format its input into multiple columns. It's
     particularly useful for making text-based tables and improving the readability
     of command output.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`column` 命令用于将输入格式化为多列。它特别适用于创建基于文本的表格和改善命令输出的可读性。'
 - en: Command Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Command Options
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令选项
 - en: '`-t`: Determine the number of columns automatically and create a table'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-t`：自动确定列数并创建表格'
 - en: '`-s`: Specify the column delimiter (default is whitespace)'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-s`：指定列分隔符（默认为空白字符）'
 - en: '`-n`: Don''t merge multiple adjacent delimiters'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-n`：不合并多个相邻的分隔符'
 - en: '`-c`: Output in column format with specified width'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-c`：以指定宽度输出列格式'
 - en: '`-x`: Fill columns before rows'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-x`：在行之前填充列'
 - en: '`-L`: Align all entries to the left'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-L`：将所有条目左对齐'
 - en: '`-R`: Align all entries to the right'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-R`：将所有条目右对齐'
 - en: '`-o`: Specify column separator for table output'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-o`：指定表格输出的列分隔符'
 - en: Examples
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: Basic Column Formatting
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 基本列格式化
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Creating a Table from Delimited Data
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从分隔数据创建表格
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Formatting Command Output
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 格式化命令输出
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Custom Column Separator
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 自定义列分隔符
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Left-aligned Table
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 左对齐表格
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: '**Note:** Options like `-L` and `-R` may not be available in all Linux distributions
     (mainly GNU `column`).'
+  id: totrans-24
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 选项如 `-L` 和 `-R` 可能并非所有 Linux 发行版中都可用（主要是在 GNU `column` 中）。'
 - en: Format a file into columns (e.g., data.txt)
+  id: totrans-25
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 将文件格式化为列（例如，data.txt）
 - en: column -t -s, data.txt
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: column -t -s, data.txt
 - en: Additional Information
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更多信息
 - en: The `column` command is part of the `util-linux` package
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`column` 命令是 `util-linux` 软件包的一部分'
 - en: It's particularly useful in shell scripts for formatting output
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 它在 shell 脚本中用于格式化输出特别有用
 - en: Can handle both file input and standard input (stdin)
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 可以处理文件输入和标准输入（stdin）
 - en: Works well with other text processing commands like `cut`, `sort`, and `grep`
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与其他文本处理命令如 `cut`、`sort` 和 `grep` 一起使用效果良好
 - en: See Also
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相关链接
 - en: '[`cut`](098-the-cut-command.md) - remove sections from files'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[`cut` 命令](098-the-cut-command.md) - 从文件中删除部分内容'
 - en: '[`sort`](059-the-sort-command.md) - sort lines of text files'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[`sort` 命令](059-the-sort-command.md) - 对文本文件的行进行排序'
 - en: '[`paste`](060-the-paste-command.md) - merge lines of files'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[`paste` 命令](060-the-paste-command.md) - 合并文件的行'
 - en: '[`tr`](119-the-tr-command.md) - translate or delete characters'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[`tr` 命令](119-the-tr-command.md) - 转换或删除字符'
 - en: Further Reading
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 进一步阅读
 - en: '`man column` - manual page for the column command'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`man column` - `column` 命令的手册页面'
 - en: '[GNU Coreutils](https://www.gnu.org/software/coreutils/)'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[GNU Coreutils](https://www.gnu.org/software/coreutils/)'

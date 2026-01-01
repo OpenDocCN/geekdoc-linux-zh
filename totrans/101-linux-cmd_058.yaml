@@ -1,106 +1,164 @@
 - en: The `reboot` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`reboot` 命令'
 - en: The `reboot` command is used to restart a Linux system. However, it requires
     elevated permission using the [sudo](https://github.com/bobbyiliev/101-linux-commands/blob/main/ebook/en/content/051-the-sudo-command.md)
     command. Necessity to use this command usually arises after significant system
     or network updates have been made to the system.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`reboot` 命令用于重启 Linux 系统。然而，它需要使用 `sudo` [命令](https://github.com/bobbyiliev/101-linux-commands/blob/main/ebook/en/content/051-the-sudo-command.md)
+    提升权限。通常在系统或网络更新后需要使用此命令。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Options
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '**–help** : This option prints a short help text and exit.'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**–help**：此选项打印简短的帮助文本并退出。'
 - en: '**-halt** : This command will stop the machine.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**-halt**：此命令将停止机器。'
 - en: '**-w**, **–wtmp-only** : This option only writes wtmp shutdown entry, it does
     not actually halt, power-off, reboot.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**-w**，**–wtmp-only**：此选项仅写入 wtmp 关闭条目，实际上不会停止、关机或重启。'
 - en: Examples
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: Basic Usage. Mainly used to restart without any further details
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 基本用法。主要用于重启，无需任何其他详细信息
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: However, alternatively the shutdown command with the `-r` option
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，也可以使用带有 `-r` 选项的 `shutdown` 命令
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Note** that the usage of the reboot, halt and power off is almost similar
     in syntax and effect. Run each of these commands with –-help to see the details.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意**：reboot、halt 和关机在语法和效果上几乎相同。运行每个命令的 –-help 以查看详细信息。'
 - en: The `reboot` command has limited usage, and the `shutdown` command is being
     used instead of reboot command to fulfill much more advanced reboot and shutdown
     requirements. One of those situations is a scheduled restart. Syntax is as follows
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`reboot` 命令的使用有限，而 `shutdown` 命令被用来替代重启命令以满足更高级的重启和关机需求。其中一种情况是计划重启。语法如下'
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Here the TIME has various formats. The simplest one is `now`, already been listed
     in the previous section, and tells the system to restart immediately. Other valid
     formats we have are +m, where m is the number of minutes we need to wait until
     restart and HH:MM which specifies the TIME in a 24hr clock.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里的时间有各种格式。最简单的一种是 `now`，已在上一节中列出，告诉系统立即重启。其他有效的格式包括 +m，其中 m 是我们等待重启所需的分钟数，以及
+    HH:MM，它指定了24小时制的时间。
 - en: '**Example to reboot the system in 2 minutes**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：2分钟后重启系统**'
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**Example of a scheduled restart at 03:00 A.M**'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例：凌晨3:00计划重启**'
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Cancelling a Reboot. Usually happens in case one wants to cancel a scheduled
     restart
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 取消重启。通常发生在某人想要取消计划重启的情况下
 - en: '**Syntax**'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**语法**'
 - en: '[PRE6]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: '**Usage**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用法**'
 - en: '[PRE7]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Shows a history of system reboots **Syntax**
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示系统重启的历史记录 **语法**
 - en: '[PRE8]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'

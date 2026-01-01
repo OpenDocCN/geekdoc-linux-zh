@@ -1,88 +1,137 @@
 - en: The `which` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`which` 命令'
 - en: '`which` command identifies the executable binary that launches when you issue
     a command to the shell. If you have different versions of the same program on
     your computer, you can use which to find out which one the shell will use.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`which` 命令识别当你向 shell 发出命令时启动的可执行二进制文件。如果你在计算机上安装了同一程序的不同版本，你可以使用 `which` 来找出
+    shell 将使用哪个版本。'
 - en: 'It has 3 return status as follows:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 它有3种返回状态如下：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Examples
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例
 - en: 'To find the full path of the ls command, type the following:'
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要查找 ls 命令的完整路径，请输入以下内容：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'We can provide more than one arguments to the which command:'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 我们可以向 `which` 命令提供多个参数：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The which command searches from left to right, and if more than one matches
     are found in the directories listed in the PATH path variable, which will print
     only the first one.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '`which` 命令从左到右搜索，如果在 PATH 环境变量中列出的目录中找到多个匹配项，它将只打印第一个。'
 - en: 'To display all the paths for the specified command:'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示指定命令的所有路径：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'To display the path of node executable files, execute the command:'
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示 node 可执行文件的路径，执行以下命令：
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'To display the path of Java executable files, execute:'
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 要显示 Java 可执行文件的路径，执行：
 - en: '[PRE5]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Syntax
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE6]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: You can pass multiple programs and commands to which, and it will check them
     in order.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以向 `which` 传递多个程序和命令，并且它会按顺序检查它们。
 - en: 'For example:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：
 - en: '`which ping cat uptime date head`'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '`which ping cat uptime date head`'
 - en: Options
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '-a : List all instances of executables found (instead of just the first one
     of each).'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '-a : 列出找到的所有可执行实例（而不是每个实例的第一个）。'
 - en: '-s : No output, just return 0 if all the executables are found, or 1 if some
     were not found'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '-s : 如果找到所有可执行文件，则无输出，只返回 0；如果某些文件未找到，则返回 1。'

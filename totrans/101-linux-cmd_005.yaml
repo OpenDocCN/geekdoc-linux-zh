@@ -1,194 +1,312 @@
 - en: The `tail` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`tail` 命令'
 - en: The `tail` command prints the last ten lines of a file.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`tail` 命令打印文件的最后十行。'
 - en: 'Example:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Syntax:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Common Use Cases
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见用例
 - en: 'Get a specific number of lines:'
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 获取特定数量的行：
 - en: Use the `-n` option with a number (should be an integer) of lines to display.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-n` 选项和一个数字（应该是整数）的行数来显示。
 - en: 'Example:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This command will display the last ten lines of the file `foo.txt`.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令将显示文件 `foo.txt` 的最后十行。
 - en: Monitor new entry on files in real-time
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 实时监控文件中的新条目
 - en: It is possible to let tail output any new line added to the file you are looking
     into. So, if a new line is written to the file, it will immediately be shown in
     your output. This can be done using the `--follow` or `-f` option. This is especially
     useful for monitoring log files.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以让 `tail` 输出你正在查看的文件中添加的任何新行。因此，如果向文件写入新行，它将立即显示在你的输出中。这可以通过使用 `--follow` 或
+    `-f` 选项来完成。这对于监控日志文件特别有用。
 - en: 'Example:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Press `Ctrl+C` to stop following.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 按 `Ctrl+C` 停止跟踪。
 - en: Combine options for log monitoring
+  id: totrans-17
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 组合选项以进行日志监控
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Follow multiple files simultaneously
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 同时跟踪多个文件
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Display specific byte ranges
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 显示特定的字节范围
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Follow logs even after rotation
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 即使在轮换后也继续跟踪日志
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The `-F` option is crucial for monitoring logs managed by logrotate.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-F` 选项对于监控由 logrotate 管理的日志至关重要。'
 - en: Skip header lines
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 跳过标题行
 - en: '[PRE8]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Quiet mode for multiple files
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 多个文件的静默模式
 - en: '[PRE9]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Additional Flags and their Functionalities
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 额外标志及其功能
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| `-c` | `--bytes=[+]NUM` | Output the last NUM bytes; or use -c +NUM to'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '| `-c` | `--bytes=[+]NUM` | 输出最后 NUM 个字节；或使用 -c +NUM 以'
 - en: output starting with byte NUM of each file |
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出每个文件从字节 NUM 开始的内容 |
 - en: '| `-f` | `--follow[={name&#124;descriptor}]` | Output appended data as the
     file grows; an absent option argument means ''descriptor'' |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | `--follow[={name&#124;descriptor}]` | 随着文件增长输出附加数据；省略选项参数表示 ''descriptor''
+    |'
 - en: '| `-F` |  | Same as --follow=name --retry |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-F` |  | 与 --follow=name --retry 相同 |'
 - en: '| `-n` | `--lines=[+]NUM` | Output the last NUM lines, instead of the last
     10; or use -n +NUM to output starting with line NUM |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | `--lines=[+]NUM` | 输出最后 NUM 行，而不是最后 10 行；或使用 -n +NUM 以从行 NUM 开始输出
+    |'
 - en: '|  | `--max-unchanged-stats=N` | with --follow=name, reopen a FILE which has
     not changed size after N (default 5) iterations'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '|  | `--max-unchanged-stats=N` | 使用 --follow=name 时，在 N（默认 5）次迭代后重新打开未更改大小的
+    FILE'
 - en: to see if it has been unlinked or rename
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 以查看它是否已被取消链接或重命名
 - en: (this is the usual case of rotated log files);
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: （这是轮换日志文件的通常情况）；
 - en: with inotify, this option is rarely useful |
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 inotify，此选项很少有用 |
 - en: '|  | `--pid=PID` | with -f, terminate after process ID, PID dies |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--pid=PID` | 使用 -f 时，在进程 ID，PID 死亡后终止 |'
 - en: '| `-q` | `--quiet, --silent` | Never output headers giving file names |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `-q` | `--quiet, --silent` | 从不输出包含文件名的标题 |'
 - en: '|  | `--retry` | keep trying to open a file if it is inaccessible |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--retry` | 如果文件不可访问，则继续尝试打开文件 |'
 - en: '| `-s` | `--sleep-interval=N` | With -f, sleep for approximately N seconds
     (default 1.0) between iterations;'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '| `-s` | `--sleep-interval=N` | 使用 -f 时，在迭代之间暂停大约 N 秒（默认 1.0）；'
 - en: with inotify and --pid=P, check process P at
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 inotify 和 --pid=P，检查进程 P 在
 - en: least once every N seconds |
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 至少每 N 秒一次 |
 - en: '| `-v` | `--verbose` | Always output headers giving file names |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | `--verbose` | 总是输出包含文件名的标题 |'
 - en: '| `-z` | `--zero-terminated` | Line delimiter is NUL, not newline |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `-z` | `--zero-terminated` | 行分隔符是 NUL，而不是换行符 |'
 - en: '|  | `--help` | Display this help and exit |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--help` | 显示此帮助信息并退出 |'
 - en: '|  | `--version` | Output version information and exit |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '|  | `--version` | 输出版本信息并退出 |'
 - en: Tips
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 小贴士
 - en: Use `-F` instead of `-f` for production log monitoring
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `-F` 而不是 `-f` 进行生产日志监控
 - en: Combine with `grep`, `awk`, or `sed` for filtered monitoring
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与 `grep`、`awk` 或 `sed` 结合进行过滤监控
 - en: For large files, `tail` is much faster than opening in an editor
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于大文件，使用 `tail` 比在编辑器中打开要快得多
 - en: Use `-n +N` to start from a specific line (useful for skipping headers)
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `-n +N` 从特定行开始（对于跳过标题很有用）

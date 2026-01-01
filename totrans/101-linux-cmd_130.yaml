@@ -1,85 +1,132 @@
 - en: The `pidof` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`pidof` 命令'
 - en: The `pidof` is a command-line utility that allows you to find the process ID
     of a running program.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pidof` 是一个命令行实用程序，允许您查找正在运行的程序的进程 ID。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'To view the help message and all options of the command:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看命令的帮助信息和所有选项：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Examples:'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'To find the PID of the SSH server, you would run:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查找 SSH 服务器进程的 PID，您将运行：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If there are running processes with names matching `sshd`, their PIDs will be
     displayed on the screen. If no matches are found, the output will be empty.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果有与 `sshd` 名称匹配的正在运行的进程，它们的 PID 将显示在屏幕上。如果没有找到匹配项，输出将为空。
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`pidof` returns `0` when at least one running program matches with the requested
     name. Otherwise, the exit code is `1`. This can be useful when writing shell scripts.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pidof` 命令在至少有一个正在运行的程序与请求的名称匹配时返回 `0`。否则，退出代码为 `1`。这在编写 shell 脚本时可能很有用。'
 - en: To be sure that only the PIDs of the program you are searching for are displayed,
     use the full pathname to the program as an argument. For example, if you have
     two running programs with the same name located in two different directories pidof
     will show PIDs of both running programs.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要确保仅显示您正在搜索的程序 PID，请使用程序的完整路径作为参数。例如，如果您有两个在不同目录中运行的具有相同名称的正在运行的程序，`pidof` 将显示两个正在运行的程序的
+    PID。
 - en: 'By default, all PIDs of the matching running programs are displayed. Use the
     `-s` option to force pidof to display only one PID:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，所有匹配的正在运行的程序的 PID 都会显示。使用 `-s` 选项强制 `pidof` 仅显示一个 PID：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'The `-o` option allows you to exclude a process with a given PID from the command
     output:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-o` 选项允许您从命令输出中排除具有给定 PID 的进程：'
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: When pidof is invoked with the `-o` option, you can use a special PID named
     %PPID that represents the calling shell or shell script.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 `pidof` 使用 `-o` 选项调用时，您可以使用一个特殊的 PID，即 %PPID，它代表调用 shell 或 shell 脚本。
 - en: 'To return only the PIDs of the processes that are running with the same root
     directory, use the `-c` option. This option works only pidof is run as `root`
     or `sudo` user:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 要仅返回具有相同根目录运行的进程的 PID，请使用 `-c` 选项。此选项仅在 `pidof` 以 `root` 或 `sudo` 用户运行时才有效：
 - en: '[PRE6]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Conclusion
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: The `pidof` command is used to find out the PIDs of a specific running program.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pidof` 命令用于查找特定正在运行的程序的 PID。'
 - en: '`pidof` is a simple command that doesn’t have a lot of options. Typically you
     will invoke pidof only with the name of the program you are searching for.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '`pidof` 是一个简单的命令，没有很多选项。通常，您只会用您正在搜索的程序名称调用 `pidof`。'

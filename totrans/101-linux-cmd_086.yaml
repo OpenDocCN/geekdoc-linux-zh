@@ -1,147 +1,223 @@
 - en: The `rsync` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`rsync`命令'
 - en: The `rsync` command is probably one of the most used commands out there. It
     is used to securely copy files from one server to another over SSH.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`rsync`命令可能是最常用的命令之一。它用于通过SSH安全地从一台服务器复制文件到另一台服务器。'
 - en: Compared to the `scp` command, which does a similar thing, `rsync` makes the
     transfer a lot faster, and in case of an interruption, you could restore/resume
     the transfer process.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 与执行类似任务的`scp`命令相比，`rsync`使传输速度更快，并且在传输中断的情况下，你可以恢复/继续传输过程。
 - en: In this tutorial, I will show you how to use the `rsync` command and copy files
     from one server to another and also share a few useful tips!
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个教程中，我将向你展示如何使用`rsync`命令，从一台服务器复制文件到另一台，并分享一些有用的技巧！
 - en: Before you get started, you would need to have 2 Linux servers. I will be using
     DigitalOcean for the demo and deploy 2 Ubuntu servers.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在开始之前，你需要拥有2台Linux服务器。我将使用DigitalOcean进行演示并部署2台Ubuntu服务器。
 - en: 'You can use my referral link to get a free $100 credit that you could use to
     deploy your virtual machines and test the guide yourself on a few DigitalOcean
     servers:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用我的推荐链接获得免费的$100信用额度，你可以用它来部署虚拟机，并在几个DigitalOcean服务器上测试指南：
 - en: '**[DigitalOcean $100 Free Credit](https://m.do.co/c/2a9bba940f39)**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[DigitalOcean $100 免费信用额度](https://m.do.co/c/2a9bba940f39)**'
 - en: Transfer Files from local server to remote
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将本地服务器上的文件传输到远程
 - en: This is one of the most common causes. Essentially this is how you would copy
     the files from the server that you are currently on (the source server) to remote/destination
     server.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是最常见的原因之一。本质上，这就是你从当前所在的服务器（源服务器）复制文件到远程/目标服务器的方式。
 - en: 'What you need to do is SSH to the server that is holding your files, cd to
     the directory that you would like to transfer over:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 你需要做的是SSH到保存你文件的服务器，cd到你想传输的目录：
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'And then run:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后运行：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The above command would copy all the files and directories from the current
     folder on your server to your remote server.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令将复制服务器上当前文件夹中的所有文件和目录到你的远程服务器。
 - en: 'Rundown of the command:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令概述：
 - en: '`-a`: is used to specify that you want recursion and want to preserve the file
     permissions and etc.'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-a`：用于指定你想要递归并保留文件权限等。'
 - en: '`-v`: is verbose mode, it increases the amount of information you are given
     during the transfer.'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-v`：是详细模式，它增加了在传输过程中你获得的信息量。'
 - en: '`-z`: this option, rsync compresses the file data as it is sent to the destination
     machine, which reduces the amount of data being transmitted -- something that
     is useful over a slow connection.'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`-z`：此选项，在将文件发送到目标机器时，`rsync`会压缩文件数据，这减少了传输的数据量——这在慢速连接中非常有用。'
 - en: 'I recommend having a look at the following website which explains the commands
     and the arguments very nicely:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 我建议查看以下网站，它非常详细地解释了命令和参数：
 - en: '[https://explainshell.com/explain?cmd=rsync+-avz](https://explainshell.com/explain?cmd=rsync+-avz)'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://explainshell.com/explain?cmd=rsync+-avz](https://explainshell.com/explain?cmd=rsync+-avz)'
 - en: 'In case that the SSH service on the remote server is not running on the standard
     `22` port, you could use `rsync` with a special SSH port:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果远程服务器上的SSH服务没有运行在标准的`22`端口上，你可以使用带有特殊SSH端口的`rsync`：
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Transfer Files remote server to local
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将远程服务器上的文件传输到本地
 - en: 'In some cases you might want to transfer files from your remote server to your
     local server, in this case, you would need to use the following syntax:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 在某些情况下，你可能想从你的远程服务器传输文件到本地服务器，在这种情况下，你需要使用以下语法：
 - en: '[PRE3]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Again, in case that you have a non-standard SSH port, you can use the following
     command:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次提醒，如果你有一个非标准的SSH端口，你可以使用以下命令：
 - en: '[PRE4]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Transfer only missing files
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 仅传输缺失的文件
 - en: If you would like to transfer only the missing files you could use the `--ignore-existing`
     flag.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只想传输缺失的文件，可以使用`--ignore-existing`标志。
 - en: This is very useful for final sync in order to ensure that there are no missing
     files after a website or a server migration.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 这对于确保网站或服务器迁移后没有缺失文件，进行最后的同步非常有用。
 - en: 'Basically the commands would be the same apart from the appended --ignore-existing
     flag:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 基本上，命令将是相同的，除了附加的`--ignore-existing`标志：
 - en: '[PRE5]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Conclusion
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: Using `rsync` is a great way to quickly transfer some files from one machine
     over to another in a secure way over SSH.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`rsync`是一种快速且安全地将一些文件从一个机器传输到另一个机器的好方法。
 - en: 'For more cool Linux networking tools, I would recommend checking out this tutorial
     here:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于更多酷的Linux网络工具，我建议查看以下教程：
 - en: '[Top 15 Linux Networking tools that you should know!](https://devdojo.com/serverenthusiast/top-15-linux-networking-tools-that-you-should-know)'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '[你应该知道的15个顶级Linux网络工具！](https://devdojo.com/serverenthusiast/top-15-linux-networking-tools-that-you-should-know)'
 - en: Hope that this helps!
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 希望这能帮到您！
 - en: 'Initially posted here: [How to Transfer Files from One Linux Server to Another
     Using rsync](https://devdojo.com/bobbyiliev/how-to-transfer-files-from-one-linux-server-to-another-using-rsync)'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 初始发布于此：[如何使用rsync将文件从一个Linux服务器传输到另一个Linux服务器](https://devdojo.com/bobbyiliev/how-to-transfer-files-from-one-linux-server-to-another-using-rsync)

@@ -1,329 +1,505 @@
 - en: The `fg` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`fg` 命令'
 - en: The `fg` command is used to bring background or stopped jobs to the foreground,
     making them the active process in your terminal. It's an essential part of job
     control in Unix-like shells.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fg` 命令用于将后台或停止的作业带到前台，使其成为终端中的活动进程。它是类 Unix shell 中作业控制的一个基本部分。'
 - en: Syntax
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If no job specification is provided, `fg` operates on the current job (most
     recent job).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有提供作业指定，`fg` 将操作当前作业（最近的作业）。
 - en: Job Specifications
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 作业指定
 - en: 'You can refer to jobs using different formats:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用不同的格式引用作业：
 - en: '`%1` - Job number 1'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%1` - 第 1 个作业'
 - en: '`%+` or `%%` - Current job (most recent)'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%+` 或 `%%` - 当前作业（最近的）'
 - en: '`%-` - Previous job'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%-` - 前一个作业'
 - en: '`%string` - Job whose command line starts with string'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%string` - 命令行以字符串开头的作业'
 - en: '`%?string` - Job whose command line contains string'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%?string` - 命令行包含字符串的作业'
 - en: Examples
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例
 - en: Bring the current job to foreground
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将当前作业带到前台
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Bring specific job to foreground
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将特定作业带到前台
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Bring job by partial command name
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 通过部分命令名来调用作业
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Bring job containing specific text
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 调用包含特定文本的作业
 - en: '[PRE4]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Complete Job Control Workflow
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 完整的作业控制工作流程
 - en: 'Here''s a typical workflow demonstrating `fg` usage:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个展示 `fg` 命令使用的典型工作流程：
 - en: Start a background job
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动一个后台作业
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Start another job and stop it
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 启动另一个作业并停止它
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Check current jobs
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 检查当前作业
 - en: '[PRE7]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Output:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出：
 - en: '[PRE8]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Bring vim to foreground
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将 vim 带到前台
 - en: '[PRE9]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Work in vim, then stop again (Ctrl+Z) and bring ping to foreground
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 vim 中工作，然后再次停止（Ctrl+Z）并将 ping 带到前台
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: Practical Examples
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 实际示例
 - en: Working with editors
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 与编辑器一起工作
 - en: '[PRE11]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Managing multiple development tasks
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 管理多个开发任务
 - en: '[PRE12]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Interactive debugging session
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 交互式调试会话
 - en: '[PRE13]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Working with multiple terminals/sessions
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 与多个终端/会话一起工作
 - en: '[PRE14]'
+  id: totrans-43
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Advanced Usage
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 高级用法
 - en: Switching between multiple stopped jobs
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在多个停止的作业之间切换
 - en: '[PRE15]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Using with job control in scripts
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在脚本中使用作业控制
 - en: '[PRE16]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: Related Commands
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 相关命令
 - en: '`bg` - Put job in background'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`bg` - 将作业放入后台'
 - en: '`jobs` - List active jobs'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`jobs` - 列出活动作业'
 - en: '`kill` - Terminate job'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`kill` - 终止作业'
 - en: '`Ctrl+Z` - Stop (suspend) current job'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+Z` - 停止（挂起）当前作业'
 - en: '`Ctrl+C` - Terminate current job'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Ctrl+C` - 终止当前作业'
 - en: Use Cases
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用例
 - en: '**Code editing**: Switch between multiple open editors'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**代码编辑**：在多个打开的编辑器之间切换'
 - en: '**Development**: Alternate between compilation and editing'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**开发**：在编译和编辑之间交替'
 - en: '**System monitoring**: Switch between monitoring tools'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**系统监控**：在监控工具之间切换'
 - en: '**Remote sessions**: Resume SSH or other remote connections'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**远程会话**：恢复 SSH 或其他远程连接'
 - en: '**Interactive programs**: Return to paused interactive applications'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**交互程序**：返回暂停的交互式应用程序'
 - en: '**Debugging**: Resume debugger sessions'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**调试**：恢复调试会话'
 - en: Important Notes
+  id: totrans-62
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重要提示
 - en: When a job is brought to foreground, it becomes the active process
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当作业被带到前台时，它成为活动进程
 - en: You can only have one foreground job at a time
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 您一次只能有一个前台作业
 - en: Foreground jobs can receive keyboard input
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 前台作业可以接收键盘输入
 - en: Use Ctrl+Z to stop (suspend) a foreground job
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 Ctrl+Z 停止（挂起）前台作业
 - en: Use Ctrl+C to terminate a foreground job
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 Ctrl+C 终止前台作业
 - en: Background jobs continue running even when not in foreground
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后台作业即使在不在前台时也会继续运行
 - en: Error Handling
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 错误处理
 - en: 'Common issues with `fg`:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fg` 的常见问题：'
 - en: 'Job doesn''t exist: `fg: %3: no such job`'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '作业不存在：`fg: %3: no such job`'
 - en: 'No jobs available: `fg: no current job`'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '没有可用的作业：`fg: no current job`'
 - en: Job already in foreground
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 作业已在前台
 - en: Tips for Effective Usage
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 有效使用技巧
 - en: '**Use job numbers**: More reliable than partial names'
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**使用作业编号**：比部分名称更可靠'
 - en: '**Check jobs first**: Always run `jobs` to see current status'
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**首先检查作业**：始终运行 `jobs` 来查看当前状态'
 - en: '**Consistent workflow**: Develop a routine for job switching'
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**一致的流程**：为作业切换制定常规'
 - en: '**Redirect output**: Background jobs should redirect output to avoid interference'
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**重定向输出**：后台作业应重定向输出以避免干扰'
 - en: '[PRE17]'
+  id: totrans-79
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: Integration with Other Tools
+  id: totrans-80
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 与其他工具的集成
 - en: '`fg` works well with:'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fg` 与以下工具配合使用：'
 - en: '**Terminal multiplexers**: `screen`, `tmux`'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**终端多路复用器**：`screen`、`tmux`'
 - en: '**Development environments**: IDEs, editors'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**开发环境**：IDE、编辑器'
 - en: '**System monitoring**: `top`, `htop`, `tail`'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**系统监控**：`top`、`htop`、`tail`'
 - en: '**Network tools**: `ssh`, `ping`, `netstat`'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**网络工具**：`ssh`、`ping`、`netstat`'
 - en: The `fg` command is crucial for efficient terminal multitasking and provides
     seamless switching between different tasks.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fg` 命令对于高效的终端多任务处理至关重要，并提供了在不同任务之间无缝切换的能力。'
 - en: 'For more details, check the manual: `help fg`'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多详细信息，请查看手册：`help fg`

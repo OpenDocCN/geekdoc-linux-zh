@@ -1,71 +1,111 @@
 - en: The `fold` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`fold`命令'
 - en: The `fold` command in Linux wraps each line in an input file to fit a specified
     width and prints it to the standard output.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux中的`fold`命令将输入文件的每一行包裹到指定的宽度，并将其打印到标准输出。
 - en: By default, it wraps lines at a maximum width of 80 columns but this is configurable.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，它将行包裹在最大宽度为80列，但这是可配置的。
 - en: To fold input using the fold command pass a file or standard input to the command.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使用`fold`命令折叠输入，请将文件或标准输入传递给命令。
 - en: 'Syntax:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Options
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项
 - en: '**-w** : By using this option in fold command, we can limit the width by number
     of columns.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**-w**：在`fold`命令中使用此选项，我们可以通过列数来限制宽度。'
 - en: 'By using this command we change the column width from default width of 80.
     Syntax:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用此命令，我们更改了列宽，从默认的80列宽度。语法：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Example: wrap the lines of file1.txt to a width of 60 columns'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：将file1.txt的行包裹到60列宽
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**-b** : This option of fold command is used to limit the width of the output
     by the number of bytes rather than the number of columns.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**-b**：折叠命令的此选项用于通过字节数而不是列数来限制输出宽度。'
 - en: By using this we can enforce the width of the output to the number of bytes.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用此选项，我们可以强制输出宽度为字节数。
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Example: limit the output width of the file to 40 bytes and the command breaks
     the output at 40 bytes.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：将文件输出宽度限制为40字节，命令在40字节处断行。
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '**-s** : This option is used to break the lines on spaces so that words are
     not broken.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**-s**：此选项用于在空格处断行，以确保单词不被分割。'
 - en: If a segment of the line contains a blank character within the first width column
     positions, break the line after the last such blank character meeting the width
     constraints.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果行的某一段在第一个宽度列位置内包含空格字符，则在满足宽度约束的最后一个此类空格字符之后断行。
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'

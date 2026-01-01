@@ -1,119 +1,185 @@
 - en: The `parted` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`parted` 命令'
 - en: The `parted` command is used to manage hard disk partitions on Linux. It can
     be used to add, delete, shrink and extend disk partitions along with the file
     systems located on them. You will need root access to the system to run `parted`
     commands.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`parted` 命令用于管理 Linux 上的硬盘分区。它可以用来添加、删除、缩小和扩展硬盘分区以及它们上所在的文件系统。运行 `parted` 命令需要系统管理员权限。'
 - en: '**NOTE:** Parted writes the changes immediately to your disk, be careful when
     you are modifying the disk partitions.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意**：`parted` 会立即将更改写入您的磁盘，在修改磁盘分区时要小心。'
 - en: 'Examples:'
+  id: totrans-3
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Displays partition layout of all block devices:'
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示所有块设备的分区布局：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Display partition table of a specific `disk`
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示特定 `disk` 的分区表
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Examples of `disk` are /dev/sda, /dev/sdb
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`disk` 的例子有 /dev/sda, /dev/sdb'
 - en: Create a new disk label of `label-type` for a specific disk
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 为特定磁盘创建 `label-type` 的新磁盘标签
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '`label-type` can take values "aix", "amiga", "bsd", "dvh", "gpt", "loop", "mac",
     "msdos", "pc98", or "sun"'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`label-type` 可以取值 "aix", "amiga", "bsd", "dvh", "gpt", "loop", "mac", "msdos",
+    "pc98", 或 "sun"'
 - en: Create a new partition in a specific `disk` of type `part-time`, file system
     is `fs-type` and of size `size` Mb.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在特定 `disk` 的 `part-time` 类型的磁盘上创建一个新的分区，文件系统为 `fs-type`，大小为 `size` Mb。
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`part-time` can take values "primary", "logical", "extended".'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`part-time` 可以取值 "primary", "logical", "extended"。'
 - en: '`fs-type` is optional. It can take values "btrfs", "ext2", "ext3", "ext4",
     "fat16", "fat32", "hfs", "hfs+", "linux-swap", "ntfs", "reiserfs", "udf", or "xfs"'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fs-type` 是可选的。它可以取值 "btrfs", "ext2", "ext3", "ext4", "fat16", "fat32", "hfs",
+    "hfs+", "linux-swap", "ntfs", "reiserfs", "udf", 或 "xfs"'
 - en: '`size` has to less than the total size of the specified disk. To create a partition
     of size 50Mb, <size>will take the value of 50</size>'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`size` 必须小于指定磁盘的总大小。要创建大小为 50Mb 的分区，<size>将取值为 50</size>'
 - en: '`parted` can also be run in an interactive format. Operations to manage the
     disk partitions can be performed by entering appropriate commands in the interactive
     session. `help` command in the interactive session shows a list of all possible
     disk management operations which can be performed.'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`parted` 也可以以交互式格式运行。可以通过在交互会话中输入适当的命令来执行管理磁盘分区的操作。交互会话中的 `help` 命令会显示可以执行的所有可能的磁盘管理操作的列表。'
 - en: '[PRE4]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Syntax Forms:'
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法形式：
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Options:'
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 选项：
 - en: '| **Short Flag** | **Long Flag** | **Description** |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **长标志** | **描述** |'
 - en: '| :-- | :-- | :-- |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- | :-- |'
 - en: '| -h | --help | displays a help message listing all possible `commands [options]`
     |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| -h | --help | 显示帮助信息，列出所有可能的 `commands [options]` |'
 - en: '| -l | --list | lists partition layout on all block devices |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| -l | --list | 列出所有块设备上的分区布局 |'
 - en: '| -m | --machine | displays machine parseable output |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| -m | --machine | 显示机器可解析的输出 |'
 - en: '| -v | --version | displays the version |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| -v | --version | 显示版本 |'
 - en: '| -a | --align | set alignment type for newly created partition. It can take
     the following values: `none`: Use the minimum alignment allowed by the disk type'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '| -a | --align | 为新创建的分区设置对齐类型。它可以取以下值：`none`：使用磁盘类型允许的最小对齐'
 - en: '`cylinder`: Align partitions to cylinders'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`cylinder`：将分区对齐到磁柱'
 - en: '`minimal`: Use minimum alignment as given by the disk topology information'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '`minimal`：使用磁盘拓扑信息给出的最小对齐'
 - en: '`optimal`: Use optimum alignment as given by the disk topology information
     |'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '`optimal`：使用磁盘拓扑信息给出的最佳对齐 |'

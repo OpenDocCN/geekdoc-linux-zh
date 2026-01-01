@@ -1,369 +1,581 @@
 - en: The `nmtui` Command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`nmtui` 命令'
 - en: The **`nmtui`** (Network Manager Text User Interface) command is a **menu-driven
     tool** for configuring network connections in Linux.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '**`nmtui`**（网络管理器文本用户界面）命令是一个用于在 Linux 中配置网络连接的 **菜单驱动工具**。'
 - en: It provides a simple, text-based interface to manage network settings such as
     Wi-Fi, Ethernet, hostname, and more — without using complex command-line options.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 它提供了一个简单、基于文本的界面来管理网络设置，如 Wi-Fi、以太网、主机名等，而无需使用复杂的命令行选项。
 - en: '* * *'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🔹 What it Does
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🔹 它的作用
 - en: '`nmtui` allows you to:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nmtui` 允许您：'
 - en: View and edit **network connections**
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 查看和编辑 **网络连接**
 - en: '**Activate or deactivate** interfaces'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**激活或停用** 接口'
 - en: '**Set or change** the system **hostname**'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**设置或更改**系统 **主机名**'
 - en: Connect to **Wi-Fi networks**
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 连接到 **Wi-Fi 网络**
 - en: Manage **IPv4 / IPv6 settings**
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 管理 **IPv4 / IPv6 设置**
 - en: It is especially useful on servers or systems **without a graphical desktop
     environment**.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 它在服务器或 **没有图形桌面环境** 的系统上特别有用。
 - en: '* * *'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🧠 Syntax
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🧠 语法
 - en: nmtui [OPTION]
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: nmtui [选项]
 - en: '* * *'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🖥️ Examples
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🖥️ 示例
 - en: '**Open the main menu interface:**'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**打开主菜单界面：**'
 - en: nmtui
+  id: totrans-18
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: nmtui
 - en: Opens the main TUI (text user interface) window with options to *Edit a connection*,
     *Activate a connection*, or *Set system hostname*.
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 打开主 TUI（文本用户界面）窗口，其中包含 *编辑连接*、*激活连接* 或 *设置系统主机名* 的选项。
 - en: '**Directly edit a network connection:**'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**直接编辑网络连接：**'
 - en: nmtui edit
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: nmtui edit
 - en: Lets you create, modify, or delete network connections (both Ethernet and Wi-Fi).
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 允许您创建、修改或删除网络连接（包括以太网和 Wi-Fi）。
 - en: '**Directly activate or deactivate connections:**'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**直接激活或停用连接：**'
 - en: nmtui connect
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: nmtui connect
 - en: Opens the *Activate a connection* menu where you can enable or disable network
     interfaces.
+  id: totrans-25
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 打开 *激活连接* 菜单，您可以在其中启用或禁用网络接口。
 - en: '**Set or change the system hostname:**'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**设置或更改系统主机名：**'
 - en: nmtui hostname
+  id: totrans-27
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: nmtui hostname
 - en: Opens a dialog box to set your system’s hostname (used for identification on
     a network).
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 打开一个对话框来设置您的系统主机名（用于网络上的识别）。
 - en: '**Connect directly to a specific Wi-Fi network:**'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**直接连接到特定的 Wi-Fi 网络：**'
 - en: nmtui connect "MyWiFiNetwork"
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: nmtui connect "MyWiFiNetwork"
 - en: Connects to the specified Wi-Fi network if it exists in range.
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 如果范围内存在，则连接到指定的 Wi-Fi 网络。
 - en: '**Quit the interface:**'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**退出界面：**'
 - en: Simply use **Tab → Quit** or press **Esc**.
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 简单地使用 **Tab → 退出** 或按 **Esc**。
 - en: '* * *'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🧩 Common Options and Subcommands
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🧩 常用选项和子命令
 - en: '| **Command** | **Description** |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmtui` | Launches the interactive main menu |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui` | 启动交互式主菜单 |'
 - en: '| `nmtui edit` | Opens the “Edit a connection” screen |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui edit` | 打开“编辑连接”屏幕 |'
 - en: '| `nmtui connect` | Opens the “Activate a connection” screen |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui connect` | 打开“激活连接”屏幕 |'
 - en: '| `nmtui hostname` | Opens the “Set system hostname” dialog |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui hostname` | 打开“设置系统主机名”对话框 |'
 - en: '| `nmtui connect <SSID>` | Connects to a specific Wi-Fi network directly |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui connect <SSID>` | 直接连接到特定的 Wi-Fi 网络 |'
 - en: '| `nmtui help` | Displays basic usage help |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui help` | 显示基本使用帮助 |'
 - en: '* * *'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: ⚙️ Interface Navigation
+  id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: ⚙️ 接口导航
 - en: Use the **arrow keys** or **Tab** to move between fields.
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 **箭头键** 或 **Tab** 在字段之间移动。
 - en: Press **Enter** to select.
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按下 **Enter** 键进行选择。
 - en: Use **Spacebar** to toggle checkboxes or options.
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 **空格键** 切换复选框或选项。
 - en: Press **Esc** or select **Quit** to exit safely.
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 按下 **Esc** 或选择 **退出** 以安全退出。
 - en: '* * *'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 📡 Common Use Cases
+  id: totrans-51
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 📡 常见用例
 - en: '**1\. Configure a static IP address:**'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '**1. 配置静态 IP 地址：**'
 - en: nmtui edit
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: nmtui edit
 - en: → Choose your Ethernet connection
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: → 选择您的以太网连接
 - en: → Set “IPv4 CONFIGURATION” to *Manual*
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '→ 将“IPv4 配置”设置为 *手动* '
 - en: → Enter IP, Gateway, and DNS
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: → 输入 IP、网关和 DNS
 - en: → Save → Activate connection
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: → 保存 → 激活连接
 - en: '* * *'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '**2\. Connect to Wi-Fi from terminal:**'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**2. 从终端连接 Wi-Fi：**'
 - en: nmtui connect
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: nmtui connect
 - en: → Select your wireless interface
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: → 选择您的无线接口
 - en: → Choose the SSID
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: → 选择 SSID
 - en: → Enter the password
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: → 输入密码
 - en: → Activate connection
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: → 激活连接
 - en: '* * *'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '**3\. Change the hostname:**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**3. 更改主机名：**'
 - en: nmtui hostname
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: nmtui hostname
 - en: → Type your new hostname
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: → 输入您的新主机名
 - en: → Confirm and exit
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: → 确认并退出
 - en: → The new hostname will apply immediately.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: → 新的主机名将立即生效。
 - en: '* * *'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🛠 Troubleshooting
+  id: totrans-72
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🛠 故障排除
 - en: '| **Issue** | **Possible Solution** |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| **问题** | **可能的解决方案** |'
 - en: '| :-- | :-- |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmtui` command not found | Install NetworkManager TUI: `sudo apt install
     network-manager` (Debian/Ubuntu) or `sudo dnf install NetworkManager-tui` (Fedora/RHEL/CentOS)
     |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `nmtui` 命令未找到 | 安装 NetworkManager TUI：`sudo apt install network-manager`（Debian/Ubuntu）或
+    `sudo dnf install NetworkManager-tui`（Fedora/RHEL/CentOS）|'
 - en: '| Changes don’t take effect | Restart NetworkManager: `sudo systemctl restart
     NetworkManager` |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| 变更不会生效 | 重新启动 NetworkManager：`sudo systemctl restart NetworkManager` |'
 - en: '| Interface not showing | Ensure your interface is managed by NetworkManager:
     check `/etc/NetworkManager/NetworkManager.conf` |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| 接口未显示 | 确保您的接口由 NetworkManager 管理：检查 `/etc/NetworkManager/NetworkManager.conf`
+    |'
 - en: '| Wi-Fi missing | Make sure wireless drivers are installed and `nmcli device
     status` shows the Wi-Fi adapter |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| Wi-Fi 缺失 | 确保已安装无线驱动程序，并且 `nmcli device status` 显示 Wi-Fi 网卡 |'
 - en: '* * *'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 🧰 Related Commands
+  id: totrans-80
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🧰 相关命令
 - en: '| **Command** | **Purpose** |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| **命令** | **用途** |'
 - en: '| :-- | :-- |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `nmcli` | Command-line (non-interactive) NetworkManager control |'
+  id: totrans-83
   prefs: []
   type: TYPE_TB
+  zh: '| `nmcli` | 命令行（非交互式）NetworkManager 控制 |'
 - en: '| `ip addr` | Show IP addresses of all interfaces |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| `ip addr` | 显示所有接口的 IP 地址 |'
 - en: '| `ifconfig` | (Deprecated) Interface configuration command |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| `ifconfig` | （已弃用）接口配置命令 |'
 - en: '| `systemctl restart NetworkManager` | Restart NetworkManager service |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `systemctl restart NetworkManager` | 重新启动 NetworkManager 服务 |'
 - en: '| `hostnamectl` | Manage the system hostname directly |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| `hostnamectl` | 直接管理系统主机名 |'
 - en: '* * *'
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: '🧾 Example: Configuring Ethernet via `nmtui`'
+  id: totrans-89
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 🧾 示例：通过 `nmtui` 配置以太网
 - en: sudo nmtui
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: sudo nmtui
 - en: → Select **Edit a connection**
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: → 选择 **编辑连接**
 - en: → Choose **Wired connection 1**
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: → 选择 **有线连接 1**
 - en: → Set IPv4 to **Manual**
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: → 将 IPv4 设置为 **手动**
 - en: '→ Fill in: Address: 192.168.1.50/24'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: → 填写：地址：192.168.1.50/24
 - en: 'Gateway: 192.168.1.1'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 网关：192.168.1.1
 - en: 'DNS: 8.8.8.8'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: DNS：8.8.8.8
 - en: → Save → Back → **Activate a connection** → Select **Wired connection 1**
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: → 保存 → 返回 → **激活连接** → 选择 **有线连接 1**
 - en: ✅ Your network connection will now use a static IP.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: ✅ 您的网络连接现在将使用静态 IP。
 - en: '* * *'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 📘 Notes
+  id: totrans-100
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 📘 备注
 - en: Changes made with `nmtui` are persistent across reboots.
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `nmtui` 做的更改在重启后依然有效。
 - en: Requires **NetworkManager** to be active.
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要 **NetworkManager** 激活。
 - en: '`nmtui` provides the same functionality as `nmcli` but in a more user-friendly
     interface.'
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`nmtui` 提供了与 `nmcli` 相同的功能，但界面更加用户友好。'
 - en: Perfect for **server environments** or **SSH sessions** where GUI tools are
     unavailable.
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 非常适合 **服务器环境** 或 **SSH 会话**，在这些环境中 GUI 工具不可用。

@@ -1,87 +1,138 @@
 - en: The `iostat` command
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`iostat` 命令'
 - en: The `iostat` command in Linux is used for monitoring system input/output statistics
     for devices and partitions. It monitors system input/output by observing the time
     the devices are active in relation to their average transfer rates. The iostat
     produce reports may be used to change the system configuration to raised balance
     the input/output between the physical disks. iostat is being included in sysstat
     package. If you don’t have it, you need to install first.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux 中的 `iostat` 命令用于监控设备和分区的系统输入/输出统计信息。它通过观察设备活跃时间与其平均传输速率的关系来监控系统输入/输出。iostat
+    生成的报告可用于更改系统配置，以平衡物理磁盘之间的输入/输出。iostat 包含在 sysstat 软件包中。如果您没有安装，需要先进行安装。
 - en: 'Syntax:'
+  id: totrans-2
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 语法：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Examples:'
+  id: totrans-4
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 示例：
 - en: 'Display a single history-since-boot report for all CPU and Devices:'
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 显示所有 CPU 和设备自启动以来的单个历史报告：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Display a continuous device report at two-second intervals:'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 以两秒间隔显示连续的设备报告：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '3.Display, for all devices, six reports at two-second intervals:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 3.对于所有设备，每两秒显示六个报告：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '4.Display, for devices sda and sdb, six extended reports at two-second intervals:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 4.对于设备 sda 和 sdb，每两秒显示六个扩展报告：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Additional Flags and their Functionalities:'
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 附加标志及其功能：
 - en: '| **Short Flag** | **Description** |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| **短标志** | **描述** |'
 - en: '| :-- | :-- |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| :-- | :-- |'
 - en: '| `-x` | Show more details statistics information. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` | 显示更详细的统计信息。 |'
 - en: '| `-c` | Show only the cpu statistic. |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | 仅显示 cpu 统计信息。 |'
 - en: '| `-d` | Display only the device report |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | 仅显示设备报告 |'
 - en: '| `-xd | Show extended I/O statistic for device only. |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-xd` | 仅显示设备的扩展 I/O 统计信息。 |'
 - en: '| `-k` | Capture the statistics in kilobytes or megabytes. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-k` | 以千字节或兆字节为单位捕获统计信息。 |'
 - en: '| `-k23` | Display cpu and device statistics with delay. |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-k23` | 带延迟显示 cpu 和设备统计信息。 |'
 - en: '| `-j ID mmcbkl0 sda6 -x -m 2 2` | Display persistent device name statistics.
     |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-j ID mmcbkl0 sda6 -x -m 2 2` | 显示持久设备名称统计信息。 |'
 - en: '| `-p` | Display statistics for block devices. |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | 显示块设备的统计信息。 |'
 - en: '| `-N` | Display lvm2 statistic information. |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `-N` | 显示 lvm2 统计信息。 |'
