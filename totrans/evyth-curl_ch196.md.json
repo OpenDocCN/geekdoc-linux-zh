@@ -1,1 +1,0 @@
-["```sh\nconst char *str = curl_easy_strerror( error );\nprintf(\"libcurl said %s\\n\", str);\n```", "```sh\nchar error[CURL_ERROR_SIZE]; /* needs to be at least this big */\nCURLcode ret = curl_easy_setopt(handle, CURLOPT_ERRORBUFFER, error);\n```"]

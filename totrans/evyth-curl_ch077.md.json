@@ -1,1 +1,0 @@
-["```sh\n#!/bin/sh\ncurl http://example.com\nres=$?\nif test \"$res\" != \"0\"; then\n   echo \"the curl command failed with: $res\"\nfi\n```", "```sh\ncurl --write-out \"%{onerror}curl says: (%{exitcode}) %{errormsg}\" \\\n  https://curl.se/\n```"]

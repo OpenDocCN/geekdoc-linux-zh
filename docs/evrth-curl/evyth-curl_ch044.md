@@ -1,0 +1,100 @@
+# Autotools
+
+Autotools 是一组不同的工具集合，它们一起使用来生成 `configure` 脚本。`configure` 脚本由想要构建 curl 的用户运行，它执行一系列操作：
+
++   它检查你的系统中存在的特性和功能。
+
++   它提供了命令行选项，以便你作为构建者可以决定在构建过程中启用或禁用哪些功能。特性和协议等可以切换开启/关闭，甚至编译器警告级别等。
+
++   它提供了命令行选项，让构建者指定 curl 构建时可以使用的各种第三方依赖项的特定安装路径。
+
++   它指定了在最终构建完成并调用 `make install` 时，生成的安装文件应该放置在哪个文件路径上。
+
+在最基本的使用中，只需在源目录中运行 `./configure` 就足够了。当脚本完成后，它会输出一个总结，说明它检测/启用了哪些选项，以及哪些功能仍然被禁用，其中一些可能是因为它未能检测到那些功能正常工作所需的必要第三方依赖项的存在。如果总结不是你所期望的，请再次调用 `configure`，使用新的选项或调整之前使用的选项。
+
+在 `configure` 完成后，你调用 `make` 来构建整个项目，然后最终调用 `make install` 来安装 curl、libcurl 以及相关内容。`make install` 需要你拥有在系统中的正确权限，以便在安装目录中创建和写入文件，否则会显示错误。
+
+## 交叉编译
+
+交叉编译意味着你在一种架构上构建源代码，但输出是为了在另一种架构上运行而创建的。例如，你可以在 Linux 机器上构建源代码，但输出可以在 Windows 机器上运行。
+
+为了使交叉编译工作，你需要为特定目标系统设置一个专门的编译器和构建系统。如何获取和安装该系统，本书不涉及。
+
+一旦你有了交叉编译器，你可以指示 `configure` 在构建 curl 时使用该编译器而不是本地编译器，这样最终结果就可以移动到另一台机器上并使用。
+
+## 静态链接
+
+默认情况下，`configure` 设置构建文件，以便以下 `make` 命令创建 libcurl 的共享和静态版本。你可以使用 `--disable-static` 或 `--disable-shared` 选项来更改这一点。
+
+如果你想要使用第三方库的静态版本而不是共享库来构建，你需要准备好进行一场艰难的战斗。curl 的 `configure` 脚本专注于设置和构建共享库。
+
+与静态库链接相比，与共享库链接的一个不同之处在于共享库如何处理自己的依赖项，而静态库则不这样做。为了将库 `xyz` 作为共享库链接，基本上只需在链接器命令行中添加 `-lxyz`，无论 `xyz` 本身是用哪些其他库构建的。但是，如果 `xyz` 是一个静态库，我们还需要在链接器命令行中指定 `xyz` 的每个依赖项。curl 的配置脚本无法跟上或知道所有可能的依赖项，因此想要使用静态库的用户通常需要提供要链接的库列表。
+
+## 选择 TLS 后端
+
+基于配置的构建为用户提供在构建时从多种不同的 TLS 库中进行选择。您可以通过使用正确的命令行选项来选择它们。在 curl 7.77.0 之前，配置脚本会自动检查 OpenSSL，但现代版本不再这样做。
+
++   AmiSSL: `--with-amissl`
+
++   AWS-LC: `--with-openssl`
+
++   BearSSL: `--with-bearssl`
+
++   BoringSSL: `--with-openssl`
+
++   GnuTLS: `--with-gnutls`
+
++   LibreSSL: `--with-openssl`
+
++   mbedTLS: `--with-mbedtls`
+
++   OpenSSL: `--with-openssl`
+
++   Rustls: `--with-rustls` (指向 rustls-ffi 安装路径)
+
++   Schannel: `--with-schannel`
+
++   安全传输: `--with-secure-transport`
+
++   wolfSSL: `--with-wolfssl`
+
+如果您没有指定要使用哪个 TLS 库，配置脚本将失败。如果您想构建**不**支持 TLS 的版本，您必须明确使用 `--without-ssl` 来请求。
+
+这些 `--with-*` 选项还允许您提供安装前缀，以便配置脚本在您指定的位置搜索特定库。例如：
+
+```sh
+./configure --with-gnutls=/home/user/custom-gnutls
+```
+
+您可以选择构建支持**多个**TLS 库的版本，通过在配置命令行上指定多个 `--with-*` 选项。使用 `--with-default-ssl-backend=[NAME]` 指定哪个作为默认 TLS 后端。例如，构建支持 GnuTLS 和 OpenSSL，并默认使用 OpenSSL：
+
+```sh
+./configure --with-openssl --with-gnutls \
+  --with-default-ssl-backend=openssl
+```
+
+## 选择 SSH 后端
+
+基于配置的构建为用户提供在构建时从多种不同的 SSH 库中进行选择。您可以通过使用正确的命令行选项来选择它们。
+
++   libssh2: `--with-libssh2`
+
++   libssh: `--with-libssh`
+
++   wolfSSH: `--with-wolfssh`
+
+这些 `--with-*` 选项还允许您提供安装前缀，以便配置脚本在您指定的位置搜索特定库。例如：
+
+```sh
+./configure --with-libssh2=/home/user/custom-libssh2
+```
+
+## 选择 HTTP/3 后端
+
+基于配置的构建为用户提供在构建时选择不同的 HTTP/3 库。您可以通过使用正确的命令行选项来选择它们。
+
++   quiche: `--with-quiche`
+
++   ngtcp2: `--with-ngtcp2 --with-nghttp3`
+
++   msh3: `--with-msh3`
