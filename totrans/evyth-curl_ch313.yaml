@@ -1,40 +1,60 @@
 - en: Continuous Integration
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 持续集成
 - en: For every pull request submitted to the curl project on GitHub and for every
     commit pushed to the master branch in the git repository, a vast amount of virtual
     machines fire up, check out that code from git, build it with different options
     and run the test suite and make sure that everything is working fine.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于提交到GitHub上curl项目的每个pull request以及对于推送到git仓库主分支的每个commit，都会启动大量的虚拟机，从git检出代码，用不同的选项构建它，运行测试套件，并确保一切正常工作。
 - en: We run CI jobs on several different operating systems, including Linux, macOS,
     Windows, Solaris and FreeBSD.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们在包括Linux、macOS、Windows、Solaris和FreeBSD在内的多个不同的操作系统上运行CI作业。
 - en: We run jobs that build and test many different (combinations of) backends.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们运行构建和测试许多不同（组合）后端的作业。
 - en: 'We have jobs that use different ways of building: autotools, cmake, winbuild,
     Visual Studio, etc.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们有使用不同构建方式的作业：autotools、cmake、winbuild、Visual Studio等。
 - en: We verify that the distribution tarball works.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们验证分发tar包是否正常工作。
 - en: We run source code analyzers.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们运行源代码分析器。
 - en: Failing builds
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 构建失败
 - en: Unfortunately, due to the complexity of everything involved we often have one
     or two CI jobs that seemingly are stuck “permafailing”, that seems to be failing
     the jobs on a permanent basis.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，由于涉及到的所有事情都很复杂，我们经常有一两个CI作业似乎陷入了“永久失败”的状态，这看起来像是永久性地使作业失败。
 - en: We work hard to make them not, but it is a tough job and we often see red builds
     even for changes that should otherwise be all green.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们努力使它们不失败，但这是一项艰巨的任务，我们经常看到即使是应该全部为绿色的更改，也会出现红色构建。

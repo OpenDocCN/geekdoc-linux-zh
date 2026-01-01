@@ -1,50 +1,72 @@
 - en: Local address and port number
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 本地地址和端口号
 - en: In almost all situations you want to let the system pick the default source
     IP address and local port number when setting up a connection.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在几乎所有情况下，您都希望让系统在设置连接时选择默认的源IP地址和本地端口号。
 - en: For the rare instances when that is not good enough, libcurl features overrides.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于那些不够好的罕见情况，libcurl提供了覆盖功能。
 - en: Local address
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 本地地址
 - en: A connection created by libcurl needs to have a source IP that routes back to
     this host. An application can not just randomly pick whatever IP address it wants
     to use and expect that to work. A network interface in the machine needs to have
     the IP address assigned.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 由libcurl创建的连接需要有一个能够路由回此主机的源IP地址。应用程序不能随意选择任何它想要的IP地址并期望它能够工作。机器中的网络接口需要分配IP地址。
 - en: You can ask libcurl to use a non-default IP address with `CURLOPT_INTERFACE`.
     As the name hints, it is designed to get a named network interface as input and
     it will then attempt to use that interface’s IP address for outgoing traffic.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`CURLOPT_INTERFACE`让libcurl使用非默认的IP地址。正如其名所示，它是设计用来接收一个命名的网络接口作为输入，然后它会尝试使用该接口的IP地址进行出站流量。
 - en: The name can however instead be an IP address or a hostname, even though **we
     do not recommend using those versions**.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，名称也可以是一个IP地址或主机名，尽管**我们不推荐使用这些版本**。
 - en: To prevent libcurl from guessing what kind of input that is provided, prefix
     the interface name with “if!”, to make sure the name is not mistaken for a hostname.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了防止libcurl猜测提供的输入类型，请在接口名称前加上“if!”前缀，以确保名称不会被误认为是主机名。
 - en: Similarly, you prefix the provided name with “host!” to insist the address is
     a hostname or IP number.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似地，您可以通过在提供的名称前加上“host!”前缀来坚持地址是一个主机名或IP号码。
 - en: Local port number
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 本地端口号
 - en: By default, 16 bit random source local port numbers are used for connections,
     from the so called *ephemeral port* range. An application can ask for a specific
     port range to be used with the `CURLOPT_LOCALPORT` and `CURLOPT_LOCALPORTRANGE`
     options. Since port numbers are finite resources, narrowing the selection of ports
     to select from will increase the risk that the connection cannot be setup if none
     of the attempted port numbers are currently available to be used.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，连接使用16位随机源本地端口号，来自所谓的*临时端口*范围。应用程序可以通过`CURLOPT_LOCALPORT`和`CURLOPT_LOCALPORTRANGE`选项请求使用特定的端口号范围。由于端口号是有限的资源，缩小可选择的端口范围会增加连接无法设置的风险，如果尝试的端口号当前都不可用。

@@ -1,54 +1,78 @@
 - en: FTPS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: FTPS
 - en: FTPS is FTP secure by TLS. It negotiates fully secured TLS connections where
     plain FTP uses clear text unsafe connections.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: FTPS 是通过 TLS 加密的 FTP。它协商完全安全的 TLS 连接，而普通的 FTP 使用明文不安全的连接。
 - en: There are two ways to do FTPS with curl. The *implicit* way and the *explicit*
     way. (These terms originate from the FTPS RFC). Usually the server you work with
     dictates which of these methods you can and shall use against it.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 curl 进行 FTPS 有两种方式：*隐式* 方式和 *显式* 方式。（这些术语源自 FTPS RFC）。通常，你合作的服务器会决定你可以和应该使用哪种方法。
 - en: Implicit FTPS
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 隐式 FTPS
 - en: The *implicit* way is when you use `ftps://` in your URL. This makes curl connect
     to the host and do a TLS handshake immediately, without doing anything in the
     clear. If no port number is specified in the URL, curl uses port 990 for this.
     This is usually not how FTPS is done.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '*隐式* 方式是指你在 URL 中使用 `ftps://`。这使得 curl 立即连接到主机并执行 TLS 握手，而不进行任何明文操作。如果 URL
+    中未指定端口号，curl 将使用端口号 990。这通常不是 FTPS 的做法。'
 - en: Explicit FTPS
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 显式 FTPS
 - en: The *explicit* way of doing FTPS is to keep using an `ftp://` URL, but instruct
     curl to upgrade the connection into a secure one using the `AUTH TLS` FTP command.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 进行 FTPS 的 *显式* 方式是继续使用 `ftp://` URL，但指示 curl 使用 `AUTH TLS` FTP 命令将连接升级为安全连接。
 - en: You can tell curl to either *attempt* an upgrade and continue as usual if the
     upgrade fails with `--ssl`, or you can force curl to either upgrade or fail the
     whole thing hard if the upgrade fails by using `--ssl-reqd`. We strongly recommend
     using the latter, so that you can be sure that a secure transfer is done - if
     any.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以告诉 curl 使用 `--ssl` 尝试升级并继续正常操作，如果升级失败，或者你可以使用 `--ssl-reqd` 强制 curl 在升级失败时整个操作失败。我们强烈建议使用后者，这样你可以确保进行安全传输——如果有的话。
 - en: Common FTPS problems
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 常见 FTPS 问题
 - en: The single most common problem with FTPS comes from the fact that the FTP protocol
     (that FTPS transfers lean on) uses a separate connection setup for the data transfer.
     This connection is done to another port and when FTP is done over clear text (non-FTPS),
     firewalls and network inspectors etc can figure out that this is FTP in progress
     and they can adapt things and rules for the new connection.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: FTPS 最常见的问题源于 FTP 协议（FTPS 依赖的协议）使用一个单独的连接设置进行数据传输。这个连接是到另一个端口，当 FTP 通过明文（非 FTPS）进行时，防火墙和网络检查器等可以确定这是正在进行的
+    FTP，他们可以为此新连接调整事物和规则。
 - en: When the FTP control channel is encrypted with TLS, firewalls cannot see what
     is going on and no outsider can dynamically adapt network rules or permission
     based on this.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 FTP 控制通道使用 TLS 加密时，防火墙无法看到正在发生的事情，任何外部人员都无法根据此动态调整网络规则或权限。

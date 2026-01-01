@@ -1,99 +1,143 @@
 - en: Name resolve tricks
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 名称解析技巧
 - en: curl offers many ways to make it use another host than the one it normally would
     connect to.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl提供了许多方法来使其使用不同于它通常连接到的主机。
 - en: Edit the hosts file
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 编辑hosts文件
 - en: Maybe you want the command `curl http://example.com` to connect to your local
     server instead of the actual server.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 也许你希望命令`curl http://example.com`连接到你的本地服务器而不是实际的服务器。
 - en: You can normally and easily do that by editing your `hosts` file (`/etc/hosts`
     on Linux and Unix-like systems) and adding, for example, `127.0.0.1 example.com`
     to redirect the host to your localhost. However this edit requires admin access
     and it has the downside that it affects all other applications at the same time.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 你通常可以很容易地通过编辑你的`hosts`文件（Linux和Unix-like系统上的`/etc/hosts`）并添加例如`127.0.0.1 example.com`来重定向主机到你的本地主机。然而，这种编辑需要管理员权限，并且它的缺点是它同时影响了所有其他应用程序。
 - en: 'Change the Host: header'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更改Host:头
 - en: The `Host:` header is the normal way an HTTP client tells the HTTP server which
     server it speaks to, as typically an HTTP server serves many different names using
     the same software instance.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Host:`头是HTTP客户端告诉HTTP服务器它正在与哪个服务器通信的正常方式，因为通常一个HTTP服务器使用相同的软件实例为许多不同的名称提供服务。'
 - en: So, by passing in a custom modified `Host:` header you can have the server respond
     with the contents of the site even when you did not actually connect to that hostname.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，通过传递一个自定义修改的`Host:`头，你可以在实际上没有连接到该主机名的情况下让服务器响应网站的内容。
 - en: 'For example, you run a test instance of your main site `www.example.com` on
     your local machine and you want to have curl ask for the index html:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，你在本地机器上运行你主站`www.example.com`的测试实例，并且希望curl请求index html：
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: When setting a custom `Host:` header and using cookies, curl extracts the custom
     name and uses that as host when matching cookies to send off.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 当设置自定义`Host:`头并使用cookie时，curl会提取自定义名称并将其用作匹配cookie发送时的主机。
 - en: The `Host:` header is not enough when communicating with an HTTPS server. With
     HTTPS there is a separate extension field in the TLS protocol called SNI (Server
     Name Indication) that lets the client tell the server the name of the server it
     wants to talk to. curl only extracts the SNI name to send from the given URL.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 当与HTTPS服务器通信时，`Host:`头是不够的。在HTTPS中，TLS协议中有一个单独的扩展字段，称为SNI（服务器名称指示），它允许客户端告诉服务器它想要与之通信的服务器名称。curl只从给定的URL中提取SNI名称以发送。
 - en: Provide a custom IP address for a name
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 为一个名称提供自定义IP地址
 - en: 'Do you know better than the name resolver where curl should go? Then you can
     give an IP address to curl yourself. If you want to redirect port 80 access for
     `example.com` to instead reach your localhost:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你是否比curl的名称解析器更清楚curl应该去哪里？那么你可以自己给curl提供一个IP地址。如果你想将`example.com`的80端口访问重定向到你的本地主机：
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: You can even specify multiple `--resolve` switches to provide multiple redirects
     of this sort, which can be handy if the URL you work with uses HTTP redirects
     or if you just want to have your command line work with multiple URLs.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 你甚至可以指定多个`--resolve`开关来提供这种类型的多个重定向，这在处理的URL使用HTTP重定向或你只想让命令行与多个URL一起工作时非常有用。
 - en: '`--resolve` inserts the address into curl’s DNS cache, so it effectively makes
     curl believe that is the address it got when it resolved the name.'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--resolve`将地址插入curl的DNS缓存中，因此它实际上让curl相信这是它在解析名称时得到的地址。'
 - en: When talking HTTPS, this sends SNI for the name in the URL and curl verifies
     the server’s response to make sure it serves for the name in the URL.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当谈论HTTPS时，这会发送URL中的名称的SNI，curl验证服务器的响应以确保它为URL中的名称提供服务。
 - en: 'The pattern you specify in the option needs to be a hostname and its corresponding
     port number and only if that exact pair is used in the URL is the address substituted.
     For example, if you want to replace a hostname in an HTTPS URL on its default
     port number, you need to tell curl it is for port 443, like:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 你在选项中指定的模式需要是一个主机名及其对应的端口号，并且只有当URL中使用该精确对时，地址才会被替换。例如，如果你想替换HTTPS URL中默认端口号的主机名，你需要告诉curl它是443端口，如下所示：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Provide a replacement name
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 提供一个替换名称
 - en: As a close relative to the `--resolve` option, the `--connect-to` option provides
     a minor variation. It allows you to specify a replacement name and port number
     for curl to use under the hood when a specific name and port number is used to
     connect.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为`--resolve`选项的近亲，`--connect-to`选项提供了一个小的变化。它允许你指定curl在特定名称和端口号用于连接时在底层使用的替换名称和端口号。
 - en: 'For example, suppose you have a single site called `www.example.com` that in
     turn is actually served by three different individual HTTP servers: load1, load2
     and load3, for load balancing purposes. In a typical normal procedure, curl resolves
@@ -101,46 +145,70 @@
     a list back and just picks one of them) and all is well. If you want to send a
     test request to one specific server out of the load balanced set (`load1.example.com`
     for example) you can instruct curl to do that.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，假设你有一个名为 `www.example.com` 的单一站点，该站点实际上由三个不同的 HTTP 服务器提供服务：load1、load2 和
+    load3，用于负载均衡。在典型正常流程中，curl 解析主站点并与负载均衡服务器之一（因为它返回一个列表并从中选择一个）进行通信，一切正常。如果你想向负载均衡集中的一个特定服务器发送测试请求（例如
+    `load1.example.com`），你可以指示 curl 执行该操作。
 - en: 'You *can* still use `--resolve` to accomplish this if you know the specific
     IP address of load1\. But without having to first resolve and fix the IP address
     separately, you can tell curl:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你知道 load1 的特定 IP 地址，你仍然可以使用 `--resolve` 来完成这个任务。但无需首先单独解析和修复 IP 地址，你可以告诉 curl：
 - en: '[PRE3]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: It redirects from a SOURCE NAME + SOURCE PORT to a DESTINATION NAME + DESTINATION
     PORT. curl then resolves the `load1.example.com` name and connects, but in all
     other ways still assumes it is talking to `www.example.com`.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 它将源名称加源端口重定向到目标名称加目标端口。curl 然后解析 `load1.example.com` 名称并连接，但在所有其他方面仍然假设它正在与
+    `www.example.com` 进行通信。
 - en: Name resolve tricks with c-ares
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用 c-ares 的名称解析技巧
 - en: As should be detailed elsewhere in this book, curl may be built with several
     different name resolving backends. One of those backends is powered by the c-ares
     library and when curl is built to use c-ares, it gets a few extra superpowers
     that curl built to use other name resolve backends do not get. Namely, it gains
     the ability to more specifically instruct what DNS servers to use and how that
     DNS traffic is using the network.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如本书其他地方应详细说明的那样，curl 可以使用几个不同的名称解析后端进行构建。其中之一是由 c-ares 库提供的后端，当 curl 构建为使用
+    c-ares 时，它获得了一些额外的超级能力，而构建为使用其他名称解析后端的 curl 则没有这些能力。具体来说，它获得了更具体地指示使用哪些 DNS 服务器以及
+    DNS 流量如何使用网络的能力。
 - en: With `--dns-servers`, you can specify exactly which DNS server curl should use
     instead of the default one. This lets you run your own experimental server that
     answers differently, or use a backup one if your regular one is unreliable or
     dead.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `--dns-servers`，你可以指定 curl 应该使用哪个 DNS 服务器而不是默认的 DNS 服务器。这让你可以运行自己的实验性服务器，该服务器会以不同的方式回答，或者如果常规服务器不可靠或已死亡，可以使用备份服务器。
 - en: With `--dns-ipv4-addr` and `--dns-ipv6-addr` you ask curl to “bind” its local
     end of the DNS communication to a specific IP address and with `--dns-interface`
     you can instruct curl to use a specific network interface to use for its DNS requests.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `--dns-ipv4-addr` 和 `--dns-ipv6-addr`，你要求 curl 将 DNS 通信的本地端“绑定”到特定的 IP 地址，而使用
+    `--dns-interface`，你可以指示 curl 使用特定的网络接口来发送 DNS 请求。
 - en: These `--dns-*` options are advanced and are only meant for people who know
     what they are doing and understand what these options do. But they offer customizable
     DNS name resolution operations.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些 `--dns-*` 选项是高级的，并且仅适用于了解自己在做什么且理解这些选项作用的人。但它们提供了可定制的 DNS 域名解析操作。

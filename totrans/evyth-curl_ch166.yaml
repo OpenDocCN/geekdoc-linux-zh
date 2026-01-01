@@ -1,74 +1,113 @@
 - en: Multipart formposts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多部分表单
 - en: A multipart formpost is what an HTTP client sends when an HTML form is submitted
     with *enctype* set to `multipart/form-data`. It is an HTTP POST request sent with
     the request body specially formatted as a series of parts, separated with MIME
     boundaries.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 多部分表单是当HTML表单提交时，`enctype`设置为`multipart/form-data`时，HTTP客户端发送的内容。这是一个带有特殊格式化的请求体，作为一系列部分发送的HTTP
+    POST请求，这些部分由MIME边界分隔。
 - en: 'An example piece of HTML would look like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个HTML示例可能如下所示：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Which could look something like this in a web browser:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在网页浏览器中，它可能看起来像这样：
 - en: '![](../media/file12.png)'
+  id: totrans-5
   prefs: []
   type: TYPE_IMG
+  zh: '![](../media/file12.png)'
 - en: a multipart form
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个多部分表单
 - en: A user can fill in text in the ‘Name’ field and by pressing the `Browse` button
     a local file can be selected that is uploaded when `Submit` is pressed.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户可以在“名称”字段中填写文本，通过按下`浏览`按钮选择一个本地文件，当按下`提交`按钮时，该文件将被上传。
 - en: Sending such a form with curl
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用curl发送此类表单
 - en: With curl, you add each separate multipart with one `-F` (or `--form`) flag
     and you then continue and add one -F for every input field in the form that you
     want to send.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用curl，你可以通过一个`-F`（或`--form`）标志添加每个单独的多部分，然后继续添加一个`-F`标志，为表单中你想要发送的每个输入字段添加一个。
 - en: The above small example form has two parts, one named ‘person’ that is a plain
     text field and one named ‘secret’ that is a file.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述简短示例表单有两个部分，一个名为“person”的纯文本字段和一个名为“secret”的文件。
 - en: 'Send your data to that form like this:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照如下方式将数据发送到该表单：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The HTTP this generates
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 生成的HTTP请求
 - en: The **action** specifies where the POST is sent. **method** says it is a POST
     and **enctype** tells us it is a multipart formpost.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**动作**指定了POST请求发送的位置。**方法**说明这是一个POST请求，而**编码类型**告诉我们这是一个多部分表单。'
 - en: 'With the fields filled in as shown above, curl generates and sends these HTTP
     request headers to the host example.com:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所示，curl根据填写的字段生成并发送这些HTTP请求头到主机example.com：
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: '**Content-Length**, of course, tells the server how much data to expect. This
     example’s 313 bytes is really small.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**内容长度**当然告诉服务器期望多少数据。这个示例的313字节非常小。'
 - en: The **Expect** header is explained in the [Expect 100 continue](ch160.xhtml#http__post__expect100__md)
     chapter.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Expect**头信息在[Expect 100 continue](ch160.xhtml#http__post__expect100__md)章节中有解释。'
 - en: The **Content-Type** header is a bit special. It tells that this is a multipart
     formpost and then it sets the boundary string. The boundary string is a line of
     characters with a bunch of random digits somewhere in it, that serves as a separator
@@ -76,27 +115,39 @@
     you see in this example has the random part `d74496d66958873e` but you, of course,
     get something different when you run curl (or when you submit such a form with
     a browser).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**内容类型**头信息有些特殊。它表明这是一个多部分表单，然后设置边界字符串。边界字符串是一行字符，其中包含一些随机的数字，用作提交表单的不同部分之间的分隔符。在这个示例中，你看到的特定边界包含随机部分`d74496d66958873e`，但当你运行curl（或使用浏览器提交此类表单时），你当然会得到不同的结果。'
 - en: So after that initial set of headers follows the request body
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，在初始的一组头信息之后是请求体。
 - en: '[PRE3]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Here you clearly see the two parts sent, separated with the boundary strings.
     Each part starts with one or more headers describing the individual part with
     its name and possibly some more details. Then after the part’s headers come the
     actual data of the part, without any sort of encoding.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这里，你可以清楚地看到发送的两个部分，它们由边界字符串分隔。每个部分都以一个或多个头信息开始，描述了该部分的内容，包括其名称和可能的一些其他细节。然后在该部分的头信息之后是实际的数据，没有任何编码。
 - en: The last boundary string has two extra dashes `--` appended to signal the end.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后的边界字符串附加了两个额外的破折号`--`，以表示结束。
 - en: Content-Type
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 内容类型
 - en: POSTing with curl’s `-F` option makes it include a default `Content-Type` header
     in its request, as shown in the above example. This says `multipart/form-data`
     and then specifies the MIME boundary string. That `Content-Type` is the default
@@ -104,132 +155,204 @@
     commands and if you do, curl is clever enough to still append the boundary magic
     to the replaced header. You cannot really alter the boundary string, since curl
     needs that for producing the POST stream.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用curl的`-F`选项会使其请求包含一个默认的`Content-Type`头信息，如上述示例所示。这表明`multipart/form-data`，然后指定MIME边界字符串。这个`Content-Type`是多部分表单的默认值，但你当然可以修改它以适应自己的命令。如果你这样做，curl足够聪明，仍然会在替换的头信息中附加边界魔法。你实际上无法更改边界字符串，因为curl需要它来生成POST流。
 - en: 'To replace the header, use `-H` like this:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 要替换头信息，使用`-H`选项，如下所示：
 - en: '[PRE4]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Converting a web form
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 转换网页表单
 - en: There are a few different ways to figure out how to write a curl command line
     to submit a multipart form as seen in HTML.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 有几种不同的方法可以确定如何编写一个 curl 命令行来提交一个如 HTML 中所见的多部分表单。
 - en: Save the HTML locally, run `nc` locally to listen on a chosen port number, change
     the `action` URL to submit the POST to your local `nc` instance. Submit the form
     and watch how `nc` shows it. Then translate into a curl command line.
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 将 HTML 本地保存，在本地运行 `nc` 监听所选的端口号，将 `action` URL 更改为提交 POST 到你的本地 `nc` 实例。提交表单并观察
+    `nc` 如何显示它。然后将其转换为 curl 命令行。
 - en: Use the development tools in your favorite browser and inspect the POST request
     in the network tab after you have submitted it. Then convert that HTTP data to
     a curl command line. Unfortunately, the [copy as curl](ch077.xhtml#cmdline__copyas__md)
     feature in the browsers usually do not actually do multipart formposts particularly
     well.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用你最喜欢的浏览器的开发工具，在网络标签中检查你提交后的 POST 请求。然后将那些 HTTP 数据转换为 curl 命令行。不幸的是，浏览器中的 [复制为
+    curl](ch077.xhtml#cmdline__copyas__md) 功能通常并不特别擅长处理多部分表单的 POST。
 - en: Inspect the source HTML and convert into a curl command line directly from that.
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 检查源 HTML 并直接将其转换为 curl 命令行。
 - en: From `<form>` to -F
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 从 `<form>` 到 -F
 - en: In a `<form>` that uses `enctype="multipart/form-data"`, the first step is to
     find the `action=` property as that tells the target for the POST. You need to
     convert that into a full URL for your curl command line.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 在使用 `enctype="multipart/form-data"` 的 `<form>` 中，第一步是找到 `action=` 属性，因为它告诉 POST
+    的目标。你需要将其转换为 curl 命令行的完整 URL。
 - en: 'An example action looks like this:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个示例动作看起来像这样：
 - en: '[PRE5]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: If the form is found in a webpage hosted on a URL like for example `https://example.com/user/login`
     the `action=submit.cgi` is a relative path within the same directory as the form
     itself. The full URL to submit this form thus becomes `https://example.com/user/submit.cgi`.
     That is the URL to use in the curl command line.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果表单位于一个 URL 如 `https://example.com/user/login` 的网页上，那么 `action=submit.cgi`
+    是表单本身所在目录内的相对路径。因此，提交此表单的完整 URL 变为 `https://example.com/user/submit.cgi`。这就是 curl
+    命令行中要使用的 URL。
 - en: Next, you must identify every `<input>` tag used within the form, including
     the ones that are marked as hidden. Hidden just means that they are not shown
     in the webpage, but they should still be sent in the POST.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，你必须识别表单中使用的每个 `<input>` 标签，包括标记为隐藏的标签。隐藏只是意味着它们不会显示在网页上，但它们应该仍然在 POST 中发送。
 - en: For every `<input>` in the form there should be a corresponding `-F` in the
     command line.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 表单中的每个 `<input>` 都应该在命令行中有一个相应的 `-F`。
 - en: text input
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 文本输入
 - en: A regular tag using type text in the style like
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个使用类似文本类型的常规标签
 - en: '[PRE6]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'should then set the field name with content like this:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 应设置字段名称，内容如下：
 - en: '[PRE7]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: file input
+  id: totrans-45
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 文件输入
 - en: 'When the input type is set to a file, like in:'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 当输入类型设置为文件时，如：
 - en: '[PRE8]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'You provide a file for this part by specifying the filename and use `@` and
     the path to the file to include:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 你通过指定文件名来提供这部分文件，并使用 `@` 和文件的路径来包含：
 - en: '[PRE9]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: hidden input
+  id: totrans-50
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 隐藏输入
 - en: 'A common technique to pass on state from a form is to set a number of `<input>`
     tags as `type="hidden"`. This is basically the same thing as an already filled
     in form field, so you convert this to a command line by using the name and value.
     For example:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 将状态从表单传递过去的一个常见技术是将多个 `<input>` 标签设置为 `type="hidden"`。这基本上与已经填写好的表单字段相同，所以你可以通过使用名称和值将其转换为命令行。例如：
 - en: '[PRE10]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'This is converted like for the normal text field, and here you know what the
     content should be:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 这与正常文本字段的转换方式相同，并且你知道内容应该是什么：
 - en: '[PRE11]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: All fields at once
+  id: totrans-55
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 所有字段同时
 - en: 'If we toy with the idea that all the three different `<input>` tags showed
     in the examples above were used in the same `<form>`, then a complete curl command
     line to send, including the correct URL as extracted above, would look like:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们假设上面示例中显示的所有三个不同的 `<input>` 标签都在同一个 `<form>` 中使用，那么一个完整的 curl 命令行，包括上面提取的正确
+    URL，将看起来像这样：
 - en: '[PRE12]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'

@@ -1,88 +1,131 @@
 - en: Sending email
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 发送电子邮件
 - en: Sending email with curl is done with the SMTP protocol. SMTP stands for [Simple
     Mail Transfer Protocol](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用curl通过SMTP协议发送电子邮件。SMTP代表[简单邮件传输协议](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)。
 - en: curl supports sending data to an SMTP server, which combined with the right
     set of command line options makes an email get sent to a set of receivers of your
     choice.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl支持向SMTP服务器发送数据，结合正确的命令行选项，可以将电子邮件发送到你选择的接收者。
 - en: When sending SMTP with curl, there are two necessary command line options that
     **must** be used.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用curl发送SMTP时，有两个必要的命令行选项**必须**使用。
 - en: You need to tell the server at least one recipient with `--mail-rcpt`. You can
     use this option several times and then curl tells the server that all those email
     addresses should receive the email.
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你需要使用`--mail-rcpt`告诉服务器至少一个收件人。你可以多次使用此选项，然后curl会告诉服务器所有这些电子邮件地址都应该收到邮件。
 - en: You need to tell the server which email address that is the sender of the email
     with `--mail-from`. It is important to realize that this email address is not
     necessarily the same as is shown in the `From:` line of the email text.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你需要使用`--mail-from`告诉服务器哪个电子邮件地址是邮件的发送者。重要的是要意识到，这个电子邮件地址不一定与电子邮件文本中显示的`From:`行相同。
 - en: Then, you need to provide the actual email data. This is a (text) file formatted
     according to [RFC 5322](https://tools.ietf.org/html/rfc5322.html). It is a set
     of headers and a body. Both the headers and the body need to be correctly encoded.
     The headers typically include `To:`, `From:`, `Subject:`, `Date:` etc.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，你需要提供实际的电子邮件数据。这是一个根据[RFC 5322](https://tools.ietf.org/html/rfc5322.html)格式化的（文本）文件。它是一组头信息和正文。头信息和正文都需要正确编码。头信息通常包括`To:`,
+    `From:`, `Subject:`, `Date:`等。
 - en: 'A basic command to send an email:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 发送电子邮件的基本命令：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'An example `email.txt` could look like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个`email.txt`的例子可能如下所示：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Secure mail transfer
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安全邮件传输
 - en: Some mail providers allow or require using SSL for SMTP. They may use a dedicated
     port for SSL or allow SSL upgrading over a clear-text connection.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些邮件提供商允许或要求使用SSL进行SMTP。它们可能使用一个专用的SSL端口，或者允许在明文连接上升级SSL。
 - en: If your mail provider has a dedicated SSL port you can use smtps:// instead
     of smtp://, which uses the SMTP SSL port of 465 by default and requires the entire
     connection to be SSL. For example smtps://smtp.gmail.com/.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的邮件提供商有一个专用的SSL端口，你可以使用smtps://代替smtp://，它默认使用SMTP SSL端口465，并要求整个连接都是SSL。例如smtps://smtp.gmail.com/。
 - en: 'However, if your provider allows upgrading from clear-text to secure transfers
     you can use one of these options:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，如果你的提供商允许从明文传输升级到安全传输，你可以使用以下选项之一：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You can tell curl to *try* but not require upgrading to secure transfers by
     adding `--ssl` to the command:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过在命令中添加`--ssl`来告诉curl*尝试*但不要求升级到安全传输：
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You can tell curl to *require* upgrading to using secure transfers by adding
     `--ssl-reqd` to the command:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过在命令中添加`--ssl-reqd`来告诉curl*要求*升级到使用安全传输：
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: The SMTP URL
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMTP URL
 - en: The path part of a SMTP request specifies the hostname to present during communication
     with the mail server. If the path is omitted then curl attempts to figure out
     the local computer’s hostname and use that. However, this may not return the fully
@@ -90,39 +133,57 @@
     path allows you to set an alternative name, such as your machine’s fully qualified
     domain name, which you might have obtained from an external function such as gethostname
     or getaddrinfo.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: SMTP请求的路径部分指定了在与邮件服务器通信时呈现的主机名。如果省略路径，curl将尝试确定本地计算机的主机名并使用它。然而，这可能不会返回某些邮件服务器所需的完全限定域名，指定此路径允许你设置一个替代名称，例如从外部函数（如gethostname或getaddrinfo）获得的计算机的完全限定域名。
 - en: 'To connect to the mail server at `mail.example.com` and send your local computer’s
     hostname in the `HELO` or `EHLO` command:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 要连接到`mail.example.com`上的邮件服务器并将本地计算机的主机名发送到`HELO`或`EHLO`命令中：
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: You can of course as always use the `-v` option to get to see the client-server
     communication.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 你当然可以使用`-v`选项来查看客户端与服务器之间的通信。
 - en: 'To instead have curl send `client.example.com` in the `HELO` / `EHLO` command
     to the mail server at `mail.example.com`, use:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 要让curl在`HELO`/`EHLO`命令中将`client.example.com`发送到`mail.example.com`上的邮件服务器，请使用：
 - en: '[PRE6]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: No MX lookup!
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 无MX查找！
 - en: When you send email with an ordinary mail client, it first checks for an MX
     record for the particular domain you want to send email to. If you send an email
     to `joe@example.com`, the client gets the MX records for `example.com` to learn
     which mail server(s) to use when sending email to example.com users.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用普通邮件客户端发送电子邮件时，它首先会检查你想要发送电子邮件的特定域的MX记录。如果你向`joe@example.com`发送电子邮件，客户端会获取`example.com`的MX记录，以确定在向example.com用户发送电子邮件时应使用哪个邮件服务器（或服务器组）。
 - en: curl does no MX lookups by itself. If you want to figure out which server to
     send an email to for a particular domain, we recommend you figure that out first
     and then call curl to use those servers. Useful command line tools to get MX records
     include ‘dig’ and ‘nslookup’.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl`本身不会执行MX查找。如果你想确定向特定域发送电子邮件时应使用哪个服务器，我们建议你首先确定这一点，然后调用`curl`来使用这些服务器。用于获取MX记录的有用命令行工具包括‘dig’和‘nslookup’。'

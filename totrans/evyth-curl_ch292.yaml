@@ -1,57 +1,87 @@
 - en: State machines
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 状态机
 - en: To facilitate non-blocking behavior all through, the curl source is full of
     state machines. Work on as much data as there is and drive the state machine to
     where it can go based on what’s available and allow the functions to continue
     from that point later on when more data arrives that then might drive the state
     machine further.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了在整个过程中实现非阻塞行为，curl源中充满了状态机。处理尽可能多的数据，并根据可用情况驱动状态机到达可以继续的位置，允许函数在之后有更多数据到达时从该点继续执行。
 - en: There are such states in many different levels for a given transfer and the
     code for each particular protocol may have its own set of state machines.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于给定的传输，存在许多不同级别的状态，并且每个特定协议的代码可能都有自己的状态机集合。
 - en: mstate
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: mstate
 - en: One of the primary states is the main transfer “mode” the easy handle holds,
     which says if the current transfer is resolving, waiting for a resolve, connecting,
     waiting for a connect, issuing a request, doing a transfer etc (see the `CURLMstate`
     enum in `lib/multihandle.h`). Every transfer done with libcurl has an associated
     easy handle and every easy handle exercises that state machine.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中一个主要状态是easy句柄持有的主要传输“模式”，这表示当前传输是否正在解析、等待解析、连接、等待连接、发送请求、进行传输等（参见`lib/multihandle.h`中的`CURLMstate`枚举）。使用libcurl完成的每个传输都有一个关联的easy句柄，每个easy句柄都会执行该状态机。
 - en: The image below shows all states and possible state transitions. See further
     explanation below.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面的图像显示了所有状态和可能的状态转换。详见以下解释。
 - en: '![](../media/file13.jpg)'
+  id: totrans-6
   prefs: []
   type: TYPE_IMG
+  zh: '![](../media/file13.jpg)'
 - en: libcurl transfer state machine
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl传输状态机
 - en: All transfers start in **INIT** and they end in **MSGSENT**
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有传输都从**初始化**状态开始，并以**发送消息**状态结束。
 - en: '**yellow**: the initial setting-up states'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**黄色**：初始设置状态'
 - en: '**blue**: resolving names and setting up the connection'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**蓝色**：解析名称和设置连接'
 - en: '**green**: initiating and setting up the transfer'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**绿色**：启动和设置传输'
 - en: '**white**: the transfer'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**白色**：传输过程'
 - en: '**red**: post-transfer'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**红色**：传输后'
 - en: All states within the striped area have an associated connection.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有位于条纹区域内的状态都关联着一个连接。

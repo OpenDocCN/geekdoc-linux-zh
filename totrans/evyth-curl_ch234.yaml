@@ -1,106 +1,146 @@
 - en: Connection reuse
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 连接重用
 - en: libcurl keeps a pool of old connections alive. When one transfer has completed
     it keeps N connections alive in a connection pool (sometimes also called connection
     cache) so that a subsequent transfer that happens to be able to reuse one of the
     existing connections can use it instead of creating a new one. Reusing a connection
     instead of creating a new one offers significant benefits in speed and required
     resources.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl保持着一组旧连接的活跃状态。当一个传输完成时，它会在连接池中保持N个连接的活跃状态（有时也称为连接缓存），以便后续的传输如果能够重用现有连接之一，就可以使用它而不是创建一个新的连接。重用连接而不是创建新连接在速度和所需资源方面提供了显著的好处。
 - en: When libcurl is about to make a new connection for the purposes of doing a transfer,
     it first checks to see if there is an existing connection in the pool that it
     can reuse instead. The connection re-use check is done before any DNS or other
     name resolving mechanism is used, so it is purely hostname based. If there is
     an existing live connection to the right hostname, a lot of other properties (port
     number, protocol, etc) are also checked to see that it can be used.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl即将为传输目的创建新的连接时，它会首先检查连接池中是否存在可以重用的现有连接。连接重用检查在使用任何DNS或其他名称解析机制之前进行，因此它是基于主机名的。如果存在到正确主机名的现有活动连接，还会检查许多其他属性（端口号、协议等），以确保它可以被使用。
 - en: Easy API pool
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Easy API连接池
 - en: When you are using the easy API, or, more specifically, `curl_easy_perform()`,
     libcurl keeps the pool associated with the specific easy handle. Then reusing
     the same easy handle ensures libcurl can reuse its connection.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您使用easy API，或者更具体地说，`curl_easy_perform()`时，libcurl将连接池与特定的easy句柄相关联。然后重用相同的easy句柄确保libcurl可以重用其连接。
 - en: Multi API pool
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多线程API连接池
 - en: When you are using the multi API, the connection pool is instead kept associated
     with the multi handle. This allows you to cleanup and re-create easy handles freely
     without risking losing the connection pool, and it allows the connection used
     by one easy handle to get reused by a separate one in a later transfer. Just reuse
     the multi handle.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您使用多线程API时，连接池将与多线程句柄相关联。这允许您自由地清理和重新创建easy句柄，而不会丢失连接池，并允许一个easy句柄使用的连接在后续传输中被另一个单独的句柄重用。只需重用多线程句柄即可。
 - en: Sharing the connection cache
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 共享连接缓存
 - en: Since libcurl 7.57.0, applications can use the [share interface](ch257.xhtml#helpers__sharing__md)
     to have otherwise independent transfers share the same connection pool.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 自从libcurl 7.57.0版本起，应用程序可以使用[共享接口](ch257.xhtml#helpers__sharing__md)让原本独立的传输共享相同的连接池。
 - en: When connections are not reused as you want
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 当连接没有按预期重用时
 - en: libcurl will automatically and always try to reuse connections unless explicitly
     told not to. There are however several reasons why a connection is *not* used
     for a subsequent transfer.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl会自动且始终尝试重用连接，除非明确告知不要这样做。然而，有几种原因会导致连接**不**用于后续传输。
 - en: 'The server signals that the connection will be closed after this transfer.
     For example by using the `Connection: close` HTTP response header or a HTTP/2
     or HTTP/3 “go away” frame.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '服务器表示此传输后连接将关闭。例如，通过使用`Connection: close` HTTP响应头或HTTP/2或HTTP/3的“离开”帧。'
 - en: The HTTP/1 response of a transfer is sent in such a way that a connection close
     is the only way to detect the end of the body. Or just an HTTP/1 receive error
     that makes curl deem that it cannot safely reuse the connection anymore.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 传输的HTTP/1响应是以这种方式发送的，即连接关闭是检测身体结束的唯一方式。或者只是一个使curl认为它不能再安全地重用连接的HTTP/1接收错误。
 - en: The connection is deemed “dead” when libcurl tries to reuse it. It might happen
     when the server side has closed the connection after the previous transfer was
     completed. It can also happen if a stateful firewall/NAT or something in the network
     path drops the connection or if there is HTTP/2 or HTTP/3 traffic (like PING frames)
     over the connection when unattended.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当libcurl尝试重用连接时，该连接被视为“死亡”。这可能发生在服务器端在先前的传输完成后关闭了连接。也可能发生在有状态防火墙/NAT或网络路径中的其他部分断开了连接，或者在无人看管的情况下，连接上存在HTTP/2或HTTP/3流量（如PING帧）。
 - en: The previous transfer is deemed too old to reuse. If `CURLOPT_MAXLIFETIME_CONN`
     is set, libcurl will not reuse a connection that is older than the set value in
     seconds.
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 前一个传输被认为太旧，无法重用。如果设置了`CURLOPT_MAXLIFETIME_CONN`，libcurl将不会重用超过设定秒数的旧连接。
 - en: The previous transfer is deemed having idled for too long. By default libcurl
     never attempts to reuse a connection that has been idle for more than 118 seconds.
     This time can be changed with `CURLOPT_MAXAGE_CONN`.
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 之前的传输被认为空闲时间过长。默认情况下，libcurl 从不尝试重用空闲时间超过 118 秒的连接。这个时间可以通过 `CURLOPT_MAXAGE_CONN`
+    来更改。
 - en: If the connection pool is full when a transfer ends and a new connection is
     about to get stored there, the oldest idle connection in the pool is closed and
     discarded and therefore cannot be reused anymore. Increase the connection pool
     size with `CURLMOPT_MAXCONNECTS` or `CURLOPT_MAXCONNECTS`, depending on which
     API you are using.
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果在传输结束时连接池已满，并且即将有一个新连接存储在那里，则池中最旧的空闲连接将被关闭并丢弃，因此不能再重用。根据您使用的 API，可以通过 `CURLMOPT_MAXCONNECTS`
+    或 `CURLOPT_MAXCONNECTS` 来增加连接池的大小。
 - en: When using the multi interface, if the previous transfer has not ended when
     the next transfer is started, and the previous connection cannot be used for multiplexing.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当使用多接口时，如果下一个传输开始时之前的传输尚未结束，并且之前的连接不能用于多路复用。
 - en: Etc. Usually you can learn about the reason by enabling `CURLOPT_VERBOSE` and
     inspecting what libcurl informs the application.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 等等。通常，您可以通过启用 `CURLOPT_VERBOSE` 并检查 libcurl 向应用程序通知的内容来了解原因。

@@ -1,113 +1,171 @@
 - en: Write
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 写入
 - en: 'An application can receive WebSocket data two different ways, but there is
     only one way for it to send data over the connection: the `curl_ws_send()` function.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序可以通过两种不同的方式接收WebSocket数据，但发送数据的方式只有一种：`curl_ws_send()`函数。
 - en: '`curl_ws_send()`'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`curl_ws_send()`'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '`curl` - transfer handle'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl` - 传输句柄'
 - en: '`buffer` - pointer to the frame data to send'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`buffer` - 指向要发送的帧数据的指针'
 - en: '`buflen` - length of the data (in bytes) in `buffer`'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`buflen` - `buffer`中数据的长度（以字节为单位）'
 - en: '`fragsize` - the total size of the whole fragment, used when sending only a
     part of a larger fragment.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '`fragsize` - 整个片段的总大小，用于发送较大片段的一部分。'
 - en: '`sent` - number of bytes that were sent'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sent` - 发送的字节数'
 - en: '`flags` - bitmask describing the data. See bit descriptions below.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '`flags` - 描述数据的位掩码。请参见下面的位描述。'
 - en: Full fragment vs partial
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 完整片段与部分片段
 - en: To send a complete WebSocket fragment, set `fragsize` to zero and provide data
     for all other arguments.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 要发送完整的WebSocket片段，将`fragsize`设置为零，并为所有其他参数提供数据。
 - en: 'To send a fragment in smaller pieces: send the first part with `fragsize` set
     to the *total* fragment size. You **must** know and provide the size of the entire
     fragment before you can send it. In subsequent calls to `curl_ws_send()` you send
     the next pieces of the fragment with `fragsize` set to zero but with the `CURLWS_OFFSET`
     bit sets in the `flags` argument. Repeat until all pieces have been sent that
     constitute the whole fragment.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 要以更小的片段发送片段：使用`fragsize`设置为总片段大小发送第一部分。你**必须**知道并提供整个片段的大小，然后才能发送它。在随后的`curl_ws_send()`调用中，使用`fragsize`设置为零但在`flags`参数中设置`CURLWS_OFFSET`位发送片段的下一部分。重复此操作，直到发送构成整个片段的所有部分。
 - en: Flags
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 标志
 - en: '`CURLWS_TEXT`'
+  id: totrans-14
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_TEXT`'
 - en: The buffer contains text data. Note that this makes a difference to WebSocket
     but libcurl itself does not perform any verification of the content or make any
     precautions that you actually send valid UTF-8 content.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 缓冲区包含文本数据。请注意，这会对WebSocket产生影响，但libcurl本身并不对内容进行任何验证，也不会采取任何预防措施来确保你发送的是有效的UTF-8内容。
 - en: '`CURLWS_BINARY`'
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_BINARY`'
 - en: This is binary data.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是二进制数据。
 - en: '`CURLWS_CONT`'
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_CONT`'
 - en: This is not the final fragment of the message, which implies that there is another
     fragment coming as part of the same message where this bit is not set.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 这不是消息的最终片段，这暗示了作为同一消息的一部分，还有另一个片段即将到来，其中此位未设置。
 - en: '`CURLWS_CLOSE`'
+  id: totrans-20
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_CLOSE`'
 - en: Close this transfer.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 关闭此传输。
 - en: '`CURLWS_PING`'
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_PING`'
 - en: This as a ping.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 这作为ping。
 - en: '`CURLWS_PONG`'
+  id: totrans-24
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_PONG`'
 - en: This as a pong.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这作为回显。
 - en: '`CURLWS_OFFSET`'
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`CURLWS_OFFSET`'
 - en: The provided data is only a partial fragment and there is more data coming in
     a following call to `curl_ws_send()`. When sending only a piece of the fragment
     like this, the `fragsize` must be provided with the total expected frame size
     in the first call and it needs to be zero in subsequent calls.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 提供的数据仅是部分片段，还有更多数据将在随后的`curl_ws_send()`调用中到来。当仅以这种方式发送片段的一部分时，`fragsize`必须在第一次调用中提供总预期的帧大小，并且在后续调用中需要设置为零。
 - en: When `CURLWS_OFFSET` is set, no other flag bits should be set as this is a continuation
     of a previous send and the bits describing the fragments were set then.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 当`CURLWS_OFFSET`被设置时，不应设置其他标志位，因为这将是之前发送的延续，并且当时已设置了描述片段的位。

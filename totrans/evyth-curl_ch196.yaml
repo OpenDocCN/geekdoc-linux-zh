@@ -1,28 +1,40 @@
 - en: CURLcode return codes
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: CURLcode返回代码
 - en: Many libcurl functions return a CURLcode. That is a special libcurl typedefed
     variable for error codes. It returns `CURLE_OK` (which has the value zero) if
     everything is fine and dandy and it returns a non-zero number if a problem was
     detected. There are almost one hundred `CURLcode` errors in use, and you can find
     them all in the `curl/curl.h` header file and documented in the libcurl-errors
     man page.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多libcurl函数返回一个CURLcode。这是一个特殊的libcurl类型定义变量，用于错误代码。如果没有问题，它返回`CURLE_OK`（其值为零），如果检测到问题，则返回非零数字。目前有近一百个`CURLcode`错误在使用中，您可以在`curl/curl.h`头文件中找到它们，并在libcurl-errors手册页中进行了文档化。
 - en: 'You can convert a CURLcode into a human readable string with the `curl_easy_strerror()`
     function—but be aware that these errors are rarely phrased in a way that is suitable
     for anyone to expose in a UI or to an end user:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`curl_easy_strerror()`函数将CURLcode转换为人类可读的字符串——但请注意，这些错误很少以适合在UI中公开或向最终用户展示的方式措辞：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Another way to get a slightly better error text in case of errors is to set
     the `CURLOPT_ERRORBUFFER` option to point out a buffer in your program and then
     libcurl stores a related error message there before it returns an error:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在出现错误的情况下，获取稍微更好的错误文本的另一种方法是设置`CURLOPT_ERRORBUFFER`选项来指向程序中的一个缓冲区，然后libcurl在返回错误之前将相关错误消息存储在那里：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

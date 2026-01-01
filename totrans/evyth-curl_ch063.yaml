@@ -1,39 +1,59 @@
 - en: Fragment
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 片段
 - en: 'URLs offer a fragment part. That is usually seen as a hash symbol (`#`) and
     a name for a specific name within a webpage in browsers. An example of such a
     URL might look like:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: URL 提供了片段部分。这通常在浏览器中表现为一个哈希符号（`#`）和网页中特定名称的名称。这样的 URL 可能看起来像这样：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: curl supports fragments fine when a URL is passed to it, but the fragment part
     is never actually sent over the wire so it does not make a difference to curl’s
     operations whether it is present or not.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当将 URL 传递给 curl 时，curl 支持片段，但片段部分实际上从未真正通过网络发送，因此它对 curl 的操作是否有或没有片段没有影响。
 - en: 'If you want to make the `#` character as part of the path and not separating
     the fragment, make sure to pass it URL-encoded, as `%23`:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想将 `#` 字符作为路径的一部分，而不是作为片段的分隔符，请确保将其 URL 编码，即 `%23`：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: A fragment trick
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 片段技巧
 - en: The fact that the fragment part is not actually used over the network can be
     taken advantage of when you craft command lines.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于片段部分实际上并未在网络中使用，因此在构建命令行时可以利用这一点。
 - en: 'For example, if you want to request the same URL from a server 10 times, you
     can make a loop and put the loop instruction in the fragment part. Like this:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果你想从服务器请求相同的 URL 10 次，你可以创建一个循环，并将循环指令放在片段部分。就像这样：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

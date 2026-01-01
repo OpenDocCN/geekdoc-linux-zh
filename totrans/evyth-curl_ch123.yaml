@@ -1,44 +1,66 @@
 - en: haproxy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: haproxy
 - en: The haproxy protocol, while still having proxy in its name, is different than
     other proxy options and does not work with proxies in the same way the other proxy
     options do.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然 haproxy 协议的名字中仍有代理，但它与其他代理选项不同，并且不会以其他代理选项的方式与代理一起工作。
 - en: 'This is a way for a client to pass its IP address to the server in spite of
     how the traffic reaches it: tunnels, TCP proxies, load balancers, transparent
     proxies and what not. Services that somehow change what source IP address that
     is being used when the traffic ends up in the server, making it impossible for
     the server to figure out the IP address of the client by itself.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一种客户端将 IP 地址传递给服务器的方式，无论流量如何到达它：隧道、TCP 代理、负载均衡器、透明代理等等。某些服务会在流量最终到达服务器时更改正在使用的源
+    IP 地址，使得服务器无法自行确定客户端的 IP 地址。
 - en: The haproxy protocol is simple. It needs to be supported by the server, meaning
     a user cannot just decide to use it with an unwilling or uncooperative server.
     If it *does* support it, you can tell curl to use it to pass on its own IP address
     to the server.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: haproxy 协议很简单。它需要服务器的支持，这意味着用户不能仅仅决定使用它，而服务器不愿意或不合作。如果它*确实*支持它，你可以告诉 curl 使用它并将自己的
+    IP 地址传递给服务器。
 - en: curl and haproxy
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: curl 和 haproxy
 - en: curl only supports the haproxy protocol v1.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 只支持 haproxy 协议 v1。
 - en: 'To pass on the actual IP address of the connection that is being used right
     now, simply add the boolean flag like this:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 要传递当前正在使用的连接的实际 IP 地址，只需添加布尔标志，如下所示：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If such a command line for some reason does not provide the IP address you
     think it should pass on, you can specify the exact address yourself, using either
     an IPv4 or an IPv6 numerical address:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果出于某种原因，这样的命令行没有提供您认为应该传递的 IP 地址，您可以使用 IPv4 或 IPv6 数值地址自行指定确切地址：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

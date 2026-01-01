@@ -1,37 +1,57 @@
 - en: Debug
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 调试
 - en: 'The debug callback is set with `CURLOPT_DEBUGFUNCTION`:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过`CURLOPT_DEBUGFUNCTION`设置调试回调：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `debug_callback` function must match this prototype:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`debug_callback`函数必须匹配此原型：'
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'This callback function replaces the default verbose output function in the
     library and gets called for all debug and trace messages to aid applications to
     understand what’s going on. The *type* argument explains what sort of data that
     is provided: header, data or SSL data and in which direction it flows.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调函数替换了库中的默认详细输出函数，并在所有调试和跟踪消息中被调用，以帮助应用程序理解正在发生的事情。*类型*参数解释了提供的数据类型：标题、数据或SSL数据以及其流动方向。
 - en: A common use for this callback is to get a full trace of all data that libcurl
     sends and receives. The data sent to this callback is always the unencrypted version,
     even when, for example, HTTPS or other encrypted protocols are used.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调的常见用途是获取libcurl发送和接收的所有数据的完整跟踪。发送到此回调的数据始终是未加密版本，即使使用HTTPS或其他加密协议也是如此。
 - en: This callback must return zero or cause the transfer to stop with an error code.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调必须返回零或使用错误代码停止传输。
 - en: 'The user pointer passed in to the callback in the *userdata* argument is set
     with `CURLOPT_DEBUGDATA`:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在*userdata*参数中传递给回调的用户指针通过`CURLOPT_DEBUGDATA`设置：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

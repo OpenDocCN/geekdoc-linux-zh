@@ -1,75 +1,112 @@
 - en: Get option information
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 获取选项信息
 - en: libcurl offers an API, a set of functions really, that allow applications to
     get information about all currently support *easy options*. It does not return
     *the values* for the options, but it rather informs about name, ID and type of
     the option.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl提供了一个API，实际上是一组函数，允许应用程序获取有关所有当前支持的*简单选项*的信息。它不返回选项的*值*，而是提供有关名称、ID和类型的信息。
 - en: Iterate over all options
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 遍历所有选项
 - en: Modern libcurl supports over 300 different options. With the use of `curl_easy_option_by_next()`
     an application can iterate over all the known options and return a pointer to
     a `struct curl_easyoption` for them.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 现代libcurl支持超过300个不同的选项。通过使用`curl_easy_option_by_next()`，应用程序可以遍历所有已知选项，并返回一个指向`struct
+    curl_easyoption`的指针。
 - en: This function only returns information about options that this exact libcurl
     build knows about. Other options may exist in newer libcurl builds, or in builds
     that enable/disable options differently at build-time.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 此函数仅返回此特定libcurl构建所知的选项信息。其他选项可能存在于较新的libcurl构建中，或者在不同的构建时启用/禁用选项的构建中。
 - en: 'Example, iterate over all available options:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例，遍历所有可用选项：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Find a specific option by name
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过名称查找特定选项
 - en: Given a specific easy option name, you can ask libcurl to return a pointer to
     a `struct curl_easyoption` for it. The name should be provided without the `CURLOPT_`
     prefix.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个特定的简单选项名称，你可以要求libcurl返回一个指向`struct curl_easyoption`的指针。名称应提供，不带`CURLOPT_`前缀。
 - en: 'As an example, an application can ask libcurl about the `CURLOPT_VERBOSE` option
     like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，一个应用程序可以这样询问libcurl关于`CURLOPT_VERBOSE`选项：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Find a specific option by ID
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过ID查找特定选项
 - en: Given a specific easy option ID, you can ask libcurl to return a pointer to
     a `struct curl_easyoption` for it. The “ID” is the `CURLOPT_`-prefixed symbol
     as provided in the public `curl/curl.h` header file.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个特定的简单选项ID，你可以要求libcurl返回一个指向`struct curl_easyoption`的指针。该“ID”是公共`curl/curl.h`头文件中提供的`CURLOPT_`前缀符号。
 - en: 'An application can ask libcurl for the name of the `CURLOPT_VERBOSE` option
     like this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个应用程序可以这样询问libcurl`CURLOPT_VERBOSE`选项的名称：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The `curl_easyoption` struct
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`curl_easyoption`结构体'
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'There is only one bit with a defined meaning in ‘flags’: if `CURLOT_FLAG_ALIAS`
     is set, it means that that option is an “alias”. A name provided for backwards
     compatibility that is nowadays rather served by an option with another name. If
     you lookup the ID for an alias, you get the new canonical name for that option.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在‘flags’中只有一个具有定义意义的位：如果`CURLOT_FLAG_ALIAS`被设置，则表示该选项是一个“别名”。这是一个为了向后兼容而提供的名称，如今更常用另一个名称的选项。如果你查找别名的ID，你会得到该选项的新规范名称。

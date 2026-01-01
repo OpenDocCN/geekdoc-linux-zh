@@ -1,51 +1,77 @@
 - en: Customize headers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自定义头部
 - en: 'In an HTTP request, after the initial request-line, there typically follows
     a number of request headers. That is a set of `name: value` pairs that ends with
     a blank line that separates the headers from the following request body (that
     sometimes is empty).'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '在HTTP请求中，在初始请求行之后，通常跟随一系列请求头部。这是一组以空白行结束的`name: value`对，该空白行将头部与随后的请求体（有时为空）分开。'
 - en: curl passes on a few default headers by default on its own account in requests,
     like for example `Host:`, `Accept:`, `User-Agent:` and a few others that may depend
     on what the user asks curl to do.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl`默认在其请求中传递一些默认头部，出于其自身的账户，例如`Host:`, `Accept:`, `User-Agent:`以及一些可能取决于用户要求`curl`执行的操作的其他头部。'
 - en: All headers set by curl itself can be replaced, by the user. You just then tell
     curl’s `-H` or `--header` the new header to use and it then replaces the internal
     one if the header field matches one of those headers, or it adds the specified
     header to the list of headers to send in the request.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户可以替换`curl`自己设置的所有头部。你只需告诉`curl`的`-H`或`--header`使用新的头部，如果头部字段与这些头部之一匹配，它就会替换内部的头部，或者将指定的头部添加到请求中要发送的头部列表中。
 - en: 'To change the `Host:` header, do this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要更改`Host:`头部，请这样做：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'To add a `Elevator: floor-9` header, do this:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '要添加`Elevator: floor-9`头部，请这样做：'
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: If you just want to delete an internally generated header, just give it to curl
     without a value, just nothing on the right side of the colon.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只想删除一个内部生成的头部，只需将其提供给`curl`而不带值，即在冒号右边什么也不写。
 - en: 'To switch off the `User-Agent:` header, do this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 要关闭`User-Agent:`头部，请这样做：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Finally, if you then truly want to add a header with no contents on the right
     side of the colon (which is a rare thing), the magic marker for that is to instead
     end the header field name with a *semicolon*. Like this:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，如果你确实想要添加一个冒号右边没有内容的头部（这很少见），那个神奇的标记是让头部字段名以一个*分号*结尾。就像这样：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

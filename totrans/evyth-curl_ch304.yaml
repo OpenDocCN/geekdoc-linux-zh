@@ -1,782 +1,1157 @@
 - en: Tags
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 标签
 - en: 'Each test is always specified entirely within the `<testcase>` tag. Each test
     case is further split up into four main sections: `info`, `reply`, `client` and
     `verify`.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个测试始终完全在 `<testcase>` 标签内指定。每个测试用例进一步分为四个主要部分：`info`、`reply`、`client` 和 `verify`。
 - en: '**info** provides information about the test case'
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**info** 提供有关测试用例的信息'
 - en: '**reply** is used for the server to know what to send as a reply for the requests
     curl sends'
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**reply** 用于让服务器知道在 curl 发送请求后应该发送什么作为回复'
 - en: '**client** defines how the client should behave'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**client** 定义了客户端应该如何行为'
 - en: '**verify** defines how to verify that the data stored after a command has been
     run ended up correctly'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**verify** 定义了如何验证在运行命令后存储的数据是否正确结束'
 - en: Each main section supports a number of available *sub-tags* that can be specified,
     that are checked/used if specified.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个主要部分支持一组可用的 *子标签*，可以指定，如果指定，则进行检查/使用。
 - en: '`<info>`'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`<info>`'
 - en: '`<keywords>`'
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<keywords>`'
 - en: A newline-separated list of keywords describing what this test case uses and
     tests. Try to use already used keywords. These keywords are used for statistical/informational
     purposes and for choosing or skipping classes of tests. “Keywords” must begin
     with an alphabetic character, “-”, “[” or “{” and may consist of multiple words
     separated by spaces which are treated together as a single identifier.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个以换行符分隔的关键字列表，描述了此测试用例使用和测试的内容。尽量使用已经使用过的关键字。这些关键字用于统计/信息目的，以及选择或跳过测试类别。“Keywords”
+    必须以字母字符、“-”、“[” 或 “{” 开头，并且可以由空格分隔的多个单词组成，这些单词被视为单个标识符。
 - en: When using curl built with Hyper, the keywords must include HTTP or HTTPS for
     ‘hyper mode’ to kick in and make line ending checks work for tests.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用使用 Hyper 构建的 curl 时，关键字必须包括 HTTP 或 HTTPS 以启动“hyper 模式”并使行结束检查在测试中生效。
 - en: '`<reply>`'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`<reply>`'
 - en: '`<data [nocheck="yes"] [sendzero="yes"] [base64="yes"] [hex="yes"] [nonewline="yes"]>`'
+  id: totrans-12
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<data [nocheck="yes"] [sendzero="yes"] [base64="yes"] [hex="yes"] [nonewline="yes"]>`'
 - en: data to be sent to the client on its request and later verified that it arrived
     safely. Set `nocheck="yes"` to prevent the test script from verifying the arrival
     of this data.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在客户端请求时发送到客户端的数据，并在之后验证其是否安全到达。设置 `nocheck="yes"` 以防止测试脚本验证此数据的到达。
 - en: If the data contains `swsclose` anywhere within the start and end tag, and this
     is an HTTP test, then the connection is closed by the server after this response
     is sent. If not, the connection is kept persistent.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果数据在起始和结束标签的任何位置包含 `swsclose`，并且这是一个 HTTP 测试，那么在发送此响应后，服务器将关闭连接。如果不是，则连接保持持续。
 - en: If the data contains `swsbounce` anywhere within the start and end tag, the
     HTTP server detects if this is a second request using the same test and part number
     and then increases the part number with one. This is useful for auth tests and
     similar.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果数据在起始和结束标签的任何位置包含 `swsbounce`，HTTP 服务器将检测这是否是使用相同测试和部分号的第二次请求，然后增加部分号一个。这对于身份验证测试和类似测试很有用。
 - en: '`sendzero=yes` means that the (FTP) server “sends” the data even if the size
     is zero bytes. Used to verify curl’s behavior on zero bytes transfers.'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sendzero=yes` 表示即使数据大小为零字节，(FTP) 服务器也会“发送”数据。用于验证 curl 在零字节传输上的行为。'
 - en: '`base64=yes` means that the data provided in the test-file is a chunk of data
     encoded with base64\. It is the only way a test case can contain binary data.
     (This attribute can in fact be used on any section, but it does not make much
     sense for other sections than “data”).'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '`base64=yes` 表示测试文件中提供的数据是一块使用 base64 编码的数据。这是测试用例包含二进制数据的唯一方式。（实际上，此属性可以用于任何部分，但对于“data”部分以外的部分来说没有太多意义）。'
 - en: '`hex=yes` means that the data is a sequence of hex pairs. It gets decoded and
     used as “raw” data.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`hex=yes` 表示数据是一系列十六进制对。它被解码并用作“原始”数据。'
 - en: '`nonewline=yes` means that the last byte (the trailing newline character) should
     be cut off from the data before sending or comparing it.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`nonewline=yes` 表示在发送或比较数据之前应该从数据中截断最后一个字节（尾随换行符）。'
 - en: For FTP file listings, the `<data>` section is used *only* if you make sure
     that there has been a CWD done first to a directory named `test-[number]` where
     `[number]` is the test case number. Otherwise the ftp server cannot know from
     which test file to load the list content.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 FTP 文件列表，只有当你确保首先将 CWD 做到名为 `test-[number]` 的目录中，其中 `[number]` 是测试用例号时，才使用
+    `<data>` 部分。否则，FTP 服务器无法知道从哪个测试文件加载列表内容。
 - en: '`<dataNUMBER>`'
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<dataNUMBER>`'
 - en: Send back this contents instead of the <data>one. The number `NUMBER` is set
     by:</data>
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 发送此内容而不是 <data> 中的内容。数字 `NUMBER` 由以下设置确定：</data>
 - en: The test number in the request line is >10000 and this is the remainder of [test
     case number]%10000.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 请求行中的测试数字 >10000，这是 [测试用例编号]%10000 的余数。
 - en: The request was HTTP and included digest details, which adds 1000 to the number
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 请求是 HTTP 并包含摘要详情，这会将数字增加 1000
 - en: If an HTTP request is NTLM type-1, it adds 1001 to the number
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 HTTP 请求是 NTLM 类型-1，则将 1001 添加到数字
 - en: If an HTTP request is NTLM type-3, it adds 1002 to the number
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 HTTP 请求是 NTLM 类型-3，则将 1002 添加到数字
 - en: If an HTTP request is Basic and the number is already >=1000, it adds 1
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 HTTP 请求是 Basic 类型且数字已经 >=1000，则增加 1
 - en: If an HTTP request is Negotiate, the number gets incremented by one for each
     request with Negotiate authorization header on the same test case.
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果一个 HTTP 请求是 Negotiate，则对于具有 Negotiate 授权头且在相同测试用例上的每个请求，数字增加 1
 - en: Dynamically changing the test number in this way allows the test harness to
     be used to test authentication negotiation where several different requests must
     be sent to complete a transfer. The response to each request is found in its own
     data section. Validating the entire negotiation sequence can be done by specifying
     a `datacheck` section.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 以这种方式动态更改测试数字允许测试工具用于测试认证协商，其中必须发送多个不同的请求才能完成传输。每个请求的响应都位于其自己的数据部分。可以通过指定 `datacheck`
+    部分来验证整个协商序列。
 - en: '`<connect>`'
+  id: totrans-30
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<connect>`'
 - en: The connect section is used instead of the ‘data’ for all CONNECT requests.
     The remainder of the rules for the data section then apply but with a connect
     prefix.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 连接部分用于所有 CONNECT 请求而不是“数据”。然后应用数据部分的其余规则，但带有连接前缀。
 - en: '`<socks>`'
+  id: totrans-32
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<socks>`'
 - en: Address type and address details as logged by the SOCKS proxy.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 记录的 SOCKS 代理的地址类型和地址详情。
 - en: '`<datacheck [mode="text"] [nonewline="yes"]>`'
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<datacheck [mode="text"] [nonewline="yes"]>`'
 - en: if the data is sent but this is what should be checked afterwards. If `nonewline=yes`
     is set, runtests cuts off the trailing newline from the data before comparing
     with the one actually received by the client.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果数据已发送，但这是之后应该检查的内容。如果设置了 `nonewline=yes`，runtests 在与客户端实际接收到的数据进行比较之前，从数据中截断尾随换行符。
 - en: Use the `mode="text"` attribute if the output is in text mode on platforms that
     have a text/binary difference.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果在具有文本/二进制差异的平台上的输出是文本模式，请使用 `mode="text"` 属性。
 - en: '`<datacheckNUM [nonewline="yes"] [mode="text"]>`'
+  id: totrans-37
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<datacheckNUM [nonewline="yes"] [mode="text"]>`'
 - en: The contents of numbered `datacheck` sections are appended to the non-numbered
     one.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 编号 `datacheck` 部分的内文将附加到非编号部分。
 - en: '`<size>`'
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<size>`'
 - en: number to return on an ftp SIZE command (set to -1 to make this command fail)
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 对 ftp SIZE 命令返回的数字（设置为一1使此命令失败）
 - en: '`<mdtm>`'
+  id: totrans-41
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<mdtm>`'
 - en: what to send back if the client sends an FTP `MDTM` command, set to -1 to have
     it return that the file does not exist
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果客户端发送了设置为一1的 FTP `MDTM` 命令，则返回文件不存在
 - en: '`<postcmd>`'
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<postcmd>`'
 - en: 'special purpose server-command to control its behavior *after* the reply is
     sent For HTTP/HTTPS, these are supported:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 特殊用途服务器命令，用于在发送回复后控制其行为。对于 HTTP/HTTPS，这些是支持的：
 - en: '`wait [secs]` - Pause for the given time'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '`wait [secs]` - 暂停给定时间'
 - en: '`<servercmd>`'
+  id: totrans-46
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<servercmd>`'
 - en: Special-commands for the server.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器特殊命令。
 - en: The first line of this file is always set to `Testnum [number]` by the test
     script, to allow servers to read that to know what test the client is about to
     issue.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 此文件的第一个行总是由测试脚本设置为 `Testnum [number]`，以便服务器读取以了解客户端即将发起的测试。
 - en: For FTP/SMTP/POP/IMAP
+  id: totrans-49
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 对于 FTP/SMTP/POP/IMAP
 - en: '`REPLY [command] [return value] [response string]` - Changes how the server
     responds to the [command]. [response string] is evaluated as a perl string, so
     it can contain embedded `\r\n`, for example. There is a special [command] named
     “welcome” (without quotes) which is the string sent immediately on connect as
     a welcome.'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`REPLY [command] [return value] [response string]` - 改变服务器对 [command] 的响应方式。[response
+    string] 被评估为 perl 字符串，因此它可以包含嵌入的 `\r\n`，例如。有一个特殊的 [command] 名为“welcome”（不带引号），这是连接时立即发送的欢迎字符串。'
 - en: '`REPLYLF` (like above but sends the response terminated with LF-only and not
     CRLF)'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`REPLYLF`（类似于上面，但只发送以 LF 结尾的响应，而不是 CRLF）'
 - en: '`COUNT [command] [number]` - Do the `REPLY` change for `[command]` only `[number]`
     times and then go back to the built-in approach'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`COUNT [command] [number]` - 仅对 `[command]` 进行 `REPLY` 更改 `[number]` 次，然后返回到内置方法'
 - en: '`DELAY [command] [secs]` - Delay responding to this command for the given time'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`DELAY [command] [secs]` - 延迟响应此命令给定时间'
 - en: '`RETRWEIRDO` - Enable the “weirdo” RETR case when multiple response lines appear
     at once when a file is transferred'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`RETRWEIRDO` - 启用在文件传输时一次性出现多个响应行时的“怪异”RETR 情况'
 - en: '`RETRNOSIZE` - Make sure the RETR response does not contain the size of the
     file'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`RETRNOSIZE` - 确保RETR响应不包含文件大小'
 - en: '`NOSAVE` - Do not save what is received'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`NOSAVE` - 不要保存接收到的数据'
 - en: '`SLOWDOWN` - Send FTP responses with 0.01 sec delay between each byte'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SLOWDOWN` - 使用 0.01 秒的延迟发送 FTP 响应，每个字节之间延迟'
 - en: '`PASVBADIP` - makes PASV send back an illegal IP in its 227 response'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`PASVBADIP` - 使 PASV 在其 227 响应中发送非法 IP'
 - en: '`CAPA [capabilities]` - Enables support for and specifies a list of space separated
     capabilities to return to the client for the IMAP `CAPABILITY`, POP3 `CAPA` and
     SMTP `EHLO` commands'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`CAPA [能力]` - 启用对能力和指定用于 IMAP `CAPABILITY`、POP3 `CAPA` 和 SMTP `EHLO` 命令的空格分隔的能力列表的支持'
 - en: '`AUTH [mechanisms]` - Enables support for SASL authentication and specifies
     a list of space separated mechanisms for IMAP, POP3 and SMTP'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`AUTH [机制]` - 启用对 SASL 身份验证的支持并指定用于 IMAP、POP3 和 SMTP 的空格分隔的机制列表'
 - en: '`STOR [msg]` respond with this instead of default after `STOR`'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`STOR [消息]` 在 `STOR` 后用此消息作为默认响应'
 - en: For HTTP/HTTPS
+  id: totrans-62
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 对于 HTTP/HTTPS
 - en: '`auth_required` if this is set and a POST/PUT is made without auth, the server
     does NOT wait for the full request body to get sent'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`auth_required` 如果此选项已设置且未进行身份验证就发送了 POST/PUT 请求，则服务器不会等待发送完整的请求体'
 - en: '`idle` - do nothing after receiving the request, just “sit idle”'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`idle` - 接收到请求后什么也不做，只是“空闲”'
 - en: '`stream` - continuously send data to the client, never-ending'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`stream` - 连续向客户端发送数据，永不结束'
 - en: '`writedelay: [msecs]` delay this amount between reply packets'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`writedelay: [毫秒]` 在回复包之间延迟指定的时间'
 - en: '`skip: [number]` - instructs the server to ignore reading this many bytes from
     a PUT or POST request'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`skip: [数字]` - 指示服务器忽略从 PUT 或 POST 请求中读取这么多字节'
 - en: '`rtp: part [num] channel [num] size [num]` - stream a fake RTP packet for the
     given part on a chosen channel with the given payload size'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rtp: part [num] channel [num] size [num]` - 在选择的通道上以指定的有效载荷大小流式传输给定部分的伪造 RTP
+    数据包'
 - en: '`connection-monitor` - When used, this logs `[DISCONNECT]` to the `server.input`
     log when the connection is disconnected.'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`connection-monitor` - 当使用时，在连接断开时将 `[DISCONNECT]` 记录到 `server.input` 日志中。'
 - en: '`upgrade` - when an HTTP upgrade header is found, the server upgrades to http2'
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`upgrade` - 当找到 HTTP 升级标头时，服务器将升级到 http2'
 - en: '`swsclose` - instruct server to close connection after response'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`swsclose` - 指示服务器在响应后关闭连接'
 - en: '`no-expect` - do not read the request body if Expect: is present'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`no-expect` - 如果存在 Expect:，则不读取请求体'
 - en: For TFTP
+  id: totrans-73
   prefs:
   - PREF_H4
   type: TYPE_NORMAL
+  zh: 对于 TFTP
 - en: '`writedelay: [secs]` delay this amount between reply packets (each packet being
     512 bytes payload)'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: '`writedelay: [秒]` 在回复包之间延迟指定的时间（每个数据包为 512 字节有效载荷）'
 - en: '`<client>`'
+  id: totrans-75
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`<client>`'
 - en: '`<server>`'
+  id: totrans-76
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<server>`'
 - en: 'What server(s) this test case requires/uses. Available servers:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 本测试用例需要/使用的服务器。可用服务器：
 - en: '`file`'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`file`'
 - en: '`ftp-ipv6`'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ftp-ipv6`'
 - en: '`ftp`'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ftp`'
 - en: '`ftps`'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ftps`'
 - en: '`gopher`'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`gopher`'
 - en: '`gophers`'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`gophers`'
 - en: '`http-ipv6`'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http-ipv6`'
 - en: '`http-proxy`'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http-proxy`'
 - en: '`http-unix`'
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http-unix`'
 - en: '`http/2`'
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http/2`'
 - en: '`http`'
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http`'
 - en: '`https`'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`https`'
 - en: '`httptls+srp-ipv6`'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`httptls+srp-ipv6`'
 - en: '`httptls+srp`'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`httptls+srp`'
 - en: '`imap`'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`imap`'
 - en: '`mqtt`'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`mqtt`'
 - en: '`none`'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`none`'
 - en: '`pop3`'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`pop3`'
 - en: '`rtsp-ipv6`'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rtsp-ipv6`'
 - en: '`rtsp`'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rtsp`'
 - en: '`scp`'
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`scp`'
 - en: '`sftp`'
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`sftp`'
 - en: '`smtp`'
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`smtp`'
 - en: '`socks4`'
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`socks4`'
 - en: '`socks5`'
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`socks5`'
 - en: Enter only one server per line. This subsection is mandatory.
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行只能输入一个服务器。本小节是必需的。
 - en: '`<features>`'
+  id: totrans-104
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<features>`'
 - en: A list of features that MUST be present in the client/library for this test
     to be able to run. If a required feature is not present then the test is SKIPPED.
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 必须在客户端/库中存在的功能列表，以便本测试能够运行。如果缺少必需的功能，则测试将被跳过。
 - en: Alternatively a feature can be prefixed with an exclamation mark to indicate
     a feature is NOT required. If the feature is present then the test is SKIPPED.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，可以通过在功能前加上感叹号来表示该功能不是必需的。如果该功能存在，则测试将被跳过。
 - en: 'Features testable here are:'
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此处可测试的功能：
 - en: '`alt-svc`'
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`alt-svc`'
 - en: '`bearssl`'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`bearssl`'
 - en: '`c-ares`'
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`c-ares`'
 - en: '`cookies`'
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`cookies`'
 - en: '`crypto`'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`crypto`'
 - en: '`debug`'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`debug`'
 - en: '`DoH`'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`DoH`'
 - en: '`getrlimit`'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`getrlimit`'
 - en: '`GnuTLS`'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`GnuTLS`'
 - en: '`GSS-API`'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`GSS-API`'
 - en: '`h2c`'
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`h2c`'
 - en: '`HSTS`'
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`HSTS`'
 - en: '`HTTP-auth`'
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`HTTP-auth`'
 - en: '`http/2`'
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`http/2`'
 - en: '`hyper`'
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hyper`'
 - en: '`idn`'
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`idn`'
 - en: '`ipv6`'
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ipv6`'
 - en: '`Kerberos`'
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Kerberos`'
 - en: '`large_file`'
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`large_file`'
 - en: '`ld_preload`'
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ld_preload`'
 - en: '`libssh2`'
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`libssh2`'
 - en: '`libssh`'
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`libssh`'
 - en: '`oldlibssh` (versions before 0.9.4)'
+  id: totrans-130
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`oldlibssh`（版本在0.9.4之前）'
 - en: '`libz`'
+  id: totrans-131
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`libz`'
 - en: '`manual`'
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`manual`'
 - en: '`Mime`'
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Mime`'
 - en: '`netrc`'
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`netrc`'
 - en: '`NTLM`'
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`NTLM`'
 - en: '`OpenSSL`'
+  id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`OpenSSL`'
 - en: '`parsedate`'
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`parsedate`'
 - en: '`proxy`'
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`proxy`'
 - en: '`PSL`'
+  id: totrans-139
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`PSL`'
 - en: '`rustls`'
+  id: totrans-140
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`rustls`'
 - en: '`Schannel`'
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Schannel`'
 - en: '`sectransp`'
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`sectransp`'
 - en: '`shuffle-dns`'
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`shuffle-dns`'
 - en: '`socks`'
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`socks`'
 - en: '`SPNEGO`'
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SPNEGO`'
 - en: '`SSL`'
+  id: totrans-146
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SSL`'
 - en: '`SSLpinning`'
+  id: totrans-147
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SSLpinning`'
 - en: '`SSPI`'
+  id: totrans-148
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`SSPI`'
 - en: '`threaded-resolver`'
+  id: totrans-149
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`threaded-resolver`'
 - en: '`TLS-SRP`'
+  id: totrans-150
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`TLS-SRP`'
 - en: '`TrackMemory`'
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`TrackMemory`'
 - en: '`typecheck`'
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`typecheck`'
 - en: '`Unicode`'
+  id: totrans-153
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`Unicode`'
 - en: '`unittest`'
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`unittest`'
 - en: '`unix-sockets`'
+  id: totrans-155
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`unix-sockets`'
 - en: '`verbose-strings`'
+  id: totrans-156
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`verbose-strings`'
 - en: '`wakeup`'
+  id: totrans-157
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`wakeup`'
 - en: '`win32`'
+  id: totrans-158
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`win32`'
 - en: '`wolfssh`'
+  id: totrans-159
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`wolfssh`'
 - en: '`wolfssl`'
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`wolfssl`'
 - en: in addition to all protocols that curl supports. A protocol only needs to be
     specified if it is different from the server (useful when the server is `none`).
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了curl支持的所有协议外。只有当协议与服务器不同时才需要指定协议（当服务器是`none`时很有用）。
 - en: '`<killserver>`'
+  id: totrans-162
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<killserver>`'
 - en: Using the same syntax as in `<server>` but when mentioned here these servers
     are explicitly KILLED when this test case is completed. Only use this if there
     is no other alternatives. Using this of course requires subsequent tests to restart
     servers.
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用与`<server>`中相同的语法，但在此处提到这些服务器在测试用例完成后会被明确杀死。只有在没有其他替代方案时才使用此选项。当然，使用此选项需要后续测试重新启动服务器。
 - en: '`<precheck>`'
+  id: totrans-164
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<precheck>`'
 - en: A command line that if set gets run by the test script before the test. If an
     output is displayed by the command or if the return code is non-zero, the test
     gets skipped and the (single-line) output is displayed as reason for not running
     the test.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 在测试之前由测试脚本运行的命令行。如果命令显示输出或返回代码非零，则测试将被跳过，并且（单行）输出将显示为不运行测试的原因。
 - en: '`<postcheck>`'
+  id: totrans-166
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<postcheck>`'
 - en: A command line that if set gets run by the test script after the test. If the
     command exists with a non-zero status code, the test is considered failed.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 在测试之后由测试脚本运行的命令行。如果命令以非零状态码退出，则测试被认为是失败的。
 - en: '`<tool>`'
+  id: totrans-168
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<tool>`'
 - en: Name of tool to invoke instead of “curl”. This tool must be built and exist
     either in the `libtest/` directory (if the tool name starts with `lib`) or in
     the `unit/` directory (if the tool name starts with `unit`).
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用而不是“curl”的工具名称。此工具必须在`libtest/`目录中构建并存在（如果工具名称以`lib`开头）或`unit/`目录中（如果工具名称以`unit`开头）。
 - en: '`<name>`'
+  id: totrans-170
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<name>`'
 - en: Brief test case description, shown when the test runs.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 简短的测试用例描述，在测试运行时显示。
 - en: '`<setenv>`'
+  id: totrans-172
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<setenv>`'
 - en: '[PRE0]'
+  id: totrans-173
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Set the given environment variables to the specified value before the actual
     command is run. They are cleared again after the command has been run.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 在实际命令运行之前将指定的环境变量设置为指定的值。命令运行后，它们会被清除。
 - en: '`<command [option="no-output/no-include/force-output/binary-trace"] [timeout="secs"][delay="secs"][type="perl/shell"]>`'
+  id: totrans-175
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<command [option="no-output/no-include/force-output/binary-trace"] [timeout="secs"][delay="secs"][type="perl/shell"]>`'
 - en: Command line to run.
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: 要运行的命令行。
 - en: Note that the URL that gets passed to the server actually controls what data
     that is returned. The last slash in the URL must be followed by a number. That
     number (N) is used by the test-server to load test case N and return the data
     that is defined within the `<reply><data></data></reply>` section.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，传递给服务器的URL实际上控制着返回的数据。URL中的最后一个斜杠后面必须跟一个数字。该数字（N）由测试服务器用于加载测试用例N并返回`<reply><data></data></reply>`部分中定义的数据。
 - en: If there is no test number found above, the HTTP test server uses the number
     following the last dot in the given hostname (made so that a CONNECT can still
     pass on test number) so that “foo.bar.123” gets treated as test case 123\. Alternatively,
     if an IPv6 address is provided to CONNECT, the last hexadecimal group in the address
     is used as the test number. For example the address “[1234::ff]” would be treated
     as test case 255.
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果上面没有找到测试编号，HTTP测试服务器使用给定主机名中最后一个点的后面的数字（这样即使测试编号仍然可以通过CONNECT传递）来处理“foo.bar.123”作为测试用例123。或者，如果提供了IPv6地址给CONNECT，则地址中的最后一个十六进制组用作测试编号。例如，地址“[1234::ff]”将被处理为测试用例255。
 - en: Set `type="perl"` to write the test case as a perl script. It implies that there
     is no memory debugging and valgrind gets shut off for this test.
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`type="perl"`设置为将测试用例编写为perl脚本。这意味着没有内存调试，并且valgrind在此测试中会被关闭。
 - en: Set `type="shell"` to write the test case as a shell script. It implies that
     there is no memory debugging and valgrind gets shut off for this test.
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`type="shell"`设置为将测试用例编写为shell脚本。这意味着没有内存调试，并且valgrind在此测试中会被关闭。
 - en: Set `option="no-output"` to prevent the test script to slap on the `--output`
     argument that directs the output to a file. The `--output` is also not added if
     the verify/stdout section is used.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`option="no-output"`设置为防止测试脚本在`--output`参数上附加，该参数将输出重定向到文件。如果使用verify/stdout部分，则也不会添加`--output`。
 - en: Set `option="force-output"` to make use of `--output` even when the test is
     otherwise written to verify stdout.
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`option="force-output"`设置为即使在测试其他情况下写入verify stdout时也要使用`--output`。
 - en: Set `option="no-include"` to prevent the test script to slap on the `--include`
     argument.
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`option="no-include"`设置为防止测试脚本在`--include`参数上附加。
 - en: Set `option="binary-trace"` to use `--trace` instead of `--trace-ascii` for
     tracing. Suitable for binary-oriented protocols such as MQTT.
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`option="binary-trace"`设置为使用`--trace`而不是`--trace-ascii`进行跟踪。适用于面向二进制的协议，如MQTT。
 - en: Set `timeout="secs"` to override default server logs advisor read lock timeout.
     This timeout is used by the test harness, once that the command has completed
     execution, to wait for the test server to write out server side log files and
@@ -784,183 +1159,274 @@
     negative integer number of seconds for the timeout. This `timeout` attribute is
     documented for completeness sake, but is deep test harness stuff and only needed
     for specific test cases. Avoid using it.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`timeout="secs"`设置为覆盖默认服务器日志顾问读取锁的超时时间。此超时由测试工具使用，一旦命令执行完成，将等待测试服务器写入服务器端日志文件并移除建议不要读取的锁。参数“secs”是超时的非负整数秒数。此`timeout`属性出于完整性考虑而记录，但这是深度测试工具的内容，并且仅适用于特定测试用例。请避免使用它。
 - en: Set `delay="secs"` to introduce a time delay once that the command has completed
     execution and before the `<postcheck>` section runs. The “secs” parameter is the
     not negative integer number of seconds for the delay. This ‘delay’ attribute is
     intended for specific test cases, and normally not needed.
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 将`delay="secs"`设置为在命令执行完成后和`<postcheck>`部分运行之前引入时间延迟。参数“secs”是延迟的非负整数秒数。此‘delay’属性旨在用于特定测试用例，通常不需要。
 - en: '`<file name="log/filename" [nonewline="yes"]>`'
+  id: totrans-187
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file name="log/filename" [nonewline="yes"]>`'
 - en: This creates the named file with this content before the test case is run, which
     is useful if the test case needs a file to act on.
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: 在运行测试用例之前，使用此内容创建命名文件，这对于测试用例需要操作的文件很有用。
 - en: If `nonewline="yes"` is used, the created file gets the final newline stripped
     off.
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果使用`nonewline="yes"`，则创建的文件将移除最后的换行符。
 - en: '`<stdin [nonewline="yes"]>`'
+  id: totrans-190
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stdin [nonewline="yes"]>`'
 - en: Pass this given data on stdin to the tool.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 将此给定数据通过stdin传递给工具。
 - en: If `nonewline` is set, we cut off the trailing newline of this given data before
     comparing with the one actually received by the client
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置`nonewline`，我们在将其与客户端实际接收到的数据进行比较之前，将此给定数据的尾部换行符截断。
 - en: '`<verify>`'
+  id: totrans-193
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`<verify>`'
 - en: '`<errorcode>`'
+  id: totrans-194
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<errorcode>`'
 - en: numerical error code curl is supposed to return. Specify a list of accepted
     error codes by separating multiple numbers with comma. See test 237 for an example.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: cURL应返回的数值错误代码。通过逗号分隔多个数字来指定接受的错误代码列表。请参阅测试237以获取示例。
 - en: '`<strip>`'
+  id: totrans-196
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<strip>`'
 - en: One regex per line that is removed from the protocol dumps before the comparison
     is made. This is useful to remove dependencies on dynamically changing protocol
     data such as port numbers or user-agent strings.
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行一个正则表达式，在比较之前从协议转储中移除。这对于移除对动态变化的协议数据（如端口号或用户代理字符串）的依赖很有用。
 - en: '`<strippart>`'
+  id: totrans-198
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<strippart>`'
 - en: 'One perl op per line that operates on the protocol dump. This is pretty advanced.
     Example: `s/^EPRT .*/EPRT stripped/`.'
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行一个操作，该操作在协议转储上执行。这是相当高级的。例如：`s/^EPRT .*/EPRT stripped/`。
 - en: '`<protocol [nonewline="yes"]>`'
+  id: totrans-200
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<protocol [nonewline="yes"]>`'
 - en: the protocol dump curl should transmit, if `nonewline` is set, we cut off the
     trailing newline of this given data before comparing with the one actually sent
     by the client The `<strip>` and `<strippart>` rules are applied before comparisons
     are made.
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: 当设置`nonewline`时，如果cURL应传输协议转储，我们在将其与客户端实际发送的数据进行比较之前，将此给定数据的尾部换行符截断。在比较之前应用`<strip>`和`<strippart>`规则。
 - en: '`<proxy [nonewline="yes"]>`'
+  id: totrans-202
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<proxy [nonewline="yes"]>`'
 - en: The protocol dump curl should transmit to an HTTP proxy (when the http-proxy
     server is used), if `nonewline` is set, we cut off the trailing newline of this
     given data before comparing with the one actually sent by the client The `<strip>`
     and `<strippart>` rules are applied before comparisons are made.
+  id: totrans-203
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用HTTP代理服务器时，如果设置`nonewline`，我们在将其与客户端实际发送的数据进行比较之前，将此给定数据的尾部换行符截断。在比较之前应用`<strip>`和`<strippart>`规则。
 - en: '`<stderr [mode="text"] [nonewline="yes"]>`'
+  id: totrans-204
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stderr [mode="text"] [nonewline="yes"]>`'
 - en: This verifies that this data was passed to stderr.
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: 这验证了这些数据已传递到stderr。
 - en: Use the `mode="text"` attribute if the output is in text mode on platforms that
     have a text/binary difference.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果在具有文本/二进制差异的平台上的输出是文本模式，请使用`mode="text"`属性。
 - en: If `nonewline` is set, we cut off the trailing newline of this given data before
     comparing with the one actually received by the client
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置`nonewline`，我们在将其与客户端实际接收到的数据进行比较之前，将此给定数据的尾部换行符截断。
 - en: '`<stdout [mode="text"] [nonewline="yes"]>`'
+  id: totrans-208
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stdout [mode="text"] [nonewline="yes"]>`'
 - en: This verifies that this data was passed to stdout.
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: 这验证了这些数据已传递到stdout。
 - en: Use the `mode="text"` attribute if the output is in text mode on platforms that
     have a text/binary difference.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果在具有文本/二进制差异的平台上的输出是文本模式，请使用`mode="text"`属性。
 - en: If `nonewline` is set, we cut off the trailing newline of this given data before
     comparing with the one actually received by the client
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置了 `nonewline`，我们在与客户端实际收到的数据进行比较之前，将此给定数据的尾部换行符截断
 - en: '`<file name="log/filename" [mode="text"]>`'
+  id: totrans-212
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file name="log/filename" [mode="text"]>`'
 - en: The file’s contents must be identical to this after the test is complete. Use
     the `mode="text"` attribute if the output is in text mode on platforms that have
     a text/binary difference.
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试完成后，文件内容必须与此完全相同。如果输出在具有文本/二进制差异的平台上的文本模式下，请使用 `mode="text"` 属性。
 - en: '`<file1>`'
+  id: totrans-214
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file1>`'
 - en: 1 to 4 can be appended to ‘file’ to compare more files.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以将 1 到 4 添加到 'file' 以比较更多文件。
 - en: '`<file2>`'
+  id: totrans-216
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file2>`'
 - en: '`<file3>`'
+  id: totrans-217
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file3>`'
 - en: '`<file4>`'
+  id: totrans-218
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<file4>`'
 - en: '`<stripfile>`'
+  id: totrans-219
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stripfile>`'
 - en: 'One perl op per line that operates on the output file or stdout before being
     compared with what is stored in the test file. This is pretty advanced. Example:
     "s/^EPRT .*/EPRT stripped/"'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行一个 Perl 操作符，该操作符在比较测试文件中存储的内容之前，对输出文件或 stdout 进行操作。这相当高级。例如："s/^EPRT .*/EPRT
+    stripped/"
 - en: '`<stripfile1>`'
+  id: totrans-221
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stripfile1>`'
 - en: 1 to 4 can be appended to `stripfile` to strip the corresponding <filen>content</filen>
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以将 1 到 4 添加到 `stripfile` 以剥离相应的 <filen>content</filen>
 - en: '`<stripfile2>`'
+  id: totrans-223
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stripfile2>`'
 - en: '`<stripfile3>`'
+  id: totrans-224
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stripfile3>`'
 - en: '`<stripfile4>`'
+  id: totrans-225
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<stripfile4>`'
 - en: '`<upload>`'
+  id: totrans-226
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<upload>`'
 - en: the contents of the upload data curl should have sent
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 上传数据 curl 应发送的内容
 - en: '`<valgrind>`'
+  id: totrans-228
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '`<valgrind>`'
 - en: disable - disables the valgrind log check for this test
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: disable - 禁用此测试的 valgrind 日志检查

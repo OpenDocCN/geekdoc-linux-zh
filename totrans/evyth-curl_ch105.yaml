@@ -1,32 +1,46 @@
 - en: Connection timeout
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 连接超时
 - en: curl typically makes a TCP connection to the host as an initial part of its
     network transfer. This TCP connection can fail or be slow, if there are shaky
     network conditions or faulty remote servers.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl通常将其网络传输的初始部分作为对主机的TCP连接。如果网络条件不稳定或远程服务器存在故障，这种TCP连接可能会失败或变慢。
 - en: To reduce the impact on your scripts or other use, you can set the maximum time
     in seconds which curl allows for the connection attempt. With `--connect-timeout`
     you tell curl the maximum time to allow for connecting, and if curl has not connected
     in that time it returns a failure.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了减少对您的脚本或其他使用的干扰，您可以设置curl允许的连接尝试的最大时间（以秒为单位）。使用`--connect-timeout`选项，您告诉curl允许的最大连接时间，如果curl在此时间内未能连接，则返回失败。
 - en: The connection timeout only limits the time curl is allowed to spend up until
     the moment it connects, so once the TCP connection has been established it can
     take longer time. See the [Timeouts](ch108.xhtml#usingcurl__timeouts__md) section
     for more on generic curl timeouts.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 连接超时仅限制curl连接之前允许花费的时间，一旦TCP连接建立，它可能需要更长的时间。有关通用curl超时的更多信息，请参阅[超时](ch108.xhtml#usingcurl__timeouts__md)部分。
 - en: If you specify a low timeout, you effectively disable curl’s ability to connect
     to remote servers, slow servers or servers you access over unreliable networks.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您指定了较低的超时时间，实际上就禁用了curl连接到远程服务器、慢速服务器或通过不可靠网络访问的服务器的功能。
 - en: 'The connection timeout can be specified as a decimal value for sub-second precision.
     For example, to allow 2781 milliseconds to connect:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 连接超时可以指定为小数值以实现亚秒精度。例如，为了允许2781毫秒进行连接：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

@@ -1,36 +1,55 @@
 - en: IPFS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: IPFS
 - en: IPFS is the *Inter-Planetary File System*. curl supports IPFS only via an *HTTP
     gateway*. It means that it understands IPFS URLs when given to it, but you must
     also provide a working gateway URL for curl to use to retrieve the content. curl
     does not speak IPFS natively.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: IPFS 是 *星际文件系统*。curl 仅通过 *HTTP 网关* 支持使用 IPFS。这意味着当提供给它时，它理解 IPFS URL，但你必须同时提供一个有效的网关
+    URL，以便 curl 可以使用它来检索内容。curl 本身不支持 IPFS。
 - en: Gateway
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 网关
 - en: 'The `--ipfs-gateway` lets the user specify the IPFS HTTP gateway URL. Like
     this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--ipfs-gateway` 允许用户指定 IPFS HTTP 网关 URL。例如：'
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If you opt to go for a remote gateway you should be aware that you completely
     trust the gateway. This is fine in local gateways as you host it yourself. With
     remote gateways there could potentially be a malicious actor returning you data
     that does not match the request you made, inspect or even interfere with the request.
     You might not notice this when getting IPFS using curl.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你选择使用远程网关，你应该意识到你需要完全信任该网关。在本地网关中这是可以的，因为你自己托管它。在使用远程网关的情况下，可能存在恶意行为者返回与你的请求不匹配的数据，检查或甚至干扰请求。当你使用
+    curl 获取 IPFS 时，你可能不会注意到这一点。
 - en: If the `--ipfs-gateway` option is not used, curl checks the `IPFS_GATEWAY` environment
     variable for guidance and if not set, the `~/.ipfs/gateway` file that can be used
     to identify the gateway.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果不使用 `--ipfs-gateway` 选项，curl 会检查 `IPFS_GATEWAY` 环境变量以获取指导，如果没有设置，则可以使用 `~/.ipfs/gateway`
+    文件来识别网关。
 - en: IPFS support was first added to curl in version 8.4.0.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: IPFS 支持首次添加到 curl 的版本是 8.4.0。

@@ -1,193 +1,296 @@
 - en: TLS libraries
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: TLS库
 - en: To make curl support TLS based protocols, such as HTTPS, FTPS, SMTPS, POP3S,
     IMAPS and more, you need to build with a third-party TLS library since curl does
     not implement the TLS protocol itself.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使curl支持基于TLS的协议，例如HTTPS、FTPS、SMTPS、POP3S、IMAPS等，你需要使用第三方TLS库进行构建，因为curl本身不实现TLS协议。
 - en: 'curl is written to work with a large number of TLS libraries:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl被编写为与大量TLS库一起工作：
 - en: AmiSSL
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AmiSSL
 - en: AWS-LC
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: AWS-LC
 - en: BearSSL
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: BearSSL
 - en: BoringSSL
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: BoringSSL
 - en: GnuTLS
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: GnuTLS
 - en: libressl
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: libressl
 - en: mbedTLS
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: mbedTLS
 - en: OpenSSL
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: OpenSSL
 - en: rustls
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: rustls
 - en: Schannel (native Windows)
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Schannel（原生Windows）
 - en: Secure Transport (native macOS)
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Secure Transport（原生macOS）
 - en: WolfSSL
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: WolfSSL
 - en: When you build curl and libcurl to use one of these libraries, it is important
     that you have the library and its include headers installed on your build machine.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你构建curl和libcurl以使用这些库之一时，确保你在构建机器上安装了该库及其包含的头文件非常重要。
 - en: configure
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: configure
 - en: Below, you learn how to tell configure to use the different libraries. The configure
     script does not select any TLS library by default. You must select one, or instruct
     configure that you want to build without TLS support using `--without-ssl`.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面，你将学习如何告诉configure使用不同的库。configure脚本默认不选择任何TLS库。你必须选择一个，或者指示configure你想要构建不带TLS支持，使用`--without-ssl`。
 - en: OpenSSL, BoringSSL, libressl
+  id: totrans-18
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: OpenSSL, BoringSSL, libressl
 - en: '[PRE0]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'configure detects OpenSSL in its default path by default. You can optionally
     point configure to a custom install path prefix where it can find OpenSSL:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到OpenSSL。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到OpenSSL：
 - en: '[PRE1]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The alternatives [BoringSSL](ch049.xhtml#build__boringssl__md) and libressl
     look similar enough that configure detects them the same way as OpenSSL. It then
     uses additional measures to figure out which of the particular flavors it is using.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选方案[BoringSSL](ch049.xhtml#build__boringssl__md)和libressl看起来足够相似，以至于configure以与OpenSSL相同的方式检测它们。然后它使用额外的措施来确定它使用的是哪种特定风味。
 - en: GnuTLS
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: GnuTLS
 - en: '[PRE2]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'configure detects GnuTLS in its default path by default. You can optionally
     point configure to a custom install path prefix where it can find gnutls:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到GnuTLS。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到gnutls：
 - en: '[PRE3]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: WolfSSL
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: WolfSSL
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'configure detects WolfSSL in its default path by default. You can optionally
     point configure to a custom install path prefix where it can find WolfSSL:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到WolfSSL。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到WolfSSL：
 - en: '[PRE5]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: mbedTLS
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: mbedTLS
 - en: '[PRE6]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'configure detects mbedTLS in its default path by default. You can optionally
     point configure to a custom install path prefix where it can find mbedTLS:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到mbedTLS。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到mbedTLS：
 - en: '[PRE7]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Secure Transport
+  id: totrans-35
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Secure Transport
 - en: '[PRE8]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'configure detects Secure Transport in its default path by default. You can
     optionally point configure to a custom install path prefix where it can find Secure
     Transport:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到Secure Transport。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到Secure
+    Transport：
 - en: '[PRE9]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Schannel
+  id: totrans-39
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Schannel
 - en: '[PRE10]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: configure detects Schannel in its default path by default.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到Schannel。
 - en: (WinSSL was previously an alternative name for Schannel, and earlier curl versions
     instead needed `--with-winssl`)
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: （WinSSL曾是Schannel的替代名称，而早期curl版本则需要`--with-winssl`）
 - en: BearSSL
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: BearSSL
 - en: '[PRE11]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'configure detects BearSSL in its default path by default. You can optionally
     point configure to a custom install path prefix where it can find BearSSL:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: configure默认在其默认路径中检测到BearSSL。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到BearSSL：
 - en: '[PRE12]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Rustls
+  id: totrans-47
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Rustls
 - en: '[PRE13]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'When told to use rustls, curl is actually trying to find and use the rustls-ffi
     library - the C API for the rustls library. configure detects rustls-ffi in its
     default path by default. You can optionally point configure to a custom install
     path prefix where it can find rustls-ffi:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 当被指示使用rustls时，curl实际上正在尝试查找和使用rustls-ffi库——rustls库的C API。configure默认在其默认路径中检测到rustls-ffi。你可以选择性地将configure指向一个自定义安装路径前缀，以便在其中找到rustls-ffi：
 - en: '[PRE14]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'

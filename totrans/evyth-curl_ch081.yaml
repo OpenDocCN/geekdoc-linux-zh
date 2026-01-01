@@ -1,137 +1,207 @@
 - en: Trace options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 跟踪选项
 - en: There are times when `-v` is not enough. In particular, when you want to store
     the complete stream including the actual transferred data.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候`-v`是不够的。特别是当你想要存储包括实际传输数据的完整流时。
 - en: For situations when curl does encrypted file transfers with protocols such as
     HTTPS, FTPS or SFTP, other network monitoring tools (like Wireshark or tcpdump)
     are not able to do this job as easily for you.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于curl使用HTTPS、FTPS或SFTP等协议进行加密文件传输的情况，其他网络监控工具（如Wireshark或tcpdump）无法像curl那样轻松地完成这项工作。
 - en: For this, curl offers two other options that you use instead of `-v`.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这一点，curl提供了另外两个选项，你可以用它们来代替`-v`。
 - en: '`--trace [filename]` saves a full trace in the given filename. You can also
     use ‘-’ (a single minus) instead of a filename to get it passed to stdout. You
     would use it like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--trace [filename]`将完整的跟踪保存到指定的文件名中。你也可以使用`-`（单个减号）来代替文件名，以便将其传递到标准输出。你会这样使用它：'
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'When completed, there is a ‘dump’ file that can turn out pretty sizable. In
     this case, the 15 first lines of the dump file looks like:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成后，会有一个`dump`文件，可能会相当大。在这种情况下，`dump`文件的前15行看起来像：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Every single sent and received byte gets displayed individually in hexadecimal
     numbers. Received headers are output line by line.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 每一个发送和接收的字节都会单独以十六进制数字显示。接收到的头部信息按行输出。
 - en: 'If you think the hexadecimals are not helping, you can try `--trace-ascii [filename]`
     instead, also this accepting ‘-’ for stdout and that makes the 15 first lines
     of tracing look like:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你认为十六进制数没有帮助，你可以尝试使用`--trace-ascii [filename]`，同时它也接受`-`作为标准输出，这使得前15行跟踪看起来像：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Time stamps
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 时间戳
 - en: The `--trace-time` option prefixes all verbose/trace outputs with a high resolution
     timer for when the line is printed. It works with the regular `-v / --verbose`
     option as well as with `--trace` and `--trace-ascii`.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--trace-time`选项在打印每一行时，在详细/跟踪输出前加上高分辨率计时器。它与常规的`-v / --verbose`选项以及`--trace`和`--trace-ascii`一起工作。'
 - en: 'An example could look like this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个例子可能看起来像这样：
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The lines are all the local time as hours:minutes:seconds and then number of
     microseconds in that second.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 行都是本地时间，以小时:分钟:秒表示，然后是那一秒中的微秒数。
 - en: Identify transfers and connections
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 识别传输和连接
 - en: As the trace information flow showing on screen or to a file using these options
     is a continuous stream even though your command line might make curl use a large
     number of separate connections and different transfers, there are times when you
     want to see to which specific transfers or connections the various information
     below to. To better understand the trace output.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然使用这些选项在屏幕或文件上显示的跟踪信息流是连续的，即使你的命令行可能使curl使用大量的单独连接和不同的传输，但有时你想要看到以下各种信息对应的具体传输或连接。为了更好地理解跟踪输出。
 - en: 'You can then add `--trace-ids` to the line and you see how curl adds two numbers
     to all tracing: the connection number and the transfer number. They are two separate
     identifiers because connections can be reused and multiple transfers can use the
     same connection.'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以然后添加`--trace-ids`到行中，你将看到curl如何为所有跟踪添加两个数字：连接号和传输号。它们是两个独立的标识符，因为连接可以被重用，多个传输可以使用相同的连接。
 - en: More data
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更多数据
 - en: If the amount of tracing data is not enough. Like when you suspect and want
     to debug a problem in a more fundamental lower protocol level, curl provides the
     `--trace-config` option for you.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果跟踪数据量不足。例如，当你怀疑并想要在更基础的底层协议级别调试问题时，curl为你提供了`--trace-config`选项。
 - en: With this option you tell curl to also include logging about components that
     it otherwise does not include by default, such as details about TLS, HTTP/2 or
     HTTP/3 protocol bits. It also has convenience options for adding the connection
     and transfer identifiers and time stamps.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这个选项，你告诉curl也记录它默认不包含的组件的日志，例如TLS、HTTP/2或HTTP/3协议的详细信息。它还提供了方便的选项来添加连接和传输标识符以及时间戳。
 - en: 'The `--trace-config` option accepts an argument where you specify a comma-separated
     list with the areas you want it to trace. For example, include identifiers and
     show me HTTP/2 details:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--trace-config`选项接受一个参数，其中你可以指定一个以逗号分隔的列表，指定你想要跟踪的区域。例如，包括标识符并显示HTTP/2的详细信息：'
 - en: '[PRE4]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'The exact set of options varies, but here are some ones to try:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 选项的确切集合各不相同，但这里有一些可以尝试的选项：
 - en: '| area | description |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| area | description |'
 - en: '| --- | --- |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `ids` | the same identifiers as `--trace-ids` provides |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `ids` | 与`--trace-ids`提供的相同标识符 |'
 - en: '| `time` | the same time output as `--trace-time` provides |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `time` | 与`--trace-time`提供的相同时间输出 |'
 - en: '| `all` | show everything possible |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `all` | 显示所有可能的内容 |'
 - en: '| `tls` | TLS protocol exchange details |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `tls` | TLS 协议交换详情 |'
 - en: '| `http/2` | HTTP/2 frame information |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `http/2` | HTTP/2 帧信息 |'
 - en: '| `http/3` | HTTP/3 frame information |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `http/3` | HTTP/3 帧信息 |'
 - en: '| `*` | additional ones in future versions |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `*` | 未来版本中可能添加的额外信息 |'
 - en: Doing a quick run with `all` is often a good way to get to see which specific
     areas that are shown, as then you can do follow-up runs with more specific areas
     set.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `all` 进行快速运行通常是一个很好的方法来查看显示的具体区域，因为这样你可以进行后续的运行，并设置更具体的区域。

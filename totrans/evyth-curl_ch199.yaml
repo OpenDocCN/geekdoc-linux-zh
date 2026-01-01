@@ -1,97 +1,139 @@
 - en: Performance
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 性能
 - en: This section collects general advice on what you can do as an application author
     to get the maximum performance out of libcurl.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节收集了关于作为应用程序作者你可以做什么以从libcurl中获得最大性能的一般建议。
 - en: libcurl is designed and intended to run as fast as possible by default. You
     are expected to get top performance already without doing anything extra in particular.
     There are however some common things to look at or perhaps mistakes to avoid.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl默认设计为尽可能快地运行。你期望在不做任何额外操作的情况下就能获得最佳性能。然而，有一些常见的事情需要注意或者可能需要避免的错误。
 - en: reuse handles
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重复使用句柄
 - en: This is a general mantra whenever libcurl is discussed. If you use the easy
     interface, the *primary* key to high performance is to reuse the handles when
     doing subsequent transfers. That lets libcurl reuse connections, reuse TLS sessions,
     use its DNS cache as much as possible and more.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是在讨论libcurl时的一个通用箴言。如果你使用简单接口，那么提高性能的*主要*关键是后续传输时重用句柄。这允许libcurl重用连接、重用TLS会话、尽可能多地使用其DNS缓存等等。
 - en: buffer sizes
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 缓冲区大小
 - en: If you download data, set the `CURLOPT_BUFFERSIZE` to a suitable size. It is
     on the smaller size from start and especially on high speed transfers, you might
     be able to get more out of libcurl by increase its size. We encourage you to try
     out a few sizes in a benchmark with your use case.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你下载数据，将`CURLOPT_BUFFERSIZE`设置为合适的大小。它从开始就相对较小，尤其是在高速传输中，你可能通过增加其大小从libcurl中获得更多。我们鼓励你在基准测试中尝试几个大小以适应你的用例。
 - en: Similarly, if you upload data you might want to adjust the `CURLOPT_UPLOAD_BUFFERSIZE`
     for the same reasons.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，如果你上传数据，你可能需要出于相同的原因调整`CURLOPT_UPLOAD_BUFFERSIZE`。
 - en: pool size
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 池大小
 - en: The number of live connections kept in the connection pool that you set with
     `CURLOPT_MAXCONNECTS` can be interesting to tweak. Depending of course how your
     application uses connections, but if it for example iterates over N hostnames
     in a short period of time, it could make sense for you to make sure that libcurl
     can keep all those connections alive.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 你通过`CURLOPT_MAXCONNECTS`设置的连接池中保持的活动连接数可能值得调整。当然，这取决于你的应用程序如何使用连接，但如果它例如在短时间内迭代N个域名，确保libcurl可以保持所有这些连接活跃可能是有意义的。
 - en: make callbacks as fast as possible
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尽可能使回调尽可能快
 - en: In high speed data downloads, the write callback is called many times. If this
     function is not written to execute the fastest possible way, there is a risk that
     this function alone makes *all* transfers slower than they otherwise could be.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在高速数据下载中，写入回调会被多次调用。如果这个函数没有以尽可能快的方式编写，那么这个函数本身可能会使*所有*传输比它们本应慢。
 - en: The same of course goes for the read callback for uploads.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，对于上传的读取回调也是如此。
 - en: Avoid doing complicated logic or use locks/mutexes in your libcurl callbacks.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 避免在libcurl回调中执行复杂的逻辑或使用锁/互斥锁。
 - en: share data
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 共享数据
 - en: If you use multiple easy handles, you can still share data and caches between
     them in order to increase performance. Take a closer look at [the share API](ch257.xhtml#helpers__sharing__md).
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用多个简单句柄，你仍然可以在它们之间共享数据和缓存以提高性能。更详细地了解[共享API](ch257.xhtml#helpers__sharing__md)。
 - en: threads
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 线程
 - en: If your transfer thread ends up consuming 100% CPU, then you might benefit from
     distributing the load onto multiple threads to increase bandwidth.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的传输线程最终消耗了100%的CPU，那么你可能从将负载分配到多个线程以增加带宽中受益。
 - en: Normally then, you want to make each thread do transfers as independently as
     possible to avoid them interfering with each other’s performance or risk getting
     into thread-safe problems due to shared handles. Try to make the same hostnames
     get transferred on the same thread so that connection reuse can be optimized.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常情况下，你希望每个线程尽可能独立地进行传输，以避免它们相互干扰性能或因共享句柄而出现线程安全的问题。尽量让相同的域名在同一个线程上传输，以便可以优化连接重用。
 - en: '`curl_multi_socket_action`'
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`curl_multi_socket_action`'
 - en: If your application performs many parallel transfers, like more than a hundred
     concurrent ones or so, then you *must* consider switching to the `curl_multi_socket_action()`
     and the event based API instead of the “regular” multi API. That allows and pushes
     you to use an event based approach which lets your application avoid both `poll()`
     and `select()`, which is key to high performance combined with a high degree of
     parallelism.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你的应用程序执行许多并行传输，比如超过一百个并发传输，那么你*必须*考虑切换到`curl_multi_socket_action()`和基于事件的API，而不是“常规”的多线程API。这允许并鼓励你使用基于事件的策略，让你的应用程序避免使用`poll()`和`select()`，这对于高性能和高并发度至关重要。

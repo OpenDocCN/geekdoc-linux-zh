@@ -1,33 +1,49 @@
 - en: HTTPS proxy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTPS代理
 - en: All the other mentioned protocols to speak with the proxy are clear text protocols,
     HTTP and the SOCKS versions. Using those methods could allow someone to eavesdrop
     on your traffic the local network where you or the proxy reside. Because over
     the connection between curl and the proxy, the data is sent in the clear.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有其他提到的与代理通信的协议都是明文协议，包括HTTP和SOCKS版本。使用这些方法可能会允许某人监听您在本地网络中的流量，因为curl与代理之间的连接是明文发送数据的。
 - en: One solution for that is to use an HTTPS proxy, speaking HTTPS to the proxy,
     which then establishes a secure and encrypted connection that is safe from easy
     surveillance.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 解决这个问题的方法之一是使用HTTPS代理，与代理使用HTTPS通信，然后建立一个安全且加密的连接，从而免受简单监视的威胁。
 - en: When an HTTPS proxy is specified, the default port used on that host is 443.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当指定HTTPS代理时，该主机默认使用的端口是443。
 - en: In most other ways, HTTPS proxies work like [HTTP proxies](ch115.xhtml#usingcurl__proxies__http__md).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在大多数其他方面，HTTPS代理的工作方式类似于[HTTP代理](ch115.xhtml#usingcurl__proxies__http__md)。
 - en: HTTP/2
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP/2
 - en: When curl speaks with an HTTPS proxy, you have the option to use `--proxy-http2`
     to a ask curl to try using HTTP/2 with the proxy.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl与HTTPS代理通信时，您可以选择使用`--proxy-http2`来让curl尝试使用HTTP/2与代理通信。
 - en: By default, curl speaks HTTP/1.1 with HTTPS proxies, but if this option is used
     curl attempts to negotiate and use HTTP/2 instead.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，curl使用HTTP/1.1与HTTPS代理通信，但如果使用此选项，curl将尝试协商并使用HTTP/2。

@@ -1,53 +1,83 @@
 - en: Run tests
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 运行测试
 - en: 'The main script that runs tests is called `tests/runtests.pl` and some of its
     more useful features are:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行测试的主要脚本被称为 `tests/runtests.pl`，其中一些更有用的特性包括：
 - en: Run a range of tests
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 运行一系列测试
 - en: 'Run test 1 to 27:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行测试 1 到 27：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Run all tests marked as `SFTP`:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行所有标记为 `SFTP` 的测试：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Run all tests **not** marked `FTP`:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行所有未标记为 `FTP` 的测试：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Run a specific test with gdb
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用 gdb 运行特定测试
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: It starts up gdb, you can set break-points etc and then type `run` and off it
     goes and performs the entire thing through the debugger.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 它会启动 gdb，你可以设置断点等，然后输入 `run` 并开始运行，整个测试过程都会通过调试器执行。
 - en: Run a specific test without valgrind
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 不使用 valgrind 运行特定测试
 - en: 'The test suite uses valgrind by default if it finds it, which is an excellent
     way to find problems but it also makes the test run much slower. Sometimes you
     want to do it faster:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果测试套件找到了 valgrind，它默认会使用它，这是一个寻找问题的极好方法，但同时也使得测试运行速度大大减慢。有时你希望它运行得更快：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

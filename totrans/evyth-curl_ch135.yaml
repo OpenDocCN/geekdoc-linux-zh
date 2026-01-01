@@ -1,134 +1,195 @@
 - en: SCP and SFTP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: SCP和SFTP
 - en: 'curl supports the SCP and SFTP protocols if built with a prerequisite 3rd party
     library: [libssh2](https://www.libssh2.org/), [libssh](https://www.libssh.org/)
     or [wolfSSH](https://www.wolfssl.com/products/wolfssh/).'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl在构建时使用了先决的第三方库：[libssh2](https://www.libssh2.org/)，[libssh](https://www.libssh.org/)或[wolfSSH](https://www.wolfssl.com/products/wolfssh/)，则支持SCP和SFTP协议。
 - en: SCP and SFTP are both protocols that are built on top of SSH, a secure and encrypted
     data protocol that is similar to TLS but differs in a few important ways. For
     example, SSH does not use certificates of any sort but instead it uses public
     and private keys. Both SSH and TLS provide strong crypto and secure transfers
     when used correctly.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: SCP和SFTP都是建立在SSH之上的协议，SSH是一个安全且加密的数据协议，与TLS类似，但在几个重要方面有所不同。例如，SSH不使用任何类型的证书，而是使用公钥和私钥。当正确使用时，SSH和TLS都提供强大的加密和安全的传输。
 - en: The SCP protocol is generally considered to be the black sheep of the two since
     it is not portable and usually only works between Unix systems.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: SCP协议通常被认为是两者中的“黑羊”，因为它不可移植，通常只在Unix系统之间工作。
 - en: URLs
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: URL
 - en: 'SFTP and SCP URLs are similar to other URLs and you download files using these
     protocols the same as with others:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: SFTP和SCP的URL与其他URL类似，您可以使用这些协议下载文件，就像使用其他协议一样：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'and:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 和：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'SFTP (but not SCP) supports getting a file listing back when the URL ends with
     a trailing slash:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: SFTP（但不是SCP）支持在URL以斜杠结尾时获取文件列表：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Note that both these protocols work with “users” and you do not ask for a file
     anonymously or with a standard generic name. Most systems require that users authenticate,
     as outlined below.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这两个协议都与“用户”一起工作，您不能匿名或使用标准通用名称请求文件。大多数系统要求用户进行认证，如下所述。
 - en: When requesting a file from an SFTP or SCP URL, the file path given is considered
     to be the absolute path on the remote server unless you specifically ask for the
     path relative to the user’s home directory. You do that by making sure the path
     starts with `/~/`. This is quite the opposite to how FTP URLs work and is a common
     cause for confusion among users.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 当从SFTP或SCP URL请求文件时，提供的文件路径被认为是远程服务器上的绝对路径，除非您明确要求相对于用户主目录的路径。您可以通过确保路径以`/~/`开头来实现这一点。这与FTP
+    URL的工作方式正好相反，并且是用户中常见的混淆原因。
 - en: 'For user `daniel` to transfer `todo.txt` from his home directory, it would
     look similar to this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于用户`daniel`，要从他的主目录传输`todo.txt`，看起来可能像这样：
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Authentication
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 认证
 - en: 'Authentication with curl against an SSH server (when you specify an SCP or
     SFTP URL) is done like this:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用curl对SSH服务器进行认证（当您指定SCP或SFTP URL时）是这样进行的：
 - en: curl connects to the server and learns which authentication methods that this
     server offers
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: curl连接到服务器并了解该服务器提供的认证方法
 - en: curl then tries the offered methods one by one until one works or they all failed
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: curl会依次尝试提供的方法，直到找到一个有效的方法或者都失败
 - en: 'curl attempts to use your public key as found in the `.ssh` subdirectory in
     your home directory if the server offers public key authentication. When doing
     so, you still need to tell curl which username to use on the server. For example,
     the user ‘john’ lists the entries in his home directory on the remote SFTP server
     called ‘sftp.example.com’:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果服务器提供公钥认证，curl会尝试使用您在主目录的`.ssh`子目录中找到的公钥。在这样做的时候，您仍然需要告诉curl在服务器上使用哪个用户名。例如，用户‘john’在远程SFTP服务器`sftp.example.com`上列出其主目录的条目：
 - en: '[PRE4]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: If curl cannot authenticate with the public key for any reason, it instead attempts
     to use the username + password if the server allows it and the credentials are
     passed on the command line.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl由于任何原因无法使用公钥进行认证，它将尝试使用用户名加密码（如果服务器允许并且凭证通过命令行传递）。
 - en: 'For example, the same user from above has the password `RHvxC6wUA` on a remote
     system and can download a file via SCP like this:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，上面的同一个用户在远程系统上的密码是`RHvxC6wUA`，可以通过以下方式使用SCP下载文件：
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Known hosts
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 已知主机
 - en: A secure network client needs to make sure that the remote host is exactly the
     host that it thinks it is communicating with. With TLS based protocols, it is
     done by the client verifying the server’s certificate.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个安全的网络客户端需要确保远程主机正是它认为正在与之通信的主机。基于TLS的协议通过客户端验证服务器的证书来实现。
 - en: With SSH protocols there are no server certificates, but instead each server
     can provide its unique key. Unlike TLS, SSH has no certificate authorities or
     anything so the client simply has to make sure that the host’s key matches what
     it already knows (via other means) it should look like.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在SSH协议中，没有服务器证书，而是每个服务器都可以提供其唯一的密钥。与TLS不同，SSH没有证书颁发机构或类似的东西，因此客户端只需确保主机的密钥与其通过其他方式已知（应该看起来）的密钥匹配即可。
 - en: The matching of keys is typically done using hashes of the key and the file
     that the client stores the hashes for known servers is often called `known_hosts`
     and is put in a dedicated SSH directory. On Linux systems that is usually called
     `~/.ssh`.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 密钥匹配通常是通过密钥的哈希值来完成的，客户端存储已知服务器哈希的文件通常被称为`known_hosts`，并放置在专用的SSH目录中。在Linux系统中，这通常称为`~/.ssh`。
 - en: When curl connects to a SFTP and SCP host, it makes sure that the host’s key
     hash is already present in the known hosts file or it denies continued operation
     because it cannot trust that the server is the right one. Once the correct hash
     exists in `known_hosts` curl can perform transfers.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl连接到SFTP和SCP主机时，它会确保主机的密钥哈希已经存在于已知主机文件中，否则它会拒绝继续操作，因为它无法信任该服务器是正确的。一旦正确的哈希存在于`known_hosts`中，curl就可以执行传输。
 - en: To force curl to skip checking and obeying to the `known_hosts` file, you can
     use the `-k / --insecure` command-line option. You must use this option with extreme
     care since it makes it possible for man-in-the-middle attacks not to be detected.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 要强制curl跳过检查和遵守`known_hosts`文件，您可以使用`-k / --insecure`命令行选项。您必须非常小心地使用此选项，因为它使得中间人攻击不被检测到成为可能。

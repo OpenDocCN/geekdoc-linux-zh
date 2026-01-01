@@ -1,154 +1,234 @@
 - en: Dependencies
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 依赖项
 - en: A key to making good software is to build on top of other great software. By
     using libraries that many others use, we reinvent the same things fewer times
     and we get more reliable software as there are more people using the same code.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 制作优秀软件的关键是建立在其他优秀软件之上。通过使用许多其他人使用的库，我们减少了对相同事物的重复发明，并且由于有更多的人使用相同的代码，我们得到了更可靠的软件。
 - en: A whole slew of features that curl provides require that it is built to use
     one or more external libraries. They are then dependencies of curl. None of them
     are *required*, but most users want to use at least some of them.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 提供的许多功能都需要它被构建为使用一个或多个外部库。它们然后成为 curl 的依赖项。它们都不是必需的，但大多数用户希望至少使用其中的一些。
 - en: HTTP Compression
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP 压缩
 - en: 'curl can do automatic decompression of data transferred over HTTP if built
     with the proper 3rd party libraries. You can build curl to use one or more of
     these libraries:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果使用适当的第三方库构建 curl，则 curl 可以自动解压缩通过 HTTP 传输的数据。您可以将 curl 构建为使用这些库中的一个或多个：
 - en: gzip compression with [zlib](https://zlib.net/)
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 [zlib](https://zlib.net/) 进行 gzip 压缩
 - en: brotli compression with [brotli](https://github.com/google/brotli)
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 [brotli](https://github.com/google/brotli) 进行 brotli 压缩
 - en: zstd compression with [libzstd](https://github.com/facebook/zstd)
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 [libzstd](https://github.com/facebook/zstd) 进行 zstd 压缩
 - en: Getting compressed data over the wire uses less bandwidth, which might also
     result in shorter transfer times.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过网络获取压缩数据使用更少的带宽，这也可能导致更短的传输时间。
 - en: c-ares
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: c-ares
 - en: '[https://c-ares.org/](https://c-ares.org/)'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://c-ares.org/](https://c-ares.org/)'
 - en: curl can be built with c-ares to be able to do asynchronous name resolution.
     Another option to enable asynchronous name resolution is to build curl with the
     threaded name resolver backend, which then instead creates a separate helper thread
     for each name resolve. c-ares does it all within the same thread.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用 c-ares 来构建 curl 以实现异步名称解析。另一个启用异步名称解析的选项是使用线程化名称解析后端构建 curl，这样就会为每个名称解析创建一个单独的辅助线程。c-ares
+    在同一个线程中完成所有操作。
 - en: nghttp2
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: nghttp2
 - en: '[https://nghttp2.org/](https://nghttp2.org/)'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://nghttp2.org/](https://nghttp2.org/)'
 - en: This is a library for handling HTTP/2 framing and is a prerequisite for curl
     to support HTTP version 2.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个处理 HTTP/2 封装的库，是 curl 支持 HTTP 版本 2 的先决条件。
 - en: openldap
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: openldap
 - en: '[https://www.openldap.org/](https://www.openldap.org/)'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://www.openldap.org/](https://www.openldap.org/)'
 - en: This library is one option to allow curl to get support for the LDAP and LDAPS
     URL schemes. On Windows, you can also opt to build curl to use the winldap library.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个库是允许 curl 支持 LDAP 和 LDAPS URL 方案的选项之一。在 Windows 上，您还可以选择构建使用 winldap 库的 curl。
 - en: librtmp
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: librtmp
 - en: '[https://rtmpdump.mplayerhq.hu/](https://rtmpdump.mplayerhq.hu/)'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://rtmpdump.mplayerhq.hu/](https://rtmpdump.mplayerhq.hu/)'
 - en: To enable curl’s support for the RTMP URL scheme, you must build curl with the
     librtmp library that comes from the RTMPDump project.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 要启用 curl 对 RTMP URL 方案的支持，必须使用来自 RTMPDump 项目的 librtmp 库构建 curl。
 - en: libpsl
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: libpsl
 - en: '[https://rockdaboot.github.io/libpsl/](https://rockdaboot.github.io/libpsl/)'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://rockdaboot.github.io/libpsl/](https://rockdaboot.github.io/libpsl/)'
 - en: When you build curl with support for libpsl, the cookie parser knows about the
     Public Suffix List and thus handles such cookies appropriately.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您使用 libpsl 支持构建 curl 时，cookie 解析器会了解公共后缀列表，并相应地处理此类 cookie。
 - en: libidn2
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: libidn2
 - en: '[https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html](https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html)'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html](https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html)'
 - en: curl handles International Domain Names (IDN) with the help of the libidn2 library.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 通过 libidn2 库的帮助处理国际域名 (IDN)。
 - en: SSH libraries
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SSH 库
 - en: 'If you want curl to have SCP and SFTP support, build with one of these SSH
     libraries:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您希望 curl 具有 SCP 和 SFTP 支持，请使用以下 SSH 库之一进行构建：
 - en: '[libssh2](https://libssh2.org/)'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[libssh2](https://libssh2.org/)'
 - en: '[libssh](https://www.libssh.org/)'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[libssh](https://www.libssh.org/)'
 - en: '[wolfSSH](https://www.wolfssl.com/products/wolfssh/)'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wolfSSH](https://www.wolfssl.com/products/wolfssh/)'
 - en: TLS libraries
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TLS 库
 - en: There are many different TLS libraries to choose from, so they are covered in
     a [separate section](ch048.xhtml#build__tls__md).
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 有许多不同的 TLS 库可供选择，因此它们在 [单独的部分](ch048.xhtml#build__tls__md) 中进行了介绍。
 - en: QUIC and HTTP/3
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: QUIC 和 HTTP/3
 - en: 'To build curl with HTTP/3 support, you need one of these sets:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 要构建支持 HTTP/3 的 curl，您需要以下这些集合之一：
 - en: '[ngtcp2](https://github.com/ngtcp2/ngtcp2) + [nghttp3](https://github.com/ngtcp2/nghttp3)'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ngtcp2](https://github.com/ngtcp2/ngtcp2) + [nghttp3](https://github.com/ngtcp2/nghttp3)'
 - en: '[quiche](https://github.com/cloudflare/quiche) (**experimental**)'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[quiche](https://github.com/cloudflare/quiche) （**实验性**）'
 - en: '[msquic](https://github.com/microsoft/msquic) + [msh3](https://github.com/nibanks/msh3)
     (**experimental**)'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[msquic](https://github.com/microsoft/msquic) + [msh3](https://github.com/nibanks/msh3)
+    （**实验性**）'

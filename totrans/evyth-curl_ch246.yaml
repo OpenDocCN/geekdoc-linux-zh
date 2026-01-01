@@ -1,104 +1,156 @@
 - en: Responses
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 响应
 - en: Every HTTP request includes an HTTP response. An HTTP response is a set of metadata
     and a response body, where the body can occasionally be zero bytes and thus nonexistent.
     An HTTP response however always has response headers.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个HTTP请求都包含一个HTTP响应。HTTP响应是一组元数据和响应体，其中体有时可以是零字节，因此不存在。然而，HTTP响应总是有响应头。
 - en: Response body
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 响应体
 - en: The response body is passed to the [write callback](ch213.xhtml#transfers__callbacks__write__md)
     and the response headers to the [header callback](ch216.xhtml#transfers__callbacks__header__md).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 响应体传递给[写入回调](ch213.xhtml#transfers__callbacks__write__md)，响应头传递给[头部回调](ch216.xhtml#transfers__callbacks__header__md)。
 - en: Virtually all libcurl-using applications need to set at least one of those callbacks
     instructing libcurl what to do with received headers and data.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 几乎所有使用libcurl的应用程序都需要设置至少一个回调，指示libcurl如何处理接收到的头和数据。
 - en: Response meta-data
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 响应元数据
 - en: libcurl offers the `curl_easy_getinfo()` function that allows an application
     to query libcurl for information from the previously performed transfer.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl提供了`curl_easy_getinfo()`函数，允许应用程序查询libcurl关于之前执行传输的信息。
 - en: 'Sometimes an application just want to know the size of the data. The size of
     a response *as told by the server headers* can be extracted with `curl_easy_getinfo()`
     like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候一个应用程序只想知道数据的大小。响应的大小*如服务器头部所述*可以通过`curl_easy_getinfo()`提取，如下所示：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If you can wait until after the transfer is already done, which also is a more
     reliable way since not all URLs provide the size up front (like for example for
     servers that generate content on demand) you can instead ask for the amount of
     downloaded data in the most recent transfer.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你可以在传输完成后等待，这通常是一个更可靠的方法，因为并非所有URL都提前提供大小（例如，对于按需生成内容的服务器），你可以改为请求最近传输中下载的数据量。
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: HTTP response code
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP响应代码
 - en: 'Every HTTP response starts off with a single line that contains the HTTP response
     code. It is a three digit number that contains the server’s idea of the status
     for the request. The numbers are detailed in the HTTP standard specifications
     but they are divided into ranges that work like this:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个HTTP响应都以一行开始，该行包含HTTP响应代码。这是一个三位数，包含服务器对请求状态的想法。这些数字在HTTP标准规范中有详细说明，但它们被分为如下范围的类别：
 - en: '| Code | Meaning |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| 代码 | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| 1xx | Transient code, a new one follows |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 1xx | 临时代码，后面跟一个新代码 |'
 - en: '| 2xx | Things are OK |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| 2xx | 事情正常 |'
 - en: '| 3xx | The content is somewhere else |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| 3xx | 内容在其他地方 |'
 - en: '| 4xx | Failed because of a client problem |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| 4xx | 由于客户端问题而失败 |'
 - en: '| 5xx | Failed because of a server problem |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| 5xx | 由于服务器问题而失败 |'
 - en: You can extract the response code after a transfer like this
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在传输后像这样提取响应代码
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: About HTTP response code “errors”
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 关于HTTP响应代码“错误”
 - en: While the response code numbers can include numbers (in the 4xx and 5xx ranges)
     which the server uses to signal that there was an error processing the request,
     it is important to realize that this does not make libcurl return an error.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然响应代码数字可以包括（在4xx和5xx范围内）服务器用来表示请求处理过程中出现错误的数字，但重要的是要认识到这并不意味着libcurl会返回错误。
 - en: When libcurl is asked to perform an HTTP transfer it returns an error if that
     HTTP transfer fails. However, getting an HTTP 404 or the like back is not a problem
     for libcurl. It is not an HTTP transfer error. A user might be writing a client
     for testing a server’s HTTP responses.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl被要求执行HTTP传输时，如果该HTTP传输失败，它会返回一个错误。然而，收到HTTP 404或类似错误对libcurl来说并不是问题。这不是HTTP传输错误。用户可能正在编写一个客户端来测试服务器的HTTP响应。
 - en: If you insist on curl treating HTTP response codes from 400 and up as errors,
     libcurl offers the `CURLOPT_FAILONERROR` option that if set instructs curl to
     return `CURLE_HTTP_RETURNED_ERROR` in this case. It then returns error as soon
     as possible and does not deliver the response body.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你坚持让curl将HTTP响应代码从400及以上视为错误，libcurl提供了`CURLOPT_FAILONERROR`选项，如果设置，将指示curl在这种情况下返回`CURLE_HTTP_RETURNED_ERROR`。然后它尽快返回错误，并且不传递响应体。

@@ -1,38 +1,58 @@
 - en: for C++ programmers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 对于 C++ 程序员
 - en: libcurl provides a C API. C and C++ are similar but not the same. There are
     a few things to keep in mind when using libcurl in C++.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 提供了一个 C API。C 和 C++ 类似但并不相同。在使用 libcurl 进行 C++ 开发时，有一些事情需要记住。
 - en: Strings are C strings, not C++ string objects
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 字符串是 C 字符串，而不是 C++ 字符串对象
 - en: When you pass strings to libcurl’s APIs that accept `char *` that means you
     cannot pass in C++ strings or objects to those functions.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你将字符串传递给接受 `char *` 的 libcurl API 时，这意味着你不能将这些函数传递 C++ 字符串或对象。
 - en: 'For example, if you build a string with C++ and then want that string used
     as a URL:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果你使用 C++ 构建一个字符串，然后希望该字符串用作 URL：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Callback considerations
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 回调注意事项
 - en: Since libcurl is a C library, it does not know anything about C++ member functions
     or objects. You can overcome this limitation with relative ease using for a static
     member function that is passed a pointer to the class.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 libcurl 是一个 C 库，它对 C++ 成员函数或对象一无所知。你可以通过使用静态成员函数并传递指向类的指针来相对容易地克服这个限制。
 - en: 'Here’s an example of a write callback using a C++ method as callback:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个使用 C++ 方法作为回调的写回调示例：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

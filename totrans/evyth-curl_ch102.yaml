@@ -1,60 +1,90 @@
 - en: Request rate limiting
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 请求速率限制
 - en: When told to do multiple transfers in a single command line, there might be
     times when a user would rather have those multiple transfers done slower than
     as fast as possible. We call that *request rate limiting*.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在单个命令行中指示执行多个传输时，有时用户可能更希望这些多个传输以比尽可能快更慢的速度完成。我们称之为*请求速率限制*。
 - en: With the `--rate` option, you specify the maximum transfer frequency you allow
     curl to use - in number of transfer starts per time unit (sometimes called request
     rate). Without this option, curl starts the next transfer as fast as possible.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`--rate`选项，您指定curl允许使用的最大传输频率 - 每时间单位内的传输启动次数（有时称为请求速率）。没有此选项时，curl会尽可能快地启动下一个传输。
 - en: If given several URLs and a transfer completes faster than the allowed rate,
     curl delays starting the next transfer to maintain the requested rate. This option
     is for serial transfers and has no effect when [–parallel](ch066.xhtml#cmdline__urls__parallel__md)
     is used.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果提供了多个URL并且传输完成速度超过允许的速率，curl将延迟启动下一个传输以保持请求的速率。此选项适用于串行传输，当使用[–parallel](ch066.xhtml#cmdline__urls__parallel__md)时没有效果。
 - en: The request rate is provided as **N/U** where N is an integer number and U is
     a time unit. Supported units are `s` (second), `m` (minute), `h` (hour) and `d`
     (day, as in a 24 hour unit). The default time unit, if no **/U** is provided,
     is number of transfers per hour.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 请求速率以**N/U**提供，其中N是一个整数，U是一个时间单位。支持的单位是`s`（秒）、`m`（分钟）、`h`（小时）和`d`（天，如24小时单位）。如果没有提供**/U**，默认时间单位是每小时传输次数。
 - en: If curl is told to allow 10 requests per minute, it does not start the next
     request until 6 seconds have elapsed since the previous transfer was started.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl被指示允许每分钟10个请求，它不会在上一传输开始后的6秒内启动下一个请求。
 - en: This function uses millisecond resolution. If the allowed frequency is set more
     than 1000 per second, it instead runs unrestricted.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 此功能使用毫秒分辨率。如果允许的频率设置为每秒超过1000，则它将不受限制地运行。
 - en: When retrying transfers, enabled with [–retry](ch095.xhtml#usingcurl__downloads__retry__md),
     the separate retry delay logic is used and not this setting.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用[–retry](ch095.xhtml#usingcurl__downloads__retry__md)启用重试时，将使用单独的重试延迟逻辑，而不是此设置。
 - en: If this option is used several times, the last one is used.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果此选项使用多次，则使用最后一个。
 - en: 'For example, make curl download 100 images but doing it no faster than 2 transfers
     per second:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，让curl下载100张图片，但不要快于每秒2次传输：
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Make curl download 10 images but doing it no faster than 3 transfers per hour:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 让curl下载10张图片，但不要快于每小时3次传输：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Make curl download 200 images but not faster than 14 transfers per minute:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 让curl下载200张图片，但不要快于每分钟14次传输：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

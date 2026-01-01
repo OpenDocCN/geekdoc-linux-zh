@@ -1,93 +1,136 @@
 - en: Drive with multi
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用多接口驱动
 - en: The name ‘multi’ is for multiple, as in multiple parallel transfers, all done
     in the same single thread. The multi API is non-blocking so it can also make sense
     to use it for single transfers.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: “多”这个名字是表示多个，比如多个并行传输，所有这些都在同一个单独的线程中完成。多API是非阻塞的，因此也可以用于单次传输。
 - en: 'The transfer is still set in an “easy” `CURL *` handle as described [above](ch201.xhtml#transfers__easyhandle__md),
     but with the multi interface you also need a multi `CURLM *` handle created and
     use that to drive all the individual transfers. The multi handle can “hold” one
     or many easy handles:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 传输仍然设置在如上所述的“简单”的`CURL *`句柄中，但使用多接口时，你还需要创建一个多`CURLM *`句柄，并使用它来驱动所有单个传输。多句柄可以“持有”一个或多个简单句柄：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: A multi handle can also get certain options set, which you do with `curl_multi_setopt()`,
     but in the simplest case you might not have anything to set there.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 多句柄也可以设置某些选项，这通过`curl_multi_setopt()`完成，但在最简单的情况下，你可能没有什么可以设置的。
 - en: To drive a multi interface transfer, you first need to add all the individual
     easy handles that should be transferred to the multi handle. You can add them
     to the multi handle at any point and you can remove them again whenever you like.
     Removing an easy handle from a multi handle removes the association and that particular
     transfer stops immediately.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要驱动多接口传输，你首先需要将所有应该传输的单个简单句柄添加到多句柄中。你可以在任何时候将它们添加到多句柄中，也可以随时将它们移除。从多句柄中移除简单句柄会取消关联，并且那个特定的传输会立即停止。
 - en: 'Adding an easy handle to the multi handle is easy:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 将简单句柄添加到多句柄中很简单：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Removing one is just as easily done:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 移除一个也很简单：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Having added the easy handles representing the transfers you want to perform,
     you write the transfer loop. With the multi interface, you do the looping so you
     can ask libcurl for a set of file descriptors and a timeout value and do the `select()`
     call yourself, or you can use the slightly simplified version which does that
     for us, with `curl_multi_wait`. The simplest loop could look like this: (*note
     that a real application would check return codes*)'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 添加了代表你想要执行传输的简单句柄后，你编写传输循环。使用多接口，你进行循环，这样你可以要求libcurl提供一组文件描述符和一个超时值，然后你自己进行`select()`调用，或者你可以使用稍微简化一点的版本，它为我们做这件事，使用`curl_multi_wait`。最简单的循环可能看起来像这样：（注意，实际应用会检查返回代码）
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The fourth argument to `curl_multi_wait`, set to 1000 in the example above,
     is a timeout in milliseconds. It is the longest time the function waits for any
     activity before it returns anyway. You do not want to lock up for too long before
     calling `curl_multi_perform` again as there are timeouts, progress callbacks and
     more that may lose precision if you do so.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_multi_wait`的第四个参数，在上面的例子中设置为1000，是一个以毫秒为单位的超时值。这是函数在返回之前等待任何活动可能的最长时间。你不想在再次调用`curl_multi_perform`之前锁定太长时间，因为存在超时、进度回调等，这样做可能会失去精度。'
 - en: 'To instead do select() on our own, we extract the file descriptors and timeout
     value from libcurl like this (*note that a real application would check return
     codes*):'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要自行执行select()，我们像这样从libcurl中提取文件描述符和超时值（注意，实际应用会检查返回代码）：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Both these loops let you use one or more file descriptors of your own on which
     to wait, like if you read from your own sockets or a pipe or similar.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这两个循环都让你可以使用一个或多个自己的文件描述符来等待，比如如果你从自己的套接字或管道或类似的东西中读取。
 - en: And again, you can add and remove easy handles to the multi handle at any point
     during the looping. Removing a handle mid-transfer aborts that transfer.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次强调，你可以在循环的任何时刻添加和移除简单句柄到多句柄。在传输过程中移除句柄会中止该传输。
 - en: When is a single transfer done?
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 单次传输何时完成？
 - en: As the examples above show, a program can detect when an individual transfer
     completes by seeing that the `transfers_running` variable decreases.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上例所示，程序可以通过查看`transfers_running`变量减少来检测单个传输何时完成。
 - en: It can also call `curl_multi_info_read()`, which returns a pointer to a struct
     (a “message”) if a transfer has ended and you can then find out the result of
     that transfer using that struct.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 它还可以调用`curl_multi_info_read()`，如果传输结束，它会返回一个指向结构体（一个“消息”）的指针，然后你可以使用该结构体找出该传输的结果。
 - en: When you do multiple parallel transfers, more than one transfer can of course
     complete in the same `curl_multi_perform` invocation and then you might need more
     than one call to `curl_multi_info_read` to get info about each completed transfer.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你进行多个并行传输时，当然可能会有多个传输在同一个 `curl_multi_perform` 调用中完成，然后你可能需要多次调用 `curl_multi_info_read`
+    来获取每个已完成的传输的信息。

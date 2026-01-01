@@ -1,33 +1,51 @@
 - en: –libcurl
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: –libcurl
 - en: We actively encourage users to first try out the transfer they want to do with
     the curl command-line tool, and once it works roughly the way you want it to,
     you append the `--libcurl [filename]` option to the command line and run it again.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们积极鼓励用户首先尝试使用 curl 命令行工具执行他们想要的传输，一旦它大致按照你的期望工作，你就在命令行中添加 `--libcurl [filename]`
+    选项并再次运行它。
 - en: The `--libcurl` command-line option creates a C program in the provided file
     name. That C program is an application that uses libcurl to run the transfer you
     just had the curl command-line tool do. There are some exceptions and it is not
     always a 100% match, but you might find that it can serve as an excellent inspiration
     source for what libcurl options you want or can use and what additional arguments
     to provide to them.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--libcurl` 命令行选项会在提供的文件名中创建一个 C 程序。这个 C 程序是一个使用 libcurl 来执行你刚刚用 curl 命令行工具完成的传输的应用程序。有一些例外，并不总是完全匹配，但你可能会发现它可以作为一个极好的灵感来源，了解你想要或可以使用哪些
+    libcurl 选项，以及需要为它们提供哪些附加参数。'
 - en: If you specify the filename as a single dash, as in `--libcurl -` you get the
     program written to stdout instead of a file.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你将文件名指定为单个短横线，如 `--libcurl -`，则程序将被写入 stdout 而不是文件。
 - en: 'As an example, we run a command to get `http://example.com`:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '例如，我们运行一个命令来获取 `http://example.com`:'
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'This creates `example.c` in the current directory, looking similar to this:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 这将在当前目录中创建 `example.c` 文件，看起来类似于这样：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

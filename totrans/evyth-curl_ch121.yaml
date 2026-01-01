@@ -1,74 +1,104 @@
 - en: Proxy environment variables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 代理环境变量
 - en: curl checks for the existence of specially named environment variables before
     it runs to see if a proxy is requested to get used.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl在运行之前检查是否存在特别命名的环境变量，以查看是否请求使用代理。
 - en: 'You specify the proxy by setting a variable named `[scheme]_proxy` to hold
     the proxy hostname (the same way you would specify the host with `-x`). If you
     want to tell curl to use a proxy when access an HTTP server, you set the `http_proxy`
     environment variable. Like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过设置一个名为`[scheme]_proxy`的变量来指定代理主机名（与您使用`-x`指定主机的方式相同）。如果您想告诉curl在访问HTTP服务器时使用代理，请设置`http_proxy`环境变量。如下所示：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: While the above example shows HTTP, you can, of course, also set `ftp_proxy`,
     `https_proxy`, and so on. All these proxy environment variable names except `http_proxy`
     can also be specified in uppercase, like `HTTPS_PROXY`.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然上述示例显示了HTTP，当然也可以设置`ftp_proxy`、`https_proxy`等。除了`http_proxy`之外，所有这些代理环境变量名称也可以指定为大写，如`HTTPS_PROXY`。
 - en: To set a single variable that controls *all* protocols, the `ALL_PROXY` exists.
     If a specific protocol variable one exists, such a one takes precedence.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要设置一个控制**所有**协议的单个变量，存在`ALL_PROXY`。如果存在特定的协议变量，则该变量具有优先级。
 - en: No proxy
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 无代理
 - en: You sometimes end up in a situation where one or a few hostnames should be excluded
     from going through the proxy that normally would be used. This is then done with
     the `NO_PROXY` variable. Set that to a comma- separated list of hostnames that
     should not use a proxy when being accessed. You can set `NO_PROXY` to be a single
     asterisk (‘*’) to match all hosts.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时您会遇到一种情况，其中一个或几个主机名应该被排除在通常使用的代理之外。这可以通过`NO_PROXY`变量来完成。将其设置为不应使用代理的主机名的逗号分隔列表。可以将`NO_PROXY`设置为单个星号（`*`）以匹配所有主机。
 - en: If a name in the exclusion list starts with a dot (`.`), then the name matches
     that entire domain. For example `.example.com` matches both `www.example.com`
     and `home.example.com` but not `nonexample.com`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果排除列表中的名称以点（`.`）开头，则该名称匹配整个域名。例如，`.example.com`匹配`www.example.com`和`home.example.com`，但不匹配`nonexample.com`。
 - en: As an alternative to the `NO_PROXY` variable, there is also a `--noproxy` command
     line option that serves the same purpose and works the same way.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为`NO_PROXY`变量的替代，还有一个`--noproxy`命令行选项，它具有相同的目的并以相同的方式工作。
 - en: 'Since curl 7.86.0, a user can exclude an IP network using the CIDR notation:
     append a slash and number of bits to an IP address to specify the bit size of
     the network to match. For example, match the entire 16 bit network starting with
     `192.168` by providing the pattern `192.168.0.0/16`.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 自curl 7.86.0版本起，用户可以使用CIDR表示法排除一个IP网络：在IP地址后附加一个斜杠和位数来指定网络的位数。例如，通过提供模式`192.168.0.0/16`来匹配以`192.168`开头的整个16位网络。
 - en: '`http_proxy` in lower case only'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`http_proxy` 仅小写'
 - en: The HTTP version of the proxy environment variables is treated differently than
     the others. It is only accepted in its lower case version because of the CGI protocol,
     which lets users run scripts in a server when invoked by an HTTP server. When
     a CGI script is invoked by a server, it automatically creates environment variables
     for the script based on the incoming headers in the request. Those environment
     variables are prefixed with uppercase `HTTP_`.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 代理环境变量的HTTP版本与其他版本的处理方式不同。由于CGI协议，它允许用户在HTTP服务器调用时在服务器上运行脚本，因此它只接受其小写版本。当服务器通过HTTP服务器调用CGI脚本时，它会自动根据请求中的传入头信息为脚本创建环境变量。这些环境变量以前缀大写`HTTP_`开头。
 - en: 'An incoming request to an HTTP server using a request header like `Proxy: yada`
     therefore creates the environment variable `HTTP_PROXY` set to contain `yada`
     before the CGI script is started. If such a CGI script runs curl, it is important
     that curl does not treat that as a proxy to use.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '因此，使用类似`Proxy: yada`的请求头向HTTP服务器发送的请求会在启动CGI脚本之前创建一个名为`HTTP_PROXY`的环境变量，并将其设置为包含`yada`。如果这样的CGI脚本运行curl，那么curl不将其视为要使用的代理是很重要的。'
 - en: Accepting the upper case version of this environment variable has been the source
     for many security problems in lots of software through times.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 接受此环境变量的大写版本在许多软件中已成为许多安全问题的来源。

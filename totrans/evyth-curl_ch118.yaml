@@ -1,12 +1,16 @@
 - en: MITM proxy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 中间人代理
 - en: MITM means Man-In-The-Middle. MITM proxies are usually deployed by companies
     in “enterprise environments” and elsewhere, where the owners of the network have
     a desire to investigate even TLS encrypted traffic.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: MITM代表中间人。MITM代理通常由公司部署在“企业环境”和其他地方，那里的网络所有者希望调查甚至TLS加密流量。
 - en: To do this, they require users to install a custom “trust root” (Certificate
     Authority (CA) certificate) in the client, and then the proxy terminates all TLS
     traffic from the client, impersonates the remote server and acts like a proxy.
@@ -14,9 +18,13 @@
     proxy setups usually transparently capture all traffic from clients to TCP port
     443 on a remote machine. Running curl in such a network would also get its HTTPS
     traffic captured.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了做到这一点，他们需要用户在客户端安装一个定制的“信任根”（证书颁发机构（CA）证书），然后代理终止来自客户端的所有TLS流量，冒充远程服务器并充当代理。代理随后发送一个由定制CA签发的生成证书。此类代理设置通常透明地捕获来自客户端到远程机器上TCP端口443的所有流量。在这样的网络中运行curl也会捕获其HTTPS流量。
 - en: This practice, of course, allows the middle man to decrypt and snoop on all
     TLS traffic.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，这种做法允许中间人解密并窃听所有TLS流量。

@@ -1,26 +1,39 @@
 - en: Chunked encoded POSTs
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 分块编码的 POST
 - en: When talking to an HTTP 1.1 server, you can tell curl to send the request body
     without a `Content-Length:` header upfront that specifies exactly how big the
     POST is. By insisting on curl using chunked Transfer-Encoding, curl sends the
     POST chunked piece by piece in a special style that also sends the size for each
     such chunk as it goes along.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当与 HTTP 1.1 服务器通信时，你可以告诉 curl 在发送请求体之前不使用 `Content-Length:` 头部来指定 POST 的确切大小。通过坚持让
+    curl 使用分块传输编码，curl 会以特殊的方式逐块发送 POST，同时也会在发送过程中发送每个这样的块的大小。
 - en: 'You send a chunked POST with curl like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 curl 发送分块 POST，如下所示：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Caveats
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: This assumes that you know you do this against an HTTP/1.1 server. Before 1.1,
     there was no chunked encoding, and after version 1.1 chunked encoding has been
     deprecated.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这假设你知道你是在与一个 HTTP/1.1 服务器进行交互。在 1.1 之前，没有分块编码，而在 1.1 版本之后，分块编码已经被弃用。

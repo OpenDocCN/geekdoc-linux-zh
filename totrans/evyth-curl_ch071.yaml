@@ -1,176 +1,267 @@
 - en: Config file
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 配置文件
 - en: Curl commands with multiple command-line options can become cumbersome to work
     with. The number of characters can even exceed the maximum length allowed by your
     terminal application.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用多个命令行选项的Curl命令可能会变得难以操作。字符数量甚至可能超过您的终端应用程序允许的最大长度。
 - en: To aid such situations, curl allows you to write command-line options in a plain
     text config file and tell curl to read options from that file when applicable.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了帮助这种情况，curl允许您在纯文本配置文件中编写命令行选项，并告诉curl在适用时从该文件中读取选项。
 - en: You can also use config files to assign data to variables and transform the
     data with functions, making them incredibly useful. This is discussed in the [Variables](ch071.xhtml#cmdline__variables__md)
     section.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以使用配置文件将数据分配给变量，并使用函数转换数据，这使得它们非常有用。这将在[变量](ch071.xhtml#cmdline__variables__md)部分中讨论。
 - en: Some examples below contain multiple lines for readability. The backslash (`\`)
     is used to instruct the terminal to ignore the newline.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面的一些示例包含多行以提高可读性。反斜杠（`\`）用于指示终端忽略换行符。
 - en: Specify the config file to use
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 指定要使用的配置文件
 - en: Using the `-K` or long form `--config` option tells curl to read from a config
     file.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`-K`或长形式`--config`选项告诉curl从配置文件中读取。
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The file path specified is relative to the current directory in your terminal.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 指定的文件路径相对于您的终端中的当前目录。
 - en: You can name the config file whatever you like. `configFile.txt` is used for
     simplicity in the example above.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以为配置文件命名任何您喜欢的名称。在上面的示例中，使用`configFile.txt`是为了简单起见。
 - en: Syntax
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 语法
 - en: 'Enter one command per line. Use a hash symbol for comments:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行输入一个命令。使用井号符号作为注释：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Command line options
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令行选项
 - en: You can use both short and long options, exactly as you would write them on
     a command line.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用短选项和长选项，就像您在命令行中写的那样。
 - en: You can also write the long option WITHOUT the leading two dashes to make it
     easier to read.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以不使用前导的两个连字符来编写长选项，使其更容易阅读。
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Arguments
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 参数
 - en: A command line option that takes an argument must have its argument provided
     on the SAME LINE as the option.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 带参数的命令行选项必须在选项所在的同一行提供其参数。
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You can also use `=` or `:` between the option and its argument. As you see
     above, it is not necessary, but some like the clarity it offers. Setting the user-agent
     option again:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以在选项和其参数之间使用`=`或`:`。如您所见，这不是必需的，但有些人喜欢它提供的清晰度。再次设置用户代理选项：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'The user agent string example we have used above has no white spaces, so the
     quotes are technically not needed:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们上面使用的用户代理字符串示例没有空格，所以从技术上讲，引号不是必需的：
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: See “When to use quotes” below for more info on when quotes should be used.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 有关何时使用引号的更多信息，请参阅下文“何时使用引号”。
 - en: URLs
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: URL
 - en: When entering URLs at the command line, everything that is not an option is
     assumed to be a URL. However, in a config file, you must specify a URL with `--url`
     or `url`.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在命令行中输入URL时，所有不是选项的内容都被假定为URL。然而，在配置文件中，您必须使用`--url`或`url`来指定URL。
 - en: '[PRE6]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: When to use quotes
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 何时使用引号
 - en: 'You need to use double quotes when:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 您需要在以下情况下使用双引号：
 - en: the parameter contains white space, or starts with the characters `:` or `=`.
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 参数包含空格，或以字符`:`或`=`开头。
 - en: 'you need to use escape sequences (available options: `\\`, `\"`, `\t`, `\n`,
     `\r` and `\v`. A backslash preceding any other letter is ignored).'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 您需要使用转义序列（可用选项：`\\`，`\"`，`\t`，`\n`，`\r`和`\v`。任何字母前的反斜杠都被忽略）。
 - en: If a parameter containing white space is not enclosed in double quotes, curl
     considers the next space or newline as the end of the argument.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果包含空格的参数没有用双引号括起来，curl会认为下一个空格或换行符是参数的结束。
 - en: Default config file
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 默认配置文件
 - en: When curl is invoked, it always (unless `-q` is used), checks for a default
     config file and uses it if found.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 当调用curl时，它总是（除非使用`-q`），检查默认配置文件，如果找到则使用它。
 - en: 'Curl looks for the default config file in the following locations, in this
     order:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: Curl按以下顺序在以下位置查找默认配置文件：
 - en: '`$CURL_HOME/.curlrc`'
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$CURL_HOME/.curlrc`'
 - en: '`$XDG_CONFIG_HOME/.curlrc` (Added in 7.73.0)'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$XDG_CONFIG_HOME/.curlrc`（自7.73.0版添加）'
 - en: '`$HOME/.curlrc`'
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$HOME/.curlrc`'
 - en: 'Windows: `%USERPROFILE%\\.curlrc`'
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 'Windows: `%USERPROFILE%\\.curlrc`'
 - en: 'Windows: `%APPDATA%\\.curlrc`'
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 'Windows: `%APPDATA%\\.curlrc`'
 - en: 'Windows: `%USERPROFILE%\\Application Data\\.curlrc`'
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 'Windows: `%USERPROFILE%\\Application Data\\.curlrc`'
 - en: 'Non-Windows: use getpwuid to find the home directory'
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 非Windows：使用getpwuid查找主目录
 - en: On Windows, if it finds no `.curlrc` file in the sequence described above, it
     checks for one in the same directory the curl executable is placed.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在Windows上，如果在上述序列中找不到`.curlrc`文件，它会在curl可执行文件所在的同一目录中查找一个。
 - en: 'On Windows two filenames are checked per location: `.curlrc` and `_curlrc`,
     preferring the former. Ancient curl versions on Windows checked for `_curlrc`
     only.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Windows 系统中，每个位置会检查两个文件名：`.curlrc` 和 `_curlrc`，优先选择前者。旧版的 curl 在 Windows 上仅检查
+    `_curlrc`。

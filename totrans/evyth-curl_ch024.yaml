@@ -1,261 +1,391 @@
 - en: curl protocols
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: curl 协议
 - en: curl supports about 28 protocols. We say *about* because it depends on how you
     count and what you consider to be distinctly different protocols.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 支持大约 28 种协议。我们说“大约”是因为这取决于你如何计数以及你如何看待明显不同的协议。
 - en: DICT
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: DICT
 - en: DICT is a dictionary network protocol, it allows clients to ask dictionary servers
     about a meaning or explanation for words. See RFC 2229\. Dict servers and clients
     use TCP port 2628.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: DICT 是一种字典网络协议，它允许客户端向字典服务器询问单词的含义或解释。参见 RFC 2229。Dict 服务器和客户端使用 TCP 端口 2628。
 - en: FILE
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FILE
 - en: FILE is not actually a *network* protocol. It is a URL scheme that allows you
     to tell curl to get a file from the local file system instead of getting it over
     the network from a remote server. See RFC 1738.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: FILE 实际上不是一个 *网络* 协议。它是一个 URL 方案，允许你告诉 curl 从本地文件系统获取文件，而不是从远程服务器通过网络获取。参见 RFC
+    1738。
 - en: FTP
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FTP
 - en: FTP stands for File Transfer Protocol and is an old (originates in the early
     1970s) way to transfer files back and forth between a client and a server. See
     RFC 959\. It has been extended greatly over the years. FTP servers and clients
     use TCP port 21 plus one more port, though the second one is usually dynamically
     established during communication.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP 代表文件传输协议，是一种古老的（起源于 20 世纪 70 年代初）在客户端和服务器之间来回传输文件的方式。参见 RFC 959。多年来它得到了极大的扩展。FTP
+    服务器和客户端使用 TCP 端口 21 加上一个额外的端口，尽管第二个端口通常在通信过程中动态建立。
 - en: See the external page [FTP vs HTTP](https://daniel.haxx.se/docs/ftp-vs-http.html)
     for how it differs from HTTP.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 请参阅外部页面 [FTP 与 HTTP 的比较](https://daniel.haxx.se/docs/ftp-vs-http.html)，了解它与
+    HTTP 的不同之处。
 - en: FTPS
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FTPS
 - en: FTPS stands for Secure File Transfer Protocol. It follows the tradition of appending
     an ‘S’ to the protocol name to signify that the protocol is done like normal FTP
     but with an added SSL/TLS security layer. See RFC 4217.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: FTPS 代表安全文件传输协议。它遵循在协议名称后附加一个 'S' 的传统，以表示该协议像正常 FTP 一样执行，但添加了 SSL/TLS 安全层。参见
+    RFC 4217。
 - en: This protocol is problematic to use through firewalls and other network equipment.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 此协议在使用防火墙和其他网络设备时存在问题。
 - en: GOPHER
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: GOPHER
 - en: Designed for “distributing, searching, and retrieving documents over the Internet”,
     Gopher is somewhat of the grandfather to HTTP as HTTP has mostly taken over completely
     for the same use cases. See RFC 1436\. Gopher servers and clients use TCP port
     70.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 设计用于“在互联网上分发、搜索和检索文档”，Gopher 在某种程度上是 HTTP 的祖父，因为 HTTP 已经完全取代了相同的用例。参见 RFC 1436。Gopher
+    服务器和客户端使用 TCP 端口 70。
 - en: GOPHERS
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: GOPHERS
 - en: Gopher over TLS. A recent extension to the old protocol.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS 上的 Gopher。对旧协议的最近扩展。
 - en: HTTP
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP
 - en: The Hypertext Transfer Protocol, HTTP, is the most widely used protocol for
     transferring data on the web and over the Internet. See RFC 9110 for general HTTP
     Semantics, RFC 9112 for HTTP/1.1, RFC 9113 for [HTTP/2](ch149.xhtml#http__versions__http2__md)
     and RFC 9114 for HTTP/3\. HTTP servers and clients use TCP port 80.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 超文本传输协议（HTTP）是互联网和网络上传输数据最广泛使用的协议。参见 RFC 9110 了解 HTTP 语义，RFC 9112 了解 HTTP/1.1，RFC
+    9113 了解 [HTTP/2](ch149.xhtml#http__versions__http2__md）和 RFC 9114 了解 HTTP/3。HTTP
+    服务器和客户端使用 TCP 端口 80。
 - en: HTTPS
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTPS
 - en: Secure HTTP is HTTP done over an SSL/TLS connection. See RFC 2818\. HTTPS servers
     and clients use TCP port 443, unless they speak [HTTP/3](ch150.xhtml#http__versions__http3__md)
     which then uses QUIC (RFC 8999) and is done over UDP.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全 HTTP 是通过 SSL/TLS 连接进行的 HTTP。参见 RFC 2818。HTTPS 服务器和客户端使用 TCP 端口 443，除非它们使用
+    [HTTP/3](ch150.xhtml#http__versions__http3__md)，这时它使用 QUIC（RFC 8999）并通过 UDP 完成。
 - en: IMAP
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: IMAP
 - en: The Internet Message Access Protocol, IMAP, is a protocol for accessing, controlling
     and “reading” email. See RFC 3501\. IMAP servers and clients use TCP port 143\.
     Whilst connections to the server start out as cleartext, SSL/TLS communication
     may be supported by the client explicitly requesting to upgrade the connection
     using the `STARTTLS` command. See RFC 2595.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网消息访问协议（IMAP）是一种用于访问、控制和“阅读”电子邮件的协议。参见 RFC 3501。IMAP 服务器和客户端使用 TCP 端口 143。虽然连接到服务器最初是明文，但客户端可以通过显式请求使用
+    `STARTTLS` 命令升级连接以支持 SSL/TLS 通信。参见 RFC 2595。
 - en: IMAPS
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: IMAPS
 - en: Secure IMAP is IMAP done over an SSL/TLS connection. Such connections implicitly
     start out using SSL/TLS and as such servers and clients use TCP port 993 to communicate
     with each other. See RFC 8314.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全 IMAP 是通过 SSL/TLS 连接进行的 IMAP。此类连接隐式地开始使用 SSL/TLS，因此服务器和客户端使用 TCP 端口 993 互相通信。参见
+    RFC 8314。
 - en: LDAP
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: LDAP
 - en: The Lightweight Directory Access Protocol, LDAP, is a protocol for accessing
     and maintaining distributed directory information. Basically a database lookup.
     See RFC 4511\. LDAP servers and clients use TCP port 389.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 轻量级目录访问协议（LDAP）是一种用于访问和维护分布式目录信息的协议。基本上是一个数据库查找。参见RFC 4511。LDAP服务器和客户端使用TCP端口389。
 - en: LDAPS
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: LDAPS
 - en: Secure LDAP is LDAP done over an SSL/TLS connection.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全LDAP是通过SSL/TLS连接进行的LDAP。
 - en: MQTT
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: MQTT
 - en: Message Queuing Telemetry Transport, MQTT, is a protocol commonly used in IoT
     systems for interchanging data mostly involving smaller devices. It is a so-called
     “publish-subscribe” protocol.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 消息队列遥测传输，MQTT，是一种在物联网系统中常用，主要用于涉及较小设备的协议。它是一种所谓的“发布-订阅”协议。
 - en: POP3
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: POP3
 - en: The Post Office Protocol version 3 (POP3) is a protocol for retrieving email
     from a server. See RFC 1939\. POP3 servers and clients use TCP port 110\. Whilst
     connections to the server start out as cleartext, SSL/TLS communication may be
     supported by the client explicitly requesting to upgrade the connection using
     the `STLS` command. See RFC 2595.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 第3版邮局协议（POP3）是一种从服务器检索电子邮件的协议。参见RFC 1939。POP3服务器和客户端使用TCP端口110。虽然连接到服务器最初是明文，但客户端可以通过显式请求使用`STLS`命令升级连接来支持SSL/TLS通信。参见RFC
+    2595。
 - en: POP3S
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: POP3S
 - en: Secure POP3 is POP3 done over an SSL/TLS connection. Such connections implicitly
     start out using SSL/TLS and as such servers and clients use TCP port 995 to communicate
     with each other. See RFC 8314.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全POP3是通过SSL/TLS连接进行的POP3。此类连接隐式地开始使用SSL/TLS，因此服务器和客户端使用TCP端口995进行通信。参见RFC 8314。
 - en: RTMP
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: RTMP
 - en: The Real-Time Messaging Protocol (RTMP) is a protocol for streaming audio, video
     and data. RTMP servers and clients use TCP port 1935.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 实时消息传输协议（RTMP）是一种用于流式传输音频、视频和数据的协议。RTMP服务器和客户端使用TCP端口1935。
 - en: RTSP
+  id: totrans-36
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: RTSP
 - en: The Real Time Streaming Protocol (RTSP) is a network control protocol to control
     streaming media servers. See RFC 2326\. RTSP servers and clients use TCP and UDP
     port 554.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 实时流式传输协议（RTSP）是一种用于控制流媒体服务器的网络控制协议。参见RFC 2326。RTSP服务器和客户端使用TCP和UDP端口554。
 - en: SCP
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SCP
 - en: The Secure Copy (SCP) protocol is designed to copy files to and from a remote
     SSH server. SCP servers and clients use TCP port 22.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全复制（SCP）协议旨在将文件复制到远程SSH服务器或从其复制。SCP服务器和客户端使用TCP端口22。
 - en: SFTP
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SFTP
 - en: The SSH File Transfer Protocol (SFTP) that provides file access, file transfer,
     and file management over a reliable data stream. SFTP servers and clients use
     TCP port 22.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: SSH文件传输协议（SFTP）提供通过可靠数据流进行文件访问、文件传输和文件管理的功能。SFTP服务器和客户端使用TCP端口22。
 - en: SMB
+  id: totrans-42
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMB
 - en: The Server Message Block (SMB) protocol is also known as CIFS. It is an application-layer
     network protocol mainly used for providing shared access to files, printers, and
     serial ports and miscellaneous communications between nodes on a network. SMB
     servers and clients use TCP port 445.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器消息块（SMB）协议也称为CIFS。它是一种应用层网络协议，主要用于提供对文件、打印机和串行端口以及网络节点之间各种通信的共享访问。SMB服务器和客户端使用TCP端口445。
 - en: SMBS
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMBS
 - en: SMB done over TLS.
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过TLS进行的SMB。
 - en: SMTP
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMTP
 - en: The Simple Mail Transfer Protocol (SMTP) is a protocol for email transmission.
     See RFC 5321\. SMTP servers and clients use TCP port 25\. Whilst connections to
     the server start out as cleartext, SSL/TLS communication may be supported by the
     client explicitly requesting to upgrade the connection using the `STARTTLS` command.
     See RFC 3207.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单邮件传输协议（SMTP）是一种用于电子邮件传输的协议。参见RFC 5321。SMTP服务器和客户端使用TCP端口25。虽然连接到服务器最初是明文，但客户端可以通过显式请求使用`STARTTLS`命令来支持SSL/TLS通信。参见RFC
+    3207。
 - en: SMTPS
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMTPS
 - en: Secure SMTP, is SMTP done over an SSL/TLS connection. Such connections implicitly
     start out using SSL/TLS and as such servers and clients use TCP port 465 to communicate
     with each other. See RFC 8314.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 安全SMTP是通过SSL/TLS连接进行的SMTP。此类连接隐式地开始使用SSL/TLS，因此服务器和客户端使用TCP端口465进行通信。参见RFC 8314。
 - en: TELNET
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TELNET
 - en: TELNET is an application layer protocol used over networks to provide a bidirectional
     interactive text-oriented communication facility using a virtual terminal connection.
     See RFC 854\. TELNET servers and clients use TCP port 23.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: TELNET是一种在网络中使用的应用层协议，它通过虚拟终端连接提供双向交互式文本通信设施。参见RFC 854。TELNET服务器和客户端使用TCP端口23。
 - en: TFTP
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TFTP
 - en: The Trivial File Transfer Protocol (TFTP) is a protocol for doing simple file
     transfers over UDP to get a file from or put a file onto a remote host. TFTP servers
     and clients use UDP port 69.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单文件传输协议（TFTP）是一种通过UDP进行简单文件传输的协议，用于从远程主机获取文件或将文件放置在远程主机上。TFTP服务器和客户端使用UDP端口69。
 - en: WS
+  id: totrans-54
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: WS
 - en: WebSocket is a bidirectional TCP-like protocol, setup over an HTTP(S) request.
     WS is the scheme for the clear text version done over plain HTTP. Experimental
     support for this was added to curl 7.86.0.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: WebSocket 是一种双向的类似 TCP 协议，通过 HTTP(S) 请求进行设置。WS 是在普通 HTTP 上完成的明文版本方案。curl 7.86.0
+    中添加了对这种方案的实验性支持。
 - en: WSS
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: WSS
 - en: WebSocket is a bidirectional TCP-like protocol, setup over an HTTP(S) request.
     WSS is the scheme for the secure version done over HTTPS. Experimental support
     for this was added to curl 7.86.0.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: WebSocket 是一种双向的类似 TCP 协议，通过 HTTP(S) 请求进行设置。WSS 是在 HTTPS 上完成的加密版本方案。curl 7.86.0
+    中添加了对这种方案的实验性支持。

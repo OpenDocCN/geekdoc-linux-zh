@@ -1,21 +1,32 @@
 - en: Proxy headers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 代理头信息
 - en: When you want to add HTTP headers meant specifically for an HTTP or HTTPS proxy,
     and not for the remote server, the `--header` option falls short.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你想添加专门针对 HTTP 或 HTTPS 代理的 HTTP 头信息，而不是针对远程服务器时，`--header` 选项就不够用了。
 - en: For example, if you issue an HTTPS request through an HTTP proxy, it is done
     by first issuing a `CONNECT` to the proxy that establishes a tunnel to the remote
     server and then it sends the request to that server. That first `CONNECT` is only
     issued to the proxy and you may want to make sure only that receives your special
     header, and send another set of custom headers to the remote server.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，如果你通过 HTTP 代理发出 HTTPS 请求，它首先会向代理发出一个 `CONNECT` 命令，以建立到远程服务器的隧道，然后向该服务器发送请求。这个最初的
+    `CONNECT` 命令只针对代理，你可能想确保只有它接收你的特殊头信息，并且向远程服务器发送另一组自定义头信息。
 - en: 'Set a specific different `User-Agent:` only to the proxy:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 只为代理设置特定的不同 `User-Agent:`
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

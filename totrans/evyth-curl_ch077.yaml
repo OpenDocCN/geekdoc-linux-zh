@@ -1,612 +1,845 @@
 - en: Exit code
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 退出代码
 - en: A lot of effort has gone into the project to make curl return a usable exit
     code when something goes wrong and it always returns 0 (zero) when the operation
     went as planned.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在该项目中投入了大量努力，以便在出现问题时curl能够返回一个可用的退出代码，并且在操作按计划进行时总是返回0（零）。
 - en: If you write a shell script or batch file that invokes curl, you can always
     check the return code to detect problems in the invoked command. Below, you find
     a list of return codes as of the time of this writing. Over time we tend to slowly
     add new ones so if you get a code back not listed here, please refer to more updated
     curl documentation for aid.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你编写了一个调用curl的shell脚本或批处理文件，你可以始终检查返回代码以检测被调用命令中的问题。以下是在撰写本文时找到的返回代码列表。随着时间的推移，我们倾向于逐渐添加新的代码，所以如果你收到这里未列出的代码，请参阅更更新的curl文档以获取帮助。
 - en: 'A basic Unix shell script could look like something like this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个基本的Unix shell脚本可能看起来像这样：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Available exit codes
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 可用的退出代码
 - en: Unsupported protocol. This build of curl has no support for this protocol. Usually
     this happens because the URL was misspelled to use a scheme part that either has
     a space in front of it or spells `http` like `htpt` or similar. Another common
     mistake is that you use a libcurl installation that was built with one or more
     protocols disabled and you now ask libcurl to use one of those protocols that
     were disabled in the build.
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 不支持的协议。这个curl构建不支持此协议。通常这种情况发生是因为URL拼写错误，使用了前面有空格的方案部分，或者将`http`拼写为`htpt`或类似的形式。另一个常见错误是，你使用了一个在构建时禁用了一个或多个协议的libcurl安装，你现在要求libcurl使用在构建时被禁用的那些协议之一。
 - en: Failed to initialize. This is mostly an internal error or a problem with the
     libcurl installation or system libcurl runs in.
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 初始化失败。这通常是一个内部错误或libcurl安装或系统libcurl运行时的问题。
 - en: URL malformed. The syntax was not correct. This happens when you mistype a URL
     so that it ends up wrong, or in rare situations you are using a URL that is accepted
     by another tool that curl does not support only because there is no universal
     URL standard that everyone adheres to.
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: URL格式错误。语法不正确。这发生在你输入错误的URL导致其最终错误，或者在罕见的情况下，你使用的是curl不支持的URL，因为没有一个所有人都遵守的通用URL标准。
 - en: A feature or option that was needed to perform the desired request was not enabled
     or was explicitly disabled at build-time. To make curl able to do this, you probably
     need another build of libcurl.
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 需要的功能或选项未启用或是在构建时明确禁用。为了让curl能够执行此操作，你可能需要另一个libcurl构建。
 - en: Couldn’t resolve proxy. The address of the given proxy host could not be resolved.
     Either the given proxy name is just wrong, or the DNS server is misbehaving and
     does not know about this name when it should or perhaps even the system you run
     curl on is misconfigured so that it does not find/use the correct DNS server.
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法解析代理。给定代理主机的地址无法解析。要么给定的代理名称是错误的，要么DNS服务器行为异常，不知道这个名称，或者甚至可能是你在上面运行curl的系统配置错误，导致它找不到/不使用正确的DNS服务器。
 - en: Couldn’t resolve host. The given remote host’s address was not resolved. The
     address of the given server could not be resolved. Either the given hostname is
     just wrong, or the DNS server is misbehaving and does not know about this name
     when it should or perhaps even the system you run curl on is misconfigured so
     that it does not find/use the correct DNS server.
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法解析主机。给定的远程主机地址无法解析。给定服务器的地址无法解析。要么给定的主机名是错误的，要么DNS服务器行为异常，不知道这个名称，或者甚至可能是你在上面运行curl的系统配置错误，导致它找不到/不使用正确的DNS服务器。
 - en: Failed to connect to host. curl managed to get an IP address to the machine
     and it tried to set up a TCP connection to the host but failed. This can be because
     you have specified the wrong port number, entered the wrong hostname, the wrong
     protocol or perhaps because there is a firewall or other network equipment in
     between that blocks the traffic from getting through.
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法连接到主机。curl成功获取了机器的IP地址，并尝试设置到主机的TCP连接，但失败了。这可能是因为你指定了错误的端口号，输入了错误的域名，错误的协议，或者可能是因为中间有防火墙或其他网络设备阻止了流量通过。
 - en: Unknown FTP server response. The server sent data curl could not parse. This
     is either because of a bug in curl, a bug in the server or because the server
     is using an FTP protocol extension that curl does not support. The only real work-around
     for this is to tweak curl options to try to get it to use other FTP commands that
     perhaps do not get this unknown server response back.
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 未知 FTP 服务器响应。服务器发送了 curl 无法解析的数据。这可能是由于 curl 或服务器中的错误，或者服务器使用的是 curl 不支持的 FTP
+    协议扩展。解决这个问题的唯一真正方法是调整 curl 选项，尝试让它使用其他 FTP 命令，这些命令可能不会收到这个未知服务器的响应。
 - en: FTP access denied. The server denied login or denied access to the particular
     resource or directory you wanted to reach. Most often you tried to change to a
     directory that does not exist on the server. The directory of course is what you
     specify in the URL.
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 访问被拒绝。服务器拒绝登录或拒绝访问您想要到达的特定资源或目录。最常见的情况是您尝试切换到服务器上不存在的目录。当然，目录就是您在 URL 中指定的内容。
 - en: FTP accept failed. While waiting for the server to connect back when an active
     FTP session is used, an error code was sent over the control connection or similar.
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 接受失败。在使用活动 FTP 会话等待服务器回连时，通过控制连接发送了错误代码或类似情况。
 - en: FTP weird PASS reply. Curl could not parse the reply sent to the PASS request.
     PASS in the command curl sends the password to the server with, and even anonymous
     connections to FTP server actually sends a password - a fixed anonymous string.
     Getting a response back from this command that curl does not understand is a strong
     indication that this is not an FTP server at all or that the server is badly broken.
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 奇怪的 PASS 回复。Curl 无法解析发送到 PASS 请求的回复。PASS 是 curl 发送到服务器的命令，其中包含密码，即使是匿名连接到
+    FTP 服务器实际上也发送了一个密码 - 一个固定的匿名字符串。如果 curl 收到它不理解的命令回复，这强烈表明这根本不是 FTP 服务器，或者服务器严重损坏。
 - en: During an active FTP session (PORT is used) while waiting for the server to
     connect, the timeout expired. It took too long for the server to get back. This
     is usually a sign that something is preventing the server from reaching curl successfully,
     such as a firewall or other network arrangements.
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在活动 FTP 会话（使用 PORT）等待服务器连接期间，超时已过期。服务器回连花费了太长时间。这通常表明有某些因素阻止服务器成功连接到 curl，例如防火墙或其他网络配置。
 - en: Unknown response to FTP PASV command. Curl could not parse the reply sent to
     the PASV request. This is a strange server. PASV is used to set up the second
     data transfer connection in passive mode, see the [FTP uses two connections](ch186.xhtml#ftp__twoconnections__md)
     section for more on that. You might be able to work-around this problem by using
     PORT instead, with the `--ftp-port` option.
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 对 FTP PASV 命令的未知响应。Curl 无法解析发送到 PASV 请求的回复。这是一个奇怪的服务器。PASV 用于在被动模式下设置第二个数据传输连接，有关更多信息，请参阅[FTP
+    使用两个连接](ch186.xhtml#ftp__twoconnections__md)部分。您可能可以通过使用 PORT 选项来绕过这个问题。
 - en: Unknown FTP 227 format. Curl could not parse the 227-line the server sent. This
     is most certainly a broken server. A 227 is the FTP server’s response when sending
     back information on how curl should connect back to it in passive mode. You might
     be able to work-around this problem by using PORT instead, with the `--ftp-port`
     option.
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 未知 FTP 227 格式。Curl 无法解析服务器发送的 227 行。这肯定是一个损坏的服务器。227 是 FTP 服务器在发送 curl 如何在被动模式下连接回它的信息时的响应。您可能可以通过使用
+    PORT 选项来绕过这个问题。
 - en: FTP cannot get host. Couldn’t use the host IP address we got in the 227-line.
     This is most likely an internal error.
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 无法获取主机。无法使用我们在 227 行中获取的主机 IP 地址。这很可能是内部错误。
 - en: HTTP/2 error. A problem was detected in the HTTP2 framing layer. This is somewhat
     generic and can be one out of several problems, see the error message for details.
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP/2 错误。检测到 HTTP2 封装层存在问题。这相当通用，可能是几个问题中的一个，请参阅错误消息以获取详细信息。
 - en: FTP could not set binary. Couldn’t change transfer method to binary. This server
     is broken. curl needs to set the transfer to the correct mode before it is started
     as otherwise the transfer cannot work.
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 无法设置二进制。无法将传输方法更改为二进制。此服务器已损坏。curl 需要在开始传输之前将其设置为正确的模式，否则传输无法工作。
 - en: Partial file. Only a part of the file was transferred. When the transfer is
     considered complete, curl verifies that it actually received the same amount of
     data that it was told before-hand that it was going to get. If the two numbers
     do not match, this is the error code. It could mean that curl got fewer bytes
     than advertised or that it got more. curl itself cannot know which number is wrong
     or which is correct, if any.
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 文件部分传输。只有文件的一部分被传输。当传输被认为已完成时，curl会验证它实际上接收到的数据量是否与之前告知的数据量相同。如果这两个数字不匹配，这就是错误代码。这可能意味着curl接收到的字节数少于广告的，或者接收到的更多。curl本身无法知道哪个数字是错误的，或者是否正确，如果有的话。
 - en: FTP could not download/access the given file. The RETR (or similar) command
     failed. curl got an error from the server when trying to download the file.
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP无法下载/访问指定的文件。RETR（或类似）命令失败。当尝试下载文件时，curl从服务器收到了错误。
 - en: '**Not used**'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Quote error. A quote command returned an error from the server. curl allows
     several different ways to send custom commands to an IMAP, POP3, SMTP or FTP server
     and features a generic check that the commands work. When any of the individually
     issued commands fails, this is the exit status returned. The advice is generally
     to watch the headers in the FTP communication to better understand exactly what
     failed and how.
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 引号错误。一个引号命令从服务器返回了错误。curl允许通过几种不同的方式向IMAP、POP3、SMTP或FTP服务器发送自定义命令，并具有一个通用的检查，以确保命令可以工作。当任何单独发出的命令失败时，这就是返回的退出状态。通常建议查看FTP通信中的标题，以更好地理解确切失败的原因和方式。
 - en: HTTP page not retrieved. The requested URL was not found or returned another
     error with the HTTP error code being 400 or above. This return code only appears
     if `-f, --fail` is used.
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP页面未检索到。请求的URL未找到或返回了HTTP错误代码为400或以上的其他错误。此返回代码仅在使用`-f, --fail`时出现。
 - en: Write error. Curl could not write data to a local filesystem or similar. curl
     receives data chunk by chunk from the network and it stores it like at (or writes
     it to stdout), one piece at a time. If that write action gets an error, this is
     the exit status.
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 写入错误。Curl无法将数据写入本地文件系统或类似的地方。curl从网络以块的形式接收数据，并像在（或写入stdout）一样逐块存储它。如果写入操作出现错误，这就是退出状态。
 - en: '**Not used**'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Upload failed. The server refused to accept or store the file that curl tried
     to send to it. This is usually due to wrong access rights on the server but can
     also happen due to out of disk space or other resource constraints. This error
     can happen for many protocols.
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 上传失败。服务器拒绝接受或存储curl尝试发送给它的文件。这通常是由于服务器上的访问权限错误，但也可能由于磁盘空间不足或其他资源限制而发生。这种错误可能适用于许多协议。
 - en: Read error. Various reading problems. The inverse to exit status 23\. When curl
     sends data to a server, it reads data chunk by chunk from a local file or stdin
     or similar, and if that reading fails in some way this is the exit status curl
     returns.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 读取错误。各种读取问题。与退出状态23相反。当curl向服务器发送数据时，它从本地文件或stdin或类似的地方逐块读取数据，如果读取以某种方式失败，这就是curl返回的退出状态。
 - en: Out of memory. A memory allocation request failed. curl needed to allocate more
     memory than what the system was willing to give it and curl had to exit. Try using
     smaller files or make sure that curl gets more memory to work with.
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 内存不足。内存分配请求失败。curl需要分配比系统愿意提供的更多内存，因此curl必须退出。尝试使用较小的文件或确保curl有更多的内存来工作。
 - en: Operation timeout. The specified time-out period was reached according to the
     conditions. curl offers several [timeouts](ch108.xhtml#usingcurl__timeouts__md),
     and this exit code tells one of those timeout limits were reached. Extend the
     timeout or try changing something else that allows curl to finish its operation
     faster. Often, this happens due to network and remote server situations that you
     cannot affect locally.
+  id: totrans-33
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 操作超时。根据条件，达到了指定的超时时间。curl提供了几个[超时](ch108.xhtml#usingcurl__timeouts__md)，并且这个退出代码告诉其中一个超时限制已达到。延长超时或尝试更改其他允许curl更快完成操作的事情。通常，这发生在网络和远程服务器情况下，您无法在本地影响。
 - en: '**Not used**'
+  id: totrans-34
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: FTP PORT failed. The PORT command failed. Not all FTP servers support the PORT
     command; try doing a transfer using PASV instead. The PORT command is used to
     ask the server to create the data connection by *connecting back* to curl. See
     also the [FTP uses two connections](ch186.xhtml#ftp__twoconnections__md) section.
+  id: totrans-35
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP PORT失败。PORT命令失败。并非所有FTP服务器都支持PORT命令；尝试使用PASV进行传输。PORT命令用于请求服务器通过*回连*到curl来创建数据连接。另请参阅[FTP使用两个连接](ch186.xhtml#ftp__twoconnections__md)部分。
 - en: FTP could not use REST. The REST command failed. This command is used for resumed
     FTP transfers. curl needs to issue the REST command to do range or resumed transfers.
     The server is broken, try the same operation without range/resume as a crude work-around.
+  id: totrans-36
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP 无法使用 REST。REST 命令失败。此命令用于恢复 FTP 传输。curl 需要发出 REST 命令以执行范围或恢复传输。服务器损坏，尝试不使用范围/恢复作为粗略的解决方案执行相同的操作。
 - en: '**Not used**'
+  id: totrans-37
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: HTTP range error. The range request did not work. Resumed HTTP requests are
     not necessarily acknowledged or supported, so this exit code signals that for
     this resource on this server, there can be no range or resumed transfers.
+  id: totrans-38
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP 范围错误。范围请求未成功。由于 HTTP 请求的恢复不一定被认可或支持，因此此退出代码表示对于此服务器上的此资源，无法进行范围或恢复传输。
 - en: HTTP post error. Internal post-request generation error. If you get this error,
     please report the exact circumstances to the curl project.
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP POST 错误。内部 POST 请求生成错误。如果您遇到此错误，请向 curl 项目报告确切情况。
 - en: A TLS/SSL connect error. The SSL handshake failed. The SSL handshake can fail
     due to numerous different reasons so the error message may offer some additional
     clues. Maybe the parties could not agree to a SSL/TLS version, an agreeable cipher
     suite or similar.
+  id: totrans-40
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TLS/SSL 连接错误。SSL 握手失败。SSL 握手可能由于许多不同的原因而失败，因此错误消息可能提供一些额外的线索。可能是因为各方无法就 SSL/TLS
+    版本、可接受的加密套件或类似内容达成一致。
 - en: Bad download resume. Could not continue an earlier aborted download. When asking
     to resume a transfer that then ends up not possible to do, this error can get
     returned. For FILE, FTP or SFTP.
+  id: totrans-41
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 错误的下载恢复。无法继续之前中断的下载。当请求恢复传输而实际上无法完成时，可能会返回此错误。对于 FILE、FTP 或 SFTP。
 - en: Couldn’t read the given file when using the FILE:// scheme. Failed to open the
     file. The file could be non-existing or is it a permission problem perhaps?
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 FILE:// 方案时无法读取给定的文件。无法打开文件。文件可能不存在，或者可能是权限问题？
 - en: LDAP cannot bind. LDAP “bind” operation failed, which is a necessary step in
     the LDAP operation and thus this means the LDAP query could not be performed.
     This might happen because of a wrong username or password, or for other reasons.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDAP 无法绑定。LDAP “绑定”操作失败，这是 LDAP 操作的必要步骤，因此这意味着 LDAP 查询无法执行。这可能是因为用户名或密码错误，或其他原因。
 - en: LDAP search failed. The given search terms caused the LDAP search to return
     an error.
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: LDAP 搜索失败。给定的搜索条件导致 LDAP 搜索返回错误。
 - en: '**Not used**'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: '**Not used**'
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Aborted by callback. An application told libcurl to abort the operation. This
     error code is not generally made visible to users and not to users of the curl
     tool.
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 被回调终止。应用程序告诉 libcurl 终止操作。此错误代码通常不会对用户可见，也不会对 curl 工具的用户可见。
 - en: Bad function argument. A function was called with a bad parameter - this return
     code is present to help application authors to understand why libcurl cannot perform
     certain actions and should never be returned by the curl tool. Please file a bug
     report to the curl project if this happens to you.
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 函数参数错误。一个函数被一个错误的参数调用 - 此返回代码存在是为了帮助应用程序作者理解为什么 libcurl 无法执行某些操作，并且 curl 工具永远不会返回此错误。如果这种情况发生在您身上，请向
+    curl 项目提交错误报告。
 - en: '**Not used**'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Interface error. A specified outgoing network interface could not be used. curl
     typically decides outgoing network and IP addresses by itself but when explicitly
     asked to use a specific one that curl cannot use, this error can occur.
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接口错误。指定的出站网络接口无法使用。curl 通常自行决定出站网络和 IP 地址，但当明确要求使用特定的一个而 curl 无法使用时，可能会发生此错误。
 - en: '**Not used**'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Too many redirects. When following HTTP redirects, libcurl hit the maximum number
     set by the application. The maximum number of redirects is unlimited by libcurl
     but is set to 50 by default by the curl tool. The limit is present to stop endless
     redirect loops. Change the limit with `--max-redirs`.
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 重定向太多。在跟随 HTTP 重定向时，libcurl 达到了应用程序设定的最大数量。libcurl 不会限制重定向的最大数量，但 curl 工具默认设置为
+    50。此限制是为了防止无限循环的重定向。使用 `--max-redirs` 选项更改限制。
 - en: 'Unknown option specified to libcurl. This could happen if you use a curl version
     that is out of sync with the underlying libcurl version. Perhaps your newer curl
     tries to use an option in the older libcurl that was not introduced until after
     the libcurl version you are using but is known to your curl tool code as that
     is newer. To decrease the risk of this and make sure it does not happen: use curl
     and libcurl of the same version number.'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 指定了未知的libcurl选项。这可能发生在你使用的curl版本与底层libcurl版本不匹配的情况下。也许你的新版本curl试图使用旧版libcurl中未引入的选项，而这个选项在你使用的curl工具代码中是已知的，因为它是更新的。为了降低这种风险并确保不会发生这种情况：请使用相同版本号的curl和libcurl。
 - en: Malformed telnet option. The telnet option you provided to curl did not use
     the correct syntax.
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: telnet选项格式不正确。你提供给curl的telnet选项没有使用正确的语法。
 - en: '**Not used**'
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: The server’s SSL/TLS certificate or SSH fingerprint failed verification. curl
     can then not be sure of the server being who it claims to be. See the [using TLS
     with curl](ch123.xhtml#usingcurl__tls__md) and [using SCP and SFTP with curl](ch134.xhtml#usingcurl__scpsftp__md)
     sections for more details.
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 服务器SSL/TLS证书或SSH指纹验证失败。在这种情况下，curl无法确定服务器是否是它声称的那个。有关更多详细信息，请参阅[使用curl的TLS](ch123.xhtml#usingcurl__tls__md)和[使用curl的SCP和SFTP](ch134.xhtml#usingcurl__scpsftp__md)部分。
 - en: The server did not reply anything, which in this context is considered an error.
     When an HTTP(S) server responds to an HTTP(S) request, it always returns *something*
     as long as it is alive and sound. All valid HTTP responses have a status line
     and responses header. Not getting anything at all back is an indication the server
     is faulty or perhaps that something prevented curl from reaching the right server
     or that you are trying to connect to the wrong port number etc.
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 服务器没有回复任何内容，这在当前上下文中被视为错误。当一个HTTP(S)服务器响应HTTP(S)请求时，只要服务器是活跃和健康的，它总是会返回*某些内容*。所有有效的HTTP响应都有一个状态行和响应头。完全没有收到任何内容表明服务器可能出现了故障，或者可能是某些因素阻止curl到达正确的服务器，或者你正在尝试连接到错误的端口号等。
 - en: SSL crypto engine not found.
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 未找到SSL加密引擎。
 - en: Cannot set SSL crypto engine as default.
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法将SSL加密引擎设置为默认。
 - en: Failed sending network data. Sending data over the network is a crucial part
     of most curl operations and when curl gets an error from the lowest networking
     layers that the sending failed, this exit status gets returned. To pinpoint why
     this happens, some serious digging is usually required. Start with enabling verbose
     mode, do tracing and if possible check the network traffic with a tool like Wireshark
     or similar.
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 发送网络数据失败。在网络操作中，发送数据是curl操作的关键部分，当curl从最低层网络层收到发送失败的错误时，会返回此退出状态。为了确定为什么会发生这种情况，通常需要进行一些深入的挖掘。首先启用详细模式，进行跟踪，并在可能的情况下使用Wireshark或类似工具检查网络流量。
 - en: Failure in receiving network data. Receiving data over the network is a crucial
     part of most curl operations and when curl gets an error from the lowest networking
     layers that the receiving of data failed, this exit status gets returned. To pinpoint
     why this happens, some serious digging is usually required. Start with enabling
     verbose mode, do tracing and if possible check the network traffic with a tool
     like Wireshark or similar.
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 接收网络数据失败。在网络操作中，接收数据是curl操作的关键部分，当curl从最低层网络层收到接收数据失败的错误时，会返回此退出状态。为了确定为什么会发生这种情况，通常需要进行一些深入的挖掘。首先启用详细模式，进行跟踪，并在可能的情况下使用Wireshark或类似工具检查网络流量。
 - en: '**Not used**'
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Problem with the local certificate. The client certificate had a problem so
     it could not be used. Permissions? The wrong pass phrase?
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 本地证书存在问题。客户端证书存在问题，因此无法使用。权限问题？错误的密码短语？
 - en: Couldn’t use the specified SSL cipher. The cipher names need to be specified
     exactly and they are also unfortunately specific to the particular TLS backend
     curl has been built to use. For the current list of support ciphers and how to
     write them, see the online docs at [https://curl.se/docs/ssl-ciphers.html](https://curl.se/docs/ssl-ciphers.html).
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法使用指定的SSL加密密钥。加密密钥的名称需要精确指定，而且不幸的是，它们也特定于curl构建时使用的特定TLS后端。有关支持的加密密钥列表及其编写方式，请参阅在线文档[https://curl.se/docs/ssl-ciphers.html](https://curl.se/docs/ssl-ciphers.html)。
 - en: Peer certificate cannot be authenticated with known CA certificates. This usually
     means that the certificate is either self-signed or signed by a CA (Certificate
     Authority) that is not present in the CA store curl uses.
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法使用已知的CA证书验证对等证书。这通常意味着证书是自签名的，或者是由不在curl使用的CA存储库中的CA（证书颁发机构）签发的。
 - en: Unrecognized transfer encoding. Content received from the server could not be
     parsed by curl.
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 传输编码不可识别。从服务器接收到的内容无法被curl解析。
 - en: '**Not used**'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Maximum file size exceeded. When curl has been told to restrict downloads to
     not do it if the file is too big, this is the exit code for that condition.
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 文件大小超出最大限制。当curl被告知限制下载，如果文件太大则不进行下载时，这是该条件的退出代码。
 - en: Requested SSL (TLS) level failed. In most cases this means that curl failed
     to upgrade the connection to TLS when asked to.
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 请求的SSL（TLS）级别失败。在大多数情况下，这意味着curl在请求升级到TLS时失败了。
 - en: Sending the data requires a rewind that failed. In some situations curl needs
     to rewind in order to send the data again and if this cannot be done, the operation
     fails.
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 发送数据需要回绕，但失败了。在某些情况下，curl需要回绕以重新发送数据，如果无法完成，则操作失败。
 - en: Failed to initialize the OpenSSL SSL Engine. This can only happen when OpenSSL
     is used and would signify a serious internal problem.
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 初始化OpenSSL SSL引擎失败。这只有在使用OpenSSL时才会发生，并且表示一个严重的内部问题。
 - en: The username, password, or similar was not accepted and curl failed to log in.
     Verify that the credentials are provided correctly and that they are encoded the
     right way.
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 用户名、密码或类似信息未被接受，curl登录失败。请验证凭证是否正确提供，并且它们是否以正确的编码方式。
 - en: File not found on TFTP server.
+  id: totrans-73
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TFTP服务器上找不到文件。
 - en: Permission problem on TFTP server.
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TFTP服务器上的权限问题。
 - en: Out of disk space on TFTP server.
+  id: totrans-75
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TFTP服务器磁盘空间不足。
 - en: Illegal TFTP operation.
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 非法TFTP操作。
 - en: Unknown TFTP transfer ID.
+  id: totrans-77
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TFTP传输ID未知。
 - en: File already exists (TFTP).
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 文件已存在（TFTP）。
 - en: No such user (TFTP).
+  id: totrans-79
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TFTP上没有这样的用户。
 - en: '**Not used**'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: '**Not used**'
+  id: totrans-81
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Problem with reading the SSL CA cert. The default or specified CA cert bundle
     could not be read/used to verify the server certificate.
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 读取SSL CA证书时出现问题。默认或指定的CA证书包无法读取/使用以验证服务器证书。
 - en: The resource (file) referenced in the URL does not exist.
+  id: totrans-83
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: URL中引用的资源（文件）不存在。
 - en: An unspecified error occurred during the SSH session. This sometimes indicates
     an incompatibility problem between the SSH libcurl curl uses and the SSH version
     used by the server curl speaks to.
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: SSH会话期间发生未指定的错误。这有时表明curl使用的SSH库与curl与服务器通信时使用的SSH版本之间存在不兼容性问题。
 - en: Failed to shut down the SSL connection.
+  id: totrans-85
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法关闭SSL连接。
 - en: '**Not used**'
+  id: totrans-86
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**未使用**'
 - en: Could not load CRL file, missing or wrong format
+  id: totrans-87
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法加载CRL文件，文件缺失或格式错误。
 - en: TLS certificate issuer check failed. The most common reason for this is that
     the server did not send the proper intermediate certificate in the TLS handshake.
+  id: totrans-88
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TLS证书颁发者检查失败。这种情况最常见的原因是服务器在TLS握手过程中没有发送适当的中间证书。
 - en: The FTP `PRET` command failed. This is a non-standard command and far from all
     servers support it.
+  id: totrans-89
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP `PRET` 命令失败。这是一个非标准命令，并非所有服务器都支持它。
 - en: 'RTSP: mismatch of CSeq numbers'
+  id: totrans-90
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: RTSP：CSeq编号不匹配。
 - en: 'RTSP: mismatch of Session Identifiers'
+  id: totrans-91
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: RTSP：会话标识符不匹配。
 - en: Unable to parse FTP file list. The FTP directory listing format used by the
     server could not be parsed by curl. FTP wildcards can not be used on this server.
+  id: totrans-92
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 无法解析FTP文件列表。服务器使用的FTP目录列表格式无法被curl解析。此服务器上不能使用FTP通配符。
 - en: FTP chunk callback reported error
+  id: totrans-93
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: FTP块回调报告错误。
 - en: No connection available, the session is queued
+  id: totrans-94
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 没有可用的连接，会话正在排队。
 - en: SSL public key does not match pinned public key. Either you provided a bad public
     key, or the server has changed.
+  id: totrans-95
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: SSL公钥与已固定的公钥不匹配。要么你提供了错误的公钥，要么服务器已更改。
 - en: Invalid SSL certificate status. The server did not provide a proper valid certificate
     in the TLS handshake.
+  id: totrans-96
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: SSL证书状态无效。服务器在TLS握手过程中没有提供有效的证书。
 - en: Stream error in HTTP/2 framing layer. This is usually an unrecoverable error,
     but trying to force curl to speak HTTP/1 instead might circumvent it.
+  id: totrans-97
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP/2帧层中的流错误。这通常是一个无法恢复的错误，但尝试强制curl使用HTTP/1可能绕过它。
 - en: An API function was called from inside a callback. If the curl tool returns
     this, something has gone wrong internally
+  id: totrans-98
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在回调内部调用了API函数。如果curl工具返回此错误，则表示内部出现了问题。
 - en: Authentication error.
+  id: totrans-99
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 认证错误。
 - en: HTTP/3 layer error. This is somewhat generic and can be one out of several problems,
     see the error message for details.
+  id: totrans-100
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP/3层错误。这是一个相当通用的错误，可能是几个问题之一，请参阅错误消息以获取详细信息。
 - en: QUIC connection error. This error may be caused by an TLS library error. QUIC
     is the transport protocol used for HTTP/3.
+  id: totrans-101
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: QUIC连接错误。这个错误可能是由TLS库错误引起的。QUIC是用于HTTP/3的传输协议。
 - en: Proxy handshake error. Usually that means that a SOCKS proxy did not play along.
+  id: totrans-102
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 代理握手错误。通常这意味着SOCKS代理没有配合。
 - en: A TLS client certificate is required but was not provided.
+  id: totrans-103
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 需要TLS客户端证书，但未提供。
 - en: An internal call to poll() or select() returned error that is not recoverable.
+  id: totrans-104
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 内部对poll()或select()的调用返回了无法恢复的错误。
 - en: Error message
+  id: totrans-105
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 错误消息
 - en: When curl exits with a non-zero code, it also outputs an error message (unless
     `--silent` is used). That error message may add some additional information or
     circumstances to the exit status number itself so the same error number can get
     different error messages.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl以非零代码退出时，它也会输出一个错误消息（除非使用了`--silent`）。这个错误消息可能会向退出状态数字本身添加一些额外的信息或情况，因此相同的错误编号可以得到不同的错误消息。
 - en: Users can also craft their own error messages with [–write-out](ch081.xhtml#usingcurl__verbose__writeout__md).
     The pseudo variable `%{onerror}` allows you to set a message that only gets displayed
     on errors, and it offers `%{errormsg}` and `%{exitcode}` among all the variables.
+  id: totrans-107
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户还可以使用[–write-out](ch081.xhtml#usingcurl__verbose__writeout__md)自定义错误消息。伪变量`%{onerror}`允许您设置仅在错误时显示的消息，并提供`%{errormsg}`和`%{exitcode}`等变量。
 - en: 'For example:'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：
 - en: '[PRE1]'
+  id: totrans-109
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: “Not used”
+  id: totrans-110
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: “未使用”
 - en: The list of exit codes above contains a number of values marked as ‘not used’.
     Those are exit status codes that are not used in modern versions of curl but that
     have been used or were intended to be used in the past. They may be used in a
     future version of curl.
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的退出代码列表包含了一些标记为“未使用”的值。这些是curl现代版本中未使用的退出状态代码，但在过去曾被使用或打算使用。它们可能在curl的将来版本中使用。
 - en: Additionally, the highest used error status in this list is 99, but future curl
     versions might have added more exit codes after that number.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，在此列表中使用的最高错误状态是99，但未来的curl版本可能会在该数字之后添加更多的退出代码。

@@ -1,96 +1,141 @@
 - en: Headers API
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 头部 API
 - en: libcurl offers an API for iterating over all received HTTP headers and for extracting
     the contents from specific ones.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 提供了一个 API，用于遍历所有接收到的 HTTP 头部信息，并从特定的头部中提取内容。
 - en: When returning header content, libcurl trims leading and trailing whitespace
     but does not modify or change content in any other way.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当返回头部内容时，libcurl 会去除前导和尾随空格，但不会以任何其他方式修改或更改内容。
 - en: This API was made official and is provided for real starting in libcurl 7.84.0.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 此 API 从 libcurl 7.84.0 版本开始正式提供。
 - en: Header origins
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 头部来源
 - en: HTTP headers are key value pairs that are sent from the server in a few different
     *origins* during a transfer. libcurl collects all headers and provides easy access
     to them for applications.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 头部是键值对，在传输过程中，服务器从几个不同的 *来源* 发送这些键值对。libcurl 收集所有头部信息，并为应用程序提供方便的访问。
 - en: HTTP headers can arrive as
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 头部可以以以下方式到达
 - en: '**CURLH_HEADER** - before regular response content.'
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**CURLH_HEADER** - 在常规响应内容之前。'
 - en: '**CURLH_TRAILER** - fields arriving *after* the response content'
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**CURLH_TRAILER** - 在响应内容 *之后* 到达的字段'
 - en: '**CURLH_CONNECT** - response headers in the proxy `CONNECT` request that might
     have been done before the actual server request'
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**CURLH_CONNECT** - 在实际服务器请求之前可能完成的代理 `CONNECT` 请求的响应头部'
 - en: '**CURLH_1XX** - headers in the potential 1xx HTTP responses that might have
     preceded the following >= 2xx response code.'
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**CURLH_1XX** - 可能先于后续 >= 2xx 响应代码的潜在 1xx HTTP 响应中的头部。'
 - en: '**CURLH_PSEUDO** - HTTP/2 and HTTP/3 level headers that start with colon (`:`)'
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**CURLH_PSEUDO** - 以冒号 (`:`) 开头的 HTTP/2 和 HTTP/3 层级头部'
 - en: Request number
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 请求编号
 - en: A single HTTP transfer done with libcurl might consist of a series of HTTP requests
     and the **request** argument to the header API functions lets you specify which
     particular individual request you want the headers from. 0 being the first request
     and then the number increases for further redirects or when multi-state authentication
     is used. Passing in `-1` is a shortcut to the last request in the series, independently
     of the actual amount of requests used.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 libcurl 完成的单个 HTTP 传输可能由一系列 HTTP 请求组成，而头部 API 函数的 **request** 参数允许你指定你想要从哪个特定的单个请求中获取头部信息。0
+    表示第一个请求，然后数字随着进一步的重定向或使用多状态身份验证而增加。传入 `-1` 是到系列中最后一个请求的快捷方式，不受实际请求数量影响。
 - en: Header folding
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 头部折叠
 - en: HTTP/1 headers supports a deprecated format called *folding*, which means that
     there is a continuation line after a header, making the line folded.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/1 头部支持一个已弃用的格式，称为 *折叠*，这意味着在头部之后有一个续行，使得行折叠。
 - en: The headers API supports folded headers and returns such contents unfolded -
     where the different parts are separated by a single whitespace character.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 头部 API 支持折叠头部，并返回展开的内容 - 其中不同部分由单个空格字符分隔。
 - en: When
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 当
 - en: The two header API function calls are perfectly possible to call at any time
     during a transfer, both from inside and outside of callbacks. It is however important
     to remember that the API only returns information about the state of the headers
     at the exact moment it is called, which might not be the final status if you call
     it while the transfer is still in progress.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在传输过程中，可以在任何时间调用两个头部 API 函数调用，无论是从回调内部还是外部。然而，重要的是要记住，API 只返回在调用时的头部状态信息，这可能不是最终状态，如果你在传输仍在进行时调用它。
 - en: '[Header struct](ch278.xhtml#helpers__headerapi__struct__md)'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[头部结构](ch278.xhtml#helpers__headerapi__struct__md)'
 - en: '[Get a header](ch279.xhtml#helpers__headerapi__get__md)'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[获取头部](ch279.xhtml#helpers__headerapi__get__md)'
 - en: '[Iterate of headers](ch280.xhtml#helpers__headerapi__iterate__md)'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[遍历头部](ch280.xhtml#helpers__headerapi__iterate__md)'

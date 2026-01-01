@@ -1,80 +1,123 @@
 - en: Resolving hostnames
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 解析主机名
 - en: Aka `hostip.c` explained
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 即 `hostip.c` 解释
 - en: 'The main compile-time defines to keep in mind when reading the `host*.c` source
     file are these:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在阅读 `host*.c` 源文件时需要记住的主要编译时定义是这些：
 - en: '`CURLRES_IPV6`'
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLRES_IPV6`'
 - en: this host has `getaddrinfo()` and family, and thus we use that. The host may
     not be able to resolve IPv6, but we do not really have to take that into account.
     Hosts that are not IPv6-enabled have `CURLRES_IPV4` defined.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 此主机具有 `getaddrinfo()` 和家族，因此我们使用它。该主机可能无法解析 IPv6，但我们实际上不必考虑这一点。未启用 IPv6 的主机定义了
+    `CURLRES_IPV4`。
 - en: '`CURLRES_ARES`'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLRES_ARES`'
 - en: is defined if libcurl is built to use c-ares for asynchronous name resolves.
     This can be Windows or *nix.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 libcurl 构建为使用 c-ares 进行异步名称解析，则定义。这可能是在 Windows 或 *nix 上。
 - en: '`CURLRES_THREADED`'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLRES_THREADED`'
 - en: is defined if libcurl is built to use threading for asynchronous name resolves.
     The name resolve is done in a new thread, and the supported asynch API is be the
     same as for ares-builds. This is the default under (native) Windows.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 libcurl 构建为使用线程进行异步名称解析，则定义。名称解析在新的线程中完成，支持的异步 API 与 ares 构建相同。这是在 (本地) Windows
+    下的默认设置。
 - en: If any of the two previous are defined, `CURLRES_ASYNCH` is defined too. If
     libcurl is not built to use an asynchronous resolver, `CURLRES_SYNCH` is defined.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果定义了上述两个中的任何一个，则也会定义 `CURLRES_ASYNCH`。如果 libcurl 没有构建为使用异步解析器，则定义 `CURLRES_SYNCH`。
 - en: '`host*.c` sources'
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`host*.c` 源文件'
 - en: 'The `host*.c` sources files are split up like this:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`host*.c` 源文件是这样分割的：'
 - en: '`hostip.c` - method-independent resolver functions and utility functions'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hostip.c` - 通用解析函数和实用函数'
 - en: '`hostasyn.c` - functions for asynchronous name resolves'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hostasyn.c` - 异步名称解析的函数'
 - en: '`hostsyn.c` - functions for synchronous name resolves'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hostsyn.c` - 同步名称解析的函数'
 - en: '`asyn-ares.c` - functions for asynchronous name resolves using c-ares'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`asyn-ares.c` - 使用 c-ares 进行异步名称解析的函数'
 - en: '`asyn-thread.c` - functions for asynchronous name resolves using threads'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`asyn-thread.c` - 使用线程进行异步名称解析的函数'
 - en: '`hostip4.c` - IPv4 specific functions'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hostip4.c` - IPv4 特定函数'
 - en: '`hostip6.c` - IPv6 specific functions'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`hostip6.c` - IPv6 特定函数'
 - en: The `hostip.h` is the single united header file for all this. It defines the
     `CURLRES_*` defines based on the `config*.h` and `curl_setup.h` defines.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`hostip.h` 是所有这些内容的单一联合头文件。它基于 `config*.h` 和 `curl_setup.h` 的定义来定义 `CURLRES_*`
+    定义。'

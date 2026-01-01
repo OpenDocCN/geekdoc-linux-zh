@@ -1,58 +1,82 @@
 - en: Passwords
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 密码
 - en: Passwords are tricky and sensitive. Leaking a password can make someone other
     than you access the resources and the data otherwise protected.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 密码很棘手且敏感。泄露密码可能会让除了你之外的其他人访问原本受保护的资源和数据。
 - en: curl offers several ways to receive passwords from the user and then subsequently
     pass them on or use them to something else.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl提供了几种从用户接收密码并随后将其传递或用于其他目的的方法。
 - en: 'The most basic curl authentication option is `-u / --user`. It accepts an argument
     that is the username and password, colon separated. Like when `alice` wants to
     request a page requiring HTTP authentication and her password is `12345`:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: curl最基本的认证选项是`-u / --user`。它接受一个参数，即用户名和密码，由冒号分隔。就像当`alice`想要请求需要HTTP认证的页面，而她的密码是`12345`时：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Command line leakage
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令行泄露
 - en: Several potentially bad things are going on here. First, we are entering a password
     on the command line and the command line might be readable for other users on
     the same system (assuming you have a multi-user system). curl helps minimize that
     risk by trying to blank out passwords from process listings.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里正在发生几件可能不好的事情。首先，我们在命令行中输入密码，而命令行可能对同一系统上的其他用户是可读的（假设你有一个多用户系统）。curl通过尝试从进程列表中清除密码来帮助最小化这种风险。
 - en: One way to avoid passing the username and password on the command line is to
     instead use a [.netrc file](ch109.xhtml#usingcurl__netrc__md) or a [config file](ch070.xhtml#cmdline__configfile__md).
     You can also use the `-u` option without specifying the password, and then curl
     instead prompts the user for it when it runs.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 避免在命令行上传递用户名和密码的一种方法是用一个[.netrc文件](ch109.xhtml#usingcurl__netrc__md)或一个[配置文件](ch070.xhtml#cmdline__configfile__md)。你也可以使用`-u`选项而不指定密码，然后curl在运行时提示用户输入。
 - en: Network leakage
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 网络泄露
 - en: Secondly, this command line sends the user credentials to an HTTP server, which
     is a clear-text protocol that is open for man-in-the-middle or other snoopers
     to spy on the connection and see what is sent. In this command line example, it
     makes curl use HTTP Basic authentication and that is completely insecure.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 其次，这个命令行将用户凭据发送到HTTP服务器，这是一个明文协议，对中间人或其他窥探者开放，他们可以监视连接并查看发送的内容。在这个命令行示例中，它使curl使用HTTP基本认证，这是完全不安全的。
 - en: There are several ways to avoid this, and the key is, of course, then to avoid
     protocols or authentication schemes that send credentials in plain text over the
     network. Easiest is perhaps to make sure you use encrypted versions of protocols.
     Use HTTPS instead of HTTP, use FTPS instead of FTP and so on.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 有几种方法可以避免这种情况，关键是当然要避免在网络上发送凭据的明文协议或认证方案。最简单的方法可能是确保你使用协议的加密版本。使用HTTPS而不是HTTP，使用FTPS而不是FTP等等。
 - en: If you need to stick to a plain text and insecure protocol, then see if you
     can switch to using an authentication method that avoids sending the credentials
     in the clear. If you want HTTP, such methods would include Digest (`--digest`),
     Negotiate (`--negotiate.`) and NTLM (`--ntlm`).
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要坚持使用明文和不安全的协议，那么看看你是否可以切换到使用一种避免在明文中发送凭据的认证方法。如果你想使用HTTP，这些方法包括摘要（`--digest`）、协商（`--negotiate.`）和NTLM（`--ntlm`）。

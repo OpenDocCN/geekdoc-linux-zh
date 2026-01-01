@@ -1,25 +1,36 @@
 - en: Global initialization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 全局初始化
 - en: Before you do anything libcurl related in your program, you should do a global
     libcurl initialize call with `curl_global_init()`. This is necessary because some
     underlying libraries that libcurl might be using need a call ahead to get setup
     and initialized properly.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在你的程序中进行任何与 libcurl 相关的操作之前，你应该使用 `curl_global_init()` 做一个全局的 libcurl 初始化调用。这是必要的，因为
+    libcurl 可能使用的某些底层库需要提前调用以正确设置和初始化。
 - en: curl_global_init() is, unfortunately, not thread safe, so you must ensure that
     you only do it once and never simultaneously with another call. It initializes
     global state so you should only call it once, and once your program is completely
     done using libcurl you can call `curl_global_cleanup()` to free and clean up the
     associated global resources the init call allocated.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_global_init()` 很不幸，不是线程安全的，所以你必须确保只调用一次，并且永远不要与其他调用同时进行。它初始化全局状态，因此你应该只调用一次，一旦你的程序完全使用完
+    libcurl，你可以调用 `curl_global_cleanup()` 来释放和清理由初始化调用分配的关联全局资源。'
 - en: libcurl is built to handle the situation where you skip the `curl_global_init()`
     call, but it does so by calling it itself instead (if you did not do it before
     any actual file transfer starts) and it then uses its own defaults. But beware
     that it is still not thread safe even then, so it might cause some “interesting”
     side effects for you. It is much better to call curl_global_init() yourself in
     a controlled manner.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 是构建来处理你跳过 `curl_global_init()` 调用的情况的，但是它是通过自己调用它来做到这一点的（如果你在开始任何实际文件传输之前没有这样做）然后它使用自己的默认值。但是请注意，即使在这种情况下，它仍然不是线程安全的，所以它可能会给你带来一些“有趣”的副作用。最好是以受控的方式自己调用
+    curl_global_init()。

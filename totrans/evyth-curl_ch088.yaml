@@ -1,28 +1,40 @@
 - en: HTML and charsets
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTML和字符集
 - en: curl downloads the exact binary data that the server sends. This might be of
     importance to you in case, for example, you download an HTML page or other text
     data that uses a certain character encoding that your browser then displays as
     expected. curl does not translate the arriving data.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl下载服务器发送的确切二进制数据。在例如下载HTML页面或其他使用特定字符编码的文本数据，而浏览器按预期显示的情况下，这可能对你很重要。curl不会转换到达的数据。
 - en: 'A common example where this causes some surprising results is when a user downloads
     a webpage with something like:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个常见的例子是，当用户下载一个包含如下内容的网页时，这会导致一些令人惊讶的结果：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: …and when inspecting the `storage.html` file after the fact, the user realizes
     that one or more characters look funny or downright wrong. This might occur because
     the server sent the characters using charset X, while your editor and environment
     use charset Y. In an ideal world, we would all use UTF-8 everywhere but unfortunately,
     that is still not the case.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: …在事后检查`storage.html`文件后，用户会发现一个或多个字符看起来很奇怪或完全错误。这可能是因为服务器使用字符集X发送字符，而你的编辑器和环境使用字符集Y。在一个理想的世界里，我们都会在所有地方使用UTF-8，但不幸的是，这还不是事实。
 - en: A common work-around for this issue that works decently is to use the common
     `iconv` utility to translate a text file to and from different charsets.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个问题的一个常见解决方案是使用常见的`iconv`实用程序将文本文件在不同字符集之间进行转换。

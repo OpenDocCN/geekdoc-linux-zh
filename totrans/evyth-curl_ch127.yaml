@@ -1,55 +1,84 @@
 - en: TLS versions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: TLS版本
 - en: SSL was invented in the mid 90s and has developed ever since. SSL version 2
     was the first widespread version used on the Internet but that was deemed insecure
     already a long time ago. SSL version 3 took over from there, and it too has been
     deemed not safe enough for use.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: SSL是在90年代中期发明的，并且从那时起一直在发展。SSL版本2是第一个在互联网上广泛使用的版本，但很久以前就被认为是不安全的。SSL版本3接替了它，它也被认为不足以安全使用。
 - en: TLS version 1.0 was the first standard. RFC 2246 was published 1999\. TLS 1.1
     came out in 2006, further improving security, followed by TLS 1.2 in 2008\. TLS
     1.2 came to be the gold standard for TLS for a decade.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS版本1.0是第一个标准。RFC 2246于1999年发布。TLS 1.1于2006年推出，进一步提高了安全性，随后TLS 1.2于2008年推出。TLS
+    1.2成为TLS的黄金标准，持续了十年。
 - en: TLS 1.3 (RFC 8446) was finalized and published as a standard by the IETF in
     August 2018\. This is the most secure and fastest TLS version as of date. It is
     however so new that a lot of software, tools and libraries do not yet support
     it.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS 1.3（RFC 8446）于2018年8月由IETF最终确定并作为标准发布。这是目前最安全、最快的TLS版本。然而，由于它非常新，许多软件、工具和库还没有支持它。
 - en: curl is designed to use a secure version of SSL/TLS by default. It means that
     it does not negotiate SSLv2 or SSLv3 unless specifically told to, and in fact
     several TLS libraries no longer provide support for those protocols so in many
     cases curl is not even able to speak those protocol versions unless you make a
     serious effort.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: curl默认设计为使用安全的SSL/TLS版本。这意味着除非明确告知，否则它不会协商SSLv2或SSLv3，实际上，许多TLS库已经不再支持这些协议，所以在许多情况下，除非你做出重大努力，curl甚至无法使用这些协议版本。
 - en: '| Option | Use |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 使用 |'
 - en: '| --- | --- |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| –sslv2 | SSL version 2 |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| –sslv2 | SSL版本2 |'
 - en: '| –sslv3 | SSL version 3 |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| –sslv3 | SSL版本3 |'
 - en: '| –tlsv1 | TLS >= version 1.0 |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| –tlsv1 | TLS >= 版本 1.0 |'
 - en: '| –tlsv1.0 | TLS >= version 1.0 |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| –tlsv1.0 | TLS >= 版本 1.0 |'
 - en: '| –tlsv1.1 | TLS >= version 1.1 |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| –tlsv1.1 | TLS >= 版本 1.1 |'
 - en: '| –tlsv1.2 | TLS >= version 1.2 |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| –tlsv1.2 | TLS >= 版本 1.2 |'
 - en: '| –tlsv1.3 | TLS >= version 1.3 |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| –tlsv1.3 | TLS >= 版本 1.3 |'

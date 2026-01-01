@@ -1,22 +1,31 @@
 - en: Retry
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 重试
 - en: Normally curl only makes a single attempt to perform a transfer and returns
     an error if not successful. Using the `--retry` option you can tell curl to retry
     certain failed transfers.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，curl只会尝试一次执行传输，如果失败则返回错误。使用`--retry`选项，你可以告诉curl重试某些失败的传输。
 - en: 'If a transient error is returned when curl tries to perform a transfer, it
     retries this number of times before giving up. Setting the number to 0 makes curl
     do no retries (which is the default). Transient error means either: a timeout,
     an FTP 4xx response code or an HTTP 5xx response code.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl尝试执行传输时，如果返回一个短暂错误，它会在放弃之前重试这个次数。将数字设置为0会使curl不进行重试（这是默认设置）。短暂错误意味着以下情况之一：超时、FTP
+    4xx响应代码或HTTP 5xx响应代码。
 - en: Tweak your retries
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 调整你的重试
 - en: When curl is about to retry a transfer, it first waits one second and then for
     all forthcoming retries it doubles the waiting time until it reaches 10 minutes
     which then is the delay between the rest of the retries. Using `--retry-delay`
@@ -24,48 +33,72 @@
     the attempts. With `--retry-max-time` you cap the total time allowed for retries.
     The `--max-time` option still specifies the longest time a single of these transfers
     is allowed to spend.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl即将重试传输时，它首先等待一秒钟，然后对于所有后续的重试，它会将等待时间加倍，直到达到10分钟，然后这是其余重试之间的延迟。使用`--retry-delay`，你可以禁用这种指数退避算法并设置尝试之间的自己的延迟。使用`--retry-max-time`，你可以限制允许的重试总时间。`--max-time`选项仍然指定了这些传输中任何一个允许花费的最长时间。
 - en: 'Make curl retry up to 5 times, but no more than two minutes:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 让curl最多重试5次，但不超过两分钟：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Connection refused
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 连接被拒绝
 - en: The default retry mechanism only retries transfers for what are considered transient
     errors. Those are errors that the server itself hints and qualifies as being there
     right now but that might be gone at a later time.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认的重试机制只对被认为是短暂错误的传输进行重试。这些错误是服务器本身提示并确认现在存在的，但可能在稍后消失。
 - en: Sometimes you as a user know more about the situation and you can then help
     out curl to do better retries. For starters, you can tell curl to consider “connection
     refused” to be a transient error. Maybe you know that the server you communicate
     with is a flaky one or maybe you know that you sometimes try to download from
     it when it reboots or similar. You use `--retry-connrefused` for this.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候，作为用户，你对情况了解得更多，你可以帮助curl进行更好的重试。首先，你可以告诉curl将“连接被拒绝”视为一个短暂错误。也许你知道你正在通信的服务器是不稳定的，或者也许你知道当你尝试从它重新启动或类似的情况下下载时，它有时会出现问题。你可以使用`--retry-connrefused`来做到这一点。
 - en: 'For example: retry up to 5 times and consider `ECONNREFUSED` a reason for retry:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：重试最多5次，并将`ECONNREFUSED`视为重试的理由：
 - en: '[PRE1]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Retry on any and all errors
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 对任何和所有错误进行重试
 - en: The most aggressive form of retry is for the cases where you **know** that the
     URL is supposed to work and you do not tolerate any failures. Using `--retry-all-errors`
     makes curl treat all transfers failures as reason for retry.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 最激进的重试形式是针对那些你知道URL应该可以正常工作，并且你不能容忍任何失败的情况。使用`--retry-all-errors`会让curl将所有传输失败视为重试的理由。
 - en: 'For example: retry up to 12 times for all errors:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：对所有错误重试最多12次：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

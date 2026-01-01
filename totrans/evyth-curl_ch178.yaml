@@ -1,20 +1,26 @@
 - en: Cookies
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Cookies
 - en: HTTP cookies are key/value pairs that a client stores on the behalf of a server.
     They are sent back in subsequent requests to allow clients to keep state between
     requests. Remember that the HTTP protocol itself has no state but instead the
     client has to resend all data in subsequent requests that it wants the server
     to be aware of.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP Cookies是客户端代表服务器存储的键/值对。它们在后续请求中发送回来，以便客户端能够在请求之间保持状态。记住，HTTP协议本身没有状态，而是客户端必须在后续请求中重新发送所有它希望服务器知道的数据。
 - en: Cookies are set by the server with the `Set-Cookie:` header and with each cookie
     the server sends a bunch of extra properties that need to match for the client
     to send the cookie back. Like domain name and path and perhaps most important
     for how long the cookie should live on.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器通过`Set-Cookie:`头设置Cookies，并且每个Cookies都会发送一些额外的属性，客户端需要匹配这些属性才能将Cookies发送回服务器。这些属性包括域名、路径，也许最重要的是Cookies应该存活的时间。
 - en: The expiry of a cookie is either set to a fixed time in the future (or to live
     a number of seconds) or it gets no expiry at all. A cookie without an expire time
     is called a session cookie and is meant to live during the *session* but not longer.
@@ -22,109 +28,161 @@
     used to view a site. When you close the browser, you end your session. Doing HTTP
     operations with a command-line client that supports cookies begs the question
     of when a session really ends…
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: Cookies的过期时间要么设置为未来的固定时间（或存活一定秒数），要么根本不设置过期时间。没有过期时间的Cookies被称为会话Cookies，意味着它在会话期间存在，但不会更久。在这个意义上，会话通常被认为是用于查看网站的浏览器的生命周期。当你关闭浏览器时，你就结束了会话。使用支持Cookies的命令行客户端进行HTTP操作时，会引发一个疑问：会话何时真正结束…
 - en: Cookie engine
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Cookies引擎
 - en: The general concept of curl only doing the bare minimum unless you tell it differently
     makes it not acknowledge cookies by default. You need to switch on the cookie
     engine to make curl keep track of cookies it receives and then subsequently send
     them out on requests that have matching cookies.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: curl的一般概念是除非你告知它不同，否则只做最基本的工作，这使得它默认不识别Cookies。你需要开启Cookies引擎来让curl跟踪它接收到的Cookies，并在具有匹配Cookies的请求中发送它们。
 - en: 'You enable the cookie engine by asking curl to read or write cookies. If you
     tell curl to read cookies from blank named file, you only switch on the engine
     but start off with an empty internal cookie store:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过让curl读取或写入Cookies来开启Cookies引擎。如果你告诉curl从一个空命名的文件中读取Cookies，你只是开启了引擎，但开始时内部Cookies存储是空的：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Just switching on the cookie engine, getting a single resource and then quitting
     would be pointless as curl would have no chance to actually send any cookies it
     received. Assuming the site in this example would set cookies and then do a redirect
     we would do:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 只开启Cookies引擎，获取单个资源然后退出是没有意义的，因为curl没有机会发送它接收到的任何Cookies。假设在这个示例中，网站会设置Cookies然后进行重定向，我们会这样做：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Reading cookies from file
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 从文件中读取Cookies
 - en: Starting off with a blank cookie store may not be desirable. Why not start off
     with cookies you stored in a previous fetch or that you otherwise acquired? The
     file format curl uses for cookies is called the Netscape cookie format because
     it was once the file format used by browsers and then you could easily tell curl
     to use the browser’s cookies.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 从一个空的Cookies存储开始可能不是最佳选择。为什么不从之前获取或以其他方式获得的Cookies开始呢？curl用于Cookies的文件格式被称为Netscape
+    Cookies格式，因为它曾经是浏览器使用的文件格式，然后你可以轻松地告诉curl使用浏览器的Cookies。
 - en: As a convenience, curl also supports a cookie file being a set of HTTP headers
     that set cookies. It is an inferior format but may be the only thing you have.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为便利，curl还支持将Cookies文件作为设置Cookies的HTTP头集合。这是一个次优格式，但可能是你唯一拥有的。
 - en: 'Tell curl which file to read the initial cookies from:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 告诉curl从哪个文件中读取初始Cookies：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Remember that this only *reads* from the file. If the server would update the
     cookies in its response, curl would update that cookie in its in-memory store
     but then eventually throw them all away when it exits and a subsequent invocation
     of the same input file would use the original cookie contents again.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住，这只是为了从文件中读取。如果服务器在其响应中更新Cookies，curl会在其内存存储中更新该Cookies，但最终在退出时会丢弃所有Cookies。当后续调用相同的输入文件时，会再次使用原始的Cookies内容。
 - en: Writing cookies to file
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将Cookies写入文件
 - en: The place where cookies are stored is sometimes referred to as the cookie jar.
     When you enable the cookie engine in curl and it has received cookies, you can
     instruct curl to write down all its known cookies to a file, the cookie jar, before
     it exits. It is important to remember that curl only updates the output cookie
     jar on exit and not during its lifetime, no matter how long the handling of the
     given input takes.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 存储cookies的地方有时被称为cookie jar。当你启用curl的cookie引擎并且它已经接收到了cookies，你可以指示curl在退出之前将其所有已知的cookies写入一个文件，即cookie
+    jar。重要的是要记住，curl只在退出时更新输出cookie jar，而不是在其生命周期内，无论处理给定输入需要多长时间。
 - en: 'You point out the cookie jar output with `-c`:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `-c` 来指定cookie jar的输出：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '`-c` is the instruction to *write* cookies to a file, `-b` is the instruction
     to *read* cookies from a file. Oftentimes you want both.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-c` 是将cookies *写入* 文件的指令，`-b` 是从文件 *读取* cookies的指令。通常你两者都需要。'
 - en: When curl writes cookies to this file, it saves all known cookies including
     those that are session cookies (without a given lifetime). curl itself has no
     notion of a session and it does not know when a session ends so it does not flush
     session cookies unless you tell it to.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl将cookies写入此文件时，它会保存所有已知的cookies，包括那些会话cookies（没有指定生存期）。curl本身没有会话的概念，也不知道会话何时结束，因此除非你告诉它，否则它不会刷新会话cookies。
 - en: New cookie session
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 新的Cookie会话
 - en: Instead of telling curl when a session ends, curl features an option that lets
     the user decide when a new session *begins*.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: curl不是通过告诉curl何时会话结束来处理会话的，它提供了一个选项，让用户决定何时开始一个新的会话 *开始*。
 - en: A new cookie session means that all the old session cookies are be thrown away.
     It is the equivalent of closing a browser and starting it up again.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 新的cookie会话意味着所有旧的会话cookies都会被丢弃。这相当于关闭浏览器并重新启动。
 - en: 'Tell curl a new cookie session starts by using `-j, --junk-session-cookies`:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-j, --junk-session-cookies` 告诉curl一个新的Cookie会话开始：
 - en: '[PRE4]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: '[Cookie file format](ch178.xhtml#http__cookies__fileformat__md)'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Cookie文件格式](ch178.xhtml#http__cookies__fileformat__md)'

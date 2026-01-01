@@ -1,47 +1,73 @@
 - en: MQTT
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: MQTT
 - en: A plain GET subscribes to the topic and prints all published messages. Doing
     a POST publishes the post data to the topic and exits.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单的 GET 订阅主题并打印所有发布的消息。执行 POST 将发布数据发布到主题并退出。
 - en: 'Subscribe to the temperature in the `home/bedroom` subject published by example.com:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 订阅由 example.com 发布的 `home/bedroom` 主题的温度：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Send the value `75` to the `home/bedroom/dimmer` subject hosted by the example.com
     server:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 将值 `75` 发送到由 example.com 服务器托管的 `home/bedroom/dimmer` 主题：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: What does curl deliver as a response to a subscribe
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: curl 对订阅的响应是什么
 - en: It outputs two bytes topic length (MSB | LSB), the topic followed by the payload.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 它输出两个字节的主题长度（MSB | LSB），然后是主题和有效载荷。
 - en: Caveats
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: 'Remaining limitations in curl’s MQTT support as of September 2022:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 截至 2022 年 9 月 curl 的 MQTT 支持的剩余限制：
 - en: Only QoS level 0 is implemented for publish
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 仅实现了 QoS 级别 0 的发布
 - en: No way to set retain flag for publish
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 无法设置发布保留标志
 - en: No TLS (mqtts) support
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不支持 TLS (mqtts)

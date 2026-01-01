@@ -1,56 +1,85 @@
 - en: Request target
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 请求目标
 - en: When given an input URL such as `http://example.com/file`, the path section
     of the URL gets extracted and is turned into `/file` in the HTTP request line.
     That item in the protocol is called the *request target* in HTTP. That is the
     resource this request interacts with. Normally this request target is extracted
     from the URL and then used in the request and as a user you do not need to think
     about it.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当给定一个如 `http://example.com/file` 的输入 URL 时，URL 的路径部分会被提取出来，并在 HTTP 请求行中转换为 `/file`。在
+    HTTP 协议中，这个协议项被称为 *请求目标*。这就是请求与之交互的资源。通常，这个请求目标是从 URL 中提取出来的，然后用于请求中，作为用户，你不需要考虑它。
 - en: 'In some rare circumstances, user may want to go creative and change this request
     target in ways that the URL does not really allow. For example, the HTTP OPTIONS
     method has a specially define request target for magic that concerns *the server*
     and not a specific path, and it uses `*` for that. Yes, a single asterisk. There
     is no way to specify a URL for this, so if you want to pass a single asterisk
     in the request target to a server, like for OPTIONS, you have to do it like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一些罕见的情况下，用户可能想要创新并改变这个请求目标，以这种方式改变它，而 URL 并不允许这样做。例如，HTTP OPTIONS 方法有一个专门定义的请求目标，用于与
+    *服务器* 相关的魔法，而不是特定的路径，它使用 `*` 来表示。是的，一个单独的星号。无法指定 URL，因此如果你想在请求目标中传递一个星号到服务器，比如用于
+    OPTIONS，你必须这样做：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'That example command line makes the first line of the outgoing HTTP request
     to look like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 那个示例命令行使得发出的 HTTP 请求的第一行看起来像这样：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: –path-as-is
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: –path-as-is
 - en: The path part of the URL is the part that starts with the first slash after
     the hostname and ends either at the end of the URL or at a ‘?’ or ‘#’ (roughly
     speaking).
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: URL 的路径部分是从主机名后的第一个斜杠开始的部分，它要么在 URL 的末尾结束，要么在 ‘?’ 或 ‘#’（大致上）处结束。
 - en: If you include substrings including `/../` or `/./` in the path, curl automatically
     squashes them before the path is sent to the server, as is dictated by standards
     and how such strings tend to work in local file systems. The `/../` sequence removes
     the previous section so that `/hello/sir/../` ends up just `/hello/` and `/./`
     is simply removed so that `/hello/./sir/` becomes `/hello/sir/`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你将包括 `/../` 或 `/./` 的子字符串包含在路径中，curl 会自动在将路径发送到服务器之前将其压缩，这是根据标准以及这些字符串在本地文件系统中通常的工作方式所决定的。`/../`
+    序列会移除前面的部分，因此 `/hello/sir/../` 最终变为 `/hello/`，而 `/./` 则被简单地移除，因此 `/hello/./sir/`
+    变为 `/hello/sir/`。
 - en: To *prevent* curl from squashing those magic sequences before they are sent
     to the server and thus allow them through, the `--path-as-is` option exists.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了 *防止* curl 在将那些魔法序列发送到服务器之前压缩它们，从而允许它们通过，存在 `--path-as-is` 选项。
 - en: 'Lame attempt to trick the server to deliver its `/etc/passwd` file:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 欺骗服务器交付其 `/etc/passwd` 文件的拙劣尝试：
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

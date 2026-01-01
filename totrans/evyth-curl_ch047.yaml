@@ -1,59 +1,91 @@
 - en: Windows
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Windows
 - en: You can build curl on Windows in several different ways. We recommend using
     the MSVC compiler from Microsoft or the free and open source mingw compiler. The
     build process is, however, not limited to these.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以在Windows上以多种不同的方式构建curl。我们推荐使用来自Microsoft的MSVC编译器或免费开源的mingw编译器。然而，构建过程并不仅限于这些。
 - en: If you use mingw, you might want to use the [autotools](ch043.xhtml#build__autotools__md)
     build system.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您使用mingw，您可能想使用[autotools](ch043.xhtml#build__autotools__md)构建系统。
 - en: winbuild
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: winbuild
 - en: This is how to build curl and libcurl using the command line.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是使用命令行构建curl和libcurl的方法。
 - en: 'Build with MSVC using the `nmake` utility like this:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`nmake`工具以MSVC构建，如下所示：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Decide what options to enable/disable in your build. The `README.md` file in
     that directory details them all, but an example command line could look like this
     (split into several lines for readability):'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 决定在您的构建中启用/禁用哪些选项。该目录中的`README.md`文件详细说明了所有选项，但一个示例命令行可能看起来像这样（为了可读性分成几行）：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Visual C++ project files
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Visual C++项目文件
 - en: 'Using [CMake](ch044.xhtml#build__cmake__md), you can generate a set of Visual
     Studio project files:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用[CMake](ch044.xhtml#build__cmake__md)，您可以生成一组Visual Studio项目文件：
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Once generated, you import them and build with Visual Studio like normally.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦生成，您就可以导入它们，并像通常一样使用Visual Studio进行构建。
 - en: Mingw
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Mingw
 - en: 'You can build curl with the mingw compiler suite. Use [CMake](ch044.xhtml#build__cmake__md)
     to generate the set of Makefiles for you:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用mingw编译器套件构建curl。使用[CMake](ch044.xhtml#build__cmake__md)为您生成一组Makefiles：
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

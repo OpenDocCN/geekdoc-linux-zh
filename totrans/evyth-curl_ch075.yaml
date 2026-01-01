@@ -1,217 +1,322 @@
 - en: Version
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 版本
 - en: To get to know what version of curl you have installed, run
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解您安装的curl版本，请运行
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'or use the shorthand version:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者使用简写版本：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The output from that command line is typically four lines, out of which some
     are rather long and might wrap in your terminal window.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 该命令行的输出通常是四行，其中一些可能相当长，可能会在您的终端窗口中换行。
 - en: 'An example output from a Debian Linux in June 2020:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 2020年6月Debian Linux的一个示例输出：
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'while the same command line invoked on a Windows 10 machine on the same date
     looks like:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 而在相同日期的Windows 10机器上运行的相同命令行看起来像：
 - en: '[PRE3]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The meaning of the four lines?
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这四行的含义是什么？
 - en: 'Line 1: curl'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 第1行：curl
 - en: The first line starts with `curl` and first shows the main version number of
     the tool. Then follows the platform the tool was built for within parentheses
     and the libcurl version. Those three fields are common for all curl builds.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一行以`curl`开头，首先显示工具的主版本号。然后是工具构建的平台（括号内），以及libcurl版本。这三个字段对所有curl构建都是通用的。
 - en: If the curl version number has `-DEV` appended to it, it means the version is
     built straight from an in-development source code and it is not an officially
     released and blessed version.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl版本号后面附加了`-DEV`，则表示该版本是从开发源代码直接构建的，并且它不是一个官方发布和认可的版本。
 - en: The rest of this line contains names of third party components this build of
     curl uses, often with their individual version number next to it with a slash
     separator. Like `OpenSSL/1.1.1g` and `nghttp2/1.41.0`. This can for example tell
     you which TLS backends this curl uses.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这行剩余部分包含curl构建使用的第三方组件名称，通常旁边有斜杠分隔的各自版本号。例如`OpenSSL/1.1.1g`和`nghttp2/1.41.0`。这可以告诉你curl使用了哪些TLS后端。
 - en: 'Line 1: TLS versions'
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 第1行：TLS版本
 - en: Line 1 may contain one or more TLS libraries. curl can be built to support more
     than one TLS library which then makes curl - at start-up - select which particular
     backend to use for this invocation.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 第1行可能包含一个或多个TLS库。curl可以构建以支持多个TLS库，这使得curl在启动时选择为这次调用使用哪个特定的后端。
 - en: If curl supports more than one TLS library like this, the ones that are *not*
     selected by default are listed within parentheses. Thus, if you do not specify
     which backend to use (with the `CURL_SSL_BACKEND` environment variable) the one
     listed without parentheses is used.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl支持多个TLS库，则默认未选择的库列在括号内。因此，如果您没有指定要使用哪个后端（使用`CURL_SSL_BACKEND`环境变量），则使用未加括号的列表中的后端。
 - en: 'Line 2: Release-Date'
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 第2行：发布日期
 - en: This line shows the date this curl version was released by the curl project,
     and it can also show a secondary “Patch date” if it has been updated somehow after
     it was originally released.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 这行显示了curl版本由curl项目发布日期，也可以显示一个次要的“补丁日期”，如果它在最初发布后以某种方式更新过。
 - en: This says `[unreleased]` if curl was built another way than from a release tarball,
     and as you can see above that is how Microsoft did it for Windows 10 and the curl
     project does not recommend it.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这表示如果curl不是从发布tarball构建的，而是像上面所示的那样，Microsoft为Windows 10做了，curl项目不推荐这样做。
 - en: 'Line 3: Protocols'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 第3行：协议
 - en: This is a list of all transfer protocols (URL schemes really) in alphabetical
     order that this curl build supports. All names are shown in lowercase letters.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是curl构建支持的按字母顺序排列的所有传输协议（URL方案）。所有名称均以小写字母显示。
 - en: 'This list can contain these protocols:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 此列表可以包含以下协议：
 - en: dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, mqtt,
     pop3, pop3s, rtmp, rtsp, scp, sftp, smb, smbs, smtp, smtps, telnet and tftp
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, mqtt,
+    pop3, pop3s, rtmp, rtsp, scp, sftp, smb, smbs, smtp, smtps, telnet和tftp
 - en: 'Line 4: Features'
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 第4行：特性
 - en: The list of features this build of curl supports. If the name is present in
     the list, that feature is enabled. If the name is not present, that feature is
     not enabled.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个curl构建支持的特性列表。如果名称出现在列表中，则表示该特性已启用。如果名称不在列表中，则表示该特性未启用。
 - en: 'Features that can be present there:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能存在的特性：
 - en: '**alt-svc** - Support for the alt-svc: header'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**alt-svc** - 支持`alt-svc:`头'
 - en: '**AsynchDNS** - This curl uses asynchronous name resolves. Asynchronous name
     resolves can be done using either the c-ares or the threaded resolver backends.'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**AsynchDNS** - 这个curl使用异步域名解析。异步域名解析可以使用c-ares或线程解析后端。'
 - en: '**brotli** - support for automatic brotli compression over HTTP(S)'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**brotli** - 支持通过HTTP(S)自动brotli压缩'
 - en: '**CharConv** - curl was built with support for character set conversions (like
     EBCDIC)'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**CharConv** - curl构建时支持字符集转换（如EBCDIC）'
 - en: '**Debug** - This curl uses a libcurl built with Debug. This enables more error-tracking
     and memory debugging etc. For curl-developers only.'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**调试** - 这个curl使用的是带有调试的libcurl构建的。这可以启用更多的错误跟踪和内存调试等。仅适用于curl开发者。'
 - en: '**GSS-API** - GSS-API authentication is enabled'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**GSS-API** - 启用了GSS-API认证。'
 - en: '**HTTP2** - HTTP/2 support has been built-in.'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**HTTP2** - 内置了HTTP/2支持。'
 - en: '**HTTP3** - HTTP/3 support has been built-in.'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**HTTP3** - 内置了HTTP/3支持。'
 - en: '**HTTPS-proxy** - This curl is built to support HTTPS proxy.'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**HTTPS代理** - 这个curl被构建来支持HTTPS代理。'
 - en: '**IDN** - This curl supports IDN - international domain names.'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**IDN** - 这个curl支持IDN - 国际域名。'
 - en: '**IPv6** - You can use IPv6 with this.'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**IPv6** - 你可以使用IPv6。'
 - en: '**krb4** - Krb4 for FTP is supported'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**krb4** - 支持FTP的Krb4。'
 - en: '**Largefile** - This curl supports transfers of large files, files larger than
     2GB.'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Largefile** - 这个curl支持大文件传输，文件大小超过2GB。'
 - en: '**libz** - Automatic gzip decompression of compressed files over HTTP is supported.'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**libz** - 支持通过HTTP压缩文件的自动gzip解压缩。'
 - en: '**Metalink** - This curl supports Metalink. In modern curl versions this option
     is never available.'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**Metalink** - 这个curl支持Metalink。在现代curl版本中，此选项永远不会可用。'
 - en: '**MultiSSL** - This curl supports multiple TLS backends. The first line details
     exactly which TLS libraries.'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**MultiSSL** - 这个curl支持多个TLS后端。第一行详细说明了确切的TLS库。'
 - en: '**NTLM** - NTLM authentication is supported.'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**NTLM** - 支持NTLM认证。'
 - en: '**NTLM_WB** - NTLM authentication is supported.'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**NTLM_WB** - 支持NTLM认证。'
 - en: '**PSL** - Public Suffix List (PSL) is available and means that this curl has
     been built with knowledge about *public suffixes*, used for cookies.'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**PSL** - 公共后缀列表（PSL）可用，这意味着这个curl已经内置了关于*公共后缀*的知识，用于cookie。'
 - en: '**SPNEGO** - SPNEGO authentication is supported.'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**SPNEGO** - 支持SPNEGO认证。'
 - en: '**SSL** - SSL versions of various protocols are supported, such as HTTPS, FTPS,
     POP3S and so on.'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**SSL** - 支持各种协议的SSL版本，例如HTTPS、FTPS、POP3S等。'
 - en: '**SSPI** - SSPI is supported'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**SSPI** - 支持SSPI。'
 - en: '**TLS-SRP** - SRP (Secure Remote Password) authentication is supported for
     TLS.'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**TLS-SRP** - 支持TLS的SRP（安全远程密码）认证。'
 - en: '**UnixSockets** - Unix sockets support is provided.'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**UnixSockets** - 提供Unix套接字支持。'

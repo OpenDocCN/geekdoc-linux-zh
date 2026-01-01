@@ -1,27 +1,40 @@
 - en: Submit a login form over HTTP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 通过 HTTP 提交登录表单
 - en: A login submission over HTTP is usually a matter of figuring out exactly what
     data to submit in a POST and to which target URL to send it.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过 HTTP 提交登录通常是一个确定在 POST 中提交哪些数据以及将其发送到哪个目标 URL 的问题。
 - en: Once logged in, the target URL can be fetched if the proper cookies are used.
     As many login-systems work with HTTP redirects, we ask libcurl to follow such
     if they arrive.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 登录成功后，如果使用了正确的 cookies，可以获取目标 URL。由于许多登录系统使用 HTTP 重定向，我们要求 libcurl 在收到重定向时跟随。
 - en: Some login forms makes it more complicated and require that you got cookies
     from the page showing the login form etc, so if you need that you may want to
     extend this code a little bit.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些登录表单使得过程更加复杂，并要求您从显示登录表单的页面获取 cookies 等，因此如果您需要这些，可能需要稍微扩展一下此代码。
 - en: By passing in a non-existing cookie file, this example enables the cookie parser
     so incoming cookies are stored when the response from the login response arrives
     and then the subsequent request for the resource uses those and prove to the server
     that we are in fact correctly logged in.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过传递一个不存在的 cookie 文件，此示例启用了 cookie 解析器，以便在登录响应的响应到达时存储传入的 cookies，然后后续的资源请求使用这些
+    cookies 并向服务器证明我们确实已经正确登录。
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

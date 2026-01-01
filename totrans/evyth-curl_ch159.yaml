@@ -1,83 +1,124 @@
 - en: URL encode data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: URL 编码数据
 - en: Percent-encoding, also known as URL encoding, is technically a mechanism for
     encoding data so that it can appear in URLs. This encoding is typically used when
     sending POSTs with the `application/x-www-form-urlencoded` content type, such
     as the ones curl sends with `--data` and `--data-binary` etc.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 百分比编码，也称为 URL 编码，在技术上是一种编码数据的方式，以便它可以在 URL 中出现。这种编码通常用于发送 `application/x-www-form-urlencoded`
+    内容类型的 POST，例如 curl 通过 `--data` 和 `--data-binary` 等发送的。
 - en: The command-line options mentioned above all require that you provide properly
     encoded data, data you need to make sure already exists in the right format. While
     that gives you a lot of freedom, it is also a bit inconvenient at times.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 上文提到的命令行选项都需要你提供正确编码的数据，你需要确保这些数据已经以正确的格式存在。虽然这给了你很大的自由度，但在某些时候也会有些不便。
 - en: To help you send data you have not already encoded, curl offers the `--data-urlencode`
     option. This option offers several different ways to URL encode the data you give
     it.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了帮助你发送尚未编码的数据，curl 提供了 `--data-urlencode` 选项。此选项提供了多种方法来对给定的数据进行 URL 编码。
 - en: 'You use it like `--data-urlencode data` in the same style as the other –data
     options. To be CGI-compliant, the **data** part should begin with a name followed
     by a separator and a content specification. The **data** part can be passed to
     curl using one of the following syntaxes:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用与其它 –data 选项相同的风格使用它，例如 `--data-urlencode data`。为了符合 CGI 标准，**data** 部分应该以一个名称开头，后面跟着一个分隔符和一个内容指定。**data**
+    部分可以通过以下语法之一传递给 curl：
 - en: '`content`: URL encode the content and pass that on. Just be careful so that
     the content does not contain any `=` or `@` symbols, as that then makes the syntax
     match one of the other cases below.'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`content`：对内容进行 URL 编码并传递。只需小心确保内容中不包含任何 `=` 或 `@` 符号，因为这会使语法与以下其他情况之一匹配。'
 - en: '`=content`: URL encode the content and pass that on. The initial `=` symbol
     is not included in the data.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`=content`：对内容进行 URL 编码并传递。初始的 `=` 符号不包括在数据中。'
 - en: '`name=content`: URL encode the content part and pass that on. Note that the
     name part is expected to be URL encoded already.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`name=content`：对内容部分进行 URL 编码并传递。请注意，预期名称部分已经进行了 URL 编码。'
 - en: '`@filename`: load data from the given file (including any newlines), URL encode
     that data and pass it on in the POST.'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`@filename`：从指定的文件中加载数据（包括任何换行符），对数据进行 URL 编码，并在 POST 中传递。'
 - en: '`name@filename`: load data from the given file (including any newlines), URL
     encode that data and pass it on in the POST. The name part gets an equal sign
     appended, resulting in `name=urlencoded-file-content`. Note that the name is expected
     to be URL encoded already.'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`name@filename`：从指定的文件中加载数据（包括任何换行符），对数据进行 URL 编码，并在 POST 中传递。名称部分会附加一个等号，结果为
+    `name=urlencoded-file-content`。请注意，预期名称已经进行了 URL 编码。'
 - en: 'As an example, you could POST a name to have it encoded by curl:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，你可以通过 POST 发送一个名称，让 curl 进行编码：
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '…which would send the following data in the actual request body:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: …这将实际请求体中发送以下数据：
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'If you store the string `John Doe (Junior)` in a file named `contents.txt`,
     you can tell curl to send that contents URL encoded using the field name ‘user’
     like this:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你将字符串 `John Doe (Junior)` 存储在名为 `contents.txt` 的文件中，你可以告诉 curl 使用字段名 ‘user’
+    以这种方式发送该内容 URL 编码：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'In both these examples above, the field name is not URL encoded but is passed
     on as-is. If you want to URL encode the field name as well, like if you want to
     pass on a field name called `user name`, you can ask curl to encode the entire
     string by prefixing it with an equals sign (that does not get sent):'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在上述两个示例中，字段名没有进行 URL 编码，而是直接传递。如果你想对字段名也进行 URL 编码，比如你想传递一个名为 `user name` 的字段名，你可以要求
+    curl 对整个字符串进行编码，通过在前面加上一个等号（该等号不会被发送）：
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

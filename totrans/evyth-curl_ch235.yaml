@@ -1,155 +1,222 @@
 - en: Name resolving
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 名称解析
 - en: Most transfers libcurl can do involves a name that first needs to be translated
     to an Internet address. That is name resolving. Using a numerical IP address directly
     in the URL usually avoids the name resolve phase, but in many cases it is not
     easy to manually replace the name with the IP address.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数 libcurl 可以执行的数据传输都涉及一个首先需要解析为互联网地址的名称。这就是名称解析。在 URL 中直接使用数值 IP 地址通常可以避免名称解析阶段，但在许多情况下，手动将名称替换为
+    IP 地址并不容易。
 - en: libcurl tries hard to [re-use an existing connection](ch233.xhtml#transfers__conn__reuse__md)
     rather than to create a new one. The function that checks for an existing connection
     to use is based purely on the name and is performed before any name resolving
     is attempted. That is one of the reasons the re-use is so much faster. A transfer
     using a reused connection does not resolve the hostname again.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 尽力[重用现有连接](ch233.xhtml#transfers__conn__reuse__md)而不是创建一个新的连接。检查现有连接以使用的函数仅基于名称，并在尝试任何名称解析之前执行。这就是重用如此之快的一个原因。使用重用连接的传输不会再次解析主机名。
 - en: If no connection can be reused, libcurl resolves the hostname to the set of
     addresses it resolves to. Typically this means asking for both IPv4 and IPv6 addresses
     and there may be a whole set of those returned to libcurl. That set of addresses
     is then tried until one works, or it returns failure.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果无法重用连接，libcurl 将将主机名解析为它解析到的地址集。通常这意味着请求 IPv4 和 IPv6 地址，并且可能有一整套这些地址返回给 libcurl。然后尝试这一组地址，直到找到一个可以工作的，或者返回失败。
 - en: 'An application can force libcurl to use only an IPv4 or IPv6 resolved address
     by setting `CURLOPT_IPRESOLVE` to the preferred value. For example, ask to only
     use IPv6 addresses:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序可以通过将 `CURLOPT_IPRESOLVE` 设置为首选值来强制 libcurl 只使用 IPv4 或 IPv6 解析的地址。例如，请求只使用
+    IPv6 地址：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Name resolver backends
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 名称解析后端
 - en: libcurl can be built to do name resolves in one out of these three different
     ways and depending on which backend way that is used, it gets a slightly different
     feature set and sometimes modified behavior.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 可以构建为以三种不同方式之一进行名称解析，具体取决于使用的后端方式，它将获得略有不同的功能集和有时修改后的行为。
 - en: The default backend is invoking the normal libc resolver functions in a new
     helper-thread, so that it can still do fine-grained timeouts if wanted and there
     is no blocking calls involved.
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 默认后端是在新的辅助线程中调用正常的 libc 解析器函数，这样它仍然可以在需要时执行细粒度超时，并且没有阻塞调用。
 - en: On older systems, libcurl uses the standard synchronous name resolver functions.
     They unfortunately make all transfers within a multi handle block during its operation
     and it is much harder to time out nicely.
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在较旧的系统上，libcurl 使用标准的同步名称解析函数。不幸的是，它们在其操作期间会在多处理块中执行所有传输，这使得优雅地超时变得非常困难。
 - en: There is also support for resolving with the c-ares third party library, which
     supports asynchronous name resolving without the use of threads. This scales better
     to huge number of parallel transfers but it is not always 100% compatible with
     the native name resolver functionality.
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 还支持使用 c-ares 第三方库进行解析，该库支持不使用线程的异步名称解析。这对于大量并行传输的扩展性更好，但它并不总是与原生名称解析功能完全兼容。
 - en: DNS over HTTPS
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: DNS over HTTPS
 - en: Independently of what resolver backend that libcurl is built to use, since 7.62.0
     it also provides a way for the user to ask a specific DoH (DNS over HTTPS) server
     for the address of a name. This avoids using the normal, native resolver method
     and server and instead asks a dedicated separate one.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 不论 libcurl 构建时使用的是哪种解析器后端，从 7.62.0 版本开始，它还提供了一个让用户请求特定 DoH（DNS over HTTPS）服务器获取名称地址的方法。这避免了使用正常的、原生的解析器方法和服务器，而是请求一个专门的独立服务器。
 - en: 'A DoH server is specified as a full URL with the `CURLOPT_DOH_URL` option like
     this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `CURLOPT_DOH_URL` 选项指定一个完整的 URL 作为 DoH 服务器，例如：
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The URL passed to this option *must* be using https:// and it is generally recommended
     that you have HTTP/2 support enabled so that libcurl can perform multiple DoH
     requests multiplexed over the connection to the DoH server.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 传递给此选项的 URL *必须* 使用 https://，并且通常建议您启用 HTTP/2 支持，以便 libcurl 可以在连接到 DoH 服务器的连接上多路复用执行多个
+    DoH 请求。
 - en: Caching
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 缓存
 - en: When a name has been resolved, the result is stored in libcurl’s in-memory cache
     so that subsequent resolves of the same name are instant for as long the name
     is kept in the DNS cache. By default, each entry is kept in the cache for 60 seconds,
     but that value can be changed with `CURLOPT_DNS_CACHE_TIMEOUT`.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个名称被解析后，结果将存储在libcurl的内存缓存中，以便后续对该名称的解析可以即时完成，只要该名称保留在DNS缓存中。默认情况下，每个条目在缓存中保留60秒，但可以使用`CURLOPT_DNS_CACHE_TIMEOUT`更改此值。
 - en: The DNS cache is kept within the easy handle when `curl_easy_perform` is used,
     or within the multi handle when the multi interface is used. It can also be made
     shared between multiple easy handles using the [share interface](ch257.xhtml#helpers__sharing__md).
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用`curl_easy_perform`时，DNS缓存保留在easy句柄中，或者当使用多接口时，保留在multi句柄中。还可以使用[共享接口](ch257.xhtml#helpers__sharing__md)在多个easy句柄之间共享DNS缓存。
 - en: Custom addresses for hosts
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 主机的自定义地址
 - en: Sometimes it is handy to provide fake, custom addresses for real hostnames so
     that libcurl connects to a different address instead of one an actual name resolve
     would suggest.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时提供虚假的自定义地址以代替真实的主机名很有用，这样libcurl就会连接到不同的地址，而不是实际名称解析所建议的地址。
 - en: With the help of the [CURLOPT_RESOLVE](https://curl.se/libcurl/c/CURLOPT_RESOLVE.html)
     option, an application can pre-populate libcurl’s DNS cache with a custom address
     for a given hostname and port number.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用`CURLOPT_RESOLVE`选项，应用程序可以预先填充libcurl的DNS缓存，为特定的主机名和端口号指定一个自定义地址。
 - en: 'To make libcurl connect to 127.0.0.1 when example.com on port 443 is requested,
     an application can do:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使libcurl在请求example.com的443端口时连接到127.0.0.1，应用程序可以执行以下操作：
 - en: '[PRE2]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Since this puts the fake address into the DNS cache, it works even when following
     redirects etc.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这会将虚假地址放入DNS缓存中，因此即使在跟随重定向等情况下也能正常工作。
 - en: Name server options
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 名称服务器选项
 - en: For libcurl built to use c-ares, there is a few options available that offer
     fine-grained control of what DNS servers to use and how. This is limited to c-ares
     build purely because these are powers that are not available when the standard
     system calls for name resolving are used.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于构建为使用c-ares的libcurl，有一些选项可供选择，这些选项提供了对要使用的DNS服务器及其使用方式的精细控制。这仅限于纯c-ares构建，因为这些功能在标准系统调用用于名称解析时不可用。
 - en: With `CURLOPT_DNS_SERVERS`, the application can select to use a set of dedicated
     DNS servers.
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`CURLOPT_DNS_SERVERS`，应用程序可以选择使用一组专用的DNS服务器。
 - en: With `CURLOPT_DNS_INTERFACE` it can tell libcurl which network interface to
     speak DNS over instead of the default one.
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`CURLOPT_DNS_INTERFACE`，它可以告诉libcurl使用哪个网络接口来代替默认的DNS接口。
 - en: With `CURLOPT_DNS_LOCAL_IP4` and `CURLOPT_DNS_LOCAL_IP6`, the application can
     specify which specific network addresses to bind DNS resolves to.
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`CURLOPT_DNS_LOCAL_IP4`和`CURLOPT_DNS_LOCAL_IP6`，应用程序可以指定要将DNS解析绑定到哪个特定的网络地址。
 - en: No global DNS cache
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 无全局DNS缓存
 - en: The option called `CURLOPT_DNS_USE_GLOBAL_CACHE` once told curl to use a global
     DNS cache. This functionality has been removed since 7.65.0, so while this option
     still exists it does nothing.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 之前名为`CURLOPT_DNS_USE_GLOBAL_CACHE`的选项曾指示curl使用全局DNS缓存。自7.65.0版本以来，此功能已被移除，因此尽管此选项仍然存在，但它不再执行任何操作。

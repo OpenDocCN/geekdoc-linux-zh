@@ -1,25 +1,38 @@
 - en: Certificate pinning
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 证书固定
 - en: TLS certificate pinning is a way to verify that the public key used to sign
     the servers certificate has not changed. It is *pinned*.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS 证书固定是一种验证用于签署服务器证书的公钥是否已更改的方法。它是被*固定*的。
 - en: When negotiating a TLS or SSL connection, the server sends a certificate indicating
     its identity. A public key is extracted from this certificate and if it does not
     exactly match the public key provided to this option, curl aborts the connection
     before sending or receiving any data.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在协商 TLS 或 SSL 连接时，服务器发送一个证书以表明其身份。从这个证书中提取出一个公钥，如果它与提供给此选项的公钥不完全匹配，curl 将在发送或接收任何数据之前终止连接。
 - en: You tell curl a filename to read the sha256 value from, or you specify the base64
     encoded hash directly in the command line with a `sha256//` prefix. You can specify
     one or more hashes like that, separated with semicolons (;).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以向 curl 指定一个文件名来从中读取 sha256 值，或者你可以在命令行中直接使用带有 `sha256//` 前缀的 base64 编码的哈希值。你可以指定一个或多个这样的哈希值，用分号
+    (;) 分隔。
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This feature is not supported by all TLS backends.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 此功能并非所有 TLS 后端都支持。

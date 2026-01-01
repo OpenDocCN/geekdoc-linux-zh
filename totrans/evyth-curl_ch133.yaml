@@ -1,38 +1,54 @@
 - en: TLS backends
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: TLS后端
 - en: When curl is built, it gets told to use a specific TLS library. That TLS library
     is the engine that provides curl with the powers to speak TLS over the wire. We
     often refer to them as different “backends” as they can be seen as different pluggable
     pieces into the curl machine. curl can be built to be able to use one or more
     of these backends.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl构建时，它会被告知使用特定的TLS库。这个TLS库是提供curl通过有线传输使用TLS能力的引擎。我们通常将它们称为不同的“后端”，因为它们可以被看作是curl机器的不同可插拔组件。curl可以被构建为能够使用这些后端中的一个或多个。
 - en: Sometimes features and behaviors differ slightly when curl is built with different
     TLS backends, but the developers work hard on making those differences as small
     and unnoticeable as possible.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时当curl与不同的TLS后端一起构建时，其功能和行为会有细微的差异，但开发者们努力使这些差异尽可能小且不明显。
 - en: Showing the curl version information with [curl –version](ch074.xhtml#cmdline__curlver__md)
     includes the TLS library and version in the first line of output.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用[curl –version](ch074.xhtml#cmdline__curlver__md)显示curl版本信息时，输出第一行包括TLS库和版本。
 - en: Multiple TLS backends
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多个TLS后端
 - en: When curl is built with *multiple* TLS backends, it can be told which one to
     use each time it is started. It is always built to use a specific one by default
     unless one is asked for.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl与*多个* TLS后端一起构建时，可以在每次启动时指定使用哪一个。除非有特别要求，否则它总是默认使用一个特定的后端。
 - en: If you invoke `curl --version` for a curl with multiple backends it mentions
     `MultiSSL` as a feature in the last line. The first line includes all the supported
     TLS backends with the non-default ones within parentheses.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你为具有多个后端的curl调用`curl --version`，它会在最后一行提到`MultiSSL`作为一个特性。第一行包括所有支持的TLS后端，非默认的后端用括号括起来。
 - en: To set a specific one to get used, set the environment variable `CURL_SSL_BACKEND`
     to its name.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 要设置一个特定的后端以供使用，请将环境变量`CURL_SSL_BACKEND`设置为该后端的名字。

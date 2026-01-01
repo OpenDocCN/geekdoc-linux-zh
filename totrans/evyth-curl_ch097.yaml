@@ -1,38 +1,56 @@
 - en: Resuming and ranges
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 恢复和范围
 - en: Resuming a download means first checking the size of what is already present
     locally and then asking the server to send the rest of it so it can be appended.
     curl also allows resuming the transfer at a custom point without actually having
     anything already locally present.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 恢复下载意味着首先检查本地已经存在的内容的大小，然后请求服务器发送剩余的部分以便可以追加。curl还允许在没有任何本地现有内容的情况下从自定义点恢复传输。
 - en: curl supports resumed downloads on several protocols. Tell it where to start
     the transfer with the `-C, --continue-at` option that takes either a plain numerical
     byte counter offset where to start or the string `-` that asks curl to figure
     it out itself based on what it knows. When using `-`, curl uses the destination
     filename to figure out how much data that is already present locally and ask use
     that as an offset when asking for more data from the server.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl支持在多个协议上恢复下载。使用`-C, --continue-at`选项告诉curl从哪里开始传输，该选项可以接受一个纯数字的字节计数器偏移量，或者一个字符串`-`，这会指示curl根据已知信息自行确定。当使用`-`时，curl会使用目标文件名来确定已经本地存在的多少数据，并在请求更多数据时使用该数据作为偏移量。
 - en: 'To start downloading an FTP file from byte offset 100:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 要从字节偏移量100开始下载FTP文件：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Continue downloading a previously interrupted download:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 继续下载之前已中断的下载：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'If you instead just want a specific byte range from the remote resource transferred,
     you can ask for only that. For example, when you only want 1000 bytes from offset
     100 to avoid having to download the entire huge remote file:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只想从远程资源传输特定的字节范围，你可以只请求那个范围。例如，当你只想从偏移量100开始的1000个字节，以避免下载整个巨大的远程文件：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

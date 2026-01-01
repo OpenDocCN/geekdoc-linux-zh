@@ -1,43 +1,63 @@
 - en: Simple POST
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 简单的POST
 - en: 'To send form data, a browser URL encodes it as a series of `name=value` pairs
     separated by ampersand (`&`) symbols. The resulting string is sent as the body
     of a POST request. To do the same with curl, use the `-d` (or `--data`) argument,
     like this:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 要发送表单数据，浏览器会将它编码为一系列由和号（`&`）符号分隔的`name=value`对。生成的字符串作为POST请求的主体发送。要在curl中执行相同的操作，使用`-d`（或`--data`）参数，如下所示：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'When specifying multiple `-d` options on the command line, curl concatenates
     them and insert ampersands in between, so the above example could also be written
     like this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在命令行上指定多个`-d`选项时，curl会将它们连接起来，并在它们之间插入和号，因此上述示例也可以这样写：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'If the amount of data to send is too large for a mere string on the command
     line, you can also read it from a filename in standard curl style:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果要发送的数据量太大，无法在命令行上的简单字符串中处理，您也可以按照标准curl风格从文件名中读取它：
 - en: '[PRE2]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: While the server might assume that the data is encoded in some special way,
     curl does not encode or change the data you tell it to send. **curl sends exactly
     the bytes you give it** (except that when reading from a file. `-d` skips over
     the carriage returns and newlines so you need to use `--data-binary` if you rather
     intend them to be included in the data.).
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然服务器可能假设数据是以某种特殊方式编码的，但curl不会对您告诉它发送的数据进行编码或更改。**curl发送您给出的确切字节**（除了从文件读取时。`-d`会跳过回车符和换行符，因此如果您希望它们包含在数据中，则需要使用`--data-binary`）。
 - en: 'To send a POST body that starts with a `@` symbol, to avoid that curl tries
     to load that as a filename, use `--data-raw` instead. This option has no file
     loading capability:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 要发送以`@`符号开始的POST主体，以避免curl尝试将其作为文件名加载，请使用`--data-raw`。此选项没有文件加载功能：
 - en: '[PRE3]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

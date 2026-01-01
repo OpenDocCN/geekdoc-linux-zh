@@ -1,83 +1,118 @@
 - en: Caches and state
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 缓存和状态
 - en: When libcurl is used for Internet transfers, it stores data in caches and state
     storage in order to do subsequent transfers faster and better.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl用于互联网传输时，它将数据存储在缓存中，并将状态存储在状态存储中，以便更快、更好地执行后续传输。
 - en: The caches are kept associated with the `CURL` or `CURLM` handles, depending
     on which libcurl API is used, easy or multi.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 缓存与`CURL`或`CURLM`句柄相关联，具体取决于使用的libcurl API是简单模式还是多线程模式。
 - en: DNS cache
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: DNS缓存
 - en: When libcurl resolves the IP addresses of a hostname it stores the result in
     its DNS cache (with a default life-time of 60 seconds), so that subsequent lookups
     can use the cached data immediately instead of doing the (potentially slow) resolve
     operation again. This cache exists in memory only.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl解析主机名的IP地址时，它将结果存储在其DNS缓存中（默认生存时间为60秒），以便后续查找可以立即使用缓存数据，而不是再次执行（可能较慢）的解析操作。此缓存仅存在于内存中。
 - en: connection cache
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 连接缓存
 - en: Also known as the connection pool. This is where curl puts live connections
     after a transfer is complete so that a subsequent transfer might be able to use
     an already existing connection instead of having to set a new one up. When a connection
     is reused, curl avoids name lookups, TLS handshakes and more. This cache exists
     in memory only.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 也称为连接池。这是curl在传输完成后将活动连接放置的地方，以便后续传输可能能够使用已经存在的连接而不是必须设置一个新的连接。当连接被重用时，curl避免名称查找、TLS握手等操作。此缓存仅存在于内存中。
 - en: TLS session-ID cache
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TLS会话ID缓存
 - en: When curl uses TLS, it saves the *session-ID* in a cache. When a subsequent
     transfer needs to redo the TLS handshake with a host for which it has a cached
     session-ID, the handshake can complete faster. This cache exists in memory only.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl使用TLS时，它将*会话ID*保存在缓存中。当后续传输需要与具有缓存会话ID的主机重新执行TLS握手时，握手可以更快地完成。此缓存仅存在于内存中。
 - en: CA store cache
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: CA存储缓存
 - en: When curl creates a new connection and performs a TLS handshake, it needs to
     load and parse a *CA store* to use for verifying the certificate presented by
     the remote server. The CA store cache keeps the parsed CA store in memory for
     a period of time (default is 24 hours) so that subsequent handshakes are done
     much faster by avoiding having to re-parse this potentially large data amount.
     This cache exists in memory only. Added in 7.87.0.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl创建新的连接并执行TLS握手时，它需要加载和解析*CA存储*以用于验证远程服务器提供的证书。CA存储缓存将解析的CA存储在内存中一段时间（默认为24小时），以便后续握手通过避免重新解析可能的大量数据而更快地完成。此缓存仅存在于内存中。自7.87.0版本添加。
 - en: HSTS
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HSTS
 - en: HSTS is HTTP Strict Transport Security. HTTPS servers can inform clients that
     they want the client to connect to its hostname using only HTTPS going forward
     and not HTTP, even when `HTTP://` URLs are used. curl keeps this connection upgrade
     information in memory and can be told to load it from and save it to disk as well.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: HSTS是HTTP严格传输安全。HTTPS服务器可以通知客户端，它们希望客户端今后仅使用HTTPS连接到其主机名，而不是HTTP，即使使用`HTTP://`
+    URL。curl将此连接升级信息保存在内存中，并可以指示从磁盘加载它并将它保存到磁盘。
 - en: Alt-Svc
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Alt-Svc
 - en: '`Alt-Svc:` is an HTTP response header that informs the client about alternative
     hostnames, port numbers and protocol versions where the same service is also available.
     curl keeps this alternative service information in memory and can be told to load
     it from and save it to disk as well.'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Alt-Svc:`是一个HTTP响应头，通知客户端有关同一服务也提供的替代主机名、端口号和协议版本。curl将此替代服务信息保存在内存中，并可以指示从磁盘加载它并将它保存到磁盘。'
 - en: Cookies
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Cookies
 - en: Cookies are name value pairs sent from an HTTP server to the client, meant to
     be sent back in subsequent requests that match the conditions. curl keeps all
     cookies in memory and can be told to load them from and save them to disk as well.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Cookies是由HTTP服务器发送到客户端的名称值对，旨在在后续请求中发送回匹配条件。curl将所有Cookies保存在内存中，并可以指示从磁盘加载它们以及将它们保存到磁盘。

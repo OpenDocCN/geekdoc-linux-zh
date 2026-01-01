@@ -1,30 +1,45 @@
 - en: Get a header
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 获取标题
 - en: '[PRE0]'
+  id: totrans-1
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This function returns information about a field with a specific **name**, and
     you ask the function to search for it in one or more **origins**.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 此函数返回有关具有特定**名称**的字段的信息，并且您要求该函数在一个或多个**来源**中搜索它。
 - en: The **index** argument is when you want to ask for the nth occurrence of a header;
     when there are more than one available. Setting **index** to 0 returns the first
     instance - in many cases that is the only one.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**index** 参数是当您想要请求标题的第n次出现时；当有多个可用时。将 **index** 设置为0返回第一个实例 - 在许多情况下，这可能是唯一的。'
 - en: The **request** argument tells libcurl from which request you want headers from.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**request** 参数告诉libcurl您想要从哪个请求中获取标题。'
 - en: An application needs to pass in a pointer to a `struct curl_header *` in the
     last argument, as a pointer is returned there when an error is not returned. See
     [Header struct](ch278.xhtml#helpers__headerapi__struct__md) for details on the
     **out** result of a successful call.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序需要在最后一个参数中传递一个指向 `struct curl_header *` 的指针，因为当没有错误返回时，会从那里返回一个指针。有关成功调用的
+    **out** 结果的详细信息，请参阅[标题结构](ch278.xhtml#helpers__headerapi__struct__md)。
 - en: If the given name does not match any received header in the given origin, the
     function returns `CURLHE_MISSING` or if no headers *at all* have been received
     yet it returns `CURLHE_NOHEADERS`.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果给定的名称与给定来源中接收到的任何标题都不匹配，则函数返回 `CURLHE_MISSING`，或者如果没有接收任何标题，则返回 `CURLHE_NOHEADERS`。

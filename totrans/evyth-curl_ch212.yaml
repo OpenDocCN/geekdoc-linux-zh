@@ -1,157 +1,227 @@
 - en: Drive with multi_socket
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用multi_socket驱动
 - en: multi_socket is the extra spicy version of the regular multi interface and is
     designed for event-driven applications. Make sure you read the [Drive with multi
     interface](ch210.xhtml#transfers__drive__multi__md) section first.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: multi_socket是常规多接口的增强版本，专为事件驱动应用程序设计。请确保您首先阅读[使用多接口驱动](ch210.xhtml#transfers__drive__multi__md)部分。
 - en: multi_socket supports multiple parallel transfers—all done in the same single
     thread—and have been used to run several tens of thousands of transfers in a single
     application. It is usually the API that makes the most sense if you do a large
     number (>100 or so) of parallel transfers.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: multi_socket支持多个并行传输——所有这些都在同一个单线程中完成——并且已被用于在单个应用程序中运行数万个传输。如果您进行大量并行传输（>100个左右），通常这是最有意义的API。
 - en: Event-driven in this case means that your application uses a system level library
     or setup that subscribes to a number of sockets and it lets your application know
     when one of those sockets are readable or writable and it tells you exactly which
     one.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，事件驱动意味着您的应用程序使用一个系统级库或设置，它订阅了多个套接字，并在其中一个套接字可读或可写时通知您的应用程序，并确切地告诉您是哪一个。
 - en: This setup allows clients to scale up the number of simultaneous transfers much
     higher than with other systems, and still maintain good performance. The regular
     APIs otherwise waste far too much time scanning through lists of all the sockets.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种设置允许客户端将同时传输的数量扩展得比其他系统高得多，同时仍然保持良好的性能。常规API否则会浪费太多时间扫描所有套接字列表。
 - en: Pick one
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选择一个
 - en: There are numerous event based systems to select from out there, and libcurl
     is completely agnostic to which one you use. libevent, libev and libuv are three
     popular ones but you can also go directly to your operating system’s native solutions
     such as epoll, kqueue, /dev/poll, pollset or Event Completion.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在外部有众多基于事件的选择，libcurl对您使用哪一个完全无偏见。libevent、libev和libuv是三个流行的选择，但您也可以直接使用操作系统的原生解决方案，如epoll、kqueue、/dev/poll、pollset或Event
+    Completion。
 - en: Many easy handles
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 许多简单句柄
 - en: Just like with the regular multi interface, you add easy handles to a multi
     handle with `curl_multi_add_handle()`. One easy handle for each transfer you want
     to perform.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像使用常规的多接口一样，您可以使用`curl_multi_add_handle()`将简单句柄添加到多句柄中。每个句柄对应您想要执行的一个传输。
 - en: You can add them at any time while the transfers are running and you can also
     similarly remove easy handles at any time using the `curl_multi_remove_handle`
     call. Typically though, you remove a handle only after its transfer is completed.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以在传输运行期间随时添加它们，您也可以使用`curl_multi_remove_handle`调用在任意时间移除简单句柄。不过，通常您只在传输完成后才移除句柄。
 - en: multi_socket callbacks
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多套接字回调
 - en: 'As explained above, this event-based mechanism relies on the application to
     know which sockets that are used by libcurl and what activities libcurl waits
     for on those sockets: if it waits for the socket to become readable, writable
     or both.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所述，这种基于事件的机制依赖于应用程序知道libcurl使用的套接字以及libcurl在这些套接字上等待的活动：如果它等待套接字变为可读、可写或两者。
 - en: The application also needs to tell libcurl when the timeout time has expired,
     as it is control of driving everything libcurl cannot do it itself. libcurl informs
     the application updated timeout values as soon as it needs to.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序还需要在超时时间到期时通知libcurl，因为它控制着libcurl无法自行完成的一切。libcurl在需要时立即通知应用程序更新的超时值。
 - en: socket_callback
+  id: totrans-13
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 套接字回调
 - en: 'libcurl informs the application about socket activity to wait for with a callback
     called [CURLMOPT_SOCKETFUNCTION](https://curl.se/libcurl/c/CURLMOPT_SOCKETFUNCTION.html).
     Your application needs to implement such a function:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl通过一个名为[CURLMOPT_SOCKETFUNCTION](https://curl.se/libcurl/c/CURLMOPT_SOCKETFUNCTION.html)的回调函数通知应用程序等待的套接字活动。您的应用程序需要实现这样一个函数：
 - en: '[PRE0]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Using this, libcurl sets and removes sockets your application should monitor.
     Your application tells the underlying event-based system to wait for the sockets.
     This callback is called multiple times if there are multiple sockets to wait for,
     and it is called again when the status changes and perhaps you should switch from
     waiting for a writable socket to instead wait for it to become readable.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此方法，libcurl设置和删除应用程序应监视的套接字。您的应用程序告诉底层基于事件的系统等待套接字。如果有多个套接字要等待，此回调会被多次调用，当状态改变并且您可能需要从等待可写套接字切换到等待它变为可读时，它会被再次调用。
 - en: 'When one of the sockets that the application is monitoring on libcurl’s behalf
     registers that it becomes readable or writable, as requested, you tell libcurl
     about it by calling `curl_multi_socket_action()` and passing in the affected socket
     and an associated bitmask specifying which socket activity that was registered:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当应用程序代表监控的libcurl上的一个套接字注册它变得可读或可写时，你通过调用 `curl_multi_socket_action()` 并传递受影响的套接字以及一个相关的位掩码来告诉libcurl，该位掩码指定了已注册的套接字活动：
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: timer_callback
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: timer_callback
 - en: The application is in control and waits for socket activity. But even without
     socket activity there are things libcurl needs to do. Timeout things, calling
     the progress callback, starting over a retry or failing a transfer that takes
     too long, etc. To make that work, the application must also make sure to handle
     a single-shot timeout that libcurl sets.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序处于控制状态，等待套接字活动。但即使没有套接字活动，libcurl也需要做一些事情。比如处理超时，调用进度回调，重新尝试或失败耗时过长的传输等。为了使这些工作正常进行，应用程序还必须确保处理libcurl设置的单一超时。
 - en: 'libcurl sets the timeout with the timer_callback [CURLMOPT_TIMERFUNCTION](https://curl.se/libcurl/c/CURLMOPT_TIMERFUNCTION.html):'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl使用timer_callback [CURLMOPT_TIMERFUNCTION](https://curl.se/libcurl/c/CURLMOPT_TIMERFUNCTION.html)
+    设置超时：
 - en: '[PRE2]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: There is only one timeout for the application to handle for the entire multi
     handle, no matter how many individual easy handles that have been added or transfers
     that are in progress. The timer callback gets updated with the current nearest-in-time
     period to wait. If libcurl gets called before the timeout expiry time because
     of socket activity, it may update the timeout value again before it expires.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于整个多句柄，应用程序只需处理一个超时，无论添加了多少个单独的简单句柄或正在进行多少传输。定时器回调会更新为等待的当前最近时间间隔。如果由于套接字活动在超时到期之前调用libcurl，它可能会在超时到期之前再次更新超时值。
 - en: 'When the event system of your choice eventually tells you that the timer has
     expired, you need to tell libcurl about it:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你选择的的事件系统最终告诉你定时器已超时时，你需要通知libcurl：
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: …in many cases, this makes libcurl call the timer_callback again and set a new
     timeout for the next expiry period.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: …在许多情况下，这会使libcurl再次调用timer_callback并设置下一个到期周期的超时。
 - en: How to start everything
+  id: totrans-27
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 如何开始一切
 - en: When you have added one or more easy handles to the multi handle and set the
     socket and timer callbacks in the multi handle, you are ready to start the transfer.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你在多句柄中添加了一个或多个简单句柄，并设置了句柄和定时器回调函数后，你就可以开始传输了。
 - en: 'To kick it all off, you tell libcurl it timed out (because all easy handles
     start out with a short timeout) which make libcurl call the callbacks to set things
     up and from then on you can just let your event system drive:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 要启动整个过程，你告诉libcurl它已超时（因为所有简单句柄最初都有一个短的超时时间），这将使libcurl调用回调来设置事情，从那时起你就可以让你的事件系统驱动：
 - en: '[PRE4]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: When is it done?
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 它何时完成？
 - en: The ‘running_handles’ counter returned by `curl_multi_socket_action` holds the
     number of current transfers not completed. When that number reaches zero, we know
     there are no transfers going on.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_multi_socket_action` 返回的 ‘running_handles’ 计数器保持当前未完成的传输数量。当这个数字达到零时，我们知道没有传输正在进行。'
 - en: Each time the ‘running_handles’ counter changes, `curl_multi_info_read()` returns
     info about the specific transfers that completed.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 每当 ‘running_handles’ 计数器发生变化时，`curl_multi_info_read()` 返回有关已完成的特定传输的信息。

@@ -1,71 +1,105 @@
 - en: Progress information
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 进度信息
 - en: 'The progress callback is what gets called regularly and repeatedly for each
     transfer during the entire lifetime of the transfer. The old callback was set
     with `CURLOPT_PROGRESSFUNCTION` but the modern and preferred callback is set with
     `CURLOPT_XFERINFOFUNCTION`:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 进度回调是在整个传输过程中，对于每次传输都会定期和重复调用的。旧的回调是通过`CURLOPT_PROGRESSFUNCTION`设置的，但现代且首选的回调是通过`CURLOPT_XFERINFOFUNCTION`设置的：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `xfer_callback` function must match this prototype:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`xfer_callback`函数必须匹配以下原型：'
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: If this option is set and `CURLOPT_NOPROGRESS` is set to 0 (zero), this callback
     function gets called by libcurl with a frequent interval. While data is being
     transferred it gets called frequently, and during slow periods like when nothing
     is being transferred it can slow down to about one call per second.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置了此选项且`CURLOPT_NOPROGRESS`设置为0（零），则libcurl会以频繁的间隔调用此回调函数。在数据传输过程中，它会被频繁调用，而在没有数据传输的缓慢时期，它可以慢到大约每秒调用一次。
 - en: 'The **clientp** pointer points to the private data set with `CURLOPT_XFERINFODATA`:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`clientp`指针指向通过`CURLOPT_XFERINFODATA`设置的私有数据：'
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'The callback gets told how much data libcurl is about to transfer and has transferred,
     in number of bytes:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调会被告知libcurl即将传输和已传输的数据量，以字节数表示：
 - en: '`dltotal` is the total number of bytes libcurl expects to download in this
     transfer.'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`dltotal`是libcurl在此传输中预期下载的总字节数。'
 - en: '`dlnow` is the number of bytes downloaded so far.'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`dlnow`是到目前为止已下载的字节数。'
 - en: '`ultotal` is the total number of bytes libcurl expects to upload in this transfer.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ultotal`是libcurl在此传输中预期上传的总字节数。'
 - en: '`ulnow` is the number of bytes uploaded so far.'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`ulnow`是到目前为止已上传的字节数。'
 - en: Unknown/unused argument values passed to the callback are set to zero (like
     if you only download data, the upload size remains zero). Many times the callback
     is called one or more times first, before it knows the data sizes, so a program
     must be made to handle that.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 传递给回调的未知/未使用参数值被设置为零（例如，如果您只下载数据，上传大小保持为零）。很多时候，在知道数据大小之前，回调会被调用一次或多次，因此必须编写程序来处理这种情况。
 - en: Returning a non-zero value from this callback causes libcurl to abort the transfer
     and return `CURLE_ABORTED_BY_CALLBACK`.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 从此回调返回非零值会导致libcurl终止传输并返回`CURLE_ABORTED_BY_CALLBACK`。
 - en: If you transfer data with the multi interface, this function is not called during
     periods of idleness unless you call the appropriate libcurl function that performs
     transfers.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您使用多接口传输数据，除非您调用执行传输的适当libcurl函数，否则在空闲期间不会调用此函数。
 - en: (The deprecated callback `CURLOPT_PROGRESSFUNCTION` worked identically but instead
     of taking arguments of type `curl_off_t`, it used `double`.)
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: （已弃用的回调`CURLOPT_PROGRESSFUNCTION`工作方式相同，但它使用的是`double`类型，而不是`curl_off_t`类型。）

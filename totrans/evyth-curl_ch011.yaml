@@ -1,105 +1,149 @@
 - en: Reporting bugs
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 报告错误
 - en: The development team does a lot of testing. We have a whole test suite that
     is run frequently every day on numerous platforms in order to exercise all code
     and make sure everything works as expected.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 开发团队做了大量的测试。我们有一个完整的测试套件，每天在众多平台上频繁运行，以测试所有代码并确保一切按预期工作。
 - en: Still, there are times when things do not work the way they should, and we depend
     on people reporting it to us.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管如此，有时事情并没有按预期的方式工作，我们依赖人们向我们报告这些问题。
 - en: A bug is a problem
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一个错误是一个问题
 - en: Any problem can be considered a bug. A weirdly phrased wording in the manual
     that prevents you from understanding something is a bug. A surprising side effect
     of combining multiple options can be a bug—or perhaps it should be better documented?
     Perhaps the option does not do at all what you expected it to? That is a problem
     and we should fix it.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 任何问题都可以被视为一个错误。手册中措辞奇怪，导致你无法理解某些内容，这也是一个错误。组合多个选项产生的意外副作用可能是一个错误——或者也许应该有更好的文档说明？也许这个选项根本就没有做你期望它做的事情？这是一个问题，我们应该修复它。
 - en: Problems must be known to get fixed
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 必须知道问题才能修复
 - en: This may sound easy and uncomplicated but is a fundamental truth in our and
     other projects. Just because it is an old project and has thousands of users does
     not mean the development team knows about the problem you just stumbled into.
     Maybe users have not paid attention to details as much as you have, or perhaps
     it just never triggered for anyone else.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 这听起来可能简单且不复杂，但这是我们和其他项目中的一个基本真理。仅仅因为这是一个旧项目并且有数千名用户，并不意味着开发团队知道你刚刚遇到的这个问题。也许用户没有像你那样关注细节，或者也许它从未触发过其他人。
 - en: We rely on users experiencing problems to report them. We need to know of their
     existence in order to fix them.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们依赖遇到问题的用户来报告它们。我们需要知道它们的存在才能修复它们。
 - en: Fixing the problems
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 修复问题
 - en: Software engineering is, to a large degree, about fixing problems. To fix a
     problem a developer needs to understand how to repeat it, and to do that they
     need to be told what set of circumstances triggered the problem.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 软件工程在很大程度上是关于解决问题的。为了解决问题，开发者需要了解如何重复它，而要做到这一点，他们需要被告知触发问题的环境条件。
 - en: A good bug report
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一个好的错误报告
 - en: A good report explains what happened and what you thought was going to happen.
     Tell us exactly what versions of the different components you used and take us
     step by step through what you did to arrive at the problem.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个好的报告解释了发生了什么以及你原本认为会发生什么。告诉我们你使用了不同组件的确切版本，并一步一步地告诉我们你是如何到达问题的。
 - en: After you submit a bug report, you can expect there to be follow-up questions
     or perhaps requests that you try out various things so the developer can narrow
     down the suspects and make sure your problem is properly located.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在你提交错误报告后，你可以期待会有后续的问题或者可能需要你尝试各种事情，以便开发者可以缩小怀疑范围并确保你的问题得到正确定位。
 - en: A bug report that is submitted then abandoned by the submitter risks getting
     closed if the developer fails to understand it, fails to reproduce it or faces
     other problems when working on it. Do not abandon your report.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果提交者提交了错误报告然后放弃，如果开发者未能理解它，未能重现它或在工作时遇到其他问题，那么这个报告可能会被关闭。不要放弃你的报告。
 - en: Report curl bugs in the [curl bug tracker on GitHub](https://github.com/curl/curl/issues).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在GitHub上的[curl错误跟踪器](https://github.com/curl/curl/issues)报告curl的错误。
 - en: Testing
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 测试
 - en: Testing software thoroughly and properly is a lot of work. Testing software
     that runs on dozens of operating systems and CPU architectures, with server implementations
     which have their own sets of bugs and interpretations of the specs, is even more
     work.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 仔细且正确地测试软件是一项大量工作。测试在数十个操作系统和CPU架构上运行的软件，以及具有自己错误集合和规范解释的服务器实现，更是工作量巨大。
 - en: The curl project has a test suite that iterates over all existing test cases,
     runs each test and verifies that the outcome is correct and that no other problem
     happened, such as a memory leak or something fishy in the protocol layer.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: curl项目有一个测试套件，它遍历所有现有的测试用例，运行每个测试，并验证结果是否正确，以及没有发生其他问题，例如内存泄漏或协议层中的可疑问题。
 - en: The test suite is meant to be run after you have built curl yourself. There
     are a number of volunteers who also help out by running the test suite automatically
     a few times per day to make sure the latest commits are tested. This way we discover
     the worst flaws not long after their introduction.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试套件是在你自行构建curl之后运行的。有许多志愿者也通过每天自动运行测试套件几次来帮忙，以确保最新的提交得到测试。这样我们可以在引入后不久发现最严重的缺陷。
 - en: We do not test everything, and even when we try to test things there are always
     subtle bugs that get through, some that are only discovered years later.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们并没有测试所有内容，即使我们尝试测试某些内容，也总会有一些微妙的错误得以通过，有些甚至直到多年后才被发现。
 - en: Due to the nature of different systems and funny use cases on the Internet,
     eventually some of the best testing is done by users when they run the code to
     perform their own use cases.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于不同系统的特性和互联网上的一些奇怪用例，最终一些最好的测试是由用户在运行代码以执行他们自己的用例时完成的。
 - en: Another limiting factor with the test suite is that the test setup itself is
     less portable than curl and libcurl, so there are in fact platforms where curl
     runs fine but the test suite cannot execute at all.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试套件中另一个限制因素是，测试设置本身比curl和libcurl的可移植性差，因此实际上存在一些平台，curl可以正常运行，但测试套件却无法执行。

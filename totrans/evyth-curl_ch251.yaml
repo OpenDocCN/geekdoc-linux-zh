@@ -1,195 +1,299 @@
 - en: Cookies
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Cookies
 - en: By default and by design, libcurl makes transfers as basic as possible and features
     need to be enabled to get used. One such feature is HTTP cookies, more known as
     just plain and simply cookies.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，libcurl将传输设置为尽可能简单，需要启用功能才能使用。其中一个功能就是HTTP cookie，更通俗地称为cookie。
 - en: Cookies are name/value pairs sent by the server (using a `Set-Cookie:` header)
     to be stored in the client, and are then supposed to get sent back again in requests
     that matches the host and path requirements that were specified along with the
     cookie when it came from the server (using the `Cookie:` header). On the modern
     web of today, sites are known to sometimes use large numbers of cookies.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: Cookies是由服务器（使用`Set-Cookie:`头）发送的名称/值对，用于存储在客户端，并且应该在请求中再次发送，以匹配服务器（使用`Cookie:`头）指定的主机和路径要求。在今天的现代网络中，网站有时会使用大量的cookie。
 - en: Cookie engine
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Cookie引擎
 - en: When you enable the cookie engine for a specific easy handle, it means that
     it records incoming cookies, stores them in the in-memory cookie store that is
     associated with the easy handle and subsequently sends the proper ones back if
     an HTTP request is made that matches.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您为特定的简单句柄启用cookie引擎时，这意味着它记录传入的cookie，将它们存储在与简单句柄关联的内存中cookie存储中，并在发出匹配的HTTP请求时发送适当的cookie。
 - en: 'There are two ways to switch on the cookie engine:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 有两种方法可以开启cookie引擎：
 - en: Enable cookie engine with reading
+  id: totrans-6
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用读取启用cookie引擎
 - en: 'Ask libcurl to import cookies into the easy handle from a given filename with
     the `CURLOPT_COOKIEFILE` option:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`CURLOPT_COOKIEFILE`选项请求libcurl从给定的文件名导入cookie：
 - en: '[PRE0]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: A common trick is to just specify a non-existing filename or plain `""` to have
     it just activate the cookie engine with a blank cookie store to start with.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个常见的技巧是只指定一个不存在的文件名或空字符串`""`，以便它只使用空白的cookie存储来启动cookie引擎。
 - en: This option can be set multiple times and then each of the given files are read.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 此选项可以设置多次，然后读取每个给定的文件。
 - en: Enable cookie engine with writing
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 使用写入启用cookie引擎
 - en: 'Ask for received cookies to get stored in a file with the `CURLOPT_COOKIEJAR`
     option:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`CURLOPT_COOKIEJAR`选项请求将接收到的cookie存储在文件中：
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: when the easy handle is closed later with `curl_easy_cleanup()`, all known cookies
     are stored in the given file. The file format is the well-known Netscape cookie
     file format that browsers also once used.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当稍后使用`curl_easy_cleanup()`关闭简单句柄时，所有已知的cookie都会存储在给定的文件中。文件格式是众所周知的Netscape
+    cookie文件格式，浏览器也曾使用过。
 - en: Setting custom cookies
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 设置自定义cookie
 - en: 'A simpler and more direct way to just pass on a set of specific cookies in
     a request that does not add any cookies to the cookie store and does not even
     activate the cookie engine, is to set the set with `CURLOPT_COOKIE`:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个更简单、更直接的方法是只需在请求中传递一组特定的cookie，这不会向cookie存储添加任何cookie，甚至不会激活cookie引擎，只需使用`CURLOPT_COOKIE`设置即可：
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The string you set there is the raw string that would be sent in the HTTP request
     and should be in the format of repeated sequences of `NAME=VALUE;` - including
     the semicolon separator.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 您设置的字符串是将在HTTP请求中发送的原始字符串，应该格式为重复的`NAME=VALUE;`序列 - 包括分号分隔符。
 - en: Import export
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 导入导出
 - en: The cookie in-memory store can hold a bunch of cookies, and libcurl offers very
     powerful ways for an application to play with them. You can set new cookies, you
     can replace an existing cookie and you can extract existing cookies.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 内存中的cookie存储可以保存大量cookie，libcurl为应用程序提供了非常强大的方式来操作它们。您可以设置新的cookie，可以替换现有的cookie，也可以提取现有的cookie。
 - en: Add a cookie to the cookie store
+  id: totrans-21
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 向cookie存储中添加cookie
 - en: 'Add a new cookie to the cookie store by simply passing it into curl with `CURLOPT_COOKIELIST`
     with a new cookie. The format of the input is a single line in the cookie file
     format, or formatted as a `Set-Cookie:` response header, but we recommend the
     cookie file style:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过将新的cookie传递给curl并使用`CURLOPT_COOKIELIST`选项，可以简单地向cookie存储中添加新的cookie。输入格式是cookie文件格式中的一行，或者格式化为`Set-Cookie:`响应头，但我们推荐使用cookie文件风格：
 - en: '[PRE3]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: If that given cookie would match an already existing cookie (with the same domain
     and path, etc.), it would overwrite the old one with the new contents.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果给定的cookie与已存在的cookie（具有相同的域名和路径等）匹配，它将用新内容覆盖旧的cookie。
 - en: Get all cookies from the cookie store
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 从cookie存储中获取所有cookie
 - en: 'Sometimes writing the cookie file when you close the handle is not enough and
     then your application can opt to extract all the currently known cookies from
     the store like this:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时在关闭句柄时写入cookie文件是不够的，然后您的应用程序可以选择像这样从存储中提取所有当前已知的cookie：
 - en: '[PRE4]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: This returns a pointer to a linked list of cookies, and each cookie is (again)
     specified as a single line of the cookie file format. The list is allocated for
     you, so do not forget to call `curl_slist_free_all` when the application is done
     with the information.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 这返回一个指向 cookie 链表的指针，每个 cookie 都（再次）指定为 cookie 文件格式的一行。列表为您分配，因此当应用程序完成信息处理时，请务必调用
+    `curl_slist_free_all`。
 - en: Cookie store commands
+  id: totrans-29
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: Cookie 存储命令
 - en: 'If setting and extracting cookies is not enough, you can also interfere with
     the cookie store in more ways:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置和提取 cookie 不够，您还可以以更多方式干扰 cookie 存储：
 - en: 'Wipe the entire in-memory storage clean with:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用以下命令清除整个内存存储：
 - en: '[PRE5]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Erase all session cookies (cookies without expiry date) from memory:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 从内存中擦除所有会话 cookie（没有过期日期的 cookie）：
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Force a write of all cookies to the filename previously specified with `CURLOPT_COOKIEJAR`:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 强制将所有 cookie 写入之前通过 `CURLOPT_COOKIEJAR` 指定的文件名：
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'Force a reload of cookies from the filename previously specified with `CURLOPT_COOKIEFILE`:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 强制从之前通过 `CURLOPT_COOKIEFILE` 指定的文件名重新加载 cookie：
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Cookie file format
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Cookie 文件格式
 - en: The cookie file format is text based and stores one cookie per line. Lines that
     start with `#` are treated as comments.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: Cookie 文件格式是基于文本的，每行存储一个 cookie。以 `#` 开头的行被视为注释。
 - en: Each line that each specifies a single cookie consists of seven text fields
     separated with TAB characters.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 每行指定一个单个 cookie，由制表符字符分隔的七个文本字段组成。
 - en: '| Field | Example | Meaning |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| 字段 | 示例 | 含义 |'
 - en: '| --- | --- | --- |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| 0 | example.com | Domain name |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| 0 | example.com | 域名 |'
 - en: '| 1 | FALSE | Include subdomains boolean |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| 1 | FALSE | 包含子域布尔值 |'
 - en: '| 2 | /foobar/ | Path |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| 2 | /foobar/ | 路径 |'
 - en: '| 3 | FALSE | Set over a secure transport |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| 3 | FALSE | 通过安全传输设置 |'
 - en: '| 4 | 1462299217 | Expires at – seconds since Jan 1st 1970, or 0 |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| 4 | 1462299217 | 过期时间 – 自 1970 年 1 月 1 日起的秒数，或 0 |'
 - en: '| 5 | person | Name of the cookie |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| 5 | person | Cookie 的名称 |'
 - en: '| 6 | daniel | Value of the cookie |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| 6 | daniel | Cookie 的值 |'

@@ -1,82 +1,118 @@
 - en: Parse a URL
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 解析URL
 - en: 'You parse a full URL by *setting* the `CURLUPART_URL` part in the handle:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过在句柄中*设置* `CURLUPART_URL`部分来解析完整URL：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If successful, `rc` contains `CURLUE_OK` and the different URL components are
     held in the handle. It means that the URL was valid as far as libcurl concerns.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果成功，`rc`包含`CURLUE_OK`，并且不同的URL组件保留在句柄中。这意味着从libcurl的角度来看，URL是有效的。
 - en: 'The function call’s forth argument is a bitmask. Set none, one or more bits
     in that to alter the parser’s behavior:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数调用的第四个参数是一个掩码。设置该掩码中的零位、一位或多位以改变解析器的行为：
 - en: '`CURLU_NON_SUPPORT_SCHEME`'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_NON_SUPPORT_SCHEME`'
 - en: Makes `curl_url_set()` accept a non-supported scheme. If not set, the only acceptable
     schemes are for the protocols libcurl knows and have built-in support for.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 使`curl_url_set()`接受非支持的方案。如果没有设置，则唯一可接受的方案是libcurl知道并具有内置支持的协议。
 - en: '`CURLU_URLENCODE`'
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_URLENCODE`'
 - en: 'Makes the function URL encode the path part if any bytes in it would benefit
     from that: like spaces or “control characters”.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果路径中的任何字节从编码中受益，则使函数对路径部分进行URL编码：如空格或“控制字符”。
 - en: '`CURLU_DEFAULT_SCHEME`'
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_DEFAULT_SCHEME`'
 - en: If the passed in string does not use a scheme, assume that the default one was
     intended. The default scheme is HTTPS. If this is not set, a URL without a scheme
     part is not accepted as valid. Overrides the `CURLU_GUESS_SCHEME` option if both
     are set.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果传入的字符串未使用方案，则假定默认方案被意图使用。默认方案是HTTPS。如果未设置，则不接受没有方案部分的URL作为有效URL。如果两者都设置了，则覆盖`CURLU_GUESS_SCHEME`选项。
 - en: '`CURLU_GUESS_SCHEME`'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_GUESS_SCHEME`'
 - en: Makes libcurl allow the URL to be set without a scheme and it instead “guesses”
     which scheme that was intended based on the hostname. If the outermost sub-domain
     name matches DICT, FTP, IMAP, LDAP, POP3 or SMTP then that scheme is used, otherwise
     it picks HTTP. Conflicts with the `CURLU_DEFAULT_SCHEME` option which takes precedence
     if both are set.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 使libcurl允许设置没有方案的URL，并且它根据主机名“猜测”所意图的方案。如果最外层的子域名与DICT、FTP、IMAP、LDAP、POP3或SMTP匹配，则使用该方案，否则选择HTTP。与`CURLU_DEFAULT_SCHEME`选项冲突，如果两者都设置了，则优先级更高。
 - en: '`CURLU_NO_AUTHORITY`'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_NO_AUTHORITY`'
 - en: Skips authority checks. The RFC allows individual schemes to omit the host part
     (normally the only mandatory part of the authority), but libcurl cannot know whether
     this is permitted for custom schemes. Specifying the flag permits empty authority
     sections, similar to how the file scheme is handled. Really only usable in combination
     with `CURLU_NON_SUPPORT_SCHEME`.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 跳过权限检查。RFC允许个别方案省略主机部分（通常是权限的唯一必需部分），但libcurl无法知道这是否允许自定义方案。指定该标志允许空权限部分，类似于处理文件方案的方式。实际上，仅在与`CURLU_NON_SUPPORT_SCHEME`结合使用时才可用。
 - en: '`CURLU_PATH_AS_IS`'
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_PATH_AS_IS`'
 - en: Makes libcurl skip the normalization of the path. That is the procedure where
     curl otherwise removes sequences of dot-slash and dot-dot etc. The same option
     used for transfers is called `CURLOPT_PATH_AS_IS`.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 使libcurl跳过路径的正常化。这是curl通常删除点斜杠序列（如点点和点点等）的程序。用于传输的相同选项称为`CURLOPT_PATH_AS_IS`。
 - en: '`CURLU_ALLOW_SPACE`'
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_ALLOW_SPACE`'
 - en: Makes the URL parser allow space (ASCII 32) where possible. The URL syntax does
     normally not allow spaces anywhere, but they should be encoded as `%20` or `+`.
     When spaces are allowed, they are still not allowed in the scheme. When space
@@ -84,5 +120,7 @@
     set, which then makes libcurl URL-encode the space before stored. This affects
     how the URL is constructed when `curl_url_get()` is subsequently used to extract
     the full URL or individual parts.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 使URL解析器尽可能允许空格（ASCII 32）。URL语法通常不允许任何地方有空格，但它们应编码为`%20`或`+`。当允许空格时，它们在方案中仍然不允许。当在URL中使用并允许空格时，除非也设置了`CURLU_URLENCODE`，否则将按原样存储。这会影响随后使用`curl_url_get()`提取完整URL或单个部分时URL的构建方式。

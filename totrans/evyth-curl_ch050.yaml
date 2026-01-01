@@ -1,51 +1,79 @@
 - en: BoringSSL
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: BoringSSL
 - en: build boringssl
+  id: totrans-1
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 构建 boringssl
 - en: $HOME/src is where I put the code in this example. You can pick wherever you
     like.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`$HOME/src` 是我在本例中放置代码的位置。您可以选择任何您喜欢的位置。'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: set up the build tree to get detected by curl’s configure
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 设置构建树以便 curl 的配置程序能够检测到
 - en: In the boringssl source tree root, make sure there is a `lib` and an `include`
     dir. The `lib` directory should contain the two libs (I made them symlinks into
     the build dir). The `include` directory is already present by default. Make and
     populate `lib` like this (commands issued in the source tree root, not in the
     `build/` subdirectory).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 boringssl 源代码树根目录下，确保存在一个 `lib` 目录和一个 `include` 目录。`lib` 目录应包含两个库（我将它们作为符号链接放入构建目录）。`include`
+    目录默认已经存在。按照以下方式构建和填充 `lib`（在源代码树根目录下执行命令，而不是在 `build/` 子目录下）。
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: configure curl
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 配置 curl
 - en: '`LIBS=-lpthread ./configure --with-ssl=$HOME/src/boringssl` (where I point
     out the root of the boringssl tree)'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`LIBS=-lpthread ./configure --with-ssl=$HOME/src/boringssl`（在此我指出 boringssl
+    树的根目录）'
 - en: Verify that at the end of the configuration, it says it detected BoringSSL to
     be used.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 在配置结束时，确认它显示检测到使用了 BoringSSL。
 - en: build curl
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 构建 curl
 - en: Run `make` in the curl source tree.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 curl 源代码树中运行 `make`。
 - en: Now you can install curl normally with `make install` etc.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，您可以使用 `make install` 等命令正常安装 curl。

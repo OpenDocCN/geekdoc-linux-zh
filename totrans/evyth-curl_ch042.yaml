@@ -1,79 +1,113 @@
 - en: Website
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 网站
 - en: Most of the curl website is also available in a public git repository, although
     separate from the source code repository since it generally is not interesting
     to the same people and we can maintain a different list of people that have push
     rights, etc.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl网站的大部分内容也可在公共git仓库中找到，尽管它与源代码仓库分开，因为通常对同一群人来说并不有趣，我们可以维护一个拥有推送权限等的不同人员名单。
 - en: 'The website git repository is available on GitHub at this URL: [https://github.com/curl/curl-www](https://github.com/curl/curl-www)
     and you can clone a copy of the web code like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 网站git仓库可在以下URL的GitHub上找到：[https://github.com/curl/curl-www](https://github.com/curl/curl-www)，您可以通过以下方式克隆网站代码：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Building the web
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 构建网站
 - en: The website is a custom-made setup that mostly builds static HTML files from
     a set of source files. The source files are preprocessed with what is a souped-up
     C preprocessor called [fcpp](https://daniel.haxx.se/projects/fcpp/) and a set
     of perl scripts. The man pages get converted to HTML with [roffit](https://daniel.haxx.se/projects/roffit/).
     Make sure fcpp, perl, roffit, make and curl are all in your $PATH.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 该网站是一个定制的设置，主要从一组源文件构建静态HTML文件。源文件使用一个增强版的C预处理器[fcpp](https://daniel.haxx.se/projects/fcpp/)和一组perl脚本进行预处理。手册页面通过[roffit](https://daniel.haxx.se/projects/roffit/)转换为HTML。请确保fcpp、perl、roffit、make和curl都包含在您的$PATH中。
 - en: Once you have cloned the git repository the first time, invoke `sh bootstrap.sh`
     once to get a symlink and some initial local files setup, and then you can build
     the website locally by invoking `make` in the source root tree.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 第一次克隆git仓库后，在源根目录树中运行一次`sh bootstrap.sh`以获取符号链接和一些初始本地文件设置，然后您可以通过在源根目录树中调用`make`来本地构建网站。
 - en: Note that this does not make you a complete website mirror, as some scripts
     and files are only available on the real actual site, but should give you enough
     to let you view most HTML pages locally.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这并不使你拥有一个完整的网站镜像，因为一些脚本和文件仅可在实际网站上获取，但它应该足够让你本地查看大多数HTML页面。
 - en: Run a local clone
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 运行本地克隆
 - en: The website is built in a way that makes it easy and convenient to host a local
     copy for browsing and testing changes before we push them to the official site
     in production. We then recommend you call the site `curl.local` and add that as
     an entry in your local `/etc/hosts` file. Then point the document root of your
     HTTP server to the curl-www source code root.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 网站以易于托管本地副本的方式进行构建，以便在将更改推送到生产中的官方网站之前进行浏览和测试。我们建议您将网站命名为`curl.local`，并将其添加到您本地`/etc/hosts`文件中的一个条目。然后，将您的HTTP服务器的文档根指向curl-www源代码根目录。
 - en: Website infrastructure
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 网站基础设施
 - en: The public curl website is hosted at [curl.se](https://curl.se).
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 公共curl网站托管在[curl.se](https://curl.se)。
 - en: The domain name is owned by **Daniel Stenberg**
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 域名归**Daniel Stenberg**所有
 - en: The main origin machine is sponsored by **Haxx**
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 主要源机器由**Haxx**赞助
 - en: The curl.se domain is served by anycast distributed DNS servers sponsored by
     **Kirei**
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: curl.se域名由由**Kirei**赞助的anycast分布式DNS服务器提供服务
 - en: The site is delivered to the world via a CDN run by **Fastly**
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 该网站通过由**Fastly**运行的CDN向全球提供服务
 - en: The website updates itself from GitHub every N minutes. The CDN front-ends cache
     content for Y minutes (different types cache content different times)
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 网站每N分钟从GitHub更新一次。CDN前端缓存内容Y分钟（不同类型的缓存内容时间不同）

@@ -1,108 +1,168 @@
 - en: FTP wildcard matching
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: FTP通配符匹配
 - en: libcurl supports FTP wildcard matching. You use this feature by setting `CURLOPT_WILDCARDMATCH`
     to `1L` and then use a “wildcard pattern” in the in the filename part of the URL.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl支持FTP通配符匹配。您通过将`CURLOPT_WILDCARDMATCH`设置为`1L`并然后在URL的文件名部分使用“通配符模式”来使用此功能。
 - en: Wildcard patterns
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通配符模式
 - en: 'The default libcurl wildcard matching function supports:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认的libcurl通配符匹配函数支持：
 - en: '`*` - ASTERISK'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*` - 星号'
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: To match all txt files in the directory `some/path`. Only two asterisks are
     allowed within the same pattern string.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 要匹配目录`some/path`中的所有txt文件。在同一模式字符串中只允许使用两个星号。
 - en: '`?` - QUESTION MARK"'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '`?` - 问号'
 - en: 'A question mark matches any (exactly one) character. Like if you have files
     called `photo1.jpeg` and `photo7.jpeg` this pattern could match them:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个问号匹配任何（确切的一个）字符。例如，如果您有名为`photo1.jpeg`和`photo7.jpeg`的文件，此模式可以匹配它们：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '`[` - BRACKET EXPRESSION'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[` - 括号表达式'
 - en: 'The left bracket opens a bracket expression. The question mark and asterisk
     have no special meaning in a bracket expression. Each bracket expression ends
     by the right bracket (`]`) and matches exactly one character. Some examples follow:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 左括号开启一个括号表达式。在括号表达式中，问号和星号没有特殊含义。每个括号表达式以右括号（`]`）结束，并匹配一个确切字符。以下是一些示例：
 - en: '`[a-zA-Z0-9]` or `[f-gF-G]` - character intervals'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[a-zA-Z0-9]`或`[f-gF-G]` - 字符区间'
 - en: '`[abc]` - character enumeration'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[abc]` - 字符枚举'
 - en: '`[^abc]` or `[!abc]` - negation'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[^abc]`或`[!abc]` - 否定'
 - en: '`[[:name:]]` class expression. Supported classes are alnum, lower, space, alpha,
     digit, print, upper, blank, graph, xdigit.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[[:name:]]` 类表达式。支持的类有alnum、lower、space、alpha、digit、print、upper、blank、graph、xdigit。'
 - en: '`[][-!^]` - special case, matches only `\-`, `]`, `[`, `!` or `^`.'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[][-!^]` - 特殊情况，仅匹配`-`、`]`、`[`、`!`或`^`。'
 - en: '`[\\[\\]\\\\]` - escape syntax. Matches `[`, `]` or `\\`.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[\\[\\]\\\\]` - 转义语法。匹配`[`、`]`或`\`。'
 - en: 'Using the rules above, a filename pattern can be constructed:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用上述规则，可以构建一个文件名模式：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: FTP chunk callbacks
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FTP块回调
 - en: When FTP wildcard matching is used, the `CURLOPT_CHUNK_BGN_FUNCTION` callback
     is called before a transfer is initiated for a file that matches.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用FTP通配符匹配时，在开始传输匹配的文件之前，会调用`CURLOPT_CHUNK_BGN_FUNCTION`回调函数。
 - en: 'The callback can then opt to return one of these return codes to tell libcurl
     what to do with the file:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调函数可以选择返回以下这些返回代码之一，以告诉libcurl如何处理该文件：
 - en: '`CURL_CHUNK_BGN_FUNC_OK` transfer the file'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`CURL_CHUNK_BGN_FUNC_OK` 传输文件'
 - en: '`CURL_CHUNK_BGN_FUNC_SKIP`'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`CURL_CHUNK_BGN_FUNC_SKIP`'
 - en: '`CURL_CHUNK_BGN_FUNC_FAIL` stop because of error'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`CURL_CHUNK_BGN_FUNC_FAIL` 由于错误而停止'
 - en: After the matched file has been transferred or skipped, the `CURLOPT_CHUNK_END_FUNCTION`
     callback is called.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在匹配的文件传输或跳过后，会调用`CURLOPT_CHUNK_END_FUNCTION`回调函数。
 - en: The end chunk callback can only return success or error.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 结束块回调函数只能返回成功或错误。
 - en: FTP matching callback
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FTP匹配回调
 - en: If the default pattern matching function is not to your liking, you can provide
     your own replacement function by setting the `CURLOPT_FNMATCH_FUNCTION` option
     to your alternative.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果默认的模式匹配函数不符合您的喜好，您可以通过设置`CURLOPT_FNMATCH_FUNCTION`选项为您的替代函数来提供自己的替换函数。

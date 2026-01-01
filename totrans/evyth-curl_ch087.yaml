@@ -1,33 +1,45 @@
 - en: Use the target filename from the server
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用服务器上的目标文件名
 - en: HTTP servers have the option to provide a header named `Content-Disposition:`
     in responses. That header may contain a suggested filename for the contents delivered,
     and curl can be told to use that hint to name its local file. The `-J / --remote-header-name`
     enables this. If you also use the `-O` option, it makes curl use the filename
     from the URL by default and only *if* there is actually a valid Content-Disposition
     header available, it switches to saving using that name.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP服务器有提供名为`Content-Disposition:`的响应头选项。该头可能包含一个建议的文件名，用于传递的内容，curl可以被告知使用这个提示来命名其本地文件。`-J`或`--remote-header-name`选项启用此功能。如果你还使用了`-O`选项，curl默认会使用URL中的文件名，并且只有当实际上有有效的`Content-Disposition`头可用时，它才会切换到使用该名称保存。
 - en: '`-J` has some problems and risks associated with it that users need to be aware
     of:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-J`选项有一些问题和风险，用户需要了解：'
 - en: It only uses the rightmost part of the suggested filename, so any path or directories
     the server suggests are stripped out.
+  id: totrans-3
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它只使用建议文件名的最右边部分，因此服务器建议的任何路径或目录都会被删除。
 - en: Since the filename is entirely selected by the server, curl might overwrite
     any preexisting local file in your current directory if the server happens to
     provide such a filename (unless you use `--no-clobber`).
+  id: totrans-4
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 由于文件名完全由服务器选择，如果服务器恰好提供了这样的文件名，curl可能会覆盖你当前目录中任何现有的本地文件（除非你使用了`--no-clobber`）。
 - en: filename encoding and character sets issues. curl does not decode the name in
     any way, so you may end up with a URL-encoded filename where a browser would otherwise
     decode it to something more readable using a sensible character set.
+  id: totrans-5
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 文件名编码和字符集问题。curl不会以任何方式解码名称，因此你可能会得到一个URL编码的文件名，而在浏览器中，它可能会使用合理的字符集将其解码为更易读的格式。

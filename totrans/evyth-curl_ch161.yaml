@@ -1,56 +1,78 @@
 - en: Expect 100-continue
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 期待100-continue
 - en: 'HTTP/1 has no proper way to stop an ongoing transfer (in any direction) and
     still maintain the connection. So, if we figure out that the transfer had better
     stop after the transfer has started, there are only two ways to proceed: cut the
     connection and pay the price of reestablishing the connection again for the next
     request, or keep the transfer going and waste bandwidth but be able to reuse the
     connection next time.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/1没有一种适当的方式来停止正在进行的传输（在任何方向上）同时保持连接。因此，如果我们确定传输应该在传输开始后停止，那么只有两种方法可以继续：切断连接并支付重新建立连接的代价，或者继续传输并浪费带宽，但下次能够重用连接。
 - en: One example of when this can happen is when you send a large file over HTTP,
     only to discover that the server requires authentication and immediately sends
     back a 401 response code.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种情况的一个例子是，当您通过HTTP发送一个大型文件时，却发现服务器需要认证，并立即发送回401响应代码。
 - en: 'The mitigation that exists to make this scenario less frequent is to have curl
     pass on an extra header, `Expect: 100-continue`, which gives the server a chance
     to deny the request before a lot of data is sent off. curl sends this `Expect:`
     header by default if the POST it does is known or suspected to be larger than
     one megabyte. curl also does this for PUT requests.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '为了使这种情况不那么频繁，存在一种缓解措施，即curl传递一个额外的头`Expect: 100-continue`，这给了服务器在发送大量数据之前拒绝请求的机会。如果curl执行的POST操作已知或怀疑大于一兆字节，curl会默认发送这个`Expect:`头。curl也会为PUT请求执行此操作。'
 - en: When a server gets a request with an 100-continue and deems the request fine,
     it responds with a 100 response that makes the client continue. If the server
     does not like the request, it sends back response code for the error it thinks
     it is.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当服务器收到一个带有100-continue的请求并认为请求是合理的，它会用一个使客户端继续的100响应来响应。如果服务器不喜欢该请求，它会发送回它认为的错误响应代码。
 - en: 'Unfortunately, lots of servers in the world do not properly support the Expect:
     header or do not handle it correctly, so curl only waits 1000 milliseconds for
     that first response before it continues anyway.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 不幸的是，世界上许多服务器都没有正确支持Expect:头，或者没有正确处理它，因此curl在继续之前只等待1000毫秒的第一个响应。
 - en: 'You can change the amount of time curl waits for a response to Expect by using
     `--expect100-timeout <seconds>`. You can avoid the wait entirely by using `-H
     Expect:` to remove the header:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`--expect100-timeout <seconds>`来更改curl等待Expect响应的时间。您可以通过使用`-H Expect:`来完全避免等待，从而移除该头：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: In some situations, curl inhibits the use of the `Expect` header if the content
     it is about to send is small (below one megabyte), as having to waste such a small
     chunk of data is not considered much of a problem.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在某些情况下，如果curl即将发送的内容很小（小于一兆字节），它会抑制使用`Expect`头，因为浪费如此小的数据块被认为不是什么大问题。
 - en: HTTP/2 and later
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP/2及以后版本
 - en: HTTP/2 and later versions of HTTP can stop an ongoing transfer without shutting
     down the connection, which makes `Expect:` pointless.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/2及HTTP的后续版本可以在不关闭连接的情况下停止正在进行的传输，这使得`Expect:`变得没有意义。

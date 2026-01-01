@@ -1,68 +1,102 @@
 - en: HTTP basics
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTP 基础
 - en: HTTP is a protocol that is easy to learn the basics of. A client connects to
     a server—and it is always the client that takes the initiative—sends a request
     and receives a response. Both the request and the response consist of headers
     and a body. There can be little or a lot of information going in both directions.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 是一个易于学习基础的协议。客户端连接到服务器——并且总是客户端采取主动——发送请求并接收响应。请求和响应都由头部和主体组成。在两个方向上可能会有很少或很多信息传输。
 - en: An HTTP request sent by a client starts with a request line, followed by headers
     and then optionally a body. The most common HTTP request is probably the GET request
     which asks the server to return a specific resource, and this request does not
     contain a body.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户端发送的 HTTP 请求以请求行开始，随后是头部信息，然后可选地跟一个主体。最常见的一种 HTTP 请求可能是 GET 请求，它要求服务器返回一个特定的资源，并且这种请求不包含主体。
 - en: 'When a client connects to ‘example.com’ and asks for the ‘/’ resource, it sends
     a GET without a request body:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当客户端连接到 ‘example.com’ 并请求 ‘/’ 资源时，它发送一个没有请求主体的 GET 请求：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '…the server could respond with something like below, with response headers
     and a response body (‘hello’). The first line in the response also contains the
     response code and the specific version the server supports:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: …服务器可能会响应如下内容，包括响应头部和响应主体（‘hello’）。响应的第一行还包含了响应代码和服务器支持的具体版本：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'If the client would instead send a request with a small request body (‘hello’),
     it could look like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果客户端发送一个包含小请求主体（‘hello’）的请求，它可能看起来像这样：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: A server always responds to an HTTP request unless something is wrong.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器总是会响应 HTTP 请求，除非出现错误。
 - en: The URL converted to a request
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 将 URL 转换为请求
 - en: 'So when an HTTP client is given a URL to operate on, that URL is then used,
     picked apart and those parts are used in various places in the outgoing request
     to the server. Let’s take an example URL:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，当 HTTP 客户端被赋予一个要操作的 URL 时，该 URL 被使用，分解，这些部分被用于向服务器发送的出站请求的各个地方。让我们以一个示例 URL
+    为例：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: '**https** means that curl uses TLS to the remote port 443 (which is the default
     port number when no specified is used in the URL).'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**https** 表示 curl 使用 TLS 连接到远程端口 443（这是在 URL 中未指定端口时的默认端口号）。'
 - en: '**www.example.com** is the hostname that curl resolves to one or more IP addresses
     to connect to. This hostname is also used in the HTTP request in the `Host:` header.'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**www.example.com** 是 curl 解析到的主机名，它会解析为一个或多个 IP 地址以进行连接。这个主机名也用于 HTTP 请求中的
+    `Host:` 头部。'
 - en: '**/path/to/file** is used in the HTTP request to tell the server which exact
     document/resources curl wants to fetch'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '**/path/to/file** 在 HTTP 请求中用于告诉服务器 curl 想要获取的确切文档/资源'

@@ -1,131 +1,190 @@
 - en: Verbose
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 详细模式
 - en: If your curl command does not execute or return what you expected it to, your
     first gut reaction should always be to run the command with the `-v / --verbose`
     option to get more information.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您的curl命令没有执行或返回您期望的结果，您应该首先本能地运行带有`-v / --verbose`选项的命令以获取更多信息。
 - en: 'When verbose mode is enabled, curl gets more talkative and explains and shows
     a lot more of its doings. It adds informational tests and prefix them with ‘*’.
     For example, let’s see what curl might say when trying a simple HTTP example (saving
     the downloaded data in the file called ‘saved’):'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当启用详细模式时，curl变得更加健谈，并解释和显示更多它的行为。它添加了信息性测试，并以‘*’作为前缀。例如，让我们看看curl在尝试一个简单的HTTP示例（将下载的数据保存到名为“saved”的文件中）时可能会说什么：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Ok so we invoked curl with a URL that it considers incomplete so it helps us
     and it adds a trailing slash before it moves on.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 好吧，所以我们使用了一个curl认为不完整的URL来调用它，因此它帮助我们并在继续之前添加了一个尾随斜杠。
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This tells us curl now tries to connect to this IP address. It means the name
     ‘example.com’ has been resolved to one or more addresses and this is the first
     (and possibly only) address curl tries to connect to.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 这告诉我们curl现在正在尝试连接到这个IP地址。这意味着域名‘example.com’已经被解析为一个或多个地址，这是curl尝试连接的第一个（也可能是唯一的）地址。
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: It worked. curl connected to the site and here it explains how the name maps
     to the IP address and on which port it has connected to. The ‘(#0)’ part is which
     internal number curl has given this connection. If you try multiple URLs in the
     same command line you can see it use more connections or reuse connections, so
     the connection counter may increase or not increase depending on what curl decides
     it needs to do.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这成功了。curl连接到了该网站，这里它解释了域名如何映射到IP地址，以及它在哪个端口上连接。‘(#0)’部分是curl为这个连接分配的内部编号。如果您在同一个命令行中尝试多个URL，您可以看到它使用更多的连接或重用连接，因此连接计数器可能会增加或不会增加，这取决于curl决定需要做什么。
 - en: If we use an `HTTPS://` URL instead of an HTTP one, there are also a whole bunch
     of lines explaining how curl uses CA certs to verify the server’s certificate
     and some details from the server’s certificate, etc. Including which ciphers were
     selected and more TLS details.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们使用`HTTPS://` URL而不是HTTP URL，还会有很多行解释curl如何使用CA证书来验证服务器的证书，以及服务器证书的一些细节等。包括选择了哪些加密套件以及更多的TLS细节。
 - en: In addition to the added information given from curl internals, the `-v` verbose
     mode also makes curl show all headers it sends and receives. For protocols without
     headers (like FTP, SMTP, POP3 and so on), we can consider commands and responses
     as headers and they thus also are shown with `-v`.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了从curl内部获取的附加信息外，`-v`详细模式还会显示curl发送和接收的所有头部信息。对于没有头部信息的协议（如FTP、SMTP、POP3等），我们可以将命令和响应视为头部信息，因此它们也会在`-v`模式下显示。
 - en: 'If we then continue the output seen from the command above (but ignore the
     actual HTML response), curl shows:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们继续查看上述命令的输出（但忽略实际的HTML响应），curl会显示：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: This is the full HTTP request to the site. This request is how it looks in a
     default curl 7.45.0 installation and it may, of course, differ slightly between
     different releases and in particular it changes if you add command line options.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是发送到网站的完整HTTP请求。这个请求是在默认的curl 7.45.0安装中看起来是什么样子，当然，在不同的版本之间可能会有所不同，特别是如果您添加了命令行选项，它会有所变化。
 - en: The last line of the HTTP request headers looks empty, and it is. It signals
     the separation between the headers and the body, and in this request there is
     no “body” to send.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP请求头部的最后一行看起来是空的，确实是空的。它标志着头部和主体的分隔，在这个请求中，没有“主体”要发送。
 - en: 'Moving on and assuming everything goes according to plan, the sent request
     gets a corresponding response from the server and that HTTP response starts with
     a set of headers before the response body:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 继续进行，并假设一切按计划进行，发送的请求会从服务器获得相应的响应，而这个HTTP响应在响应体之前开始，包含一组头部信息：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: This may look mostly like mumbo jumbo to you, but this is a normal set of HTTP
     headers—metadata—about the response. The first line’s “200” might be the most
     important piece of information in there and means “everything is fine”.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 这可能看起来像是胡言乱语，但这是一组正常的HTTP头部信息——关于响应的元数据。第一行的“200”可能是其中最重要的信息，意味着“一切正常”。
 - en: The last line of the received headers is, as you can see, empty, and that is
     the marker used for the HTTP protocol to signal the end of the headers.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 收到的头部信息的最后一行，如您所见，是空的，这是HTTP协议用来表示头部信息结束的标记。
 - en: After the headers comes the actual response body, the data payload. The regular
     -v verbose mode does not show that data but only displays
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 在头部信息之后是实际的响应体，数据负载。常规的 -v verbose 模式不会显示这些数据，但它只会显示
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'That 1270 bytes should then be in the ‘saved’ file. You can also see that there
     was a header named Content-Length: in the response that contained the exact file
     length (though it may not always be present in responses).'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '那么应该有 1270 字节在“已保存”的文件中。你还可以看到响应中有一个名为 Content-Length: 的头部，其中包含确切的文件长度（尽管它可能并不总是出现在响应中）。'
 - en: HTTP/2 and HTTP/3
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP/2 和 HTTP/3
 - en: When doing file transfers using version two or three of the HTTP protocol, curl
     sends and receives **compressed** headers. To display outgoing and incoming HTTP/2
     and HTTP/3 headers in a readable and understandable way, curl shows the uncompressed
     versions in a style similar to how they appear with HTTP/1.1.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 HTTP 协议的第二版或第三版进行文件传输时，curl 会发送和接收**压缩**的头部信息。为了以可读和易懂的方式显示 HTTP/2 和 HTTP/3
+    的头部信息，curl 会以类似于 HTTP/1.1 的风格显示未压缩的版本。
 - en: Silence
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 寂静
 - en: The opposite of verbose is, of course, to make curl more silent. With the `-s`
     (or `--silent`) option you make curl switch off the progress meter and not output
     any error messages for when errors occur. It gets mute. It still outputs the downloaded
     data you ask it to.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 verbose 相反，当然是要让 curl 更加安静。使用 `-s`（或 `--silent`）选项可以让 curl 关闭进度条，并且在发生错误时不会输出任何错误信息。它会变得沉默。但它仍然会输出你请求下载的数据。
 - en: With silence activated, you can ask for it to still output the error message
     on failures by adding `-S` or `--show-error`.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在激活了寂静模式后，你可以通过添加 `-S` 或 `--show-error` 来请求在失败时仍然输出错误信息。
 - en: '[Trace options](ch080.xhtml#usingcurl__verbose__trace__md)'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[跟踪选项](ch080.xhtml#usingcurl__verbose__trace__md)'
 - en: '[Write out](ch081.xhtml#usingcurl__verbose__writeout__md)'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[输出内容](ch081.xhtml#usingcurl__verbose__writeout__md)'

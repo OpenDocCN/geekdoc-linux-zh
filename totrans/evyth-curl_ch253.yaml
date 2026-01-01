@@ -1,119 +1,176 @@
 - en: Upload
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 上传
 - en: Uploads over HTTP can be done in many different ways and it is important to
     notice the differences. They can use different methods, like POST or PUT, and
     when using POST the body formatting can differ.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过HTTP进行上传可以以许多不同的方式完成，并且注意这些差异非常重要。它们可以使用不同的方法，如POST或PUT，并且在使用POST时，主体格式可能不同。
 - en: In addition to those HTTP differences, libcurl offers different ways to provide
     the data to upload.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了这些HTTP差异之外，libcurl还提供了不同的方式来提供上传的数据。
 - en: HTTP POST
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP POST
 - en: 'POST is typically the HTTP method to pass data to a remote web application.
     A common way to do that in browsers is by filling in an HTML form and pressing
     submit. It is the standard way for an HTTP request to pass on data to the server.
     With libcurl you normally provide that data as a pointer and a length:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: POST通常是传递数据到远程Web应用的HTTP方法。在浏览器中，通常通过填写HTML表单并按提交按钮来实现这一点。这是HTTP请求传递数据到服务器的标准方式。使用libcurl，你通常提供数据作为指针和长度：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Or you tell libcurl that it is a post but would prefer to have libcurl instead
     get the data by using the regular [read callback](ch214.xhtml#transfers__callbacks__read__md):'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，你可以告诉libcurl这是一个POST操作，但更希望它通过使用常规[读取回调](ch214.xhtml#transfers__callbacks__read__md)来获取数据：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'This “normal” POST also sets the request header `Content-Type: application/x-www-form-urlencoded`.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '这个“正常”的POST也设置了请求头`Content-Type: application/x-www-form-urlencoded`。'
 - en: HTTP multipart formposts
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP多部分表单
 - en: A multipart formpost is still using the same HTTP method POST; the difference
     is only in the formatting of the request body. A multipart formpost is a series
     of separate “parts”, separated by MIME-style boundary strings. There is no limit
     to how many parts you can send.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 多部分表单仍然使用相同的HTTP方法POST；区别仅在于请求体的格式。多部分表单是一系列分开的“部分”，由MIME风格的边界字符串分隔。你可以发送的部分数量没有限制。
 - en: Each such part has a name, a set of headers and a few other properties.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个这样的部分都有一个名称、一组头和一些其他属性。
 - en: 'libcurl offers a set of convenience functions for constructing such a series
     of parts and to send that off to the server, all prefixed with `curl_mime`. Create
     a multipart post and for each part in the data you set the name, the data and
     perhaps additional meta-data. A basic setup might look like this:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl提供了一套便利函数来构建这样的部分序列并将其发送到服务器，所有这些函数都以`curl_mime`为前缀。创建一个多部分表单，对于数据中的每个部分，你设置名称、数据和可能的其他元数据。一个基本的设置可能看起来像这样：
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Then you pass that post to libcurl like this:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后你将这个帖子传递给libcurl，如下所示：
 - en: '[PRE3]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: (`curl_formadd` is the former API to build multi-part formposts with but we
     no longer recommend using that)
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: (`curl_formadd`是之前用于构建多部分表单的API，但我们不再推荐使用它)
 - en: HTTP PUT
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP PUT
 - en: 'A PUT with libcurl assumes you pass the data to it using the read callback,
     as that is the typical “file upload” pattern libcurl uses and provides. You set
     the callback, you ask for PUT (by asking for `CURLOPT_UPLOAD`), you set the size
     of the upload and you set the URL to the destination:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用libcurl进行PUT操作时，它假定你通过读取回调传递数据给它，因为这是libcurl使用的典型“文件上传”模式，并且提供了该模式。你设置回调，请求PUT（通过请求`CURLOPT_UPLOAD`），设置上传的大小，并设置目标URL：
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'If you for some reason do not know the size of the upload before the transfer
     starts, and you are using HTTP 1.1 you can add a `Transfer-Encoding: chunked`
     header with [CURLOPT_HTTPHEADER](ch246.xhtml#libcurl-http__requests__md). For
     HTTP 1.0 you must provide the size before hand and for HTTP 2 and later, neither
     the size nor the extra header is needed.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '如果你在传输开始之前不知道上传的大小，并且你正在使用HTTP 1.1，你可以通过[CURLOPT_HTTPHEADER](ch246.xhtml#libcurl-http__requests__md)添加一个`Transfer-Encoding:
+    chunked`头。对于HTTP 1.0，你必须事先提供大小，而对于HTTP 2及以后版本，既不需要大小也不需要额外的头。'
 - en: 'Expect: headers'
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 期望：标题
 - en: 'When doing HTTP uploads using HTTP 1.1, libcurl inserts an `Expect: 100-continue`
     header in some circumstances. This header offers the server a way to reject the
     transfer early and save the client from having to send a lot of data in vain before
     the server gets a chance to decline.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '在使用HTTP 1.1进行HTTP上传时，在某些情况下，libcurl会插入一个`Expect: 100-continue`头。此头为服务器提供了一种在早期拒绝传输的方式，从而避免客户端在服务器有机会拒绝之前发送大量数据。'
 - en: The header is added by libcurl if HTTP uploading is done with `CURLOPT_UPLOAD`
     or if it is asked to do an HTTP POST for which the body size is either unknown
     or known to be larger than 1024 bytes.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果使用`CURLOPT_UPLOAD`进行HTTP上传，或者如果要求进行HTTP POST（其中主体大小未知或已知大于1024字节），libcurl会添加一个头。
 - en: A libcurl-using client can explicitly disable the use of the `Expect:` header
     with the [CURLOPT_HTTPHEADER](ch246.xhtml#libcurl-http__requests__md) option.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用libcurl的客户端可以通过[CURLOPT_HTTPHEADER](ch246.xhtml#libcurl-http__requests__md)选项显式禁用`Expect:`头部的使用。
 - en: This header is not used with HTTP/2 or HTTP/3.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 在HTTP/2或HTTP/3中不使用此头部。
 - en: Uploads also downloads
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 上传也会下载
 - en: HTTP is a protocol that can respond with contents back even when you upload
     data to it - it is up to the server to decide. The response data may even start
     getting sent back to the client before the upload has completed.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP是一种即使你向其上传数据也能返回内容的协议 - 这取决于服务器来决定。响应数据甚至可能在上传完成之前就开始发送回客户端。

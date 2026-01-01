@@ -1,82 +1,120 @@
 - en: Stop
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 停止
 - en: An Internet transfer might be brief but can also take a long time. Maybe even
     an infinite amount of time.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 互联网传输可能很短暂，但也可能需要很长时间。甚至可能是无限长的时间。
 - en: libcurl normally performs transfers until they are complete or until an error
     occurs. If none of those events happen, the transfer continues.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl通常执行传输，直到它们完成或发生错误。如果没有这些事件发生，传输将继续。
 - en: At times, you might want to stop a libcurl transfer before it would otherwise
     stop.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，你可能想在libcurl传输本应停止之前停止它。
 - en: easy API
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 简单API
 - en: As explained elsewhere, the `curl_easy_perform()` function is a synchronous
     function call. It does the entire transfer before it returns.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如其他地方所述，`curl_easy_perform()`函数是一个同步函数调用。它在返回之前完成整个传输。
 - en: 'There are a few different ways to stop a transfer before it would otherwise
     end:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在传输本应结束之前停止传输有几种不同的方法：
 - en: return an error from a callback
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从回调返回一个错误
 - en: set an option that makes the transfer stop after a fixed period of time
+  id: totrans-8
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 设置一个选项，使传输在固定时间段后停止
 - en: Every [callback](../callbacks/) can return an error, and when an error is returned
     from one of those functions the entire transfer is stopped. For example the read,
     write or progress callbacks.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个[callback](../callbacks/)都可以返回一个错误，并且当这些函数之一返回错误时，整个传输将停止。例如，读取、写入或进度回调。
 - en: 'The second way is to set a timeout or other option that stops the transfer
     after a time or at a particular condition. For example one or more of the following:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 第二种方法是设置超时或其他选项，在一段时间后或达到特定条件时停止传输。例如以下之一：
 - en: '`CURLOPT_TIMEOUT` - set a maximum time the entire transfer may take'
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`CURLOPT_TIMEOUT` - 设置整个传输可能的最大时间'
 - en: '`CURLOPT_CONNECTTIMEOUT` - set a maximum time “connection phase” may take'
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`CURLOPT_CONNECTTIMEOUT` - 设置“连接阶段”可能的最大时间'
 - en: '`CURLOPT_LOW_SPEED_LIMIT` - set the lowest acceptable transfer speed. The transfer
     stops if slower than this speed for `CURLOPT_LOW_SPEED_TIME` number of second.'
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`CURLOPT_LOW_SPEED_LIMIT` - 设置最低可接受的传输速度。如果传输速度低于此速度`CURLOPT_LOW_SPEED_TIME`秒数，则传输停止。'
 - en: There is no provided function that allows your application to stop an ongoing
     `curl_easy_perform()` call from another thread. The common suggestion is then
     that you signal that intent in a private way that you can detect in a callback
     and have that callback return error when it happens.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有提供函数允许你的应用程序从另一个线程停止正在进行的`curl_easy_perform()`调用。因此，常见的建议是私下发出这个意图，你可以在回调中检测到它，并在发生时让该回调返回错误。
 - en: multi API
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多个API
 - en: The multi interface is generally a non-blocking API, so in most situations you
     can stop a transfer by removing its corresponding easy handle from the multi handle
     using `curl_multi_remove_handle()`.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 多接口通常是一个非阻塞API，所以在大多数情况下，你可以通过使用`curl_multi_remove_handle()`从多句柄中移除相应的简单句柄来停止传输。
 - en: When you use the multi API, you might call libcurl to wait for activities or
     traffic on sockets libcurl works with. A call that might sit blocking while waiting
     for something to happen (or a timeout to expire), like `curl_multi_poll()`.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用多API时，你可能会调用libcurl来等待与libcurl一起工作的套接字上的活动或流量。例如，`curl_multi_poll()`这样的调用可能会在等待某个事件发生（或超时到期）时阻塞。
 - en: An application can make a blocked call to `curl_multi_poll()` wake up and return
     forcibly and immediately by calling `curl_multi_wakeup()` from another thread.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序可以通过从另一个线程调用`curl_multi_wakeup()`来使阻塞的`curl_multi_poll()`调用唤醒并强制立即返回。

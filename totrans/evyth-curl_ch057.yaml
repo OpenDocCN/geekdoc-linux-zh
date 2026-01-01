@@ -1,23 +1,33 @@
 - en: Name and password
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 用户名和密码
 - en: 'Following the scheme in a URL, there can be a possible username and password
     field embedded. The use of this syntax is usually frowned upon these days since
     you easily leak this information in scripts or otherwise. For example, listing
     the directory of an FTP server using a given name and password:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在URL方案之后，可能嵌入用户名和密码字段。如今，这种语法的使用通常是不受欢迎的，因为您很容易在脚本或其他方式中泄露这些信息。例如，使用给定的用户名和密码列出FTP服务器的目录：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The presence of username and password in the URL is completely optional. curl
     also allows that information to be provided with normal command-line options,
     outside of the URL.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: URL中包含用户名和密码是完全可选的。curl还允许通过正常的命令行选项提供这些信息，而无需在URL中。
 - en: 'If you want a non-ASCII letter or maybe a `:` or `@` as part of the username
     and/or password, remember to URL encode that letter: write it as `%HH` where `HH`
     is the hexadecimal byte value. `:` is `%3a` and `@` is `%40`.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果用户名和/或密码中包含非ASCII字母或可能包含`:`或`@`，请记住对该字母进行URL编码：将其写作`%HH`，其中`HH`是十六进制字节值。`:`是`%3a`，而`@`是`%40`。

@@ -1,10 +1,14 @@
 - en: RTSP interleaved data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: RTSP 交织数据
 - en: The callback with the `CURLOPT_INTERLEAVEFUNCTION` option.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 带有 `CURLOPT_INTERLEAVEFUNCTION` 选项的回调。
 - en: This callback gets called by libcurl as soon as it has received interleaved
     RTP data when doing an RTSP transfer. It gets called for each `$` block and therefore
     contains exactly one upper-layer protocol unit (e.g. one RTP packet). libcurl
@@ -13,9 +17,15 @@
     byte channel identifier and then a 2 byte integer length in network byte order.
     See RFC2326 Section 10.12 for more information on how RTP interleaving behaves.
     If unset or set to NULL, curl uses the default write function.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当进行 RTSP 传输时，libcurl 一旦收到交织的 RTP 数据就会调用此回调。它对每个 `$` 块进行调用，因此恰好包含一个上层协议单元（例如，一个
+    RTP 数据包）。libcurl 为每个调用写入交织的头部以及包含的数据。第一个字节始终是 ASCII 美元符号。美元符号后面跟着一个字节通道标识符，然后是一个
+    2 字节整数长度，以网络字节序表示。有关 RTP 交织行为的信息，请参阅 RFC2326 第 10.12 节。如果未设置或设置为 NULL，curl 将使用默认的写入函数。
 - en: The `CURLOPT_INTERLEAVEDATA` pointer is passed in the userdata argument in the
     callback.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLOPT_INTERLEAVEDATA` 指针在回调函数的 userdata 参数中传递。'

@@ -1,115 +1,172 @@
 - en: Requests
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 请求
 - en: An HTTP request is what curl sends to the server when it tells the server what
     to do. When it wants to get data or send data. All transfers involving HTTP start
     with an HTTP request.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 请求是 curl 向服务器发送以告知服务器要执行的操作。当它想要获取数据或发送数据时，所有涉及 HTTP 的传输都以 HTTP 请求开始。
 - en: An HTTP request contains a method, a path, HTTP version and a set of request
     headers. A libcurl-using application can tweak all those fields.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 HTTP 请求包含一个方法、一个路径、HTTP 版本和一组请求头。使用 libcurl 的应用程序可以调整所有这些字段。
 - en: Request method
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 请求方法
 - en: Every HTTP request contains a “method”, sometimes referred to as a “verb”. It
     is usually something like GET, HEAD, POST or PUT but there are also more esoteric
     ones like DELETE, PATCH and OPTIONS.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个HTTP请求都包含一个“方法”，有时也称为“动词”。它通常是 GET、HEAD、POST 或 PUT 等内容，但也有更专业的如 DELETE、PATCH
+    和 OPTIONS。
 - en: Usually when you use libcurl to set up and perform a transfer the specific request
     method is implied by the options you use. If you just ask for a URL, it means
     the method is `GET` while if you set for example `CURLOPT_POSTFIELDS` that makes
     libcurl use the `POST` method. If you set `CURLOPT_UPLOAD` to true, libcurl sends
     a `PUT` method in its HTTP request and so on. Asking for `CURLOPT_NOBODY` makes
     libcurl use `HEAD`.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，当您使用 libcurl 设置和执行传输时，特定的请求方法由您使用的选项隐含。如果您只是请求一个 URL，这意味着方法是 `GET`，而如果您设置例如
+    `CURLOPT_POSTFIELDS`，这将使 libcurl 使用 `POST` 方法。如果您将 `CURLOPT_UPLOAD` 设置为 true，libcurl
+    在其 HTTP 请求中发送一个 `PUT` 方法，依此类推。请求 `CURLOPT_NOBODY` 将使 libcurl 使用 `HEAD`。
 - en: 'However, sometimes those default HTTP methods are not good enough or simply
     not the ones you want your transfer to use. Then you can instruct libcurl to use
     the specific method you like with `CURLOPT_CUSTOMREQUEST`. For example, you want
     to send a `DELETE` method to the URL of your choice:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，有时那些默认的 HTTP 方法不足以满足需求，或者根本不是您想要的传输方法。然后您可以指示 libcurl 使用您喜欢的特定方法，通过 `CURLOPT_CUSTOMREQUEST`。例如，您想向您选择的
+    URL 发送一个 `DELETE` 方法：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The CURLOPT_CUSTOMREQUEST setting should only be the single keyword to use as
     method in the HTTP request line. If you want to change or add additional HTTP
     request headers, see the following section.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: CURLOPT_CUSTOMREQUEST 设置应仅是作为 HTTP 请求行中方法的单个关键字。如果您想更改或添加额外的 HTTP 请求头，请参阅以下部分。
 - en: Customize HTTP request headers
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 自定义 HTTP 请求头
 - en: When libcurl issues HTTP requests as part of performing the data transfers you
     have asked it to, it sends them off with a set of HTTP headers that are suitable
     for fulfilling the task given to it.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 libcurl 在执行您请求的数据传输时发出 HTTP 请求，它会使用一组适合完成分配给它的任务的 HTTP 头信息发送请求。
 - en: 'If just given the URL `http://localhost/file1.txt`, libcurl sends the following
     request to the server:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果只提供了 `http://localhost/file1.txt` 这个 URL，libcurl 将向服务器发送以下请求：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'If you instruct your application to also set `CURLOPT_POSTFIELDS` to the string
     “foobar” (6 letters, the quotes only used for visual delimiters here), it would
     send the following headers:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您指示应用程序也将 `CURLOPT_POSTFIELDS` 设置为字符串 “foobar”（6个字母，引号仅用于视觉分隔符），它将发送以下头信息：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If you are not pleased with the default set of headers libcurl sends, the application
     has the power to add, change or remove headers in the HTTP request.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您对 libcurl 发送的默认头信息集不满意，应用程序有权在 HTTP 请求中添加、更改或删除头信息。
 - en: Add a header
+  id: totrans-16
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 添加一个头
 - en: 'To add a header that would not otherwise be in the request, add it with `CURLOPT_HTTPHEADER`.
     Suppose you want a header called `Name:` that contains `Mr. Smith`:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 要添加一个在请求中不会出现的头，使用 `CURLOPT_HTTPHEADER` 添加它。假设您想要一个名为 `Name:` 的头，它包含 `Mr. Smith`：
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Change a header
+  id: totrans-19
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 更改一个头
 - en: 'If one of those default headers are not to your satisfaction you can alter
     them. Like if you think the default `Host:` header is wrong (even though it is
     derived from the URL you give libcurl), you can tell libcurl your own:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果默认的标题之一不符合您的期望，您可以修改它们。例如，如果您认为默认的 `Host:` 标题是错误的（即使它是从您提供的 libcurl URL 中派生出来的），您可以告诉
+    libcurl 使用您自己的：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Remove a header
+  id: totrans-22
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 移除一个头
 - en: 'When you think libcurl uses a header in a request that you really think it
     should not, you can easily tell it to just remove it from the request. Like if
     you want to take away the `Accept:` header. Just provide the header name with
     nothing to the right sight of the colon:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您认为 libcurl 在请求中使用了一个您认为不应该使用的头时，您可以轻松地告诉它从请求中移除它。例如，如果您想移除 `Accept:` 头。只需提供头名称，冒号右边不提供任何内容：
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Provide a header without contents
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 提供一个无内容的头
 - en: 'As you may then have noticed in the above sections, if you try to add a header
     with no contents on the right side of the colon, it is treated as a removal instruction
     and it instead completely inhibits that header from being sent. If you instead
@@ -118,34 +175,50 @@
     a proper colon. Like `Header;`. If you want to add a header to the outgoing HTTP
     request that is just `Moo:` with nothing following the colon, you could write
     it like:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 如您在上文各节中可能已经注意到的，如果您尝试在冒号右侧添加没有内容的标题，它会被视为删除指令，从而完全阻止该标题被发送。如果您确实*真正地*想要发送一个右侧内容为零的标题，您需要使用一个特殊的标记。您必须使用分号而不是正确的冒号来提供标题。例如`Header;`。如果您想要向发出的HTTP请求添加一个只有`Moo:`而没有冒号后跟内容的标题，您可以这样写：
 - en: '[PRE6]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Referrer
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 引用者
 - en: 'The `Referer:` header (yes, it is misspelled) is a standard HTTP header that
     tells the server from which URL the user-agent was directed from when it arrived
     at the URL it now requests. It is a normal header so you can set it yourself with
     the `CURLOPT_HEADER` approach as shown above, or you can use the shortcut known
     as `CURLOPT_REFERER`. Like this:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Referer:`标题（是的，它拼写错误）是一个标准的HTTP标题，它告诉服务器用户代理是从哪个URL被引导到它现在请求的URL的。它是一个正常的标题，因此您可以使用上面显示的`CURLOPT_HEADER`方法自己设置它，或者您可以使用称为`CURLOPT_REFERER`的快捷方式。就像这样：'
 - en: '[PRE7]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Automatic referrer
+  id: totrans-31
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 自动引用者
 - en: 'When libcurl is asked to follow redirects itself with the `CURLOPT_FOLLOWLOCATION`
     option, and you still want to have the `Referer:` header set to the correct previous
     URL from where it did the redirect, you can ask libcurl to set that by itself:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl被要求使用`CURLOPT_FOLLOWLOCATION`选项自行跟随重定向，并且您仍然希望将`Referer:`标题设置为它进行重定向的正确的前一个URL，您可以要求libcurl自行设置该值：
 - en: '[PRE8]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'

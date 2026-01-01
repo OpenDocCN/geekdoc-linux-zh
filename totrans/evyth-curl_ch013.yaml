@@ -1,65 +1,93 @@
 - en: Releases
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 发布
 - en: A release in the curl project means packaging up all the source code that is
     in the master branch of the code repository, signing the package, tagging the
     point in the code repository, and then putting it up on the website for the world
     to download.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在curl项目中，一个发布意味着将代码库master分支中的所有源代码打包，对包进行签名，标记代码库中的该点，然后将它上传到网站供全世界下载。
 - en: It is one single source code archive for all platforms curl can run on. It is
     the one and only package for both curl and libcurl.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个适用于curl可以在其上运行的平台的单一源代码存档。这是curl和libcurl的唯一包。
 - en: 'We never ship any curl or libcurl *binaries* from the project with one exception:
     we host official curl binaries built for Windows users. All the other packaged
     binaries that are provided with operating systems or on other download sites are
     done by gracious volunteers outside of the project.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从未从项目中发送任何curl或libcurl的二进制文件，只有一个例外：我们托管为Windows用户构建的官方curl二进制文件。所有其他与操作系统一起提供的或在其他下载网站上提供的打包二进制文件都是由项目外的志愿者完成的。
 - en: As of several years back, we make an effort to do our releases on an eight week
     cycle and unless some really serious and urgent problem shows up we stick to this
     schedule. We release on a Wednesday, and then again a Wednesday eight weeks later
     and so it continues. Non-stop.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 几年前，我们努力以八周为一个周期进行发布，除非出现一些真正严重和紧急的问题，否则我们会坚持这个计划。我们每周三发布，然后八周后的又一个周三再次发布，以此类推。不间断。
 - en: For every release we tag the source code in the repository with the curl version
     number and we update the [changelog](https://curl.se/changes.html).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于每个版本，我们都会在代码库中将源代码标记为curl版本号，并更新[变更日志](https://curl.se/changes.html)。
 - en: We had done a total of 253 releases by January 2024\. The entire release history
     and changelog is available in our [curl release log](https://curl.se/docs/releases.html).
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 到2024年1月，我们已经发布了253个版本。整个发布历史和变更日志可在我们的[curl发布日志](https://curl.se/docs/releases.html)中找到。
 - en: Release cycle
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 发布周期
 - en: '![](../media/file1.png)'
+  id: totrans-8
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../media/file1.png)'
 - en: The curl release cycle visualized
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: curl发布周期可视化
 - en: Daily snapshots
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 每日快照
 - en: Every single change to the source code is committed and pushed to the source
     code repository. This repository is hosted on github.com and is using git these
     days (but has not always been this way). When building curl off the repository,
     there are a few things you need to generate and set up that sometimes cause people
     some problems or just friction. To help with that, we provide daily snapshots.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 每次对源代码的更改都会提交并推送到源代码库。这个库托管在github.com上，目前使用git（但并非一直如此）。从库中构建curl时，需要生成和设置一些东西，有时这会给人们带来一些问题或摩擦。为了帮助解决这个问题，我们提供了每日快照。
 - en: The daily snapshots are generated daily (clever naming, right?) as if a release
     had been made at that point. It produces a package of all source code and all
     files that are normally part of a release and puts it in a package and uploads
     it to [this special place](https://curl.se/snapshots/) to allow interested people
     to get the latest code to test, to experiment or whatever.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 每日快照每天生成（命名很聪明，对吧？）就像在那个点发布了一个版本一样。它生成一个包含所有源代码和通常作为发布一部分的所有文件的包，并将其放入包中，上传到[这个特殊位置](https://curl.se/snapshots/)，以便有兴趣的人获取最新的代码进行测试、实验或其他用途。
 - en: The snapshots are kept for around 20 days until deleted.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 快照保留大约20天后将被删除。

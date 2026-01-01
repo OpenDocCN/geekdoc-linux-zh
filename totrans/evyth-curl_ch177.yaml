@@ -1,26 +1,38 @@
 - en: HTTP PUT
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTP PUT
 - en: The difference between a PUT and a POST is subtle. They are virtually identical
     transmissions except for the different method strings. Where POST is meant to
     pass on data to a remote resource, PUT is supposed to be the new version of that
     resource.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: PUT和POST之间的区别很微妙。它们在传输上几乎相同，只是方法字符串不同。POST旨在将数据传递给远程资源，而PUT则应该是该资源的新版本。
 - en: 'In that aspect, PUT is similar to good old standard file upload found in other
     protocols. You upload a new version of the resource with PUT. The URL identifies
     the resource and you point out the local file to put there:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这方面，PUT与在其他协议中找到的古老标准文件上传类似。您使用PUT上传资源的最新版本。URL标识资源，您指出要放置的本地文件：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '`-T` implies a PUT and tell curl which file to send off. But the similarities
     between POST and PUT also allows you to send a PUT with a string by using the
     regular curl POST mechanism using `-d` but asking for it to use a PUT instead:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-T` 表示一个PUT操作，并告诉curl发送哪个文件。但POST和PUT之间的相似性也允许您通过使用常规curl POST机制（使用`-d`）发送一个PUT请求，但要求使用PUT方法：'
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

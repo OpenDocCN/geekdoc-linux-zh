@@ -1,45 +1,67 @@
 - en: Multiple downloads
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多次下载
 - en: As curl can be told to download many URLs in a single command line, there are,
     of course, times when you want to store these downloads in nicely named local
     files.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于curl可以告诉它在单个命令行中下载多个URL，当然有时您希望将这些下载存储在命名良好的本地文件中。
 - en: 'The key to understanding this is that each download URL needs its own “storage
     instruction”. Without said “storage instruction”, curl defaults to sending the
     data to stdout. If you ask for two URLs and only tell curl where to save the first
     URL, the second one is sent to stdout. Like this:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 理解这个问题的关键在于，每个下载URL都需要自己的“存储指令”。如果没有这个“存储指令”，curl默认会将数据发送到stdout。如果您请求了两个URL，但只告诉curl第一个URL的保存位置，那么第二个URL就会被发送到stdout。就像这样：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The “storage instructions” are read and handled in the same order as the download
     URLs so they do not have to be next to the URL in any way. You can round up all
     the output options first, last or interleaved with the URLs. You choose.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: “存储指令”的读取和处理顺序与下载URL相同，因此它们不必以任何方式紧挨着URL。您可以首先、最后或与URL交织地汇总所有输出选项。您来选择。
 - en: 'These examples all work the same way:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些示例都以相同的方式工作：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The `-O` is similarly just an instruction for a single download so if you download
     multiple URLs, use more of them:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-O`同样只是一个针对单个下载的指令，因此如果您下载多个URL，请使用更多的它们：'
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Parallel
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 并行
 - en: 'Unless told otherwise, curl downloads all given URLs in a serial fashion, one
     by one. By using `-Z` (or `--parallel`) curl can instead do the transfers [in
     parallel](ch066.xhtml#cmdline__urls__parallel__md): several ones at once.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 除非另有说明，curl会按顺序逐个下载所有给定的URL。通过使用`-Z`（或`--parallel`），curl可以改为并行传输[传输](ch066.xhtml#cmdline__urls__parallel__md)：一次多个。

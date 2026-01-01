@@ -1,352 +1,537 @@
 - en: Write out
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 写出
 - en: '`--write-out` or just `-w` for short, outputs text and information after a
     transfer is completed. It offers a large range of variables that you can include
     in the output, variables that have been set with values and information from the
     transfer.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--write-out`或简写为`-w`，在传输完成后输出文本和信息。它提供了一系列变量，您可以将这些变量包含在输出中，这些变量包含已设置的值和传输的信息。'
 - en: 'Instruct curl to output a string by passing plain text to this option:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过将纯文本传递给此选项来指示curl输出一个字符串：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '…and you can also have curl read that string from a given file instead if you
     prefix the string with ‘@’:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: …你也可以让curl从指定的文件中读取该字符串，如果在该字符串前加上‘@’：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '…or even have curl read the string from stdin if you use ‘-’ as filename:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: …或者甚至让curl从stdin读取字符串，如果您使用`-`作为文件名：
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Variables
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 变量
 - en: The variables that are available are accessed by writing `%{variable_name}`
     in the string and that variable is substituted by the correct value. To output
     a plain `%` you write it as `%%`. You can also output a newline by using `\n`,
     a carriage return with `\r` and a tab space with `\t`.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 可用的变量通过在字符串中写入`%{variable_name}`来访问，该变量将被正确的值替换。要输出一个普通的`%`，请将其写作`%%`。您还可以使用`\n`输出换行符，使用`\r`输出回车符，使用`\t`输出制表符。
 - en: 'As an example, we can output the Content-Type and the response code from an
     HTTP transfer, separated with newlines and some extra text like this:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，我们可以这样输出HTTP传输的Content-Type和响应代码，用换行符和一些额外的文本分隔：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: The output is sent to stdout by default so you probably want to make sure that
     you do not also send the downloaded content to stdout as then you might have a
     hard time to separate out the data; or use `%{stderr}` to send the output to stderr.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，输出发送到stdout，所以您可能想确保您没有也将下载的内容发送到stdout，否则您可能很难分离数据；或者使用`%{stderr}`将输出发送到stderr。
 - en: HTTP headers
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP头部
 - en: This option also provides an easy to use way to output the contents of HTTP
     response headers from the most recent transfer.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 此选项还提供了一个简单易用的方法来输出最近一次传输的HTTP响应头内容。
 - en: 'Use `%header{name}` in the string, where `name` is the case insensitive name
     of the header (without the trailing colon). The output header contents are then
     shown exactly as was sent over the network, with leading and trailing whitespace
     trimmed. Like this:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在字符串中使用`%header{name}`，其中`name`是头部的无大小写名称（不带尾随冒号）。然后输出头部内容将精确地显示为通过网络发送的内容，前后空白被删除。如下所示：
 - en: '[PRE4]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Output
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 输出
 - en: By default, this option makes the selected data get output on stdout. If that
     is not good enough, the pseudo-variable `%{stderr}` can be used to direct (the
     following) part to stderr and `%{stdout}` brings it back to stdout.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，此选项使选定的数据输出到stdout。如果这还不够好，可以使用伪变量`%{stderr}`将（以下）部分重定向到stderr，而`%{stdout}`则将其带回stdout。
 - en: 'From curl 8.3.0, there is a feature that lets users send the write-out output
     to a file: `%output{filename}`. The data following is then written to that file.
     If you would rather have curl append to that file instead of creating it from
     scratch, prefix the filename with `>>`. Like this: `%output{>>filename}`.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 从curl 8.3.0版本开始，有一个功能允许用户将write-out输出发送到文件：`%output{filename}`。然后数据将被写入该文件。如果您希望curl向该文件追加而不是从头创建它，请将文件名前缀为`>>`。如下所示：`%output{>>filename}`。
 - en: A write-out argument can include output to stderr, stdout and files as the user
     sees fit.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 写出参数可以包括用户认为合适的stderr、stdout和文件输出。
 - en: Windows
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Windows
 - en: '**NOTE:** In Windows, the `%`-symbol is a special symbol used to expand environment
     variables. In batch files all occurrences of `%` must be doubled when using this
     option to properly escape. If this option is used at the command prompt then the
     `%` cannot be escaped and unintended expansion is possible.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意：** 在Windows中，`%`符号是一个特殊符号，用于展开环境变量。在批处理文件中，使用此选项时，所有`%`的出现都必须加倍，以正确转义。如果在命令提示符中使用此选项，则`%`无法转义，可能会发生意外的展开。'
 - en: Available –write-out variables
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 可用的–write-out变量
 - en: Some of these variables are not available in really old curl versions.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些变量中的一些在非常旧的curl版本中不可用。
 - en: '| Variable | Description |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| 变量 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `certs` | Outputs the certificate chain from the most recent TLS handshake
     - with details. (Introduced in 7.88.0) |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `certs` | 输出最近一次TLS握手的证书链 - 包括详细信息。（自7.88.0版本引入）|'
 - en: '| `content_type` | Content-Type of the requested document, if there was any.
     |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `content_type` | 请求文档的Content-Type，如果有。|'
 - en: '| `errormsg` | Error message from the transfer. Empty if no error occurred.
     (Introduced in 7.75.0) |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `errormsg` | 传输错误信息。如果没有错误发生，则为空。（自7.75.0版本引入）|'
 - en: '| `exitcode` | Numerical exit code from the transfer. 0 if no error occurred.
     (Introduced in 7.75.0) |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `exitcode` | 传输的数值退出代码。如果没有发生错误，则为0。（自7.75.0版本引入） |'
 - en: '| `filename_effective` | The ultimate filename that curl writes out to. Practical
     if curl is told to write to a file with the `--remote-name` or `--output` option.
     It is most useful in combination with the `--remote-header-name` option. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `filename_effective` | curl写入的最终文件名。如果curl被指示使用`--remote-name`或`--output`选项写入文件，则非常有用。它与`--remote-header-name`选项结合使用时最有用。
+    |'
 - en: '| `ftp_entry_path` | The initial path curl ended up in when logging on to the
     remote FTP server. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `ftp_entry_path` | 当登录到远程FTP服务器时curl最终到达的初始路径。 |'
 - en: '| `http_code` | The former variable name for what is now known as `response_code`.
     |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `http_code` | 现在被称为`response_code`的前一个变量名。 |'
 - en: '| `http_connect` | the numerical code that was found in the last response (from
     a proxy) to a curl CONNECT request. |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `http_connect` | 在curl CONNECT请求的最后响应（来自代理）中找到的数值代码。 |'
 - en: '| `http_version` | The HTTP version that was used. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `http_version` | 使用的HTTP版本。 |'
 - en: '| `json` | all write-out variables as a single JSON object. (Introduced in
     7.72.0) |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `json` | 将所有写入变量作为一个单独的JSON对象输出。（自7.72.0版本引入） |'
 - en: '| `local_ip` | IP address of the local end of the most recently used connection
     - can be either IPv4 or IPv6 |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `local_ip` | 最近使用连接的本地端IP地址 - 可以是IPv4或IPv6 |'
 - en: '| `local_port` | Local port number of the most recently used connection |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `local_port` | 最近使用连接的本地端口号 |'
 - en: '| `method` | HTTP method the most recent request used. (Introduced in 7.72.0)
     |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `method` | 最近请求使用的HTTP方法。（自7.72.0版本引入） |'
 - en: '| `num_certs` | Number of the certificates in the most recent TLS handshake.
     (Introduced in 7.88.0) |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `num_certs` | 最近TLS握手中证书的数量。（自7.88.0版本引入） |'
 - en: '| `num_connects` | Number of new connects made in the recent transfer. |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `num_connects` | 在最近传输中建立的新连接数量。 |'
 - en: '| `num_headers` | Number of response headers in the last response |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `num_headers` | 最后响应中的响应头数量 |'
 - en: '| `num_redirects` | Number of redirects that were followed in the request.
     |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `num_redirects` | 请求中跟随的重定向数量。 |'
 - en: '| `onerror` | If the transfer ended with an error, show the rest of the string,
     otherwise stop here. (Introduced in 7.75.0) |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `onerror` | 如果传输因错误而结束，则显示字符串的其余部分，否则在这里停止。（自7.75.0版本引入） |'
 - en: '| `proxy_ssl_verify_result` | The result of the SSL peer certificate verification
     that was requested when communicating with a proxy. 0 means the verification was
     successful. |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `proxy_ssl_verify_result` | 与代理通信时请求的SSL对等证书验证的结果。0表示验证成功。 |'
 - en: '| `redirect_url` | The actual URL a redirect *would* take you to when an HTTP
     request was made without `-L` to follow redirects. |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `redirect_url` | 当进行HTTP请求时，如果没有使用 `-L` 来跟随重定向，将实际重定向到的URL。 |'
 - en: '| `remote_ip` | The remote IP address of the most recently used connection
     — can be either IPv4 or IPv6. |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `remote_ip` | 最近使用连接的远程IP地址 — 可以是IPv4或IPv6。 |'
 - en: '| `remote_port` | The remote port number of the most recently made connection.
     |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `remote_port` | 最近建立的连接的远程端口号。 |'
 - en: '| `response_code` | The numerical response code that was found in the last
     transfer. |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `response_code` | 在最后传输中找到的数值响应代码。 |'
 - en: '| `scheme` | scheme used in the previous URL |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `scheme` | 在上一个URL中使用的方案 |'
 - en: '| `size_download` | Total number of bytes that were downloaded. |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `size_download` | 下载的总字节数。 |'
 - en: '| `size_header` | Total number of bytes of the downloaded headers. |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `size_header` | 下载的头的总字节数。 |'
 - en: '| `size_request` | Total number of bytes that were sent in the HTTP request.
     |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `size_request` | 在HTTP请求中发送的总字节数。 |'
 - en: '| `size_upload` | Total number of bytes that were uploaded. |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `size_upload` | 上传的总字节数。 |'
 - en: '| `speed_download` | Average download speed that curl measured for the complete
     download in bytes per second. |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `speed_download` | curl测量的完整下载的平均下载速度，以字节每秒为单位。 |'
 - en: '| `speed_upload` | Average upload speed that curl measured for the complete
     upload in bytes per second. |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `speed_upload` | curl测量的完整上传的平均上传速度，以字节每秒为单位。 |'
 - en: '| `ssl_verify_result` | the result of the SSL peer certificate verification
     that was requested. 0 means the verification was successful. |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `ssl_verify_result` | 请求的SSL对等证书验证的结果。0表示验证成功。 |'
 - en: '| `stderr` | Makes the rest of the output get written to stderr. |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `stderr` | 使其余输出写入stderr。 |'
 - en: '| `stdout` | makes the rest of the output get written to stdout. |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `stdout` | 使其余输出写入stdout。 |'
 - en: '| `time_appconnect` | The time in seconds, it took from the start until the
     SSL/SSH/etc connect/handshake to the remote host was completed. |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `time_appconnect` | 从开始到与远程主机进行SSL/SSH等连接/握手完成所需的时间（以秒为单位）。 |'
 - en: '| `time_connect` | The time in seconds, it took from the start until the TCP
     connect to the remote host (or proxy) was completed. |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `time_connect` | 从开始到与远程主机（或代理）的TCP连接完成所需的时间（以秒为单位）。 |'
 - en: '| `time_namelookup` | The time in seconds, it took from the start until the
     name resolving was completed. |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `time_namelookup` | 从开始到域名解析完成所需的时间（以秒为单位）。 |'
 - en: '| `time_pretransfer` | The time in seconds, it took from the start until the
     file transfer was just about to begin. This includes all pre-transfer commands
     and negotiations that are specific to the particular protocol(s) involved. |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `time_pretransfer` | 从开始到文件传输即将开始所需的时间（以秒为单位）。这包括所有与特定协议（s）相关的预传输命令和协商。 |'
 - en: '| `time_redirect` | The time in seconds, it took for all redirection steps
     including name lookup, connect, pre-transfer and transfer before the final transaction
     was started. time_redirect the complete execution time for multiple redirections.
     |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `time_redirect` | 包括名称查找、连接、预传输和传输的所有重定向步骤所需的时间（以秒为单位），直到开始最终事务。time_redirect是多次重定向的完整执行时间。
+    |'
 - en: '| `time_starttransfer` | The time in seconds, it took from the start until
     the first byte was just about to be transferred. This includes time_pretransfer
     and also the time the server needed to calculate the result. |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `time_starttransfer` | 从开始到第一个字节即将被传输所需的时间（以秒为单位）。这包括time_pretransfer以及服务器计算结果所需的时间。
+    |'
 - en: '| `time_total` | The total time in seconds, that the full operation lasted.
     The time is displayed with millisecond resolution. |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `time_total` | 全部操作持续的总时间（以秒为单位）。时间以毫秒分辨率显示。 |'
 - en: '| `url` | The URL used in the transfer. (Introduced in 7.75.0) |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `url` | 传输中使用的URL。（自7.75.0版本引入） |'
 - en: '| `url_effective` | The URL that was fetched last. This is particularly meaningful
     if you have told curl to follow Location: headers (with `-L`). |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `url_effective` | 最后被获取的URL。如果你告诉curl跟随Location:标题（使用`-L`），这尤其有意义。 |'
 - en: '| `urlnum` | 0-based numerical index of the URL used in the transfer. (Introduced
     in 7.75.0) |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `urlnum` | 传输中使用的URL的基于0的数值索引。（自7.75.0版本引入） |'
 - en: In curl 8.1.0, variables to output only specific URL components were added,
     for when the `url` or `url_effective` variables show more than you want.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 在curl 8.1.0版本中，添加了仅输出特定URL组件的变量，当`url`或`url_effective`变量显示的内容超过所需时使用。
 - en: '| Variable | Description |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| 变量 | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `url.scheme` | The scheme part of the URL that was fetched. |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `url.scheme` | 被获取的URL的方案部分。 |'
 - en: '| `url.user` | The user part of the URL that was fetched. |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `url.user` | 被获取的URL的用户部分。 |'
 - en: '| `url.password` | The password part of the URL that was fetched. |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `url.password` | 被获取的URL的密码部分。 |'
 - en: '| `url.options` | The options part of the URL that was fetched. Only available
     for some schemes. |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `url.options` | 被获取的URL的选项部分。仅适用于某些方案。 |'
 - en: '| `url.host` | The hostname part of the URL that was fetched. |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `url.host` | 被获取的URL的主机名部分。 |'
 - en: '| `url.path` | The path part of the URL that was fetched. |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `url.path` | 被获取的URL的路径部分。 |'
 - en: '| `url.query` | The query part of the URL that was fetched. |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `url.query` | 被获取的URL的查询部分。 |'
 - en: '| `url.fragment` | The fragment part of the URL that was fetched. |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `url.fragment` | 被获取的URL的片段部分。 |'
 - en: '| `url.zoneid` | The zone id part of the URL that was fetched. Only available
     if the hostname is an IPv6 address. |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| `url.zoneid` | 被获取的URL的域ID部分。仅当主机名是IPv6地址时才可用。 |'
 - en: '| `urle.scheme` | The scheme part of the effective (last) URL that was fetched.
     |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.scheme` | 被获取的有效（最后）URL的方案部分。 |'
 - en: '| `urle.user` | The user part of the effective (last) URL that was fetched.
     |'
+  id: totrans-83
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.user` | 被获取的有效（最后）URL的用户部分。 |'
 - en: '| `urle.password` | The password part of the effective (last) URL that was
     fetched. |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.password` | 被获取的有效（最后）URL的密码部分。 |'
 - en: '| `urle.options` | The options part of the effective (last) URL that was fetched.
     Only available for some schemes. |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.options` | 被获取的有效（最后）URL的选项部分。仅适用于某些方案。 |'
 - en: '| `urle.host` | The hostname part of the effective (last) URL that was fetched.
     |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.host` | 被获取的有效（最后）URL的主机名部分。 |'
 - en: '| `urle.path` | The path part of the effective (last) URL that was fetched.
     |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.path` | 被获取的有效（最后）URL的路径部分。 |'
 - en: '| `urle.query` | The query part of the effective (last) URL that was fetched.
     |'
+  id: totrans-88
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.query` | 被获取的有效（最后）URL的查询部分。 |'
 - en: '| `urle.fragment` | The fragment part of the effective (last) URL that was
     fetched. |'
+  id: totrans-89
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.fragment` | 被获取的有效（最后）URL的片段部分。 |'
 - en: '| `urle.zoneid` | The zone id part of the effective (last) URL that was fetched.
     Only available if the hostname is an IPv6 address. |'
+  id: totrans-90
   prefs: []
   type: TYPE_TB
+  zh: '| `urle.zoneid` | 被获取的有效（最后）URL的区域ID部分。仅在主机名为IPv6地址时可用。 |'

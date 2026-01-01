@@ -1,34 +1,48 @@
 - en: Multiplexing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 多路复用
 - en: The HTTP versions 2 and 3 offer “multiplexing”. Using this protocol feature,
     an HTTP client can do several concurrent transfers to a server *over the same
     single connection*. This feature does not exist in earlier versions of the HTTP
     protocol. In earlier HTTP versions, the client would either have to create multiple
     connections or do the transfers in a serial manner, one after the other.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP版本2和3提供了“多路复用”功能。使用此协议特性，HTTP客户端可以在同一个单一连接上对服务器进行多个并发传输。这一特性在HTTP协议的早期版本中并不存在。在早期的HTTP版本中，客户端要么必须创建多个连接，要么必须按顺序逐个进行传输。
 - en: libcurl supports HTTP multiplexing for both HTTP/2 and HTTP/3.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl支持HTTP/2和HTTP/3的HTTP多路复用。
 - en: Make sure you do multiple transfers using the multi interface to a server that
     supports HTTP multiplexing. libcurl can only multiplex transfers when the same
     hostname is used for subsequent transfers.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保您使用多接口对支持HTTP多路复用的服务器进行多个传输。libcurl只能在后续传输使用相同主机名时进行多路复用。
 - en: For all practical purposes and API behaviors, an application does not have to
     care about if multiplexing is done or not.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于所有实际用途和API行为，应用程序无需关心是否进行了多路复用。
 - en: libcurl enables multiplexing by default, but if you start multiple transfers
     at the same time they prioritize short-term speed so they might then open new
     connections rather than waiting for a connection to get created by another transfer
     to be able to multiplex over. To tell libcurl to prioritize multiplexing, set
     the `CURLOPT_PIPEWAIT` option for the transfer with `curl_easy_setopt()`.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl默认启用多路复用，但如果您同时开始多个传输，它们会优先考虑短期速度，因此可能会打开新的连接，而不是等待另一个传输创建连接以便进行多路复用。要告诉libcurl优先考虑多路复用，请使用`curl_easy_setopt()`为传输设置`CURLOPT_PIPEWAIT`选项。
 - en: With `curl_multi_setopt()`’s option `CURLMOPT_PIPELINING`, you can disable multiplexing
     for a specific multi handle.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`curl_multi_setopt()`的选项`CURLMOPT_PIPELINING`，您可以禁用特定多处理句柄的多路复用。

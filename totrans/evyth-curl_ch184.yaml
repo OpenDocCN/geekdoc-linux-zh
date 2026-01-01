@@ -1,31 +1,46 @@
 - en: FTP Directory listing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: FTP目录列表
 - en: You can list a remote FTP directory with curl by making sure the URL ends with
     a trailing slash. If the URL ends with a slash, curl presumes that it is a directory
     you want to list. If it is not actually a directory, you are likely to instead
     get an error.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用curl列出远程FTP目录，只需确保URL以反斜杠结尾。如果URL以斜杠结尾，curl假定您想要列出的是一个目录。如果不是实际的目录，您可能会收到错误。
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: With FTP there is no standard syntax for the directory output that is returned
     for this sort of command that uses the standard FTP command `LIST`. The listing
     is usually humanly readable and perfectly understandable but different servers
     can return the listing using slightly different layouts.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在FTP中，没有用于返回此类命令的标准目录输出语法，该命令使用标准的FTP命令`LIST`。列表通常是可读的，并且完全理解，但不同的服务器可能会使用略微不同的布局来返回列表。
 - en: 'One way to get just a listing of all the names in a directory and thus to avoid
     the special formatting of the regular directory listings is to tell curl to `--list-only`
     (or just `-l`). curl then issues the `NLST` FTP command instead:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要仅获取目录中所有名称的列表，从而避免常规目录列表的特殊格式，可以告诉curl使用`--list-only`（或简称`-l`）。然后curl会发出`NLST`
+    FTP命令：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: NLST has its own quirks though, as some FTP servers list only actual *files*
     in their response to NLST; they do not include directories and symbolic links.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: NLST有其独特的特点，因为一些FTP服务器在响应NLST时只列出实际的*文件*；它们不包括目录和符号链接。

@@ -1,19 +1,27 @@
 - en: Connection reuse
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 连接重用
 - en: Setting up a TCP connection and especially a TLS connection can be a slow process,
     even on high bandwidth networks.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 建立TCP连接，尤其是TLS连接，可能是一个缓慢的过程，即使在高速网络中也是如此。
 - en: It can be useful to remember that curl has a connection pool internally which
     keeps previously used connections alive and around for a while after they were
     used so that subsequent requests to the same hosts can reuse an already established
     connection.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住curl内部有一个连接池是有用的，它会保持之前使用的连接活跃，并在使用后一段时间内保持连接状态，以便后续对同一主机的请求可以重用已建立的连接。
 - en: Of course, they can only be kept alive for as long as the curl tool is running.
     It is a good reason for trying to get several transfers done within the same command
     line instead of running several independent curl command line invocations.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，它们只能保持活跃，直到curl工具运行结束。这是尝试在同一个命令行中完成多个传输而不是运行多个独立的curl命令行调用的一个很好的理由。

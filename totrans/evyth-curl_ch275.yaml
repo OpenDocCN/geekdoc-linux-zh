@@ -1,56 +1,88 @@
 - en: Read
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 读取
 - en: 'An application receives and reads incoming WebSocket traffic using one of these
     two methods:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序可以通过以下两种方法之一接收和读取传入的 WebSocket 流量：
 - en: Write callback
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 写入回调
 - en: When the `CURLOPT_CONNECT_ONLY` option is **not** set, WebSocket data is delivered
     to the write callback.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当未设置 `CURLOPT_CONNECT_ONLY` 选项时，WebSocket 数据将传递给写入回调。
 - en: In the default frame mode (as opposed to raw mode), libcurl delivers parts of
     WebSocket fragments to the callback as data arrives. The application can then
     call `curl_ws_meta()` to get information about the specific frame that was passed
     to the callback.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在默认帧模式（与原始模式相对），libcurl 在数据到达时将 WebSocket 数据片段的部分传递给回调。然后应用程序可以调用 `curl_ws_meta()`
+    来获取传递给回调的特定帧的信息。
 - en: libcurl can deliver full fragments or partial ones, depending on what comes
     over the wire when. Each WebSocket fragment can be up to 63 bit in size.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 可以传递完整的片段或部分片段，这取决于何时通过网络传输的内容。每个 WebSocket 片段的大小可以达到 63 位。
 - en: '`curl_ws_recv`'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`curl_ws_recv`'
 - en: If the connect-only option was set, the transfer ends after the WebSocket has
     been setup to the remote host and from that point the application needs to call
     `curl_ws_recv()` to read WebSocket data and `curl_ws_send()` to send it.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置了仅连接选项，则在将 WebSocket 设置到远程主机后，传输结束，从那时起应用程序需要调用 `curl_ws_recv()` 来读取 WebSocket
+    数据，并调用 `curl_ws_send()` 来发送它。
 - en: 'The `curl_ws_recv` function has this prototype:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_ws_recv` 函数具有以下原型：'
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '`curl` - the handle to the transfer'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl` - 转移的句柄'
 - en: '`buffer` - pointer to a buffer to receive the WebSocket data in'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`buffer` - 指向一个缓冲区的指针，用于接收 WebSocket 数据'
 - en: '`buflen` - the size in bytes of the **buffer**'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`buflen` - 缓冲区的大小（以字节为单位）'
 - en: '`recv` - the size in bytes of the data stored in the **buffer* on return'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`recv` - 返回时存储在 **buffer** 中的数据的大小（以字节为单位）'
 - en: '`meta` - gets a pointer to a struct with [information about the received frame](ch275.xhtml#helpers__ws__meta__md).'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '`meta` - 获取一个指向包含 [接收帧信息](ch275.xhtml#helpers__ws__meta__md) 的结构的指针。'

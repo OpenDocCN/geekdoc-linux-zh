@@ -1,23 +1,33 @@
 - en: Maximum filesize
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 最大文件大小
 - en: 'When you want to make sure your curl command line does not download a too-large
     file, instruct curl to stop before doing that, if it knows the size before the
     transfer starts. Maybe that would use too much bandwidth, take too long time or
     you do not have enough space on your hard drive:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你想确保你的curl命令行不会下载过大的文件时，可以指示curl在开始下载之前停止，如果它在传输开始前知道文件大小。也许这会使用过多的带宽，花费太长时间，或者你的硬盘空间不足：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Give curl the largest download you can accept in number of bytes and if curl
     can figure out the size before the transfer starts it aborts before trying to
     download something larger.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 给curl提供你能够接受的最大的下载字节数，如果curl在传输开始前能够计算出文件大小，它会在尝试下载更大的文件之前终止。
 - en: There are many situations in which curl cannot figure out the size at the time
     the transfer starts. Such transfers thus are then aborted first when they actually
     reach that limit.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 有许多情况下curl在传输开始时无法确定文件大小。因此，当这些传输实际上达到那个限制时，它们首先会被终止。

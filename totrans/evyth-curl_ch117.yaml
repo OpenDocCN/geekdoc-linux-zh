@@ -1,61 +1,97 @@
 - en: SOCKS proxy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: SOCKS代理
 - en: SOCKS is a protocol used for proxies and curl supports it. curl supports both
     SOCKS version 4 as well as version 5, and both versions come in two flavors.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: SOCKS是一种用于代理的协议，curl支持它。curl支持SOCKS版本4和版本5，两种版本都有两种风味。
 - en: You can select the specific SOCKS version to use by using the correct scheme
     part for the given proxy host with `-x`, or you can specify it with a separate
     option instead of `-x`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过使用给定的代理主机正确的方案部分来选择要使用的特定SOCKS版本，使用`-x`，或者您可以使用单独的选项来指定它，而不是`-x`。
 - en: 'SOCKS4 is for the version 4 but curl resolves the name:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: SOCKS4适用于版本4，但curl会解析名称：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'SOCKS4a is for the version 4 with resolving done by the proxy:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: SOCKS4a适用于版本4，解析由代理完成：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'SOCKS5 is for the version 5 and SOCKS5-hostname is for the version 5 without
     resolving the hostname locally:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: SOCKS5适用于版本5，而SOCKS5-hostname适用于版本5且不本地解析主机名：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'The SOCKS5-hostname versions. This sends the hostname to the proxy so there
     is no name resolving done by curl locally:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: SOCKS5-hostname版本。这会将主机名发送到代理，因此curl在本地不会进行名称解析：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Helpful table to figure how which side that resolves the name for which socks
     version:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 有助于确定哪个版本由哪一侧解析名称的有用表格：
 - en: '| SOCKS | who resolves the name | works with IPv6 |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| SOCKS | 谁解析名称 | 支持IPv6 |'
 - en: '| --- | --- | --- |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| 4 | curl | no |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| 4 | curl | 否 |'
 - en: '| 4a | proxy | no |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 4a | 代理 | 否 |'
 - en: '| 5 | curl | yes |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| 5 | curl | 是 |'
 - en: '| 5h | proxy | yes |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| 5h | 代理 | 是 |'

@@ -1,22 +1,30 @@
 - en: Two connections
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 两个连接
 - en: FTP uses two TCP connections. The first connection is setup by the client when
     it connects to an FTP server, and is called the *control connection*. As the initial
     connection, it gets to handle authentication and changing to the correct directory
     on the remote server, etc. When the client then is ready to transfer a file, a
     second TCP connection is established and the data is transferred over that.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP使用两个TCP连接。第一个连接是由客户端在连接到FTP服务器时设置的，被称为*控制连接*。作为初始连接，它负责处理认证以及更改远程服务器上的正确目录等。当客户端准备好传输文件时，会建立第二个TCP连接，数据通过该连接传输。
 - en: This setting up of a second connection causes nuisances and headaches for several
     reasons.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 建立第二个连接的原因有几个，这会导致麻烦和头痛。
 - en: Active connections
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 主动连接
 - en: 'The client can opt to ask the server to connect to the client to set it up,
     a so-called *active* connection. This is done with the PORT or EPRT commands.
     Allowing a remote host to connect back to a client on a port that the client opens
@@ -26,48 +34,70 @@
     and while the option allows you to specify exactly which address to use, just
     setting the same as you come from is almost always the correct choice and you
     do that with `-P -`, like this way to ask for a file:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户端可以选择要求服务器连接到客户端以进行设置，这被称为*主动*连接。这是通过PORT或EPRT命令完成的。允许远程主机连接回客户端打开的端口需要中间没有防火墙或其他网络设备拒绝该连接，但这并不总是情况。您可以使用`curl
+    -P [arg]`（也称为`--ftp-port`的长格式）请求一个主动传输，虽然该选项允许您指定确切要使用的地址，但将地址设置为与您连接的地址几乎总是正确的选择，您可以通过`-P
+    -`这样做，如下请求文件的方式：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: You can also explicitly ask curl to not use EPRT (which is a slightly newer
     command than PORT) with the `--no-eprt` command-line option.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以显式要求curl不使用EPRT（这是一个比PORT稍微新一点的命令）通过`--no-eprt`命令行选项。
 - en: Passive connections
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 被动连接
 - en: Curl defaults to asking for a *passive* connection, which means it sends a PASV
     or EPSV command to the server and then the server opens up a new port for the
     second connection that then curl connects to. Outgoing connections to a new port
     are generally easier and less restricted for end users and clients but requires
     that the network in the server’s end allows it.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: Curl默认请求一个*被动*连接，这意味着它会向服务器发送PASV或EPSV命令，然后服务器打开一个新的端口用于第二个连接，curl随后连接到该端口。对于终端用户和客户端来说，向新端口发出的连接通常更容易且限制较少，但需要服务器端的网络允许这样做。
 - en: Passive connections are enabled by default, but if you have switched on active
     before, you can switch back to passive with `--ftp-pasv`.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，被动连接已被启用，但如果您之前已经开启了主动连接，您可以使用`--ftp-pasv`将其切换回被动连接。
 - en: You can also explicitly ask curl not to use EPSV (which is a slightly newer
     command than PASV) with the `--no-epsv` command-line option.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以显式要求curl不使用EPSV（这是一个比PASV稍微新一点的命令）通过`--no-epsv`命令行选项。
 - en: Sometimes the server is running a funky setup so that when curl issues the PASV
     command and the server responds with an IP address for curl to connect to, that
     address is wrong and then curl fails to setup the data connection. For this (rare)
     situation, you can ask curl to ignore the IP address mentioned in the PASV response
     (`--ftp-skip-pasv-ip`) and instead use the same IP address it has for the control
     connection even for the second connection.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时服务器运行的是一个古怪的配置，当curl发出PASV命令且服务器响应一个curl需要连接的IP地址时，该地址是错误的，然后curl无法设置数据连接。对于这种（罕见）情况，您可以要求curl忽略PASV响应中提到的IP地址（`--ftp-skip-pasv-ip`），而使用与控制连接相同的IP地址，即使是第二个连接也是如此。
 - en: Firewall issues
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 防火墙问题
 - en: Using either active or passive transfers, any existing firewalls in the network
     path pretty much have to have stateful inspection of the FTP traffic to figure
     out the new port to open that up and accept it for the second connection.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用主动或被动传输时，网络路径中现有的防火墙基本上必须对FTP流量进行状态检查，以确定要打开的新端口并接受第二个连接。

@@ -1,177 +1,269 @@
 - en: URL globbing
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: URL globbing
 - en: At times you want to get a range of URLs that are mostly the same, with only
     a small portion of it changing between the requests. Maybe it is a numeric range
     or maybe a set of names. curl offers “globbing” as a way to specify many URLs
     like that easily.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时你想要获取一系列大部分相同的URL，其中只有一小部分在请求之间发生变化。这可能是一个数字范围，也可能是一组名称。curl提供“globbing”作为指定这种类型多个URL的简便方法。
 - en: The globbing uses the reserved symbols [] and {} for this, symbols that normally
     cannot be part of a legal URL (except for numerical IPv6 addresses but curl handles
     them fine anyway). If the globbing gets in your way, disable it with `-g, --globoff`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: globbing使用保留符号[]和{}来实现这一点，这些符号通常不能作为合法URL的一部分（除了数字IPv6地址，但curl仍然可以很好地处理它们）。如果globbing妨碍了你，可以使用`-g,
+    --globoff`禁用它。
 - en: When using [] or {} sequences when invoked from a command line prompt, you probably
     have to put the full URL within double quotes to avoid the shell from interfering
     with it. This also goes for other characters treated special, like for example
     ‘&’, ‘?’ and ’*’.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当从命令行提示符调用时使用[]或{}序列，你可能必须将完整的URL放在双引号内，以避免shell干扰它。这也适用于其他特殊处理的字符，例如‘&’，‘？’和‘*’。
 - en: While most transfer related functionality in curl is provided by the libcurl
     library, the URL globbing feature is not.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然curl中的大多数传输相关功能都由libcurl库提供，但URL globbing功能不是。
 - en: Numerical ranges
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 数字范围
 - en: 'You can ask for a numerical range with [N-M] syntax, where N is the start index
     and it goes up to and including M. For example, you can ask for 100 images one
     by one that are named numerically:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用[N-M]语法请求数字范围，其中N是起始索引，它向上到并包括M。例如，你可以请求100个按数字命名的图片：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'and it can even do the ranges with zero prefixes, like if the number is three
     digits all the time:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 它甚至可以处理没有前缀的范围，比如如果数字始终是三位数：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Or maybe you only want even-numbered images so you tell curl a step counter
     too. This example range goes from 0 to 100 with an increment of 2:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者你可能只想下载偶数编号的图片，所以你告诉curl一个步进计数器。这个例子中的范围从0到100，步长为2：
 - en: '[PRE2]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Alphabetical ranges
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 字母范围
 - en: 'curl can also do alphabetical ranges, like when a site has sections named a
     to z:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: curl还可以进行字母范围的遍历，比如当一个网站有从a到z命名的部分：
 - en: '[PRE3]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: List
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 列表
 - en: 'Sometimes the parts do not follow such an easy pattern, and then you can instead
     give the full list yourself but then within the curly braces instead of the brackets
     used for the ranges:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候部分并不遵循这样的简单模式，然后你可以自己提供完整的列表，但然后在花括号内而不是用于范围的括号内：
 - en: '[PRE4]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Combinations
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 组合
 - en: 'You can use several globs in the same URL which then makes curl iterate over
     those, too. To download the images of Ben, Alice and Frank, in both the resolutions
     100 x 100 and 1000 x 1000, a command line could look like:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在同一个URL中使用多个glob，这样curl也会遍历这些URL。要下载Ben、Alice和Frank的图片，两种分辨率100 x 100和1000
+    x 1000，命令行可能看起来像这样：
 - en: '[PRE5]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Or download all the images of a chess board, indexed by two coordinates ranged
     0 to 7:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者下载棋盘上所有图片，通过两个坐标范围0到7进行索引：
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'And you can, of course, mix ranges and series. Get a week’s worth of logs for
     both the web server and the mail server:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你也可以混合范围和序列。获取Web服务器和邮件服务器一周的日志：
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Output variables for globbing
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: globbing的输出变量
 - en: In all the globbing examples previously in this chapter we have selected to
     use the `-O / --remote-name` option, which makes curl save the target file using
     the filename part of the used URL.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本章前面所有的globbing示例中，我们选择使用`-O / --remote-name`选项，这使得curl使用使用的URL的文件名部分保存目标文件。
 - en: 'Sometimes that is not enough. You are downloading multiple files and maybe
     you want to save them in a different subdirectory or create the saved filenames
     differently. curl, of course, has a solution for these situations as well: output
     filename variables.'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候这还不够。你正在下载多个文件，也许你想要将它们保存在不同的子目录中，或者以不同的方式创建保存的文件名。curl当然也有针对这些情况的解决方案：输出文件名变量。
 - en: Each “glob” used in a URL gets a separate variable. They are referenced as `#[num]`
     - that means the single character `#` followed by the glob number which starts
     with 1 for the first glob and ends with the last glob.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在URL中使用的每个“glob”都会得到一个单独的变量。它们被引用为`#[num]` - 这意味着单个字符`#`后跟glob编号，第一个glob从1开始，最后一个glob结束。
 - en: 'Save the main pages of two different sites:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存两个不同网站的主页：
 - en: '[PRE8]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Save the outputs from a command line with two globs in a subdirectory:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 将带有两个glob的命令行输出的结果保存在子目录中：
 - en: '[PRE9]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Using `[]{}` in URLs
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在URL中使用`[]{}`
 - en: When the globbing concept was introduced in curl in the 1990s, we all used the
     same Internet standard for how the URL syntax was defined, and in this standard
     these four symbols are documented as *reserved*. You had to URL-encode them in
     the URL if you wanted to use them (`%HH` style). Those symbols were therefore
     not used in URLs and were downright attractive to use for globbing purposes.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在1990年代curl中引入通配符概念时，我们所有人都使用相同的互联网标准来定义URL语法，在这个标准中，这四个符号被记录为*保留*。如果你想在URL中使用它们（使用`%HH`样式进行URL编码），你必须对它们进行URL编码。因此，这些符号没有在URL中使用，并且对于通配符用途来说非常吸引人。
 - en: Later on, the URL syntax has gradually been relaxed and changed and these days
     every now and then we see URLs used where one of the four symbols `[]{}` are used
     as-is, without being URL-encoded. Passing such a URL to curl causes it to spew
     out syntax errors when the glob parser goes crazy.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 后来，URL语法逐渐放宽并发生变化，如今我们时不时地看到URL被使用，其中四个符号`[]{}`之一被直接使用，而没有进行URL编码。将这样的URL传递给curl会导致当通配符解析器疯狂时，curl会输出语法错误。
 - en: To work around that problem, you have two separate options. You either encode
     the symbols yourself, or you switch off globbing.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了解决这个问题，你有两个独立的选项。你可以自己编码这些符号，或者关闭通配符匹配。
 - en: 'Encode the symbols like this:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照以下方式对符号进行编码：
 - en: '| symbol | encoding |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| 符号 | 编码 |'
 - en: '| --- | --- |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `[` | `%5b` |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `[` | `%5b` |'
 - en: '| `]` | `%5d` |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `]` | `%5d` |'
 - en: '| `{` | `%7b` |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `{` | `%7b` |'
 - en: '| `}` | `%7d` |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `}` | `%7d` |'
 - en: Or switch off globbing with `-g` or `--globoff`.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者使用 `-g` 或 `--globoff` 来关闭通配符匹配。

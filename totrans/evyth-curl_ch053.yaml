@@ -1,153 +1,230 @@
 - en: Command line options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 命令行选项
 - en: When telling curl to do something, you invoke curl with zero, one or several
     command-line options to accompany the URL or set of URLs you want the transfer
     to be about. curl supports over two hundred different options.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当告诉curl执行某项操作时，你通过curl调用，并附带零个、一个或多个命令行选项来伴随你想要传输的URL或URL集合。curl支持超过两百个不同的选项。
 - en: Short options
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 短选项
 - en: 'Command line options pass on information to curl about how you want it to behave.
     Like you can ask curl to switch on verbose mode with the -v option:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令行选项将关于你希望curl如何表现的信息传递给curl。例如，你可以使用-v选项让curl开启详细模式：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '-v is here used as a “short option”. You write those with the minus symbol
     and a single letter immediately following it. Many options are just switches that
     switch something on or change something between two known states. They can be
     used with just that option name. You can then also combine several single-letter
     options after the minus. To ask for both verbose mode and that curl follows HTTP
     redirects:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: -v在这里用作“短选项”。你用减号和紧随其后的单个字母来写这些选项。许多选项只是开关，用于打开或改变两个已知状态之间的某个东西。它们可以用那个选项名来使用。然后你也可以在减号后组合几个单字母选项。要请求详细模式和curl跟随HTTP重定向：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The command-line parser in curl always parses the entire line and you can put
     the options anywhere you like; they can also appear after the URL:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: curl的命令行解析器始终解析整行，你可以将选项放在你喜欢的任何位置；它们也可以出现在URL之后：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'and the two separate short options can of course also be specified separately,
     like:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，两个单独的短选项也可以分别指定，例如：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Long options
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 长选项
 - en: Single-letter options are convenient since they are quick to write and use,
     but as there are only a limited number of letters in the alphabet and there are
     many things to control, not all options are available like that. Long option names
     are therefore provided for those. Also, as a convenience and to allow scripts
     to become more readable, most short options have longer name aliases.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 单字母选项很方便，因为它们书写和使用的速度都很快，但由于字母表中的字母数量有限，而且有许多东西需要控制，并非所有选项都像这样可用。因此，为这些提供了长选项名。此外，为了方便和允许脚本更具可读性，大多数短选项都有更长的别名。
 - en: 'Long options are always written with *two* minuses (or *dashes*, whichever
     you prefer to call them) and then the name and you can only write one option name
     per double-minus. Asking for verbose mode using the long option format looks like:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 长选项总是用两个减号（或称为“短划线”，根据你更喜欢叫什么）然后是名称，并且每个双减号只能写一个选项名。使用长选项格式请求详细模式看起来如下：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'and asking for HTTP redirects as well using the long format looks like:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且使用长格式请求HTTP重定向看起来如下：
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Arguments to options
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 选项的参数
 - en: 'Not all options are just simple boolean flags that enable or disable features.
     For some of them you need to pass on data, like perhaps a username or a path to
     a file. You do this by writing first the option and then the argument, separated
     with a space. Like, for example, if you want to send an arbitrary string of data
     in an HTTP POST to a server:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 并非所有选项都是简单的布尔标志，用于启用或禁用功能。对于其中一些，你需要传递数据，比如可能是一个用户名或文件路径。你可以通过首先写选项，然后写参数，并用空格分隔来实现。例如，如果你想通过HTTP
+    POST发送一个任意字符串数据到服务器：
 - en: '[PRE6]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'and it works the same way even if you use the long form of the option:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使你使用选项的长格式，它也以相同的方式工作：
 - en: '[PRE7]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'When you use the short options with arguments, you can, in fact, also write
     the data without the space separator:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用带参数的短选项时，实际上你也可以在不使用空格分隔符的情况下写入数据：
 - en: '[PRE8]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Arguments with spaces
+  id: totrans-24
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 带空格的参数
 - en: 'At times you want to pass on an argument to an option, and that argument contains
     one or more spaces. For example you want to set the user-agent field curl uses
     to be exactly `I am your father`, including those three spaces. Then you need
     to put quotes around the string when you pass it to curl on the command line.
     The exact quotes to use varies depending on your shell/command prompt, but generally
     it works with double quotes in most places:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候你想要向一个选项传递一个参数，而这个参数包含一个或多个空格。例如，你想要设置curl使用的用户代理字段为“我是你的父亲”，包括这三个空格。那么，当你通过命令行将字符串传递给curl时，你需要将字符串放在引号内。使用的引号取决于你的shell/命令提示符，但通常在大多数地方使用双引号即可：
 - en: '[PRE9]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'Failing to use quotes, like if you would write the command line like this:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有使用引号，比如你这样写命令行：
 - en: '[PRE10]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: … makes curl only use ‘I’ as a user-agent string, and the following strings,
     `am`, `your` and `father` are instead treated as separate URLs since they do not
     start with `-` to indicate that they are options and curl only ever handles options
     and URLs.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: … 使得 curl 只使用 ‘I’ 作为用户代理字符串，而下面的字符串，`am`、`your` 和 `father` 由于它们不以 `-` 开头，因此被视为独立的
+    URL，而 curl 只处理选项和 URL。
 - en: 'To make the string itself contain double quotes, which is common when you for
     example want to send a string of JSON to the server, you may need to use single
     quotes (except on Windows, where single quotes do not work the same way). Send
     the JSON string `{ "name": "Darth" }`:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '要使字符串本身包含双引号，这在例如你想向服务器发送 JSON 字符串时很常见，你可能需要使用单引号（除了在 Windows 上，那里的单引号工作方式不同）。发送
+    JSON 字符串 `{ "name": "Darth" }`：'
 - en: '[PRE11]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'Or if you want to avoid the single quote thing, you may prefer to send the
     data to curl via a file, which then does not need the extra quoting. Assuming
     we call the file ‘json’ that contains the above mentioned data:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，如果你想避免单引号的问题，你可能更喜欢通过文件将数据发送给 curl，这样就不需要额外的引号。假设我们称这个文件为‘json’，它包含上述提到的数据：
 - en: '[PRE12]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Negative options
+  id: totrans-34
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 负面选项
 - en: 'For options that switch on something, there is also a way to switch it off.
     You then use the long form of the option with an initial `no-` prefix before the
     name. As an example, to switch off verbose mode:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于那些可以开启的选项，也有一种方法可以将其关闭。这时，你需要在选项名称前加上一个初始的 `no-` 前缀来使用选项的长格式。例如，要关闭详细模式：
 - en: '[PRE13]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'

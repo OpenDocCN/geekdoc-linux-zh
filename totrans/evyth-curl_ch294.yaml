@@ -1,96 +1,144 @@
 - en: Backends
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 后端
 - en: A backend in curl is a **build-time selectable alternative implementation**.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl中的后端是一个**构建时可选的替代实现**。
 - en: When you build curl, you can select alternative implementations for several
     different things. Different providers of the same feature set. You select which
     backend or backends (plural) to use when you build curl.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你构建curl时，你可以为几个不同的事情选择替代实现。相同功能集的不同提供者。当你构建curl时，你选择使用哪个后端或后端（复数）。
 - en: Backends are selectable and deselectable
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 后端是可选的，也可以取消选择
 - en: Often platform dependent
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 通常与平台相关
 - en: Can differ in features
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 功能可能不同
 - en: Can differ in 3rd party licenses
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 第三方许可证可能不同
 - en: Can differ in maturity
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 成熟度可能不同
 - en: The internal APIs are never exposed externally
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 内部API永远不会对外暴露
 - en: Different backends
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 不同的后端
 - en: 'In the libcurl source code, there are internal APIs for providing functionality.
     In these different areas there are multiple different providers:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在libcurl源代码中，存在内部API以提供功能。在这些不同的区域有多个不同的提供者：
 - en: IDN
+  id: totrans-11
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: IDN
 - en: Name resolving
+  id: totrans-12
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 名称解析
 - en: TLS
+  id: totrans-13
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: TLS
 - en: SSH
+  id: totrans-14
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: SSH
 - en: HTTP/1 and HTTP/2
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP/1 和 HTTP/2
 - en: HTTP/3
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP/3
 - en: HTTP content encoding
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: HTTP内容编码
 - en: Backends visualized
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 后端可视化
 - en: '![](../media/file15.jpg)'
+  id: totrans-19
   prefs: []
   type: TYPE_IMG
+  zh: '![图片](../media/file15.jpg)'
 - en: libcurl backends
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl后端
 - en: Applications (in the upper yellow cloud) access libcurl through the public API.
     The API is fixed and stable.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序（在上方的黄色云中）通过公共API访问libcurl。API是固定和稳定的。
 - en: Internally, the core of libcurl uses internal APIs to perform the different
     duties it needs to do. Each of these internal APIs are powered by alternative
     implementations, in many times powered by different third party libraries.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 内部，libcurl的核心使用内部API来完成它需要执行的不同任务。每个内部API都由替代实现提供动力，很多时候是由不同的第三方库提供动力。
 - en: The image above shows the different third party libraries powering different
     internal APIs. The purple boxes are one or more and the dark gray ones are “one
     of these”.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的图像展示了不同第三方库为不同的内部API提供动力。紫色方框表示一个或多个，深灰色方框表示“这些中的一个”。

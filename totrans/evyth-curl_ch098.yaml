@@ -1,138 +1,207 @@
 - en: Uploads
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 上传
 - en: Uploading is a term for sending data to a remote server. Uploading is done differently
     for each protocol, and several protocols may even allow different ways of uploading
     data.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 上传是指将数据发送到远程服务器的过程。不同的协议有不同的上传方式，甚至有些协议允许不同的上传数据方式。
 - en: Protocols allowing upload
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 允许上传的协议
 - en: 'You can upload data using one of these protocols: FILE, FTP, FTPS, HTTP, HTTPS,
     IMAP, IMAPS, SCP, SFTP, SMB, SMBS, SMTP, SMTPS and TFTP.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下协议之一上传数据：FILE、FTP、FTPS、HTTP、HTTPS、IMAP、IMAPS、SCP、SFTP、SMB、SMBS、SMTP、SMTPS
+    和 TFTP。
 - en: HTTP offers several uploads
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP 提供了多种上传方式
 - en: HTTP, and its bigger brother HTTPS, offer several different ways to upload data
     to a server, and curl provides easy command-line options to do it the three most
     common ways, described below.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 及其更大的兄弟 HTTPS 提供了多种将数据上传到服务器的方式，curl 提供了简单的命令行选项来完成以下三种最常见的方式，如下所述。
 - en: An interesting detail with HTTP is that an upload can also be a download, in
     the same operation and in fact many downloads are initiated with an HTTP POST.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 的一个有趣细节是，上传也可以是下载，在同一个操作中，实际上许多下载都是通过 HTTP POST 启动的。
 - en: POST
+  id: totrans-7
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: POST
 - en: POST is the HTTP method that was invented to send data to a receiving web application,
     and it is, for example, how most common HTML forms on the web work. It usually
     sends a chunk of relatively small amounts of data to the receiver.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: POST 是一种 HTTP 方法，旨在向接收的 Web 应用程序发送数据，例如，这是大多数常见的 Web 表单的工作方式。它通常向接收者发送一小块相对较小的数据。
 - en: The upload kind is usually done with the `-d` or `--data` options, but there
     are a few additional alterations.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 上传通常使用 `-d` 或 `--data` 选项进行，但还有一些额外的修改。
 - en: Read the detailed description on how to do this with curl in the [HTTP POST
     with curl](../http/post/) chapter.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [使用 curl 的 HTTP POST](../http/post/) 章节中阅读有关如何使用 curl 进行此操作的详细描述。
 - en: multipart formpost
+  id: totrans-11
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 多部分表单上传
 - en: Multipart formposts are also used in HTML forms on websites; typically when
     there is a file upload involved. This type of upload is also an HTTP POST but
     it sends the data formatted according to some special rules, which is what the
     multipart name means.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 多部分表单上传也用于网站上的 HTML 表单；通常当涉及文件上传时。这种类型上传也是 HTTP POST，但它发送的数据格式根据一些特殊规则，这就是多部分名称的含义。
 - en: Since it sends the data formatted completely differently, you cannot select
     which type of POST to use at your own whim but it entirely depends on what the
     receiving server end expects and can handle.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于它以完全不同的格式发送数据，您不能随意选择要使用的 POST 类型，而是完全取决于接收服务器端期望和能够处理的内容。
 - en: HTTP multipart formposts are done with `-F`. See the detailed description in
     the [HTTP multipart formposts](ch165.xhtml#http__post__multipart__md) chapter.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-F` 进行 HTTP 多部分表单上传。请参阅 [HTTP 多部分表单上传](ch165.xhtml#http__post__multipart__md)
+    章节的详细描述。
 - en: PUT
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: PUT
 - en: HTTP PUT is the upload method that was designed to send a complete resource
     meant to be put as-is on the remote site or even replace an existing resource
     there. That said, this is also the least used upload method for HTTP on the web
     today and lots, if not most, web servers do not even have PUT enabled.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP PUT 是一种上传方法，旨在发送一个完整的资源，该资源将被直接放置在远程站点上，甚至可以替换那里的现有资源。尽管如此，这也是今天在网络上使用最少的
+    HTTP 上传方法，如果不是大多数的话，许多网络服务器甚至没有启用 PUT。
 - en: 'You send off an HTTP upload using the -T option with the file to upload:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 -T 选项和要上传的文件来发送 HTTP 上传：
 - en: '[PRE0]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: FTP uploads
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: FTP 上传
 - en: 'Working with FTP, you get to see the remote file system you are accessing.
     You tell the server exactly in which directory you want the upload to be placed
     and which filename to use. If you specify the upload URL with a trailing slash,
     curl appends the locally used filename to the URL and then that becomes the filename
     used when stored remotely:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 FTP，您可以看到您正在访问的远程文件系统。您告诉服务器确切地想要将上传放置在哪个目录以及使用哪个文件名。如果您指定带有尾随斜杠的上传 URL，curl
+    会将本地使用的文件名追加到 URL 中，然后该文件名成为远程存储时使用的文件名：
 - en: '[PRE1]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'So if you prefer to select a different filename on the remote side than what
     you have used locally, you specify it in the URL:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，如果您希望远程侧的文件名与本地使用的不同，您可以在 URL 中指定它：
 - en: '[PRE2]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Learn much more about FTPing in the [FTP with curl](../ftp/) section.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [使用 curl 的 FTP](../ftp/) 部分中了解更多关于 FTP 的信息。
 - en: SMTP uploads
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SMTP 上传
 - en: You may not consider sending an email to be uploading, but to curl it is. You
     upload the mail body to the SMTP server. With SMTP, you also need to include all
     the mail headers you need (`To:`, `From:`, `Date:`, etc.) in the mail body as
     curl does not add any at all.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能不会把发送电子邮件视为上传，但对于curl来说却是。你将邮件正文上传到SMTP服务器。使用SMTP时，你还需要在邮件正文中包含所有需要的邮件头信息（如`To:`,
+    `From:`, `Date:`等），因为curl不会添加任何邮件头。
 - en: '[PRE3]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Learn more about using SMTP with curl in the [Sending email](ch136.xhtml#usingcurl__smtp__md)
     section.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[发送电子邮件](ch136.xhtml#usingcurl__smtp__md)部分了解更多关于curl使用SMTP的信息。
 - en: Progress meter for uploads
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 上传的进度条
 - en: The general progress meter curl provides (see the [Progress meter](ch073.xhtml#cmdline__progressmeter__md)
     section) works fine for uploads as well. What needs to be remembered is that the
     progress meter is automatically disabled when you are sending output to stdout,
     and most protocols curl support can output something even for an upload.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 通用进度条功能在上传时同样表现良好（参见[进度条](ch073.xhtml#cmdline__progressmeter__md)部分）。需要记住的是，当你将输出发送到标准输出（stdout）时，进度条会自动禁用，并且curl支持的多数协议在上传时都能输出一些内容。
 - en: Therefore, you may need to explicitly redirect the downloaded data to a file
     (using shell redirect ‘>’, `-o` or similar) to get the progress meter displayed
     for upload.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，你可能需要显式地将下载的数据重定向到一个文件（使用shell重定向操作符‘>’，`-o`或类似操作）来显示上传的进度条。

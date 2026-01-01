@@ -1,43 +1,63 @@
 - en: Header struct
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Header 结构体
 - en: The header struct pointer the header API functions return, points to memory
     associated with the easy handle and subsequent calls to the functions clobber
     that struct. Applications need to copy the data if they want to keep it around.
     The memory used for the struct gets freed with calling `curl_easy_cleanup()`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 头部结构指针是头部API函数返回的，指向与easy句柄关联的内存，后续对该函数的调用会破坏该结构。如果应用程序想要保留数据，则需要复制数据。用于结构体的内存会在调用`curl_easy_cleanup()`时释放。
 - en: The struct
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结构体
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '**name** is the name of header. It uses the casing used for the first instance
     of the header with this name.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**名称**是报头的名称。它使用报头首次出现时使用的首字母大小写。'
 - en: '**value** is the content. It comes exactly as delivered over the network but
     with leading and trailing whitespace and newlines stripped off. The data is always
     null-terminated.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**值**是内容。它正好像通过网络传递的那样，但去除了前导和尾随空格以及换行符。数据总是以空字符终止。'
 - en: '**amount** is the number of headers using this name that exist, within the
     asked origin and request context.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**数量**是指使用此名称的报头在请求的源和请求上下文中的存在数量。'
 - en: '**index** is the zero based entry number of this particular header name, which
     in case this header was used more than once in the requested scope can be larger
     than 0 but is always less than **amount**.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**索引**是此特定报头名称的基于零的条目编号，如果此报头在请求范围内被使用超过一次，则可能大于0，但总是小于**数量**。'
 - en: '**origin** has (exactly) one of the origin bits set, indicating where from
     the header originates.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**源**设置了（正好）一个源位，指示报头从哪里起源。'
 - en: '**anchor** is a private handle used by libcurl internals. Do not modify. Do
     not assume anything about it.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**锚点**是libcurl内部使用的私有句柄。不要修改。不要对此有任何假设。'

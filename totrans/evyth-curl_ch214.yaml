@@ -1,27 +1,41 @@
 - en: Write data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 写入数据
 - en: 'The write callback is set with `CURLOPT_WRITEFUNCTION`:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 写入回调通过`CURLOPT_WRITEFUNCTION`设置：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `write_callback` function must match this prototype:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`write_callback`函数必须匹配此原型：'
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This callback function gets called by libcurl as soon as there is data received
     that needs to be saved. *ptr* points to the delivered data, and the size of that
     data is *size* multiplied with *nmemb*.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl接收到需要保存的数据时，会调用此回调函数。*ptr*指向传递的数据，该数据的大小是*size*乘以*nmemb*。
 - en: If this callback is not set, libcurl instead uses ‘fwrite’ by default.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果此回调未设置，libcurl将默认使用`fwrite`。
 - en: 'The write callback is passed as much data as possible in all invokes, but it
     must not make any assumptions. It may be one byte, it may be thousands. The maximum
     amount of body data that is passed to the write callback is defined in the curl.h
@@ -29,42 +43,62 @@
     is enabled for this transfer, which makes header data get passed to the write
     callback, you can get up to `CURL_MAX_HTTP_HEADER` bytes of header data passed
     into it. This usually means 100KB.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 写入回调在所有调用中尽可能传递尽可能多的数据，但它不能做出任何假设。它可能是一个字节，也可能是数千字节。传递给写入回调的最大正文数据量在curl.h头文件中定义：`CURL_MAX_WRITE_SIZE`（通常默认为16KB）。如果为此传输启用了`CURLOPT_HEADER`，这将使头部数据传递给写入回调，你可以得到多达`CURL_MAX_HTTP_HEADER`字节的头部数据传递给它。这通常意味着100KB。
 - en: This function may be called with zero bytes data if the transferred file is
     empty.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果传输的文件为空，此函数可能会以零字节数据调用。
 - en: The data passed to this function is not be zero terminated. You cannot, for
     example, use printf’s `%s` operator to display the contents nor strcpy to copy
     it.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 传递给此函数的数据不会被空终止。例如，你不能使用printf的`%s`操作符来显示内容，也不能使用strcpy来复制它。
 - en: This callback should return the number of bytes actually taken care of. If that
     number differs from the number passed to your callback function, it signals an
     error condition to the library. This causes the transfer to get aborted and the
     libcurl function used returns `CURLE_WRITE_ERROR`.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调应返回实际处理的字节数。如果该数字与传递给回调函数的数字不同，则向库发出错误条件信号。这会导致传输被中止，并且使用的libcurl函数返回`CURLE_WRITE_ERROR`。
 - en: 'The user pointer passed in to the callback in the *userdata* argument is set
     with `CURLOPT_WRITEDATA`:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在*userdata*参数中传递给回调的用户指针通过`CURLOPT_WRITEDATA`设置：
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Store in memory
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 存储到内存
 - en: A popular demand is to store the retrieved response in memory, and the callback
     explained above supports that. When doing this, just be careful as the response
     can potentially be enormous.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 有一个普遍的需求是将检索到的响应存储在内存中，上述回调支持这一点。在这样做的时候，请务必小心，因为响应可能非常大。
 - en: 'You implement the callback in a manner similar to:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 你应以类似以下方式实现回调：
 - en: '[PRE3]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

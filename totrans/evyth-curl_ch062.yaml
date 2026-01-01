@@ -1,39 +1,59 @@
 - en: FTP type
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: FTP类型
 - en: This is not a feature that is widely used.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 这不是一个广泛使用的功能。
 - en: URLs that identify files on FTP servers have a special feature that allows you
     to also tell the client (curl in this case) which file type the resource is. This
     is because FTP is a little special and can change mode for a transfer and thus
     handle the file differently than if it would use another mode.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于标识FTP服务器上文件的URL具有一个特殊功能，允许您同时告知客户端（在这种情况下为curl）资源的文件类型。这是因为FTP有一些特别之处，可以改变传输模式，从而以不同于其他模式的方式处理文件。
 - en: 'You tell curl that the FTP resource is an ASCII type by appending `;type=A`
     to the URL. Getting the `foo` file from the root directory of `example.com` using
     ASCII could then be made with:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过在URL后附加`;type=A`来告诉curl FTP资源是ASCII类型。使用ASCII从`example.com`的根目录获取`foo`文件可以这样实现：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'And while curl defaults to binary transfers for FTP, the URL format allows
     you to also specify the binary type with type=I:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管curl默认为FTP使用二进制传输，但URL格式允许您通过type=I指定二进制类型：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Finally, you can tell curl that the identified resource is a directory if the
     type you pass is D:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，如果您传递的类型是D，您可以告诉curl所标识的资源是一个目录。
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: …this can then work as an alternative format, instead of ending the path with
     a trailing slash as mentioned above.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: …这样就可以作为一个替代格式，而不是像上面提到的那样以路径结束符结束。

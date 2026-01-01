@@ -1,42 +1,66 @@
 - en: sockopt
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: sockopt
 - en: 'The sockopt callback is set with `CURLOPT_SOCKOPTFUNCTION`:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: sockopt 回调通过 `CURLOPT_SOCKOPTFUNCTION` 设置：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `sockopt_callback` function must match this prototype:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`sockopt_callback` 函数必须匹配此原型：'
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This callback function gets called by libcurl when a new socket has been created
     but before the connect call, to allow applications to change specific socket options.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 libcurl 创建了一个新的套接字但在连接调用之前，这个回调函数会被调用，以便应用程序更改特定的套接字选项。
 - en: 'The **clientp** pointer points to the private data set with `CURLOPT_SOCKOPTDATA`:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**clientp** 指针指向使用 `CURLOPT_SOCKOPTDATA` 设置的私有数据集：'
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'This callback should return:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调应返回：
 - en: CURL_SOCKOPT_OK on success
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CURL_SOCKOPT_OK 表示成功
 - en: CURL_SOCKOPT_ERROR to signal an unrecoverable error to libcurl
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CURL_SOCKOPT_ERROR 用于向 libcurl 信号不可恢复的错误
 - en: CURL_SOCKOPT_ALREADY_CONNECTED to signal success but also that the socket is
     in fact already connected to the destination
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: CURL_SOCKOPT_ALREADY_CONNECTED 表示成功，同时也表明套接字实际上已经连接到目标

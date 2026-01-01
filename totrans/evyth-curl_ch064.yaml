@@ -1,51 +1,72 @@
 - en: Browsers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 浏览器
 - en: Browsers typically support and use a *different* URL standard than what curl
     uses. Where curl uses RFC 3986 for guidance, the browsers use [the WHATWG URL
     Specification](https://url.spec.whatwg.org/).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 浏览器通常支持和使用与curl不同的URL标准。curl使用RFC 3986作为指导，而浏览器使用[WHATWG URL规范](https://url.spec.whatwg.org/)。
 - en: This is important because the two URL standards are not the same. They are not
     completely compatible, even though in most daily use those differences rarely
     show. Sometimes, a URL interpreted according to one of the specs will be handled
     differently when interpreted by the other spec. As such, curl and browsers do
     not always treat URLs the same way.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 这很重要，因为两个URL标准并不相同。它们并不完全兼容，尽管在大多数日常使用中这些差异很少显现。有时，根据其中一个规范解释的URL，当由另一个规范解释时，处理方式可能会有所不同。因此，curl和浏览器并不总是以相同的方式处理URL。
 - en: The WHATWG spec is also *changing* over time.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: WHATWG规范也在不断*变化*。
 - en: Since curl is developed to be able to do the same operations a browser can,
     the curl URL parser has been slightly adjusted to cater to some of the differences.
     For example it accepts spaces in the URL when read from incoming HTTP headers
     and it accepts either one, two or three slashes as a separator between the scheme
     and the hostname. That is why we sometimes say that curl’s parser is *RFC 3986+*
     compliant.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于curl被开发出来能够执行浏览器可以执行的操作，因此curl URL解析器已经略微调整，以适应一些差异。例如，当从传入的HTTP头中读取URL时，它接受空格；它接受一个、两个或三个斜杠作为方案和主机名之间的分隔符。这就是我们有时说curl的解析器是*RFC
+    3986+*兼容的原因。
 - en: curl strives hard to not break existing behavior, which makes it still support
     the URLs and the URL format it supported back in 1998\. The browsers do not.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 努力不破坏现有的行为，这使得它仍然支持1998年所支持的URL和URL格式。浏览器则不支持。
 - en: Browsers’ address bar
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 浏览器的地址栏
 - en: When you use a modern web browser, the address bar they tend to feature at the
     top of their main windows are not using URLs or even URIs. They are in fact mostly
     using IRIs, which is a superset of URIs to allow internationalization like non-Latin
     symbols and more, but it usually goes beyond that, too, as they tend to, for example,
     handle spaces and do magic things on percent encoding in ways none of these mentioned
     specifications say a client should do.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用现代网络浏览器时，它们在主窗口顶部通常展示的地址栏并不是使用URL或甚至URI。实际上，它们主要使用IRI（国际资源标识符），这是URI的超集，允许国际化，如非拉丁符号等，但它们通常还超出了这个范围，例如，它们倾向于处理空格，并在百分编码上执行一些这些提到的规范没有说明客户端应该做的魔法操作。
 - en: The address bar is quite simply an interface for humans to enter and see URI-like
     strings.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 地址栏非常简单，是供人类输入和查看类似URI的字符串的界面。
 - en: Sometimes the differences between what you see in a browser’s address bar and
     what you can pass into curl is significant.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，浏览器地址栏中显示的内容和你可以传递给curl的内容之间的差异是显著的。

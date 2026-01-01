@@ -1,105 +1,167 @@
 - en: Get URL parts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 获取URL部分
 - en: The `CURLU` handle stores the individual parts of a URL and the application
     can extract those pieces individually from the handle at any time. If they are
     set.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLU`句柄存储URL的各个部分，应用程序可以在任何时间从句柄中单独提取这些部分。如果它们被设置。'
 - en: The second argument to `curl_url_get()` specifies which part you want extracted.
     They are all extracted as null-terminated `char *` data, so you pass a pointer
     to such a variable.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_url_get()`的第二个参数指定了您想要提取的部分。它们都被提取为空终止的`char *`数据，因此您需要传递一个指向此类变量的指针。'
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Remember to free the returned string with `curl_free` when you are done with
     it!
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 记得使用`curl_free`释放返回的字符串，当你完成使用时！
 - en: Extracted parts are not URL decoded unless the user asks for it with the `CURLU_URLDECODE`
     flag.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 提取的部分除非用户使用`CURLU_URLDECODE`标志请求，否则不会进行URL解码。
 - en: URL parts
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: URL部分
 - en: 'The different parts are named from their roles in the URL. Imagine a URL that
     looks like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 不同的部分是根据它们在URL中的角色命名的。想象一个看起来像这样的URL：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'When this URL is parsed by curl, it stores the different components like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 当这个URL被curl解析时，它会以这种方式存储不同的组件：
 - en: '| text | part |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 文本 | 部分 |'
 - en: '| --- | --- |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `http` | `CURLUPART_SCHEME` |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `http` | `CURLUPART_SCHEME` |'
 - en: '| `joe` | `CURLUPART_USER` |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `joe` | `CURLUPART_USER` |'
 - en: '| `7Hbz` | `CURLUPART_PASSWORD` |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `7Hbz` | `CURLUPART_PASSWORD` |'
 - en: '| `example.com` | `CURLUPART_HOST` |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `example.com` | `CURLUPART_HOST` |'
 - en: '| `8080` | `CURLUPART_PORT` |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `8080` | `CURLUPART_PORT` |'
 - en: '| `/images` | `CURLUPART_PATH` |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `/images` | `CURLUPART_PATH` |'
 - en: '| `id=5445` | `CURLUPART_QUERY` |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `id=5445` | `CURLUPART_QUERY` |'
 - en: '| `footer` | `CURLUPART_FRAGMENT` |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `footer` | `CURLUPART_FRAGMENT` |'
 - en: Zone ID
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 区域ID
 - en: 'The one thing that might stick out a little is the Zone id. It is an extra
     qualifier that can be used for IPv6 numerical addresses, and only for such addresses.
     It is used like this, where it is set to `eth0`:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能会稍微突出一点的是区域ID。它是一个额外的限定符，可以用于IPv6数值地址，并且仅适用于此类地址。它的使用方式如下，其中设置为`eth0`：
 - en: '[PRE2]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'For this URL, curl extracts:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个URL，curl提取：
 - en: '| text | part |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| 文本 | 部分 |'
 - en: '| --- | --- |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `http` | `CURLUPART_SCHEME` |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `http` | `CURLUPART_SCHEME` |'
 - en: '| `2a04:4e42:e00::347` | `CURLUPART_HOST` |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `2a04:4e42:e00::347` | `CURLUPART_HOST` |'
 - en: '| `eth0` | `CURLUPART_ZONEID` |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `eth0` | `CURLUPART_ZONEID` |'
 - en: '| `/` | `CURLUPART_PATH` |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `/` | `CURLUPART_PATH` |'
 - en: Asking for any other component returns non-zero as they are missing.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 请求任何其他组件都会返回非零值，因为它们缺失。

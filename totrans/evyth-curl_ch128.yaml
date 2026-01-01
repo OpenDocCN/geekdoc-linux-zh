@@ -1,101 +1,152 @@
 - en: Verifying server certificates
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 验证服务器证书
 - en: Having a secure connection to a server is not worth a lot if you cannot also
     be certain that you are communicating with the **correct** host. If we do not
     know that, we could just as well be talking with an impostor that just *appears*
     to be who we think it is.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你不能确定你正在与正确的宿主进行通信，那么与服务器建立安全连接就没有太大的意义。如果我们不知道这一点，我们可能只是在和一个冒充者交谈，这个冒充者看起来就像是我们认为的那样。
 - en: To check that it communicates with the right TLS server, curl uses a CA store
     - a set of certificates to verify the signature of the server’s certificate. All
     servers provide a certificate to the client as part of the TLS handshake and all
     public TLS-using servers have acquired that certificate from an established Certificate
     Authority.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了检查它与正确的 TLS 服务器通信，curl 使用一个 CA 证书存储库——一组用于验证服务器证书签名的证书。所有服务器都在 TLS 握手过程中向客户端提供一个证书，所有使用公共
+    TLS 的服务器都从已建立的证书权威机构获得了该证书。
 - en: After some applied crypto magic, curl knows that the server is in fact the correct
     one that acquired that certificate for the hostname that curl used to connect
     to it. Failing to verify the server’s certificate is a TLS handshake failure and
     curl exits with an error.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 经过一些加密魔术之后，curl 确认服务器确实是获取了 curl 连接到的主机名的证书的正确服务器。未能验证服务器的证书是 TLS 握手失败，curl
+    会带错误退出。
 - en: In rare circumstances, you may decide that you still want to communicate with
     a TLS server even if the certificate verification fails. You then accept the fact
     that your communication may be subject to Man-In-The-Middle attacks. You lower
     your guards with the `-k` or `--insecure` option.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在罕见的情况下，你可能仍然决定即使证书验证失败，也要与 TLS 服务器进行通信。那么你接受这样一个事实，即你的通信可能会受到中间人攻击。你可以通过 `-k`
+    或 `--insecure` 选项降低你的安全防护。
 - en: Native CA stores
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 本地 CA 证书存储库
 - en: Operating systems like Windows and macOS tend to have their own CA stores.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 操作系统如 Windows 和 macOS 通常都有自己的 CA 证书存储库。
 - en: If you run curl with Schannel on Windows, curl uses Windows’ own CA store by
     default.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用 Windows 上的 Schannel 运行 curl，curl 默认使用 Windows 的 CA 证书存储库。
 - en: If you run curl with Secure Transport on macOS, curl uses macOS’ own CA store
     by default.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用 macOS 上的 Secure Transport 运行 curl，curl 默认使用 macOS 的 CA 证书存储库。
 - en: If you use curl with any other TLS backend than Schannel or Secure Transport,
     it uses a CA store provided in a separate file or directory, independently of
     the native CA store. However, for some of them you can still ask curl to instead
     prefer the native CA store using the `--ca-native` command line option. This option
     is supported with OpenSSL (and forks), wolfSSL and GnuTLS.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用 curl 与 Schannel 或 Secure Transport 之外的任何 TLS 后端，它将使用一个单独的文件或目录中提供的 CA
+    证书存储库，独立于本地的 CA 证书存储库。然而，对于其中的一些，你仍然可以使用 `--ca-native` 命令行选项让 curl 优先使用本地的 CA
+    证书存储库。此选项与 OpenSSL（及其分支）、wolfSSL 和 GnuTLS 兼容。
 - en: For HTTPS proxies, the corresponding option is called `--proxy-ca-native`.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于 HTTPS 代理，相应的选项称为 `--proxy-ca-native`。
 - en: CA store in file(s)
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 文件中的 CA 证书存储库
 - en: If curl is not built to use a TLS library that is native to your platform (like
     Schannel or Secure Transport), it has to either have been built to know where
     the local CA store is, or users need to provide a path to the CA store when curl
     is invoked.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 curl 没有构建为使用你平台本地的 TLS 库（如 Schannel 或 Secure Transport），它必须已经构建为知道本地 CA 证书存储库的位置，或者用户需要在调用
+    curl 时提供 CA 证书存储库的路径。
 - en: You can point out a specific CA bundle to use in the TLS handshake with the
     `--cacert` command line option. That bundle needs to be in PEM format. You can
     also set the environment variable `CURL_CA_BUNDLE` to the full path.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `--cacert` 命令行选项指定用于 TLS 握手的特定 CA 证书包。该包需要是 PEM 格式。你也可以设置环境变量 `CURL_CA_BUNDLE`
+    为完整路径。
 - en: CA store on windows
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Windows 上的 CA 证书存储库
 - en: curl built on windows that is not using the native TLS library (Schannel), have
     an extra sequence for how the CA store can be found and used.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Windows 上构建的未使用本地 TLS 库（Schannel）的 curl，有额外的序列来查找和使用 CA 证书存储库。
 - en: 'curl searches for a CA cert file named `curl-ca-bundle.crt` in these directories
     and in this order:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 在这些目录中按此顺序搜索名为 `curl-ca-bundle.crt` 的 CA 证书文件：
 - en: application’s directory
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 应用程序目录
 - en: current working directory
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当前工作目录
 - en: Windows System directory (e.g. `C:\windows\system32`)
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Windows 系统目录（例如 `C:\windows\system32`）
 - en: Windows Directory (e.g. `C:\windows`)
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Windows 目录（例如 `C:\windows`）
 - en: all directories along `%PATH%`
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`%PATH%` 中的所有目录'

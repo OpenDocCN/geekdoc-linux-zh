@@ -1,23 +1,35 @@
 - en: OCSP stapling
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: OCSP stapling
 - en: This uses the TLS extension called Certificate Status Request to ask the server
     to provide a fresh “proof” from the CA in the handshake, that the certificate
     that it returns is still valid. This is a way to make really sure the server’s
     certificate has not been revoked.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 这使用了名为证书状态请求的TLS扩展，要求服务器在握手过程中提供来自CA的“新鲜”证明，即它返回的证书仍然有效。这是一种确保服务器证书未被吊销的真正方法。
 - en: If the server does not support this extension, the test fails and curl returns
     an error. It is still common that servers do not support this.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果服务器不支持此扩展，测试将失败，curl将返回错误。服务器不支持此扩展的情况仍然很常见。
 - en: 'Ask for the handshake to use the status request like this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 要求握手使用如下状态请求：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This feature is only supported by the OpenSSL and GnuTLS backends.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 此功能仅由OpenSSL和GnuTLS后端支持。

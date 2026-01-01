@@ -1,70 +1,105 @@
 - en: alt-svc
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: alt-svc
 - en: Alternative Services, aka alt-svc, is an HTTP header that lets a server tell
     the client that there is one or more *alternatives* for that server at another
     place with the use of the `Alt-Svc:` response header.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 替代服务，即 alt-svc，是一个 HTTP 头部，允许服务器通过使用 `Alt-Svc:` 响应头部告诉客户端，该服务器在另一个位置有一个或多个 *替代方案*。
 - en: The *alternatives* the server suggests can include a server running on another
     port on the same host, on another completely different hostname and it can also
     offer the service *over another protocol*.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器建议的 *替代方案* 可以包括在同一主机上运行的其他端口的服务器，也可以是在完全不同的主机名上运行的服务器，它还可以通过 *另一种协议* 提供服务。
 - en: Enable
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 启用
 - en: To make libcurl consider any offered alternatives by serves, you must first
     enable it in the handle. You do this by setting the correct bitmask to the `CURLOPT_ALTSVC_CTRL`
     option. The bitmask allows the application to limit what HTTP versions to allow,
     and if the cache file on disk should only be used to read from (not write).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要让 libcurl 考虑服务器提供的任何替代方案，您必须首先在句柄中启用它。您可以通过将正确的掩码设置到 `CURLOPT_ALTSVC_CTRL`
+    选项来实现。掩码允许应用程序限制允许的 HTTP 版本，并确定磁盘上的缓存文件是否仅用于读取（不写入）。
 - en: 'Enable alt-svc and allow it to switch to either HTTP/1 or HTTP/2:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 启用 alt-svc 并允许其切换到 HTTP/1 或 HTTP/2：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Tell libcurl to use a specific alt-svc cache file like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过以下方式告诉 libcurl 使用特定的 alt-svc 缓存文件：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: libcurl holds the list of alternatives in a memory-based cache, but loads all
     already existing alternative service entries from the alt-svc file at start-up
     and consider those when doing its subsequent HTTP requests. If servers responds
     with new or updated `Alt-Svc:` headers, libcurl stores those in the cache file
     at exit (unless the `CURLALTSVC_READONLYFILE` bit was set).
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 将替代方案列表存储在基于内存的缓存中，但在启动时加载所有现有的替代服务条目从 alt-svc 文件，并在后续的 HTTP 请求时考虑这些条目。如果服务器响应新的或更新的
+    `Alt-Svc:` 头部，libcurl 将这些存储在退出时的缓存文件中（除非设置了 `CURLALTSVC_READONLYFILE` 位）。
 - en: The alt-svc cache
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: alt-svc 缓存
 - en: The alt-svc cache is similar to a cookie jar. It is a text based file that stores
     one alternative per line and each entry also has an expiry time for which duration
     that particular alternative is valid.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: alt-svc 缓存类似于一个 cookie jar。它是一个基于文本的文件，每行存储一个替代方案，每个条目还有一个有效期，表示该特定替代方案的有效时长。
 - en: HTTPS only
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 仅 HTTPS
 - en: '`Alt-Svc:` is only trusted and parsed from servers when connected to over HTTPS.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Alt-Svc:` 只有在通过 HTTPS 连接时才被信任并解析来自服务器的信息。'
 - en: HTTP/3
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP/3
 - en: The use of `Alt-Svc:` headers is as of March 2022 still the only defined way
     to bootstrap a client and server into using HTTP/3\. The server then hints to
     the client over HTTP/1 or HTTP/2 that it also is available over HTTP/3 and then
     curl can connect to it using HTTP/3 in the subsequent request if the alt-svc cache
     says so.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 截至 2022 年 3 月，使用 `Alt-Svc:` 头部仍然是启动客户端和服务器使用 HTTP/3 的唯一定义方式。然后服务器通过 HTTP/1 或
+    HTTP/2 向客户端暗示它也支持 HTTP/3，如果 alt-svc 缓存允许，curl 可以在后续请求中使用 HTTP/3 连接到它。

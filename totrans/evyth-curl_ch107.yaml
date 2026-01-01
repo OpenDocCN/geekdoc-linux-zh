@@ -1,35 +1,49 @@
 - en: Local port number
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 本地端口号
 - en: A TCP connection is created between an IP address and a port number in the local
     end and an IP address and a port number in the remote end. The remote port number
     can be specified in the URL and usually helps identify which service you are targeting.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本地端和远程端之间创建一个TCP连接，其中一个端是IP地址和端口号，另一个端是远程的IP地址和端口号。远程端口号可以在URL中指定，通常有助于识别您正在针对哪个服务。
 - en: The local port number is usually randomly assigned to your TCP connection by
     the network stack and you normally do not have to think about it much further.
     However, in some circumstances you find yourself behind network equipment, firewalls
     or similar setups that put restrictions on what source port numbers that can be
     allowed to set up the outgoing connections.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地端口号通常由网络堆栈随机分配给您的TCP连接，您通常不需要过多考虑。然而，在某些情况下，您可能会发现自己位于网络设备、防火墙或类似的设置之后，这些设置对可以设置出站连接的源端口号施加了限制。
 - en: For situations like this, you can specify which local ports curl should bind
     the connection to. You can specify a single port number to use, or a range of
     ports. We recommend using a range because ports are scarce resources and the exact
     one you want may already be in use. If you ask for a local port number (or range)
     that curl cannot obtain for you, it exits with a failure.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这种情况，您可以指定curl应该绑定连接的本地端口。您可以指定一个要使用的单个端口号，或者一个端口号范围。我们建议使用范围，因为端口是稀缺资源，您想要的特定端口可能已经被占用。如果您请求的本地端口号（或范围）curl无法为您获取，它将失败退出。
 - en: Also, on most operating systems you cannot bind to port numbers below 1024 without
     having a higher privilege level (root) and we generally advise against running
     curl as root if you can avoid it.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，在大多数操作系统上，如果没有更高的权限级别（root）您无法绑定低于1024的端口号，我们通常建议如果可能的话不要以root身份运行curl。
 - en: 'Ask curl to use a local port number between 4000 and 4200 when getting this
     HTTPS page:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 请配置curl在获取此HTTPS页面时使用介于4000和4200之间的本地端口号：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

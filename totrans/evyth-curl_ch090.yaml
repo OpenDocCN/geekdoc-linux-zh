@@ -1,32 +1,46 @@
 - en: Shell redirects
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Shell重定向
 - en: When you invoke curl from a shell or some other command-line prompt system,
     that environment generally provides you with a set of output redirection abilities.
     In most Linux and Unix shells and with Windows’ command prompts, you direct stdout
     to a file with `> filename`. Using this, of course, makes the use of -o or -O
     superfluous.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你在shell或某些其他命令行提示系统中调用curl时，该环境通常会为你提供一组输出重定向能力。在大多数Linux和Unix shell以及Windows的命令提示符中，你可以使用`>`将标准输出重定向到文件。当然，使用这种方法，-o或-O选项就变得多余了。
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Redirecting output to a file redirects all output from curl to that file, so
     even if you ask to transfer more than one URL to stdout, redirecting the output
     gets all the URLs’ output stored in that single file.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 将输出重定向到文件会将curl的所有输出重定向到该文件，因此即使你要求将多个URL的输出传输到stdout，重定向输出也会将所有URL的输出存储在该单个文件中。
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Unix shells usually allow you to redirect the *stderr* stream separately. The
     stderr stream is usually a stream that also gets shown in the terminal, but you
     can redirect it separately from the stdout stream. The stdout stream is for the
     data while stderr is metadata and errors, etc., that are not data. You can redirect
     stderr with `2>file` like this:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: Unix shell通常允许你单独重定向*stderr*流。stderr流通常是一个也会在终端中显示的流，但你可以在不与stdout流混淆的情况下单独重定向它。stdout流用于数据，而stderr用于元数据和错误等非数据。你可以像这样使用`2>file`来重定向stderr：
 - en: '[PRE2]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

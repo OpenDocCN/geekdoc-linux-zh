@@ -1,64 +1,90 @@
 - en: Compression
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 压缩
 - en: curl allows you to ask HTTP and HTTPS servers to provide compressed versions
     of the data and then perform automatic decompression of it on arrival. In situations
     where bandwidth is more limited than CPU this helps you receive more data in a
     shorter amount of time.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl允许你请求HTTP和HTTPS服务器提供压缩后的数据，并在到达时自动解压缩。在带宽比CPU更有限的情况下，这可以帮助你在更短的时间内接收更多数据。
 - en: 'HTTP compression can be done using two different mechanisms, one which might
     be considered “The Right Way” and the other that is the way that everyone actually
     uses and is the widespread and popular way to do it. The common way to compress
     HTTP content is using the **Content-Encoding** header. You ask curl to use this
     with the `--compressed` option:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP压缩可以使用两种不同的机制来完成，一种可能被认为是“正确的方式”，另一种则是大家实际使用且广泛流行的方式。压缩HTTP内容的一种常见方式是使用**内容编码**头。你要求curl使用这个选项`--compressed`：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: With this option enabled (and if the server supports it) it delivers the data
     in a compressed way and curl decompresses it before saving it or sending it to
     stdout. This usually means that as a user you do not really see or experience
     the compression other than possibly noticing a faster transfer.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 启用此选项（如果服务器支持）后，它会以压缩方式提供数据，curl在保存或发送到stdout之前对其进行解压缩。这通常意味着作为用户，你实际上并不真正看到或体验到压缩，除非可能注意到传输速度更快。
 - en: 'The `--compressed` option asks for Content-Encoding compression using one of
     the supported compression algorithms. There is also the rare **Transfer-Encoding**
     method, which is the request header that was created for this automated method
     but was never really widely adopted. You can tell curl to ask for Transfer-Encoded
     compression with `--tr-encoding`:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--compressed`选项请求使用支持的压缩算法之一进行内容编码压缩。还有一种罕见的**传输编码**方法，这是为这种自动化方法创建的请求头，但从未真正广泛采用。你可以告诉curl使用`--tr-encoding`请求传输编码压缩：'
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: In theory, there is nothing that prevents you from using both in the same command
     line, although in practice, you may experience that some servers get a little
     confused when asked to compress in two different ways. It is generally safer to
     just pick one.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 理论上，没有什么是阻止你在同一命令行中使用两者的，尽管在实践中，你可能发现当被要求以两种不同的方式压缩时，某些服务器会有些困惑。通常来说，只选择一种更安全。
 - en: For SCP and SFTP transfers, there is `--compressed-ssh`. It compresses all traffic
     in either direction.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于SCP和SFTP传输，有`--compressed-ssh`选项。它会在两个方向上压缩所有流量。
 - en: HTTP headers
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP头部
 - en: HTTP/1.x headers cannot be compressed. HTTP/2 and HTTP/3 headers on the other
     hands are always compressed and cannot be sent uncompressed. However, as a convenience
     to users, curl always shows the headers uncompressed in a style similar to how
     they look for HTTP/1.x to make the output and look consistent.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/1.x的头部不能被压缩。另一方面，HTTP/2和HTTP/3的头部总是被压缩，并且不能以未压缩的形式发送。然而，为了方便用户，curl总是以类似于HTTP/1.x的风格显示未压缩的头部，以使输出看起来一致。
 - en: Uploads
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 上传
 - en: For HTTP there is no standard way to do compression. The above mentioned HTTP
     compression methods only work for downloads.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于HTTP，没有标准的压缩方式。上述提到的HTTP压缩方法仅适用于下载。

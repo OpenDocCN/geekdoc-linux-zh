@@ -1,21 +1,29 @@
 - en: Everything is multi
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 一切都是多任务
 - en: libcurl offers a few different APIs to do transfers; where the primary differences
     are the synchronous easy interface versus the non-blocking multi interface. The
     multi interface itself can then be further used either by using the event-driven
     socket interface or the normal perform interface.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 提供了几个不同的 API 来进行传输；其中主要区别在于同步的简单接口与非阻塞的多接口。多接口本身可以通过使用事件驱动的套接字接口或正常的执行接口进一步使用。
 - en: Internally however, everything is written for the event-driven interface. Everything
     needs to be written in non-blocking fashion so that functions are never waiting
     for data in loop or similar. Unless they are the surface functions that have that
     expressed functionality.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，内部一切都是为事件驱动的接口编写的。所有内容都需要以非阻塞方式编写，以确保函数在循环或类似操作中永远不会等待数据。除非它们是具有明确功能的外部函数。
 - en: The function `curl_easy_perform()` which performs a single transfer synchronously,
     is itself just a wrapper function that internally setups and uses the multi interface
     itself.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_easy_perform()` 函数执行单个同步传输，它本身只是一个包装函数，在内部设置并使用多接口本身。'

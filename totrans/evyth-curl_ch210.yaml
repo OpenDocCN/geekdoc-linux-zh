@@ -1,26 +1,36 @@
 - en: Drive with easy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用简单方式驾驶
 - en: 'The name ‘easy’ was picked simply because this is really the easy way to use
     libcurl, and with easy, of course, comes a few limitations. Like, for example,
     that it can only do one transfer at a time and that it does the entire transfer
     in a single function call and returns once it is completed:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: “简单”这个名字被选中，仅仅是因为这确实是使用libcurl的简单方法，而且当然，使用简单方法也有一些限制。例如，它一次只能进行一个传输，并且在一个函数调用中完成整个传输，并在完成后返回：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: If the server is slow, if the transfer is large or if you have some unpleasant
     timeouts in the network or similar, this function call can end up taking a long
     time. You can, of course, set timeouts to not allow it to spend more than N seconds,
     but it could still mean a substantial amount of time depending on the particular
     conditions.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果服务器速度慢，如果传输量大，或者你在网络或类似情况下遇到一些不愉快的超时，这个函数调用可能会花费很长时间。当然，你可以设置超时，以防止它花费超过N秒，但这仍然可能意味着根据特定条件需要大量时间。
 - en: If you want your application to do something else while libcurl is transferring
     with the easy interface, you need to use multiple threads. If you want to do multiple
     simultaneous transfers when using the easy interface, you need to perform each
     of the transfers in its own thread.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想在libcurl使用简单接口进行传输的同时，让应用程序做其他事情，你需要使用多个线程。如果你想在使用简单接口时进行多个同时传输，你需要在每个传输中执行其自己的线程。

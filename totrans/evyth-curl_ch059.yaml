@@ -1,42 +1,66 @@
 - en: Port number
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 端口号
 - en: 'Each protocol has a default port number that curl uses, unless a specified
     port number is given. The optional port number can be provided within the URL
     after the hostname part, as a colon and the port number written in decimal. For
     example, asking for an HTTP document on port 8080:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个协议都有一个 curl 使用的默认端口号，除非提供了指定的端口号。可选的端口号可以在 URL 的主机名部分之后提供，用冒号和十进制表示的端口号。例如，请求端口
+    8080 上的 HTTP 文档：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'With the name specified as an IPv4 address:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 IPv4 地址命名时：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'With the name given as an IPv6 address:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 IPv6 地址命名时：
 - en: '[PRE2]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The port number is an unsigned 16 bit number, so it has to be within the range
     0 to 65535.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 端口号是一个无符号的 16 位数字，因此它必须在 0 到 65535 的范围内。
 - en: TCP vs UDP
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TCP 与 UDP
 - en: The given port number is used when setting up the connection to the server specified
     in the URL. The port is either a TCP port number or a UDP port number depending
     on which actual underlying transport protocol that is used. TCP is the most common
     one, but TFTP and HTTP/3 use UDP.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定的端口号用于设置与 URL 中指定的服务器建立连接时使用的连接。端口号可以是 TCP 端口号或 UDP 端口号，具体取决于实际使用的底层传输协议。TCP
+    是最常见的一种，但 TFTP 和 HTTP/3 使用 UDP。
 - en: URLs using the `file://` scheme cannot have a port number.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `file://` 方案的 URL 不能有端口号。

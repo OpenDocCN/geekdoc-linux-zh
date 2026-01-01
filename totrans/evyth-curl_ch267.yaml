@@ -1,69 +1,109 @@
 - en: Set URL parts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置 URL 部分
 - en: The API allows the application to set individual parts of a URL held in the
     `CURLU` handle, either after having parsed a full URL or instead of parsing such.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: API 允许应用程序通过 `CURLU` 处理器设置 URL 的各个部分，无论是解析了完整的 URL 之后，还是不解析这样的 URL。
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The API always expects a null-terminated `char *` string in the third argument,
     or NULL to clear the field. Note that the port number is also provided as a string
     this way.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: API 总是期望在第三个参数中提供一个以空字符终止的 `char *` 字符串，或者 NULL 以清除字段。请注意，端口号也是以这种方式作为字符串提供的。
 - en: Set parts are not URL encoded unless the user asks for it with the `CURLU_URLENCODE`
     flag in the forth argument.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 除非用户在第四个参数中使用 `CURLU_URLENCODE` 标志请求它，否则设置的各部分不会进行 URL 编码。
 - en: Update parts
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 更新部分
 - en: By setting an individual part, you can for example first set a full URL, then
     update a single component of that URL and then extract the updated version of
     that URL.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过设置单个部分，例如，你可以首先设置一个完整的 URL，然后更新该 URL 的单个组件，然后提取该 URL 的更新版本。
 - en: For example, let’s say we have this URL
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，假设我们有一个这样的 URL
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'and we want change the host in that URL to instead become `example.net`, it
     could be done like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们希望将那个 URL 中的主机名更改为 `example.net`，可以这样做：
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Then change the hostname part:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后更改主机名部分：
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'and this then now holds this URL:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，现在这个 URL 如下所示：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'If you then continue and change the path part to `/foo` like this:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你继续并将路径部分更改为 `/foo`，就像这样：
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'and the URL handle now holds this URL:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，URL 处理器现在持有这个 URL：
 - en: '[PRE6]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: etc…
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 等等……

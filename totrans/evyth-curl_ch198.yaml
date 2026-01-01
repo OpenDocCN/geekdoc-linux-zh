@@ -1,104 +1,147 @@
 - en: Caches
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 缓存
 - en: 'libcurl caches different information in order to help subsequent transfers
     to perform faster. There are four key caches: DNS, connections, TLS sessions and
     CA certs.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl缓存不同的信息，以帮助后续传输更快地执行。有四个关键缓存：DNS、连接、TLS会话和CA证书。
 - en: When the multi interface is used, these caches are by default shared among all
     the easy handles that are added to that single multi handle, and when the easy
     interface is used they are kept within that handle.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用多接口时，这些缓存默认情况下会共享给添加到单个多接口的所有easy handles，而当使用easy接口时，它们将保留在该handle中。
 - en: You can instruct libcurl to share some of the caches with the [share interface](ch257.xhtml#helpers__sharing__md).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以指示libcurl与[共享接口](ch257.xhtml#helpers__sharing__md)共享一些缓存。
 - en: DNS cache
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: DNS缓存
 - en: When libcurl resolves a hostname to one or more IP addresses, that is stored
     in the DNS cache so that subsequent transfers in the near term do not have to
     redo the same resolve again. A name resolve can easily take several hundred milliseconds
     and sometimes even much longer.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl将主机名解析为一个或多个IP地址时，这些地址会存储在DNS缓存中，以便在近期内的后续传输中无需再次进行相同的解析。名称解析可能需要几百毫秒，有时甚至更长。
 - en: By default, each such hostname is stored in the cache for 60 seconds (changeable
     with `CURLOPT_DNS_CACHE_TIMEOUT`).
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，每个此类主机名都会在缓存中存储60秒（可以通过`CURLOPT_DNS_CACHE_TIMEOUT`进行更改）。
 - en: libcurl does in fact not usually know what the TTL (Time To Live) value is for
     DNS entries, as that is generally not exposed in the system function calls it
     uses for this purpose, so increasing this value come with a risk that libcurl
     keeps using stale addresses longer periods than necessary.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，libcurl通常不知道DNS条目的TTL（生存时间）值，因为通常在它用于此目的的系统功能调用中不会暴露该值，因此增加此值会带来风险，即libcurl可能比必要的更长的时间继续使用过时的地址。
 - en: Connection cache
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 连接缓存
 - en: Also sometimes referred to as the connection pool. This is a collection of previously
     used connections that instead of being closed after use, are kept around alive
     so that subsequent transfers that are targeting the same host name and have several
     other checks also matching, can use them instead of creating a new connection.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 也被称为连接池。这是一个之前使用的连接集合，而不是在使用后关闭，而是保持活跃状态，以便后续针对相同主机名且具有其他几个匹配的检查的传输可以使用它们，而不是创建新的连接。
 - en: A reused connection usually saves having to a DNS lookup, setting up a TCP connection,
     do a TLS handshake and more.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 重新使用的连接通常可以节省进行DNS查找、设置TCP连接、执行TLS握手等操作。
 - en: Connections are only reused if the name is identical. Even if two different
     hostnames resolve to the same IP addresses, they still always use two separate
     connections with libcurl.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 只有当名称相同的情况下才会重用连接。即使两个不同的主机名解析到相同的IP地址，它们仍然始终使用libcurl的两个单独的连接。
 - en: Since the connection reuse is based on the hostname and the DNS resolve phase
     is entirely skipped when a connection is reused for a transfer, libcurl does not
     know the current state of the hostname in DNS as it can in fact change IP over
     time while the connection might survive and continue to get reused over the original
     IP address.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于连接重用基于主机名，并且当重用连接进行传输时，DNS解析阶段完全跳过，因此libcurl不知道主机名在DNS中的当前状态，因为实际上IP地址可能会随时间变化，而连接可能会在原始IP地址上继续被重用。
 - en: The size of the connection cache - the number of live connections to keep there
     - can be set with `CURLOPT_MAXCONNECTS` (default is 5) for easy handles and `CURLMOPT_MAXCONNECTS`
     for multi handles. The default size for multi handles is 4 times the number of
     easy handles added.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 连接缓存的大小——要保留的活跃连接数量——可以通过`CURLOPT_MAXCONNECTS`（默认为5）为easy handles设置，对于多handles使用`CURLMOPT_MAXCONNECTS`。多handles的默认大小是easy
+    handles数量的4倍。
 - en: TLS session cache
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: TLS会话缓存
 - en: TLS session IDs and tickets are special TLS mechanisms that a client can pass
     to a server to shortcut subsequent TLS handshakes to a server it previously established
     a connection to.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS会话ID和票据是特殊的TLS机制，客户端可以将它们传递给服务器，以简化与之前已建立连接的服务器之间的后续TLS握手。
 - en: libcurl caches session IDs and tickets associated with hostnames and port numbers,
     so if a subsequent connection attempt is made to a host for which libcurl has
     a cached ID or ticket, using that can greatly decrease the TLS handshake process
     and therefore the time needed until completion.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl缓存与主机名和端口号相关的会话ID和票据，因此如果后续连接尝试连接到libcurl已缓存的ID或票据的主机，使用它们可以大大减少TLS握手过程，从而减少完成所需的时间。
 - en: CA cert cache
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: CA证书缓存
 - en: With some of the TLS backends curl supports (OpenSSL and Schannel), it builds
     a CA cert store cache in memory and keeps it there for subsequent transfers to
     use. This lets transfers skip unnecessary loading and parsing time that comes
     from loading and handling the sometimes rather big CA cert bundles.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于curl支持的某些TLS后端（OpenSSL和Schannel），它会在内存中构建CA证书存储缓存，并在后续传输中使用它。这使得传输可以跳过加载和处理有时相当大的CA证书包所带来的不必要的加载和解析时间。
 - en: Since the CA cert bundle might be updated, the life-time of the cache is by
     default set to 24 hours so that long-running applications will flush the cache
     and reload the file at least once every day - to be able to load and use a new
     version of the store.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于CA证书包可能会更新，缓存的生命周期默认设置为24小时，这样长时间运行的应用程序至少每天刷新缓存并重新加载文件一次——以便能够加载和使用存储的新版本。
 - en: Applications can change the CA cert cache timeout with the `CURLOPT_CA_CACHE_TIMEOUT`
     option in case this default is not good enough.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果默认设置不够好，应用程序可以通过`CURLOPT_CA_CACHE_TIMEOUT`选项更改CA证书缓存超时时间。

@@ -1,34 +1,50 @@
 - en: Opensocket and closesocket
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Opensocket和closesocket
 - en: Occasionally you end up in a situation where you want your application to control
     with more precision exactly what socket libcurl uses for its operations. libcurl
     offers this pair of callbacks that replaces libcurl’s own call to `socket()` and
     the subsequent `close()` of the same file descriptor.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时你可能会遇到这样的情况，你希望你的应用程序能够更精确地控制libcurl操作所使用的套接字库。libcurl提供了一对回调，用于替换libcurl对`socket()`的调用以及随后对相同文件描述符的`close()`操作。
 - en: Provide a file descriptor
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 提供一个文件描述符
 - en: 'By setting the `CURLOPT_OPENSOCKETFUNCTION` callback, you can provide a custom
     function to return a file descriptor for libcurl to use:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过设置`CURLOPT_OPENSOCKETFUNCTION`回调，你可以提供一个自定义函数，以便libcurl返回一个文件描述符：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `opensocket_callback` function must match this prototype:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`opensocket_callback`函数必须匹配以下原型：'
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The callback gets the *clientp* as first argument, which is simply an opaque
     pointer you set with `CURLOPT_OPENSOCKETDATA`.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调将`clientp`作为第一个参数，它是一个简单的不可见指针，你使用`CURLOPT_OPENSOCKETDATA`设置它。
 - en: The other two arguments pass in data that identifies for what *purpose* and
     *address* the socket is to be used. The *purpose* is a typedef with a value of
     `CURLSOCKTYPE_IPCXN` or `CURLSOCKTYPE_ACCEPT`, identifying in which circumstance
@@ -36,50 +52,74 @@
     an incoming FTP connection for when FTP active mode is used, and all other cases
     when libcurl creates a socket for its own outgoing connections the *IPCXN* value
     is passed in.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '其他两个参数传递的数据用于标识套接字将被用于什么*目的*和*地址*。*目的*是一个typedef，其值为`CURLSOCKTYPE_IPCXN`或`CURLSOCKTYPE_ACCEPT`，用于标识套接字是在哪种情况下创建的。在libcurl用于接受FTP主动模式下的传入FTP连接时，“接受”情况发生，而在libcurl创建套接字用于其自己的出站连接的所有其他情况下，传递的值是*IPCXN*。 '
 - en: The *address* pointer points to a `struct curl_sockaddr` that describes the
     IP address of the network destination for which this socket is created. Your callback
     can for example use this information to whitelist or blacklist specific addresses
     or address ranges.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '*地址*指针指向一个`struct curl_sockaddr`，它描述了为创建此套接字而创建的网络目标IP地址。例如，你的回调可以使用这些信息来白名单或黑名单特定的地址或地址范围。'
 - en: The socketopen callback is also explicitly allowed to modify the target address
     in that struct, if you would like to offer some sort of network filter or translation
     layer.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想在结构体中修改目标地址，以便提供某种网络过滤器或转换层，socketopen回调也被明确允许。
 - en: The callback should return a file descriptor or `CURL_SOCKET_BAD`, which then
     causes an unrecoverable error within libcurl and it returns `CURLE_COULDNT_CONNECT`
     from its perform function.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调应该返回一个文件描述符或`CURL_SOCKET_BAD`，这将导致libcurl内部发生不可恢复的错误，并从其perform函数返回`CURLE_COULDNT_CONNECT`。
 - en: If you want to return a file descriptor that is *already connected* to a server,
     then you must also set the [sockopt callback](ch218.xhtml#transfers__callbacks__sockopt__md)
     and make sure that returns the correct return value.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你希望返回一个已经连接到服务器的文件描述符，那么你也必须设置[sockopt回调](ch218.xhtml#transfers__callbacks__sockopt__md)并确保它返回正确的返回值。
 - en: 'The `curl_sockaddress` struct looks like this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_sockaddress`结构看起来像这样：'
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Socket close callback
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Socket关闭回调
 - en: 'The corresponding callback to the open socket is of course the close socket.
     Usually when you provide a custom way to provide a file descriptor you want to
     provide your own cleanup version as well:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，打开套接字的对应回调是关闭套接字。通常，当你提供一种自定义方式来提供文件描述符时，你希望提供自己的清理版本：
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The `closesocket_callback` function must match this prototype:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`closesocket_callback`函数必须匹配以下原型：'
 - en: '[PRE4]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

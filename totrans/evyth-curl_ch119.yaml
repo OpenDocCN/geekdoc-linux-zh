@@ -1,41 +1,59 @@
 - en: Proxy authentication
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 代理认证
 - en: HTTP and SOCKS proxies can require authentication, so curl then needs to provide
     the proper credentials to the proxy to be allowed to use it. Failing to do so
     (or providing the wrong credentials) makes the proxy return HTTP responses using
     code 407.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP和SOCKS代理可能需要认证，因此curl需要向代理提供适当的凭据才能使用它。未能这样做（或提供了错误的凭据）将导致代理返回使用代码407的HTTP响应。
 - en: Authentication for proxies is similar to “normal” HTTP authentication. It is
     separate from the server authentication to allow clients to independently use
     both normal host authentication as well as proxy authentication.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 代理认证类似于“正常”的HTTP认证。它是独立于服务器认证的，以便客户端可以独立使用正常的宿主认证以及代理认证。
 - en: 'With curl, you set the username and password for the proxy authentication with
     the `-U user:password` or `--proxy-user user:password` option:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用curl时，你可以通过`-U user:password`或`--proxy-user user:password`选项设置代理认证的用户名和密码：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'This example defaults to using the Basic authentication scheme. Some proxies
     requires other authentication schemes (and the headers that are returned when
     you get a 407 response tells you which) and then you can ask for a specific method
     with `--proxy-digest`, `--proxy-negotiate`, `--proxy-ntlm`. The above example
     command again, but asking for NTLM auth with the proxy:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 此示例默认使用基本认证方案。一些代理需要其他认证方案（并且当你收到407响应时返回的头部信息会告诉你哪种），然后你可以使用`--proxy-digest`、`--proxy-negotiate`、`--proxy-ntlm`请求特定的方法。再次给出上述示例命令，但这次是请求使用代理的NTLM认证：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'There is also the option that asks curl to figure out which method the proxy
     wants and supports and then go with that (with the possible expense of extra round-trips)
     using `--proxy-anyauth`. Asking curl to use any method the proxy wants is then
     like this:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 也有一种选项是让curl确定代理希望使用并支持的方法，然后使用`--proxy-anyauth`跟随那个方法（可能会增加额外的往返次数）。让curl使用代理想要的任何方法是这样的：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

@@ -1,45 +1,66 @@
 - en: HSTS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HSTS
 - en: HSTS is short for HTTP Strict-Transport-Security. It is a defined way for a
     server to tell a client that the client should prefer to use HTTPS with that site
     for a specified period of time into the future.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HSTS 是 HTTP Strict-Transport-Security 的缩写。这是一种服务器告知客户端，客户端应优先使用 HTTPS 与该站点进行通信，并在未来指定时间段内使用该站点的定义方式。
 - en: Here is how you use HSTS with libcurl.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 下面是如何使用 libcurl 与 HSTS 一起使用的方法。
 - en: In-memory cache
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 内存缓存
 - en: libcurl primarily features an in-memory cache for HSTS hosts, so that subsequent
     HTTP-only requests to a hostname present in the cache gets internally “redirected”
     to the HTTPS version. Assuming you have this feature enabled.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 主要具有用于 HSTS 主机的内存缓存功能，这样后续只针对 HTTP 的请求到缓存中存在的域名将被内部“重定向”到 HTTPS 版本。假设你已启用此功能。
 - en: Enable HSTS for a handle
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 为句柄启用 HSTS
 - en: HSTS is enabled by setting the correct bitmask using the `CURLOPT_HSTS_CTRL`
     option with `curl_easy_setopt()`. The bitmask has two separate flags that can
     be used, but `CURLHSTS_ENABLE` is the primary one. If that is set, then this easy
     handle how has HSTS support enabled.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用 `CURLOPT_HSTS_CTRL` 选项并调用 `curl_easy_setopt()` 来设置正确的掩码位，可以启用 HSTS。掩码位有两个独立的标志可以使用，但
+    `CURLHSTS_ENABLE` 是主要的一个。如果设置了该标志，则此简单句柄已启用 HSTS 支持。
 - en: The second flag available for this option is `CURLHSTS_READONLYFILE`, which
     if set, tells libcurl that the filename you specify for it to use as a HSTS cache
     is only to be read from, and not write anything back to.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 此选项可用的第二个标志是 `CURLHSTS_READONLYFILE`，如果设置此标志，则告诉 libcurl，你指定的用于作为 HSTS 缓存的文件名仅用于读取，不应写入任何内容。
 - en: Set a HSTS cache file
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 设置 HSTS 缓存文件
 - en: If you want to persist the HSTS cache on disk, then set a filename with the
     `CURLOPT_HSTS` option. libcurl reads from this file at start of a transfer and
     writes to it (unless it was set read-only) when the easy handle is closed.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想在磁盘上持久化 HSTS 缓存，则使用 `CURLOPT_HSTS` 选项设置一个文件名。libcurl 在传输开始时从该文件读取，并在简单句柄关闭时写入它（除非它被设置为只读）。

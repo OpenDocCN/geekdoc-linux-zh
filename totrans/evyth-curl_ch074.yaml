@@ -1,129 +1,199 @@
 - en: Progress meter
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 进度条
 - en: curl has a built-in progress meter. When curl is invoked to transfer data (either
     uploading or downloading) it can show that meter in the terminal screen to show
     how the transfer is progressing, namely the current transfer speed, how long it
     has been going on and how long it thinks it might be left until completion.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl有一个内置的进度条。当curl被调用以传输数据（无论是上传还是下载）时，它可以在终端屏幕上显示该进度条，以显示传输的进度，即当前的传输速度、已经进行的时间以及它认为可能剩余的时间直到完成。
 - en: The progress meter is inhibited if curl deems that there is output going to
     the terminal, as the progress meter would interfere with that output and just
     mess up what gets displayed. A user can also forcibly switch off the progress
     meter with the `-s / --silent` option, which tells curl to hush.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl认为输出将发送到终端，进度条将被抑制，因为进度条会干扰该输出并弄乱显示的内容。用户也可以使用`-s / --silent`选项强制关闭进度条，该选项告诉curl保持安静。
 - en: If you invoke curl and do not get the progress meter, make sure your output
     is directed somewhere other than the terminal.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你调用curl而没有得到进度条，请确保你的输出不是指向终端。
 - en: curl also features an alternative and simpler progress meter that you enable
     with `-# / --progress-bar`. As the long name implies, it instead shows the transfer
     as a progress bar.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: curl还提供了一个替代的更简单的进度条，你可以通过`-# / --progress-bar`启用它。正如长名称所暗示的，它显示传输为一个进度条。
 - en: At times when curl is asked to transfer data, it cannot figure out the total
     size of the requested operation and that then subsequently makes the progress
     meter contain fewer details and it cannot, for example, make forecasts for transfer
     times, etc.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在curl被要求传输数据时，它无法确定请求操作的总大小，这导致进度条包含的细节更少，例如，它无法预测传输时间等。
 - en: Units
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 单位
 - en: The progress meter displays bytes and bytes per second.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 进度条显示字节数和每秒字节数。
 - en: 'It also uses suffixes for larger amounts of bytes, using the 1024 base system
     so 1024 is one kilobyte (1K), 2048 is 2K, etc. curl supports these:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 它还使用后缀表示更大的字节数，使用1024进制系统，因此1024是一个千字节（1K），2048是2K等。curl支持这些：
 - en: '| Suffix | Amount | Name |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| Suffix | 数量 | 名称 |'
 - en: '| --- | --- | --- |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| K | 2^10 | kilobyte |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| K | 2^10 | 千字节 |'
 - en: '| M | 2^20 | megabyte |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| M | 2^20 | 兆字节 |'
 - en: '| G | 2^30 | gigabyte |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| G | 2^30 | 吉字节 |'
 - en: '| T | 2^40 | terabyte |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| T | 2^40 | 太字节 |'
 - en: '| P | 2^50 | petabyte |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| P | 2^50 | 太字节 |'
 - en: The times are displayed using H:MM:SS for hours, minutes and seconds.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 时间使用H:MM:SS格式显示，表示小时、分钟和秒。
 - en: Progress meter legend
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 进度条图例
 - en: 'The progress meter exists to show a user that something actually is happening.
     The different fields in the output have the following meaning:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 进度条的存在是为了向用户显示实际上正在发生某事。输出中的不同字段具有以下含义：
 - en: '[PRE0]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'From left to right:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 从左到右：
 - en: '| Title | Meaning |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| Title | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `%` | Percentage completed of the whole transfer |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `%` | 整个传输完成的百分比 |'
 - en: '| `Total` | Total size of the whole expected transfer (if known) |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `Total` | 整个预期传输的总大小（如果已知） |'
 - en: '| `%` | Percentage completed of the download |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `%` | 下载完成的百分比 |'
 - en: '| `Received` | Currently downloaded number of bytes |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `Received` | 当前已下载的字节数 |'
 - en: '| `%` | Percentage completed of the upload |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `%` | 上传完成的百分比 |'
 - en: '| `Xferd` | Currently uploaded number of bytes |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `Xferd` | 当前已上传的字节数 |'
 - en: '| `Average Speed Dload` | Average transfer speed of the entire download so
     far, in number of bytes per second |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `Average Speed Dload` | 到目前为止整个下载的平均传输速度，以每秒字节数表示 |'
 - en: '| `Average Speed Upload` | Average transfer speed of the entire upload so far,
     in number of bytes per second |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `Average Speed Upload` | 到目前为止整个上传的平均传输速度，以每秒字节数表示 |'
 - en: '| `Time Total` | Expected time to complete the operation, in `HH:MM:SS` notation
     for hours, minutes and seconds |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `Time Total` | 完成操作预计时间，以`HH:MM:SS`格式表示的小时、分钟和秒 |'
 - en: '| `Time Current` | Time passed since the start of the transfer, in `HH:MM:SS`
     notation for hours, minutes and seconds |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `Time Current` | 从传输开始经过的时间，以`HH:MM:SS`格式表示的小时、分钟和秒 |'
 - en: '| `Time Left` | Expected time left to completion, in `HH:MM:SS` notation for
     hours, minutes and seconds |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `Time Left` | 完成剩余的预计时间，以`HH:MM:SS`格式表示的小时、分钟和秒 |'
 - en: '| `Curr. Speed` | Average transfer speed over the last 5 seconds (the first
     5 seconds of a transfer is based on less time, of course) in number of bytes per
     second |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `Curr. Speed` | 过去5秒内的平均传输速度（传输的前5秒基于更少的时间，当然）以每秒字节数表示 |'

@@ -1,96 +1,142 @@
 - en: libcurl
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: libcurl
 - en: The engine in the curl command-line tool is libcurl. libcurl is also the engine
     in thousands of tools, services and applications out there today, performing their
     Internet data transfers.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 命令行工具中的引擎是 libcurl。libcurl 同样也是今天成千上万的工具、服务和应用程序的引擎，执行它们的互联网数据传输。
 - en: C API
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: C API
 - en: libcurl is a library of functions that are provided with a C API, for applications
     written in C. You can easily use it from C++ too, with only a few considerations
     (see [libcurl for C++ programmers](ch199.xhtml#libcurl__cplusplus__md)). For other
     languages, there exist *bindings* that work as intermediate layers between libcurl
     the library and corresponding functions for the particular language you like.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 是一个提供 C API 的函数库，用于编写 C 语言的应用程序。你也可以很容易地从 C++ 中使用它，只需考虑几个因素（参见[libcurl
+    for C++ programmers](ch199.xhtml#libcurl__cplusplus__md)）。对于其他语言，存在 *绑定*，它们作为
+    libcurl 库和特定语言对应函数之间的中间层。
 - en: Transfer oriented
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 传输导向
 - en: We have designed libcurl to be transfer oriented usually without forcing users
     to be protocol experts or in fact know much at all about networking or the protocols
     involved. You setup a transfer with as many details and specific information as
     you can and want, and then you tell libcurl to perform that transfer.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们设计 libcurl 以传输为导向，通常不强迫用户成为协议专家，或者实际上对网络或涉及的协议了解很多。你可以用尽可能多的细节和具体信息设置一个传输，然后告诉
+    libcurl 执行该传输。
 - en: That said, networking and protocols are areas with lots of pitfalls and special
     cases so the more you know about these things, the more you are able to understand
     about libcurl’s options and ways of working. Not to mention, such knowledge is
     invaluable when you are debugging and need to understand what to do next when
     things do not go as you intended.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 话虽如此，网络和协议是存在许多陷阱和特殊情况的领域，所以你对这些事情了解得越多，你对 libcurl 的选项和工作方式的理解就越深入。更不用说，这种知识在调试时非常有价值，当你遇到问题需要理解下一步该做什么时。
 - en: The most basic libcurl using application can be as small as just a couple of
     lines of code, but most applications do, of course, need more code than that.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 最基本的 libcurl 使用应用程序可能只有几行代码那么小，但当然，大多数应用程序都需要比这更多的代码。
 - en: Simple by default, more on demand
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 默认简单，按需扩展
 - en: libcurl generally does the simple and basic transfer by default, and if you
     want to add more advanced features, you add that by setting the correct options.
     For example, libcurl does not support HTTP cookies by default but it does once
     you tell it.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl 通常默认执行简单的和基本的数据传输，如果你想要添加更高级的功能，你可以通过设置正确的选项来实现。例如，libcurl 默认不支持 HTTP
+    cookies，但一旦你告诉它，它就支持了。
 - en: This makes libcurl’s behaviors easier to guess and depend on, and also it makes
     it easier to maintain old behavior and add new features. Only applications that
     actually ask for and use the new features get that behavior.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这使得 libcurl 的行为更容易预测和依赖，同时也使得维护旧行为和添加新功能更容易。只有真正请求和使用新功能的应用程序才会获得这种行为。
 - en: '[Header files](ch190.xhtml#libcurl__headers__md)'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[头文件](ch190.xhtml#libcurl__headers__md)'
 - en: '[Global initialization](ch191.xhtml#libcurl__globalinit__md)'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[全局初始化](ch191.xhtml#libcurl__globalinit__md)'
 - en: '[API compatibility](ch192.xhtml#libcurl__api__md)'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[API 兼容性](ch192.xhtml#libcurl__api__md)'
 - en: '[–libcurl](ch193.xhtml#libcurl__--libcurl__md)'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[–libcurl](ch193.xhtml#libcurl__--libcurl__md)'
 - en: '[multi-threading](ch194.xhtml#libcurl__threading__md)'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[多线程](ch194.xhtml#libcurl__threading__md)'
 - en: '[CURLcode return codes](ch195.xhtml#libcurl__curlcode__md)'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[CURLcode 返回代码](ch195.xhtml#libcurl__curlcode__md)'
 - en: '[Verbose operations](ch196.xhtml#libcurl__verbose__md)'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[详细操作](ch196.xhtml#libcurl__verbose__md)'
 - en: '[Caches](ch197.xhtml#libcurl__caches__md)'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[缓存](ch197.xhtml#libcurl__caches__md)'
 - en: '[Performance](ch198.xhtml#libcurl__performance__md)'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[性能](ch198.xhtml#libcurl__performance__md)'
 - en: '[for C++ programmers](ch199.xhtml#libcurl__cplusplus__md)'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[针对 C++ 程序员](ch199.xhtml#libcurl__cplusplus__md)'

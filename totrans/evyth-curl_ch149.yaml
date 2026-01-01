@@ -1,25 +1,38 @@
 - en: HTTP/0.9
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTP/0.9
 - en: The HTTP version used before HTTP/1.0 was made available is often referred to
     as HTTP/0.9\. Back in those days, HTTP responses had no headers as they would
     only return a response body and then immediately close the connection.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 HTTP/1.0 之前使用的 HTTP 版本通常被称为 HTTP/0.9。在那些日子里，HTTP 响应没有头部信息，因为它们只会返回一个响应体，然后立即关闭连接。
 - en: curl can be told to support such responses but by default it does not recognize
     them, for security reasons. Almost anything bad looks like an HTTP/0.9 response
     to curl so the option needs to be used with caution.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以告诉 curl 支持这样的响应，但默认情况下它不会识别它们，出于安全考虑。几乎所有不好的东西在 curl 看起来都像 HTTP/0.9 响应，所以这个选项需要谨慎使用。
 - en: The HTTP/0.9 option to curl is different than the other HTTP command line options
     for HTTP versions mentioned above as this controls what response to accept, while
     the others are about what HTTP protocol version to try to use.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 的 HTTP/0.9 选项与其他上述提到的 HTTP 版本的命令行选项不同，因为它控制着要接受哪些响应，而其他选项则是关于尝试使用哪个 HTTP
+    协议版本。
 - en: 'Tell curl to accept an HTTP/0.9 response like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这样告诉 curl 接受 HTTP/0.9 响应：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'

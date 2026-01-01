@@ -1,42 +1,63 @@
 - en: HSTS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HSTS
 - en: HTTP Strict Transport Security, HSTS, is a protocol mechanism that helps to
     protect HTTPS servers against man-in-the-middle attacks such as protocol downgrade
     attacks and cookie hijacking. It allows an HTTPS server to declare that clients
     should automatically interact with this hostname using only HTTPS connections
     going forward - and explicitly not use clear text protocols with it.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP严格传输安全，HSTS，是一种协议机制，有助于保护HTTPS服务器免受中间人攻击，如协议降级攻击和cookie劫持。它允许HTTPS服务器声明客户端应自动使用仅HTTPS连接与该主机名交互
+    - 并且明确不使用明文协议与它交互。
 - en: HSTS cache
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HSTS缓存
 - en: The HSTS status for a certain server name is set in a response header and has
     an expire time. The status for every HSTS hostname needs to be saved in a file
     for curl to pick it up and to update the status and expire time.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 某个服务器名称的HSTS状态设置在响应头中，并有一个过期时间。每个HSTS主机名的状态都需要保存在一个文件中，以便curl能够获取它并更新状态和过期时间。
 - en: 'Invoke curl and tell it which file to use as a hsts cache:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用curl并告诉它使用哪个文件作为hsts缓存：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: curl only updates the hsts info if the header is read over a secure transfer,
     so not when done over a clear text protocol.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: curl仅在通过安全传输读取头信息时更新hsts信息，因此不是在明文协议上完成时更新。
 - en: Use HSTS to update insecure protocols
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用HSTS更新不安全的协议
 - en: 'If the cache file now contains an entry for the given hostname, it automatically
     switches over to a secure protocol even if you try to connect to it with an insecure
     one:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果缓存文件现在包含给定主机名的条目，即使你尝试使用不安全的协议连接到它，它也会自动切换到安全协议：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

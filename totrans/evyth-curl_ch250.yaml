@@ -1,170 +1,255 @@
 - en: Authentication
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 认证
 - en: libcurl supports a wide variety of HTTP authentication schemes.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl支持多种HTTP认证方案。
 - en: Note that this way of authentication is different than the otherwise widely
     used scheme on the web today where authentication is performed by an HTTP POST
     and then keeping state in cookies. See [Cookies with libcurl](ch250.xhtml#libcurl-http__cookies__md)
     for details on how to do that.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这种认证方式与今天广泛使用的在Web上通过HTTP POST执行认证并在cookies中保持状态的方案不同。有关如何操作的详细信息，请参阅[libcurl的Cookies](ch250.xhtml#libcurl-http__cookies__md)。
 - en: Username and password
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 用户名和密码
 - en: 'libcurl does not try any HTTP authentication without a given username. Set
     one like:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl在没有给定用户名的情况下不会尝试任何HTTP认证。设置一个如下：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'and of course most authentications also require a set password that you set
     separately:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，大多数认证还需要一个单独设置的密码：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'That is all you need. This makes libcurl switch on its default authentication
     method for this transfer: *HTTP Basic*.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是你需要做的。这使得libcurl为这次传输切换到其默认的认证方法：*HTTP Basic*。
 - en: Authentication required
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 认证要求
 - en: A client does not itself decide that it wants to send an authenticated request.
     It is something the server requires. When the server has a resource that is protected
     and requires authentication, it responds with a 401 HTTP response and a `WWW-Authenticate:`
     header. The header includes details about what specific authentication methods
     it accepts for that resource.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 客户端本身不会决定发送一个认证请求。这是服务器要求的。当服务器有一个受保护的资源并需要认证时，它会以401 HTTP响应和一个`WWW-Authenticate:`头来响应。该头包括关于它为该资源接受哪些特定认证方法的详细信息。
 - en: Basic
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Basic
 - en: Basic is the default HTTP authentication method and as its name suggests, it
     is indeed basic. It takes the name and the password, separates them with a colon
     and base64 encodes that string before it puts the entire thing into a `Authorization:`
     HTTP header in the request.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: Basic是默认的HTTP认证方法，正如其名所示，它确实是基本的。它接受用户名和密码，用冒号分隔它们，然后在将其整个放入请求中的`Authorization:`
+    HTTP头之前进行base64编码。
 - en: 'If the name and password is set like the examples shown above, the exact outgoing
     header looks like this:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果像上面示例中那样设置了用户名和密码，精确的输出头看起来像这样：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This authentication method is totally insecure over HTTP as the credentials
     are sent in plain-text over the network.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种认证方法在HTTP上完全不安全，因为凭证以明文形式在网络中发送。
 - en: 'You can explicitly tell libcurl to use Basic method for a specific transfer
     like this:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以明确告诉libcurl为特定的传输使用Basic方法，如下所示：
 - en: '[PRE3]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Digest
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Digest
 - en: Another HTTP authentication method is called Digest. One advantage this method
     has compared to Basic, is that it does not send the password over the wire in
     plain text. This is however an authentication method that is rarely spoken by
     browsers and consequently is not a frequently used one.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种HTTP认证方法被称为Digest。与Basic相比，这种方法的一个优点是它不会在明文中将密码发送到线路上。然而，这是一个很少被浏览器提及的认证方法，因此也不是一个常用的方法。
 - en: 'You can explicitly tell libcurl to use the Digest method for a specific transfer
     like this (it still needs username and password set as well):'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以明确告诉libcurl为特定的传输使用Digest方法，如下所示（它仍然需要设置用户名和密码）：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: NTLM
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: NTLM
 - en: Another HTTP authentication method is called NTLM.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种HTTP认证方法被称为NTLM。
 - en: 'You can explicitly tell libcurl to use the NTLM method for a specific transfer
     like this (it still needs username and password set as well):'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以明确告诉libcurl为特定的传输使用NTLM方法，如下所示（它仍然需要设置用户名和密码）：
 - en: '[PRE5]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Negotiate
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Negotiate
 - en: Another HTTP authentication method is called Negotiate.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一种HTTP认证方法被称为Negotiate。
 - en: 'You can explicitly tell libcurl to use the Negotiate method for a specific
     transfer like this (it still needs username and password set as well):'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以明确告诉libcurl为特定的传输使用Negotiate方法，如下所示（它仍然需要设置用户名和密码）：
 - en: '[PRE6]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Bearer
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Bearer
 - en: 'To pass on an OAuth 2.0 Bearer Access Token in a request, use `CURLOPT_XOAUTH2_BEARER`
     for example:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在请求中传递OAuth 2.0 Bearer访问令牌，例如使用`CURLOPT_XOAUTH2_BEARER`：
 - en: '[PRE7]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Try-first
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 尝试第一个
 - en: Some HTTP servers allow one out of several authentication methods, in some cases
     you find yourself in a position where you as a client does not want or is not
     able to select a single specific method before-hand and for yet another subset
     of cases your application does not know if the requested URL even require authentication
     or not.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些HTTP服务器允许使用多种认证方法中的一种，在某些情况下，你可能发现自己作为客户端，在事先无法选择单一特定方法，而对于另一个子集的情况，你的应用程序甚至不知道请求的URL是否需要认证。
 - en: libcurl covers all these situations as well.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl也涵盖了所有这些情况。
 - en: You can ask libcurl to use more than one method, and when doing so, you imply
     that curl first tries the request without any authentication at all and then based
     on the HTTP response coming back, it selects one of the methods that both the
     server and your application allow. If more than one would work, curl picks them
     in a order based on how secure the methods are considered to be, picking the safest
     of the available methods.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以要求libcurl使用多种方法，在这样做的时候，你暗示curl首先尝试不进行任何身份验证的请求，然后根据返回的HTTP响应，选择服务器和你的应用程序都允许的方法之一。如果有多种方法都可以工作，curl会根据这些方法被认为有多安全来选择一个顺序，选择最安全的方法。
 - en: 'Tell libcurl to accept multiple method by bitwise ORing them like this:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 告诉libcurl通过按位或操作接受多种方法，就像这样：
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: If you want libcurl to only allow a single specific method but still want it
     to probe first to check if it can possibly still make the request without the
     use of authentication, you can force that behavior by adding `CURLAUTH_ONLY` to
     the bitmask.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你希望libcurl只允许使用一种特定的方法，但仍然希望它首先探测是否可以在不使用身份验证的情况下发送请求，你可以通过在掩码中添加`CURLAUTH_ONLY`来强制这种行为。
 - en: 'Ask to use digest, but nothing else but digest, and only if proven really necessary:'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 请求使用摘要，但除了摘要之外不使用其他任何方法，并且只有在证明确实有必要时：
 - en: '[PRE9]'
+  id: totrans-41
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'

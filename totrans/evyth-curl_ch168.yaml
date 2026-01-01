@@ -1,153 +1,217 @@
 - en: Redirects
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 重定向
 - en: The “redirect” is a fundamental part of the HTTP protocol. The concept was present
     and is documented already in the first spec (RFC 1945), published in 1996, and
     it has remained well-used ever since.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: “重定向”是HTTP协议的基本部分。这个概念在1996年发布的第一个规范（RFC 1945）中就已经存在，并且有记录，自那时起一直被广泛使用。
 - en: A redirect is exactly what it sounds like. It is the server sending back an
     instruction to the client instead of giving back the contents the client wanted.
     The server says “go look over *here* instead for that thing you asked for“.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 重定向就是其字面意思。服务器向客户端发送指令，而不是返回客户端请求的内容。服务器会说“去找这里看看你请求的那个东西”。
 - en: Redirects are not all alike. How permanent is the redirect? What request method
     should the client use in the next request?
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 重定向并不完全相同。重定向是永久的吗？客户端在下一个请求中应该使用什么请求方法？
 - en: All redirects also need to send back a `Location:` header with the new URI to
     ask for, which can be absolute or relative.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有重定向都需要发送回一个`Location:`头，包含请求的新URI，可以是绝对路径或相对路径。
 - en: Permanent and temporary
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 永久和临时
 - en: Is the redirect meant to last or just remain valid for now? If you want a GET
     to permanently redirect users to resource B with another GET, send back a 301\.
     It also means that the user-agent (browser) is meant to cache this and keep going
     to the new URI from now on when the original URI is requested.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 重定向是打算持续存在还是只是暂时有效？如果你想通过另一个GET永久性地将用户重定向到资源B，请发送回301。这也意味着用户代理（浏览器）打算缓存此操作，并从现在开始，当请求原始URI时，继续访问新的URI。
 - en: The temporary alternative is 302\. Right now the server wants the client to
     send a GET request to B, but it should not cache this but keep trying the original
     URI when directed to it next time.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 临时替代方案是302。目前服务器希望客户端向B发送GET请求，但它不应该缓存这个请求，而应该在下次被指引到原始URI时继续尝试。
 - en: Note that both 301 and 302 make browsers do a GET in the next request, which
     possibly means changing the method if it started with a POST (and only if POST).
     This changing of the HTTP method to GET for 301 and 302 responses is said to be
     “for historical reasons”, but that’s still what browsers do so most of the public
     web behaves this way.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，301和302都会让浏览器在下一个请求中执行GET操作，这可能意味着如果它以POST开始（并且仅限于POST），则需要更改方法。将HTTP方法从GET更改为301和302响应的说法是“出于历史原因”，但浏览器仍然这样做，因此大多数公共网络都表现出这种行为。
 - en: In practice, the 303 code is similar to 302\. It is not be cached and it makes
     the client issue a GET in the next request. The differences between a 302 and
     303 are subtle, but 303 seems to be more designed for an “indirect response” to
     the original request rather than just a redirect.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，303代码与302类似。它不会被缓存，并且它让客户端在下一个请求中发出GET请求。302和303之间的区别很微妙，但303似乎是为对原始请求的“间接响应”而设计的，而不仅仅是重定向。
 - en: These three codes were the only redirect codes in the HTTP/1.0 spec.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这三个代码是HTTP/1.0规范中唯一的重定向代码。
 - en: curl however, does not remember or cache any redirects at all so to it, there
     is really no difference between permanent and temporary redirects.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，curl根本不记住或缓存任何重定向，因此对于它来说，永久重定向和临时重定向之间实际上没有区别。
 - en: Tell curl to follow redirects
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 告诉curl跟随重定向
 - en: In curl’s tradition of only doing the basics unless you tell it differently,
     it does not follow HTTP redirects by default. Use the `-L, --location` option
     to tell it to do that.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 在curl的传统中，除非你告诉它不同，否则它默认不跟随HTTP重定向。使用`-L, --location`选项来告诉它这样做。
 - en: When following redirects is enabled, curl follows up to 30 redirects by default.
     There is a maximum limit mostly to avoid the risk of getting caught in endless
     loops. If 30 is not sufficient for you, you can change the maximum number of redirects
     to follow with the `--max-redirs` option.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当启用跟随重定向时，curl默认跟随最多30个重定向。这个最大限制主要是为了避免陷入无限循环的风险。如果你觉得30不够用，你可以通过`--max-redirs`选项更改要跟随的最大重定向数。
 - en: GET or POST?
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: GET或POST？
 - en: All three of these response codes, 301 and 302/303, assume that the client sends
     a GET to get the new URI, even if the client might have sent a POST in the first
     request. This is important, at least if you do something that does not use GET.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 这三个响应代码，301和302/303，都假设客户端发送GET来获取新的URI，即使客户端可能在第一个请求中发送了POST。这很重要，至少如果你做的是不使用GET的事情。
 - en: If the server instead wants to redirect the client to a new URI and wants it
     to send the same method in the second request as it did in the first, like if
     it first sent POST it’d like it to send POST again in the next request, the server
     would use different response codes.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果服务器希望将客户端重定向到新的URI，并希望它在第二次请求中发送与第一次相同的方法，比如如果它首先发送了POST，它希望它在下一个请求中再次发送POST，服务器将使用不同的响应代码。
 - en: To tell the client “the URI you sent a POST to, is permanently redirected to
     B where you should instead send your POST now and in the future”, the server responds
     with a 308\. To complicate matters, the 308 code is only recently defined (the
     [spec](https://tools.ietf.org/html/rfc7238#section-3) was published in June 2014)
     so older clients may not treat it correctly. If so, then the only response code
     left for you is…
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 要告诉客户“你发送POST请求的URI已永久重定向到B，你应该现在以及未来发送POST请求”，服务器会响应308状态码。更复杂的是，308状态码是最近才定义的（[规范](https://tools.ietf.org/html/rfc7238#section-3)于2014年6月发布），因此较旧的客户端可能无法正确处理它。如果是这样，那么你剩下的唯一响应代码就是……
 - en: The (older) response code to tell a client to send a POST also in the next request
     but temporarily is 307\. This redirect is not be cached by the client though,
     so it’ll again post to A if requested to again. The 307 code was introduced in
     HTTP/1.1.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 告诉客户端在下一个请求中也发送POST的（较旧的）响应代码是307。尽管如此，客户端不会缓存此重定向，因此如果再次请求，它将再次向A发送POST。307代码是在HTTP/1.1中引入的。
 - en: Oh, and redirects work the same way in HTTP/2 as they do in HTTP/1.1.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 哦，并且重定向在HTTP/2中与HTTP/1.1中的工作方式相同。
 - en: '|  | Permanent | Temporary |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  | 永久 | 临时 |'
 - en: '| --- | --- | --- |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| Switch to GET | 301 | 302 and 303 |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| 切换到GET | 301 | 302和303 |'
 - en: '| Keep original method | 308 | 307 |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| 保持原始方法 | 308 | 307 |'
 - en: Decide what method to use in redirects
+  id: totrans-25
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 决定在重定向中使用的请求方法
 - en: It turns out that there are web services out there in the world that want a
     POST sent to the original URL, but are responding with HTTP redirects that use
     a 301, 302 or 303 response codes and *still* want the HTTP client to send the
     next request as a POST. As explained above, browsers won’t do that and neither
     does curl by default.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果表明，世界上确实存在一些希望将POST请求发送到原始URL的Web服务，但它们会以HTTP重定向的形式响应，使用301、302或303响应代码，并且仍然希望HTTP客户端将下一个请求作为POST发送。如上所述，浏览器不会这样做，curl默认也不会这样做。
 - en: Since these setups exist, and they’re actually not terribly rare, curl offers
     options to alter its behavior.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于这些设置存在，而且实际上并不罕见，curl提供了选项来改变其行为。
 - en: 'You can tell curl to not change the non-GET request method to GET after a 30x
     response by using the dedicated options for that: `--post301`, `--post302` and
     `--post303`. If you are instead writing a libcurl based application, you control
     that behavior with the `CURLOPT_POSTREDIR` option.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过使用专门为此目的提供的选项来告诉curl在30x响应后不要将非GET请求方法更改为GET：`--post301`、`--post302`和`--post303`。如果你正在编写基于libcurl的应用程序，你可以通过`CURLOPT_POSTREDIR`选项来控制该行为。
 - en: Redirecting to other hostnames
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重定向到其他主机名
 - en: When you use curl you may provide credentials like username and password for
     a particular site, but since an HTTP redirect might move away to a different host
     curl limits what it sends away to other hosts than the original within the same
     transfer.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用curl时，你可以为特定站点提供用户名和密码等凭证，但由于HTTP重定向可能会移动到不同的主机，curl限制了它发送到原始传输中其他主机的数据。
 - en: So if you want the credentials to also get sent to the following hostnames even
     though they are not the same as the original—presumably because you trust them
     and know that there is no harm in doing that—you can tell curl that it is fine
     to do so by using the `--location-trusted` option.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 所以，如果你想将凭证也发送到后续的主机名，即使它们与原始主机名不同——可能是因为你信任它们，并且知道这样做没有害处——你可以通过使用`--location-trusted`选项告诉curl这样做是可以的。

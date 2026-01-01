@@ -1,26 +1,39 @@
 - en: Options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 选项
 - en: 'There is a dedicated setopt option for the application to control a WebSocket
     communication: `CURLOPT_WS_OPTIONS`.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 应用程序有一个专门的 setopt 选项来控制 WebSocket 通信：`CURLOPT_WS_OPTIONS`。
 - en: This option sets a bitmask of flags to libcurl, but at the moment, there is
     only a single bit used.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 此选项设置一个标志位的掩码给 libcurl，但到目前为止，只有一个位被使用。
 - en: Raw mode
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 原始模式
 - en: By setting the `CURLWS_RAW_MODE` bit in the bitmask, libcurl delivers all WebSocket
     traffic raw to the write callback instead of parsing the WebSocket traffic itself.
     This raw mode is intended for applications that maybe implemented WebSocket handling
     already and want to just move over to use libcurl for the transfer and maintain
     its own WebSocket logic.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过在掩码中设置 `CURLWS_RAW_MODE` 位，libcurl 将所有 WebSocket 流量以原始形式传递给写入回调，而不是自己解析 WebSocket
+    流量。这种原始模式适用于可能已经实现了 WebSocket 处理的应用程序，它们只想迁移到使用 libcurl 进行传输并保持自己的 WebSocket 逻辑。
 - en: In raw mode, libcurl also does not handle any PING traffic automatically.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在原始模式下，libcurl 也不会自动处理任何 PING 流量。

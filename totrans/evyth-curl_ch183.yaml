@@ -1,90 +1,133 @@
 - en: Command line FTP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 命令行 FTP
 - en: FTP, the File Transfer Protocol, is probably the oldest network protocol that
     curl supports—it was created in the early 1970s. The official spec that still
     is the go-to documentation is [RFC 959](https://www.ietf.org/rfc/rfc959.txt),
     from 1985, published well over a decade before the first curl release.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP，即文件传输协议，可能是 curl 支持的最古老的网络协议——它是在 20 世纪 70 年代初期创建的。官方规范仍然是首选的文档，即 [RFC 959](https://www.ietf.org/rfc/rfc959.txt)，发布于
+    1985 年，比第一个 curl 发布早十多年。
 - en: FTP was created in a different era of the Internet and computers and as such
     it works a little bit differently than most other protocols. These differences
     can often be ignored and things just works, but they are also important to know
     at times when things do not run as planned.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP 是在互联网和计算机的另一个时代创建的，因此它的工作方式与大多数其他协议略有不同。这些差异通常可以忽略，事情也能正常工作，但在某些情况下，了解这些差异也很重要，因为事情可能不会按计划运行。
 - en: Ping-pong
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Ping-pong
 - en: The FTP protocol is a command and response protocol; the client sends a command
     and the server responds. If you use curl’s `-v` option you get to see all the
     commands and responses during a transfer.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP 协议是一种命令和响应协议；客户端发送命令，服务器响应。如果你使用 curl 的 `-v` 选项，你可以在传输过程中看到所有的命令和响应。
 - en: For an ordinary transfer, there are something like 5 to 8 commands necessary
     to send and as many responses to wait for and read. Perhaps needlessly to say,
     if the server is in a remote location there is a lot of time waiting for the ping
     pong to go through before the actual file transfer can be set up and get started.
     For small files, the initial commands can take longer time than the actual data
     transfer.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于普通传输，大约需要 5 到 8 个命令来发送，以及同样多的响应等待读取。也许不必说，如果服务器位于远程位置，在文件传输可以设置并开始之前，需要等待
+    ping pong 的时间可能会很长。对于小文件，初始命令可能比实际数据传输花费更长的时间。
 - en: Transfer mode
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 传输模式
 - en: When an FTP client is about to transfer data, it specifies to the server which
     transfer mode it would like the upcoming transfer to use. The two transfer modes
     curl supports are ‘ASCII’ and ‘BINARY’. Ascii is for text and usually means that
     the server sends the files with converted newlines while binary means sending
     the data unaltered and assuming the file is not text.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 FTP 客户端即将传输数据时，它会向服务器指定希望使用的传输模式。curl 支持的两种传输模式是 ‘ASCII’ 和 ‘BINARY’。Ascii
+    用于文本，通常意味着服务器在发送文件时转换换行符，而 binary 则表示发送未经修改的数据，并假设文件不是文本。
 - en: curl defaults to binary transfer mode for FTP, and you ask for ascii mode instead
     with `-B, --use-ascii` or by making sure the URL ends with `;type=A`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 默认为 FTP 使用二进制传输模式，你可以通过 `-B, --use-ascii` 选项或确保 URL 以 `;type=A` 结尾来请求 ASCII
+    模式。
 - en: Authentication
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 认证
 - en: FTP is one of the protocols you normally do not access without a user name and
     password. It just happens that for systems that allow anonymous FTP access you
     can login with pretty much any name and password you like. When curl is used on
     an FTP URL to do transfer without any given user name or password, it uses the
     name `anonymous` with the password `ftp@example.com`.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP 是一种通常需要用户名和密码才能访问的协议。对于允许匿名 FTP 访问的系统，你可以使用几乎任何你喜欢的名字和密码登录。当在 FTP URL 上使用
+    curl 进行传输且没有提供用户名或密码时，它会使用名字 `anonymous` 和密码 `ftp@example.com`。
 - en: 'If you want to provide another user name and password, you can pass them on
     to curl either with the `-u, --user` option or embed the info in the URL:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要提供另一个用户名和密码，你可以通过 `-u, --user` 选项将它们传递给 curl，或者将信息嵌入到 URL 中：
 - en: '[PRE0]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '[FTP Directory listing](ch183.xhtml#ftp__dirlist__md)'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[FTP 目录列表](ch183.xhtml#ftp__dirlist__md)'
 - en: '[Uploading with FTP](ch184.xhtml#ftp__upload__md)'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[使用 FTP 上传](ch184.xhtml#ftp__upload__md)'
 - en: '[Custom FTP commands](ch185.xhtml#ftp__cmds__md)'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[自定义 FTP 命令](ch185.xhtml#ftp__cmds__md)'
 - en: '[Two connections](ch186.xhtml#ftp__twoconnections__md)'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[两个连接](ch186.xhtml#ftp__twoconnections__md)'
 - en: '[Directory traversing](ch187.xhtml#ftp__traversedir__md)'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[目录遍历](ch187.xhtml#ftp__traversedir__md)'
 - en: '[FTPS](ch188.xhtml#ftp__ftps__md)'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[FTPS](ch188.xhtml#ftp__ftps__md)'

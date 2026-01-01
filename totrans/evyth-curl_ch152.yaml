@@ -1,87 +1,132 @@
 - en: Conditionals
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 条件性
 - en: 'Sometimes users want to avoid downloading a file again if the same file maybe
     already has been downloaded the day before. This can be done by making the HTTP
     transfer conditioned on something. curl supports two different conditions: the
     file timestamp and etag.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时用户希望避免在文件可能前一天已经下载的情况下再次下载文件。这可以通过使 HTTP 传输条件化来实现。curl 支持两种不同的条件：文件时间戳和 etag。
 - en: Check by modification date
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过修改日期进行检查
 - en: 'Download the file only if it is newer than a specific date with the use of
     the `-z` or `--time-cond` option:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `-z` 或 `--time-cond` 选项仅下载比特定日期更新的文件：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Or the reverse, get the file only if it is older than the specific time by
     prefixing the date with a dash:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者相反，如果文件比特定时间旧，可以通过在日期前加一个连字符来获取文件：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The date parser is liberal and accepts most formats you can write the date
     with, and you can also specify it complete with a time:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 日期解析器很宽松，接受大多数你可以用日期写出的格式，你也可以指定它包括时间：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'The `-z` option can also extract and use the timestamp from a local file, which
     is handy to only download a file if it has been updated remotely:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-z` 选项还可以从本地文件中提取并使用时间戳，这对于仅在文件被远程更新时下载文件来说很方便：'
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'It is often useful to combine the use of `-z` with the `--remote-time` flag,
     which sets the time of the locally created file to the same timestamp as the remote
     file had:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常将 `-z` 与 `--remote-time` 标志结合使用非常有用，该标志将本地创建的文件的时间设置为与远程文件相同的时戳：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Check by modification of content
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过内容修改进行检查
 - en: HTTP servers can return a specific *ETag* for a given resource version. If the
     resource at a given URL changes, a new Etag value must be generated, so a client
     knows that as long as the ETag remains the same, the content has not changed.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 服务器可以为给定资源版本返回一个特定的 *ETag*。如果给定 URL 的资源发生变化，必须生成新的 Etag 值，以便客户端知道只要 ETag
+    保持不变，内容就没有发生变化。
 - en: Using ETags, curl can check for remote updates without having to rely on times
     or file dates. It also then makes the check able to detect sub-second changes,
     which the timestamp based checks cannot.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 ETags，curl 可以在无需依赖时间或文件日期的情况下检查远程更新。它还使得检查能够检测到亚秒级的变化，这是基于时间戳的检查所无法做到的。
 - en: 'Using curl you can download a remote file and save its ETag (if it provides
     any) in a separate cache by using the `--etag-save` command line option. Like
     this:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 curl 可以下载远程文件并将其 ETag（如果有的话）保存在单独的缓存中，通过使用 `--etag-save` 命令行选项。例如：
 - en: '[PRE5]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'A subsequent command line can then use that previously saved etag and make
     sure to only download the file again if it has changed, like this:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 随后的命令行可以使用之前保存的 etag，并确保只有在文件发生变化时才再次下载文件，如下所示：
 - en: '[PRE6]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'The two etag options can also be combined in the same command line, so that
     if the file actually was updated, curl would save the update ETag again in the
     file:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这两个 etag 选项也可以在同一个命令行中结合使用，这样如果文件实际上已经更新，curl 会再次将更新 ETag 保存到文件中：
 - en: '[PRE7]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'

@@ -1,144 +1,216 @@
 - en: Verbose operations
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 详细操作
 - en: Okay, we just showed how to get the error as a human readable text as that is
     an excellent help to figure out what went wrong in a particular transfer and often
     explains why it can be done like that or what the problem is for the moment.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 好的，我们刚刚展示了如何将错误作为可读文本获取，这对于确定特定传输中出了什么问题非常有帮助，通常解释了为什么可以这样做或目前的问题是什么。
 - en: 'The next lifesaver when writing libcurl applications that everyone needs to
     know about and needs to use extensively, at least while developing libcurl applications
     or debugging libcurl itself, is to enable verbose mode with `CURLOPT_VERBOSE`:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当编写libcurl应用程序时，每个人都需要了解并广泛使用的一个救星，至少在开发libcurl应用程序或调试libcurl本身时，是启用详细模式`CURLOPT_VERBOSE`：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: When libcurl is told to be verbose it outputs transfer-related details and information
     to stderr while the transfer is ongoing. This is awesome to figure out why things
     fail and to learn exactly what libcurl does when you ask it different things.
     You can redirect the output elsewhere by changing stderr with `CURLOPT_STDERR`
     or you can get even more info in a fancier way with the debug callback (explained
     further in a later section).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当libcurl被要求详细输出时，它在传输进行时将传输相关的细节和信息输出到stderr。这对于找出为什么失败以及了解当您要求它做不同的事情时libcurl到底做了什么非常有用。您可以通过更改stderr使用`CURLOPT_STDERR`将输出重定向到其他地方，或者您可以通过调试回调（在后面的部分中进一步解释）以更花哨的方式获取更多信息。
 - en: Trace everything
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 跟踪一切
 - en: Verbose is certainly fine, but sometimes you need more. libcurl also offers
     a trace callback that in addition to showing you all the stuff the verbose mode
     does, it also passes on *all* data sent and received so that your application
     gets a full trace of everything.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 详细模式当然很好，但有时您需要更多。libcurl还提供了一个跟踪回调，除了显示详细模式所做的所有内容外，它还传递发送和接收的所有数据，以便您的应用程序获得完整的跟踪。
 - en: The sent and received data passed to the trace callback is given to the callback
     in its unencrypted form, which can be handy when working with TLS or SSH based
     protocols when capturing the data off the network for debugging is not practical.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 传递给跟踪回调的发送和接收数据以未加密的形式提供给回调，这在处理基于TLS或SSH的协议时很有用，当从网络上捕获数据以进行调试不切实际时。
 - en: When you set the `CURLOPT_DEBUGFUNCTION` option, you still need to have `CURLOPT_VERBOSE`
     enabled but with the trace callback set libcurl uses that callback instead of
     its internal handling.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您设置`CURLOPT_DEBUGFUNCTION`选项时，您仍然需要启用`CURLOPT_VERBOSE`，但将跟踪回调设置为libcurl使用该回调而不是其内部处理。
 - en: 'The trace callback should match a prototype like this:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 跟踪回调应与以下原型匹配：
 - en: '[PRE1]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: '**handle** is the easy handle it concerns, **type** describes the particular
     data passed to the callback (data in/out, header in/out, TLS data in/out and text),
     **data** is a pointer pointing to the data being **size** number of bytes. **user**
     is the custom pointer you set with `CURLOPT_DEBUGDATA`.'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**handle**是相关的简单句柄，**type**描述传递给回调的特定数据（数据输入/输出、头部输入/输出、TLS数据输入/输出和文本），**data**是一个指向数据的指针，该数据是**size**字节数。**user**是您使用`CURLOPT_DEBUGDATA`设置的定制指针。'
 - en: The data pointed to by **data** is *not* null terminated, but is exactly of
     the size as told by the **size** argument.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**data**指向的数据不是null终止的，但正好与**size**参数告诉的大小相同。'
 - en: The callback must return 0 or libcurl considers it an error and aborts the transfer.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调必须返回0，否则libcurl将其视为错误并终止传输。
 - en: On the curl website, we host an example called [debug.c](https://curl.se/libcurl/c/debug.html)
     that includes a simple trace function to get inspiration from.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在curl网站上，我们托管了一个名为[debug.c](https://curl.se/libcurl/c/debug.html)的示例，其中包含一个简单的跟踪函数以供参考。
 - en: There are also additional details in the [CURLOPT_DEBUGFUNCTION man page](https://curl.se/libcurl/c/CURLOPT_DEBUGFUNCTION.html).
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[CURLOPT_DEBUGFUNCTION 手册页](https://curl.se/libcurl/c/CURLOPT_DEBUGFUNCTION.html)中还有额外的详细信息。
 - en: Transfer and connection identifiers
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 传输和连接标识符
 - en: As the trace information flow passed to the debug callback is a continuous stream
     even though your application might make libcurl use a large number of separate
     connections and different transfers, there are times when you want to see to which
     specific transfers or connections the various information belong to. To better
     understand the trace output.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管您的应用程序可能让libcurl使用大量单独的连接和不同的传输，但跟踪信息流传递给调试回调时是一个连续的流，有时您想查看各种信息属于哪些特定的传输或连接。为了更好地理解跟踪输出。
 - en: 'You can then get the transfer and connection identifiers from within the callback:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以在回调内部获取传输和连接标识符：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: They are two separate identifiers because connections can be reused and multiple
     transfers can use the same connection. Using these identifiers (numbers really),
     you can see which logs are associated with which transfers and connections.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 它们是两个独立的标识符，因为连接可以被重用，多个传输可以使用相同的连接。使用这些标识符（实际上是数字），你可以看到哪些日志与哪些传输和连接相关联。
 - en: Trace more
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 跟踪更多
 - en: If the default amount of tracing data passed to the debug callback is not enough.
     Like when you suspect and want to debug a problem in a more fundamental lower
     protocol level, libcurl provides the `curl_global_trace()` function for you.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果传递给调试回调函数的默认跟踪数据量不足。例如，当你怀疑并想要在更基础的底层协议级别调试问题时，libcurl 为你提供了 `curl_global_trace()`
+    函数。
 - en: With this function you tell libcurl to also include detailed logging about components
     that it otherwise does not include by default. Such as details about TLS, HTTP/2
     or HTTP/3 protocol bits.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用此函数，你告诉 libcurl 也包括关于它默认不包含的组件的详细日志。例如，关于 TLS、HTTP/2 或 HTTP/3 协议的详细信息。
 - en: 'The `curl_global_trace()` functions takes an argument where you specify a string
     holding a comma-separated list with the areas you want it to trace. For example,
     include TLS and HTTP/2 details:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '`curl_global_trace()` 函数接受一个参数，其中你指定一个字符串，包含你想要它跟踪的区域以逗号分隔的列表。例如，包括 TLS 和 HTTP/2
+    的详细信息：'
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The exact set of options varies, but here are some ones to try:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 具体的选项集可能会有所不同，但这里有一些可以尝试的选项：
 - en: '| area | description |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| area | 描述 |'
 - en: '| --- | --- |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `all` | show everything possible |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `all` | 显示所有可能的内容 |'
 - en: '| `tls` | TLS protocol exchange details |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `tls` | TLS 协议交换细节 |'
 - en: '| `http/2` | HTTP/2 frame information |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `http/2` | HTTP/2 帧信息 |'
 - en: '| `http/3` | HTTP/3 frame information |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `http/3` | HTTP/3 帧信息 |'
 - en: '| `*` | additional ones in future versions |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `*` | 未来版本中的附加选项 |'
 - en: Doing a quick run with `all` is often a good way to get to see which specific
     areas that are shown, as then you can do follow-up runs with more specific areas
     set.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `all` 快速运行通常是一个很好的方法来查看哪些特定区域被显示，因为这样你可以进行后续的运行，并设置更具体的区域。

@@ -1,233 +1,363 @@
 - en: Variables
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 变量
 - en: This concept of variables for the command line and config files was added in
     curl 8.3.0.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令行和配置文件变量的概念是在curl 8.3.0中添加的。
 - en: A user sets a *variable* to a plain string with `--variable varName=content`
     or from the contents of a file with `--variable varName@file` where the file can
     be stdin if set to a single dash (`-`).
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户可以使用 `--variable varName=content` 将一个 *变量* 设置为纯字符串，或者从文件内容中设置，使用 `--variable
+    varName@file`，其中文件可以是如果设置为单个短横线（`-`）的stdin。
 - en: A variable in this context is given a specific name and it holds contents. Any
     number of variables can be set. If you set the same variable name again, it gets
     overwritten with new content. Variable names are case sensitive, can be up to
     128 characters long and may consist of the characters a-z, A-Z, 0-9 and underscore.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在此上下文中，变量被赋予一个特定的名称并包含内容。可以设置任意数量的变量。如果您再次设置相同的变量名称，它将被新的内容覆盖。变量名称区分大小写，最长可达128个字符，可以由字符
+    a-z、A-Z、0-9 和下划线组成。
 - en: Some examples below contain multiple lines for readability. The backslash (`\`)
     is used to instruct the terminal to ignore the newline.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下一些示例包含多行以提高可读性。反斜杠（`\`）用于指示终端忽略换行。
 - en: Setting variables
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 设置变量
 - en: 'You can set variables at the command line with `--variable` or in config files
     with `variable` (no dashes):'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用 `--variable` 在命令行中设置变量，或者使用配置文件中的 `variable`（不带短横线）设置变量。
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'or in a config file:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者在一个配置文件中：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Assigning contents from file
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 从文件分配内容
 - en: 'You can assign the contents of a plain text file to a variable, too:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以将纯文本文件的内容分配给变量：
 - en: '[PRE2]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Expand
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 展开
 - en: Variables can be expanded in option parameters using `{{varName}}` when the
     option name is prefixed with `--expand-`. This makes the content of the variable
     `varName` get inserted.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当选项名称以 `--expand-` 为前缀时，可以使用 `{{varName}}` 在选项参数中展开变量。这使得变量 `varName` 的内容被插入。
 - en: If you reference a name that does not exist as a variable, a blank string is
     inserted.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您引用的名称作为变量不存在，则插入一个空字符串。
 - en: 'Insert `{{` verbatim in the string by escaping it with a backslash:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过转义符将 `{{` 原样插入字符串中：
 - en: '`\{{`.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '`\\{{`'
 - en: 'In the example below, the variable `host` is set and then expanded:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在下面的示例中，设置了变量 `host` 并进行了展开：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: For options specified without the `--expand-` prefix, variables are not expanded.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于没有 `--expand-` 前缀指定的选项，变量不会被展开。
 - en: Variable content holding null bytes that are not encoded when expanded causes
     curl to exit with an error.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 变量内容包含在展开时未编码的空字节会导致curl以错误退出。
 - en: Environment variables
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 环境变量
 - en: Import an environment variable with `--variable %VARNAME`. This import makes
     curl exit with an error if the given environment variable is not set. A user can
     also opt to set a default value if the environment variable does not exist, using
     `=content` or `@file` as described above.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `--variable %VARNAME` 导入环境变量。如果给定的环境变量未设置，此导入将使curl以错误退出。用户还可以选择如果环境变量不存在，则使用
+    `=content` 或 `@file` 设置默认值，如上所述。
 - en: 'As an example, assign the `%USER` environment variable to a curl variable and
     insert it into a URL. Because no default value is specified, this operation fails
     if the environment variable does not exist:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，将 `%USER` 环境变量分配给curl变量并将其插入到URL中。因为没有指定默认值，所以如果环境变量不存在，此操作将失败：
 - en: '[PRE4]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Instead, let’s use `dummy` as a default value if `%USER` does not exist:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 相反，如果 `%USER` 不存在，则使用 `dummy` 作为默认值：
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Expand `--variable`
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 展开 `--variable`
 - en: The `--variable` option itself can also be expanded, which allows you to assign
     variables to the contents of other variables.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--variable` 选项本身也可以展开，这允许您将变量分配给其他变量的内容。'
 - en: '[PRE6]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Or done in a config file:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者在一个配置文件中：
 - en: '[PRE7]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Functions
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数
 - en: 'When expanding variables, curl offers a set of *functions* to change how they
     are expanded. Functions are applied with colon + function name after the variable,
     like this: `{{varName:function}}`.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 当展开变量时，curl提供一组 *函数* 来更改它们的展开方式。函数在变量后使用冒号加函数名应用，如下所示：`{{varName:function}}`。
 - en: 'Multiple functions can be applied to the variable. They are then applied in
     a left-to-right order: `{{varName:func1:func2:func3}}`'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以将多个函数应用于变量。它们将按从左到右的顺序应用：`{{varName:func1:func2:func3}}`
 - en: 'These functions are available: `trim`, `json`, `url` and `b64`'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些功能可用：`trim`、`json`、`url` 和 `b64`
 - en: 'Function: `trim`'
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数：`trim`
 - en: 'Expands the variable without leading and trailing white space. White space
     is defined as:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 展开变量时，不包含前导和尾随空白。空白定义为：
 - en: horizontal tabs
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 水平制表符
 - en: spaces
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 空格
 - en: new lines
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 新行
 - en: vertical tabs
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 垂直标签
 - en: form feed and carriage returns
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 表格分隔符和回车符
 - en: This is extra useful when reading data from files.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 这在从文件读取数据时非常有用。
 - en: '[PRE8]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Function: `json`'
+  id: totrans-46
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数：`json`
 - en: Expands the variable as a valid JSON string. This makes it easier to insert
     valid JSON into an argument (The quotes are not included in the resulting JSON).
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 将变量扩展为有效的 JSON 字符串。这使得将有效的 JSON 插入参数中变得更容易（结果 JSON 中不包括引号）。
 - en: '[PRE9]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'To trim the variable first, apply both functions (in this order):'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 要先修剪变量，请按以下顺序应用这两个函数：
 - en: '[PRE10]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Function: `url`'
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数：`url`
 - en: Expands the variable URL encoded. Also known as *percent encoded*. This function
     ensures that all output characters are legal within a URL and the rest are encoded
     as `%HH` where `HH` is a two-digit hexadecimal number for the ascii value.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 扩展变量为 URL 编码。也称为 *百分编码*。此函数确保所有输出字符在 URL 中都是合法的，其余字符编码为 `%HH`，其中 `HH` 是表示 ascii
+    值的两个十六进制数字。
 - en: '[PRE11]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'To trim the variable first, apply both functions (in this order):'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: 要先修剪变量，请按以下顺序应用这两个函数：
 - en: '[PRE12]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: 'Function: `b64`'
+  id: totrans-56
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 函数：`b64`
 - en: Expands the variable base64 encoded. Base64 is an encoding for binary data that
     only uses 64 specific characters.
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 将变量扩展为 base64 编码。Base64 是一种仅使用 64 个特定字符的二进制数据编码方式。
 - en: '[PRE13]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'To trim the variable first, apply both functions (in this order):'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 要先修剪变量，请按以下顺序应用这两个函数：
 - en: '[PRE14]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: 'Example: get the contents of a file called `$HOME/.secret` into a variable
     called `fix`. Make sure that the content is trimmed and percent-encoded sent as
     POST data:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：将名为 `$HOME/.secret` 的文件内容获取到名为 `fix` 的变量中。确保内容经过修剪并作为 POST 数据进行百分编码发送：
 - en: '[PRE15]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'

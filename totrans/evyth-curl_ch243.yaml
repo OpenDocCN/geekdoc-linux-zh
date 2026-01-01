@@ -1,41 +1,62 @@
 - en: Cleanup
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 清理
 - en: In previous sections we have discussed how to setup handles and how to drive
     the transfers. All transfers end up at some point, either successfully or with
     a failure.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前面的章节中，我们讨论了如何设置handles以及如何驱动传输。所有的传输最终都会结束，无论是成功还是失败。
 - en: Multi API
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 多API
 - en: When you have finished a single transfer with the multi API, you use `curl_multi_info_read()`
     to identify exactly which easy handle was completed and you remove that easy handle
     from the multi handle with `curl_multi_remove_handle()`.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用多API完成单个传输后，你使用`curl_multi_info_read()`来识别哪个easy handle已经完成，然后使用`curl_multi_remove_handle()`将其从multi
+    handle中移除。
 - en: 'If you remove the last easy handle from the multi handle so there are no more
     transfers going on, you can close the multi handle like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你从multi handle中移除了最后一个easy handle，使得没有更多的传输在进行，你可以这样关闭multi handle：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: easy handle
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: easy handle
 - en: When the easy handle is done serving its purpose, you can close it. If you intend
     to do another transfer, you are however advised to rather reuse the handle rather
     than to close it and create a new one.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 当easy handle完成其服务目的后，你可以关闭它。然而，如果你打算进行另一个传输，建议你重用handle而不是关闭它并创建一个新的。
 - en: 'If you do not intend to do another transfer with the easy handle, you simply
     ask libcurl to cleanup:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你没有打算使用easy handle进行另一个传输，你只需请求libcurl进行清理：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

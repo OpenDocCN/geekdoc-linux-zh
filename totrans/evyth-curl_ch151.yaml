@@ -1,87 +1,127 @@
 - en: HTTP/3
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTP/3
 - en: HTTP/3 is different than its predecessors in several ways. Maybe most noticeably,
     HTTP/3 cannot be negotiated on the same connection like HTTP/2 can. Due to HTTP/3
     using a different transport protocol, it has to set up and negotiate a dedicated
     connection for it.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/3在几个方面与其前辈不同。最明显的是，HTTP/3不能像HTTP/2那样在相同的连接上进行协商。由于HTTP/3使用不同的传输协议，它必须为它设置和协商一个专用的连接。
 - en: QUIC
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: QUIC
 - en: HTTP/3 is the HTTP version that is designed to communicate over QUIC. QUIC can
     for most particular purposes be considered a TCP+TLS replacement.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/3是专为在QUIC上通信而设计的HTTP版本。对于大多数特定目的而言，QUIC可以被视为TCP+TLS的替代品。
 - en: All transfers that use HTTP/3 therefore do not use TCP. They use QUIC. QUIC
     is a reliable transport protocol built over UDP. HTTP/3 implies use of QUIC.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 因此，所有使用HTTP/3的传输都不使用TCP。它们使用QUIC。QUIC是在UDP上构建的可靠传输协议。HTTP/3意味着使用QUIC。
 - en: HTTPS only
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTPS仅限
 - en: HTTP/3 is performed over QUIC which is always using TLS, so HTTP/3 is by definition
     always encrypted and secure. Therefore, curl only uses HTTP/3 for `HTTPS://` URLs.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/3是在QUIC上执行的，QUIC始终使用TLS，因此HTTP/3在定义上始终是加密和安全的。因此，curl仅对`HTTPS://` URL使用HTTP/3。
 - en: Enable
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 启用
 - en: 'As a shortcut straight to HTTP/3, to make curl attempt a QUIC connect directly
     to the given hostname and port number, use `--http3`. Like this:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为直接访问HTTP/3的快捷方式，要使curl尝试直接连接到给定的主机名和端口号进行QUIC连接，请使用`--http3`。如下所示：
 - en: '[PRE0]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Normally, without the `--http3` option, an `HTTPS://` URL implies that a client
     needs to connect to it using TCP (and TLS).
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，如果没有`--http3`选项，`HTTPS://` URL意味着客户端需要使用TCP（和TLS）连接到它。
 - en: Multiplexing
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复用
 - en: A primary feature in the HTTP/3 protocol, is the ability to multiplex several
     logical streams over the same physical connection. The curl command-line tool
     can take advantage of this feature when [doing parallel transfers](ch066.xhtml#cmdline__urls__parallel__md).
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP/3协议的一个主要特性是能够在相同的物理连接上复用多个逻辑流。curl命令行工具可以在[进行并行传输](ch066.xhtml#cmdline__urls__parallel__md)时利用这一特性。
 - en: 'Alt-svc:'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 'Alt-svc:'
 - en: The [alt-svc](ch179.xhtml#http__altsvc__md) method of changing to HTTP/3 is
     the official way to bootstrap into HTTP/3 for a server.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 将HTTP/3切换为[alt-svc](ch179.xhtml#http__altsvc__md)的方法是服务器启动HTTP/3的官方方式。
 - en: Note that you need that feature built-in and that it does not switch to HTTP/3
     for the *current* request unless the alt-svc cache is already populated, but it
     rather stores the info for use in the *next* request to the host.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，你需要该功能内置，并且它不会为*当前*请求切换到HTTP/3，除非alt-svc缓存已经填充，但它而不是存储信息以供在*下一个*请求到该主机时使用。
 - en: When QUIC is denied
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 当QUIC被拒绝
 - en: A certain amount of QUIC connection attempts fail, partly because many networks
     and hosts block or throttle the traffic.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于许多网络和主机阻止或限制流量，一定数量的QUIC连接尝试会失败。
 - en: When `--http3` is used, curl starts a second transfer attempt a few hundred
     milliseconds after the QUIC connection is initiated which is using HTTP/2 or HTTP/1,
     so that if the connection attempt over QUIC fails or turns out to be unbearably
     slow, the connection using an older HTTP version can still succeed and perform
     the transfer. This allows users to use `--http3` with some amount of confidence
     that the operation works.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用`--http3`时，curl在启动QUIC连接后大约几百毫秒开始第二次传输尝试，该连接使用HTTP/2或HTTP/1，这样如果QUIC连接尝试失败或变得无法忍受地慢，使用较旧HTTP版本的连接仍然可以成功并执行传输。这使用户可以有一定信心地使用`--http3`。
 - en: '`--http3-only` is provided to explicitly *not* try any older version in parallel,
     but thus makes the transfer fail immediately if no QUIC connection can be established.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`--http3-only`选项用于明确*不*尝试任何较旧版本并行传输，但因此如果无法建立QUIC连接，传输将立即失败。'

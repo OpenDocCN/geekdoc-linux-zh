@@ -1,69 +1,99 @@
 - en: Timeouts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 超时
 - en: All internals need to be written non-blocking and cannot just hang around and
     wait for things to occur. At the same time, the multi interface allows users to
     call libcurl to perform virtually at any time, even if no action has happened
     or a timeout has triggered.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有内部操作都需要以非阻塞方式编写，不能只是挂起并等待事件发生。同时，多接口允许用户在几乎任何时间调用libcurl，即使没有发生任何操作或超时触发。
 - en: Exposes just a single timeout to apps
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 仅向应用暴露单个超时
 - en: In the external API libcurl provides a single timeout at a time, no matter how
     many concurrent transfers and what options are set. An application can get the
     timeout value it with `curl_multi_timeout()` or in a `CURLMOPT_TIMERFUNCTION`
     callback, depending on what API it wants to use.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在外部API中，libcurl每次只提供一个超时，无论有多少并发传输以及设置了哪些选项。应用程序可以通过`curl_multi_timeout()`或`CURLMOPT_TIMERFUNCTION`回调函数来获取超时值，具体取决于它想使用哪个API。
 - en: 'Internally, this is done like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在内部，操作如下：
 - en: Every easy handle keeps an array of timeouts, in a sorted order. The closest
     (next-timeout) in time is first in the list.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 每个简单句柄都保留一个超时数组，按顺序排列。时间最接近（下次超时）的位于列表之首。
 - en: All easy handles are put in a *splay tree* which is binary self-balancing search
     tree that makes it fast to insert and remove nodes depending on their timeouts.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所有简单句柄都被放入一个*伸展树*中，这是一个二叉自平衡搜索树，使得根据超时插入和删除节点变得快速。
 - en: As soon as any handle’s next-timeout changes, the splay tree is re-balanced.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一旦任何句柄的下次超时时间发生变化，伸展树就会重新平衡。
 - en: Extracting the easy handles with expired timeouts is a quick operation.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 提取带有过期超时的简单句柄是一个快速操作。
 - en: Set a timeout
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 设置超时
 - en: The internal function for *setting* a timeout is called `Curl_expire()`. It
     asks that libcurl gets called again for this handle in a certain amount of milliseconds
     into the future. A timeout is set with a specific ID, to make sure that it overrides
     previous values set for the same timeout etc. The existing timeout IDs are limited
     and the set is hard-coded.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于*设置*超时的内部函数称为`Curl_expire()`。它要求libcurl在未来的一定毫秒数后再次调用此句柄。通过特定的ID设置超时，以确保它覆盖了之前为同一超时设置的值等。现有的超时ID是有限的，并且是硬编码的。
 - en: A timeout can be removed again with `Curl_expire_clear()`, which then removes
     that timeout from the list of timeouts for the given easy handle.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以使用`Curl_expire_clear()`再次移除超时，这将从给定简单句柄的超时列表中移除该超时。
 - en: Expired timeouts
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 过期的超时
 - en: Expiration of a timeout means that the application knows that it needs to call
     libcurl again. When the *socket_action* API is used, it even knows to call libcurl
     again for a specific given easy handle for which the timeout has expired.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 超时到期意味着应用程序知道它需要再次调用libcurl。当使用*socket_action* API时，它甚至知道需要再次为超时到期的特定简单句柄调用libcurl。
 - en: There is no other special action or activity happening when a timeout expires
     than that the perform function is called. Each state or internal function needs
     to know what times or states to check for and act accordingly when called (again).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 当超时到期时，除了调用perform函数外，没有其他特殊动作或活动发生。每个状态或内部函数都需要知道要检查哪些时间或状态，并在被调用时（再次）相应地执行。

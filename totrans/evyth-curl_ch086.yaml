@@ -1,37 +1,53 @@
 - en: Download to a file named by the URL
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 将下载保存到由URL命名的文件中
 - en: 'Many URLs, however, already contain the filename part in the rightmost end.
     curl lets you use that as a shortcut so you do not have to repeat it with `-o`.
     Instead of:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，许多URL的右端已经包含了文件名部分。curl允许你使用这个快捷方式，这样你就不必用`-o`重复它。而不是：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'You can save the remote URL resource into the local file ‘file.html’ with this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以用这个命令将远程URL资源保存到本地文件`file.html`中：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This is the `-O` (uppercase letter o) option, or `--remote-name` for the long
     name version. The -O option selects the local filename to use by picking the filename
     part of the URL that you provide. This is important. You specify the URL and curl
     picks the name from this data. If the site redirects curl further (and if you
     tell curl to follow redirects), it does not change the filename curl uses for
     storing this.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是`-O`（大写字母O）选项，或者长名称版本的`--remote-name`。`-O`选项通过选择你提供的URL的文件名部分来选择要使用的本地文件名。这很重要。你指定URL，curl会从这个数据中选取名称。如果网站重定向curl到其他地方（如果你告诉curl跟随重定向），它不会改变curl用于存储此内容的文件名。
 - en: Use the URL’s filename part for all URLs
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 为所有URL使用URL的文件名部分
 - en: As a reaction to adding a hundred `-O` options when using a hundred URLs, we
     introduced an option called `--remote-name-all`. This makes `-O` the default operation
     for all given URLs. You can still provide individual “storage instructions” for
     URLs but if you leave one out for a URL that gets downloaded, the default action
     is then switched from stdout to -O style.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为对使用一百个URL时添加一百个`-O`选项的反应，我们引入了一个名为`--remote-name-all`的选项。这使得`-O`成为所有给定URL的默认操作。你仍然可以为URL提供单独的“存储指令”，但如果为下载的URL省略了它，那么默认操作将从stdout切换到`-O`风格。

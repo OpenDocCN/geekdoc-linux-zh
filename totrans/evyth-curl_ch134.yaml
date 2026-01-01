@@ -1,69 +1,106 @@
 - en: SSLKEYLOGFILE
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: SSLKEYLOGFILE
 - en: '![](../media/file10.png)'
+  id: totrans-1
   prefs: []
   type: TYPE_IMG
+  zh: '![](../media/file10.png)'
 - en: view network traffic with Wireshark
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 Wireshark 查看网络流量
 - en: Since a long time back, the venerable network analyzer tool Wireshark (screenshot
     above) has provided a way to decrypt and inspect TLS traffic when sent and received
     by Firefox and Chrome.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 从很久以前开始，备受尊敬的网络分析工具 Wireshark（如上图所示）就提供了一种在 Firefox 和 Chrome 发送和接收 TLS 流量时解密和检查
+    TLS 流量的方法。
 - en: This is similarly possible to do with curl.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 这同样适用于 curl。
 - en: 'You do this by making the browser or curl tell Wireshark the encryption secrets
     so that it can decrypt them:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过让浏览器或 curl 告诉 Wireshark 加密秘密，以便它可以解密它们来完成此操作：
 - en: set the environment variable named `SSLKEYLOGFILE` to a filename of your choice
     before you start the browser or curl
+  id: totrans-6
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在启动浏览器或 curl 之前，将环境变量 `SSLKEYLOGFILE` 设置为您选择的文件名
 - en: Setting the same filename path in the Master-secret field in Wireshark. Go to
     Preferences->Protocols->TLS and edit the path as shown in the screenshot below.
+  id: totrans-7
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在 Wireshark 的 Master-secret 字段中设置相同的文件名路径。转到首选项->协议->TLS 并编辑如下截图所示的路径。
 - en: '![](../media/file11.png)'
+  id: totrans-8
   prefs: []
   type: TYPE_IMG
+  zh: '![](../media/file11.png)'
 - en: set the ssl key filename
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置 ssl 密钥文件名
 - en: Having done this simple operation, you can now inspect curl’s or your browser’s
     HTTPS traffic in Wireshark. Just super handy and awesome.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在完成这个简单的操作后，您现在可以在 Wireshark 中检查 curl 或您浏览器的 HTTPS 流量。非常方便且酷炫。
 - en: Just remember that if you record TLS traffic and want to save it for analyzing
     later, you need to also save the file with the secrets so that you can decrypt
     that traffic capture at a later time as well.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 只需记住，如果您记录 TLS 流量并希望稍后分析，您还需要保存包含秘密的文件，这样您才能在稍后解密该流量捕获。
 - en: libcurl-using applications too
+  id: totrans-12
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用 libcurl 的应用程序也是如此
 - en: Support for `SSLKEYLOGFILE` is provided by libcurl itself - making it possible
     for you to trace and inspect the TLS network data for any application built to
     use libcurl - not just the curl command line tool.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`SSLKEYLOGFILE` 的支持由 libcurl 本身提供——这使得您能够跟踪和检查任何使用 libcurl 构建的应用的 TLS 网络数据，而不仅仅是
+    curl 命令行工具。'
 - en: Restrictions
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 限制
 - en: 'The support for `SSLKEYLOGFILE` requires that curl was built with a TLS backend
     that supports this feature. The backends that support SSLKEYLOGFILE are: OpenSSL,
     libressl, BoringSSL, GnuTLS and wolfSSL.'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '`SSLKEYLOGFILE` 的支持要求 curl 是使用支持此功能的 TLS 后端构建的。支持 SSLKEYLOGFILE 的后端有：OpenSSL、libressl、BoringSSL、GnuTLS
+    和 wolfSSL。'
 - en: If curl was built to use another backend, you cannot record your curl TLS traffic
     this way.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 curl 是构建为使用另一个后端，则您不能以这种方式记录您的 curl TLS 流量。

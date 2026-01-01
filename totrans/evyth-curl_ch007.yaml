@@ -1,47 +1,67 @@
 - en: What does curl do?
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: curl做什么？
 - en: 'cURL is a project and its primary purpose and focus is to make two products:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: cURL是一个项目，其首要目的和重点是制作两个产品：
 - en: curl, the command-line tool
+  id: totrans-2
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: curl：命令行工具
 - en: libcurl the transfer library with a C API
+  id: totrans-3
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: libcurl：具有C API的传输库
 - en: Both the tool and the library do Internet transfers for resources specified
     as URLs using Internet protocols.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 工具和库都使用互联网协议为指定为URL的资源进行互联网传输。
 - en: Everything and anything that is related to Internet protocol transfers can be
     considered curl’s business. Things that are not related to that should be avoided
     and be left for other projects and products.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 与互联网协议传输相关的一切都可以被认为是curl的业务。与此不相关的事情应避免，并留给其他项目和产品。
 - en: It could be important to also consider that curl and libcurl try to avoid handling
     the actual data that is transferred. It has, for example, no knowledge about HTML
     or anything else of the content that is popular to transfer over HTTP, but it
     knows all about how to transfer such data over HTTP.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 考虑到curl和libcurl试图避免处理实际传输的数据，这可能很重要。例如，它对HTML或其他在HTTP上流行的内容一无所知，但它知道如何通过HTTP传输此类数据。
 - en: Both products are frequently used not only to drive thousands or millions of
     scripts and applications for an Internet connected world, but they are also widely
     used for server testing, protocol fiddling and trying out new things.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这两个产品不仅频繁用于驱动成千上万或数百万的脚本和应用程序，以连接到互联网的世界，而且它们也广泛用于服务器测试、协议调整和尝试新事物。
 - en: 'The library is used in every imaginable sort of embedded device where Internet
     transfers are needed: car infotainment, televisions, Blu-Ray players, set-top
     boxes, printers, routers, game systems, etc.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 该库被用于各种可想象的嵌入式设备中，需要互联网传输的地方：车载信息娱乐系统、电视、蓝光播放器、机顶盒、打印机、路由器、游戏系统等。
 - en: Command line tool
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命令行工具
 - en: Running curl from the command line was natural and Daniel never considered anything
     else than that it would output data on stdout, to the terminal, by default. The
     “everything is a pipe” mantra of standard Unix philosophy was something Daniel
@@ -50,35 +70,49 @@
     That is also why virtually all curl options that allow reading from a file or
     writing to a file, also have the ability to select doing it to stdout or from
     stdin.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 从命令行运行curl是自然而然的，丹尼尔从未考虑过除了默认将数据输出到stdout、终端之外的其他任何事情。标准Unix哲学的“一切皆管道”信条是丹尼尔所坚信的。curl就像‘cat’或其他Unix工具一样；它将数据发送到stdout，以便与其他工具链式连接，完成您想要的工作。这也是为什么几乎所有的curl选项，允许从文件读取或写入文件，也都有选择将其输出到stdout或从stdin的能力。
 - en: Following the Unix style of how command-line tools work, there was also never
     any question about whether curl should support multiple URLs on the command line.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 遵循Unix风格的命令行工具工作方式，curl是否应该支持命令行上的多个URL也从未有过疑问。
 - en: The command-line tool is designed to work perfectly from scripts or other automatic
     means. It does not feature any other GUI or UI other than mere text in and text
     out.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令行工具旨在通过脚本或其他自动方式完美运行。它不包含任何其他图形用户界面或用户界面，除了输入和输出纯文本。
 - en: The library
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 库
 - en: While the command-line tool came first, the network engine was ripped out and
     converted into a library during the year 2000 and the concepts we still have today
     were introduced with libcurl 7.1 in August 2000\. Since then, the command line
     tool has been a thin layer of logic to make a tool around the library that does
     all the heavy lifting.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然命令行工具先出现，但在2000年，网络引擎被剥离并转换为库，我们今天仍然拥有的概念是在2000年8月的libcurl 7.1中引入的。从那时起，命令行工具就成为了围绕库的逻辑薄层，以制作一个执行所有繁重工作的工具。
 - en: libcurl is designed and meant to be available for anyone who wants to add client-side
     file transfer capabilities to their software, on any platform, any architecture
     and for any purpose. libcurl is also extremely liberally licensed to avoid that
     becoming an obstacle.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl旨在为任何希望将客户端文件传输功能添加到其软件中的人提供，无论平台、架构和目的。libcurl的许可也非常宽松，以避免成为障碍。
 - en: libcurl is written in traditional and conservative C. Where other languages
     are preferred, people have created libcurl [bindings](../bindings/) for them.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: libcurl是用传统和保守的C语言编写的。在其他语言更受欢迎的情况下，人们为它们创建了libcurl [绑定](../bindings/)。

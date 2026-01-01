@@ -1,97 +1,142 @@
 - en: HTTP proxy
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: HTTP代理
 - en: An HTTP proxy is a proxy that the client speaks HTTP with to get the transfer
     done. curl does by default, assume that a host you point out with `-x` or `--proxy`
     is an HTTP proxy, and unless you also specify a port number it defaults to port
     1080 (and the reason for that particular port number is purely historical).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP代理是客户端与它通信以完成传输的代理。curl默认情况下，假设您使用`-x`或`--proxy`指定的主机是HTTP代理，除非您也指定端口号，否则默认为端口1080（而选择该特定端口号的原因纯粹是历史的）。
 - en: 'If you want to request the example.com webpage using a proxy on 192.168.0.1
     port 8080, a command line could look like:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想通过192.168.0.1端口8080的代理请求example.com网页，命令行可能看起来像这样：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Recall that the proxy receives your request, forwards it to the real server,
     then reads the response from the server and then hands that back to the client.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 回想一下，代理接收您的请求，将其转发到真实服务器，然后从服务器读取响应，并将其返回给客户端。
 - en: If you enable verbose mode with `-v` when talking to a proxy, it shows that
     curl connects to the proxy instead of the remote server, and might see that it
     uses a slightly different request line.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您在与代理通信时启用详细模式`-v`，它将显示curl连接到代理而不是远程服务器，并且可能看到它使用了一个略微不同的请求行。
 - en: HTTPS with HTTP proxy
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过HTTP代理的HTTPS
 - en: HTTPS was designed to allow and provide secure and safe end-to-end privacy from
     the client to the server (and back). In order to provide that when speaking to
     an HTTP proxy, the HTTP protocol has a special request that curl uses to setup
     a tunnel through the proxy that it then can encrypt and verify. This HTTP method
     is known as `CONNECT`.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTPS被设计成允许并从客户端到服务器（以及返回）提供安全且安全的端到端隐私。为了在通过HTTP代理进行通信时提供这一点，HTTP协议有一个curl用来设置通过代理隧道的特殊请求。这个HTTP方法被称为`CONNECT`。
 - en: 'When the proxy tunnels encrypted data through to the remote server after a
     CONNECT method sets it up, the proxy cannot see nor modify the traffic without
     breaking the encryption:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当代理在通过CONNECT方法设置后通过隧道将加密数据传输到远程服务器时，代理无法看到或修改流量，除非破坏加密：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Non-HTTP protocols over an HTTP proxy
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 通过HTTP代理的非HTTP协议
 - en: An HTTP proxy means the proxy itself speaks HTTP. HTTP proxies are primarily
     used to proxy HTTP but it is also fairly common that they support other protocols
     as well. In particular, FTP is fairly commonly supported.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP代理意味着代理本身说HTTP。HTTP代理主要用于代理HTTP，但它们也相当普遍地支持其他协议。特别是，FTP相当普遍地得到支持。
 - en: 'When talking FTP over an HTTP proxy, it is usually done by more or less pretending
     the other protocol works like HTTP and asking the proxy to get this URL even if
     the URL is not using HTTP. This distinction is important because it means that
     when sent over an HTTP proxy like this, curl does not really speak FTP even though
     given an FTP URL; thus FTP-specific features do not work:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 当通过HTTP代理进行FTP通信时，通常是通过或多或少地假装其他协议像HTTP一样工作，并要求代理获取此URL来完成的，即使该URL不是使用HTTP。这种区别很重要，因为它意味着当通过这样的HTTP代理发送时，curl实际上并没有真正地说FTP，尽管给出了FTP
+    URL；因此FTP特定的功能不会工作：
 - en: '[PRE2]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: What you can do instead then, is to tunnel through the HTTP proxy.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，您可以做的另一件事就是通过HTTP代理隧道。
 - en: HTTP proxy tunneling
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP代理隧道
 - en: Most HTTP proxies allow clients to tunnel through it to a server on the other
     side. That is exactly what’s done every time you use HTTPS through the HTTP proxy.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 大多数HTTP代理允许客户端通过它隧道到另一侧的服务器。这正是每次您通过HTTP代理使用HTTPS时所做的。
 - en: You tunnel through an HTTP proxy with curl using `-p` or `--proxytunnel`.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`-p`或`--proxytunnel`通过curl通过HTTP代理隧道。
 - en: When you do HTTPS through a proxy you normally connect through to the default
     HTTPS remote TCP port number 443\. Most HTTP proxies white list and allow connections
     only to hosts on that port number and perhaps a few others. Most proxies deny
     clients from connecting to just any random port (for reasons only the proxy administrators
     know).
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 当您通过代理进行HTTPS时，通常连接到默认的HTTPS远程TCP端口号443。大多数HTTP代理将白名单和允许连接仅限于该端口号上的主机以及可能的一些其他端口号。大多数代理拒绝客户端连接到任何随机端口（原因只有代理管理员知道）。
 - en: 'Still, assuming that the HTTP proxy allows it, you can ask it to tunnel through
     to a remote server on any port number so you can do other protocols normally even
     when tunneling. You can do FTP tunneling like this:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽管如此，假设HTTP代理允许这样做，您可以要求它通过任何端口号隧道到远程服务器，这样您就可以在隧道时正常进行其他协议。您可以通过以下方式执行FTP隧道：
 - en: '[PRE3]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: You can tell curl to use HTTP/1.0 in its CONNECT request issued to the HTTP
     proxy by using `--proxy1.0 [proxy]` instead of `-x`.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用`--proxy1.0 [proxy]`而不是`-x`来告诉curl在向HTTP代理发出的CONNECT请求中使用HTTP/1.0。

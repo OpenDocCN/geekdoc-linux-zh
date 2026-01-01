@@ -1,7 +1,9 @@
 - en: Rate limiting
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 速率限制
 - en: When curl transfers data, it attempts to do that as fast as possible. It goes
     for both uploads and downloads. Exactly how fast that goes depends on several
     factors, including your computer’s ability, your own network connection’s bandwidth,
@@ -9,40 +11,57 @@
     that server. Your curl transfers are also likely to compete with other transfers
     on the networks the data travels over, from other users or just other apps by
     the same user.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当curl传输数据时，它会尽可能地快速完成。这包括上传和下载。具体传输速度取决于多个因素，包括您电脑的处理能力、您自己的网络连接带宽、您传输到的远程服务器的负载以及到该服务器的延迟。您的curl传输也可能与其他用户或同一用户的其他应用程序在数据传输的网络上的传输竞争。
 - en: In many setups, however, you can more or less saturate your own network connection
     with a single curl command line. If you have a 10 megabit per second connection
     to the Internet, chances are curl can use all of those 10 megabits to transfer
     data.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在许多配置中，您可以使用单个curl命令行大致饱和自己的网络连接。如果您有每秒10兆比特的互联网连接，curl很可能会使用这10兆比特的全部来传输数据。
 - en: For most use cases, using as much bandwidth as possible is a good thing. It
     makes the transfer faster, it makes the curl command complete sooner and it makes
     the transfer use resources from the server for a shorter period of time.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于大多数用例，尽可能使用更多的带宽是好事。它使传输更快，使curl命令更快完成，并使传输在更短的时间内使用服务器资源。
 - en: Sometimes, having curl starve out other network functions on your local network
     connection is inconvenient. In these situations you may want to tell curl to slow
     down so that other network users get a better chance to get their data through
     as well. With `--limit-rate [speed]` you can tell curl to not go faster than the
     given number of bytes per second. The rate limit value can be given with a letter
     suffix using one of K, M and G for kilobytes, megabytes and gigabytes.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，让curl在您的本地网络连接上耗尽其他网络功能可能不方便。在这些情况下，您可能希望告诉curl减慢速度，以便其他网络用户也有更好的机会传输他们的数据。使用`--limit-rate
+    [speed]`，您可以告诉curl不要超过每秒给定字节数。速率限制值可以使用字母后缀K、M和G来表示，分别代表千字节、兆字节和吉字节。
 - en: 'To make curl not download data any faster than 200 kilobytes per second:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要使curl的下载速度不超过每秒200千字节：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: The given limit is the maximum *average speed* allowed during a period of several
     seconds. It means that curl might use higher transfer speeds in short bursts,
     but over time it averages to no more than the given rate.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定的限制是在几秒钟内允许的最大*平均速度*。这意味着curl可能会在短时间内使用更高的传输速度，但总体上平均速度不会超过给定的速率。
 - en: curl does not know what the maximum possible speed is — it simply goes as fast
     as it can and is allowed. You might know your connection’s maximum speed, curl
     does not.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: curl不知道最大可能速度是多少——它只是尽可能地快，并且允许这样做。您可能知道您连接的最大速度，但curl不知道。

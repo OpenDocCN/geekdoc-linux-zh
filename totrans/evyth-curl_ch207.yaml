@@ -1,973 +1,1593 @@
 - en: All options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 所有选项
 - en: This is a table of available options for `curl_easy_setopt()`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是`curl_easy_setopt()`可用的选项表。
 - en: '| Option | Purpose |'
+  id: totrans-2
   prefs: []
   type: TYPE_TB
+  zh: '| 选项 | 目的 |'
 - en: '| --- | --- |'
+  id: totrans-3
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `CURLOPT_ABSTRACT_UNIX_SOCKET` | abstract Unix domain socket |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ABSTRACT_UNIX_SOCKET` | 抽象Unix域套接字 |'
 - en: '| `CURLOPT_ACCEPT_ENCODING` | automatic decompression of HTTP downloads |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ACCEPT_ENCODING` | 自动解压缩HTTP下载 |'
 - en: '| `CURLOPT_ACCEPTTIMEOUT_MS` | timeout waiting for FTP server to connect back
     |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ACCEPTTIMEOUT_MS` | 等待FTP服务器回连的超时时间 |'
 - en: '| `CURLOPT_ADDRESS_SCOPE` | scope id for IPv6 addresses |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ADDRESS_SCOPE` | IPv6地址的作用域ID |'
 - en: '| `CURLOPT_ALTSVC_CTRL` | control alt-svc behavior |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ALTSVC_CTRL` | 控制alt-svc行为 |'
 - en: '| `CURLOPT_ALTSVC` | alt-svc cache filename |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ALTSVC` | alt-svc缓存文件名 |'
 - en: '| `CURLOPT_APPEND` | append to the remote file |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_APPEND` | 追加到远程文件 |'
 - en: '| `CURLOPT_AUTOREFERER` | automatically update the referer header |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_AUTOREFERER` | 自动更新引用头 |'
 - en: '| `CURLOPT_AWS_SIGV4` | V4 signature |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_AWS_SIGV4` | V4签名 |'
 - en: '| `CURLOPT_BUFFERSIZE` | receive buffer size |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_BUFFERSIZE` | 接收缓冲区大小 |'
 - en: '| `CURLOPT_CA_CACHE_TIMEOUT` | life-time for cached certificate stores |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CA_CACHE_TIMEOUT` | 缓存证书存储的生命周期 |'
 - en: '| `CURLOPT_CAINFO_BLOB` | Certificate Authority (CA) bundle in PEM format |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CAINFO_BLOB` | PEM格式的证书颁发机构（CA）包 |'
 - en: '| `CURLOPT_CAINFO` | path to Certificate Authority (CA) bundle |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CAINFO` | 证书颁发机构（CA）包的路径 |'
 - en: '| `CURLOPT_CAPATH` | directory holding CA certificates |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CAPATH` | 存放CA证书的目录 |'
 - en: '| `CURLOPT_CERTINFO` | request SSL certificate information |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CERTINFO` | 请求SSL证书信息 |'
 - en: '| `CURLOPT_CHUNK_BGN_FUNCTION` | callback before a transfer with FTP wildcardmatch
     |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CHUNK_BGN_FUNCTION` | FTP通配符匹配传输前的回调 |'
 - en: '| `CURLOPT_CHUNK_DATA` | pointer passed to the FTP chunk callbacks |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CHUNK_DATA` | 传递给FTP块回调的指针 |'
 - en: '| `CURLOPT_CHUNK_END_FUNCTION` | callback after a transfer with FTP wildcardmatch
     |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CHUNK_END_FUNCTION` | FTP通配符匹配传输后的回调 |'
 - en: '| `CURLOPT_CLOSESOCKETDATA` | pointer passed to the socket close callback |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CLOSESOCKETDATA` | 传递给套接字关闭回调的指针 |'
 - en: '| `CURLOPT_CLOSESOCKETFUNCTION` | callback to socket close replacement |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CLOSESOCKETFUNCTION` | 替换套接字关闭的回调 |'
 - en: '| `CURLOPT_CONNECT_ONLY` | stop when connected to target server |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONNECT_ONLY` | 连接到目标服务器后停止 |'
 - en: '| `CURLOPT_CONNECT_TO` | connect to a specific host and port instead of the
     URL’s host and port |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONNECT_TO` | 连接到指定的主机和端口，而不是URL的主机和端口 |'
 - en: '| `CURLOPT_CONNECTTIMEOUT_MS` | timeout for the connect phase |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONNECTTIMEOUT_MS` | 连接阶段的超时时间 |'
 - en: '| `CURLOPT_CONNECTTIMEOUT` | timeout for the connect phase |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONNECTTIMEOUT` | 连接阶段超时时间 |'
 - en: '| `CURLOPT_CONV_FROM_NETWORK_FUNCTION` | convert data from network to host
     encoding |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONV_FROM_NETWORK_FUNCTION` | 将数据从网络编码转换为主机编码 |'
 - en: '| `CURLOPT_CONV_FROM_UTF8_FUNCTION` | convert data from UTF8 to host encoding
     |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONV_FROM_UTF8_FUNCTION` | 将数据从UTF8转换为主机编码 |'
 - en: '| `CURLOPT_CONV_TO_NETWORK_FUNCTION` | convert data to network from host encoding
     |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CONV_TO_NETWORK_FUNCTION` | 将数据从主机编码转换为网络编码 |'
 - en: '| `CURLOPT_COOKIE` | HTTP Cookie header |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COOKIE` | HTTP Cookie头 |'
 - en: '| `CURLOPT_COOKIEFILE` | filename to read cookies from |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COOKIEFILE` | 从中读取cookie的文件名 |'
 - en: '| `CURLOPT_COOKIEJAR` | filename to store cookies to |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COOKIEJAR` | 存储cookie的文件名 |'
 - en: '| `CURLOPT_COOKIELIST` | add to or manipulate cookies held in memory |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COOKIELIST` | 添加或操作内存中持有的cookie |'
 - en: '| `CURLOPT_COOKIESESSION` | start a new cookie session |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COOKIESESSION` | 开始一个新的cookie会话 |'
 - en: '| `CURLOPT_COPYPOSTFIELDS` | have libcurl copy data to POST |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_COPYPOSTFIELDS` | 让libcurl将数据复制到POST |'
 - en: '| `CURLOPT_CRLF` | CRLF conversion |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CRLF` | CRLF转换 |'
 - en: '| `CURLOPT_CRLFILE` | Certificate Revocation List file |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CRLFILE` | 证书吊销列表文件 |'
 - en: '| `CURLOPT_CURLU` | URL in CURLU * format |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CURLU` | CURLU *格式的URL |'
 - en: '| `CURLOPT_CUSTOMREQUEST` | custom request method |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_CUSTOMREQUEST` | 自定义请求方法 |'
 - en: '| `CURLOPT_DEBUGDATA` | pointer passed to the debug callback |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DEBUGDATA` | 传递给调试回调的指针 |'
 - en: '| `CURLOPT_DEBUGFUNCTION` | debug callback |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DEBUGFUNCTION` | 调试回调函数 |'
 - en: '| `CURLOPT_DEFAULT_PROTOCOL` | default protocol to use if the URL is missing
     a |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DEFAULT_PROTOCOL` | 如果URL缺少协议，则使用默认协议 |'
 - en: '| `CURLOPT_DIRLISTONLY` | ask for names only in a directory listing |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DIRLISTONLY` | 仅请求目录列表中的名称 |'
 - en: '| `CURLOPT_DISALLOW_USERNAME_IN_URL` | disallow specifying username in the
     URL |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DISALLOW_USERNAME_IN_URL` | 禁止在URL中指定用户名 |'
 - en: '| `CURLOPT_DNS_CACHE_TIMEOUT` | life-time for DNS cache entries |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_CACHE_TIMEOUT` | DNS缓存条目的生命周期 |'
 - en: '| `CURLOPT_DNS_INTERFACE` | interface to speak DNS over |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_INTERFACE` | 在其上说话DNS的接口 |'
 - en: '| `CURLOPT_DNS_LOCAL_IP4` | IPv4 address to bind DNS resolves to |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_LOCAL_IP4` | 绑定 DNS 解析到的 IPv4 地址 |'
 - en: '| `CURLOPT_DNS_LOCAL_IP6` | IPv6 address to bind DNS resolves to |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_LOCAL_IP6` | 绑定 DNS 解析到的 IPv6 地址 |'
 - en: '| `CURLOPT_DNS_SERVERS` | DNS servers to use |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_SERVERS` | 要使用的 DNS 服务器 |'
 - en: '| `CURLOPT_DNS_SHUFFLE_ADDRESSES` | shuffle IP addresses for hostname |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_SHUFFLE_ADDRESSES` | 打乱主机名的 IP 地址 |'
 - en: '| `CURLOPT_DNS_USE_GLOBAL_CACHE` | global DNS cache |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DNS_USE_GLOBAL_CACHE` | 全局 DNS 缓存 |'
 - en: '| `CURLOPT_DOH_SSL_VERIFYHOST` | verify the hostname in the DoH SSL certificate
     |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DOH_SSL_VERIFYHOST` | 验证 DoH SSL 证书中的主机名 |'
 - en: '| `CURLOPT_DOH_SSL_VERIFYPEER` | verify the DoH SSL certificate |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DOH_SSL_VERIFYPEER` | 验证 DoH SSL 证书 |'
 - en: '| `CURLOPT_DOH_SSL_VERIFYSTATUS` | verify the DoH SSL certificate’s status
     |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DOH_SSL_VERIFYSTATUS` | 验证 DoH SSL 证书的状态 |'
 - en: '| `CURLOPT_DOH_URL` | provide the DNS-over-HTTPS URL |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_DOH_URL` | 提供 DNS-over-HTTPS URL |'
 - en: '| `CURLOPT_EGDSOCKET` | EGD socket path |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_EGDSOCKET` | EGD 套接字路径 |'
 - en: '| `CURLOPT_ERRORBUFFER` | error buffer for error messages |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ERRORBUFFER` | 错误消息的错误缓冲区 |'
 - en: '| `CURLOPT_EXPECT_100_TIMEOUT_MS` | timeout for Expect: 100-continue response
     |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_EXPECT_100_TIMEOUT_MS` | Expect: 100-continue 响应的超时时间 |'
 - en: '| `CURLOPT_FAILONERROR` | request failure on HTTP response >= 400 |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FAILONERROR` | HTTP 响应 >= 400 时请求失败 |'
 - en: '| `CURLOPT_FILETIME` | get the modification time of the remote resource |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FILETIME` | 获取远程资源的修改时间 |'
 - en: '| `CURLOPT_FNMATCH_DATA` | pointer passed to the fnmatch callback |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FNMATCH_DATA` | 传递给 fnmatch 回调的指针 |'
 - en: '| `CURLOPT_FNMATCH_FUNCTION` | wildcard match callback |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FNMATCH_FUNCTION` | 通配符匹配回调 |'
 - en: '| `CURLOPT_FOLLOWLOCATION` | follow HTTP 3xx redirects |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FOLLOWLOCATION` | 跟随 HTTP 3xx 重定向 |'
 - en: '| `CURLOPT_FORBID_REUSE` | make connection get closed at once after use |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FORBID_REUSE` | 使用后立即关闭连接 |'
 - en: '| `CURLOPT_FRESH_CONNECT` | force a new connection to be used |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FRESH_CONNECT` | 强制使用新的连接 |'
 - en: '| `CURLOPT_FTP_ACCOUNT` | account info for FTP |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_ACCOUNT` | FTP 的账户信息 |'
 - en: '| `CURLOPT_FTP_ALTERNATIVE_TO_USER` | command to use instead of USER with FTP
     |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_ALTERNATIVE_TO_USER` | 用于 FTP 的替代 USER 命令 |'
 - en: '| `CURLOPT_FTP_CREATE_MISSING_DIRS` | create missing dirs for FTP and SFTP
     |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_CREATE_MISSING_DIRS` | 为 FTP 和 SFTP 创建缺失的目录 |'
 - en: '| `CURLOPT_FTP_FILEMETHOD` | select directory traversing method for FTP |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_FILEMETHOD` | 选择 FTP 目录遍历方法 |'
 - en: '| `CURLOPT_FTP_RESPONSE_TIMEOUT` | time allowed to wait for FTP response |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_RESPONSE_TIMEOUT` | 等待 FTP 响应的时间 |'
 - en: '| `CURLOPT_FTP_SKIP_PASV_IP` | ignore the IP address in the PASV response |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_SKIP_PASV_IP` | 忽略 PASV 响应中的 IP 地址 |'
 - en: '| `CURLOPT_FTP_SSL_CCC` | switch off SSL again with FTP after auth |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_SSL_CCC` | 在 FTP 身份验证后再次关闭 SSL |'
 - en: '| `CURLOPT_FTP_USE_EPRT` | use EPRT for FTP |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_USE_EPRT` | 为 FTP 使用 EPRT |'
 - en: '| `CURLOPT_FTP_USE_EPSV` | use EPSV for FTP |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_USE_EPSV` | 为 FTP 使用 EPSV |'
 - en: '| `CURLOPT_FTP_USE_PRET` | use PRET for FTP |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTP_USE_PRET` | 为 FTP 使用 PRET |'
 - en: '| `CURLOPT_FTPPORT` | make FTP transfer active |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTPPORT` | 使 FTP 传输处于活动状态 |'
 - en: '| `CURLOPT_FTPSSLAUTH` | order in which to attempt TLS vs SSL |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_FTPSSLAUTH` | 尝试 TLS 与 SSL 的顺序 |'
 - en: '| `CURLOPT_GSSAPI_DELEGATION` | allowed GSS-API delegation |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_GSSAPI_DELEGATION` | 允许 GSS-API 委派 |'
 - en: '| `CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS` | head start for ipv6 for happy eyeballs
     |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HAPPY_EYEBALLS_TIMEOUT_MS` | 为 happy eyeballs 的 ipv6 提供提前启动 |'
 - en: '| `CURLOPT_HAPROXY_CLIENT_IP` | set HAProxy PROXY protocol client IP |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HAPROXY_CLIENT_IP` | 设置 HAProxy PROXY 协议客户端 IP |'
 - en: '| `CURLOPT_HAPROXYPROTOCOL` | send HAProxy PROXY protocol v1 header |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HAPROXYPROTOCOL` | 发送 HAProxy PROXY 协议 v1 头部 |'
 - en: '| `CURLOPT_HEADER` | pass headers to the data stream |'
+  id: totrans-83
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HEADER` | 将头部传递到数据流 |'
 - en: '| `CURLOPT_HEADERDATA` | pointer to pass to header callback |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HEADERDATA` | 传递给头部回调的指针 |'
 - en: '| `CURLOPT_HEADERFUNCTION` | callback that receives header data |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HEADERFUNCTION` | 接收头部数据的回调 |'
 - en: '| `CURLOPT_HEADEROPT` | send HTTP headers to both proxy and host or separately
     |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HEADEROPT` | 将 HTTP 头部发送到代理和主机或分别发送 |'
 - en: '| `CURLOPT_HSTS_CTRL` | control HSTS behavior |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTS_CTRL` | 控制 HSTS 行为 |'
 - en: '| `CURLOPT_HSTS` | HSTS cache filename |'
+  id: totrans-88
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTS` | HSTS 缓存文件名 |'
 - en: '| `CURLOPT_HSTSREADDATA` | pointer passed to the HSTS read callback |'
+  id: totrans-89
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTSREADDATA` | 传递给 HSTS 读取回调的指针 |'
 - en: '| `CURLOPT_HSTSREADFUNCTION` | read callback for HSTS hosts |'
+  id: totrans-90
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTSREADFUNCTION` | HSTS 主机的读取回调 |'
 - en: '| `CURLOPT_HSTSWRITEDATA` | pointer passed to the HSTS write callback |'
+  id: totrans-91
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTSWRITEDATA` | 传递给 HSTS 写入回调的指针 |'
 - en: '| `CURLOPT_HSTSWRITEFUNCTION` | write callback for HSTS hosts |'
+  id: totrans-92
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HSTSWRITEFUNCTION` | HSTS 主机的写入回调 |'
 - en: '| `CURLOPT_HTTP09_ALLOWED` | allow HTTP/0.9 response |'
+  id: totrans-93
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTP09_ALLOWED` | 允许 HTTP/0.9 响应 |'
 - en: '| `CURLOPT_HTTP200ALIASES` | alternative matches for HTTP 200 OK |'
+  id: totrans-94
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTP200ALIASES` | HTTP 200 OK 的替代匹配 |'
 - en: '| `CURLOPT_HTTP_CONTENT_DECODING` | HTTP content decoding control |'
+  id: totrans-95
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTP_CONTENT_DECODING` | HTTP 内容解码控制 |'
 - en: '| `CURLOPT_HTTP_TRANSFER_DECODING` | HTTP transfer decoding control |'
+  id: totrans-96
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTP_TRANSFER_DECODING` | HTTP 传输解码控制 |'
 - en: '| `CURLOPT_HTTP_VERSION` | HTTP protocol version to use |'
+  id: totrans-97
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTP_VERSION` | 要使用的 HTTP 协议版本 |'
 - en: '| `CURLOPT_HTTPAUTH` | HTTP server authentication methods to try |'
+  id: totrans-98
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTPAUTH` | 尝试的 HTTP 服务器认证方法 |'
 - en: '| `CURLOPT_HTTPGET` | ask for an HTTP GET request |'
+  id: totrans-99
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTPGET` | 请求 HTTP GET 请求 |'
 - en: '| `CURLOPT_HTTPHEADER` | set of HTTP headers |'
+  id: totrans-100
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTPHEADER` | HTTP 头集合 |'
 - en: '| `CURLOPT_HTTPPOST` | multipart formpost content |'
+  id: totrans-101
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTPPOST` | 表单 post 内容的多部分 |'
 - en: '| `CURLOPT_HTTPPROXYTUNNEL` | tunnel through HTTP proxy |'
+  id: totrans-102
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_HTTPPROXYTUNNEL` | 通过 HTTP 代理隧道 |'
 - en: '| `CURLOPT_IGNORE_CONTENT_LENGTH` | ignore content length |'
+  id: totrans-103
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_IGNORE_CONTENT_LENGTH` | 忽略内容长度 |'
 - en: '| `CURLOPT_INFILESIZE_LARGE` | size of the input file to send off |'
+  id: totrans-104
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_INFILESIZE_LARGE` | 要发送的输入文件的大小 |'
 - en: '| `CURLOPT_INFILESIZE` | size of the input file to send off |'
+  id: totrans-105
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_INFILESIZE` | 要发送的输入文件的大小 |'
 - en: '| `CURLOPT_INTERFACE` | source interface for outgoing traffic |'
+  id: totrans-106
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_INTERFACE` | 出站流量的源接口 |'
 - en: '| `CURLOPT_INTERLEAVEDATA` | pointer passed to RTSP interleave callback |'
+  id: totrans-107
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_INTERLEAVEDATA` | 传递给 RTSP 交错回调的指针 |'
 - en: '| `CURLOPT_INTERLEAVEFUNCTION` | callback for RTSP interleaved data |'
+  id: totrans-108
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_INTERLEAVEFUNCTION` | RTSP 交错数据的回调 |'
 - en: '| `CURLOPT_IOCTLDATA` | pointer passed to I/O callback |'
+  id: totrans-109
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_IOCTLDATA` | 指针传递给 I/O 回调 |'
 - en: '| `CURLOPT_IOCTLFUNCTION` | callback for I/O operations |'
+  id: totrans-110
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_IOCTLFUNCTION` | I/O 操作的回调 |'
 - en: '| `CURLOPT_IPRESOLVE` | IP protocol version to use |'
+  id: totrans-111
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_IPRESOLVE` | 要使用的 IP 协议版本 |'
 - en: '| `CURLOPT_ISSUERCERT_BLOB` | issuer SSL certificate from memory blob |'
+  id: totrans-112
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ISSUERCERT_BLOB` | 从内存 blob 中获取的发行者 SSL 证书 |'
 - en: '| `CURLOPT_ISSUERCERT` | issuer SSL certificate filename |'
+  id: totrans-113
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_ISSUERCERT` | 发行者 SSL 证书文件名 |'
 - en: '| `CURLOPT_KEEP_SENDING_ON_ERROR` | keep sending on early HTTP response >=
     300 |'
+  id: totrans-114
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_KEEP_SENDING_ON_ERROR` | 在早期 HTTP 响应 >= 300 时继续发送 |'
 - en: '| `CURLOPT_KEYPASSWD` | passphrase to private key |'
+  id: totrans-115
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_KEYPASSWD` | 私钥的密码短语 |'
 - en: '| `CURLOPT_KRBLEVEL` | FTP kerberos security level |'
+  id: totrans-116
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_KRBLEVEL` | FTP Kerberos 安全级别 |'
 - en: '| `CURLOPT_LOCALPORT` | local port number to use for socket |'
+  id: totrans-117
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_LOCALPORT` | 用于套接字的本地端口号 |'
 - en: '| `CURLOPT_LOCALPORTRANGE` | number of additional local ports to try |'
+  id: totrans-118
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_LOCALPORTRANGE` | 尝试的附加本地端口号数量 |'
 - en: '| `CURLOPT_LOGIN_OPTIONS` | login options |'
+  id: totrans-119
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_LOGIN_OPTIONS` | 登录选项 |'
 - en: '| `CURLOPT_LOW_SPEED_LIMIT` | low speed limit in bytes per second |'
+  id: totrans-120
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_LOW_SPEED_LIMIT` | 每秒字节数的低速限制 |'
 - en: '| `CURLOPT_LOW_SPEED_TIME` | low speed limit time period |'
+  id: totrans-121
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_LOW_SPEED_TIME` | 低速限制时间周期 |'
 - en: '| `CURLOPT_MAIL_AUTH` | SMTP authentication address |'
+  id: totrans-122
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAIL_AUTH` | SMTP 认证地址 |'
 - en: '| `CURLOPT_MAIL_FROM` | SMTP sender address |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAIL_FROM` | SMTP 发件人地址 |'
 - en: '| `CURLOPT_MAIL_RCPT_ALLOWFAILS` | allow RCPT TO command to fail for some recipients
     |'
+  id: totrans-124
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAIL_RCPT_ALLOWFAILS` | 允许 RCPT TO 命令对某些收件人失败 |'
 - en: '| `CURLOPT_MAIL_RCPT` | list of SMTP mail recipients |'
+  id: totrans-125
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAIL_RCPT` | SMTP 邮件收件人列表 |'
 - en: '| `CURLOPT_MAX_RECV_SPEED_LARGE` | rate limit data download speed |'
+  id: totrans-126
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAX_RECV_SPEED_LARGE` | 数据下载速度限制率 |'
 - en: '| `CURLOPT_MAX_SEND_SPEED_LARGE` | rate limit data upload speed |'
+  id: totrans-127
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAX_SEND_SPEED_LARGE` | 数据上传速度限制率 |'
 - en: '| `CURLOPT_MAXAGE_CONN` | max idle time allowed for reusing a connection |'
+  id: totrans-128
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXAGE_CONN` | 允许重用连接的最大空闲时间 |'
 - en: '| `CURLOPT_MAXCONNECTS` | maximum connection cache size |'
+  id: totrans-129
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXCONNECTS` | 最大连接缓存大小 |'
 - en: '| `CURLOPT_MAXFILESIZE_LARGE` | maximum file size allowed to download |'
+  id: totrans-130
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXFILESIZE_LARGE` | 允许下载的最大文件大小 |'
 - en: '| `CURLOPT_MAXFILESIZE` | maximum file size allowed to download |'
+  id: totrans-131
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXFILESIZE` | 允许下载的最大文件大小 |'
 - en: '| `CURLOPT_MAXLIFETIME_CONN` | max lifetime (since creation) allowed for reusing
     a connection |'
+  id: totrans-132
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXLIFETIME_CONN` | 允许重用连接的最大生命周期（自创建以来） |'
 - en: '| `CURLOPT_MAXREDIRS` | maximum number of redirects allowed |'
+  id: totrans-133
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MAXREDIRS` | 允许的最大重定向次数 |'
 - en: '| `CURLOPT_MIME_OPTIONS` | set MIME option flags |'
+  id: totrans-134
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MIME_OPTIONS` | 设置 MIME 选项标志 |'
 - en: '| `CURLOPT_MIMEPOST` | send data from mime structure |'
+  id: totrans-135
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_MIMEPOST` | 从 MIME 结构发送数据 |'
 - en: '| `CURLOPT_NETRC_FILE` | filename to read .netrc info from |'
+  id: totrans-136
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NETRC_FILE` | 从中读取 .netrc 信息的文件名 |'
 - en: '| `CURLOPT_NETRC` | enable use of .netrc |'
+  id: totrans-137
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NETRC` | 启用 .netrc 的使用 |'
 - en: '| `CURLOPT_NEW_DIRECTORY_PERMS` | permissions for remotely created directories
     |'
+  id: totrans-138
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NEW_DIRECTORY_PERMS` | 远程创建目录的权限 |'
 - en: '| `CURLOPT_NEW_FILE_PERMS` | permissions for remotely created files |'
+  id: totrans-139
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NEW_FILE_PERMS` | 远程创建文件的权限 |'
 - en: '| `CURLOPT_NOBODY` | do the download request without getting the body |'
+  id: totrans-140
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NOBODY` | 执行下载请求而不获取主体 |'
 - en: '| `CURLOPT_NOPROGRESS` | switch off the progress meter |'
+  id: totrans-141
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NOPROGRESS` | 关闭进度表 |'
 - en: '| `CURLOPT_NOPROXY` | disable proxy use for specific hosts |'
+  id: totrans-142
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NOPROXY` | 禁用特定主机的代理使用 |'
 - en: '| `CURLOPT_NOSIGNAL` | skip all signal handling |'
+  id: totrans-143
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_NOSIGNAL` | 跳过所有信号处理 |'
 - en: '| `CURLOPT_OPENSOCKETDATA` | pointer passed to open socket callback |'
+  id: totrans-144
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_OPENSOCKETDATA` | 传递给打开套接字回调的指针 |'
 - en: '| `CURLOPT_OPENSOCKETFUNCTION` | callback for opening socket |'
+  id: totrans-145
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_OPENSOCKETFUNCTION` | 打开套接字的回调 |'
 - en: '| `CURLOPT_PASSWORD` | password to use in authentication |'
+  id: totrans-146
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PASSWORD` | 用于认证的密码 |'
 - en: '| `CURLOPT_PATH_AS_IS` | do not handle dot dot sequences |'
+  id: totrans-147
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PATH_AS_IS` | 不处理点号序列 |'
 - en: '| `CURLOPT_PINNEDPUBLICKEY` | pinned public key |'
+  id: totrans-148
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PINNEDPUBLICKEY` | 固定公钥 |'
 - en: '| `CURLOPT_PIPEWAIT` | wait for pipelining/multiplexing |'
+  id: totrans-149
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PIPEWAIT` | 等待管道/多路复用 |'
 - en: '| `CURLOPT_PORT` | remote port number to connect to |'
+  id: totrans-150
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PORT` | 要连接的远程端口号 |'
 - en: '| `CURLOPT_POST` | make an HTTP POST |'
+  id: totrans-151
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POST` | 执行HTTP POST |'
 - en: '| `CURLOPT_POSTFIELDS` | data to POST to server |'
+  id: totrans-152
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POSTFIELDS` | 要发送到服务器的数据 |'
 - en: '| `CURLOPT_POSTFIELDSIZE_LARGE` | size of POST data pointed to |'
+  id: totrans-153
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POSTFIELDSIZE_LARGE` | 指向的POST数据的大小 |'
 - en: '| `CURLOPT_POSTFIELDSIZE` | size of POST data pointed to |'
+  id: totrans-154
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POSTFIELDSIZE` | 指向的POST数据的大小 |'
 - en: '| `CURLOPT_POSTQUOTE` | (S)FTP commands to run after the transfer |'
+  id: totrans-155
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POSTQUOTE` | 传输后运行的（S）FTP命令 |'
 - en: '| `CURLOPT_POSTREDIR` | how to act on an HTTP POST redirect |'
+  id: totrans-156
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_POSTREDIR` | 对HTTP POST重定向的处理方式 |'
 - en: '| `CURLOPT_PRE_PROXY` | pre-proxy host to use |'
+  id: totrans-157
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PRE_PROXY` | 要使用的预代理主机 |'
 - en: '| `CURLOPT_PREQUOTE` | commands to run before an FTP transfer |'
+  id: totrans-158
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PREQUOTE` | FTP传输前的命令 |'
 - en: '| `CURLOPT_PREREQDATA` | pointer passed to the pre-request callback |'
+  id: totrans-159
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PREREQDATA` | 传递给预请求回调的指针 |'
 - en: '| `CURLOPT_PREREQFUNCTION` | user callback called when a connection has been
     |'
+  id: totrans-160
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PREREQFUNCTION` | 当连接建立时用户回调函数被调用 |'
 - en: '| `CURLOPT_PRIVATE` | store a private pointer |'
+  id: totrans-161
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PRIVATE` | 存储一个私有指针 |'
 - en: '| `CURLOPT_PROGRESSDATA` | pointer passed to the progress callback |'
+  id: totrans-162
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROGRESSDATA` | 传递给进度回调的指针 |'
 - en: '| `CURLOPT_PROGRESSFUNCTION` | progress meter callback |'
+  id: totrans-163
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROGRESSFUNCTION` | 进度表回调 |'
 - en: '| `CURLOPT_PROTOCOLS_STR` | allowed protocols |'
+  id: totrans-164
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROTOCOLS_STR` | 允许的协议 |'
 - en: '| `CURLOPT_PROTOCOLS` | allowed protocols |'
+  id: totrans-165
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROTOCOLS` | 允许的协议 |'
 - en: '| `CURLOPT_PROXY_CAINFO_BLOB` | proxy Certificate Authority (CA) bundle in
     PEM format |'
+  id: totrans-166
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_CAINFO_BLOB` | 以PEM格式存储的代理证书颁发机构（CA）证书包 |'
 - en: '| `CURLOPT_PROXY_CAINFO` | path to proxy Certificate Authority (CA) bundle
     |'
+  id: totrans-167
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_CAINFO` | 代理证书颁发机构（CA）证书包的路径 |'
 - en: '| `CURLOPT_PROXY_CAPATH` | directory holding HTTPS proxy CA certificates |'
+  id: totrans-168
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_CAPATH` | 存放HTTPS代理CA证书的目录 |'
 - en: '| `CURLOPT_PROXY_CRLFILE` | HTTPS proxy Certificate Revocation List file |'
+  id: totrans-169
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_CRLFILE` | HTTPS代理证书吊销列表文件 |'
 - en: '| `CURLOPT_PROXY_ISSUERCERT_BLOB` | proxy issuer SSL certificate from memory
     blob |'
+  id: totrans-170
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_ISSUERCERT_BLOB` | 从内存blob中获取的代理发行者SSL证书 |'
 - en: '| `CURLOPT_PROXY_ISSUERCERT` | proxy issuer SSL certificate filename |'
+  id: totrans-171
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_ISSUERCERT` | 代理发行者SSL证书的文件名 |'
 - en: '| `CURLOPT_PROXY_KEYPASSWD` | passphrase for the proxy private key |'
+  id: totrans-172
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_KEYPASSWD` | 代理私钥的密码短语 |'
 - en: '| `CURLOPT_PROXY_PINNEDPUBLICKEY` | pinned public key for https proxy |'
+  id: totrans-173
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_PINNEDPUBLICKEY` | https代理的固定公钥 |'
 - en: '| `CURLOPT_PROXY_SERVICE_NAME` | proxy authentication service name |'
+  id: totrans-174
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SERVICE_NAME` | 代理认证服务名称 |'
 - en: '| `CURLOPT_PROXY_SSL_CIPHER_LIST` | ciphers to use for HTTPS proxy |'
+  id: totrans-175
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSL_CIPHER_LIST` | 用于HTTPS代理的加密套件 |'
 - en: '| `CURLOPT_PROXY_SSL_OPTIONS` | HTTPS proxy SSL behavior options |'
+  id: totrans-176
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSL_OPTIONS` | HTTPS代理SSL行为选项 |'
 - en: '| `CURLOPT_PROXY_SSL_VERIFYHOST` | verify the proxy certificate’s name against
     host |'
+  id: totrans-177
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSL_VERIFYHOST` | 将代理证书的名称与主机进行验证 |'
 - en: '| `CURLOPT_PROXY_SSL_VERIFYPEER` | verify the proxy’s SSL certificate |'
+  id: totrans-178
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSL_VERIFYPEER` | 验证代理的SSL证书 |'
 - en: '| `CURLOPT_PROXY_SSLCERT_BLOB` | SSL proxy client certificate from memory blob
     |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLCERT_BLOB` | 从内存blob中获取的SSL代理客户端证书 |'
 - en: '| `CURLOPT_PROXY_SSLCERT` | HTTPS proxy client certificate |'
+  id: totrans-180
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLCERT` | HTTPS代理客户端证书 |'
 - en: '| `CURLOPT_PROXY_SSLCERTTYPE` | type of the proxy client SSL certificate |'
+  id: totrans-181
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLCERTTYPE` | 代理客户端SSL证书的类型 |'
 - en: '| `CURLOPT_PROXY_SSLKEY_BLOB` | private key for proxy cert from memory blob
     |'
+  id: totrans-182
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLKEY_BLOB` | 从内存blob中获取的代理证书的私钥 |'
 - en: '| `CURLOPT_PROXY_SSLKEY` | private keyfile for HTTPS proxy client cert |'
+  id: totrans-183
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLKEY` | HTTPS代理客户端证书的私钥文件 |'
 - en: '| `CURLOPT_PROXY_SSLKEYTYPE` | type of the proxy private key file |'
+  id: totrans-184
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLKEYTYPE` | 代理私钥文件的类型 |'
 - en: '| `CURLOPT_PROXY_SSLVERSION` | preferred HTTPS proxy TLS version |'
+  id: totrans-185
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_SSLVERSION` | 偏好的HTTPS代理TLS版本 |'
 - en: '| `CURLOPT_PROXY_TLS13_CIPHERS` | ciphers suites for proxy TLS 1.3 |'
+  id: totrans-186
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_TLS13_CIPHERS` | 代理TLS 1.3的加密套件 |'
 - en: '| `CURLOPT_PROXY_TLSAUTH_PASSWORD` | password to use for proxy TLS authentication
     |'
+  id: totrans-187
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_TLSAUTH_PASSWORD` | 用于代理 TLS 认证的密码 |'
 - en: '| `CURLOPT_PROXY_TLSAUTH_TYPE` | HTTPS proxy TLS authentication methods |'
+  id: totrans-188
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_TLSAUTH_TYPE` | HTTPS 代理 TLS 认证方法 |'
 - en: '| `CURLOPT_PROXY_TLSAUTH_USERNAME` | username to use for proxy TLS authentication
     |'
+  id: totrans-189
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_TLSAUTH_USERNAME` | 用于代理 TLS 认证的用户名 |'
 - en: '| `CURLOPT_PROXY_TRANSFER_MODE` | append FTP transfer mode to URL for proxy
     |'
+  id: totrans-190
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY_TRANSFER_MODE` | 将 FTP 传输模式附加到代理 URL |'
 - en: '| `CURLOPT_PROXY` | proxy to use |'
+  id: totrans-191
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXY` | 要使用的代理 |'
 - en: '| `CURLOPT_PROXYAUTH` | HTTP proxy authentication methods |'
+  id: totrans-192
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYAUTH` | HTTP 代理认证方法 |'
 - en: '| `CURLOPT_PROXYHEADER` | set of HTTP headers to pass to proxy |'
+  id: totrans-193
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYHEADER` | 要传递给代理的 HTTP 头部集合 |'
 - en: '| `CURLOPT_PROXYPASSWORD` | password to use with proxy authentication |'
+  id: totrans-194
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYPASSWORD` | 用于代理认证的密码 |'
 - en: '| `CURLOPT_PROXYPORT` | port number the proxy listens on |'
+  id: totrans-195
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYPORT` | 代理监听的端口号 |'
 - en: '| `CURLOPT_PROXYTYPE` | proxy protocol type |'
+  id: totrans-196
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYTYPE` | 代理协议类型 |'
 - en: '| `CURLOPT_PROXYUSERNAME` | username to use for proxy authentication |'
+  id: totrans-197
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYUSERNAME` | 用于代理认证的用户名 |'
 - en: '| `CURLOPT_PROXYUSERPWD` | username and password to use for proxy authentication
     |'
+  id: totrans-198
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PROXYUSERPWD` | 用于代理认证的用户名和密码 |'
 - en: '| `CURLOPT_PUT` | make an HTTP PUT request |'
+  id: totrans-199
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_PUT` | 发送 HTTP PUT 请求 |'
 - en: '| `CURLOPT_QUICK_EXIT` | allow to exit quickly |'
+  id: totrans-200
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_QUICK_EXIT` | 允许快速退出 |'
 - en: '| `CURLOPT_QUOTE` | (S)FTP commands to run before transfer |'
+  id: totrans-201
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_QUOTE` | 传输前运行的 (S)FTP 命令 |'
 - en: '| `CURLOPT_RANDOM_FILE` | file to read random data from |'
+  id: totrans-202
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RANDOM_FILE` | 从中读取随机数据的文件 |'
 - en: '| `CURLOPT_RANGE` | byte range to request |'
+  id: totrans-203
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RANGE` | 请求的字节范围 |'
 - en: '| `CURLOPT_READDATA` | pointer passed to the read callback |'
+  id: totrans-204
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_READDATA` | 传递给读取回调的指针 |'
 - en: '| `CURLOPT_READFUNCTION` | read callback for data uploads |'
+  id: totrans-205
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_READFUNCTION` | 数据上传的读取回调 |'
 - en: '| `CURLOPT_REDIR_PROTOCOLS_STR` | protocols allowed to redirect to |'
+  id: totrans-206
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_REDIR_PROTOCOLS_STR` | 允许重定向到的协议 |'
 - en: '| `CURLOPT_REDIR_PROTOCOLS` | protocols allowed to redirect to |'
+  id: totrans-207
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_REDIR_PROTOCOLS` | 允许重定向到的协议 |'
 - en: '| `CURLOPT_REFERER` | the HTTP referer header |'
+  id: totrans-208
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_REFERER` | HTTP 引用头 |'
 - en: '| `CURLOPT_REQUEST_TARGET` | alternative target for this request |'
+  id: totrans-209
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_REQUEST_TARGET` | 此请求的替代目标 |'
 - en: '| `CURLOPT_RESOLVE` | provide custom hostname to IP address resolves |'
+  id: totrans-210
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RESOLVE` | 提供自定义主机名到 IP 地址解析 |'
 - en: '| `CURLOPT_RESOLVER_START_DATA` | pointer passed to the resolver start callback
     |'
+  id: totrans-211
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RESOLVER_START_DATA` | 传递给 resolver start 回调的指针 |'
 - en: '| `CURLOPT_RESOLVER_START_FUNCTION` | callback called before a new name resolve
     is started |'
+  id: totrans-212
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RESOLVER_START_FUNCTION` | 在开始新的名称解析之前调用的回调 |'
 - en: '| `CURLOPT_RESUME_FROM_LARGE` | offset to resume transfer from |'
+  id: totrans-213
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RESUME_FROM_LARGE` | 从何处恢复传输的偏移量 |'
 - en: '| `CURLOPT_RESUME_FROM` | offset to resume transfer from |'
+  id: totrans-214
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RESUME_FROM` | 从何处恢复传输的偏移量 |'
 - en: '| `CURLOPT_RTSP_CLIENT_CSEQ` | RTSP client CSEQ number |'
+  id: totrans-215
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_CLIENT_CSEQ` | RTSP 客户端 CSEQ 数字 |'
 - en: '| `CURLOPT_RTSP_REQUEST` | RTSP request |'
+  id: totrans-216
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_REQUEST` | RTSP 请求 |'
 - en: '| `CURLOPT_RTSP_SERVER_CSEQ` | RTSP server CSEQ number |'
+  id: totrans-217
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_SERVER_CSEQ` | RTSP 服务器 CSEQ 数字 |'
 - en: '| `CURLOPT_RTSP_SESSION_ID` | RTSP session ID |'
+  id: totrans-218
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_SESSION_ID` | RTSP 会话 ID |'
 - en: '| `CURLOPT_RTSP_STREAM_URI` | RTSP stream URI |'
+  id: totrans-219
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_STREAM_URI` | RTSP 流 URI |'
 - en: '| `CURLOPT_RTSP_TRANSPORT` | RTSP Transport: header |'
+  id: totrans-220
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_RTSP_TRANSPORT` | RTSP 传输：头部 |'
 - en: '| `CURLOPT_SASL_AUTHZID` | authorization identity (identity to act as) |'
+  id: totrans-221
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SASL_AUTHZID` | 授权身份（要充当的身份） |'
 - en: '| `CURLOPT_SASL_IR` | send initial response in first packet |'
+  id: totrans-222
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SASL_IR` | 在第一个数据包中发送初始响应 |'
 - en: '| `CURLOPT_SEEKDATA` | pointer passed to the seek callback |'
+  id: totrans-223
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SEEKDATA` | 传递给 seek 回调的指针 |'
 - en: '| `CURLOPT_SEEKFUNCTION` | user callback for seeking in input stream |'
+  id: totrans-224
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SEEKFUNCTION` | 输入流中查找的用户回调 |'
 - en: '| `CURLOPT_SERVER_RESPONSE_TIMEOUT` | time in seconds allowed to wait for server
     response |'
+  id: totrans-225
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SERVER_RESPONSE_TIMEOUT` | 允许等待服务器响应的秒数 |'
 - en: '| `CURLOPT_SERVER_RESPONSE_TIMEOUT_MS` | time in milliseconds allowed to wait
     for server response |'
+  id: totrans-226
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SERVER_RESPONSE_TIMEOUT_MS` | 允许等待服务器响应的毫秒数 |'
 - en: '| `CURLOPT_SERVICE_NAME` | authentication service name |'
+  id: totrans-227
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SERVICE_NAME` | 认证服务名称 |'
 - en: '| `CURLOPT_SHARE` | share handle to use |'
+  id: totrans-228
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SHARE` | 要使用的共享句柄 |'
 - en: '| `CURLOPT_SOCKOPTDATA` | pointer to pass to sockopt callback |'
+  id: totrans-229
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SOCKOPTDATA` | 传递给 sockopt 回调的指针 |'
 - en: '| `CURLOPT_SOCKOPTFUNCTION` | callback for setting socket options |'
+  id: totrans-230
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SOCKOPTFUNCTION` | 设置套接字选项的回调 |'
 - en: '| `CURLOPT_SOCKS5_AUTH` | methods for SOCKS5 proxy authentication |'
+  id: totrans-231
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SOCKS5_AUTH` | SOCKS5 代理认证方法 |'
 - en: '| `CURLOPT_SOCKS5_GSSAPI_NEC` | socks proxy gssapi negotiation protection |'
+  id: totrans-232
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SOCKS5_GSSAPI_NEC` | socks 代理 gssapi 协商保护 |'
 - en: '| `CURLOPT_SOCKS5_GSSAPI_SERVICE` | SOCKS5 proxy authentication service name
     |'
+  id: totrans-233
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SOCKS5_GSSAPI_SERVICE` | SOCKS5代理认证服务名称 |'
 - en: '| `CURLOPT_SSH_AUTH_TYPES` | auth types for SFTP and SCP |'
+  id: totrans-234
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_AUTH_TYPES` | SFTP和SCP的认证类型 |'
 - en: '| `CURLOPT_SSH_COMPRESSION` | enable SSH compression |'
+  id: totrans-235
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_COMPRESSION` | 启用SSH压缩 |'
 - en: '| `CURLOPT_SSH_HOST_PUBLIC_KEY_MD5` | MD5 checksum of SSH server public key
     |'
+  id: totrans-236
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_HOST_PUBLIC_KEY_MD5` | SSH服务器公钥的MD5校验和 |'
 - en: '| `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256` | SHA256 hash of SSH server public key
     |'
+  id: totrans-237
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_HOST_PUBLIC_KEY_SHA256` | SSH服务器公钥的SHA256哈希值 |'
 - en: '| `CURLOPT_SSH_HOSTKEYDATA` | pointer to pass to the SSH host key callback
     |'
+  id: totrans-238
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_HOSTKEYDATA` | 传递给SSH主机密钥回调的指针 |'
 - en: '| `CURLOPT_SSH_HOSTKEYFUNCTION` | callback to check host key |'
+  id: totrans-239
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_HOSTKEYFUNCTION` | 检查主机密钥的回调 |'
 - en: '| `CURLOPT_SSH_KEYDATA` | pointer passed to the SSH key callback |'
+  id: totrans-240
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_KEYDATA` | 传递给SSH密钥回调的指针 |'
 - en: '| `CURLOPT_SSH_KEYFUNCTION` | callback for known host matching logic |'
+  id: totrans-241
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_KEYFUNCTION` | 已知主机匹配逻辑的回调 |'
 - en: '| `CURLOPT_SSH_KNOWNHOSTS` | filename holding the SSH known hosts |'
+  id: totrans-242
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_KNOWNHOSTS` | 包含SSH已知主机的文件名 |'
 - en: '| `CURLOPT_SSH_PRIVATE_KEYFILE` | private key file for SSH auth |'
+  id: totrans-243
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_PRIVATE_KEYFILE` | SSH认证的私钥文件 |'
 - en: '| `CURLOPT_SSH_PUBLIC_KEYFILE` | public key file for SSH auth |'
+  id: totrans-244
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSH_PUBLIC_KEYFILE` | SSH认证的公钥文件 |'
 - en: '| `CURLOPT_SSL_CIPHER_LIST` | ciphers to use for TLS |'
+  id: totrans-245
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_CIPHER_LIST` | 用于TLS的加密套件 |'
 - en: '| `CURLOPT_SSL_CTX_DATA` | pointer passed to ssl_ctx callback |'
+  id: totrans-246
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_CTX_DATA` | 传递给ssl_ctx回调的指针 |'
 - en: '| `CURLOPT_SSL_CTX_FUNCTION` | SSL context callback for OpenSSL, wolfSSL or
     mbedTLS |'
+  id: totrans-247
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_CTX_FUNCTION` | OpenSSL、wolfSSL或mbedTLS的SSL上下文回调 |'
 - en: '| `CURLOPT_SSL_EC_CURVES` | key exchange curves |'
+  id: totrans-248
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_EC_CURVES` | 密钥交换曲线 |'
 - en: '| `CURLOPT_SSL_ENABLE_ALPN` | Application Layer Protocol Negotiation |'
+  id: totrans-249
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_ENABLE_ALPN` | 应用层协议协商 |'
 - en: '| `CURLOPT_SSL_ENABLE_NPN` | use NPN |'
+  id: totrans-250
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_ENABLE_NPN` | 使用NPN |'
 - en: '| `CURLOPT_SSL_FALSESTART` | TLS false start |'
+  id: totrans-251
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_FALSESTART` | TLS false start |'
 - en: '| `CURLOPT_SSL_OPTIONS` | SSL behavior options |'
+  id: totrans-252
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_OPTIONS` | SSL行为选项 |'
 - en: '| `CURLOPT_SSL_SESSIONID_CACHE` | use the SSL session-ID cache |'
+  id: totrans-253
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_SESSIONID_CACHE` | 使用SSL会话ID缓存 |'
 - en: '| `CURLOPT_SSL_VERIFYHOST` | verify the certificate’s name against host |'
+  id: totrans-254
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_VERIFYHOST` | 将证书的名称与主机进行验证 |'
 - en: '| `CURLOPT_SSL_VERIFYPEER` | verify the peer’s SSL certificate |'
+  id: totrans-255
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_VERIFYPEER` | 验证对等方的SSL证书 |'
 - en: '| `CURLOPT_SSL_VERIFYSTATUS` | verify the certificate’s status |'
+  id: totrans-256
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSL_VERIFYSTATUS` | 验证证书的状态 |'
 - en: '| `CURLOPT_SSLCERT_BLOB` | SSL client certificate from memory blob |'
+  id: totrans-257
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLCERT_BLOB` | 从内存blob中获取SSL客户端证书 |'
 - en: '| `CURLOPT_SSLCERT` | SSL client certificate |'
+  id: totrans-258
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLCERT` | SSL客户端证书 |'
 - en: '| `CURLOPT_SSLCERTTYPE` | type of client SSL certificate |'
+  id: totrans-259
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLCERTTYPE` | 客户端SSL证书的类型 |'
 - en: '| `CURLOPT_SSLENGINE_DEFAULT` | make SSL engine default |'
+  id: totrans-260
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLENGINE_DEFAULT` | 设置SSL引擎为默认 |'
 - en: '| `CURLOPT_SSLENGINE` | SSL engine identifier |'
+  id: totrans-261
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLENGINE` | SSL引擎标识符 |'
 - en: '| `CURLOPT_SSLKEY_BLOB` | private key for client cert from memory blob |'
+  id: totrans-262
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLKEY_BLOB` | 从内存blob中获取客户端证书的私钥 |'
 - en: '| `CURLOPT_SSLKEY` | private keyfile for TLS and SSL client cert |'
+  id: totrans-263
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLKEY` | TLS和SSL客户端证书的私钥文件 |'
 - en: '| `CURLOPT_SSLKEYTYPE` | type of the private key file |'
+  id: totrans-264
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLKEYTYPE` | 私钥文件的类型 |'
 - en: '| `CURLOPT_SSLVERSION` | preferred TLS/SSL version |'
+  id: totrans-265
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SSLVERSION` | 优先的TLS/SSL版本 |'
 - en: '| `CURLOPT_STDERR` | redirect stderr to another stream |'
+  id: totrans-266
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_STDERR` | 将stderr重定向到另一个流 |'
 - en: '| `CURLOPT_STREAM_DEPENDS_E` | stream this transfer depends on exclusively
     |'
+  id: totrans-267
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_STREAM_DEPENDS_E` | 此传输专一依赖的流 |'
 - en: '| `CURLOPT_STREAM_DEPENDS` | stream this transfer depends on |'
+  id: totrans-268
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_STREAM_DEPENDS` | 此传输依赖的流 |'
 - en: '| `CURLOPT_STREAM_WEIGHT` | numerical stream weight |'
+  id: totrans-269
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_STREAM_WEIGHT` | 数值流权重 |'
 - en: '| `CURLOPT_SUPPRESS_CONNECT_HEADERS` | suppress proxy CONNECT response headers
     from user callbacks |'
+  id: totrans-270
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_SUPPRESS_CONNECT_HEADERS` | 从用户回调中抑制代理CONNECT响应头 |'
 - en: '| `CURLOPT_TCP_FASTOPEN` | TCP Fast Open |'
+  id: totrans-271
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TCP_FASTOPEN` | TCP快速打开 |'
 - en: '| `CURLOPT_TCP_KEEPALIVE` | TCP keep-alive probing |'
+  id: totrans-272
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TCP_KEEPALIVE` | TCP保活探测 |'
 - en: '| `CURLOPT_TCP_KEEPIDLE` | TCP keep-alive idle time wait |'
+  id: totrans-273
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TCP_KEEPIDLE` | TCP保活空闲时间等待 |'
 - en: '| `CURLOPT_TCP_KEEPINTVL` | TCP keep-alive interval |'
+  id: totrans-274
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TCP_KEEPINTVL` | TCP保活间隔 |'
 - en: '| `CURLOPT_TCP_NODELAY` | the TCP_NODELAY option |'
+  id: totrans-275
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TCP_NODELAY` | TCP_NODELAY选项 |'
 - en: '| `CURLOPT_TELNETOPTIONS` | set of telnet options |'
+  id: totrans-276
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TELNETOPTIONS` | 一组telnet选项 |'
 - en: '| `CURLOPT_TFTP_BLKSIZE` | TFTP block size |'
+  id: totrans-277
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TFTP_BLKSIZE` | TFTP块大小 |'
 - en: '| `CURLOPT_TFTP_NO_OPTIONS` | send no TFTP options requests |'
+  id: totrans-278
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TFTP_NO_OPTIONS` | 不发送TFTP选项请求 |'
 - en: '| `CURLOPT_TIMECONDITION` | select condition for a time request |'
+  id: totrans-279
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TIMECONDITION` | 时间请求的选取条件 |'
 - en: '| `CURLOPT_TIMEOUT_MS` | maximum time the transfer is allowed to complete |'
+  id: totrans-280
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TIMEOUT_MS` | 允许传输完成的最大时间 |'
 - en: '| `CURLOPT_TIMEOUT` | maximum time the transfer is allowed to complete |'
+  id: totrans-281
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TIMEOUT` | 允许传输完成的最大时间 |'
 - en: '| `CURLOPT_TIMEVALUE_LARGE` | time value for conditional |'
+  id: totrans-282
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TIMEVALUE_LARGE` | 条件性时间值 |'
 - en: '| `CURLOPT_TIMEVALUE` | time value for conditional |'
+  id: totrans-283
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TIMEVALUE` | 条件性时间值 |'
 - en: '| `CURLOPT_TLS13_CIPHERS` | ciphers suites to use for TLS 1.3 |'
+  id: totrans-284
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TLS13_CIPHERS` | 用于TLS 1.3的加密套件 |'
 - en: '| `CURLOPT_TLSAUTH_PASSWORD` | password to use for TLS authentication |'
+  id: totrans-285
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TLSAUTH_PASSWORD` | 用于TLS身份验证的密码 |'
 - en: '| `CURLOPT_TLSAUTH_TYPE` | TLS authentication methods |'
+  id: totrans-286
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TLSAUTH_TYPE` | TLS身份验证方法 |'
 - en: '| `CURLOPT_TLSAUTH_USERNAME` | username to use for TLS authentication |'
+  id: totrans-287
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TLSAUTH_USERNAME` | 用于TLS身份验证的用户名 |'
 - en: '| `CURLOPT_TRAILERDATA` | pointer passed to trailing headers callback |'
+  id: totrans-288
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TRAILERDATA` | 传递给尾部头回调的指针 |'
 - en: '| `CURLOPT_TRAILERFUNCTION` | callback for sending trailing headers |'
+  id: totrans-289
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TRAILERFUNCTION` | 发送尾部头的回调函数 |'
 - en: '| `CURLOPT_TRANSFER_ENCODING` | ask for HTTP Transfer Encoding |'
+  id: totrans-290
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TRANSFER_ENCODING` | 请求HTTP传输编码 |'
 - en: '| `CURLOPT_TRANSFERTEXT` | request a text based transfer for FTP |'
+  id: totrans-291
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_TRANSFERTEXT` | 请求基于文本的FTP传输 |'
 - en: '| `CURLOPT_UNIX_SOCKET_PATH` | Unix domain socket |'
+  id: totrans-292
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_UNIX_SOCKET_PATH` | Unix域套接字 |'
 - en: '| `CURLOPT_UNRESTRICTED_AUTH` | send credentials to other hosts too |'
+  id: totrans-293
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_UNRESTRICTED_AUTH` | 向其他主机发送凭据 |'
 - en: '| `CURLOPT_UPKEEP_INTERVAL_MS` | connection upkeep interval |'
+  id: totrans-294
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_UPKEEP_INTERVAL_MS` | 连接维护间隔 |'
 - en: '| `CURLOPT_UPLOAD_BUFFERSIZE` | upload buffer size |'
+  id: totrans-295
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_UPLOAD_BUFFERSIZE` | 上传缓冲区大小 |'
 - en: '| `CURLOPT_UPLOAD` | data upload |'
+  id: totrans-296
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_UPLOAD` | 数据上传 |'
 - en: '| `CURLOPT_URL` | URL for this transfer |'
+  id: totrans-297
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_URL` | 此传输的URL |'
 - en: '| `CURLOPT_USE_SSL` | request using SSL / TLS for the transfer |'
+  id: totrans-298
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_USE_SSL` | 使用SSL / TLS进行传输请求 |'
 - en: '| `CURLOPT_USERAGENT` | HTTP user-agent header |'
+  id: totrans-299
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_USERAGENT` | HTTP用户代理头 |'
 - en: '| `CURLOPT_USERNAME` | username to use in authentication |'
+  id: totrans-300
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_USERNAME` | 用于身份验证的用户名 |'
 - en: '| `CURLOPT_USERPWD` | username and password to use in authentication |'
+  id: totrans-301
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_USERPWD` | 用于身份验证的用户名和密码 |'
 - en: '| `CURLOPT_VERBOSE` | verbose mode |'
+  id: totrans-302
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_VERBOSE` | 详细模式 |'
 - en: '| `CURLOPT_WILDCARDMATCH` | directory wildcard transfers |'
+  id: totrans-303
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_WILDCARDMATCH` | 目录通配符传输 |'
 - en: '| `CURLOPT_WRITEDATA` | pointer passed to the write callback |'
+  id: totrans-304
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_WRITEDATA` | 传递给写回调的指针 |'
 - en: '| `CURLOPT_WRITEFUNCTION` | callback for writing received data |'
+  id: totrans-305
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_WRITEFUNCTION` | 写入接收数据的回调函数 |'
 - en: '| `CURLOPT_WS_OPTIONS` | WebSocket behavior options |'
+  id: totrans-306
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_WS_OPTIONS` | WebSocket行为选项 |'
 - en: '| `CURLOPT_XFERINFODATA` | pointer passed to the progress callback |'
+  id: totrans-307
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_XFERINFODATA` | 传递给进度回调的指针 |'
 - en: '| `CURLOPT_XFERINFOFUNCTION` | progress meter callback |'
+  id: totrans-308
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_XFERINFOFUNCTION` | 进度计回调函数 |'
 - en: '| `CURLOPT_XOAUTH2_BEARER` | OAuth 2.0 access token |'
+  id: totrans-309
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLOPT_XOAUTH2_BEARER` | OAuth 2.0访问令牌 |'

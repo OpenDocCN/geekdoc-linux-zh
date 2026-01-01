@@ -1,299 +1,469 @@
 - en: Post transfer info
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 传输后信息
 - en: Remember how libcurl transfers are associated with *easy handles*. Each transfer
     has such a handle and when a transfer is completed, before the handle is cleaned
     or reused for another transfer, it can be used to extract information from the
     previous operation.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 记住 libcurl 传输与 *easy 处理句柄* 的关联。每个传输都有一个这样的句柄，当传输完成时，在句柄被清理或用于另一个传输之前，它可以用来从之前的操作中提取信息。
 - en: Your friend for doing this is called `curl_easy_getinfo()` and you tell it which
     specific information you are interested in and it returns that if it can.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 你的朋友 `curl_easy_getinfo()` 可以做这件事，你告诉它你感兴趣的具体信息，如果它能提供，它就会返回。
 - en: When you use this function, you pass in the easy handle, which information you
     want and a pointer to a variable to hold the answer. You must pass in a pointer
     to a variable of the correct type or you risk that things go side-ways. These
     information values are designed to be provided *after* the transfer is completed.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你使用此函数时，你需要传入 easy 处理句柄、所需信息和用于存储答案的变量的指针。你必须传入正确类型的变量指针，否则可能会出现意外情况。这些信息值旨在在传输完成后提供。
 - en: The data you receive can be a long, a ‘char *’, a ’struct curl_slist* ’, a double
     or a socket.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 你接收到的数据可以是一个长整型、`char *`、`struct curl_slist*`、一个双精度浮点数或一个套接字。
 - en: 'This is how you extract the `Content-Type:` value from the previous HTTP transfer:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这就是如何从之前的 HTTP 传输中提取 `Content-Type:` 值：
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If you want to extract the local port number that was used in that connection:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想提取在该连接中使用过的本地端口号：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Available information
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 可用信息
 - en: '| Getinfo option | Type | Description |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| 获取信息选项 | 类型 | 描述 |'
 - en: '| --- | --- | --- |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `CURLINFO_ACTIVESOCKET` | `curl_socket_t` | The session’s active socket |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_ACTIVESOCKET` | `curl_socket_t` | 会话的活跃套接字 |'
 - en: '| `CURLINFO_APPCONNECT_TIME` | `double` | Time from start until SSL/SSH handshake
     completed |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_APPCONNECT_TIME` | `double` | 从开始到 SSL/SSH 握手完成的时刻 |'
 - en: '| `CURLINFO_APPCONNECT_TIME_T` | `curl_off_t` | Time from start until SSL/SSH
     handshake completed (in microseconds) |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_APPCONNECT_TIME_T` | `curl_off_t` | 从开始到 SSL/SSH 握手完成的时刻（以微秒为单位）
+    |'
 - en: '| `CURLINFO_CAINFO` | `char *` | Path to the default CA file libcurl is built
     to use |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CAINFO` | `char *` | libcurl 构建时使用的默认 CA 文件路径 |'
 - en: '| `CURLINFO_CAPATH` | `char *` | Path to the CA directory libcurl is built
     to use |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CAPATH` | `char *` | libcurl 构建时使用的 CA 目录路径 |'
 - en: '| `CURLINFO_CERTINFO` | `struct curl_slist *` | Certificate chain |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CERTINFO` | `struct curl_slist *` | 证书链 |'
 - en: '| `CURLINFO_CONDITION_UNMET` | `long` | Whether or not a time conditional was
     met |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONDITION_UNMET` | `long` | 是否满足时间条件 |'
 - en: '| `CURLINFO_CONNECT_TIME` | `double` | Time from start until remote host or
     proxy completed |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONNECT_TIME` | `double` | 从开始到远程主机或代理完成的时间 |'
 - en: '| `CURLINFO_CONNECT_TIME_T` | `curl_off_t` | Time from start until remote host
     or proxy completed (in microseconds) |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONNECT_TIME_T` | `curl_off_t` | 从开始到远程主机或代理完成的时间（以微秒为单位） |'
 - en: '| `CURLINFO_CONN_ID` | `curl_off_t` | Numerical id of the current connection
     (meant for callbacks) |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONN_ID` | `curl_off_t` | 当前连接的数值 ID（用于回调） |'
 - en: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD` | `double` | Content length from the Content-Length
     header |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD` | `double` | 从 Content-Length 报头获取的内容长度
+    |'
 - en: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD_T` | `curl_off_t` | Content length from
     the Content-Length header |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD_T` | `curl_off_t` | 从 Content-Length 报头获取的内容长度
+    |'
 - en: '| `CURLINFO_CONTENT_LENGTH_UPLOAD` | `double` | Upload size |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONTENT_LENGTH_UPLOAD` | `double` | 上传大小 |'
 - en: '| `CURLINFO_CONTENT_LENGTH_UPLOAD_T` | `curl_off_t` | Upload size |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONTENT_LENGTH_UPLOAD_T` | `curl_off_t` | 上传大小 |'
 - en: '| `CURLINFO_CONTENT_TYPE` | `char *` | Content type from the Content-Type header
     |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_CONTENT_TYPE` | `char *` | 从 Content-Type 报头获取的内容类型 |'
 - en: '| `CURLINFO_COOKIELIST` | `struct curl_slist *` | List of all known cookies
     |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_COOKIELIST` | `struct curl_slist *` | 所有已知 cookie 的列表 |'
 - en: '| `CURLINFO_EFFECTIVE_METHOD` | `char *` | Last used HTTP request method |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_EFFECTIVE_METHOD` | `char *` | 最后使用的 HTTP 请求方法 |'
 - en: '| `CURLINFO_EFFECTIVE_URL` | `char *` | Last used URL |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_EFFECTIVE_URL` | `char *` | 最后使用的 URL |'
 - en: '| `CURLINFO_FILETIME` | `long` | Remote time of the retrieved document |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_FILETIME` | `long` | 获取的文档的远程时间 |'
 - en: '| `CURLINFO_FILETIME_T` | `curl_off_t` | Remote time of the retrieved document
     |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_FILETIME_T` | `curl_off_t` | 获取的文档的远程时间 |'
 - en: '| `CURLINFO_FTP_ENTRY_PATH` | `char *` | The entry path after logging in to
     an FTP server |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_FTP_ENTRY_PATH` | `char *` | 登录 FTP 服务器后的入口路径 |'
 - en: '| `CURLINFO_HEADER_SIZE` | `long` | Number of bytes of all headers received
     |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_HEADER_SIZE` | `long` | 接收到的所有报头字节数 |'
 - en: '| `CURLINFO_HTTP_CONNECTCODE` | `long` | Last proxy CONNECT response code |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_HTTP_CONNECTCODE` | `long` | 最后代理CONNECT响应代码 |'
 - en: '| `CURLINFO_HTTP_VERSION` | `long` | The HTTP version used in the connection
     |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_HTTP_VERSION` | `long` | 连接中使用的HTTP版本 |'
 - en: '| `CURLINFO_HTTPAUTH_AVAIL` | `long` | Available HTTP authentication methods
     (bitmask) |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_HTTPAUTH_AVAIL` | `long` | 可用的HTTP身份验证方法（位掩码） |'
 - en: '| `CURLINFO_LASTSOCKET` | `long` | Last socket used |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_LASTSOCKET` | `long` | 最后使用的套接字 |'
 - en: '| `CURLINFO_LOCAL_IP` | `char *` | Local-end IP address of last connection
     |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_LOCAL_IP` | `char *` | 上次连接的本地端IP地址 |'
 - en: '| `CURLINFO_LOCAL_PORT` | `long` | Local-end port of last connection |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_LOCAL_PORT` | `long` | 上次连接的本地端端口 |'
 - en: '| `CURLINFO_NAMELOOKUP_TIME` | `double` | Time from start until name resolving
     completed |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_NAMELOOKUP_TIME` | `double` | 从开始到名称解析完成的时间 |'
 - en: '| `CURLINFO_NAMELOOKUP_TIME_T` | `curl_off_t` | Time from start until name
     resolving completed (in microseconds) |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_NAMELOOKUP_TIME_T` | `curl_off_t` | 从开始到名称解析完成的时间（微秒） |'
 - en: '| `CURLINFO_NUM_CONNECTS` | `long` | Number of new successful connections used
     for previous transfer |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_NUM_CONNECTS` | `long` | 用于上次传输的新成功连接数 |'
 - en: '| `CURLINFO_OS_ERRNO` | `long` | The errno from the last failure to connect
     |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_OS_ERRNO` | `long` | 上次连接失败的errno |'
 - en: '| `CURLINFO_PRETRANSFER_TIME` | `double` | Time from start until just before
     the transfer begins |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PRETRANSFER_TIME` | `double` | 从开始到传输开始之前的时间 |'
 - en: '| `CURLINFO_PRETRANSFER_TIME_T` | `curl_off_t` | Time from start until just
     before the transfer begins (in microseconds) |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PRETRANSFER_TIME_T` | `curl_off_t` | 从开始到传输开始之前的时间（微秒） |'
 - en: '| `CURLINFO_PRIMARY_IP` | `char *` | IP address of the last connection |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PRIMARY_IP` | `char *` | 上次连接的IP地址 |'
 - en: '| `CURLINFO_PRIMARY_PORT` | `long` | Port of the last connection |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PRIMARY_PORT` | `long` | 上次连接的端口 |'
 - en: '| `CURLINFO_PRIVATE` | `char *` | User’s private data pointer |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PRIVATE` | `char *` | 用户私有数据指针 |'
 - en: '| `CURLINFO_PROTOCOL` | `long` | The protocol used for the connection |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PROTOCOL` | `long` | 用于连接的协议 |'
 - en: '| `CURLINFO_PROXY_ERROR` | `long` | Detailed (SOCKS) proxy error if `CURLE_PROXY`
     was returned from the transfer |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PROXY_ERROR` | `long` | 如果从传输返回`CURLE_PROXY`，则详细的（SOCKS）代理错误 |'
 - en: '| `CURLINFO_PROXY_SSL_VERIFYRESULT` | `long` | Proxy certificate verification
     result |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PROXY_SSL_VERIFYRESULT` | `long` | 代理证书验证结果 |'
 - en: '| `CURLINFO_PROXYAUTH_AVAIL` | `long` | Available HTTP proxy authentication
     methods |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_PROXYAUTH_AVAIL` | `long` | 可用的HTTP代理身份验证方法 |'
 - en: '| `CURLINFO_QUEUE_TIME_T` | `curl_off_t` | Time in microseconds this transfer
     was held in queue waiting to start |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_QUEUE_TIME_T` | `curl_off_t` | 此传输在队列中等待开始的时间（微秒） |'
 - en: '| `CURLINFO_REDIRECT_COUNT` | `long` | Total number of redirects that were
     followed |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REDIRECT_COUNT` | `long` | 跟随的重定向总数 |'
 - en: '| `CURLINFO_REDIRECT_TIME` | `double` | Time taken for all redirect steps before
     the final transfer |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REDIRECT_TIME` | `double` | 在最终传输之前所有重定向步骤所需的时间 |'
 - en: '| `CURLINFO_REDIRECT_TIME_T` | `curl_off_t` | Time taken for all redirect steps
     before the final transfer (in microseconds) |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REDIRECT_TIME_T` | `curl_off_t` | 在最终传输之前所有重定向步骤所需的时间（微秒） |'
 - en: '| `CURLINFO_REDIRECT_URL` | `char *` | URL a redirect would take you to, had
     you enabled redirects |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REDIRECT_URL` | `char *` | 重定向会带你去到的URL，如果你启用了重定向 |'
 - en: '| `CURLINFO_REFERER` | `char *` | The used request `Referer:` header |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REFERER` | `char *` | 使用的请求`Referer:`头 |'
 - en: '| `CURLINFO_REQUEST_SIZE` | `long` | Number of bytes sent in the issued HTTP
     requests |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_REQUEST_SIZE` | `long` | 发出的HTTP请求中发送的字节数 |'
 - en: '| `CURLINFO_RESPONSE_CODE` | `long` | Last received response code |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RESPONSE_CODE` | `long` | 最后接收到的响应代码 |'
 - en: '| `CURLINFO_RETRY_AFTER` | `curl_off_t` | The value from the response `Retry-After:`
     header |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RETRY_AFTER` | `curl_off_t` | 从响应`Retry-After:`头中获取的值 |'
 - en: '| `CURLINFO_RTSP_CLIENT_CSEQ` | `long` | RTSP next expected client CSeq |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RTSP_CLIENT_CSEQ` | `long` | RTSP下一次期望的客户CSeq |'
 - en: '| `CURLINFO_RTSP_CSEQ_RECV` | `long` | RTSP last received |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RTSP_CSEQ_RECV` | `long` | RTSP最后接收 |'
 - en: '| `CURLINFO_RTSP_SERVER_CSEQ` | `long` | RTSP next expected server CSeq |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RTSP_SERVER_CSEQ` | `long` | RTSP下一次期望的服务器CSeq |'
 - en: '| `CURLINFO_RTSP_SESSION_ID` | `char *` | RTSP session ID |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_RTSP_SESSION_ID` | `char *` | RTSP会话ID |'
 - en: '| `CURLINFO_SCHEME` | `char *` | The scheme used for the connection |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SCHEME` | `char *` | 用于连接的方案 |'
 - en: '| `CURLINFO_SIZE_DOWNLOAD` | `double` | Number of bytes downloaded |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SIZE_DOWNLOAD` | `double` | 下载的字节数 |'
 - en: '| `CURLINFO_SIZE_DOWNLOAD_T` | `curl_off_t` | Number of bytes downloaded |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SIZE_DOWNLOAD_T` | `curl_off_t` | 下载的字节数 |'
 - en: '| `CURLINFO_SIZE_UPLOAD` | `double` | Number of bytes uploaded |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SIZE_UPLOAD` | `double` | 上传的字节数 |'
 - en: '| `CURLINFO_SIZE_UPLOAD_T` | `curl_off_t` | Number of bytes uploaded |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SIZE_UPLOAD_T` | `curl_off_t` | 上传的字节数 |'
 - en: '| `CURLINFO_SPEED_DOWNLOAD` | `double` | Average download speed |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SPEED_DOWNLOAD` | `double` | 平均下载速度 |'
 - en: '| `CURLINFO_SPEED_DOWNLOAD_T` | `curl_off_t` | Average download speed |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SPEED_DOWNLOAD_T` | `curl_off_t` | 平均下载速度 |'
 - en: '| `CURLINFO_SPEED_UPLOAD` | `double` | Average upload speed |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SPEED_UPLOAD` | `double` | 平均上传速度 |'
 - en: '| `CURLINFO_SPEED_UPLOAD_T` | `curl_off_t` | Average upload speed |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SPEED_UPLOAD_T` | `curl_off_t` | 平均上传速度 |'
 - en: '| `CURLINFO_SSL_ENGINES` | `struct curl_slist *` | A list of OpenSSL crypto
     engines |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SSL_ENGINES` | `struct curl_slist *` | OpenSSL 加密引擎列表 |'
 - en: '| `CURLINFO_SSL_VERIFYRESULT` | `long` | Certificate verification result |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_SSL_VERIFYRESULT` | `long` | 证书验证结果 |'
 - en: '| `CURLINFO_STARTTRANSFER_TIME` | `double` | Time from start until just when
     the first byte is received |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_STARTTRANSFER_TIME` | `double` | 从开始到接收到第一个字节的时刻的时间 |'
 - en: '| `CURLINFO_STARTTRANSFER_TIME_T` | `curl_off_t` | Time from start until just
     when the first byte is received (in microseconds) |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_STARTTRANSFER_TIME_T` | `curl_off_t` | 从开始到接收到第一个字节的时刻的时间（以微秒为单位）
+    |'
 - en: '| `CURLINFO_TLS_SSL_PTR` | `struct curl_slist *` | TLS session info that can
     be used for further processing |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_TLS_SSL_PTR` | `struct curl_slist *` | 可用于进一步处理的 TLS 会话信息 |'
 - en: '| `CURLINFO_TOTAL_TIME` | `double` | Total time of previous transfer |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_TOTAL_TIME` | `double` | 上一次传输的总时间 |'
 - en: '| `CURLINFO_TOTAL_TIME_T` | `curl_off_t` | Total time of previous transfer
     (in microseconds) |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_TOTAL_TIME_T` | `curl_off_t` | 上一次传输的总时间（以微秒为单位） |'
 - en: '| `CURLINFO_XFER_ID` | `curl_off_t` | Numerical id of the current transfer
     (meant for callbacks) |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '| `CURLINFO_XFER_ID` | `curl_off_t` | 当前传输的数值ID（用于回调） |'

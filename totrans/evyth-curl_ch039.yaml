@@ -1,287 +1,436 @@
 - en: Code style
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 代码风格
 - en: Source code that has a common style is easier to read than code that uses different
     styles in different places. It helps make the code feel like one continuous code
     base. Being easy-to-read is an important property of code and helps make it easier
     to review when new things are added and it helps debugging code when developers
     are trying to figure out why things go wrong. A unified style is more important
     than individual contributors having their own personal tastes satisfied.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 具有共同样式的源代码比在不同地方使用不同样式的代码更容易阅读。这有助于使代码感觉像是一个连续的代码库。易于阅读是代码的一个重要属性，有助于在添加新内容时更容易进行代码审查，并在开发者试图弄清楚事情出错的原因时有助于调试代码。统一的样式比个人贡献者满足个人口味更重要。
 - en: Our C code has a few style rules. Most of them are verified and upheld by the
     `checksrc.pl` script. Invoked with `make checksrc` or even by default by the build
     system when built after `./configure --enable-debug` has been used.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们的C代码有一些风格规则。其中大部分由`checksrc.pl`脚本验证和执行。可以通过`make checksrc`调用，或者在`./configure
+    --enable-debug`被使用后，构建系统默认执行。
 - en: It is normally not a problem for anyone to follow the guidelines as you just
     need to copy the style already used in the source code, and there are no particularly
     unusual rules in our set of rules.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，遵循指南对任何人来说都不是问题，因为你只需要复制源代码中已经使用的样式，并且在我们的规则集中没有特别不寻常的规则。
 - en: We also work hard on writing code that is warning-free on all the major platforms
     and in general on as many platforms as possible. Code that obviously causes warnings
     is not accepted as-is.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还努力编写在所有主要平台以及尽可能多的平台上无警告的代码。显然会导致警告的代码不接受原样使用。
 - en: Naming
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 命名
 - en: Try using a non-confusing naming scheme for your new functions and variable
     names. It does not necessarily have to mean that you should use the same as in
     other places of the code, just that the names should be logical, understandable
     and be named according to what they are used for. File-local functions should
     be made static. We like lower case names.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 尝试为你的新函数和变量名使用一个不令人困惑的命名方案。这并不意味着你必须在代码的其他地方使用相同的命名，只是名字应该是逻辑的、可理解的，并且根据它们的使用目的来命名。文件局部函数应该被定义为静态的。我们喜欢小写命名。
 - en: All symbols meant for public use must start with `curl`. Global internal symbols
     start with `Curl`.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有供公共使用的符号都必须以`curl`开头。全局内部符号以`Curl`开头。
 - en: Indentation
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 缩进
 - en: We use only spaces for indentation, never TABs. We use two spaces for each new
     open brace.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们只使用空格进行缩进，从不使用制表符。每个新的开括号使用两个空格。
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Comments
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 注释
 - en: Since we write C89 code, `//` comments are not allowed. They were not introduced
     in the C standard until C99\. We use only `/* comments */`.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于我们编写的是C89代码，不允许使用`//`注释。它们直到C99标准中才被引入。我们只使用`/*注释*/`。
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Long lines
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 长行
 - en: 'Source code in curl may never be wider than 79 columns. There are two reasons
     for maintaining this even in the modern era of large and high resolution screens:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: curl中的源代码宽度不得超过79列。即使在现代大屏幕和高分辨率屏幕时代，保持这一规定的两个原因如下：
 - en: Narrower columns are easier to read than wide ones. There is a reason newspapers
     have used columns for decades or centuries.
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 较窄的列比宽列更容易阅读。这也是为什么报纸几十年来或几个世纪来都使用栏目的原因。
 - en: Narrower columns allow developers to more easily view multiple pieces of code
     next to each other in different windows. I often have two or three source code
     windows next to each other on the same screen, as well as multiple terminal and
     debugging windows.
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 较窄的列宽允许开发者更容易地在不同的窗口中并排查看多段代码。我经常在同一屏幕上并排打开两到三个源代码窗口，以及多个终端和调试窗口。
 - en: Braces
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 花括号
 - en: 'In if/while/do/for expressions, we write the open brace on the same line as
     the keyword and we then set the closing brace on the same indentation level as
     the initial keyword. Like this:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 在if/while/do/for表达式中，我们将开括号写在关键字所在的同一行上，然后我们将闭合括号设置在初始关键字相同的缩进级别上。如下所示：
 - en: '[PRE2]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You may omit the braces if they would contain only a one-line statement:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果括号中只包含一行语句，你可以省略括号：
 - en: '[PRE3]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'For functions the opening brace should be on a separate line:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于函数，开括号应该放在单独的一行上：
 - en: '[PRE4]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: else on the following line
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在下一行使用else
 - en: 'When adding an `else` clause to a conditional expression using braces, we add
     it on a new line after the closing brace. Like this:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用花括号给条件表达式添加`else`子句时，我们在闭合花括号之后的新行上添加它。如下所示：
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: No space before parentheses
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 括号前不加空格
 - en: 'When writing expressions using if/while/do/for, there shall be no space between
     the keyword and the open parenthesis. Like this:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用if/while/do/for编写表达式时，关键字与开括号之间不应有空格。例如：
 - en: '[PRE6]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Use boolean conditions
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用布尔条件
 - en: 'Rather than test a conditional value such as a bool against TRUE or FALSE,
     a pointer against NULL or != NULL and an int against zero or not zero in if/while
     conditions we prefer:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 而不是在if/while条件中测试条件值，如布尔值与TRUE或FALSE，指针与NULL或不为NULL，整数与零或不为零，我们更喜欢：
 - en: '[PRE7]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: '}'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '}'
 - en: No assignments in conditions
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件中不允许有赋值操作
 - en: 'To increase readability and reduce complexity of conditionals, we avoid assigning
     variables within if/while conditions. We frown upon this style:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了提高可读性和减少条件语句的复杂性，我们避免在if/while条件中赋值变量。我们反对这种风格：
 - en: '[PRE8]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'Instead we encourage the above version to be spelled out more clearly:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 相反，我们鼓励使用更清晰的上述版本：
 - en: '[PRE9]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: New block on a new line
+  id: totrans-40
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在新的一行上创建新的区块
 - en: We never write multiple statements on the same source line, even for short if()
     conditions.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们从不将多个语句写在同一源行上，即使对于短的if()条件也是如此。
 - en: '[PRE10]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Never:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 永远不要：
 - en: '[PRE11]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: Space around operators
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 操作符周围的空格
 - en: Please use spaces on both sides of operators in C expressions. Postfix **(),
     [], ->, ., ++, –** and Unary **+, -, !, ~, &** operators excluded they should
     have no space.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 请在C表达式中操作符两侧使用空格。后缀**(), [], ->, ., ++, –**和一元**+, -, !, ~, &**操作符除外，它们不应有空格。
 - en: 'Examples:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE12]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: No parentheses for return values
+  id: totrans-49
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 返回值不需要括号
 - en: 'We use the ‘return’ statement without extra parentheses around the value:'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们使用带括号的‘return’语句来返回值：
 - en: '[PRE13]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: Parentheses for sizeof arguments
+  id: totrans-52
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: sizeof参数的括号
 - en: 'When using the sizeof operator in code, we prefer it to be written with parentheses
     around its argument:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在代码中使用sizeof运算符时，我们更喜欢将其参数用括号括起来：
 - en: '[PRE14]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Column alignment
+  id: totrans-55
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 列对齐
 - en: Some statements cannot be completed on a single line because the line would
     be too long, the statement too hard to read, or due to other style guidelines
     above. In such a case the statement spans multiple lines.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 有些语句不能在单行上完成，因为行会太长，语句难以阅读，或者由于其他风格指南。在这种情况下，语句跨越多行。
 - en: 'If a continuation line is part of an expression or sub-expression then you
     should align on the appropriate column so that it is easy to tell what part of
     the statement it is. Operators should not start continuation lines. In other cases
     follow the 2-space indent guideline. Here are some examples from libcurl:'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果续行符是表达式或子表达式的部分，那么你应该在适当的列上对齐，以便容易判断它是语句的哪一部分。操作符不应开始续行符。在其他情况下，遵循2个空格缩进指南。以下是一些来自libcurl的示例：
 - en: '[PRE15]'
+  id: totrans-58
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: 'If no parenthesis, use the default indent:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有括号，使用默认缩进：
 - en: '[PRE16]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'Function invoke with an open parenthesis:'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用开括号进行函数调用：
 - en: '[PRE17]'
+  id: totrans-62
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: 'Align with the “current open” parenthesis:'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 与“当前打开”的括号对齐：
 - en: '[PRE18]'
+  id: totrans-64
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Platform dependent code
+  id: totrans-65
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 平台相关代码
 - en: 'Use **#ifdef HAVE_FEATURE** to do conditional code. We avoid checking for particular
     operating systems or hardware in the #ifdef lines. The HAVE_FEATURE shall be generated
     by the configure script for unix-like systems and they are hard-coded in the `config-[system].h`
     files for the others.'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用**#ifdef HAVE_FEATURE**来进行条件代码。我们避免在#ifdef行中检查特定的操作系统或硬件。HAVE_FEATURE应由unix-like系统的configure脚本来生成，而对于其他系统则硬编码在`config-[system].h`文件中。
 - en: 'We also encourage use of macros/functions that possibly are empty or defined
     to constants when libcurl is built without that feature, to make the code seamless.
     Like this example where the **magic()** function works differently depending on
     a build-time conditional:'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还鼓励使用宏/函数，当libcurl构建时没有该功能，它们可能是空的或定义为常量，以使代码无缝。例如，**magic()**函数根据构建时的条件而有所不同：
 - en: '[PRE19]'
+  id: totrans-68
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: No typedefed structs
+  id: totrans-69
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 不使用typedef的结构体
 - en: 'Use structs by all means, but do not typedef them. Use the `struct name` way
     of identifying them:'
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 尽可能使用结构体，但不要为它们使用typedef。使用`struct name`的方式来标识它们：
 - en: '[PRE20]'
+  id: totrans-71
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: '**Not okay**:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**不合适**：'
 - en: '[PRE21]'
+  id: totrans-73
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'

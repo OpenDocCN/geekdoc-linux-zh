@@ -1,134 +1,187 @@
 - en: Reporting vulnerabilities
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 报告漏洞
 - en: All known and public curl or libcurl related vulnerabilities are listed on [the
     curl website security page](https://curl.se/docs/security.html).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有已知和公开的curl或libcurl相关漏洞均列在[curl网站的安全页面](https://curl.se/docs/security.html)上。
 - en: Security vulnerabilities should not be entered in the project’s public bug tracker
     unless the necessary configuration is in place to limit access to the issue to
     only the reporter and the project’s security team.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 除非设置了必要的配置以将问题仅限于报告者和项目安全团队访问，否则不应在项目的公共错误跟踪器中输入安全漏洞。
 - en: Vulnerability handling
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 漏洞处理
 - en: The typical process for handling a new security vulnerability is as follows.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 处理新安全漏洞的典型流程如下。
 - en: No information should be made public about a vulnerability until it is formally
     announced at the end of this process. That means, for example, that a bug tracker
     entry must NOT be created to track the issue since that makes the issue public
     and it should not be discussed on any of the project’s public mailing lists. Also
     messages associated with any commits should not make any reference to the security
     nature of the commit if done prior to the public announcement.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在正式宣布之前，关于漏洞的信息不应公开。这意味着，例如，不应创建一个错误跟踪器条目来跟踪问题，因为这会使问题公开，并且不应在任何项目的公共邮件列表上讨论。此外，与任何提交相关的消息在公共宣布之前不应提及提交的安全性质。
 - en: The person discovering the issue, the reporter, reports the vulnerability on
     [https://hackerone.com/curl](https://hackerone.com/curl). Issues filed there reach
     a handful of selected and trusted people.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 发现问题的个人，报告者，在[https://hackerone.com/curl](https://hackerone.com/curl)上报告漏洞。那里提交的问题会达到少数精选和信任的人。
 - en: Messages that do not relate to the reporting or managing of an undisclosed security
     vulnerability in curl or libcurl are ignored and no further action is required.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与curl或libcurl中未公开的安全漏洞报告或管理无关的消息将被忽略，不需要采取进一步行动。
 - en: A person in the security team sends an email to the original reporter to acknowledge
     the report.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安全团队中的某个人会向原始报告者发送一封电子邮件以确认报告。
 - en: The security team investigates the report and either rejects it or accepts it.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安全团队调查报告，要么拒绝它，要么接受它。
 - en: If the report is rejected, the team writes to the reporter to explain why.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果报告被拒绝，团队会写信给报告者解释原因。
 - en: If the report is accepted, the team writes to the reporter to let him/her know
     it is accepted and that they are working on a fix.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果报告被接受，团队会写信给报告者，让他/她知道报告已被接受，并且他们正在修复这个问题。
 - en: The security team discusses the problem, works out a fix, considers the impact
     of the problem and suggests a release schedule. This discussion should involve
     the reporter as much as possible.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安全团队讨论问题，制定解决方案，考虑问题的 影响，并建议发布时间表。这次讨论应尽可能涉及报告者。
 - en: The release of the information should be as soon as possible and is most often
     synced with an upcoming release that contains the fix. If the reporter, or anyone
     else, thinks the next planned release is too far away then a separate earlier
     release for security reasons should be considered.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 信息发布应尽可能快，通常与包含修复的即将发布的版本同步。如果报告者或其他人认为下一个计划发布的版本太远，那么应考虑为安全原因考虑一个单独的更早的发布。
 - en: Write a security advisory draft about the problem that explains what the problem
     is, its impact, which versions it affects, any solutions or workarounds and when
     the fix was released, making sure to credit all contributors properly.
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 编写关于问题的安全公告草案，解释问题是什么，其影响，受影响的版本，任何解决方案或绕过方法，以及修复何时发布，确保正确地认可所有贡献者。
 - en: Request a CVE number ([Common Vulnerabilities and Exposures](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures))
     using HackerOne’s form for this purpose.
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用HackerOne为此目的的表格请求CVE编号（[常见漏洞和暴露](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)）。
 - en: Update the security advisory with the CVE number.
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 更新安全公告，包括CVE编号。
 - en: Consider informing [distros@openwall](https://oss-security.openwall.org/wiki/mailing-lists/distros)
     to prepare them about the upcoming public security vulnerability announcement
     - attach the advisory draft for information. Note that ‘distros’ do not accept
     an embargo longer than 14 days and they do not care for Windows-specific flaws.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 考虑通知[distros@openwall](https://oss-security.openwall.org/wiki/mailing-lists/distros)以让他们为即将到来的公共安全漏洞公告做好准备
+    - 附加安全公告草案以供信息参考。请注意，“distros”不接受超过14天的禁令，并且他们对Windows特定的缺陷不感兴趣。
 - en: The security team commits the fix in a private branch. The commit message should
     ideally contain the CVE number. This fix is usually also distributed to the ‘distros’
     mailing list to allow them to use the fix prior to the public announcement.
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 安全团队在一个私有分支中提交了修复。理想情况下，提交信息应包含CVE编号。这个修复通常也会分发到“distros”邮件列表，以便它们在公开宣布之前使用这个修复。
 - en: At the day of the next release, the private branch is merged into the master
     branch and pushed. Once pushed, the information is accessible to the public and
     the actual release should follow suit immediately afterwards.
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在下一个版本发布的那一天，私有分支被合并到主分支并推送。一旦推送，信息对公众可访问，实际的发布应该随后立即进行。
 - en: The project team creates a release that includes the fix.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 项目团队创建了一个包含修复的版本。
 - en: The project team announces the release and the vulnerability to the world in
     the same manner we always announce releases—it gets sent to the curl-announce,
     curl-library and curl-users mailing lists.
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 项目团队以我们通常宣布版本的方式向全世界宣布了版本和漏洞——信息被发送到curl-announce、curl-library和curl-users邮件列表。
 - en: The security webpage on the website should get the new vulnerability mentioned.
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 网站上的安全页面应该提到新的漏洞。
 - en: curl-security@haxx.se
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: curl-security@haxx.se
 - en: Who is on this list? There are a couple of criteria you must meet, and then
     we might ask you to join the list or you can ask to join it. It really is not
     formal. We only require that you have a long-term presence in the curl project
     and you have shown an understanding for the project and its way of working. You
     must have been around for a good while and you should have no plans on vanishing
     in the near future.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个列表上都有谁？你必须满足一些条件，然后我们可能会邀请你加入这个列表，或者你也可以要求加入。这真的不是正式的。我们只要求你在curl项目中有一个长期的参与，并且你已经表现出对项目及其工作方式的理解。你必须已经存在了一段时间，而且你应该没有在近期消失的计划。
 - en: We do not make the list of participants public mostly because it tends to vary
     somewhat over time and a list somewhere only risks getting outdated.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们不公开参与者的名单主要是因为它随着时间的推移会有所变化，而某个地方的名单只会存在过时的风险。

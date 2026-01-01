@@ -1,56 +1,82 @@
 - en: Alternative Services
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 替代服务
 - en: '[RFC 7838](https://www.rfc-editor.org/rfc/rfc7838.txt) defines an HTTP header
     which lets a server tell a client that there is one or more *alternatives* for
     that server at another place with the use of the `Alt-Svc:` response header.'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '[RFC 7838](https://www.rfc-editor.org/rfc/rfc7838.txt)定义了一个HTTP头信息，允许服务器通过使用`Alt-Svc:`响应头告诉客户端，该服务器在另一个位置有一个或多个*替代方案*。'
 - en: The *alternatives* the server suggests can include a server running on another
     port on the same host, on another completely different hostname and it can even
     perhaps offer the service over another protocol.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 服务器建议的*替代方案*可能包括在同一主机上运行的其他端口的另一个服务器，在完全不同的主机名上，甚至可能通过另一个协议提供该服务。
 - en: Enable
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 启用
 - en: 'To make curl consider offered alternatives, tell curl to use a specific alt-svc
     cache file like this:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要让curl考虑提供的替代方案，告诉curl使用特定的alt-svc缓存文件，如下所示：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: then curl loads existing alternative service entries from the file at start-up
     and consider those when doing HTTP requests, and if the servers sends new or updated
     `Alt-Svc:` headers, curl stores those in the cache at exit.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，curl在启动时从文件中加载现有的替代服务条目，并在进行HTTP请求时考虑这些条目；如果服务器发送新的或更新的`Alt-Svc:`头信息，curl会在退出时将这些信息存储在缓存中。
 - en: The alt-svc cache
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: alt-svc缓存
 - en: The alt-svc cache is similar to a cookie jar. It is a text based file that stores
     one alternative per line and each entry also has an expiry time for which duration
     that particular alternative is valid.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: alt-svc缓存类似于一个cookie jar。它是一个基于文本的文件，每行存储一个替代方案，每个条目还有一个有效期，表示该特定替代方案的有效时长。
 - en: HTTPS only
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 仅HTTPS
 - en: '`Alt-Svc:` is only trusted and parsed from servers when connected to over HTTPS.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '`Alt-Svc:`只有在通过HTTPS连接到服务器时才被信任和解析。'
 - en: HTTP/3
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTTP/3
 - en: The use of `Alt-Svc:` headers is as of August 2019 the only defined way to bootstrap
     a client and server into using HTTP/3\. The server then hints to the client over
     HTTP/1 or HTTP/2 that it also is available over HTTP/3 and then curl can connect
     to it using HTTP/3 in the subsequent request if the alt-svc cache says so.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 截至2019年8月，使用`Alt-Svc:`头信息是启动客户端和服务器使用HTTP/3的唯一定义方式。然后服务器通过HTTP/1或HTTP/2向客户端暗示它也通过HTTP/3可用，如果alt-svc缓存这样指示，curl可以在后续请求中使用HTTP/3连接到它。

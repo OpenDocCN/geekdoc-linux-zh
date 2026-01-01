@@ -1,57 +1,81 @@
 - en: Flags
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 标志
 - en: When retrieving a URL part using `curl_url_get()`, the API offers a few different
     toggles to better specify exactly how that content should be returned. They are
     set in the `flags` bitmask parameter, which is the function’s fourth argument.
     You can set zero, one or more bits.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用 `curl_url_get()` 检索URL部分时，API提供了一些不同的切换选项，以更好地指定应如何返回该内容。它们设置在 `flags` 位掩码参数中，这是函数的第四个参数。你可以设置零、一个或多个位。
 - en: '`CURLU_DEFAULT_PORT`'
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_DEFAULT_PORT`'
 - en: If the URL handle has no port number stored, this option makes `curl_url_get()`
     return the default port for the used scheme.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果URL句柄没有存储端口号，此选项使 `curl_url_get()` 返回用于该方案的默认端口号。
 - en: '`CURLU_DEFAULT_SCHEME`'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_DEFAULT_SCHEME`'
 - en: If the handle has no scheme stored, this option makes `curl_url_get()` return
     the default scheme instead of error.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果句柄没有存储方案，此选项使 `curl_url_get()` 返回默认方案而不是错误。
 - en: '`CURLU_NO_DEFAULT_PORT`'
+  id: totrans-6
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_NO_DEFAULT_PORT`'
 - en: Instructs `curl_url_get()` to *not* use a port number in the generated URL if
     that port number matches the default port used for the scheme. For example, if
     port number 443 is set and the scheme is `https`, the extracted URL does not include
     the port number.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 指示 `curl_url_get()` 在生成的URL中不使用端口号，如果该端口号与用于方案的默认端口号匹配。例如，如果端口号设置为443，方案为 `https`，则提取的URL不包括端口号。
 - en: '`CURLU_URLENCODE`'
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_URLENCODE`'
 - en: This flag makes `curl_url_get()` URL encode the hostname part when a full URL
     is retrieved. If not set (default), libcurl returns the URL with the hostname
     “raw” to support IDN names to appear as-is. IDN hostnames are typically using
     non-ASCII bytes that otherwise are percent-encoded.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 此标志使 `curl_url_get()` 在检索完整URL时对主机名部分进行URL编码。如果没有设置（默认），libcurl以“raw”形式返回URL，以支持IDN名称以原始形式出现。IDN主机名通常使用非ASCII字节，否则将进行百分编码。
 - en: Note that even when not asking for URL encoding, the `%` (byte 37) is URL encoded
     in hostnames to make sure the hostname remains valid.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，即使不请求URL编码，`%`（字节37）在主机名中也是URL编码的，以确保主机名保持有效。
 - en: '`CURLU_URLDECODE`'
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_URLDECODE`'
 - en: Tells `curl_url_get()` to URL decode the contents before returning it. It does
     attempt to decode the scheme, the port number or the full URL. The query component
     also gets plus-to-space conversion as a bonus when this bit is set. Note that
@@ -59,16 +83,24 @@
     with data that could be intended for a particular encoding. If there are any byte
     values lower than 32 in the decoded string, the get operation instead returns
     error.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 告诉 `curl_url_get()` 在返回之前对内容进行URL解码。它确实尝试解码方案、端口号或完整URL。当设置此位时，查询组件还会获得加号到空格的转换作为额外的好处。请注意，此URL解码是无字符集意识的，你将获得一个以零终止的字符串，其中包含可能旨在特定编码的数据。如果解码字符串中存在任何小于32的字节值，则获取操作将返回错误。
 - en: '`CURLU_PUNYCODE`'
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLU_PUNYCODE`'
 - en: If set and `CURLU_URLENCODE` is not set, and asked to retrieve the `CURLUPART_HOST`
     or `CURLUPART_URL` parts, libcurl returns the hostname in its punycode version
     if it contains any non-ASCII octets (and is an IDN name). If libcurl is built
     without IDN capabilities, using this bit makes `curl_url_get()` return `CURLUE_LACKS_IDN`
     if the hostname contains anything outside the ASCII range.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果设置且未设置 `CURLU_URLENCODE`，并且请求检索 `CURLUPART_HOST` 或 `CURLUPART_URL` 部分，当主机名包含任何非ASCII八进制数（并且是IDN名称）时，libcurl
+    返回其punycode版本。如果libcurl没有构建IDN功能，使用此位使 `curl_url_get()` 在主机名包含ASCII范围之外的任何内容时返回
+    `CURLUE_LACKS_IDN`。

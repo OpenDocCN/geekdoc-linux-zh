@@ -1,94 +1,146 @@
 - en: JSON
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: JSON
 - en: 'curl 7.82.0 introduced the `--json` option as a new way to send JSON formatted
     data to HTTP servers using POST. This option works as a shortcut and provides
     a single option that replaces these three:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 7.82.0版本引入了`--json`选项，作为将JSON格式数据通过POST方式发送到HTTP服务器的新方法。此选项作为一个快捷方式，提供了一个单一选项来替代以下三个选项：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: This option does not make curl actually understand or know about the JSON data
     it sends, but it makes it easier to send it. curl does not touch or parse the
     data that it sends, so you need to make sure it is valid JSON yourself.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 此选项并不使curl真正理解或知道它发送的JSON数据，但它使发送它变得更容易。curl不会触摸或解析它发送的数据，因此你需要自己确保它是有效的JSON。
 - en: 'Send a basic JSON object to a server:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 向服务器发送一个基本的JSON对象：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Send JSON from a local file:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 从本地文件发送JSON：
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Send JSON passed to curl on stdin:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 从curl的stdin发送JSON：
 - en: '[PRE3]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: You can use multiple `--json` options on the same command line. This makes curl
     concatenate the contents from the options and send all data in one go to the server.
     Note that the concatenation is plain text based and it does not merge the JSON
     objects as per JSON.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在同一个命令行中使用多个`--json`选项。这使得curl将选项的内容连接起来，一次性将所有数据发送到服务器。请注意，这种连接是基于纯文本的，并且它不会按照JSON格式合并JSON对象。
 - en: 'Send JSON from a file and concatenate a string to the end:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 从文件发送JSON并将字符串连接到末尾：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Crafting JSON to send
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 构建要发送的JSON
 - en: The quotes used in JSON data sometimes makes it a bit difficult and cumbersome
     to write and use in shells and scripts.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: JSON数据中使用的引号有时会使在shell和脚本中编写和使用它变得有些困难和繁琐。
 - en: Using a separate tool for this purpose might make things easier for you, and
     one tool in particular that might help you accomplish this is [jo](https://github.com/jpmens/jo).
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用一个专门的工具来完成这个目的可能会使事情对你来说更容易，特别是可能帮助你完成这个任务的工具是[jo](https://github.com/jpmens/jo)。
 - en: Send a basic JSON object to a server with jo and `--json`
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用jo和`--json`选项向服务器发送一个基本的JSON对象。
 - en: '[PRE5]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Receiving JSON
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 接收JSON
 - en: curl itself does not know or understand the contents it sends or receives, including
     when the server returns JSON in its response.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: curl本身并不知道或理解它发送或接收的内容，包括当服务器在响应中返回JSON时。
 - en: Using a separate tool for the purpose of parsing or pretty-printing JSON responses
     might make things easier for you, and one tool in particular that might help you
     accomplish this is [jq](https://stedolan.github.io/jq/).
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用一个专门的工具来解析或格式化JSON响应可能会使事情对你来说更容易，特别是可能帮助你完成这个任务的工具是[jq](https://stedolan.github.io/jq/)。
 - en: 'Send a basic JSON object to a server, and pretty-print the JSON response:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 向服务器发送一个基本的JSON对象，并格式化输出JSON响应：
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Send the JSON with `jo`, print the response with `jq`:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`jo`发送JSON，使用`jq`打印响应：
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: jq is a powerful and capable tool for extracting, filtering and managing JSON
     content that goes way beyond just pretty-printing.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: jq是一个功能强大且功能丰富的工具，用于提取、过滤和管理JSON内容，其功能远不止于格式化输出。

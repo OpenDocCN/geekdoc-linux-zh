@@ -1,83 +1,124 @@
 - en: Custom FTP commands
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 自定义 FTP 命令
 - en: The FTP protocol offers a wide variety of different commands that allow the
     client to perform actions, other than the plain file transfers that curl is focused
     on.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: FTP 协议提供了一系列不同的命令，允许客户端执行除了 curl 专注于的普通文件传输之外的操作。
 - en: A curl user can pass on such extra (custom) commands to the server as a step
     in the file transfer sequence. curl even offers to have those commands run at
     different points in the process.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 用户可以将这些额外的（自定义）命令作为文件传输序列中的一步传递给服务器。curl 甚至提供在处理过程中的不同点运行这些命令的选项。
 - en: Quote
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 引号
 - en: 'In the old days the standard old ftp client had a command called *quote*. It
     was used to send commands verbatim to the server. curl uses the same name for
     virtually the same functionality: send the specified command verbatim to the server.
     Actually one or more commands. `-Q` or `--quote`.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在过去，标准的旧 ftp 客户端有一个名为 *quote* 的命令。它用于将命令逐字发送到服务器。curl 使用相同的名称来提供几乎相同的功能：将指定的命令逐字发送到服务器。实际上是一个或多个命令。`-Q`
+    或 `--quote`。
 - en: To know what commands that are available and possible to send to a server, you
     need to know a little about the FTP protocol, and possibly read up a bit on RFC
     959 on the details.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解可以发送到服务器的哪些命令，您需要了解一些关于 FTP 协议的知识，并可能阅读一下 RFC 959 的细节。
 - en: 'To send a simple `NOOP` to the server (which does nothing) **before** the transfer
     starts, provide it to curl like this:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在传输开始前发送一个简单的 `NOOP` 到服务器（它什么都不做），像这样提供给 curl：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'To instead send the same command immediately **after** the transfer, prefix
     the FTP command with a dash:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在传输后立即发送相同的命令，请在 FTP 命令前加一个短横线（-）：
 - en: '[PRE1]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: curl also offers to send commands after it changes the working directory, just
     **before the commands** that kick off the transfer are sent. To send command then,
     prefix the command with a ‘+’ (plus).
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 还提供在更改工作目录后发送命令的选项，就在启动传输的命令之前。要发送命令，请在命令前加一个加号（`+`）。
 - en: A series of commands
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 一系列命令
 - en: You can in fact send commands in all three different times by using multiple
     `-Q` on the command line. You can also send multiple commands in the same position
     by using more `-Q` options.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，您可以通过在命令行中使用多个 `-Q` 来在所有三个不同时间发送命令。您也可以通过使用更多的 `-Q` 选项在同一位置发送多个命令。
 - en: By default, if any of the given commands returns an error from the server, curl
     stops its operations, abort the transfer (if it happens before transfer has started)
     and not send any more of the custom commands.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认情况下，如果任何给定的命令从服务器返回错误，curl 会停止其操作，如果发生错误在传输开始之前，则中止传输，并且不会发送更多的自定义命令。
 - en: 'Example, rename a file then do a transfer:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，先重命名一个文件然后进行传输：
 - en: '[PRE2]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Fallible commands
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 可失败的命令
 - en: You can opt to send individual quote commands that are allowed to fail, to get
     an error returned from the server without causing everything to stop.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以选择发送允许失败的单独引号命令，以从服务器返回错误，而不会导致一切停止。
 - en: 'You make the command fallible by prefixing it with an asterisk (`*`). For example,
     send a delete (`DELE`) after a transfer and allow it to fail:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过在命令前加星号（`*`）使其成为可失败的命令。例如，在传输后发送删除（`DELE`）命令并允许其失败：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'

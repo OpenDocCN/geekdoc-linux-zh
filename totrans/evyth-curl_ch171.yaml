@@ -1,39 +1,58 @@
 - en: Request method
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 请求方法
 - en: 'The first line of an HTTP request includes the *method* - sometimes also referred
     to as the verb. When doing a simple GET request as this command line would do:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP请求的第一行包括*方法*——有时也被称为动词。当你执行一个简单的GET请求，就像这个命令行会做的那样：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '…the initial request line looks like this:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: …初始请求行看起来像这样：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'You can tell curl to change the method into something else by using the `-X`
     or `--request` command-line options followed by the actual method name. You can,
     for example, send a `DELETE` instead of `GET` like this:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过使用`-X`或`--request`命令行选项后跟实际的方法名称来告诉curl更改方法。例如，你可以像这样发送`DELETE`而不是`GET`：
 - en: '[PRE2]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This command-line option only changes the text in the outgoing request, it does
     not change any behavior. This is particularly important if you, for example, ask
     curl to send a HEAD with `-X`, as HEAD is specified to send all the headers a
     GET response would get but *never* send a response body, even if the headers otherwise
     imply that one would come. So, adding `-X HEAD` to a command line that would otherwise
     do a GET causes curl to hang, waiting for a response body that does not come.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令行选项仅更改输出请求中的文本，它不会改变任何行为。这一点尤其重要，例如，如果你要求curl使用`-X`发送HEAD请求，因为HEAD指定发送GET响应会获取的所有头信息，但*永远*不发送响应体，即使头信息暗示了可能会有响应体。因此，在原本应该执行GET请求的命令行中添加`-X
+    HEAD`会导致curl挂起，等待不会到来的响应体。
 - en: When asking curl to perform HTTP transfers, it picks the correct method based
     on the option so you should only rarely have to explicitly ask for it with `-X`.
     It should also be noted that when curl follows redirects like asked to with `-L`,
     the request method set with `-X` is sent even on the subsequent redirects.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 当使用curl执行HTTP传输时，它会根据选项选择正确的方法，因此你很少需要显式使用`-X`来请求它。还应注意的是，当curl按照`-L`选项的要求进行重定向时，即使是在后续的重定向中，也会发送使用`-X`设置的请求方法。

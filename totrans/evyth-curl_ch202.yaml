@@ -1,88 +1,130 @@
 - en: Easy handle
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 简单句柄
 - en: 'The fundamentals you need to learn with libcurl:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 你需要使用libcurl学习的 fundamentals：
 - en: 'First you create an “easy handle”, which is your handle to a transfer, really:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，你创建一个“简单句柄”，这实际上是你的传输句柄：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'You then set options in that handle to control the upcoming transfer. This
     example sets the URL:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，你在这个句柄上设置选项以控制即将进行的传输。此示例设置了URL：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: If `curl_easy_setopt()` returns `CURLE_OK`, we know it stored the option fine.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果`curl_easy_setopt()`返回`CURLE_OK`，我们知道它已正确存储了选项。
 - en: Creating the easy handle and setting options on it does not make any transfer
     happen, and usually do not even make much more happen other than libcurl storing
     your wish to be used later when the transfer actually occurs. Lots of syntax checking
     and validation of the input may also be postponed, so just because `curl_easy_setopt`
     did not complain, it does not mean that the input was correct and valid; you may
     get an error returned later.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建简单句柄并在其上设置选项并不会触发任何传输，通常也不会导致libcurl做更多的事情，除了存储你希望在传输实际发生时使用的愿望。很多语法检查和输入验证也可以推迟，所以即使`curl_easy_setopt`没有抱怨，并不意味着输入是正确和有效的；你可能会在之后得到一个错误返回。
 - en: Read more on [easy options](options/) in its separate section.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在其单独的章节中了解更多关于[简单选项](options/)的信息。
 - en: When you are done setting options to your easy handle, you can fire off the
     actual transfer.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你完成对简单句柄的选项设置后，你可以启动实际的传输。
 - en: The actual performing of the transfer can be done using different methods and
     function calls, depending on what kind of behavior you want in your application
     and how libcurl is best integrated into your architecture. Those are further described
     later in this chapter.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际执行传输可以使用不同的方法和函数调用，这取决于你希望在应用程序中实现的行为以及libcurl如何最佳地集成到你的架构中。这些内容将在本章后面进一步描述。
 - en: While the transfer is ongoing, libcurl calls your specified functions—known
     as *[callbacks](callbacks/)* — to deliver data, to read data and to do a variety
     of things.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在传输进行过程中，libcurl会调用你指定的函数——称为*[回调函数](callbacks/)*——来传递数据、读取数据以及执行各种操作。
 - en: After the transfer has completed, you can figure out if it succeeded or not
     and you can extract statistics and other information that libcurl gathered during
     the transfer from the easy handle. See [Post transfer information](ch243.xhtml#transfers__getinfo__md).
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 传输完成后，你可以确定它是否成功，并可以从简单句柄中提取libcurl在传输期间收集的统计信息和其它信息。请参阅[传输后信息](ch243.xhtml#transfers__getinfo__md)。
 - en: Reuse
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重复使用
 - en: Easy handles are meant and designed to be reused. When you have done a single
     transfer with the easy handle, you can immediately use it again for your next
     transfer. There are lots of gains to be had by this.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 简单句柄旨在并设计为可重复使用。当你使用简单句柄完成一次传输后，你可以立即再次使用它进行下一次传输。这样做可以带来很多好处。
 - en: All options are “sticky”. If you make a second transfer with the same handle,
     the same options are used. They remain set in the handle until you change them
     again, or call `curl_easy_reset()` on the handle.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有选项都是“粘性的”。如果你使用同一个句柄进行第二次传输，将使用相同的选项。它们将保留在句柄中，直到你再次更改它们或调用句柄上的`curl_easy_reset()`。
 - en: Reset
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重置
 - en: By calling `curl_easy_reset()`, all options for the given easy handle are reset
     and restored to their default values. The same values the options had when the
     handle was initially created. The caches remain intact.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过调用`curl_easy_reset()`，给定简单句柄的所有选项都会重置并恢复到其默认值。这些值与句柄最初创建时选项的值相同。缓存保持完整。
 - en: Duplicate
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 复制
 - en: An easy handle, with all its currently set options, can be duplicated using
     `curl_easy_duphandle()`. It returns a copy of the handle passed in to it.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`curl_easy_duphandle()`可以复制一个包含所有当前设置选项的简单句柄。它返回传递给它的句柄的副本。
 - en: The caches and other state information are not carried over.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 缓存和其他状态信息不会被传递。

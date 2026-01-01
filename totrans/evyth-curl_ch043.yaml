@@ -1,140 +1,205 @@
 - en: Build curl and libcurl
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 构建 curl 和 libcurl
 - en: The source code for this project is written in a way that allows it to be compiled
     and built on just about any operating system and platform, with as few restraints
     and requirements as possible.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 该项目的源代码编写方式允许它在尽可能少的限制和要求下编译和构建在任何操作系统和平台上。
 - en: If you have a 32bit (or larger) CPU architecture, if you have a C89 compliant
     compiler and if you have roughly a POSIX supporting sockets API, then you can
     most likely build curl and libcurl for your target system.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你有一个32位（或更大）的CPU架构，如果你有一个符合C89规范的编译器，如果你有一个大致支持POSIX套接字API的系统，那么你很可能可以为你的目标系统构建curl和libcurl。
 - en: For the most popular platforms, the curl project comes with build systems already
     done and prepared to allow you to easily build it yourself.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于最受欢迎的平台，curl项目已经提供了已经完成和准备好的构建系统，以便你可以轻松自行构建。
 - en: There are also friendly people and organizations who put together binary packages
     of curl and libcurl and make them available for download. The different options
     are explored below.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 还有友好的人和机构将curl和libcurl的二进制包组合在一起，并使它们可供下载。以下将探讨不同的选项。
 - en: The latest version?
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 最新版本？
 - en: Looking at the [curl website](https://curl.se), you can see the latest curl
     and libcurl version released from the project. That is the latest source code
     release package you can get.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看curl网站[curl官网](https://curl.se)，你可以看到项目发布的最新curl和libcurl版本。这就是你可以获取的最新源代码发布包。
 - en: When you opt for a prebuilt and prepackaged version for your operating system
     or distribution of choice, you may not always find the latest version but you
     might have to either be satisfied with the latest version someone has packaged
     for your environment, or you need to build it yourself from source.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你选择为你选择的操作系统或发行版预构建和预包装版本时，你可能并不总是能找到最新版本，但你可能不得不满足于为你的环境打包的最新版本，或者你需要从源代码自行构建。
 - en: 'The curl project also provides info about the latest version in a somewhat
     more machine-readable format on this URL: `https://curl.se/info`.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: curl项目还在此URL上以某种更易于机器读取的格式提供有关最新版本的信息：`https://curl.se/info`。
 - en: Releases source code
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 发布源代码
 - en: The curl project creates source code that can be built to produce the two products
     curl and libcurl. The conversion from source code to binaries is often referred
     to as “building”. You build curl and libcurl from source.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: curl项目创建的源代码可以构建成curl和libcurl两个产品。从源代码到二进制的转换通常被称为“构建”。你从源代码构建curl和libcurl。
 - en: The curl project does not provide any built binaries at all — it only ships
     the source code. The binaries which can be found on the download page of the curl
     web and installed from other places on the Internet are all built and provided
     to the world by other friendly people and organizations.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: curl项目根本不提供任何预构建的二进制文件——它只提供源代码。可以在curl网站下载页面找到并从互联网上的其他地方安装的二进制文件都是由其他友好的人和机构构建并提供给全世界的。
 - en: The source code consists of a large number of files containing C code. Generally
     speaking, the same set of files are used to build binaries for all platforms and
     computer architectures that curl supports. curl can be built and run on a vast
     number of platforms. If you use a rare operating system yourself, chances are
     that building curl from source is the easiest or perhaps the only way to get curl.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 源代码由大量包含C代码的文件组成。一般来说，相同的文件集用于构建curl支持的所有平台和计算机架构的二进制文件。curl可以在大量平台上构建和运行。如果你使用的是罕见的操作系统，那么从源代码构建curl可能是最简单或可能是唯一的方法来获取curl。
 - en: Making it easy to build curl is a priority to the curl project, although we
     do not always necessarily succeed.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 使构建curl变得容易是curl项目的优先事项，尽管我们并不总是能成功。
 - en: git vs release tarballs
+  id: totrans-14
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: git与发布tar包
 - en: When release tarballs are created, a few files are generated and included in
     the final release bundle. Those generated files are not present in the git repository,
     because they are generated and there is no need to store them in git.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当创建发布tar包时，会生成一些文件并包含在最终的发布包中。这些生成的文件不在git仓库中，因为它们是生成的，没有必要存储在git中。
 - en: Of course, you can also opt to build the latest version that exists in the [git
     repository](https://github.com/curl/curl). It could however be a bit more fragile
     and probably requires slightly more attention to detail.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你也可以选择构建存在于[git仓库](https://github.com/curl/curl)中的最新版本。然而，这可能会稍微脆弱一些，并且可能需要稍微更多的细节关注。
 - en: If you build curl from a git checkout, you need to generate some files yourself
     before you can build. On Linux and Unix-like systems, do this by running `autoreconf
     -fi` and on Windows, run `buildconf.bat`.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你从 git 检出构建 curl，在构建之前你需要自己生成一些文件。在 Linux 和类 Unix 系统上，通过运行 `autoreconf -fi`
+    来完成此操作，在 Windows 上，运行 `buildconf.bat`。
 - en: On Linux and Unix-like systems
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在 Linux 和类 Unix 系统上
 - en: There are two distinctly different ways to build curl on Linux and other Unix-like
     systems; there is the one using [the configure script](ch043.xhtml#build__autotools__md)
     and there is [the CMake approach](ch044.xhtml#build__cmake__md).
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Linux 和其他类 Unix 系统上构建 curl 有两种明显不同的方式；一种是使用 [configure 脚本](ch043.xhtml#build__autotools__md)，另一种是
+    [CMake 方法](ch044.xhtml#build__cmake__md)。
 - en: There are two different build environments to cater to people’s different opinions
     and tastes. The configure-based build is arguably the more mature and more encompassing
     build system and should probably be considered the default one.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 有两种不同的构建环境，以满足不同人的观点和口味。基于 configure 的构建可能是更成熟、更全面的构建系统，并且可能应该被认为是默认的。
 - en: On Windows
+  id: totrans-21
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在 Windows 上
 - en: On Windows there are at least four different ways to build. The above mentioned
     ways, [the CMake approach](ch044.xhtml#build__cmake__md) and using [configure](ch043.xhtml#build__autotools__md)
     with msys work, but the more popular and common methods are probably building
     with Microsoft’s Visual Studio compiler using either `nmake` or project files.
     See the build on [windows](ch046.xhtml#build__windows__md) section.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Windows 上至少有四种不同的构建方式。上述提到的方式，[CMake 方法](ch044.xhtml#build__cmake__md) 和使用
+    [configure](ch043.xhtml#build__autotools__md) 与 msys 一起工作，但更受欢迎和常见的方法可能是使用 Microsoft
+    的 Visual Studio 编译器通过 `nmake` 或项目文件进行构建。请参阅 [windows](ch046.xhtml#build__windows__md)
+    部分的构建说明。
 - en: Learn more
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 了解更多
 - en: '[Autotools](ch043.xhtml#build__autotools__md) - build with configure'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Autotools](ch043.xhtml#build__autotools__md) - 使用 configure 进行构建'
 - en: '[CMake](ch044.xhtml#build__cmake__md)'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[CMake](ch044.xhtml#build__cmake__md)'
 - en: '[Separate install](ch045.xhtml#build__separate__md)'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[单独安装](ch045.xhtml#build__separate__md)'
 - en: '[On Windows](ch046.xhtml#build__windows__md) - Windows-specific ways to build'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[在 Windows 上](ch046.xhtml#build__windows__md) - Windows 特定的构建方式'
 - en: '[Dependencies](ch047.xhtml#build__deps__md)'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[依赖项](ch047.xhtml#build__deps__md)'
 - en: '[TLS libraries](ch048.xhtml#build__tls__md)'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[TLS 库](ch048.xhtml#build__tls__md)'

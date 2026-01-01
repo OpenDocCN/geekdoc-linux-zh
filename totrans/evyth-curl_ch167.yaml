@@ -1,26 +1,36 @@
 - en: -d vs -F
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: '`-d`与`-F`'
 - en: Previous chapters talked about [regular POST](ch154.xhtml#http__post__simple__md)
     and [multipart formpost](ch165.xhtml#http__post__multipart__md), and in your typical
     command lines you do them with `-d` or `-F`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 前几章讨论了[常规POST](ch154.xhtml#http__post__simple__md)和[multipart formpost](ch165.xhtml#http__post__multipart__md)，在你的典型命令行中，你可以使用`-d`或`-F`来完成它们。
 - en: When do you use which of them?
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 何时使用哪一个？
 - en: As described in the chapters mentioned above, both these options send the specified
     data to the server. The difference is in how the data is formatted over the wire.
     Most of the time, the receiving end is written to expect a specific format and
     it expects that the sender formats and sends the data correctly. A client cannot
     just pick a format of its own choice.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 如上所述章节中描述的，这两种选项都将指定数据发送到服务器。区别在于数据在网络中的格式化方式。大多数情况下，接收端被编写为期望特定的格式，并期望发送端正确地格式化和发送数据。客户端不能随意选择自己的格式。
 - en: HTML web forms
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTML网页表单
 - en: When we are talking browsers and HTML, the standard way is to offer a form to
     the user that sends off data when the form has been filled in. The `<form>` tag
     is what makes one of those appear on the webpage. The tag instructs the browser
@@ -28,28 +38,39 @@
     it tells the browser to send the data as a [multipart formpost](ch165.xhtml#http__post__multipart__md)
     which you make with curl’s `-F` option. This method is typically used when the
     form includes a `<input type=file>` tag, for file uploads.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当我们谈论浏览器和HTML时，标准方式是提供一个表单给用户，当表单填写完毕后发送数据。`<form>`标签是使这些表单出现在网页上的标签。该标签指示浏览器如何格式化其POST。如果表单标签包含`enctype=multipart/form-data`，它告诉浏览器使用curl的`-F`选项发送数据作为[multipart
+    formpost](ch165.xhtml#http__post__multipart__md)。这种方法通常用于表单包含`<input type=file>`标签，用于文件上传。
 - en: The default `enctype` used by forms, which is rarely spelled out in HTML since
     it is default, is `application/x-www-form-urlencoded`. It makes the browser URL
     encode the input as name=value pairs with the data encoded to avoid unsafe characters.
     We often refer to that as a [regular POST](ch154.xhtml#http__post__simple__md),
     and you perform one with curl’s `-d` and friends.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 表单默认使用的`enctype`，由于它是默认的，所以在HTML中很少明确写出，是`application/x-www-form-urlencoded`。它使得浏览器将输入作为name=value对进行URL编码，以避免不安全的字符。我们通常将其称为[常规POST](ch154.xhtml#http__post__simple__md)，而你使用curl的`-d`和其他选项执行它。
 - en: POST outside of HTML
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: HTML之外的POST
 - en: POST is a regular HTTP method and there is no requirement that it be triggered
     by HTML or involve a browser. Lots of services, APIs and other systems allow you
     to pass in data these days in order to get things done.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: POST是一种常规的HTTP方法，没有要求它必须由HTML触发或涉及浏览器。如今，许多服务、API和其他系统允许你传递数据以完成任务。
 - en: If these services expect plain raw data or perhaps data formatted as JSON or
     similar, you want the [regular POST](ch154.xhtml#http__post__simple__md) approach.
     curl’s `-d` option does not alter or encode the data at all but just sends exactly
     what you tell it to. Just pay attention that `-d` sets a default `Content-Type:`
     that might not be what you want.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果这些服务期望纯原始数据或可能是JSON或类似格式的数据，你希望采用[常规POST](ch154.xhtml#http__post__simple__md)方法。curl的`-d`选项根本不改变或编码数据，只是发送你告诉它的内容。只需注意，`-d`设置了一个默认的`Content-Type:`，这可能不是你想要的。

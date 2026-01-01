@@ -1,7 +1,9 @@
 - en: Ranges
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 范围
 - en: What if the client only wants the first 200 bytes out of a remote resource or
     perhaps 300 bytes somewhere in the middle? The HTTP protocol allows a client to
     ask for only a specific data range. The client asks the server for the specific
@@ -11,30 +13,47 @@
     such a request, you get them separated with mime boundary strings and it is up
     to the user application to handle that accordingly. curl does not further separate
     such a response.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果客户端只想从远程资源中获取前 200 字节，或者可能在中间的某个地方获取 300 字节，怎么办？HTTP 协议允许客户端请求特定的数据范围。客户端通过提供一个起始偏移量和结束偏移量向服务器请求特定的范围。它甚至可以组合这些请求，通过并列列出多个范围来在同一个请求中请求多个范围。当服务器发送多个独立的部分来回答这样的请求时，这些部分会通过
+    MIME 边界字符串分隔，用户应用程序需要相应地处理这些部分。curl 不会进一步分隔这样的响应。
 - en: However, a byte range is only a request to the server. It does not have to respect
     the request and in many cases, like when the server automatically generates the
     contents on the fly when it is being asked, it simply refuses to do it and it
     then instead respond with the full contents anyway.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，字节范围只是一个对服务器的请求。服务器不必遵守这个请求，在许多情况下，比如当服务器在请求时自动生成内容，它可能会简单地拒绝这样做，然后仍然以完整内容作为响应。
 - en: 'You can make libcurl ask for a range with `CURLOPT_RANGE`. Like if you want
     the first 200 bytes out of something:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用 `CURLOPT_RANGE` 让 libcurl 请求一个范围。比如，如果你想要某个东西的前 200 字节：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Or everything in the file starting from index 200:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者从索引 200 开始文件中的所有内容：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Get 200 bytes from index 0 *and* 200 bytes from index 1000:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 从索引 0 获取 200 字节，并且从索引 1000 获取 200 字节：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

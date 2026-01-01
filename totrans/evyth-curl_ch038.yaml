@@ -1,13 +1,17 @@
 - en: Handling build options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 处理构建选项
 - en: The curl and libcurl source code has been carefully written to build and run
     on virtually every computer platform in existence. This can only be done through
     hard work and by adhering to a few guidelines (and, of course, a fair amount of
     testing).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 和 libcurl 的源代码被精心编写，以便在几乎所有的计算机平台上构建和运行。这只能通过辛勤工作和遵循一些指南（当然，还有相当数量的测试）来实现。
 - en: 'A golden rule is to always add #ifdefs that checks for specific features, and
     then have the setup scripts (configure or CMake or hard-coded) check for the presence
     of said features in a user’s computer setup before the program is compiled there.
@@ -16,25 +20,35 @@
     be used. Examples of that would be when users want to, for example, build a version
     of the library with a smaller footprint or with support for certain protocols
     disabled, etc.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '一个黄金法则是在代码中始终添加 #ifdef 来检查特定功能，然后让设置脚本（configure 或 CMake 或硬编码）在程序编译到用户的计算机配置之前检查这些功能是否存在。此外，作为额外的好处，由于这种编写代码的方式，即使某些功能在系统中存在并且*可以*使用，也可以明确地关闭它们。例如，当用户想要构建一个具有更小体积或禁用某些协议支持的库版本时，情况就是这样。'
 - en: 'The project sometimes uses #ifdef protection around entire source files when,
     for example, a single file is provided for a specific operating system or perhaps
     for a specific feature that is not always present. This is to make it possible
     for all platforms to always build all files—it simplifies the build scripts and
     makefiles a lot. A file entirely #ifdefed out hardly adds anything to the build
     time, anyway.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '当例如提供一个特定操作系统或可能不是始终存在的特定功能的单个文件时，项目有时会在整个源文件周围使用 #ifdef 保护。这样做是为了使所有平台始终能够构建所有文件——这大大简化了构建脚本和
+    makefile。无论如何，完全 #ifdef 出来的文件几乎不会增加构建时间。'
 - en: 'Rather than sprinkling the code with #ifdefs, to the extent where it is possible,
     we provide functions and macros that make the code look and work the same, independent
     of present features. Some of those are then empty macros for the builds that lack
     the features.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '而不是在代码中到处撒 #ifdef，只要可能，我们提供函数和宏，使代码看起来和工作方式相同，不受现有功能的影响。其中一些是空宏，用于缺少这些功能的构建。'
 - en: Both TLS handling and name resolving are handled with an internal API that hides
     the specific implementation and choice of 3rd party software library. That way,
     most of the internals work the same independent of which TLS library or name resolving
     system libcurl is told to use.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS 处理和名称解析都使用一个内部 API 来处理，该 API 隐藏了特定的实现和第三方软件库的选择。这样，大多数内部工作在 libcurl 被告知使用哪个
+    TLS 库或名称解析系统时都是相同的。

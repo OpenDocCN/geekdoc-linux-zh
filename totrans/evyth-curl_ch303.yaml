@@ -1,10 +1,14 @@
 - en: Test file format
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 测试文件格式
 - en: Each curl test is designed in a single text file using an XML-like format.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个 curl 测试都使用单个文本文件设计，格式类似于 XML。
 - en: Labels mark the beginning and the end of all sections, and each label must be
     written in its own line. Comments are either XML-style (enclosed with `<!--` and
     `-->`) or shell script style (beginning with `#`) and must appear on their own
@@ -12,360 +16,544 @@
     valid XML, although a few files are not (lack of support for character entities
     and the preservation of carriage return and linefeed characters at the end of
     lines are the biggest differences).
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 标签标记了所有部分的开始和结束，并且每个标签必须单独一行。注释可以是 XML 风格（用 `<!--` 和 `-->` 包围）或 shell 脚本风格（以
+    `#` 开头）并且必须单独一行，不能与实际测试数据并列。大多数测试数据文件是语法有效的 XML，尽管一些文件不是（不支持字符实体和保留行尾的回车和换行符是最大的区别）。
 - en: All tests must begin with a `<testcase>` tag, which encompasses the remainder
     of the file. See below for other tags.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有测试都必须以 `<testcase>` 标签开始，它包含文件的其余部分。下面将介绍其他标签。
 - en: Each test file is called `tests/data/testNUMBER` where `NUMBER` is a unique
     numerical test identifier. Each test has to use its own dedicated number. The
     number has no meaning other than identifying the test.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个测试文件都命名为 `tests/data/testNUMBER`，其中 `NUMBER` 是唯一的数值测试标识符。每个测试都必须使用自己的专用编号。这个编号除了标识测试外，没有其他意义。
 - en: The test file defines exactly what command line or tool to run, what test servers
     to invoke and how they should respond, exactly what protocol exchange that should
     happen, what output and return code to expect and much more.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试文件定义了确切要运行的命令行或工具、要调用的测试服务器以及它们应该如何响应、应该发生的确切协议交换、预期的输出和返回代码以及更多内容。
 - en: 'Everything is written within their dedicated tags like this when the name is
     set:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当设置名称时，所有内容都写入它们各自的标签中，如下所示：
 - en: '[PRE0]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: keywords
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 关键字
 - en: Every test has one or more `<keywords>` set in the top of the file. They are
     meant to be “tags” that identify features and protocols that are tested by this
     test case. `runtests.pl` can be made to run only tests that match (or do not match)
     such keywords.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个测试在文件顶部设置一个或多个 `<keywords>`。它们被用作“标签”，以标识由此测试用例测试的功能和协议。`runtests.pl` 可以被配置为仅运行匹配（或不匹配）此类关键字的测试。
 - en: Preprocessed
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 预处理
 - en: Under the hood, each test input file is *preprocessed* at startup by `runtests.pl`.
     This means that variables, macros and keywords are expanded and a temporary version
     of the file is stored in `tests/log/testNUMBER` - and *that* file is then used
     by all the test servers etc.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 在启动时，每个测试输入文件都由 `runtests.pl` 进行预处理。这意味着变量、宏和关键字会被展开，并在 `tests/log/testNUMBER`
+    中存储临时文件版本 - 然后，这个文件被所有测试服务器等使用。
 - en: This processing allows the test format to offer features like `%repeat` to create
     really big test files without bloating the input files correspondingly.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种处理允许测试格式提供像 `%repeat` 这样的功能，以创建非常大的测试文件，而不会相应地膨胀输入文件。
 - en: Base64 Encoding
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Base64 编码
 - en: In the preprocess stage, a special instruction can be used to have runtests.pl
     base64 encode a certain section and insert in the generated output file. This
     is in particular good for test cases where the test tool is expected to pass in
     base64 encoded content that might use dynamic information that is unique for this
     particular test invocation, like the server port number.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在预处理阶段，可以使用特殊指令让 runtests.pl 对某个部分进行 base64 编码，并将其插入到生成的输出文件中。这对于测试用例特别有用，因为测试工具预期会传递
+    base64 编码的内容，这些内容可能使用了特定于此次测试调用的动态信息，例如服务器端口号。
 - en: 'To insert a base64 encoded string into the output, use this syntax:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 要将 base64 编码的字符串插入到输出中，使用以下语法：
 - en: '[PRE1]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'The data to encode can then use any of the existing variables mentioned below,
     or even percent-encoded individual bytes. As an example, insert the HTTP server’s
     port number (in ASCII) followed by a space and the hexadecimal byte 9a:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 要编码的数据可以使用以下提到的任何现有变量，甚至可以插入单独的字节。例如，插入 HTTP 服务器的端口号（ASCII 编码）后跟一个空格和十六进制字节
+    9a：
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Hexadecimal decoding
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 十六进制解码
 - en: In the preprocess stage, a special instruction can be used to have runtests.pl
     generate a sequence of binary bytes.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在预处理阶段，可以使用特殊指令让 runtests.pl 生成一系列二进制字节。
 - en: 'To insert a sequence of bytes from a hex encoded string, use this syntax:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 要从十六进制编码的字符串中插入一系列字节，使用以下语法：
 - en: '[PRE3]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'For example, to insert the binary octets 0, 1 and 255 into the test file:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，要将二进制八位字节 0、1 和 255 插入到测试文件中：
 - en: '[PRE4]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Repeat content
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 重复内容
 - en: In the preprocess stage, a special instruction can be used to have runtests.pl
     generate a repetitive sequence of bytes.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 在预处理阶段，可以使用特殊指令让runtests.pl生成重复的字节序列。
 - en: 'To insert a sequence of repeat bytes, use this syntax to make the `<string>`
     get repeated `<number>` of times. The number has to be 1 or larger and the string
     may contain `%HH` hexadecimal codes:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 要插入重复的字节序列，使用此语法使`<string>`重复`<number>`次。数字必须是1或更大，字符串可以包含`%HH`十六进制代码：
 - en: '[PRE5]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'For example, to insert the word hello a 100 times:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，要插入单词“hello” 100 次：
 - en: '[PRE6]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Conditional lines
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 条件行
 - en: 'Lines in the test file can be made to appear conditionally on a specific feature
     (see the “features” section below) being set or not set. If the specific feature
     is present, the following lines are output, otherwise it outputs nothing, until
     a following `else` or `endif` clause. Like this:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 测试文件中的行可以根据特定特征（见下文“特征”部分）是否设置而条件性地显示。如果存在特定特征，则输出以下行，否则不输出任何内容，直到出现后续的`else`或`endif`子句。如下所示：
 - en: '[PRE7]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'It can also check for the inverse condition, so if the feature is *not* set
     by the use of an exclamation mark:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 它还可以检查逆条件，所以如果特征**没有**通过感叹号设置：
 - en: '[PRE8]'
+  id: totrans-35
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'You can also make an “else” clause to get output for the opposite condition,
     like:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还可以使用“else”子句来获取相反条件的输出，例如：
 - en: '[PRE9]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: '**Note** that there can be no nested conditions. You can only do one conditional
     at a time and you can only check for a single feature in it.'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注意**，不能有嵌套条件。您一次只能执行一个条件，并且只能检查一个特征。'
 - en: Variables
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 变量
 - en: When the test is preprocessed, a range of variables in the test file are replaced
     by their content at that time.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 在测试预处理时，测试文件中的一系列变量会被替换为当时的内容。
 - en: 'Available substitute variables include:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 可用的替换变量包括：
 - en: '`%CLIENT6IP` - IPv6 address of the client running curl'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%CLIENT6IP` - 运行curl的客户端的IPv6地址'
 - en: '`%CLIENTIP` - IPv4 address of the client running curl'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%CLIENTIP` - 运行curl的客户端的IPv4地址'
 - en: '`%CURL` - Path to the curl executable'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%CURL` - curl可执行文件的路径'
 - en: '`%FILE_PWD` - Current directory, on windows prefixed with a slash'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FILE_PWD` - 当前目录，在Windows中前面带有斜杠'
 - en: '`%FTP6PORT` - IPv6 port number of the FTP server'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FTP6PORT` - FTP服务器的IPv6端口号'
 - en: '`%FTPPORT` - Port number of the FTP server'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FTPPORT` - FTP服务器的端口号'
 - en: '`%FTPSPORT` - Port number of the FTPS server'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FTPSPORT` - FTPS服务器的端口号'
 - en: '`%FTPTIME2` - Timeout in seconds that should be just sufficient to receive
     a response from the test FTP server'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FTPTIME2` - 应该刚好足够从测试FTP服务器接收响应的超时时间（秒）'
 - en: '`%FTPTIME3` - Even longer than `%FTPTIME2`'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%FTPTIME3` - 比 `%FTPTIME2` 更长'
 - en: '`%GOPHER6PORT` - IPv6 port number of the Gopher server'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%GOPHER6PORT` - Gopher服务器的IPv6端口号'
 - en: '`%GOPHERPORT` - Port number of the Gopher server'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%GOPHERPORT` - Gopher服务器的端口号'
 - en: '`%GOPHERSPORT` - Port number of the Gophers server'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%GOPHERSPORT` - Gophers服务器的端口号'
 - en: '`%HOST6IP` - IPv6 address of the host running this test'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HOST6IP` - 运行此测试的主机的IPv6地址'
 - en: '`%HOSTIP` - IPv4 address of the host running this test'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HOSTIP` - 运行此测试的主机的IPv4地址'
 - en: '`%HTTP6PORT` - IPv6 port number of the HTTP server'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTP6PORT` - HTTP服务器的IPv6端口号'
 - en: '`%HTTPPORT` - Port number of the HTTP server'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPPORT` - HTTP服务器的端口号'
 - en: '`%HTTP2PORT` - Port number of the HTTP/2 server'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTP2PORT` - HTTP/2服务器的端口号'
 - en: '`%HTTPSPORT` - Port number of the HTTPS server'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPSPORT` - HTTPS服务器的端口号'
 - en: '`%HTTPSPROXYPORT` - Port number of the HTTPS-proxy'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPSPROXYPORT` - HTTPS代理的端口号'
 - en: '`%HTTPTLS6PORT` - IPv6 port number of the HTTP TLS server'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPTLS6PORT` - HTTP TLS服务器的IPv6端口号'
 - en: '`%HTTPTLSPORT` - Port number of the HTTP TLS server'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPTLSPORT` - HTTP TLS服务器的端口号'
 - en: '`%HTTPUNIXPATH` - Path to the Unix socket of the HTTP server'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%HTTPUNIXPATH` - HTTP服务器的Unix套接字路径'
 - en: '`%SOCKSUNIXPATH` - Absolute Path to the Unix socket of the SOCKS server'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SOCKSUNIXPATH` - SOCKS服务器的Unix套接字的绝对路径'
 - en: '`%IMAP6PORT` - IPv6 port number of the IMAP server'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%IMAP6PORT` - IMAP服务器的IPv6端口号'
 - en: '`%IMAPPORT` - Port number of the IMAP server'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%IMAPPORT` - IMAP服务器的端口号'
 - en: '`%MQTTPORT` - Port number of the MQTT server'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%MQTTPORT` - MQTT服务器的端口号'
 - en: '`%TELNETPORT` - Port number of the telnet server'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%TELNETPORT` - telnet服务器的端口号'
 - en: '`%NOLISTENPORT` - Port number where no service is listening'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%NOLISTENPORT` - 没有服务监听的端口号'
 - en: '`%POP36PORT` - IPv6 port number of the POP3 server'
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%POP36PORT` - POP3服务器的IPv6端口号'
 - en: '`%POP3PORT` - Port number of the POP3 server'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%POP3PORT` - POP3服务器的端口号'
 - en: '`%POSIX_PWD` - Current directory somewhat mingw friendly'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%POSIX_PWD` - 对mingw友好的当前目录'
 - en: '`%PROXYPORT` - Port number of the HTTP proxy'
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%PROXYPORT` - HTTP代理的端口号'
 - en: '`%PWD` - Current directory'
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%PWD` - 当前目录'
 - en: '`%RTSP6PORT` - IPv6 port number of the RTSP server'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%RTSP6PORT` - RTSP服务器的IPv6端口号'
 - en: '`%RTSPPORT` - Port number of the RTSP server'
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%RTSPPORT` - RTSP服务器的端口号'
 - en: '`%SMBPORT` - Port number of the SMB server'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SMBPORT` - SMB服务器的端口号'
 - en: '`%SMBSPORT` - Port number of the SMBS server'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SMBSPORT` - SMBS服务器的端口号'
 - en: '`%SMTP6PORT` - IPv6 port number of the SMTP server'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SMTP6PORT` - SMTP服务器的IPv6端口号'
 - en: '`%SMTPPORT` - Port number of the SMTP server'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SMTPPORT` - SMTP服务器的端口号'
 - en: '`%SOCKSPORT` - Port number of the SOCKS4/5 server'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SOCKSPORT` - SOCKS4/5服务器的端口号'
 - en: '`%SRCDIR` - Full path to the source dir'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SRCDIR` - 源目录的完整路径'
 - en: '`%SSHPORT` - Port number of the SCP/SFTP server'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SSHPORT` - SCP/SFTP服务器的端口号'
 - en: '`%SSHSRVMD5` - MD5 of SSH server’s public key'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SSHSRVMD5` - SSH服务器的公钥的MD5'
 - en: '`%SSHSRVSHA256` - SHA256 of SSH server’s public key'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SSHSRVSHA256` - SSH服务器的公钥的SHA256'
 - en: '`%SSH_PWD` - Current directory friendly for the SSH server'
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%SSH_PWD` - 对SSH服务器友好的当前目录'
 - en: '`%TESTNUMBER` - Number of the test case'
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%TESTNUMBER` - 测试用例的编号'
 - en: '`%TFTP6PORT` - IPv6 port number of the TFTP server'
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%TFTP6PORT` - TFTP服务器的IPv6端口号'
 - en: '`%TFTPPORT` - Port number of the TFTP server'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%TFTPPORT` - TFTP服务器的端口号'
 - en: '`%USER` - Login ID of the user running the test'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%USER` - 运行测试的用户登录ID'
 - en: '`%VERSION` - the full version number of the tested curl'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`%VERSION` - 被测试curl的完整版本号'

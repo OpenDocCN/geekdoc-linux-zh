@@ -1,46 +1,64 @@
 - en: SSH key
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: SSH密钥
 - en: This callback is set with `CURLOPT_SSH_KEYFUNCTION`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调函数通过`CURLOPT_SSH_KEYFUNCTION`设置。
 - en: It gets called when the `known_host` matching has been done, to allow the application
     to act and decide for libcurl how to proceed. The callback is called if `CURLOPT_SSH_KNOWNHOSTS`
     is also set.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当`known_host`匹配完成时会被调用，以便应用程序可以行动并决定libcurl如何继续。如果`CURLOPT_SSH_KNOWNHOSTS`也被设置，则会调用回调函数。
 - en: 'In the arguments to the callback are the old key and the new key and the callback
     is expected to return a return code that tells libcurl how to act:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调函数的参数是旧密钥和新密钥，并且期望回调函数返回一个返回码，告诉libcurl如何行动：
 - en: '`CURLKHSTAT_FINE_REPLACE` - The new host+key is accepted and libcurl replaces
     the old host+key into the known_hosts file before continuing with the connection.
     This also adds the new host+key combo to the known_host pool kept in memory if
     it was not already present there. The adding of data to the file is done by completely
     replacing the file with a new copy, so the permissions of the file must allow
     this.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLKHSTAT_FINE_REPLACE` - 新的主机+密钥被接受，libcurl在继续连接之前将旧的主机+密钥替换到known_hosts文件中。如果新主机+密钥组合尚未存在于内存中的known_host池中，它也会添加到该池中。向文件添加数据是通过完全用新副本替换文件来完成的，因此文件权限必须允许这样做。'
 - en: '`CURLKHSTAT_FINE_ADD_TO_FILE` - The host+key is accepted and libcurl appends
     it to the known_hosts file before continuing with the connection. This also adds
     the host+key combo to the known_host pool kept in memory if it was not already
     present there. The adding of data to the file is done by completely replacing
     the file with a new copy, so the permissions of the file must allow this.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLKHSTAT_FINE_ADD_TO_FILE` - 主机+密钥被接受，libcurl在继续连接之前将其追加到known_hosts文件中。如果主机+密钥组合尚未存在于内存中的known_host池中，它也会添加到该池中。向文件添加数据是通过完全用新副本替换文件来完成的，因此文件权限必须允许这样做。'
 - en: '`CURLKHSTAT_FINE` - The host+key is accepted libcurl continues with the connection.
     This also adds the host+key combo to the known_host pool kept in memory if it
     was not already present there.'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLKHSTAT_FINE` - 主机+密钥被接受，libcurl继续连接。如果主机+密钥组合尚未存在于内存中的known_host池中，它也会添加到该池中。'
 - en: '`CURLKHSTAT_REJECT` - The host+key is rejected. libcurl denies the connection
     to continue and it closes.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLKHSTAT_REJECT` - 主机+密钥被拒绝。libcurl拒绝连接继续并关闭。'
 - en: '`CURLKHSTAT_DEFER` - The host+key is rejected, but the SSH connection is asked
     to be kept alive. This feature could be used when the app wants to somehow return
     and act on the host+key situation and then retry without needing the overhead
     of setting it up from scratch again.'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLKHSTAT_DEFER` - 主机+密钥被拒绝，但请求保持SSH连接活跃。当应用程序想要以某种方式返回并处理主机+密钥情况，然后重试而不需要从头设置开销时，可以使用此功能。'

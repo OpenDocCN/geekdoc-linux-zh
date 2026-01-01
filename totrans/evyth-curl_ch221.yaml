@@ -1,10 +1,14 @@
 - en: Seek and ioctl
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 寻找和ioctl
 - en: This callback is set with `CURLOPT_SEEKFUNCTION`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 此回调函数通过`CURLOPT_SEEKFUNCTION`设置。
 - en: The callback gets called by libcurl to seek to a certain position in the input
     stream and can be used to fast forward a file in a resumed upload (instead of
     reading all uploaded bytes with the normal read function/callback). It is also
@@ -14,18 +18,27 @@
     and the server closes the connection. The function shall work like fseek(3) or
     lseek(3) and it gets `SEEK_SET`, `SEEK_CUR` or `SEEK_END` as argument for origin,
     although libcurl currently only passes `SEEK_SET`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调函数由libcurl调用，用于在输入流中定位到特定位置，并可用于在恢复上传时快速前进文件（而不是使用常规的读取函数/回调读取所有已上传的字节）。它还用于在已向服务器发送数据并需要再次发送数据时回滚流。这可能在执行带有多阶段认证方法的HTTP
+    PUT或POST时发生，或者当现有的HTTP连接太晚重用时服务器关闭连接。该函数应像fseek(3)或lseek(3)一样工作，并接收`SEEK_SET`、`SEEK_CUR`或`SEEK_END`作为原点的参数，尽管libcurl当前只传递`SEEK_SET`。
 - en: The custom `userp` sent to the callback is the pointer you set with `CURLOPT_SEEKDATA`.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 发送到回调函数的`userp`是您使用`CURLOPT_SEEKDATA`设置的指针。
 - en: The callback function must return `CURL_SEEKFUNC_OK` on success, `CURL_SEEKFUNC_FAIL`
     to cause the upload operation to fail or `CURL_SEEKFUNC_CANTSEEK` to indicate
     that while the seek failed, libcurl is free to work around the problem if possible.
     The latter can sometimes be done by instead reading from the input or similar.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 回调函数在成功时必须返回`CURL_SEEKFUNC_OK`，在导致上传操作失败时返回`CURL_SEEKFUNC_FAIL`，或在寻求失败时返回`CURL_SEEKFUNC_CANTSEEK`以指示虽然寻求失败，但如果可能，libcurl可以自由地绕过问题。后者有时可以通过从输入读取或类似的方式完成。
 - en: If you forward the input arguments directly to fseek(3) or lseek(3), note that
     the data type for offset is not the same as defined for `curl_off_t` on many systems.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您直接将输入参数传递给fseek(3)或lseek(3)，请注意，偏移量的数据类型与许多系统上定义的`curl_off_t`不同。

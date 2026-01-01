@@ -1,58 +1,82 @@
 - en: Query
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 查询
 - en: The query part of a URL is the data that is to the right of a question mark
     (`?`) but to the left of the [fragment](ch062.xhtml#cmdline__urls__fragment__md),
     which begins with a hash (`#`).
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: URL的查询部分是位于问号（`?`）右侧但位于[片段](ch062.xhtml#cmdline__urls__fragment__md)左侧的数据，该片段以哈希（`#`）开头。
 - en: The query can be any string of characters as long as they are URL encoded. It
     is a common practice to use a sequence of key/value pairs separated by ampersands
     (`&`). Like in `https://example.com/?name=daniel&tool=curl`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 查询可以是任何经过URL编码的字符序列。通常，使用由与号（`&`）分隔的键/值对序列。例如，在 `https://example.com/?name=daniel&tool=curl`。
 - en: To help users create such query sets, properly encoded, curl offers the command
     line option `--url-query [content]`. This option adds content, usually a name
     + value pair, to the end of the query part of the provided URL.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了帮助用户创建这样的查询集，curl提供了适当的命令行选项`--url-query [content]`。此选项将内容（通常是一个名称+值对）添加到提供的URL查询部分的末尾。
 - en: When adding query parts, curl adds ampersand separators.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在添加查询部分时，curl会添加与号分隔符。
 - en: 'The syntax is identical to that used by `--data-urlencode` with one extension:
     the `+` prefix. See below.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 语法与`--data-urlencode`使用的语法相同，但有一个扩展：使用`+`前缀。见下文。
 - en: '`content`: URL encode the content and add that to the query. Just be careful
     so that the content does not contain any `=` or `@` symbols, as that makes the
     syntax match one of the other cases below.'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`content`: 对内容进行URL编码，并将其添加到查询中。只需小心确保内容不包含任何`=`或`@`符号，因为这会使语法与以下其他情况之一匹配。'
 - en: '`=content`: URL encode the content and add that to the query. The initial `=`
     symbol is not included in the data.'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`=content`: 对内容进行URL编码，并将其添加到查询中。初始的`=`符号不包括在数据中。'
 - en: '`name=content`: URL encode the content part and add that to the query. Note
     that the name part is expected to be URL encoded already.'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`name=content`: 对内容部分进行URL编码，并将其添加到查询中。注意，预期名称部分已经进行了URL编码。'
 - en: '`@filename`: load data from the given file (including any newlines), URL encode
     that data and add that to the query.'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`@filename`: 从指定的文件（包括任何换行符）加载数据，对数据进行URL编码，并将其添加到查询中。'
 - en: '`name@filename`: load data from the given file (including any newlines), URL
     encode that data and add that to the query. The name part gets an equal sign appended,
     resulting in `name=urlencoded-file-content`. Note that the name is expected to
     be URL encoded already.'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`name@filename`: 从指定的文件（包括任何换行符）加载数据，对数据进行URL编码，并将其添加到查询中。名称部分附加一个等号，结果为`name=urlencoded-file-content`。注意，预期名称已经进行了URL编码。'
 - en: '`+content`: Add the content to the query without doing any encoding.'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`+content`: 不进行任何编码，将内容添加到查询中。'

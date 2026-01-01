@@ -1,27 +1,37 @@
 - en: Persistent connections
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 持久连接
 - en: When setting up connections to sites, curl keeps old connections around for
     a while so that if the next transfer is done using the same host as a previous
     transfer, it can reuse the same connection again and thus save a lot of time.
     We call this persistent connections. curl always tries to keep connections alive
     and reuses existing connections as far as it can.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当设置到网站的连接时，curl会保留旧连接一段时间，这样如果下一次传输使用的是之前传输相同的宿主，它就可以再次重用相同的连接，从而节省大量时间。我们称这种连接为持久连接。curl总是尝试保持连接活跃，并在可能的情况下重用现有连接。
 - en: Connections are kept in the *connection pool*, sometimes also called the *connection
     cache*.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 连接被保存在*连接池*中，有时也被称为*连接缓存*。
 - en: The curl command-line tool can, however, only keep connections alive for as
     long as it runs, so as soon as it exits back to your command line it has to close
     down all currently open connections (and also free and clean up all the other
     caches it uses to decrease time of subsequent operations). We call the pool of
     alive connections the *connection cache*.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，curl命令行工具只能保持连接活跃，直到它运行结束，因此一旦它退出回到你的命令行，它就必须关闭所有当前打开的连接（并且释放和清理它用于减少后续操作时间的所有其他缓存）。我们称活跃连接的池为*连接缓存*。
 - en: If you want to perform N transfers or operations against the same host or same
     base URL, you could gain a lot of speed by trying to do them in as few curl command
     lines as possible instead of repeatedly invoking curl with one URL at a time.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要对同一主机或同一基本URL执行N次传输或操作，通过尽可能少地使用curl命令行来执行它们，而不是每次只使用一个URL调用curl，你可以获得很多速度上的提升。

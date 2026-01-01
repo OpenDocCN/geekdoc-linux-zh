@@ -1,186 +1,292 @@
 - en: Linux
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Linux
 - en: Linux distributions come with packager managers that let you install software
     that they offer. Most Linux distributions offer curl and libcurl to be installed
     if they are not installed by default.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux发行版自带了包管理器，允许您安装它们提供的软件。大多数Linux发行版如果默认没有安装，会提供curl和libcurl的安装选项。
 - en: Ubuntu and Debian
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Ubuntu和Debian
 - en: '`apt` is a tool to install prebuilt packages on Debian Linux and Ubuntu Linux
     distributions and derivatives.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`apt`是用于在Debian Linux和Ubuntu Linux及其衍生版上安装预构建包的工具。'
 - en: To install the curl command-line tool, you usually just
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装curl命令行工具，通常您只需
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: …and that then makes sure the dependencies are installed and usually libcurl
     is then also installed as an individual package.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保依赖项已安装，通常libcurl也会作为一个单独的包一起安装。
 - en: 'If you want to build applications against libcurl, you need a development package
     installed to get the include headers and some additional documentation, etc. You
     can then select a libcurl with the TLS backend you prefer:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您想针对libcurl构建应用程序，您需要安装一个开发包以获取包含头文件和一些额外文档等。然后您可以选择您喜欢的具有TLS后端的libcurl：
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: or
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Redhat and CentOS
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Redhat和CentOS
 - en: 'With Redhat Linux and CentOS Linux derivatives, you use `yum` to install packages.
     Install the command-line tool with:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Redhat Linux和CentOS Linux衍生版中，您使用`yum`来安装包。使用以下命令安装命令行工具：
 - en: '[PRE3]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You install the libcurl development package (with include files and some docs,
     etc.) with this:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用以下方式安装libcurl开发包（包括包含文件和一些文档等）：
 - en: '[PRE4]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Fedora
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Fedora
 - en: Fedora Workstation and other Fedora based distributions use `dnf` to install
     packages.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: Fedora Workstation和其他基于Fedora的发行版使用`dnf`来安装包。
 - en: 'Install the command-line tool with:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用以下命令安装命令行工具：
 - en: '[PRE5]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'To install the libcurl development package you run:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装libcurl开发包，您需要运行：
 - en: '[PRE6]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Immutable Fedora distributions
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 不可变的Fedora发行版
 - en: Distributions such as Silverblue, Kinoite, Sericea, Onyx, … use `rpm-ostree`
     to install packages. Remember to restart the system after install.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 如Silverblue、Kinoite、Sericea、Onyx等发行版使用`rpm-ostree`来安装包。请记住在安装后重启系统。
 - en: '[PRE7]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'To install the libcurl development package you run:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装libcurl开发包，您需要运行：
 - en: '[PRE8]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: nix
+  id: totrans-27
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: nix
 - en: '[Nix](https://nixos.org/nix/) is a package manager default to the NixOS distribution,
     but it can also be used on any Linux distribution.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '[Nix](https://nixos.org/nix/)是NixOS发行版的默认包管理器，但它也可以在任何Linux发行版中使用。'
 - en: 'In order to install command-line tool:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装命令行工具：
 - en: '[PRE9]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Arch Linux
+  id: totrans-31
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Arch Linux
 - en: curl is located in the core repository of Arch Linux. This means it should be
     installed automatically if you follow the normal installation procedure.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: curl位于Arch Linux的核心仓库中。这意味着如果您遵循正常的安装程序，它应该会自动安装。
 - en: 'If curl is not installed, Arch Linux uses `pacman` to install packages:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果curl未安装，Arch Linux使用`pacman`来安装包：
 - en: '[PRE10]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: SUSE and openSUSE
+  id: totrans-35
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: SUSE和openSUSE
 - en: 'With SUSE Linux and openSUSE Linux you use `zypper` to install packages. To
     install the curl command-line utility:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在SUSE Linux和openSUSE Linux中，您使用`zypper`来安装包。为了安装curl命令行工具：
 - en: '[PRE11]'
+  id: totrans-37
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'In order to install the libcurl development package you run:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装libcurl开发包，您需要运行：
 - en: '[PRE12]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: SUSE SLE Micro and openSUSE MicroOS
+  id: totrans-40
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: SUSE SLE Micro和openSUSE MicroOS
 - en: 'These versions of SUSE/openSUSE Linux are immutable OSes and have a read only
     root file system, to install packages you would use `transactional-update` instead
     of `zypper`. To install the curl command-line utility:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些版本的SUSE/openSUSE Linux是不可变的操作系统，具有只读的根文件系统，为了安装包，您将使用`transactional-update`而不是`zypper`。为了安装curl命令行工具：
 - en: '[PRE13]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'And to install the libcurl development package:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 并且为了安装libcurl开发包：
 - en: '[PRE14]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: Gentoo
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Gentoo
 - en: This package installs the tool, libcurl, headers and pkg-config files etc
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 此包安装了工具、libcurl、头文件和pkg-config文件等
 - en: '[PRE15]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: Void Linux
+  id: totrans-48
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: Void Linux
 - en: 'With Void Linux you use `xbps-install` to install packages. To install the
     curl command-line utility:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Void Linux中，您使用`xbps-install`来安装包。为了安装curl命令行工具：
 - en: '[PRE16]'
+  id: totrans-50
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: 'In order to install the libcurl development package:'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装libcurl开发包：
 - en: '[PRE17]'
+  id: totrans-52
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'

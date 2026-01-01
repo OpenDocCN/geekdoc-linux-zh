@@ -1,54 +1,82 @@
 - en: Download
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 下载
 - en: 'The GET method is the default method libcurl uses when an HTTP URL is requested
     and no particular other method is asked for. It asks the server for a particular
     resource—the standard HTTP download request:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: GET 方法是 libcurl 在请求 HTTP URL 且未指定特定其他方法时的默认方法。它请求服务器提供特定资源——标准的 HTTP 下载请求：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Since options set in an easy handle are sticky and remain until changed, there
     may be times when you have asked for another request method than GET and then
     want to switch back to GET again for a subsequent request. For this purpose, there
     is the `CURLOPT_HTTPGET` option:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于在 easy 处理程序中设置的选项是粘性的，并且会保持直到被更改，因此可能会有这样的情况：你请求了另一种请求方法而不是 GET，然后又想切换回 GET
+    以进行后续请求。为此，存在 `CURLOPT_HTTPGET` 选项：
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Download headers too
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 下载头部信息
 - en: An HTTP transfer also includes a set of response headers. Response headers are
     metadata associated with the actual payload, called the response body. All downloads
     get a set of headers too, but when using libcurl you can select whether you want
     to have them downloaded (seen) or not.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: HTTP 传输还包括一组响应头部。响应头部是与实际有效载荷（称为响应正文）关联的元数据。所有下载都会获得一组头部信息，但当你使用 libcurl 时，你可以选择是否希望下载（查看）它们。
 - en: 'You can ask libcurl to pass on the headers to the same stream as the regular
     body is, by using `CURLOPT_HEADER`:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以通过使用 `CURLOPT_HEADER` 来请求 libcurl 将头部信息传递到与常规正文相同的流中：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Or you can opt to store the headers in a separate download file, by relying
     on the default behaviors of the [write](ch213.xhtml#transfers__callbacks__write__md)
     and [header callbacks](ch216.xhtml#transfers__callbacks__header__md):'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，你也可以选择将头部信息存储在单独的下载文件中，这依赖于 [write](ch213.xhtml#transfers__callbacks__write__md)
+    和 [header callbacks](ch216.xhtml#transfers__callbacks__header__md) 的默认行为：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'If you only want to casually browse the headers, you may even be happy enough
     with just setting verbose mode while developing as that shows both outgoing and
     incoming headers sent to stderr:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你只想随意浏览头部信息，那么在开发时仅设置详细模式可能就足够让你满意了，因为这样会在标准错误输出中显示发送的出站和入站头部信息：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'

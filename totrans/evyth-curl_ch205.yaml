@@ -1,61 +1,89 @@
 - en: Set string options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 设置字符串选项
 - en: There are currently over 80 options for `curl_easy_setopt()` that accept a string
     as its third argument.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 目前`curl_easy_setopt()`函数有超过80个选项接受字符串作为其第三个参数。
 - en: 'When a string is set in a handle, libcurl immediately copies that data so that
     the application does not have to keep the data around for the time the transfer
     is being done - **with one notable exception**: `CURLOPT_POSTFIELDS`.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 当在句柄中设置字符串时，libcurl会立即复制该数据，这样应用程序就不必在传输过程中保留数据 - **有一个显著的例外**：`CURLOPT_POSTFIELDS`。
 - en: 'Set a URL in the handle:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在句柄中设置URL：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: '`CURLOPT_POSTFIELDS`'
+  id: totrans-5
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`CURLOPT_POSTFIELDS`'
 - en: The exception to the rule that libcurl always copies data, `CURLOPT_POSTFIELDS`
     only stores the pointer to the data, meaning an application using this option
     **must** keep the memory around for the entire duration of the associated transfer.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 不同于libcurl总是复制数据的规则，`CURLOPT_POSTFIELDS`只存储数据的指针，这意味着使用此选项的应用程序**必须**在整个传输过程中保留内存。
 - en: If that is problematic, an alternative is to instead use `CURLOPT_COPYPOSTFIELDS`
     which copies the data. If the data is binary and does not stop at the first presence
     of a null byte, make sure that `CURLOPT_POSTFIELDSIZE` is set *before* this option
     is used.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果这成问题，一个替代方案是使用`CURLOPT_COPYPOSTFIELDS`来复制数据。如果数据是二进制且不以第一个null字节结束，确保在使用此选项之前设置`CURLOPT_POSTFIELDSIZE`。
 - en: Why?
+  id: totrans-8
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 为什么？
 - en: The reason `CURLOPT_POSTFIELDS` is an exception is due to legacy. Originally
     (before curl 7.17.0), libcurl did not copy *any* string arguments and when this
     current behavior was introduced, this option could not be converted over without
     breaking behavior so it had to keep working like before. Which now sticks out,
     as no other option does…
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '`CURLOPT_POSTFIELDS`是一个例外的原因是历史遗留问题。最初（在curl 7.17.0之前），libcurl不复制任何字符串参数，当引入当前行为时，此选项无法在不破坏行为的情况下转换，因此它必须像以前一样继续工作。现在这显得有些突出，因为其他选项都没有这样做...'
 - en: C++
+  id: totrans-10
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: C++
 - en: If you use libcurl from a C++ program, it is important to remember that you
     cannot pass in a string object where libcurl expects a string. It has to be a
     null terminated C string. Usually you can make this happen with the `c_str()`
     method.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你从C++程序中使用libcurl，重要的是要记住你不能传递libcurl期望的字符串对象。它必须是一个以null结尾的C字符串。通常你可以使用`c_str()`方法来实现这一点。
 - en: 'For example, keep the URL in a string object and set that in the handle:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，将URL保存在字符串对象中，并在句柄中设置该对象：
 - en: '[PRE1]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'

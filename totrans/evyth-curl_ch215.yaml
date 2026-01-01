@@ -1,34 +1,52 @@
 - en: Read data
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 读取数据
 - en: 'The read callback is set with `CURLOPT_READFUNCTION`:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 读取回调是通过 `CURLOPT_READFUNCTION` 设置的：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'The `read_callback` function must match this prototype:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '`read_callback` 函数必须匹配以下原型：'
 - en: '[PRE1]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: This callback function gets called by libcurl when it wants to send data to
     the server. This is a transfer that you have set up to upload data or otherwise
     send it off to the server. This callback is called over and over until all data
     has been delivered or the transfer failed.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 当 libcurl 想要向服务器发送数据时，会调用此回调函数。这是一个您已设置用于上传数据或以其他方式将其发送到服务器的传输。此回调会在所有数据已发送或传输失败之前反复调用。
 - en: 'The **stream** pointer points to the private data set with `CURLOPT_READDATA`:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**stream** 指针指向通过 `CURLOPT_READDATA` 设置的私有数据集：'
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: If this callback is not set, libcurl instead uses ‘fread’ by default.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果没有设置此回调，libcurl 默认使用 'fread'。
 - en: The data area pointed at by the pointer **buffer** should be filled up with
     at most **size** multiplied with **nitems** number of bytes by your function.
     The callback should then return the number of bytes that it stored in that memory
@@ -36,5 +54,9 @@
     a few “magic” return codes to cause libcurl to return failure immediately or to
     pause the particular transfer. See the [CURLOPT_READFUNCTION man page](https://curl.se/libcurl/c/CURLOPT_READFUNCTION.html)
     for details.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 指针 **buffer** 所指向的数据区域应由您的函数填充最多 **size** 乘以 **nitems** 个字节的字节。然后回调应返回它存储在该内存区域中的字节数，或者如果已达到数据末尾，则返回
+    0。回调还可以返回一些“魔法”返回代码，以使 libcurl 立即返回失败或暂停特定的传输。有关详细信息，请参阅 [CURLOPT_READFUNCTION
+    手册页](https://curl.se/libcurl/c/CURLOPT_READFUNCTION.html)。

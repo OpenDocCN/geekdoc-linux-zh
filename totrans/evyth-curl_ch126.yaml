@@ -1,79 +1,127 @@
 - en: Enable TLS
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 启用 TLS
 - en: curl supports the TLS version of many protocols. HTTP has HTTPS, FTP has FTPS,
     LDAP has LDAPS, POP3 has POP3S, IMAP has IMAPS and SMTP has SMTPS.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: curl 支持许多协议的 TLS 版本。HTTP 有 HTTPS，FTP 有 FTPS，LDAP 有 LDAPS，POP3 有 POP3S，IMAP 有
+    IMAPS，SMTP 有 SMTPS。
 - en: If the server side supports it, you can use the TLS version of these protocols
     with curl.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果服务器端支持，您可以使用 curl 的这些协议的 TLS 版本。
 - en: There are two general approaches to do TLS with protocols. One of them is to
     speak TLS already from the first connection handshake while the other is to upgrade
     the connection from plain-text to TLS using protocol specific instructions.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在协议中使用 TLS 有两种一般方法。其中一种是在第一次连接握手时就使用 TLS，另一种是使用特定协议的指令将连接从纯文本升级到 TLS。
 - en: With curl, if you explicitly specify the TLS version of the protocol (the one
     that has a name that ends with an ‘S’ character) in the URL, curl tries to connect
     with TLS from start, while if you specify the non-TLS version in the URL you can
     *usually* upgrade the connection to TLS-based with the `--ssl` option.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 curl，如果您在 URL 中明确指定了协议的 TLS 版本（以 'S' 字符结尾的名称），curl 会尝试从开始就使用 TLS 连接，而如果您在
+    URL 中指定了非 TLS 版本，您通常可以使用 `--ssl` 选项将连接升级到基于 TLS 的连接。
 - en: 'The support table looks like this:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 支持表看起来如下：
 - en: '| Clear | TLS version | –ssl |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 清除 | TLS 版本 | –ssl |'
 - en: '| --- | --- | --- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| HTTP | HTTPS | no |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| HTTP | HTTPS | no |'
 - en: '| LDAP | LDAPS | no |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| LDAP | LDAPS | no |'
 - en: '| FTP | FTPS | **yes** |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| FTP | FTPS | **yes** |'
 - en: '| POP3 | POP3S | **yes** |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| POP3 | POP3S | **yes** |'
 - en: '| IMAP | IMAPS | **yes** |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| IMAP | IMAPS | **yes** |'
 - en: '| SMTP | SMTPS | **yes** |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| SMTP | SMTPS | **yes** |'
 - en: The protocols that *can* do `--ssl` all favor that method. Using `--ssl` means
     that curl *attempts* to upgrade the connection to TLS but if that fails, it still
     continues with the transfer using the plain-text version of the protocol. To make
     the `--ssl` option **require** TLS to continue, there is instead the `--ssl-reqd`
     option which makes the transfer fail if curl cannot successfully negotiate TLS.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 所有能够执行 `--ssl` 的协议都倾向于这种方法。使用 `--ssl` 意味着 curl 会尝试将连接升级到 TLS，但如果失败，它仍然会使用协议的纯文本版本继续传输。为了使
+    `--ssl` 选项**要求**TLS 继续传输，可以使用 `--ssl-reqd` 选项，如果 curl 无法成功协商 TLS，则传输会失败。
 - en: 'Require TLS security for your FTP transfer:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 为您的 FTP 传输要求 TLS 安全性：
 - en: '[PRE0]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Suggest TLS to be used for your FTP transfer:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 建议使用 TLS 进行您的 FTP 传输：
 - en: '[PRE1]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Connecting directly with TLS (to `HTTPS://`, `LDAPS://`, `FTPS://` etc) means
     that TLS is mandatory and curl returns an error if TLS is not negotiated.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 直接使用 TLS 连接（到 `HTTPS://`，`LDAPS://`，`FTPS://` 等）意味着 TLS 是强制性的，如果未协商 TLS，curl
+    会返回错误。
 - en: 'Get a file over HTTPS:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过 HTTPS 获取文件：
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'

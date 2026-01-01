@@ -1,67 +1,97 @@
 - en: curl easy options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: curl 简单选项
 - en: You set options in the easy handle to control how that transfer is going to
     be done, or in some cases you can actually set options and modify the transfer’s
     behavior while it is in progress. You set options with `curl_easy_setopt()` and
     you provide the handle, the option you want to set and the argument to the option.
     All options take exactly one argument and you must always pass exactly three parameters
     to the `curl_easy_setopt()` calls.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 你在 easy 处理句柄中设置选项来控制如何执行该传输，或者在某些情况下，你实际上可以在传输进行中设置选项并修改传输的行为。你使用 `curl_easy_setopt()`
+    来设置选项，并提供句柄、你想要设置的选项以及选项的参数。所有选项都恰好接受一个参数，并且你必须始终向 `curl_easy_setopt()` 调用传递恰好三个参数。
 - en: Since the `curl_easy_setopt()` call accepts several hundred different options
     and the various options accept a variety of different types of arguments, it is
     important to read up on the specifics and provide exactly the argument type the
     specific option supports and expects. Passing in the wrong type can lead to unexpected
     side-effects or hard to understand hiccups.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于 `curl_easy_setopt()` 调用接受数百种不同的选项，并且各种选项接受各种不同类型的参数，因此了解具体细节并准确提供特定选项支持的参数类型非常重要。传递错误类型的参数可能导致意外的副作用或难以理解的故障。
 - en: 'The perhaps most important option that every transfer needs, is the URL. libcurl
     cannot perform a transfer without knowing which URL it concerns so you must tell
     it. The URL option name is `CURLOPT_URL` as all options are prefixed with `CURLOPT_`
     and then the descriptive name — all using uppercase letters. An example line setting
     the URL to get the `http://example.com` HTTP contents could look like:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个传输可能最重要的选项是 URL。libcurl 无法在没有知道它涉及哪个 URL 的情况下执行传输，因此你必须告诉它。URL 选项名称是 `CURLOPT_URL`，因为所有选项都以
+    `CURLOPT_` 为前缀，然后是描述性的名称——全部使用大写字母。一个设置 URL 以获取 `http://example.com` HTTP 内容的示例行可能如下所示：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Again: this only sets the option in the handle. It does not do the actual transfer
     or anything. It just tells libcurl to copy the given string and if that works
     it returns OK.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次强调：这仅设置句柄中的选项。它并不执行实际的传输或任何其他操作。它只是告诉 libcurl 复制给定的字符串，如果成功则返回 OK。
 - en: It is, of course, good form to check the return code to see that nothing went
     wrong.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，检查返回码以确认没有出错是良好的做法。
 - en: Get options
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 获取选项
 - en: There is no way to extract the values previously set with `curl_easy_setopt()`.
     If you need to be able to extract the information again that you set earlier,
     we encourage you to keep track of that data yourself in your application.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 无法提取之前使用 `curl_easy_setopt()` 设置的值。如果你需要能够再次提取你之前设置的信息，我们鼓励你在你的应用程序中自行跟踪这些数据。
 - en: '[Set numerical options](ch203.xhtml#transfers__options__num__md)'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[设置数值选项](ch203.xhtml#transfers__options__num__md)'
 - en: '[Set string options](ch204.xhtml#transfers__options__strings__md)'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[设置字符串选项](ch204.xhtml#transfers__options__strings__md)'
 - en: '[TLS options](ch205.xhtml#transfers__options__tls__md)'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[TLS 选项](ch205.xhtml#transfers__options__tls__md)'
 - en: '[All options](ch206.xhtml#transfers__options__all__md)'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[所有选项](ch206.xhtml#transfers__options__all__md)'
 - en: '[Get option information](ch207.xhtml#transfers__options__info__md)'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[获取选项信息](ch207.xhtml#transfers__options__info__md)'

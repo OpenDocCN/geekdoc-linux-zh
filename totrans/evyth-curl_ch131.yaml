@@ -1,35 +1,51 @@
 - en: Client certificates
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 客户端证书
 - en: TLS client certificates are a way for clients to cryptographically prove to
     servers that they are truly the right peer (also sometimes known as Mutual TLS
     or mTLS). A command line that uses a client certificate specifies the certificate
     and the corresponding key, and they are then passed on the TLS handshake with
     the server.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: TLS客户端证书是客户端通过密码学方式向服务器证明其确实是正确对等方的一种方式（有时也称为双向TLS或mTLS）。使用客户端证书的命令行指定了证书及其相应的密钥，然后它们在TLS握手过程中传递给服务器。
 - en: You need to have your client certificate already stored in a file when doing
     this and you should supposedly have gotten it from the right instance via a different
     channel previously.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在进行此操作时，您需要将客户端证书事先存储在文件中，并且您应该已经通过不同的渠道从正确的实例中获取了它。
 - en: The key is typically protected by a password that you need to provide or get
     prompted for interactively.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 密钥通常由密码保护，您需要提供或交互式地提示以获取。
 - en: 'curl offers options to let you specify a single file that is both the client
     certificate and the private key concatenated using `--cert`, or you can specify
     the key file independently with `--key`:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: curl提供了选项，允许您使用`--cert`指定一个既是客户端证书又是私钥的单一文件，或者您可以使用`--key`独立指定密钥文件：
 - en: '[PRE0]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'For some TLS backends you can also pass in the key and certificate using different
     types:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于某些TLS后端，您也可以使用不同的类型传递密钥和证书：
 - en: '[PRE1]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
