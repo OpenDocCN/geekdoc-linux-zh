@@ -1,3 +1,4 @@
++   [101 Linux 命令](docs/101-linux-cmd/README.md)
 +   [AWK 程序设计语言](docs/awk-pl/README.md)
 +   [计算机网络：原理、协议与实践](docs/cmpt-net-prcp-prtc-prac/README.md)
 +   [ElderNode 博客中文翻译](docs/eldernode-blog/README.md)
