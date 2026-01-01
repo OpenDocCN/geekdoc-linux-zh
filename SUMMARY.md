@@ -2,6 +2,7 @@
 +   [计算机网络：原理、协议与实践](docs/cmpt-net-prcp-prtc-prac/README.md)
 +   [ElderNode 博客中文翻译](docs/eldernode-blog/README.md)
 +   [嵌入式 Linux 知识库 (eLinux.org)](docs/emb-linux-wiki/README.md)
++   [关于 CURL 的一切](docs/evrth-curl/README.md)
 +   [FreeBSD 使用手册](docs/fbsd-man/README.md)
 +   [Java 程序员眼中的 Linux](docs/java-linux/README.md)
 +   [Linux 101 Hacks](docs/linux-101-hack/README.md)
