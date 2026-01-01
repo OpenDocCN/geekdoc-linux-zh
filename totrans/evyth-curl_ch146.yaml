@@ -1,0 +1,71 @@
+- en: Authentication
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Each HTTP request can be made authenticated. If a server or a proxy want the
+    user to provide proof that they have the correct credentials to access a URL or
+    perform an action, it can send an HTTP response code that informs the client that
+    it needs to provide a correct HTTP authentication header in the request to be
+    allowed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A server that requires authentication sends back a 401 response code and an
+    associated `WWW-Authenticate:` header that lists all the authentication methods
+    that the server supports.
+  prefs: []
+  type: TYPE_NORMAL
+- en: An HTTP proxy that requires authentication sends back a 407 response code and
+    an associated `Proxy-Authenticate:` header that lists all the authentication methods
+    that the proxy supports.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It might be worth to note that most websites of today do not require HTTP authentication
+    for login etc, but they instead ask users to login on webpages and then the browser
+    issues a POST with the user and password etc, and then subsequently maintain cookies
+    for the session.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To tell curl to do an authenticated HTTP request, you use the `-u, --user`
+    option to provide username and password (separated with a colon). Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: This makes curl use the default *Basic* HTTP authentication method. Yes, it
+    is actually called Basic and it is truly basic. To explicitly ask for the basic
+    method, use `--basic`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Basic authentication method sends the username and password in clear text
+    over the network (base64 encoded) and should be avoided for HTTP transport.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When asking to do an HTTP transfer using a single (specified or implied), authentication
+    method, curl inserts the authentication header already in the first request on
+    the wire.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you would rather have curl first *test* if the authentication is really
+    required, you can ask curl to figure that out and then automatically use the most
+    safe method it knows about with `--anyauth`. This makes curl try the request unauthenticated,
+    and then switch over to authentication if necessary:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and the same concept works for HTTP operations that may require authentication:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'curl typically (a little depending on how it was built) speaks several other
+    authentication methods as well, including Digest, Negotiate and NTLM. You can
+    ask for those methods too specifically:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE

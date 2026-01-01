@@ -1,0 +1,1 @@
+["```sh\nexport LD_LIBRARY_PATH=$HOME/install/lib\n$HOME/install/bin/curl https://example.com/\n```", "```sh\ngcc -g example.c -L$HOME/install/lib -lcurl -Wl,-rpath=$HOME/install/lib\n```", "```sh\nLDFLAGS=\"-Wl,-rpath,$HOME/install/lib\" ./configure ...\n```", "```sh\nLDFLAGS=\"-Wl,-rpath,$HOME/install/lib -Wl,--enable-new-dtags\" \\\n  ./configure ...\n```"]

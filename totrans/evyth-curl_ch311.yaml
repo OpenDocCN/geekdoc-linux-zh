@@ -1,0 +1,23 @@
+- en: Unit tests
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '**Unit tests only work on [debug builds](ch306.xhtml#internals__tests__debug__md).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unit tests are tests that use functions that are libcurl internal and therefore
+    not part of any public API, headers or external documentation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the internal function you want to test is made `static`, they should instead
+    be set `UNITTEST` - which then makes debug builds not use static for them and
+    they then become accessible to test from unit tests.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We provide a set of convenience functions and macros for unit tests to make
+    it quick and easy to write them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All unit test programs are kept in `tests/unit`
+  prefs: []
+  type: TYPE_NORMAL

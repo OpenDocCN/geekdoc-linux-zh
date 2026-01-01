@@ -1,0 +1,87 @@
+- en: HTTP/3
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: HTTP/3 is different than its predecessors in several ways. Maybe most noticeably,
+    HTTP/3 cannot be negotiated on the same connection like HTTP/2 can. Due to HTTP/3
+    using a different transport protocol, it has to set up and negotiate a dedicated
+    connection for it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: QUIC
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: HTTP/3 is the HTTP version that is designed to communicate over QUIC. QUIC can
+    for most particular purposes be considered a TCP+TLS replacement.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All transfers that use HTTP/3 therefore do not use TCP. They use QUIC. QUIC
+    is a reliable transport protocol built over UDP. HTTP/3 implies use of QUIC.
+  prefs: []
+  type: TYPE_NORMAL
+- en: HTTPS only
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: HTTP/3 is performed over QUIC which is always using TLS, so HTTP/3 is by definition
+    always encrypted and secure. Therefore, curl only uses HTTP/3 for `HTTPS://` URLs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Enable
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'As a shortcut straight to HTTP/3, to make curl attempt a QUIC connect directly
+    to the given hostname and port number, use `--http3`. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Normally, without the `--http3` option, an `HTTPS://` URL implies that a client
+    needs to connect to it using TCP (and TLS).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Multiplexing
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A primary feature in the HTTP/3 protocol, is the ability to multiplex several
+    logical streams over the same physical connection. The curl command-line tool
+    can take advantage of this feature when [doing parallel transfers](ch066.xhtml#cmdline__urls__parallel__md).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Alt-svc:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The [alt-svc](ch179.xhtml#http__altsvc__md) method of changing to HTTP/3 is
+    the official way to bootstrap into HTTP/3 for a server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that you need that feature built-in and that it does not switch to HTTP/3
+    for the *current* request unless the alt-svc cache is already populated, but it
+    rather stores the info for use in the *next* request to the host.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When QUIC is denied
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A certain amount of QUIC connection attempts fail, partly because many networks
+    and hosts block or throttle the traffic.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When `--http3` is used, curl starts a second transfer attempt a few hundred
+    milliseconds after the QUIC connection is initiated which is using HTTP/2 or HTTP/1,
+    so that if the connection attempt over QUIC fails or turns out to be unbearably
+    slow, the connection using an older HTTP version can still succeed and perform
+    the transfer. This allows users to use `--http3` with some amount of confidence
+    that the operation works.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`--http3-only` is provided to explicitly *not* try any older version in parallel,
+    but thus makes the transfer fail immediately if no QUIC connection can be established.'
+  prefs: []
+  type: TYPE_NORMAL

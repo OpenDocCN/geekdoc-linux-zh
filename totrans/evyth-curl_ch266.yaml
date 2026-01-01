@@ -1,0 +1,105 @@
+- en: Get URL parts
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `CURLU` handle stores the individual parts of a URL and the application
+    can extract those pieces individually from the handle at any time. If they are
+    set.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The second argument to `curl_url_get()` specifies which part you want extracted.
+    They are all extracted as null-terminated `char *` data, so you pass a pointer
+    to such a variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Remember to free the returned string with `curl_free` when you are done with
+    it!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Extracted parts are not URL decoded unless the user asks for it with the `CURLU_URLDECODE`
+    flag.
+  prefs: []
+  type: TYPE_NORMAL
+- en: URL parts
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The different parts are named from their roles in the URL. Imagine a URL that
+    looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When this URL is parsed by curl, it stores the different components like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| text | part |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `http` | `CURLUPART_SCHEME` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `joe` | `CURLUPART_USER` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `7Hbz` | `CURLUPART_PASSWORD` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `example.com` | `CURLUPART_HOST` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `8080` | `CURLUPART_PORT` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/images` | `CURLUPART_PATH` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `id=5445` | `CURLUPART_QUERY` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `footer` | `CURLUPART_FRAGMENT` |'
+  prefs: []
+  type: TYPE_TB
+- en: Zone ID
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The one thing that might stick out a little is the Zone id. It is an extra
+    qualifier that can be used for IPv6 numerical addresses, and only for such addresses.
+    It is used like this, where it is set to `eth0`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For this URL, curl extracts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| text | part |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `http` | `CURLUPART_SCHEME` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `2a04:4e42:e00::347` | `CURLUPART_HOST` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `eth0` | `CURLUPART_ZONEID` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/` | `CURLUPART_PATH` |'
+  prefs: []
+  type: TYPE_TB
+- en: Asking for any other component returns non-zero as they are missing.
+  prefs: []
+  type: TYPE_NORMAL

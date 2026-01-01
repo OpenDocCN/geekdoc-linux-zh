@@ -1,0 +1,39 @@
+- en: FTP type
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This is not a feature that is widely used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: URLs that identify files on FTP servers have a special feature that allows you
+    to also tell the client (curl in this case) which file type the resource is. This
+    is because FTP is a little special and can change mode for a transfer and thus
+    handle the file differently than if it would use another mode.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You tell curl that the FTP resource is an ASCII type by appending `;type=A`
+    to the URL. Getting the `foo` file from the root directory of `example.com` using
+    ASCII could then be made with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'And while curl defaults to binary transfers for FTP, the URL format allows
+    you to also specify the binary type with type=I:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Finally, you can tell curl that the identified resource is a directory if the
+    type you pass is D:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: …this can then work as an alternative format, instead of ending the path with
+    a trailing slash as mentioned above.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,59 @@
+- en: Windows
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: You can build curl on Windows in several different ways. We recommend using
+    the MSVC compiler from Microsoft or the free and open source mingw compiler. The
+    build process is, however, not limited to these.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you use mingw, you might want to use the [autotools](ch043.xhtml#build__autotools__md)
+    build system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: winbuild
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is how to build curl and libcurl using the command line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Build with MSVC using the `nmake` utility like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Decide what options to enable/disable in your build. The `README.md` file in
+    that directory details them all, but an example command line could look like this
+    (split into several lines for readability):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Visual C++ project files
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Using [CMake](ch044.xhtml#build__cmake__md), you can generate a set of Visual
+    Studio project files:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Once generated, you import them and build with Visual Studio like normally.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Mingw
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can build curl with the mingw compiler suite. Use [CMake](ch044.xhtml#build__cmake__md)
+    to generate the set of Makefiles for you:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,40 @@
+- en: Header data
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'The header callback is set with `CURLOPT_HEADERFUNCTION`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `header_callback` function must match this prototype:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: This callback function gets called by libcurl as soon as a header has been received.
+    *ptr* points to the delivered data, and the size of that data is *size* multiplied
+    with *nmemb*. libcurl buffers headers and delivers only “full” headers, one by
+    one, to this callback.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The data passed to this function is not be zero terminated. You cannot, for
+    example, use printf’s `%s` operator to display the contents nor strcpy to copy
+    it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This callback should return the number of bytes actually taken care of. If that
+    number differs from the number passed to your callback function, it signals an
+    error condition to the library. This causes the transfer to abort and the libcurl
+    function used returns `CURLE_WRITE_ERROR`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The user pointer passed in to the callback in the *userdata* argument is set
+    with `CURLOPT_HEADERDATA`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,82 @@
+- en: Stop
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: An Internet transfer might be brief but can also take a long time. Maybe even
+    an infinite amount of time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: libcurl normally performs transfers until they are complete or until an error
+    occurs. If none of those events happen, the transfer continues.
+  prefs: []
+  type: TYPE_NORMAL
+- en: At times, you might want to stop a libcurl transfer before it would otherwise
+    stop.
+  prefs: []
+  type: TYPE_NORMAL
+- en: easy API
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As explained elsewhere, the `curl_easy_perform()` function is a synchronous
+    function call. It does the entire transfer before it returns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There are a few different ways to stop a transfer before it would otherwise
+    end:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: return an error from a callback
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: set an option that makes the transfer stop after a fixed period of time
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Every [callback](../callbacks/) can return an error, and when an error is returned
+    from one of those functions the entire transfer is stopped. For example the read,
+    write or progress callbacks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The second way is to set a timeout or other option that stops the transfer
+    after a time or at a particular condition. For example one or more of the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLOPT_TIMEOUT` - set a maximum time the entire transfer may take'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`CURLOPT_CONNECTTIMEOUT` - set a maximum time “connection phase” may take'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`CURLOPT_LOW_SPEED_LIMIT` - set the lowest acceptable transfer speed. The transfer
+    stops if slower than this speed for `CURLOPT_LOW_SPEED_TIME` number of second.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: There is no provided function that allows your application to stop an ongoing
+    `curl_easy_perform()` call from another thread. The common suggestion is then
+    that you signal that intent in a private way that you can detect in a callback
+    and have that callback return error when it happens.
+  prefs: []
+  type: TYPE_NORMAL
+- en: multi API
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The multi interface is generally a non-blocking API, so in most situations you
+    can stop a transfer by removing its corresponding easy handle from the multi handle
+    using `curl_multi_remove_handle()`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you use the multi API, you might call libcurl to wait for activities or
+    traffic on sockets libcurl works with. A call that might sit blocking while waiting
+    for something to happen (or a timeout to expire), like `curl_multi_poll()`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: An application can make a blocked call to `curl_multi_poll()` wake up and return
+    forcibly and immediately by calling `curl_multi_wakeup()` from another thread.
+  prefs: []
+  type: TYPE_NORMAL

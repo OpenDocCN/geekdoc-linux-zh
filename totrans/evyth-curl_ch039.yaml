@@ -1,0 +1,287 @@
+- en: Code style
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Source code that has a common style is easier to read than code that uses different
+    styles in different places. It helps make the code feel like one continuous code
+    base. Being easy-to-read is an important property of code and helps make it easier
+    to review when new things are added and it helps debugging code when developers
+    are trying to figure out why things go wrong. A unified style is more important
+    than individual contributors having their own personal tastes satisfied.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Our C code has a few style rules. Most of them are verified and upheld by the
+    `checksrc.pl` script. Invoked with `make checksrc` or even by default by the build
+    system when built after `./configure --enable-debug` has been used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is normally not a problem for anyone to follow the guidelines as you just
+    need to copy the style already used in the source code, and there are no particularly
+    unusual rules in our set of rules.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We also work hard on writing code that is warning-free on all the major platforms
+    and in general on as many platforms as possible. Code that obviously causes warnings
+    is not accepted as-is.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Naming
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Try using a non-confusing naming scheme for your new functions and variable
+    names. It does not necessarily have to mean that you should use the same as in
+    other places of the code, just that the names should be logical, understandable
+    and be named according to what they are used for. File-local functions should
+    be made static. We like lower case names.
+  prefs: []
+  type: TYPE_NORMAL
+- en: All symbols meant for public use must start with `curl`. Global internal symbols
+    start with `Curl`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Indentation
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We use only spaces for indentation, never TABs. We use two spaces for each new
+    open brace.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Comments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Since we write C89 code, `//` comments are not allowed. They were not introduced
+    in the C standard until C99\. We use only `/* comments */`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Long lines
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Source code in curl may never be wider than 79 columns. There are two reasons
+    for maintaining this even in the modern era of large and high resolution screens:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Narrower columns are easier to read than wide ones. There is a reason newspapers
+    have used columns for decades or centuries.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Narrower columns allow developers to more easily view multiple pieces of code
+    next to each other in different windows. I often have two or three source code
+    windows next to each other on the same screen, as well as multiple terminal and
+    debugging windows.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Braces
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In if/while/do/for expressions, we write the open brace on the same line as
+    the keyword and we then set the closing brace on the same indentation level as
+    the initial keyword. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You may omit the braces if they would contain only a one-line statement:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For functions the opening brace should be on a separate line:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: else on the following line
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When adding an `else` clause to a conditional expression using braces, we add
+    it on a new line after the closing brace. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: No space before parentheses
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When writing expressions using if/while/do/for, there shall be no space between
+    the keyword and the open parenthesis. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Use boolean conditions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Rather than test a conditional value such as a bool against TRUE or FALSE,
+    a pointer against NULL or != NULL and an int against zero or not zero in if/while
+    conditions we prefer:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: '}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: No assignments in conditions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To increase readability and reduce complexity of conditionals, we avoid assigning
+    variables within if/while conditions. We frown upon this style:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Instead we encourage the above version to be spelled out more clearly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: New block on a new line
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: We never write multiple statements on the same source line, even for short if()
+    conditions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Never:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: Space around operators
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Please use spaces on both sides of operators in C expressions. Postfix **(),
+    [], ->, ., ++, –** and Unary **+, -, !, ~, &** operators excluded they should
+    have no space.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: No parentheses for return values
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'We use the ‘return’ statement without extra parentheses around the value:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: Parentheses for sizeof arguments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When using the sizeof operator in code, we prefer it to be written with parentheses
+    around its argument:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: Column alignment
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Some statements cannot be completed on a single line because the line would
+    be too long, the statement too hard to read, or due to other style guidelines
+    above. In such a case the statement spans multiple lines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If a continuation line is part of an expression or sub-expression then you
+    should align on the appropriate column so that it is easy to tell what part of
+    the statement it is. Operators should not start continuation lines. In other cases
+    follow the 2-space indent guideline. Here are some examples from libcurl:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If no parenthesis, use the default indent:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Function invoke with an open parenthesis:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Align with the “current open” parenthesis:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Platform dependent code
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Use **#ifdef HAVE_FEATURE** to do conditional code. We avoid checking for particular
+    operating systems or hardware in the #ifdef lines. The HAVE_FEATURE shall be generated
+    by the configure script for unix-like systems and they are hard-coded in the `config-[system].h`
+    files for the others.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'We also encourage use of macros/functions that possibly are empty or defined
+    to constants when libcurl is built without that feature, to make the code seamless.
+    Like this example where the **magic()** function works differently depending on
+    a build-time conditional:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: No typedefed structs
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Use structs by all means, but do not typedef them. Use the `struct name` way
+    of identifying them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Not okay**:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE

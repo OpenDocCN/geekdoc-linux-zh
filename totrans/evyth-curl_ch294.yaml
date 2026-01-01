@@ -1,0 +1,96 @@
+- en: Backends
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A backend in curl is a **build-time selectable alternative implementation**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you build curl, you can select alternative implementations for several
+    different things. Different providers of the same feature set. You select which
+    backend or backends (plural) to use when you build curl.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Backends are selectable and deselectable
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Often platform dependent
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Can differ in features
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Can differ in 3rd party licenses
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Can differ in maturity
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The internal APIs are never exposed externally
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Different backends
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In the libcurl source code, there are internal APIs for providing functionality.
+    In these different areas there are multiple different providers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: IDN
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Name resolving
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: TLS
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: SSH
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: HTTP/1 and HTTP/2
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: HTTP/3
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: HTTP content encoding
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Backends visualized
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '![](../media/file15.jpg)'
+  prefs: []
+  type: TYPE_IMG
+- en: libcurl backends
+  prefs: []
+  type: TYPE_NORMAL
+- en: Applications (in the upper yellow cloud) access libcurl through the public API.
+    The API is fixed and stable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Internally, the core of libcurl uses internal APIs to perform the different
+    duties it needs to do. Each of these internal APIs are powered by alternative
+    implementations, in many times powered by different third party libraries.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The image above shows the different third party libraries powering different
+    internal APIs. The purple boxes are one or more and the dark gray ones are “one
+    of these”.
+  prefs: []
+  type: TYPE_NORMAL

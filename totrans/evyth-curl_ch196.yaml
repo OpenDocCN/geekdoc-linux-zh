@@ -1,0 +1,28 @@
+- en: CURLcode return codes
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Many libcurl functions return a CURLcode. That is a special libcurl typedefed
+    variable for error codes. It returns `CURLE_OK` (which has the value zero) if
+    everything is fine and dandy and it returns a non-zero number if a problem was
+    detected. There are almost one hundred `CURLcode` errors in use, and you can find
+    them all in the `curl/curl.h` header file and documented in the libcurl-errors
+    man page.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can convert a CURLcode into a human readable string with the `curl_easy_strerror()`
+    function—but be aware that these errors are rarely phrased in a way that is suitable
+    for anyone to expose in a UI or to an end user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Another way to get a slightly better error text in case of errors is to set
+    the `CURLOPT_ERRORBUFFER` option to point out a buffer in your program and then
+    libcurl stores a related error message there before it returns an error:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE

@@ -1,0 +1,93 @@
+- en: Callbacks
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Lots of operations within libcurl are controlled with the use of *callbacks*.
+    A callback is a function pointer provided to libcurl that libcurl then calls at
+    some point to get a particular job done.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each callback has its specific documented purpose and it requires that you write
+    it with the exact function prototype to accept the correct arguments and return
+    the documented return code and return value so that libcurl performs the way you
+    want it to.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each callback option also has a companion option that sets the associated user
+    pointer. This user pointer is a pointer that libcurl does not touch or care about,
+    but just passes on as an argument to the callback. This allows you to, for example,
+    pass in pointers to local data all the way through to your callback function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unless explicitly stated in a libcurl function documentation, it is not legal
+    to invoke libcurl functions from within a libcurl callback.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Write data](ch213.xhtml#transfers__callbacks__write__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Read data](ch214.xhtml#transfers__callbacks__read__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Progress information](ch215.xhtml#transfers__callbacks__progress__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Header data](ch216.xhtml#transfers__callbacks__header__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Debug](ch217.xhtml#transfers__callbacks__debug__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sockopt](ch218.xhtml#transfers__callbacks__sockopt__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[SSL context](ch219.xhtml#transfers__callbacks__sslcontext__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Seek and ioctl](ch220.xhtml#transfers__callbacks__seek__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Network data conversion](ch221.xhtml#transfers__callbacks__conversions__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Opensocket and closesocket](ch222.xhtml#transfers__callbacks__openclosesocket__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[SSH key](ch223.xhtml#transfers__callbacks__sshkey__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[RTSP interleaved data](ch224.xhtml#transfers__callbacks__rtsp__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[FTP wildcard matching](ch225.xhtml#transfers__callbacks__ftpmatch__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Resolver start](ch226.xhtml#transfers__callbacks__resolver__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Sending trailers](ch227.xhtml#transfers__callbacks__trailers__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[HSTS](ch228.xhtml#transfers__callbacks__hsts__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Prereq](ch229.xhtml#transfers__callbacks__prereq__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

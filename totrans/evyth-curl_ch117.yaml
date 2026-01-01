@@ -1,0 +1,61 @@
+- en: SOCKS proxy
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: SOCKS is a protocol used for proxies and curl supports it. curl supports both
+    SOCKS version 4 as well as version 5, and both versions come in two flavors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can select the specific SOCKS version to use by using the correct scheme
+    part for the given proxy host with `-x`, or you can specify it with a separate
+    option instead of `-x`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'SOCKS4 is for the version 4 but curl resolves the name:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'SOCKS4a is for the version 4 with resolving done by the proxy:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'SOCKS5 is for the version 5 and SOCKS5-hostname is for the version 5 without
+    resolving the hostname locally:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The SOCKS5-hostname versions. This sends the hostname to the proxy so there
+    is no name resolving done by curl locally:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Helpful table to figure how which side that resolves the name for which socks
+    version:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| SOCKS | who resolves the name | works with IPv6 |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4 | curl | no |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 4a | proxy | no |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5 | curl | yes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| 5h | proxy | yes |'
+  prefs: []
+  type: TYPE_TB

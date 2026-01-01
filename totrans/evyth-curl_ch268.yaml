@@ -1,0 +1,30 @@
+- en: Append to the query
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: An application can append a string to the right end of the existing query part
+    with the `CURLU_APPENDQUERY` flag.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Consider a handle that holds the URL `https://example.com/?shoes=2`. An application
+    can then add the string `hat=1` to the query part like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: It even notices the lack of an ampersand (`&`) separator so it injects one too,
+    and the handle’s full URL would then equal `https://example.com/?shoes=2&hat=1`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The appended string can of course also get URL encoded on add, and if asked,
+    the encoding skips the `=` character. For example, append `candy=M&M` to what
+    we already have, and URL encode it to deal with the ampersand in the data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Now the URL looks like `https://example.com/?shoes=2&hat=1&candy=M%26M`.
+  prefs: []
+  type: TYPE_NORMAL

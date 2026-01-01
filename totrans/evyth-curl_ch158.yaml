@@ -1,0 +1,94 @@
+- en: JSON
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'curl 7.82.0 introduced the `--json` option as a new way to send JSON formatted
+    data to HTTP servers using POST. This option works as a shortcut and provides
+    a single option that replaces these three:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: This option does not make curl actually understand or know about the JSON data
+    it sends, but it makes it easier to send it. curl does not touch or parse the
+    data that it sends, so you need to make sure it is valid JSON yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Send a basic JSON object to a server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Send JSON from a local file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Send JSON passed to curl on stdin:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can use multiple `--json` options on the same command line. This makes curl
+    concatenate the contents from the options and send all data in one go to the server.
+    Note that the concatenation is plain text based and it does not merge the JSON
+    objects as per JSON.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Send JSON from a file and concatenate a string to the end:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Crafting JSON to send
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The quotes used in JSON data sometimes makes it a bit difficult and cumbersome
+    to write and use in shells and scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using a separate tool for this purpose might make things easier for you, and
+    one tool in particular that might help you accomplish this is [jo](https://github.com/jpmens/jo).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Send a basic JSON object to a server with jo and `--json`
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Receiving JSON
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: curl itself does not know or understand the contents it sends or receives, including
+    when the server returns JSON in its response.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using a separate tool for the purpose of parsing or pretty-printing JSON responses
+    might make things easier for you, and one tool in particular that might help you
+    accomplish this is [jq](https://stedolan.github.io/jq/).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Send a basic JSON object to a server, and pretty-print the JSON response:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Send the JSON with `jo`, print the response with `jq`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: jq is a powerful and capable tool for extracting, filtering and managing JSON
+    content that goes way beyond just pretty-printing.
+  prefs: []
+  type: TYPE_NORMAL

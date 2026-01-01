@@ -1,0 +1,371 @@
+- en: Test file format
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Each curl test is designed in a single text file using an XML-like format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Labels mark the beginning and the end of all sections, and each label must be
+    written in its own line. Comments are either XML-style (enclosed with `<!--` and
+    `-->`) or shell script style (beginning with `#`) and must appear on their own
+    lines and not alongside actual test data. Most test data files are syntactically
+    valid XML, although a few files are not (lack of support for character entities
+    and the preservation of carriage return and linefeed characters at the end of
+    lines are the biggest differences).
+  prefs: []
+  type: TYPE_NORMAL
+- en: All tests must begin with a `<testcase>` tag, which encompasses the remainder
+    of the file. See below for other tags.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Each test file is called `tests/data/testNUMBER` where `NUMBER` is a unique
+    numerical test identifier. Each test has to use its own dedicated number. The
+    number has no meaning other than identifying the test.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The test file defines exactly what command line or tool to run, what test servers
+    to invoke and how they should respond, exactly what protocol exchange that should
+    happen, what output and return code to expect and much more.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Everything is written within their dedicated tags like this when the name is
+    set:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: keywords
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Every test has one or more `<keywords>` set in the top of the file. They are
+    meant to be “tags” that identify features and protocols that are tested by this
+    test case. `runtests.pl` can be made to run only tests that match (or do not match)
+    such keywords.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Preprocessed
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Under the hood, each test input file is *preprocessed* at startup by `runtests.pl`.
+    This means that variables, macros and keywords are expanded and a temporary version
+    of the file is stored in `tests/log/testNUMBER` - and *that* file is then used
+    by all the test servers etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This processing allows the test format to offer features like `%repeat` to create
+    really big test files without bloating the input files correspondingly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Base64 Encoding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the preprocess stage, a special instruction can be used to have runtests.pl
+    base64 encode a certain section and insert in the generated output file. This
+    is in particular good for test cases where the test tool is expected to pass in
+    base64 encoded content that might use dynamic information that is unique for this
+    particular test invocation, like the server port number.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To insert a base64 encoded string into the output, use this syntax:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The data to encode can then use any of the existing variables mentioned below,
+    or even percent-encoded individual bytes. As an example, insert the HTTP server’s
+    port number (in ASCII) followed by a space and the hexadecimal byte 9a:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Hexadecimal decoding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the preprocess stage, a special instruction can be used to have runtests.pl
+    generate a sequence of binary bytes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To insert a sequence of bytes from a hex encoded string, use this syntax:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For example, to insert the binary octets 0, 1 and 255 into the test file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Repeat content
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In the preprocess stage, a special instruction can be used to have runtests.pl
+    generate a repetitive sequence of bytes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To insert a sequence of repeat bytes, use this syntax to make the `<string>`
+    get repeated `<number>` of times. The number has to be 1 or larger and the string
+    may contain `%HH` hexadecimal codes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For example, to insert the word hello a 100 times:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Conditional lines
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Lines in the test file can be made to appear conditionally on a specific feature
+    (see the “features” section below) being set or not set. If the specific feature
+    is present, the following lines are output, otherwise it outputs nothing, until
+    a following `else` or `endif` clause. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'It can also check for the inverse condition, so if the feature is *not* set
+    by the use of an exclamation mark:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can also make an “else” clause to get output for the opposite condition,
+    like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Note** that there can be no nested conditions. You can only do one conditional
+    at a time and you can only check for a single feature in it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When the test is preprocessed, a range of variables in the test file are replaced
+    by their content at that time.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Available substitute variables include:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`%CLIENT6IP` - IPv6 address of the client running curl'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%CLIENTIP` - IPv4 address of the client running curl'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%CURL` - Path to the curl executable'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FILE_PWD` - Current directory, on windows prefixed with a slash'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FTP6PORT` - IPv6 port number of the FTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FTPPORT` - Port number of the FTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FTPSPORT` - Port number of the FTPS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FTPTIME2` - Timeout in seconds that should be just sufficient to receive
+    a response from the test FTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%FTPTIME3` - Even longer than `%FTPTIME2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%GOPHER6PORT` - IPv6 port number of the Gopher server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%GOPHERPORT` - Port number of the Gopher server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%GOPHERSPORT` - Port number of the Gophers server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HOST6IP` - IPv6 address of the host running this test'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HOSTIP` - IPv4 address of the host running this test'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTP6PORT` - IPv6 port number of the HTTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPPORT` - Port number of the HTTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTP2PORT` - Port number of the HTTP/2 server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPSPORT` - Port number of the HTTPS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPSPROXYPORT` - Port number of the HTTPS-proxy'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPTLS6PORT` - IPv6 port number of the HTTP TLS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPTLSPORT` - Port number of the HTTP TLS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%HTTPUNIXPATH` - Path to the Unix socket of the HTTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SOCKSUNIXPATH` - Absolute Path to the Unix socket of the SOCKS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%IMAP6PORT` - IPv6 port number of the IMAP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%IMAPPORT` - Port number of the IMAP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%MQTTPORT` - Port number of the MQTT server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%TELNETPORT` - Port number of the telnet server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%NOLISTENPORT` - Port number where no service is listening'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%POP36PORT` - IPv6 port number of the POP3 server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%POP3PORT` - Port number of the POP3 server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%POSIX_PWD` - Current directory somewhat mingw friendly'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%PROXYPORT` - Port number of the HTTP proxy'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%PWD` - Current directory'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%RTSP6PORT` - IPv6 port number of the RTSP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%RTSPPORT` - Port number of the RTSP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SMBPORT` - Port number of the SMB server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SMBSPORT` - Port number of the SMBS server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SMTP6PORT` - IPv6 port number of the SMTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SMTPPORT` - Port number of the SMTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SOCKSPORT` - Port number of the SOCKS4/5 server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SRCDIR` - Full path to the source dir'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SSHPORT` - Port number of the SCP/SFTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SSHSRVMD5` - MD5 of SSH server’s public key'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SSHSRVSHA256` - SHA256 of SSH server’s public key'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%SSH_PWD` - Current directory friendly for the SSH server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%TESTNUMBER` - Number of the test case'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%TFTP6PORT` - IPv6 port number of the TFTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%TFTPPORT` - Port number of the TFTP server'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%USER` - Login ID of the user running the test'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`%VERSION` - the full version number of the tested curl'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

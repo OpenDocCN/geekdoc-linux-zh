@@ -1,0 +1,154 @@
+- en: Dependencies
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A key to making good software is to build on top of other great software. By
+    using libraries that many others use, we reinvent the same things fewer times
+    and we get more reliable software as there are more people using the same code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A whole slew of features that curl provides require that it is built to use
+    one or more external libraries. They are then dependencies of curl. None of them
+    are *required*, but most users want to use at least some of them.
+  prefs: []
+  type: TYPE_NORMAL
+- en: HTTP Compression
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'curl can do automatic decompression of data transferred over HTTP if built
+    with the proper 3rd party libraries. You can build curl to use one or more of
+    these libraries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: gzip compression with [zlib](https://zlib.net/)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: brotli compression with [brotli](https://github.com/google/brotli)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: zstd compression with [libzstd](https://github.com/facebook/zstd)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Getting compressed data over the wire uses less bandwidth, which might also
+    result in shorter transfer times.
+  prefs: []
+  type: TYPE_NORMAL
+- en: c-ares
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://c-ares.org/](https://c-ares.org/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: curl can be built with c-ares to be able to do asynchronous name resolution.
+    Another option to enable asynchronous name resolution is to build curl with the
+    threaded name resolver backend, which then instead creates a separate helper thread
+    for each name resolve. c-ares does it all within the same thread.
+  prefs: []
+  type: TYPE_NORMAL
+- en: nghttp2
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://nghttp2.org/](https://nghttp2.org/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is a library for handling HTTP/2 framing and is a prerequisite for curl
+    to support HTTP version 2.
+  prefs: []
+  type: TYPE_NORMAL
+- en: openldap
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://www.openldap.org/](https://www.openldap.org/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This library is one option to allow curl to get support for the LDAP and LDAPS
+    URL schemes. On Windows, you can also opt to build curl to use the winldap library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: librtmp
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://rtmpdump.mplayerhq.hu/](https://rtmpdump.mplayerhq.hu/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To enable curl’s support for the RTMP URL scheme, you must build curl with the
+    librtmp library that comes from the RTMPDump project.
+  prefs: []
+  type: TYPE_NORMAL
+- en: libpsl
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://rockdaboot.github.io/libpsl/](https://rockdaboot.github.io/libpsl/)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you build curl with support for libpsl, the cookie parser knows about the
+    Public Suffix List and thus handles such cookies appropriately.
+  prefs: []
+  type: TYPE_NORMAL
+- en: libidn2
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html](https://www.gnu.org/software/libidn/libidn2/manual/libidn2.html)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: curl handles International Domain Names (IDN) with the help of the libidn2 library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SSH libraries
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'If you want curl to have SCP and SFTP support, build with one of these SSH
+    libraries:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[libssh2](https://libssh2.org/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[libssh](https://www.libssh.org/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wolfSSH](https://www.wolfssl.com/products/wolfssh/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: TLS libraries
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many different TLS libraries to choose from, so they are covered in
+    a [separate section](ch048.xhtml#build__tls__md).
+  prefs: []
+  type: TYPE_NORMAL
+- en: QUIC and HTTP/3
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'To build curl with HTTP/3 support, you need one of these sets:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[ngtcp2](https://github.com/ngtcp2/ngtcp2) + [nghttp3](https://github.com/ngtcp2/nghttp3)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[quiche](https://github.com/cloudflare/quiche) (**experimental**)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[msquic](https://github.com/microsoft/msquic) + [msh3](https://github.com/nibanks/msh3)
+    (**experimental**)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

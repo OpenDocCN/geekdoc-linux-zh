@@ -1,0 +1,86 @@
+- en: Meta
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '`curl_ws_recv()` and `curl_ws_meta()` both return a pointer to a `curl_ws_frame`
+    struct, which provides information about the incoming WebSocket data. A WebSocket
+    “frame” in this case is a part of a WebSocket fragment. It *can* be a whole fragment,
+    but it might only be a piece of it. The `curl_ws_frame` contains information about
+    the frame to tell you the details.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`age`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is just a number that identifies the age of this struct. It is always 0
+    now, but might increase in a future and then the struct might grow.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`flags`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `flags’ field is a bitmask describing details of data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_TEXT`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The buffer contains text data. Note that this makes a difference to WebSocket
+    but libcurl itself does make any verification of the content or precautions that
+    you actually receive valid UTF-8 content.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_BINARY`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is binary data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_FINAL`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is the final fragment of the message, if this is not set, it implies that
+    there is another fragment coming as part of the same message.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_CLOSE`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This transfer is now closed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_PING`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is an incoming ping message, that expects a pong response.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`offset`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When the data delivered is just a part of a larger fragment, this identifies
+    the offset in number of bytes into the larger fragment where this piece belongs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`bytesleft`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Number of outstanding payload bytes after this frame, that is left to complete
+    this fragment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The maximum size of a WebSocket fragment is 63 bits.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,69 @@
+- en: SSLKEYLOGFILE
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '![](../media/file10.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: view network traffic with Wireshark
+  prefs: []
+  type: TYPE_NORMAL
+- en: Since a long time back, the venerable network analyzer tool Wireshark (screenshot
+    above) has provided a way to decrypt and inspect TLS traffic when sent and received
+    by Firefox and Chrome.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is similarly possible to do with curl.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You do this by making the browser or curl tell Wireshark the encryption secrets
+    so that it can decrypt them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: set the environment variable named `SSLKEYLOGFILE` to a filename of your choice
+    before you start the browser or curl
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Setting the same filename path in the Master-secret field in Wireshark. Go to
+    Preferences->Protocols->TLS and edit the path as shown in the screenshot below.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '![](../media/file11.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: set the ssl key filename
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having done this simple operation, you can now inspect curl’s or your browser’s
+    HTTPS traffic in Wireshark. Just super handy and awesome.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Just remember that if you record TLS traffic and want to save it for analyzing
+    later, you need to also save the file with the secrets so that you can decrypt
+    that traffic capture at a later time as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: libcurl-using applications too
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Support for `SSLKEYLOGFILE` is provided by libcurl itself - making it possible
+    for you to trace and inspect the TLS network data for any application built to
+    use libcurl - not just the curl command line tool.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Restrictions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The support for `SSLKEYLOGFILE` requires that curl was built with a TLS backend
+    that supports this feature. The backends that support SSLKEYLOGFILE are: OpenSSL,
+    libressl, BoringSSL, GnuTLS and wolfSSL.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If curl was built to use another backend, you cannot record your curl TLS traffic
+    this way.
+  prefs: []
+  type: TYPE_NORMAL

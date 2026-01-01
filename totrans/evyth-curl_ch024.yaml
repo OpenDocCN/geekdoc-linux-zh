@@ -1,0 +1,261 @@
+- en: curl protocols
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: curl supports about 28 protocols. We say *about* because it depends on how you
+    count and what you consider to be distinctly different protocols.
+  prefs: []
+  type: TYPE_NORMAL
+- en: DICT
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: DICT is a dictionary network protocol, it allows clients to ask dictionary servers
+    about a meaning or explanation for words. See RFC 2229\. Dict servers and clients
+    use TCP port 2628.
+  prefs: []
+  type: TYPE_NORMAL
+- en: FILE
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: FILE is not actually a *network* protocol. It is a URL scheme that allows you
+    to tell curl to get a file from the local file system instead of getting it over
+    the network from a remote server. See RFC 1738.
+  prefs: []
+  type: TYPE_NORMAL
+- en: FTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: FTP stands for File Transfer Protocol and is an old (originates in the early
+    1970s) way to transfer files back and forth between a client and a server. See
+    RFC 959\. It has been extended greatly over the years. FTP servers and clients
+    use TCP port 21 plus one more port, though the second one is usually dynamically
+    established during communication.
+  prefs: []
+  type: TYPE_NORMAL
+- en: See the external page [FTP vs HTTP](https://daniel.haxx.se/docs/ftp-vs-http.html)
+    for how it differs from HTTP.
+  prefs: []
+  type: TYPE_NORMAL
+- en: FTPS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: FTPS stands for Secure File Transfer Protocol. It follows the tradition of appending
+    an ‘S’ to the protocol name to signify that the protocol is done like normal FTP
+    but with an added SSL/TLS security layer. See RFC 4217.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This protocol is problematic to use through firewalls and other network equipment.
+  prefs: []
+  type: TYPE_NORMAL
+- en: GOPHER
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Designed for “distributing, searching, and retrieving documents over the Internet”,
+    Gopher is somewhat of the grandfather to HTTP as HTTP has mostly taken over completely
+    for the same use cases. See RFC 1436\. Gopher servers and clients use TCP port
+    70.
+  prefs: []
+  type: TYPE_NORMAL
+- en: GOPHERS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Gopher over TLS. A recent extension to the old protocol.
+  prefs: []
+  type: TYPE_NORMAL
+- en: HTTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Hypertext Transfer Protocol, HTTP, is the most widely used protocol for
+    transferring data on the web and over the Internet. See RFC 9110 for general HTTP
+    Semantics, RFC 9112 for HTTP/1.1, RFC 9113 for [HTTP/2](ch149.xhtml#http__versions__http2__md)
+    and RFC 9114 for HTTP/3\. HTTP servers and clients use TCP port 80.
+  prefs: []
+  type: TYPE_NORMAL
+- en: HTTPS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Secure HTTP is HTTP done over an SSL/TLS connection. See RFC 2818\. HTTPS servers
+    and clients use TCP port 443, unless they speak [HTTP/3](ch150.xhtml#http__versions__http3__md)
+    which then uses QUIC (RFC 8999) and is done over UDP.
+  prefs: []
+  type: TYPE_NORMAL
+- en: IMAP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Internet Message Access Protocol, IMAP, is a protocol for accessing, controlling
+    and “reading” email. See RFC 3501\. IMAP servers and clients use TCP port 143\.
+    Whilst connections to the server start out as cleartext, SSL/TLS communication
+    may be supported by the client explicitly requesting to upgrade the connection
+    using the `STARTTLS` command. See RFC 2595.
+  prefs: []
+  type: TYPE_NORMAL
+- en: IMAPS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Secure IMAP is IMAP done over an SSL/TLS connection. Such connections implicitly
+    start out using SSL/TLS and as such servers and clients use TCP port 993 to communicate
+    with each other. See RFC 8314.
+  prefs: []
+  type: TYPE_NORMAL
+- en: LDAP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Lightweight Directory Access Protocol, LDAP, is a protocol for accessing
+    and maintaining distributed directory information. Basically a database lookup.
+    See RFC 4511\. LDAP servers and clients use TCP port 389.
+  prefs: []
+  type: TYPE_NORMAL
+- en: LDAPS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Secure LDAP is LDAP done over an SSL/TLS connection.
+  prefs: []
+  type: TYPE_NORMAL
+- en: MQTT
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Message Queuing Telemetry Transport, MQTT, is a protocol commonly used in IoT
+    systems for interchanging data mostly involving smaller devices. It is a so-called
+    “publish-subscribe” protocol.
+  prefs: []
+  type: TYPE_NORMAL
+- en: POP3
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Post Office Protocol version 3 (POP3) is a protocol for retrieving email
+    from a server. See RFC 1939\. POP3 servers and clients use TCP port 110\. Whilst
+    connections to the server start out as cleartext, SSL/TLS communication may be
+    supported by the client explicitly requesting to upgrade the connection using
+    the `STLS` command. See RFC 2595.
+  prefs: []
+  type: TYPE_NORMAL
+- en: POP3S
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Secure POP3 is POP3 done over an SSL/TLS connection. Such connections implicitly
+    start out using SSL/TLS and as such servers and clients use TCP port 995 to communicate
+    with each other. See RFC 8314.
+  prefs: []
+  type: TYPE_NORMAL
+- en: RTMP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Real-Time Messaging Protocol (RTMP) is a protocol for streaming audio, video
+    and data. RTMP servers and clients use TCP port 1935.
+  prefs: []
+  type: TYPE_NORMAL
+- en: RTSP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Real Time Streaming Protocol (RTSP) is a network control protocol to control
+    streaming media servers. See RFC 2326\. RTSP servers and clients use TCP and UDP
+    port 554.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SCP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Secure Copy (SCP) protocol is designed to copy files to and from a remote
+    SSH server. SCP servers and clients use TCP port 22.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SFTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The SSH File Transfer Protocol (SFTP) that provides file access, file transfer,
+    and file management over a reliable data stream. SFTP servers and clients use
+    TCP port 22.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SMB
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Server Message Block (SMB) protocol is also known as CIFS. It is an application-layer
+    network protocol mainly used for providing shared access to files, printers, and
+    serial ports and miscellaneous communications between nodes on a network. SMB
+    servers and clients use TCP port 445.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SMBS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: SMB done over TLS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SMTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Simple Mail Transfer Protocol (SMTP) is a protocol for email transmission.
+    See RFC 5321\. SMTP servers and clients use TCP port 25\. Whilst connections to
+    the server start out as cleartext, SSL/TLS communication may be supported by the
+    client explicitly requesting to upgrade the connection using the `STARTTLS` command.
+    See RFC 3207.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SMTPS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Secure SMTP, is SMTP done over an SSL/TLS connection. Such connections implicitly
+    start out using SSL/TLS and as such servers and clients use TCP port 465 to communicate
+    with each other. See RFC 8314.
+  prefs: []
+  type: TYPE_NORMAL
+- en: TELNET
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: TELNET is an application layer protocol used over networks to provide a bidirectional
+    interactive text-oriented communication facility using a virtual terminal connection.
+    See RFC 854\. TELNET servers and clients use TCP port 23.
+  prefs: []
+  type: TYPE_NORMAL
+- en: TFTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The Trivial File Transfer Protocol (TFTP) is a protocol for doing simple file
+    transfers over UDP to get a file from or put a file onto a remote host. TFTP servers
+    and clients use UDP port 69.
+  prefs: []
+  type: TYPE_NORMAL
+- en: WS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: WebSocket is a bidirectional TCP-like protocol, setup over an HTTP(S) request.
+    WS is the scheme for the clear text version done over plain HTTP. Experimental
+    support for this was added to curl 7.86.0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: WSS
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: WebSocket is a bidirectional TCP-like protocol, setup over an HTTP(S) request.
+    WSS is the scheme for the secure version done over HTTPS. Experimental support
+    for this was added to curl 7.86.0.
+  prefs: []
+  type: TYPE_NORMAL

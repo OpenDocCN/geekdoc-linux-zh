@@ -1,0 +1,26 @@
+- en: HTTP PUT
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The difference between a PUT and a POST is subtle. They are virtually identical
+    transmissions except for the different method strings. Where POST is meant to
+    pass on data to a remote resource, PUT is supposed to be the new version of that
+    resource.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In that aspect, PUT is similar to good old standard file upload found in other
+    protocols. You upload a new version of the resource with PUT. The URL identifies
+    the resource and you point out the local file to put there:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`-T` implies a PUT and tell curl which file to send off. But the similarities
+    between POST and PUT also allows you to send a PUT with a string by using the
+    regular curl POST mechanism using `-d` but asking for it to use a PUT instead:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE

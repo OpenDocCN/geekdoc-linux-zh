@@ -1,0 +1,113 @@
+- en: Write
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'An application can receive WebSocket data two different ways, but there is
+    only one way for it to send data over the connection: the `curl_ws_send()` function.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`curl_ws_send()`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`curl` - transfer handle'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`buffer` - pointer to the frame data to send'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`buflen` - length of the data (in bytes) in `buffer`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`fragsize` - the total size of the whole fragment, used when sending only a
+    part of a larger fragment.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`sent` - number of bytes that were sent'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`flags` - bitmask describing the data. See bit descriptions below.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Full fragment vs partial
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: To send a complete WebSocket fragment, set `fragsize` to zero and provide data
+    for all other arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To send a fragment in smaller pieces: send the first part with `fragsize` set
+    to the *total* fragment size. You **must** know and provide the size of the entire
+    fragment before you can send it. In subsequent calls to `curl_ws_send()` you send
+    the next pieces of the fragment with `fragsize` set to zero but with the `CURLWS_OFFSET`
+    bit sets in the `flags` argument. Repeat until all pieces have been sent that
+    constitute the whole fragment.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Flags
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`CURLWS_TEXT`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The buffer contains text data. Note that this makes a difference to WebSocket
+    but libcurl itself does not perform any verification of the content or make any
+    precautions that you actually send valid UTF-8 content.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_BINARY`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is binary data.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_CONT`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This is not the final fragment of the message, which implies that there is another
+    fragment coming as part of the same message where this bit is not set.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_CLOSE`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Close this transfer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_PING`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This as a ping.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_PONG`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This as a pong.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURLWS_OFFSET`'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The provided data is only a partial fragment and there is more data coming in
+    a following call to `curl_ws_send()`. When sending only a piece of the fragment
+    like this, the `fragsize` must be provided with the total expected frame size
+    in the first call and it needs to be zero in subsequent calls.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When `CURLWS_OFFSET` is set, no other flag bits should be set as this is a continuation
+    of a previous send and the bits describing the fragments were set then.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,45 @@
+- en: Multiple downloads
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: As curl can be told to download many URLs in a single command line, there are,
+    of course, times when you want to store these downloads in nicely named local
+    files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The key to understanding this is that each download URL needs its own “storage
+    instruction”. Without said “storage instruction”, curl defaults to sending the
+    data to stdout. If you ask for two URLs and only tell curl where to save the first
+    URL, the second one is sent to stdout. Like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: The “storage instructions” are read and handled in the same order as the download
+    URLs so they do not have to be next to the URL in any way. You can round up all
+    the output options first, last or interleaved with the URLs. You choose.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'These examples all work the same way:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The `-O` is similarly just an instruction for a single download so if you download
+    multiple URLs, use more of them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Parallel
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Unless told otherwise, curl downloads all given URLs in a serial fashion, one
+    by one. By using `-Z` (or `--parallel`) curl can instead do the transfers [in
+    parallel](ch066.xhtml#cmdline__urls__parallel__md): several ones at once.'
+  prefs: []
+  type: TYPE_NORMAL

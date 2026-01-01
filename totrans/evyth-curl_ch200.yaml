@@ -1,0 +1,38 @@
+- en: for C++ programmers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: libcurl provides a C API. C and C++ are similar but not the same. There are
+    a few things to keep in mind when using libcurl in C++.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Strings are C strings, not C++ string objects
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When you pass strings to libcurl’s APIs that accept `char *` that means you
+    cannot pass in C++ strings or objects to those functions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, if you build a string with C++ and then want that string used
+    as a URL:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Callback considerations
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Since libcurl is a C library, it does not know anything about C++ member functions
+    or objects. You can overcome this limitation with relative ease using for a static
+    member function that is passed a pointer to the class.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here’s an example of a write callback using a C++ method as callback:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE

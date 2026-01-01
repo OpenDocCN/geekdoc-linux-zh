@@ -1,0 +1,233 @@
+- en: Variables
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This concept of variables for the command line and config files was added in
+    curl 8.3.0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A user sets a *variable* to a plain string with `--variable varName=content`
+    or from the contents of a file with `--variable varName@file` where the file can
+    be stdin if set to a single dash (`-`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: A variable in this context is given a specific name and it holds contents. Any
+    number of variables can be set. If you set the same variable name again, it gets
+    overwritten with new content. Variable names are case sensitive, can be up to
+    128 characters long and may consist of the characters a-z, A-Z, 0-9 and underscore.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some examples below contain multiple lines for readability. The backslash (`\`)
+    is used to instruct the terminal to ignore the newline.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Setting variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can set variables at the command line with `--variable` or in config files
+    with `variable` (no dashes):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'or in a config file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Assigning contents from file
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You can assign the contents of a plain text file to a variable, too:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Expand
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Variables can be expanded in option parameters using `{{varName}}` when the
+    option name is prefixed with `--expand-`. This makes the content of the variable
+    `varName` get inserted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you reference a name that does not exist as a variable, a blank string is
+    inserted.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Insert `{{` verbatim in the string by escaping it with a backslash:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`\{{`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In the example below, the variable `host` is set and then expanded:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: For options specified without the `--expand-` prefix, variables are not expanded.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Variable content holding null bytes that are not encoded when expanded causes
+    curl to exit with an error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Environment variables
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Import an environment variable with `--variable %VARNAME`. This import makes
+    curl exit with an error if the given environment variable is not set. A user can
+    also opt to set a default value if the environment variable does not exist, using
+    `=content` or `@file` as described above.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As an example, assign the `%USER` environment variable to a curl variable and
+    insert it into a URL. Because no default value is specified, this operation fails
+    if the environment variable does not exist:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Instead, let’s use `dummy` as a default value if `%USER` does not exist:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Expand `--variable`
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `--variable` option itself can also be expanded, which allows you to assign
+    variables to the contents of other variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or done in a config file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Functions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When expanding variables, curl offers a set of *functions* to change how they
+    are expanded. Functions are applied with colon + function name after the variable,
+    like this: `{{varName:function}}`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Multiple functions can be applied to the variable. They are then applied in
+    a left-to-right order: `{{varName:func1:func2:func3}}`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'These functions are available: `trim`, `json`, `url` and `b64`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Function: `trim`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Expands the variable without leading and trailing white space. White space
+    is defined as:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: horizontal tabs
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: spaces
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: new lines
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: vertical tabs
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: form feed and carriage returns
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This is extra useful when reading data from files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Function: `json`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Expands the variable as a valid JSON string. This makes it easier to insert
+    valid JSON into an argument (The quotes are not included in the resulting JSON).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To trim the variable first, apply both functions (in this order):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Function: `url`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Expands the variable URL encoded. Also known as *percent encoded*. This function
+    ensures that all output characters are legal within a URL and the rest are encoded
+    as `%HH` where `HH` is a two-digit hexadecimal number for the ascii value.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To trim the variable first, apply both functions (in this order):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Function: `b64`'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Expands the variable base64 encoded. Base64 is an encoding for binary data that
+    only uses 64 specific characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To trim the variable first, apply both functions (in this order):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example: get the contents of a file called `$HOME/.secret` into a variable
+    called `fix`. Make sure that the content is trimmed and percent-encoded sent as
+    POST data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE

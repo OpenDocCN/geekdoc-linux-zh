@@ -1,0 +1,84 @@
+- en: TELNET
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Telnet is an ancient application protocol for bidirectional **clear-text** communication.
+    It was designed for interactive text-oriented communications and *there is no
+    encrypted or secure version* of Telnet.
+  prefs: []
+  type: TYPE_NORMAL
+- en: TELNET is not a perfect match for curl. The protocol is not done to handle plain
+    uploads or downloads so the usual curl paradigms have had to be stretched somewhat
+    to make curl deal with it appropriately.
+  prefs: []
+  type: TYPE_NORMAL
+- en: curl sends received data to stdout and it reads input to send on stdin. The
+    transfer is complete when the connection is dropped or when the user presses control-c.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Historic TELNET
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Once upon the time, systems provided telnet access for login. Then you could
+    connect to a server and login to it, much like how you would do it with SSH today.
+    That practice has fortunately now mostly been moved into the museum cabinets due
+    to the insecure nature of the protocol.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The default port number for telnet is 23.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Debugging with TELNET
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The fact that TELNET is basically just a simple clear-text TCP connection to
+    the target host and port makes it somewhat useful to debug other protocols and
+    services at times.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example, connect to your local HTTP server on port 80 and send a (broken) request
+    to it by manually entering `GET /` and press return twice:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Your web server most probably returns something like this back:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'When curl sets up a TELNET connection to a server, you can ask it to pass on
+    options. You do this with `--telnet-option` (or `-t`), and there are three options
+    available to use:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`TTYPE=<term>` sets the “terminal type” for the session to be `<term>`.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`XDISPLOC=<X display>` sets the X display location'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`NEW_ENV=<var,val>` sets the environment variable `var` to the value `val`
+    in the remote session'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Login to your local machine’s telnet server and tell it you use a `vt100` terminal:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: You need to manually enter your name and password when prompted.
+  prefs: []
+  type: TYPE_NORMAL

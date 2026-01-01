@@ -1,0 +1,23 @@
+- en: OCSP stapling
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: This uses the TLS extension called Certificate Status Request to ask the server
+    to provide a fresh “proof” from the CA in the handshake, that the certificate
+    that it returns is still valid. This is a way to make really sure the server’s
+    certificate has not been revoked.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the server does not support this extension, the test fails and curl returns
+    an error. It is still common that servers do not support this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Ask for the handshake to use the status request like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: This feature is only supported by the OpenSSL and GnuTLS backends.
+  prefs: []
+  type: TYPE_NORMAL

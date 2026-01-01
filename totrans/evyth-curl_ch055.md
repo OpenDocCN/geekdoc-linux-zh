@@ -1,0 +1,21 @@
+# URLs
+
+curl is called curl because a substring in its name is URL (Uniform Resource Locator). It operates on URLs. URL is the name we casually use for the web address strings, like the ones we usually see prefixed with `HTTP://` or starting with www.
+
+URL is, strictly speaking, the former name for these. URI (Uniform Resource Identifier) is the more modern and correct name for them. The syntax is defined in [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt).
+
+Where curl accepts a “URL” as input, it is then really a “URI”. Most of the protocols curl understands also have a corresponding URI syntax document that describes how that particular URI format works.
+
+*   [Scheme](ch055.xhtml#cmdline__urls__scheme__md)
+*   [Name and password](ch056.xhtml#cmdline__urls__auth__md)
+*   [Host](ch057.xhtml#cmdline__urls__host__md)
+*   [Port number](ch058.xhtml#cmdline__urls__port__md)
+*   [Path](ch059.xhtml#cmdline__urls__path__md)
+*   [Query](ch060.xhtml#cmdline__urls__query__md)
+*   [FTP type](ch061.xhtml#cmdline__urls__ftptype__md)
+*   [Fragment](ch062.xhtml#cmdline__urls__fragment__md)
+*   [Browsers](ch063.xhtml#cmdline__urls__browsers__md)
+*   [Many options and URLs](ch064.xhtml#cmdline__urls__options__md)
+*   [Connection reuse](ch065.xhtml#cmdline__urls__connreuse__md)
+*   [Parallel transfers](ch066.xhtml#cmdline__urls__parallel__md)
+*   [trurl](ch067.xhtml#cmdline__urls__trurl__md)

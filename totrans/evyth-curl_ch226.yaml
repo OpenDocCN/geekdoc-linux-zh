@@ -1,0 +1,108 @@
+- en: FTP wildcard matching
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: libcurl supports FTP wildcard matching. You use this feature by setting `CURLOPT_WILDCARDMATCH`
+    to `1L` and then use a “wildcard pattern” in the in the filename part of the URL.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Wildcard patterns
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The default libcurl wildcard matching function supports:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*` - ASTERISK'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: To match all txt files in the directory `some/path`. Only two asterisks are
+    allowed within the same pattern string.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`?` - QUESTION MARK"'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A question mark matches any (exactly one) character. Like if you have files
+    called `photo1.jpeg` and `photo7.jpeg` this pattern could match them:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`[` - BRACKET EXPRESSION'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The left bracket opens a bracket expression. The question mark and asterisk
+    have no special meaning in a bracket expression. Each bracket expression ends
+    by the right bracket (`]`) and matches exactly one character. Some examples follow:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[a-zA-Z0-9]` or `[f-gF-G]` - character intervals'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[abc]` - character enumeration'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[^abc]` or `[!abc]` - negation'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[[:name:]]` class expression. Supported classes are alnum, lower, space, alpha,
+    digit, print, upper, blank, graph, xdigit.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[][-!^]` - special case, matches only `\-`, `]`, `[`, `!` or `^`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`[\\[\\]\\\\]` - escape syntax. Matches `[`, `]` or `\\`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using the rules above, a filename pattern can be constructed:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: FTP chunk callbacks
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When FTP wildcard matching is used, the `CURLOPT_CHUNK_BGN_FUNCTION` callback
+    is called before a transfer is initiated for a file that matches.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The callback can then opt to return one of these return codes to tell libcurl
+    what to do with the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`CURL_CHUNK_BGN_FUNC_OK` transfer the file'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`CURL_CHUNK_BGN_FUNC_SKIP`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`CURL_CHUNK_BGN_FUNC_FAIL` stop because of error'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: After the matched file has been transferred or skipped, the `CURLOPT_CHUNK_END_FUNCTION`
+    callback is called.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The end chunk callback can only return success or error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: FTP matching callback
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: If the default pattern matching function is not to your liking, you can provide
+    your own replacement function by setting the `CURLOPT_FNMATCH_FUNCTION` option
+    to your alternative.
+  prefs: []
+  type: TYPE_NORMAL

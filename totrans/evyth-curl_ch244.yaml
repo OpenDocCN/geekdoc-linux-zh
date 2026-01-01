@@ -1,0 +1,299 @@
+- en: Post transfer info
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Remember how libcurl transfers are associated with *easy handles*. Each transfer
+    has such a handle and when a transfer is completed, before the handle is cleaned
+    or reused for another transfer, it can be used to extract information from the
+    previous operation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Your friend for doing this is called `curl_easy_getinfo()` and you tell it which
+    specific information you are interested in and it returns that if it can.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you use this function, you pass in the easy handle, which information you
+    want and a pointer to a variable to hold the answer. You must pass in a pointer
+    to a variable of the correct type or you risk that things go side-ways. These
+    information values are designed to be provided *after* the transfer is completed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The data you receive can be a long, a ‘char *’, a ’struct curl_slist* ’, a double
+    or a socket.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This is how you extract the `Content-Type:` value from the previous HTTP transfer:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you want to extract the local port number that was used in that connection:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Available information
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '| Getinfo option | Type | Description |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_ACTIVESOCKET` | `curl_socket_t` | The session’s active socket |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_APPCONNECT_TIME` | `double` | Time from start until SSL/SSH handshake
+    completed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_APPCONNECT_TIME_T` | `curl_off_t` | Time from start until SSL/SSH
+    handshake completed (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CAINFO` | `char *` | Path to the default CA file libcurl is built
+    to use |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CAPATH` | `char *` | Path to the CA directory libcurl is built
+    to use |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CERTINFO` | `struct curl_slist *` | Certificate chain |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONDITION_UNMET` | `long` | Whether or not a time conditional was
+    met |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONNECT_TIME` | `double` | Time from start until remote host or
+    proxy completed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONNECT_TIME_T` | `curl_off_t` | Time from start until remote host
+    or proxy completed (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONN_ID` | `curl_off_t` | Numerical id of the current connection
+    (meant for callbacks) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD` | `double` | Content length from the Content-Length
+    header |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONTENT_LENGTH_DOWNLOAD_T` | `curl_off_t` | Content length from
+    the Content-Length header |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONTENT_LENGTH_UPLOAD` | `double` | Upload size |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONTENT_LENGTH_UPLOAD_T` | `curl_off_t` | Upload size |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_CONTENT_TYPE` | `char *` | Content type from the Content-Type header
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_COOKIELIST` | `struct curl_slist *` | List of all known cookies
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_EFFECTIVE_METHOD` | `char *` | Last used HTTP request method |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_EFFECTIVE_URL` | `char *` | Last used URL |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_FILETIME` | `long` | Remote time of the retrieved document |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_FILETIME_T` | `curl_off_t` | Remote time of the retrieved document
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_FTP_ENTRY_PATH` | `char *` | The entry path after logging in to
+    an FTP server |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_HEADER_SIZE` | `long` | Number of bytes of all headers received
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_HTTP_CONNECTCODE` | `long` | Last proxy CONNECT response code |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_HTTP_VERSION` | `long` | The HTTP version used in the connection
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_HTTPAUTH_AVAIL` | `long` | Available HTTP authentication methods
+    (bitmask) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_LASTSOCKET` | `long` | Last socket used |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_LOCAL_IP` | `char *` | Local-end IP address of last connection
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_LOCAL_PORT` | `long` | Local-end port of last connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_NAMELOOKUP_TIME` | `double` | Time from start until name resolving
+    completed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_NAMELOOKUP_TIME_T` | `curl_off_t` | Time from start until name
+    resolving completed (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_NUM_CONNECTS` | `long` | Number of new successful connections used
+    for previous transfer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_OS_ERRNO` | `long` | The errno from the last failure to connect
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PRETRANSFER_TIME` | `double` | Time from start until just before
+    the transfer begins |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PRETRANSFER_TIME_T` | `curl_off_t` | Time from start until just
+    before the transfer begins (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PRIMARY_IP` | `char *` | IP address of the last connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PRIMARY_PORT` | `long` | Port of the last connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PRIVATE` | `char *` | User’s private data pointer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PROTOCOL` | `long` | The protocol used for the connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PROXY_ERROR` | `long` | Detailed (SOCKS) proxy error if `CURLE_PROXY`
+    was returned from the transfer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PROXY_SSL_VERIFYRESULT` | `long` | Proxy certificate verification
+    result |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_PROXYAUTH_AVAIL` | `long` | Available HTTP proxy authentication
+    methods |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_QUEUE_TIME_T` | `curl_off_t` | Time in microseconds this transfer
+    was held in queue waiting to start |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REDIRECT_COUNT` | `long` | Total number of redirects that were
+    followed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REDIRECT_TIME` | `double` | Time taken for all redirect steps before
+    the final transfer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REDIRECT_TIME_T` | `curl_off_t` | Time taken for all redirect steps
+    before the final transfer (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REDIRECT_URL` | `char *` | URL a redirect would take you to, had
+    you enabled redirects |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REFERER` | `char *` | The used request `Referer:` header |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_REQUEST_SIZE` | `long` | Number of bytes sent in the issued HTTP
+    requests |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RESPONSE_CODE` | `long` | Last received response code |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RETRY_AFTER` | `curl_off_t` | The value from the response `Retry-After:`
+    header |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RTSP_CLIENT_CSEQ` | `long` | RTSP next expected client CSeq |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RTSP_CSEQ_RECV` | `long` | RTSP last received |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RTSP_SERVER_CSEQ` | `long` | RTSP next expected server CSeq |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_RTSP_SESSION_ID` | `char *` | RTSP session ID |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SCHEME` | `char *` | The scheme used for the connection |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SIZE_DOWNLOAD` | `double` | Number of bytes downloaded |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SIZE_DOWNLOAD_T` | `curl_off_t` | Number of bytes downloaded |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SIZE_UPLOAD` | `double` | Number of bytes uploaded |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SIZE_UPLOAD_T` | `curl_off_t` | Number of bytes uploaded |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SPEED_DOWNLOAD` | `double` | Average download speed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SPEED_DOWNLOAD_T` | `curl_off_t` | Average download speed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SPEED_UPLOAD` | `double` | Average upload speed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SPEED_UPLOAD_T` | `curl_off_t` | Average upload speed |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SSL_ENGINES` | `struct curl_slist *` | A list of OpenSSL crypto
+    engines |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_SSL_VERIFYRESULT` | `long` | Certificate verification result |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_STARTTRANSFER_TIME` | `double` | Time from start until just when
+    the first byte is received |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_STARTTRANSFER_TIME_T` | `curl_off_t` | Time from start until just
+    when the first byte is received (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_TLS_SSL_PTR` | `struct curl_slist *` | TLS session info that can
+    be used for further processing |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_TOTAL_TIME` | `double` | Total time of previous transfer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_TOTAL_TIME_T` | `curl_off_t` | Total time of previous transfer
+    (in microseconds) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CURLINFO_XFER_ID` | `curl_off_t` | Numerical id of the current transfer
+    (meant for callbacks) |'
+  prefs: []
+  type: TYPE_TB

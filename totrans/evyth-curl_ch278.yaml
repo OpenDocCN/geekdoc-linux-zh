@@ -1,0 +1,96 @@
+- en: Headers API
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: libcurl offers an API for iterating over all received HTTP headers and for extracting
+    the contents from specific ones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When returning header content, libcurl trims leading and trailing whitespace
+    but does not modify or change content in any other way.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This API was made official and is provided for real starting in libcurl 7.84.0.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Header origins
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: HTTP headers are key value pairs that are sent from the server in a few different
+    *origins* during a transfer. libcurl collects all headers and provides easy access
+    to them for applications.
+  prefs: []
+  type: TYPE_NORMAL
+- en: HTTP headers can arrive as
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**CURLH_HEADER** - before regular response content.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**CURLH_TRAILER** - fields arriving *after* the response content'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**CURLH_CONNECT** - response headers in the proxy `CONNECT` request that might
+    have been done before the actual server request'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**CURLH_1XX** - headers in the potential 1xx HTTP responses that might have
+    preceded the following >= 2xx response code.'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**CURLH_PSEUDO** - HTTP/2 and HTTP/3 level headers that start with colon (`:`)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Request number
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A single HTTP transfer done with libcurl might consist of a series of HTTP requests
+    and the **request** argument to the header API functions lets you specify which
+    particular individual request you want the headers from. 0 being the first request
+    and then the number increases for further redirects or when multi-state authentication
+    is used. Passing in `-1` is a shortcut to the last request in the series, independently
+    of the actual amount of requests used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Header folding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: HTTP/1 headers supports a deprecated format called *folding*, which means that
+    there is a continuation line after a header, making the line folded.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The headers API supports folded headers and returns such contents unfolded -
+    where the different parts are separated by a single whitespace character.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The two header API function calls are perfectly possible to call at any time
+    during a transfer, both from inside and outside of callbacks. It is however important
+    to remember that the API only returns information about the state of the headers
+    at the exact moment it is called, which might not be the final status if you call
+    it while the transfer is still in progress.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Header struct](ch278.xhtml#helpers__headerapi__struct__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Get a header](ch279.xhtml#helpers__headerapi__get__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Iterate of headers](ch280.xhtml#helpers__headerapi__iterate__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

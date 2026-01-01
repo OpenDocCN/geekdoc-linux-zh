@@ -1,0 +1,140 @@
+- en: Build curl and libcurl
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The source code for this project is written in a way that allows it to be compiled
+    and built on just about any operating system and platform, with as few restraints
+    and requirements as possible.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you have a 32bit (or larger) CPU architecture, if you have a C89 compliant
+    compiler and if you have roughly a POSIX supporting sockets API, then you can
+    most likely build curl and libcurl for your target system.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For the most popular platforms, the curl project comes with build systems already
+    done and prepared to allow you to easily build it yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are also friendly people and organizations who put together binary packages
+    of curl and libcurl and make them available for download. The different options
+    are explored below.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The latest version?
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Looking at the [curl website](https://curl.se), you can see the latest curl
+    and libcurl version released from the project. That is the latest source code
+    release package you can get.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When you opt for a prebuilt and prepackaged version for your operating system
+    or distribution of choice, you may not always find the latest version but you
+    might have to either be satisfied with the latest version someone has packaged
+    for your environment, or you need to build it yourself from source.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The curl project also provides info about the latest version in a somewhat
+    more machine-readable format on this URL: `https://curl.se/info`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Releases source code
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The curl project creates source code that can be built to produce the two products
+    curl and libcurl. The conversion from source code to binaries is often referred
+    to as “building”. You build curl and libcurl from source.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The curl project does not provide any built binaries at all — it only ships
+    the source code. The binaries which can be found on the download page of the curl
+    web and installed from other places on the Internet are all built and provided
+    to the world by other friendly people and organizations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The source code consists of a large number of files containing C code. Generally
+    speaking, the same set of files are used to build binaries for all platforms and
+    computer architectures that curl supports. curl can be built and run on a vast
+    number of platforms. If you use a rare operating system yourself, chances are
+    that building curl from source is the easiest or perhaps the only way to get curl.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Making it easy to build curl is a priority to the curl project, although we
+    do not always necessarily succeed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: git vs release tarballs
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: When release tarballs are created, a few files are generated and included in
+    the final release bundle. Those generated files are not present in the git repository,
+    because they are generated and there is no need to store them in git.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, you can also opt to build the latest version that exists in the [git
+    repository](https://github.com/curl/curl). It could however be a bit more fragile
+    and probably requires slightly more attention to detail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you build curl from a git checkout, you need to generate some files yourself
+    before you can build. On Linux and Unix-like systems, do this by running `autoreconf
+    -fi` and on Windows, run `buildconf.bat`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On Linux and Unix-like systems
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are two distinctly different ways to build curl on Linux and other Unix-like
+    systems; there is the one using [the configure script](ch043.xhtml#build__autotools__md)
+    and there is [the CMake approach](ch044.xhtml#build__cmake__md).
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are two different build environments to cater to people’s different opinions
+    and tastes. The configure-based build is arguably the more mature and more encompassing
+    build system and should probably be considered the default one.
+  prefs: []
+  type: TYPE_NORMAL
+- en: On Windows
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: On Windows there are at least four different ways to build. The above mentioned
+    ways, [the CMake approach](ch044.xhtml#build__cmake__md) and using [configure](ch043.xhtml#build__autotools__md)
+    with msys work, but the more popular and common methods are probably building
+    with Microsoft’s Visual Studio compiler using either `nmake` or project files.
+    See the build on [windows](ch046.xhtml#build__windows__md) section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Learn more
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[Autotools](ch043.xhtml#build__autotools__md) - build with configure'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[CMake](ch044.xhtml#build__cmake__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Separate install](ch045.xhtml#build__separate__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[On Windows](ch046.xhtml#build__windows__md) - Windows-specific ways to build'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Dependencies](ch047.xhtml#build__deps__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[TLS libraries](ch048.xhtml#build__tls__md)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

@@ -1,0 +1,47 @@
+- en: MQTT
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A plain GET subscribes to the topic and prints all published messages. Doing
+    a POST publishes the post data to the topic and exits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Subscribe to the temperature in the `home/bedroom` subject published by example.com:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Send the value `75` to the `home/bedroom/dimmer` subject hosted by the example.com
+    server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: What does curl deliver as a response to a subscribe
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: It outputs two bytes topic length (MSB | LSB), the topic followed by the payload.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Caveats
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Remaining limitations in curl’s MQTT support as of September 2022:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Only QoS level 0 is implemented for publish
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: No way to set retain flag for publish
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: No TLS (mqtts) support
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

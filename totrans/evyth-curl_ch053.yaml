@@ -1,0 +1,153 @@
+- en: Command line options
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: When telling curl to do something, you invoke curl with zero, one or several
+    command-line options to accompany the URL or set of URLs you want the transfer
+    to be about. curl supports over two hundred different options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Short options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Command line options pass on information to curl about how you want it to behave.
+    Like you can ask curl to switch on verbose mode with the -v option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '-v is here used as a “short option”. You write those with the minus symbol
+    and a single letter immediately following it. Many options are just switches that
+    switch something on or change something between two known states. They can be
+    used with just that option name. You can then also combine several single-letter
+    options after the minus. To ask for both verbose mode and that curl follows HTTP
+    redirects:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The command-line parser in curl always parses the entire line and you can put
+    the options anywhere you like; they can also appear after the URL:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and the two separate short options can of course also be specified separately,
+    like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Long options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Single-letter options are convenient since they are quick to write and use,
+    but as there are only a limited number of letters in the alphabet and there are
+    many things to control, not all options are available like that. Long option names
+    are therefore provided for those. Also, as a convenience and to allow scripts
+    to become more readable, most short options have longer name aliases.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Long options are always written with *two* minuses (or *dashes*, whichever
+    you prefer to call them) and then the name and you can only write one option name
+    per double-minus. Asking for verbose mode using the long option format looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and asking for HTTP redirects as well using the long format looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Arguments to options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Not all options are just simple boolean flags that enable or disable features.
+    For some of them you need to pass on data, like perhaps a username or a path to
+    a file. You do this by writing first the option and then the argument, separated
+    with a space. Like, for example, if you want to send an arbitrary string of data
+    in an HTTP POST to a server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'and it works the same way even if you use the long form of the option:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'When you use the short options with arguments, you can, in fact, also write
+    the data without the space separator:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Arguments with spaces
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'At times you want to pass on an argument to an option, and that argument contains
+    one or more spaces. For example you want to set the user-agent field curl uses
+    to be exactly `I am your father`, including those three spaces. Then you need
+    to put quotes around the string when you pass it to curl on the command line.
+    The exact quotes to use varies depending on your shell/command prompt, but generally
+    it works with double quotes in most places:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Failing to use quotes, like if you would write the command line like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: … makes curl only use ‘I’ as a user-agent string, and the following strings,
+    `am`, `your` and `father` are instead treated as separate URLs since they do not
+    start with `-` to indicate that they are options and curl only ever handles options
+    and URLs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To make the string itself contain double quotes, which is common when you for
+    example want to send a string of JSON to the server, you may need to use single
+    quotes (except on Windows, where single quotes do not work the same way). Send
+    the JSON string `{ "name": "Darth" }`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or if you want to avoid the single quote thing, you may prefer to send the
+    data to curl via a file, which then does not need the extra quoting. Assuming
+    we call the file ‘json’ that contains the above mentioned data:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Negative options
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For options that switch on something, there is also a way to switch it off.
+    You then use the long form of the option with an initial `no-` prefix before the
+    name. As an example, to switch off verbose mode:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE

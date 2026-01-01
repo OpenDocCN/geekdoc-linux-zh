@@ -1,0 +1,217 @@
+- en: Version
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: To get to know what version of curl you have installed, run
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'or use the shorthand version:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: The output from that command line is typically four lines, out of which some
+    are rather long and might wrap in your terminal window.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'An example output from a Debian Linux in June 2020:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'while the same command line invoked on a Windows 10 machine on the same date
+    looks like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: The meaning of the four lines?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Line 1: curl'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The first line starts with `curl` and first shows the main version number of
+    the tool. Then follows the platform the tool was built for within parentheses
+    and the libcurl version. Those three fields are common for all curl builds.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If the curl version number has `-DEV` appended to it, it means the version is
+    built straight from an in-development source code and it is not an officially
+    released and blessed version.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The rest of this line contains names of third party components this build of
+    curl uses, often with their individual version number next to it with a slash
+    separator. Like `OpenSSL/1.1.1g` and `nghttp2/1.41.0`. This can for example tell
+    you which TLS backends this curl uses.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Line 1: TLS versions'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Line 1 may contain one or more TLS libraries. curl can be built to support more
+    than one TLS library which then makes curl - at start-up - select which particular
+    backend to use for this invocation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If curl supports more than one TLS library like this, the ones that are *not*
+    selected by default are listed within parentheses. Thus, if you do not specify
+    which backend to use (with the `CURL_SSL_BACKEND` environment variable) the one
+    listed without parentheses is used.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Line 2: Release-Date'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This line shows the date this curl version was released by the curl project,
+    and it can also show a secondary “Patch date” if it has been updated somehow after
+    it was originally released.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This says `[unreleased]` if curl was built another way than from a release tarball,
+    and as you can see above that is how Microsoft did it for Windows 10 and the curl
+    project does not recommend it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Line 3: Protocols'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is a list of all transfer protocols (URL schemes really) in alphabetical
+    order that this curl build supports. All names are shown in lowercase letters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This list can contain these protocols:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: dict, file, ftp, ftps, gopher, http, https, imap, imaps, ldap, ldaps, mqtt,
+    pop3, pop3s, rtmp, rtsp, scp, sftp, smb, smbs, smtp, smtps, telnet and tftp
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Line 4: Features'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The list of features this build of curl supports. If the name is present in
+    the list, that feature is enabled. If the name is not present, that feature is
+    not enabled.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Features that can be present there:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**alt-svc** - Support for the alt-svc: header'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**AsynchDNS** - This curl uses asynchronous name resolves. Asynchronous name
+    resolves can be done using either the c-ares or the threaded resolver backends.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**brotli** - support for automatic brotli compression over HTTP(S)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**CharConv** - curl was built with support for character set conversions (like
+    EBCDIC)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Debug** - This curl uses a libcurl built with Debug. This enables more error-tracking
+    and memory debugging etc. For curl-developers only.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**GSS-API** - GSS-API authentication is enabled'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**HTTP2** - HTTP/2 support has been built-in.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**HTTP3** - HTTP/3 support has been built-in.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**HTTPS-proxy** - This curl is built to support HTTPS proxy.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**IDN** - This curl supports IDN - international domain names.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**IPv6** - You can use IPv6 with this.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**krb4** - Krb4 for FTP is supported'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Largefile** - This curl supports transfers of large files, files larger than
+    2GB.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**libz** - Automatic gzip decompression of compressed files over HTTP is supported.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Metalink** - This curl supports Metalink. In modern curl versions this option
+    is never available.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**MultiSSL** - This curl supports multiple TLS backends. The first line details
+    exactly which TLS libraries.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**NTLM** - NTLM authentication is supported.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**NTLM_WB** - NTLM authentication is supported.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**PSL** - Public Suffix List (PSL) is available and means that this curl has
+    been built with knowledge about *public suffixes*, used for cookies.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**SPNEGO** - SPNEGO authentication is supported.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**SSL** - SSL versions of various protocols are supported, such as HTTPS, FTPS,
+    POP3S and so on.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**SSPI** - SSPI is supported'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**TLS-SRP** - SRP (Secure Remote Password) authentication is supported for
+    TLS.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**UnixSockets** - Unix sockets support is provided.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

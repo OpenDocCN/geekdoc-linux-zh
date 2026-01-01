@@ -1,0 +1,129 @@
+- en: Progress meter
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: curl has a built-in progress meter. When curl is invoked to transfer data (either
+    uploading or downloading) it can show that meter in the terminal screen to show
+    how the transfer is progressing, namely the current transfer speed, how long it
+    has been going on and how long it thinks it might be left until completion.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The progress meter is inhibited if curl deems that there is output going to
+    the terminal, as the progress meter would interfere with that output and just
+    mess up what gets displayed. A user can also forcibly switch off the progress
+    meter with the `-s / --silent` option, which tells curl to hush.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If you invoke curl and do not get the progress meter, make sure your output
+    is directed somewhere other than the terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: curl also features an alternative and simpler progress meter that you enable
+    with `-# / --progress-bar`. As the long name implies, it instead shows the transfer
+    as a progress bar.
+  prefs: []
+  type: TYPE_NORMAL
+- en: At times when curl is asked to transfer data, it cannot figure out the total
+    size of the requested operation and that then subsequently makes the progress
+    meter contain fewer details and it cannot, for example, make forecasts for transfer
+    times, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Units
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The progress meter displays bytes and bytes per second.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'It also uses suffixes for larger amounts of bytes, using the 1024 base system
+    so 1024 is one kilobyte (1K), 2048 is 2K, etc. curl supports these:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Suffix | Amount | Name |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| K | 2^10 | kilobyte |'
+  prefs: []
+  type: TYPE_TB
+- en: '| M | 2^20 | megabyte |'
+  prefs: []
+  type: TYPE_TB
+- en: '| G | 2^30 | gigabyte |'
+  prefs: []
+  type: TYPE_TB
+- en: '| T | 2^40 | terabyte |'
+  prefs: []
+  type: TYPE_TB
+- en: '| P | 2^50 | petabyte |'
+  prefs: []
+  type: TYPE_TB
+- en: The times are displayed using H:MM:SS for hours, minutes and seconds.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Progress meter legend
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The progress meter exists to show a user that something actually is happening.
+    The different fields in the output have the following meaning:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'From left to right:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Title | Meaning |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%` | Percentage completed of the whole transfer |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Total` | Total size of the whole expected transfer (if known) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%` | Percentage completed of the download |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Received` | Currently downloaded number of bytes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%` | Percentage completed of the upload |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Xferd` | Currently uploaded number of bytes |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Average Speed Dload` | Average transfer speed of the entire download so
+    far, in number of bytes per second |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Average Speed Upload` | Average transfer speed of the entire upload so far,
+    in number of bytes per second |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Time Total` | Expected time to complete the operation, in `HH:MM:SS` notation
+    for hours, minutes and seconds |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Time Current` | Time passed since the start of the transfer, in `HH:MM:SS`
+    notation for hours, minutes and seconds |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Time Left` | Expected time left to completion, in `HH:MM:SS` notation for
+    hours, minutes and seconds |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Curr. Speed` | Average transfer speed over the last 5 seconds (the first
+    5 seconds of a transfer is based on less time, of course) in number of bytes per
+    second |'
+  prefs: []
+  type: TYPE_TB

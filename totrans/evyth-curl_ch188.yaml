@@ -1,0 +1,66 @@
+- en: Directory traversing
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: When doing FTP commands to traverse the remote file system, there are a few
+    different ways curl can proceed to reach the target file, the file the user wants
+    to transfer.
+  prefs: []
+  type: TYPE_NORMAL
+- en: multicwd
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'curl can do one change directory (CWD) command for every individual directory
+    down the file tree hierarchy. If the full path is `one/two/three/file.txt`, that
+    method means doing three `CWD` commands before asking for the `file.txt` file
+    to get transferred. This method thus creates quite a large number of commands
+    if the path is many levels deep. This method is mandated by an early spec (RFC
+    1738) and is how curl acts by default:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This then equals this FTP command/response sequence (simplified):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: nocwd
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The opposite to doing one CWD for each directory part is to not change the
+    directory at all. This method asks the server using the entire path at once and
+    is thus fast. Occasionally servers have a problem with this and it is not purely
+    standards-compliant:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This then equals this FTP command/response sequence (simplified):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: singlecwd
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'This is the in-between the other two FTP methods. This makes a single `CWD`
+    command to the target directory and then it asks for the given file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This then equals this FTP command/response sequence (simplified):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
