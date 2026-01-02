@@ -1,0 +1,32 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Bash Structure</h1>
+    <p>Let's start by creating a new file with a <code>.sh</code> extension. As an example, we could create a file called <code>devdojo.sh</code>.</p>
+    <p>To create that file, you can use the <code>touch</code> command:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">touch devdojo.sh
+</code>
+    </pre>
+    <p>Or you can use your text editor instead:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">nano devdojo.sh
+</code>
+    </pre>
+    <p>In order to execute/run a bash script file with the bash shell interpreter, the first line of a script file must indicate the absolute path to the bash executable:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-meta">#!/bin/bash
+</span>
+      </code>
+    </pre>
+    <p>This is also called a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">Shebang</a>.</p>
+    <p>All that the shebang does is to instruct the operating system to run the script with the <code>/bin/bash</code> executable.</p>
+    <p>However, bash is not always in <code>/bin/bash</code> directory, particularly on non-Linux systems or due to installation as an optional package. Thus, you may want to use:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-meta">#!/usr/bin/env bash
+</span>
+      </code>
+    </pre>
+    <p>It searches for bash executable in directories, listed in PATH environmental variable.</p>
+  </body></html>

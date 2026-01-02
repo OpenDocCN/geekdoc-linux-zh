@@ -1,0 +1,336 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Automatic WordPress on LAMP installation with BASH</h1>
+    <p>Here is an example of a full LAMP and WordPress installation that works on any Debian-based machine.</p>
+    <div style="page-break-after: always;"/>
+    <h1>Prerequisites</h1>
+    <ul>
+      <li>A Debian-based machine (Ubuntu, Debian, Linux Mint, etc.)</li>
+    </ul>
+    <div style="page-break-after: always;"/>
+    <h1>Planning the functionality</h1>
+    <p>Let's start again by going over the main functionality of the script:</p>
+    <p>
+      <strong>Lamp Installation</strong>
+    </p>
+    <ul>
+      <li>Update the package manager</li>
+      <li>Install a firewall (ufw)</li>
+      <li>Allow SSH, HTTP and HTTPS traffic</li>
+      <li>Install Apache2</li>
+      <li>Install &amp; Configure MariaDB</li>
+      <li>Install PHP and required plugins</li>
+      <li>Enable all required Apache2 mods</li>
+    </ul>
+    <p>
+      <strong>Apache Virtual Host Setup</strong>
+    </p>
+    <ul>
+      <li>Create a directory in <code>/var/www</code></li>
+      <li>Configure permissions to the directory</li>
+      <li>Create the <code>$domain</code> file under <code>/etc/apache2/sites-available</code> and append the required Virtualhost content</li>
+      <li>Enable the site</li>
+      <li>Restart Apache2</li>
+    </ul>
+    <p>
+      <strong>SSL Config</strong>
+    </p>
+    <ul>
+      <li>Generate the OpenSSL certificate</li>
+      <li>Append the SSL certificate to the <code>ssl-params.conf</code> file</li>
+      <li>Append the SSL config to the Virtualhost file</li>
+      <li>Enable SSL</li>
+      <li>Reload Apache2</li>
+    </ul>
+    <p>
+      <strong>Database Config</strong>
+    </p>
+    <ul>
+      <li>Create a database</li>
+      <li>Create a user</li>
+      <li>Flush Privileges</li>
+    </ul>
+    <p>
+      <strong>WordPress Config</strong>
+    </p>
+    <ul>
+      <li>Install required WordPress PHP plugins</li>
+      <li>Install WordPress</li>
+      <li>Append the required information to <code>wp-config.php</code> file</li>
+    </ul>
+    <p>Without further ado, let's start writing the script.</p>
+    <div style="page-break-after: always;"/>
+    <h1>The script</h1>
+    <p>We start by setting our variables and asking the user to input their domain:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">'Please enter your domain of preference without www:'</span>
+<span class="hljs-built_in">read</span> DOMAIN
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database username:"</span>
+<span class="hljs-built_in">read</span> DBUSERNAME
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database password:"</span>
+<span class="hljs-built_in">read</span> DBPASSWORD
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database name:"</span>
+<span class="hljs-built_in">read</span> DBNAME
+
+ip=`hostname -I | cut -f1 -d<span class="hljs-string">' '</span>`
+</code>
+    </pre>
+    <p>We are now ready to start writing our functions. Start by creating the <code>lamp_install()</code> function. Inside of it, we are going to update the system, install ufw, allow SSH, HTTP and HTTPS traffic, install Apache2, install MariaDB and PHP. We are also going to enable all required Apache2 mods.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">lamp_install</span></span> () {
+	apt update -y
+	apt install ufw
+	ufw <span class="hljs-built_in">enable</span>
+	ufw allow OpenSSH
+	ufw allow <span class="hljs-keyword">in</span> <span class="hljs-string">"WWW Full"</span>
+
+	apt install apache2 -y
+	apt install mariadb-server
+	mysql_secure_installation -y
+	apt install php libapache2-mod-php php-mysql -y
+	sed -i <span class="hljs-string">"2d"</span> /etc/apache2/mods-enabled/dir.conf
+	sed -i <span class="hljs-string">"2i\\\tDirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm"</span> /etc/apache2/mods-enabled/dir.conf
+	systemctl reload apache2
+	
+}
+</code>
+    </pre>
+    <p>Next, we are going to create the <code>apache_virtualhost_setup()</code> function. Inside of it, we are going to create a directory in <code>/var/www</code>, configure permissions to the directory, create the <code>$domain</code> file under <code>/etc/apache2/sites-available</code> and append the required Virtualhost content, enable the site and restart Apache2.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">apache_virtual_host_setup</span></span> () {
+	mkdir /var/www/<span class="hljs-variable">$DOMAIN</span>
+	chown -R <span class="hljs-variable">$USER</span>:<span class="hljs-variable">$USER</span> /var/www/<span class="hljs-variable">$DOMAIN</span>
+
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"&lt;VirtualHost *:80&gt;"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerName <span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerAlias www.<span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerAdmin webmaster@localhost"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tDocumentRoot /var/www/<span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">'\tErrorLog ${APACHE_LOG_DIR}/error.log'</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">'\tCustomLog ${APACHE_LOG_DIR}/access.log combined'</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"&lt;/VirtualHost&gt;"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	a2ensite <span class="hljs-variable">$DOMAIN</span>
+	a2dissite 000-default
+	systemctl reload apache2
+
+}
+</code>
+    </pre>
+    <p>Next, we are going to create the <code>ssl_config()</code> function. Inside of it, we are going to generate the OpenSSL certificate, append the SSL certificate to the <code>ssl-params.conf</code> file, append the SSL config to the Virtualhost file, enable SSL and reload Apache2.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">ssl_config</span></span> () {
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+	
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLHonorCipherOrder On"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Header always set X-Frame-Options DENY"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Header always set X-Content-Type-Options nosniff"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLCompression off"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLUseStapling on"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLStaplingCache \"shmcb:logs/stapling-cache(150000)\""</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLSessionTickets Off"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	
+	cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bak
+	sed -i <span class="hljs-string">"s/var\/www\/html/var\/www\/<span class="hljs-variable">$DOMAIN</span>/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"s/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/etc\/ssl\/certs\/apache-selfsigned.crt/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"s/etc\/ssl\/private\/ssl-cert-snakeoil.key/etc\/ssl\/private\/apache-selfsigned.key/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"4i\\\t\tServerName <span class="hljs-variable">$ip</span>"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"22i\\\tRedirect permanent \"/\" \"https://<span class="hljs-variable">$ip</span>/\""</span> /etc/apache2/sites-available/000-default.conf
+	a2enmod ssl
+	a2enmod headers
+	a2ensite default-ssl
+	a2enconf ssl-params
+	systemctl reload apache2
+}
+</code>
+    </pre>
+    <p>Next, we are going to create the <code>db_setup()</code> function. Inside of it, we are going to create the database, create the user and grant all privileges to the user.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">db_config</span></span> () {
+	mysql -e <span class="hljs-string">"CREATE DATABASE <span class="hljs-variable">$DBNAME</span>;"</span>
+	mysql -e <span class="hljs-string">"GRANT ALL ON <span class="hljs-variable">$DBNAME</span>.* TO '<span class="hljs-variable">$DBUSERNAME</span>'@'localhost' IDENTIFIED BY '<span class="hljs-variable">$DBPASSWORD</span>' WITH GRANT OPTION;"</span>
+	mysql -e <span class="hljs-string">"FLUSH PRIVILEGES;"</span>
+}
+</code>
+    </pre>
+    <p>Next, we are going to create the <code>wordpress_config()</code> function. Inside of it, we are going to download the latest version of WordPress, extract it to the <code>/var/www/$DOMAIN</code> directory, create the <code>wp-config.php</code> file and append the required content to it.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">wordpress_config</span></span> () {
+	db_config
+
+	
+	apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip -y
+	systemctl restart apache2
+	sed -i <span class="hljs-string">"8i\\\t&lt;Directory /var/www/<span class="hljs-variable">$DOMAIN</span>/&gt;"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	sed -i <span class="hljs-string">"9i\\\t\tAllowOverride All"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	sed -i <span class="hljs-string">"10i\\\t&lt;/Directory&gt;"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+
+	a2enmod rewrite
+	systemctl restart apache2
+
+	apt install curl
+	<span class="hljs-built_in">cd</span> /tmp
+	curl -O https://wordpress.org/latest.tar.gz
+	tar xzvf latest.tar.gz
+	touch /tmp/wordpress/.htaccess
+	cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+	mkdir /tmp/wordpress/wp-content/upgrade
+	cp -a /tmp/wordpress/. /var/www/<span class="hljs-variable">$DOMAIN</span>
+	chown -R www-data:www-data /var/www/<span class="hljs-variable">$DOMAIN</span>
+	find /var/www/<span class="hljs-variable">$DOMAIN</span>/ -<span class="hljs-built_in">type</span> d -<span class="hljs-built_in">exec</span> chmod 750 {} \;
+	find /var/www/<span class="hljs-variable">$DOMAIN</span>/ -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> chmod 640 {} \;
+	curl -s https://api.wordpress.org/secret-key/1.1/salt/ &gt;&gt; /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"define('FS_METHOD', 'direct');"</span> &gt;&gt; /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"51,58d"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/database_name_here/<span class="hljs-variable">$DBNAME</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/username_here/<span class="hljs-variable">$DBUSERNAME</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/password_here/<span class="hljs-variable">$DBPASSWORD</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+}
+</code>
+    </pre>
+    <p>And finally, we are going to create the <code>execute()</code> function. Inside of it, we are going to call all the functions we created above.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">execute</span></span> () {
+	lamp_install
+	apache_virtual_host_setup
+	ssl_config
+	wordpress_config
+}
+</code>
+    </pre>
+    <p>With this, you have the script ready and you are ready to run it. And if you need the full script, you can find it in the next section.</p>
+    <div style="page-break-after: always;"/>
+    <h1>The full script</h1>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">'Please enter your domain of preference without www:'</span>
+<span class="hljs-built_in">read</span> DOMAIN
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database username:"</span>
+<span class="hljs-built_in">read</span> DBUSERNAME
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database password:"</span>
+<span class="hljs-built_in">read</span> DBPASSWORD
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Please enter your Database name:"</span>
+<span class="hljs-built_in">read</span> DBNAME
+
+ip=`hostname -I | cut -f1 -d<span class="hljs-string">' '</span>`
+
+<span class="hljs-function"><span class="hljs-title">lamp_install</span></span> () {
+	apt update -y
+	apt install ufw
+	ufw <span class="hljs-built_in">enable</span>
+	ufw allow OpenSSH
+	ufw allow <span class="hljs-keyword">in</span> <span class="hljs-string">"WWW Full"</span>
+
+	apt install apache2 -y
+	apt install mariadb-server
+	mysql_secure_installation -y
+	apt install php libapache2-mod-php php-mysql -y
+	sed -i <span class="hljs-string">"2d"</span> /etc/apache2/mods-enabled/dir.conf
+	sed -i <span class="hljs-string">"2i\\\tDirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm"</span> /etc/apache2/mods-enabled/dir.conf
+	systemctl reload apache2
+	
+}
+
+<span class="hljs-function"><span class="hljs-title">apache_virtual_host_setup</span></span> () {
+	mkdir /var/www/<span class="hljs-variable">$DOMAIN</span>
+	chown -R <span class="hljs-variable">$USER</span>:<span class="hljs-variable">$USER</span> /var/www/<span class="hljs-variable">$DOMAIN</span>
+
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"&lt;VirtualHost *:80&gt;"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerName <span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerAlias www.<span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tServerAdmin webmaster@localhost"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">"\tDocumentRoot /var/www/<span class="hljs-variable">$DOMAIN</span>"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">'\tErrorLog ${APACHE_LOG_DIR}/error.log'</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> -e <span class="hljs-string">'\tCustomLog ${APACHE_LOG_DIR}/access.log combined'</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"&lt;/VirtualHost&gt;"</span> &gt;&gt; /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	a2ensite <span class="hljs-variable">$DOMAIN</span>
+	a2dissite 000-default
+	systemctl reload apache2
+
+}
+
+
+<span class="hljs-function"><span class="hljs-title">ssl_config</span></span> () {
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+	
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLHonorCipherOrder On"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Header always set X-Frame-Options DENY"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Header always set X-Content-Type-Options nosniff"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLCompression off"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLUseStapling on"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLStaplingCache \"shmcb:logs/stapling-cache(150000)\""</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"SSLSessionTickets Off"</span> &gt;&gt; /etc/apache2/conf-available/ssl-params.conf
+	
+	cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bak
+	sed -i <span class="hljs-string">"s/var\/www\/html/var\/www\/<span class="hljs-variable">$DOMAIN</span>/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"s/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/etc\/ssl\/certs\/apache-selfsigned.crt/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"s/etc\/ssl\/private\/ssl-cert-snakeoil.key/etc\/ssl\/private\/apache-selfsigned.key/1"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"4i\\\t\tServerName <span class="hljs-variable">$ip</span>"</span> /etc/apache2/sites-available/default-ssl.conf
+	sed -i <span class="hljs-string">"22i\\\tRedirect permanent \"/\" \"https://<span class="hljs-variable">$ip</span>/\""</span> /etc/apache2/sites-available/000-default.conf
+	a2enmod ssl
+	a2enmod headers
+	a2ensite default-ssl
+	a2enconf ssl-params
+	systemctl reload apache2
+}
+	
+<span class="hljs-function"><span class="hljs-title">db_config</span></span> () {
+	mysql -e <span class="hljs-string">"CREATE DATABASE <span class="hljs-variable">$DBNAME</span>;"</span>
+	mysql -e <span class="hljs-string">"GRANT ALL ON <span class="hljs-variable">$DBNAME</span>.* TO '<span class="hljs-variable">$DBUSERNAME</span>'@'localhost' IDENTIFIED BY '<span class="hljs-variable">$DBPASSWORD</span>' WITH GRANT OPTION;"</span>
+	mysql -e <span class="hljs-string">"FLUSH PRIVILEGES;"</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">wordpress_config</span></span> () {
+	db_config
+
+	
+	apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip -y
+	systemctl restart apache2
+	sed -i <span class="hljs-string">"8i\\\t&lt;Directory /var/www/<span class="hljs-variable">$DOMAIN</span>/&gt;"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	sed -i <span class="hljs-string">"9i\\\t\tAllowOverride All"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+	sed -i <span class="hljs-string">"10i\\\t&lt;/Directory&gt;"</span> /etc/apache2/sites-available/<span class="hljs-variable">$DOMAIN</span>.conf
+
+	a2enmod rewrite
+	systemctl restart apache2
+
+	apt install curl
+	<span class="hljs-built_in">cd</span> /tmp
+	curl -O https://wordpress.org/latest.tar.gz
+	tar xzvf latest.tar.gz
+	touch /tmp/wordpress/.htaccess
+	cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+	mkdir /tmp/wordpress/wp-content/upgrade
+	cp -a /tmp/wordpress/. /var/www/<span class="hljs-variable">$DOMAIN</span>
+	chown -R www-data:www-data /var/www/<span class="hljs-variable">$DOMAIN</span>
+	find /var/www/<span class="hljs-variable">$DOMAIN</span>/ -<span class="hljs-built_in">type</span> d -<span class="hljs-built_in">exec</span> chmod 750 {} \;
+	find /var/www/<span class="hljs-variable">$DOMAIN</span>/ -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">exec</span> chmod 640 {} \;
+	curl -s https://api.wordpress.org/secret-key/1.1/salt/ &gt;&gt; /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"define('FS_METHOD', 'direct');"</span> &gt;&gt; /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"51,58d"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/database_name_here/<span class="hljs-variable">$DBNAME</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/username_here/<span class="hljs-variable">$DBUSERNAME</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+	sed -i <span class="hljs-string">"s/password_here/<span class="hljs-variable">$DBPASSWORD</span>/1"</span> /var/www/<span class="hljs-variable">$DOMAIN</span>/wp-config.php
+}
+
+<span class="hljs-function"><span class="hljs-title">execute</span></span> () {
+	lamp_install
+	apache_virtual_host_setup
+	ssl_config
+	wordpress_config
+}
+</code>
+    </pre>
+    <h2>Summary</h2>
+    <p>The script does the following:</p>
+    <ul>
+      <li>Install LAMP</li>
+      <li>Create a virtual host</li>
+      <li>Configure SSL</li>
+      <li>Install WordPress</li>
+      <li>Configure WordPress</li>
+    </ul>
+    <p>With this being said, I hope you enjoyed this example.</p>
+  </body></html>

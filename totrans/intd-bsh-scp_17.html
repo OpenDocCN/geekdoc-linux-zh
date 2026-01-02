@@ -1,0 +1,110 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Executing BASH scripts on Multiple Remote Servers</h1>
+    <p>Any command that you can run from the command line can be used in a bash script. Scripts are used to run a series of commands. Bash is available by default on Linux and macOS operating systems.</p>
+    <p>Let's have a hypothetical scenario where you need to execute a BASH script on multiple remote servers, but you don't want to manually copy the script to each server, then again login to each server individually and only then execute the script.</p>
+    <p>Of course you could use a tool like Ansible but let's learn how to do that with Bash!</p>
+    <h2>Prerequisites</h2>
+    <p>For this example I will use 3 remote Ubuntu servers deployed on DigitalOcean. If you don't have a Digital Ocean account yet, you can sign up for DigitalOcean and get $100 free credit via this referral link here:</p>
+    <p>
+      <a href="https://m.do.co/c/2a9bba940f39">https://m.do.co/c/2a9bba940f39</a>
+    </p>
+    <p>Once you have your Digital Ocean account ready go ahead and deploy 3 droplets.</p>
+    <p>I've gone ahead and created 3 Ubuntu servers:</p>
+    <p>
+      <img src="images/https/imgur.com/09xmq41.png" alt="DigitalOcean Ubuntu servers"/>
+    </p>
+    <p>I'll put a those servers IP's in a <code>servers.txt</code> file which I would use to loop though with our Bash script.</p>
+    <p>If you are new to DigitalOcean you can follow the steps on how to create a Droplet here:</p>
+    <ul>
+      <li>
+        <a href="https://www.digitalocean.com/docs/droplets/how-to/create/">How to Create a Droplet from the DigitalOcean Control Panel</a>
+      </li>
+    </ul>
+    <p>You can also follow the steps from this video here on how to do your initial server setup:</p>
+    <ul>
+      <li>
+        <a href="https://youtu.be/7NL2_4HIgKU">How to do your Initial Server Setup with Ubuntu</a>
+      </li>
+    </ul>
+    <p>Or even better, you can follow this article here on how to automate your initial server setup with Bash:</p>
+    <p>
+      <a href="https://www.digitalocean.com/community/tutorials/automating-initial-server-setup-with-ubuntu-18-04">Automating Initial Server Setup with Ubuntu 18.04 with Bash</a>
+    </p>
+    <p>With the 3 new servers in place, we can go ahead and focus on running our Bash script on all of them with a single command!</p>
+    <h2>The BASH Script</h2>
+    <p>I will reuse the demo script from the previous chapter with some slight changes. It simply executes a few checks like the current memory usage, the current CPU usage, the number of TCP connections and the version of the kernel.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-comment">##</span><span class="hljs-comment"># BASH script that checks the following:</span><span class="hljs-comment">#   - Memory usage</span><span class="hljs-comment">#   - CPU load</span><span class="hljs-comment">#   - Number of TCP connections</span><span class="hljs-comment">#   - Kernel version</span><span class="hljs-comment">##</span><span class="hljs-comment">##</span><span class="hljs-comment"># Memory check</span><span class="hljs-comment">##</span>
+server_name=$(hostname)
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"The current memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+}
+
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">cpu_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"The current CPU load on <span class="hljs-variable">${server_name}</span> is: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uptime
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">tcp_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Total TCP connections on <span class="hljs-variable">${server_name}</span>: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	cat  /proc/net/tcp | wc -l
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">kernel_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"The exact Kernel version on <span class="hljs-variable">${server_name}</span> is: "</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uname -r
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"#######"</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">all_checks</span></span>() {
+	memory_check
+	cpu_check
+	tcp_check
+	kernel_check
+}
+
+all_checks
+</code>
+    </pre>
+    <p>Copy the code bellow and add this in a file called <code>remote_check.sh</code>. You can also get the script from <a href="https://devdojo.com/bobbyiliev/executing-bash-script-on-multiple-remote-server">here</a>.</p>
+    <h2>Running the Script on all Servers</h2>
+    <p>Now that we have the script and the servers ready and that we've added those servers in our servers.txt file we can run the following command to loop though all servers and execute the script remotely without having to copy the script to each server and individually connect to each server.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">for</span> server <span class="hljs-keyword">in</span> $(cat servers.txt) ; <span class="hljs-keyword">do</span> ssh your_user@<span class="hljs-variable">${server}</span> <span class="hljs-string">'bash -s'</span> &lt; ./remote_check.sh ; <span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>What this for loop does is, it goes through each server in the servers.txt file and then it runs the following command for each item in the list:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">ssh your_user@the_server_ip <span class="hljs-string">'bash -s'</span> &lt; ./remote_check.sh
+</code>
+    </pre>
+    <p>You would get the following output:</p>
+    <p>
+      <img src="images/https/imgur.com/B1AmhUP.png" alt="Running bash script on multiple remote servers"/>
+    </p>
+    <h2>Conclusion</h2>
+    <p>This is just a really simple example on how to execute a simple script on multiple servers without having to copy the script to each server and without having to access the servers individually.</p>
+    <p>Of course you could run a much more complex script and on many more servers.</p>
+    <p>If you are interested in automation, I would recommend checking out the Ansible resources page on the DigitalOcean website:</p>
+    <p>
+      <a href="https://www.digitalocean.com/community/tags/ansible">Ansible Resources</a>
+    </p>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> This content was initially posted on <a href="https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs">DevDojo</a></p>
+    </blockquote>
+  </body></html>

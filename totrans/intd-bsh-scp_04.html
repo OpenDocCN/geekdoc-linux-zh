@@ -1,0 +1,117 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Bash Variables</h1>
+    <p>As in any other programming language, you can use variables in Bash Scripting as well. However, there are no data types, and a variable in Bash can contain numbers as well as characters.</p>
+    <p>To assign a value to a variable, all you need to do is use the <code>=</code> sign:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">name=<span class="hljs-string">"DevDojo"</span>
+</code>
+    </pre>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> as an important note, you can not have spaces before and after the <code>=</code> sign.</p>
+    </blockquote>
+    <p>After that, to access the variable, you have to use the <code>$</code> and reference it as shown below:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$name</span>
+</code>
+    </pre>
+    <p>Wrapping the variable name between curly brackets is not required, but is considered a good practice, and I would advise you to use them whenever you can:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">${name}</span>
+</code>
+    </pre>
+    <p>The above code would output: <code>DevDojo</code> as this is the value of our <code>name</code> variable.</p>
+    <p>Next, let's update our <code>devdojo.sh</code> script and include a variable in it.</p>
+    <p>Again, you can open the file <code>devdojo.sh</code> with your favorite text editor, I'm using nano here to open the file:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">nano devdojo.sh
+</code>
+    </pre>
+    <p>Adding our <code>name</code> variable here in the file, with a welcome message. Our file now looks like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+name=<span class="hljs-string">"DevDojo"</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hi there <span class="hljs-variable">$name</span>"</span>
+</code>
+    </pre>
+    <p>Save it and run the file using the command below:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./devdojo.sh
+</code>
+    </pre>
+    <p>You would see the following output on your screen:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">Hi there DevDojo
+</code>
+    </pre>
+    <p>Here is a rundown of the script written in the file:</p>
+    <ul>
+      <li><code>#!/bin/bash</code> - At first, we specified our shebang.</li>
+      <li><code>name=DevDojo</code> - Then, we defined a variable called <code>name</code> and assigned a value to it.</li>
+      <li><code>echo "Hi there $name"</code> - Finally, we output the content of the variable on the screen as a welcome message by using <code>echo</code></li>
+    </ul>
+    <p>You can also add multiple variables in the file as shown below:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+name=<span class="hljs-string">"DevDojo"</span>
+greeting=<span class="hljs-string">"Hello"</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$greeting</span> <span class="hljs-variable">$name</span>"</span>
+</code>
+    </pre>
+    <p>Save the file and run it again:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./devdojo.sh
+</code>
+    </pre>
+    <p>You would see the following output on your screen:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">Hello DevDojo
+</code>
+    </pre>
+    <p>Note that you don't necessarily need to add semicolon <code>;</code> at the end of each line. It works both ways, a bit like other programming language such as JavaScript!</p>
+    <p>You can also add variables in the Command Line outside the Bash script and they can be read as parameters:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./devdojo.sh Bobby buddy!
+</code>
+    </pre>
+    <p>This script takes in two parameters <code>Bobby</code>and <code>buddy!</code> separated by space. In the <code>devdojo.sh</code> file we have the following:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello there"</span> <span class="hljs-variable">$1</span>
+
+</code>
+    </pre>
+    <p><code>$1</code> is the first input (<code>Bobby</code>) in the Command Line. Similarly, there could be more inputs and they are all referenced to by the <code>$</code> sign and their respective order of input. This means that <code>buddy!</code> is referenced to using <code>$2</code>. Another useful method for reading variables is the <code>$@</code> which reads all inputs.</p>
+    <p>So now let's change the <code>devdojo.sh</code> file to better understand:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello there"</span> <span class="hljs-variable">$1</span>
+
+<span class="hljs-comment"># $1 : first parameter</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello there"</span> <span class="hljs-variable">$2</span>
+
+<span class="hljs-comment"># $2 : second parameter</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello there"</span> <span class="hljs-variable">$@</span>
+
+<span class="hljs-comment"># $@ : all</span>
+</code>
+    </pre>
+    <p>The output for:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./devdojo.sh Bobby buddy!
+</code>
+    </pre>
+    <p>Would be the following:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">Hello there Bobby
+Hello there buddy!
+Hello there Bobby buddy!
+</code>
+    </pre>
+  </body></html>

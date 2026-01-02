@@ -1,0 +1,174 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Bash Loops</h1>
+    <p>As with any other language, loops are very convenient. With Bash you can use <code>for</code> loops, <code>while</code> loops, and <code>until</code> loops.</p>
+    <h2>For loops</h2>
+    <p>Here is the structure of a for loop:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">for</span> var <span class="hljs-keyword">in</span> <span class="hljs-variable">${list}</span>
+<span class="hljs-keyword">do</span>
+    your_commands
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>Example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+users=<span class="hljs-string">"devdojo bobby tony"</span>
+
+<span class="hljs-keyword">for</span> user <span class="hljs-keyword">in</span> <span class="hljs-variable">${users}</span>
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${user}</span>"</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>A quick rundown of the example:</p>
+    <ul>
+      <li>First, we specify a list of users and store the value in a variable called <code>$users</code>.</li>
+      <li>After that, we start our <code>for</code> loop with the <code>for</code> keyword.</li>
+      <li>Then we define a new variable which would represent each item from the list that we give. In our case, we define a variable called <code>user</code>, which would represent each user from the <code>$users</code> variable.</li>
+      <li>Then we specify the <code>in</code> keyword followed by our list that we will loop through.</li>
+      <li>On the next line, we use the <code>do</code> keyword, which indicates what we will do for each iteration of the loop.</li>
+      <li>Then we specify the commands that we want to run.</li>
+      <li>Finally, we close the loop with the <code>done</code> keyword.</li>
+    </ul>
+    <p>You can also use <code>for</code> to process a series of numbers. For example here is one way to loop through from 1 to 10:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> {1..10}
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">${num}</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <h2>While loops</h2>
+    <p>The structure of a while loop is quite similar to the <code>for</code> loop:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">while</span> [ your_condition ]
+<span class="hljs-keyword">do</span>
+    your_commands
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>Here is an example of a <code>while</code> loop:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+counter=1
+<span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$counter</span> -le 10 ]]
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$counter</span>
+    ((counter++))
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>First, we specified a counter variable and set it to <code>1</code>, then inside the loop, we added counter by using this statement here: <code>((counter++))</code>. That way, we make sure that the loop will run 10 times only and would not run forever. The loop will complete as soon as the counter becomes 10, as this is what we've set as the condition: <code>while [[ $counter -le 10 ]]</code>.</p>
+    <p>Let's create a script that asks the user for their name and not allow an empty input:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">read</span> -p <span class="hljs-string">"What is your name? "</span> name
+
+<span class="hljs-keyword">while</span> [[ -z <span class="hljs-variable">${name}</span> ]]
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"Your name can not be blank. Please enter a valid name!"</span>
+    <span class="hljs-built_in">read</span> -p <span class="hljs-string">"Enter your name again? "</span> name
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Hi there <span class="hljs-variable">${name}</span>"</span>
+</code>
+    </pre>
+    <p>Now, if you run the above and just press enter without providing input, the loop would run again and ask you for your name again and again until you actually provide some input.</p>
+    <h2>Until Loops</h2>
+    <p>The difference between <code>until</code> and <code>while</code> loops is that the <code>until</code> loop will run the commands within the loop until the condition becomes true.</p>
+    <p>Structure:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">until [[ your_condition ]]
+<span class="hljs-keyword">do</span>
+    your_commands
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>Example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+count=1
+until [[ <span class="hljs-variable">$count</span> -gt 10 ]]
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$count</span>
+    ((count++))
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <h2>Continue and Break</h2>
+    <p>As with other languages, you can use <code>continue</code> and <code>break</code> with your bash scripts as well:</p>
+    <ul>
+      <li><code>continue</code> tells your bash script to stop the current iteration of the loop and start the next iteration.</li>
+    </ul>
+    <p>The syntax of the continue statement is as follows:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">continue</span> [n]
+</code>
+    </pre>
+    <p>The [n] argument is optional and can be greater than or equal to 1. When [n] is given, the n-th enclosing loop is resumed. continue 1 is equivalent to continue.</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 1 2 3 4 5
+<span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$i</span> -eq 2 ]] 
+    <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"skipping number 2"</span>
+        <span class="hljs-built_in">continue</span>
+    <span class="hljs-keyword">fi</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"i is equal to <span class="hljs-variable">$i</span>"</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>We can also use continue command in similar way to break command for controlling multiple loops.</p>
+    <ul>
+      <li><code>break</code> tells your bash script to end the loop straight away.</li>
+    </ul>
+    <p>The syntax of the break statement takes the following form:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">break</span> [n]
+</code>
+    </pre>
+    <p>[n] is an optional argument and must be greater than or equal to 1. When [n] is provided, the n-th enclosing loop is exited. break 1 is equivalent to break.</p>
+    <p>Example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span>
+num=1
+<span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$num</span> -lt 10 ]] 
+<span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$num</span> -eq 5 ]] 
+    <span class="hljs-keyword">then</span>
+        <span class="hljs-built_in">break</span>
+    <span class="hljs-keyword">fi</span>
+    ((num++))
+<span class="hljs-keyword">done</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Loop completed"</span>
+</code>
+    </pre>
+    <p>We can also use break command with multiple loops. If we want to exit out of current working loop whether inner or outer loop, we simply use break but if we are in inner loop &amp; want to exit out of outer loop, we use break 2.</p>
+    <p>Example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-keyword">for</span> (( a = 1; a &lt; 10; a++ ))
+<span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"outer loop: <span class="hljs-variable">$a</span>"</span>
+    <span class="hljs-keyword">for</span> (( b = 1; b &lt; 100; b++ ))
+    <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$b</span> -gt 5 ]] 
+        <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">break</span> 2
+        <span class="hljs-keyword">fi</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-string">"Inner loop: <span class="hljs-variable">$b</span> "</span>
+    <span class="hljs-keyword">done</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p>The bash script will begin with a=1 &amp; will move to inner loop and when it reaches b=5, it will break the outer loop.
+We can use break only instead of break 2, to break inner loop &amp; see how it affects the output.</p>
+  </body></html>

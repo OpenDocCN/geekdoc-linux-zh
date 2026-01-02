@@ -1,0 +1,275 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Common Bash Errors and Fixes</h1>
+    <p>Bash scripting is widely used for automation in Linux, but beginners often face errors that can be confusing.
+This chapter explains common Bash errors, why they occur, and how to fix them.
+Each explanation includes examples to make it easy to understand and apply in real scenarios.</p>
+    <p>By learning these common mistakes, you can debug scripts faster, write cleaner code, and avoid repeated errors.</p>
+    <h2>1. Permission Denied</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash: ./script.sh: Permission denied
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>The script file is not executable, which prevents the shell from running it.</p>
+    <h3>Fix:</h3>
+    <p>Grant execute permission using:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">chmod +x script.sh
+</code>
+    </pre>
+    <p>Then run the script:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./script.sh
+</code>
+    </pre>
+    <h3>Example:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Hello, world!"</span>
+</code>
+    </pre>
+    <p>Without <code>chmod +x</code>, running the script results in an error.
+After granting execute permission, the script runs successfully.</p>
+    <p><strong>Explanation:</strong> Linux requires explicit permission to run scripts for security reasons. Always set execute permission before running a new script.</p>
+    <h2>2. Bad Interpreter or No Such File</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash: ./script.sh: bad interpreter: /bin/bash^M: No such file or directory
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>This occurs when a script is created on Windows. Windows uses carriage return characters (<code>\r\n</code>) which Linux cannot read.</p>
+    <h3>Fix:</h3>
+    <p>Convert the file to Unix format:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">dos2unix script.sh
+</code>
+    </pre>
+    <p>Or recreate the file using a Linux text editor such as <strong>nano</strong> or <strong>vim</strong>.</p>
+    <p><strong>Explanation:</strong> The first line of a script (<code>#!/bin/bash</code>) tells the shell which interpreter to use. Extra Windows characters break this line, causing the error.</p>
+    <h2>3. Command Not Found</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash: myscript: <span class="hljs-built_in">command</span> not found
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>The shell cannot locate the command or script. It might not be in the system PATH or is executed without specifying the path.</p>
+    <h3>Fix:</h3>
+    <p>Run the script from its current directory:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./myscript.sh
+</code>
+    </pre>
+    <p>Or add its directory to PATH:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/path/to/script
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> The shell searches for commands in directories listed in <code>$PATH</code>. Scripts outside these directories require an explicit path.</p>
+    <h2>4. Syntax Error Near Unexpected Token</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">syntax error near unexpected token `then'
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>A missing <code>then</code>, semicolon (<code>;</code>) , or incorrect control structure causes Bash to fail parsing the script.</p>
+    <h3>Fix:</h3>
+    <p>Ensure correct syntax for conditional statements.</p>
+    <p>
+      <strong>Incorrect:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt 10 ]
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Number greater than 10"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <p>
+      <strong>Correct:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt 10 ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Number greater than 10"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Bash requires a specific structure for <code>if</code> statements: <code>[condition]; then</code> followed by commands and closed with <code>fi</code>.</p>
+    <h2>5. Unexpected End of File (EOF)</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language- hljs " data-lang="">syntax error: unexpected end of file
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>A block (like <code>if</code>, <code>for</code>, or <code>while</code>) or a quote is not properly closed.</p>
+    <h3>Example:</h3>
+    <p>
+      <strong>Incorrect:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt 5 ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Greater"</span>
+</code>
+    </pre>
+    <p>
+      <strong>Correct:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt 5 ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Greater"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Every opening keyword like <code>if</code> or <code>for</code> must have a corresponding closing keyword (<code>fi, done</code>) for Bash to understand the block.</p>
+    <h2>6. Variable Not Expanding</h2>
+    <h2>Issue:</h2>
+    <p>A variable prints empty or does not display its value.</p>
+    <h3>Cause:</h3>
+    <p>The variable is not initialized or not exported correctly.</p>
+    <h3>Fix:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">username=<span class="hljs-string">"Nishika"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"User is <span class="hljs-variable">$username</span>"</span>
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Variables must be assigned a value before usage. Otherwise, Bash prints nothing.</p>
+    <h2>7. Integer Expression Expected</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">[: 5a: <span class="hljs-built_in">integer</span> expression expected
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>A non-numeric value is used in an arithmetic comparison.</p>
+    <h3>Fix:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">num=5
+<span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt 3 ]; <span class="hljs-keyword">then</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Yes"</span>
+<span class="hljs-keyword">fi</span>
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Bash arithmetic comparisons work only with integers. Make sure the variable contains a number.</p>
+    <h2>8. Bad Substitution</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bad substitution
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>Bash-specific syntax is used in a shell that does not support it (like <code>sh</code>).</p>
+    <h3>Fix:</h3>
+    <p>Run the script with Bash explicitly:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash script.sh
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Not all shells support Bash extensions. Always use Bash when using advanced syntax.</p>
+    <h2>9. File Redirection Permission Denied</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash: output.txt: Permission denied
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>The user does not have permission to write to the file or directory.</p>
+    <h3>Fix:</h3>
+    <p>Redirect output to a writable location:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./script.sh &gt; ~/output.txt
+</code>
+    </pre>
+    <p>Or run with elevated permissions:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo ./script.sh
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Linux enforces strict file permissions. Writing to protected directories requires proper rights.</p>
+    <h2>10. Script Not Found</h2>
+    <h3>Error:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash: script.sh: <span class="hljs-built_in">command</span> not found
+</code>
+    </pre>
+    <h3>Cause:</h3>
+    <p>The script is executed without specifying the relative or absolute path.</p>
+    <h3>Fix:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./script.sh
+</code>
+    </pre>
+    <p>Or provide full path:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">/path/to/script.sh
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Bash will only execute scripts it can locate. Use relative or absolute paths when needed.</p>
+    <h2>Practical Example: Loop Over Files</h2>
+    <p>Beginners often write loops that process a directory itself instead of the files inside it. This is a logical mistake that runs without a syntax error but produces unexpected results.</p>
+    <p>
+      <strong>Incorrect:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> /home/user/docs
+<span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> Processing <span class="hljs-variable">$file</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <h3>Output:</h3>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">Processing /home/user/docs
+</code>
+    </pre>
+    <p>
+      <strong>Correct:</strong>
+    </p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> /home/user/docs/*; <span class="hljs-keyword">do</span>
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"Processing <span class="hljs-variable">$file</span>"</span>
+<span class="hljs-keyword">done</span>
+</code>
+    </pre>
+    <p><strong>Explanation:</strong> Adding <code>/*</code> ensures the loop iterates over each file inside the directory, rather than the directory itself.</p>
+    <h2>Debugging Tips</h2>
+    <ul>
+      <li>
+        <p><code>set -x</code> – Display each command before execution.</p>
+      </li>
+      <li>
+        <p><code>$?</code> – Check the exit status of the last command.</p>
+      </li>
+      <li>
+        <p><code>bash -n script.sh</code> – Validate syntax without running the script.</p>
+      </li>
+      <li>
+        <p><code>bash -v script.sh</code> – Display commands as they execute.</p>
+      </li>
+      <li>
+        <p><code>2&gt; error.log</code> – Redirect errors to a file.</p>
+      </li>
+      <li>
+        <p><code>trap 'echo "Error on line $LINENO"' ERR</code> – Catch runtime errors  with line numbers.</p>
+      </li>
+    </ul>
+    <h2>Key Takeaways</h2>
+    <p>Most common Bash errors result from:</p>
+    <ul>
+      <li>
+        <p>Missing permissions</p>
+      </li>
+      <li>
+        <p>Syntax mistakes</p>
+      </li>
+      <li>
+        <p>Unset variables</p>
+      </li>
+      <li>
+        <p>Running scripts with the wrong shell</p>
+      </li>
+    </ul>
+    <p>Understanding these errors and using debugging techniques will help you write reliable and maintainable Bash scripts.</p>
+  </body></html>

@@ -1,0 +1,151 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Write your first Bash script</h1>
+    <p>Let's try to put together what we've learned so far and create our first Bash script!</p>
+    <h2>Planning the script</h2>
+    <p>As an example, we will write a script that would gather some useful information about our server like:</p>
+    <ul>
+      <li>Current Disk usage</li>
+      <li>Current CPU usage</li>
+      <li>Current RAM usage</li>
+      <li>Check the exact Kernel version</li>
+    </ul>
+    <p>Feel free to adjust the script by adding or removing functionality so that it matches your needs.</p>
+    <h2>Writing the script</h2>
+    <p>The first thing that you need to do is to create a new file with a <code>.sh</code> extension. I will create a file called <code>status.sh</code> as the script that we will create would give us the status of our server.</p>
+    <p>Once you've created the file, open it with your favorite text editor.</p>
+    <p>As we've learned in chapter 1, on the very first line of our Bash script we need to specify the so-called <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">Shebang</a>:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-meta">#!/bin/bash
+</span>
+      </code>
+    </pre>
+    <p>All that the shebang does is to instruct the operating system to run the script with the /bin/bash executable.</p>
+    <h2>Adding comments</h2>
+    <p>Next, as discussed in chapter 6, let's start by adding some comments so that people could easily figure out what the script is used for. To do that right after the shebang you can just add the following:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">
+        <span class="hljs-meta">#!/bin/bash
+</span>
+        <span class="hljs-comment"># Script that returns the current server status</span>
+      </code>
+    </pre>
+    <h2>Adding your first variable</h2>
+    <p>Then let's go ahead and apply what we've learned in chapter 4 and add some variables which we might want to use throughout the script.</p>
+    <p>To assign a value to a variable in bash, you just have to use the <code>=</code> sign. For example, let's store the hostname of our server in a variable so that we could use it later:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">server_name=$(hostname)
+</code>
+    </pre>
+    <p>By using <code>$()</code> we tell bash to actually interpret the command and then assign the value to our variable.</p>
+    <p>Now if we were to echo out the variable we would see the current hostname:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> <span class="hljs-variable">$server_name</span>
+</code>
+    </pre>
+    <h2>Adding your first function</h2>
+    <p>As you already know after reading chapter 12, in order to create a function in bash you need to use the following structure:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">function_name</span></span>() {
+    your_commands
+}
+</code>
+    </pre>
+    <p>Let's create a function that returns the current memory usage on our server:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"The current memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+</code>
+    </pre>
+    <p>Quick run down of the function:</p>
+    <ul>
+      <li><code>function memory_check() {</code> - this is how we define the function</li>
+      <li><code>echo ""</code> - here we just print a new line</li>
+      <li><code>echo "The current memory usage on ${server_name} is: "</code> - here we print a small message and the <code>$server_name</code> variable</li>
+      <li><code>}</code> - finally this is how we close the function</li>
+    </ul>
+    <p>Then once the function has been defined, in order to call it, just use the name of the function:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Define the function</span><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"The current memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-comment"># Call the function</span>
+memory_check
+</code>
+    </pre>
+    <h2>Adding more functions challenge</h2>
+    <p>Before checking out the solution, I would challenge you to use the function from above and write a few functions by yourself.</p>
+    <p>The functions should do the following:</p>
+    <ul>
+      <li>Current Disk usage</li>
+      <li>Current CPU usage</li>
+      <li>Current RAM usage</li>
+      <li>Check the exact Kernel version</li>
+    </ul>
+    <p>Feel free to use google if you are not sure what commands you need to use in order to get that information.</p>
+    <p>Once you are ready, feel free to scroll down and check how we've done it and compare the results!</p>
+    <p>Note that there are multiple correct ways of doing it!</p>
+    <h2>The sample script</h2>
+    <p>Here's what the end result would look like:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-comment">##</span><span class="hljs-comment"># BASH script that checks:</span><span class="hljs-comment">#   - Memory usage</span><span class="hljs-comment">#   - CPU load</span><span class="hljs-comment">#   - Number of TCP connections</span><span class="hljs-comment">#   - Kernel version</span><span class="hljs-comment">##</span>
+
+server_name=$(hostname)
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">cpu_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"CPU load on <span class="hljs-variable">${server_name}</span> is: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uptime
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">tcp_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"TCP connections on <span class="hljs-variable">${server_name}</span>: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	cat  /proc/net/tcp | wc -l
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">kernel_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Kernel version on <span class="hljs-variable">${server_name}</span> is: "</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uname -r
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">all_checks</span></span>() {
+	memory_check
+	cpu_check
+	tcp_check
+	kernel_check
+}
+
+all_checks
+</code>
+    </pre>
+    <h2>Conclusion</h2>
+    <p>Bash scripting is awesome! No matter if you are a DevOps/SysOps engineer, developer, or just a Linux enthusiast, you can use Bash scripts to combine different Linux commands and automate boring and repetitive daily tasks, so that you can focus on more productive and fun things!</p>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> This was initially posted on <a href="https://devdojo.com/bobbyiliev/introduction-to-bash-scripting">DevDojo.com</a></p>
+    </blockquote>
+  </body></html>

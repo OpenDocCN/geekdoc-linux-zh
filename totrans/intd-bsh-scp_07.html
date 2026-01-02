@@ -1,0 +1,63 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Bash Arguments</h1>
+    <p>You can pass arguments to your shell script when you execute it. To pass an argument, you just need to write it right after the name of your script. For example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./devdojo.com your_argument
+</code>
+    </pre>
+    <p>In the script, we can then use <code>$1</code> in order to reference the first argument that we specified.</p>
+    <p>If we pass a second argument, it would be available as <code>$2</code> and so on.</p>
+    <p>Let's create a short script called <code>arguments.sh</code> as an example:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"Argument one is <span class="hljs-variable">$1</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Argument two is <span class="hljs-variable">$2</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Argument three is <span class="hljs-variable">$3</span>"</span>
+</code>
+    </pre>
+    <p>Save the file and make it executable:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">chmod +x arguments.sh
+</code>
+    </pre>
+    <p>Then run the file and pass <strong>3</strong> arguments:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./arguments.sh dog cat bird
+</code>
+    </pre>
+    <p>The output that you would get would be:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">Argument one is dog
+Argument two is cat
+Argument three is bird
+</code>
+    </pre>
+    <p>To reference all arguments, you can use <code>$@</code>:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"All arguments: <span class="hljs-variable">$@</span>"</span>
+</code>
+    </pre>
+    <p>If you run the script again:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">./arguments.sh dog cat bird
+</code>
+    </pre>
+    <p>You will get the following output:</p>
+    <pre>
+      <code class="language-javascript hljs javascript" data-lang="javascript">All <span class="hljs-built_in">arguments</span>: dog cat bird
+</code>
+    </pre>
+    <p>Another thing that you need to keep in mind is that <code>$0</code> is used to reference the script itself.</p>
+    <p>This is an excellent way to create self destruct the file if you need to or just get the name of the script.</p>
+    <p>For example, let's create a script that prints out the name of the file and deletes the file after that:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-built_in">echo</span> <span class="hljs-string">"The name of the file is: <span class="hljs-variable">$0</span> and it is going to be self-deleted."</span>
+
+rm -f <span class="hljs-variable">$0</span>
+</code>
+    </pre>
+    <p>You need to be careful with the self deletion and ensure that you have your script backed up before you self-delete it.</p>
+  </body></html>

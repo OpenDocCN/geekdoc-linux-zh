@@ -1,0 +1,272 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Creating an interactive menu in Bash</h1>
+    <p>In this tutorial, I will show you how to create a multiple-choice menu in Bash so that your users could choose between what action should be executed!</p>
+    <p>We would reuse some of the code from the previous chapter, so if you have not read it yet make sure to do so.</p>
+    <h2>Planning the functionality</h2>
+    <p>Let's start again by going over the main functionality of the script:</p>
+    <ul>
+      <li>Checks the current Disk usage</li>
+      <li>Checks the current CPU usage</li>
+      <li>Checks the current RAM usage</li>
+      <li>Checks the check the exact Kernel version</li>
+    </ul>
+    <p>In case that you don't have it on hand, here is the script itself:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-comment">##</span><span class="hljs-comment"># BASH menu script that checks:</span><span class="hljs-comment">#   - Memory usage</span><span class="hljs-comment">#   - CPU load</span><span class="hljs-comment">#   - Number of TCP connections</span><span class="hljs-comment">#   - Kernel version</span><span class="hljs-comment">##</span>
+
+server_name=$(hostname)
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">cpu_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"CPU load on <span class="hljs-variable">${server_name}</span> is: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uptime
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">tcp_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"TCP connections on <span class="hljs-variable">${server_name}</span>: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	cat  /proc/net/tcp | wc -l
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">kernel_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Kernel version on <span class="hljs-variable">${server_name}</span> is: "</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uname -r
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">all_checks</span></span>() {
+	memory_check
+	cpu_check
+	tcp_check
+	kernel_check
+}
+</code>
+    </pre>
+    <p>We will then build a menu that allows the user to choose which function to be executed.</p>
+    <p>Of course, you can adjust the function or add new ones depending on your needs.</p>
+    <h2>Adding some colors</h2>
+    <p>In order to make the menu a bit more 'readable' and easy to grasp at first glance, we will add some color functions.</p>
+    <p>At the beginning of your script add the following color functions:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment">##</span><span class="hljs-comment"># Color  Variables</span><span class="hljs-comment">##</span>
+green=<span class="hljs-string">'\e[32m'</span>
+blue=<span class="hljs-string">'\e[34m'</span>
+red=<span class="hljs-string">'\e[31m'</span>
+clear=<span class="hljs-string">'\e[0m'</span>
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Color Functions</span>
+<span class="hljs-comment">##</span>
+
+<span class="hljs-function"><span class="hljs-title">ColorGreen</span></span>(){
+	<span class="hljs-built_in">echo</span> -ne <span class="hljs-variable">$green</span><span class="hljs-variable">$1</span><span class="hljs-variable">$clear</span>
+}
+<span class="hljs-function"><span class="hljs-title">ColorBlue</span></span>(){
+	<span class="hljs-built_in">echo</span> -ne <span class="hljs-variable">$blue</span><span class="hljs-variable">$1</span><span class="hljs-variable">$clear</span>
+}
+</code>
+    </pre>
+    <p>You can use the color functions as follows:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> -ne $(ColorBlue <span class="hljs-string">'Some text here'</span>)
+</code>
+    </pre>
+    <p>The above would output the <code>Some text here</code> string and it would be blue!</p>
+    <div style="page-break-after: always;"/>
+    <h1>Adding the menu</h1>
+    <p>Finally, to add our menu, we will create a separate function with a case switch for our menu options:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-function"><span class="hljs-title">menu</span></span>(){
+<span class="hljs-built_in">echo</span> -ne <span class="hljs-string">"
+My First Menu
+<span class="hljs-variable">$(ColorGreen '1)</span>') Memory usage
+<span class="hljs-variable">$(ColorGreen '2)</span>') CPU load
+<span class="hljs-variable">$(ColorGreen '3)</span>') Number of TCP connections
+<span class="hljs-variable">$(ColorGreen '4)</span>') Kernel version
+<span class="hljs-variable">$(ColorGreen '5)</span>') Check All
+<span class="hljs-variable">$(ColorGreen '0)</span>') Exit
+<span class="hljs-variable">$(ColorBlue 'Choose an option:')</span> "</span>
+        <span class="hljs-built_in">read</span> a
+        <span class="hljs-keyword">case</span> <span class="hljs-variable">$a</span> <span class="hljs-keyword">in</span>
+	        1) memory_check ; menu ;;
+	        2) cpu_check ; menu ;;
+	        3) tcp_check ; menu ;;
+	        4) kernel_check ; menu ;;
+	        5) all_checks ; menu ;;
+		0) <span class="hljs-built_in">exit</span> 0 ;;
+		*) <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"<span class="hljs-variable">${red}</span>Wrong option.<span class="hljs-variable">${clear}</span>"</span>; menu ;;
+        <span class="hljs-keyword">esac</span>
+}
+</code>
+    </pre>
+    <h3>A quick rundown of the code</h3>
+    <p>First we just echo out the menu options with some color:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">echo</span> -ne <span class="hljs-string">"
+My First Menu
+<span class="hljs-variable">$(ColorGreen '1)</span>') Memory usage
+<span class="hljs-variable">$(ColorGreen '2)</span>') CPU load
+<span class="hljs-variable">$(ColorGreen '3)</span>') Number of TCP connections 
+<span class="hljs-variable">$(ColorGreen '4)</span>') Kernel version
+<span class="hljs-variable">$(ColorGreen '5)</span>') Check All
+<span class="hljs-variable">$(ColorGreen '0)</span>') Exit
+<span class="hljs-variable">$(ColorBlue 'Choose an option:')</span> "</span>
+</code>
+    </pre>
+    <p>Then we read the answer of the user and store it in a variable called <code>$a</code>:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-built_in">read</span> a
+</code>
+    </pre>
+    <p>Finally, we have a switch case which triggers a different function depending on the value of <code>$a</code>:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-keyword">case</span> <span class="hljs-variable">$a</span> <span class="hljs-keyword">in</span>
+	        1) memory_check ; menu ;;
+	        2) cpu_check ; menu ;;
+	        3) tcp_check ; menu ;;
+	        4) kernel_check ; menu ;;
+	        5) all_checks ; menu ;;
+		0) <span class="hljs-built_in">exit</span> 0 ;;
+		*) <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"<span class="hljs-variable">${red}</span>Wrong option.<span class="hljs-variable">${clear}</span>"</span>; menu ;;
+        <span class="hljs-keyword">esac</span>
+</code>
+    </pre>
+    <p>At the end we need to call the menu function to actually print out the menu:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-comment"># Call the menu function</span>
+menu
+</code>
+    </pre>
+    <h2>Testing the script</h2>
+    <p>In the end, your script will look like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-comment">##</span><span class="hljs-comment"># BASH menu script that checks:</span><span class="hljs-comment">#   - Memory usage</span><span class="hljs-comment">#   - CPU load</span><span class="hljs-comment">#   - Number of TCP connections </span><span class="hljs-comment">#   - Kernel version</span><span class="hljs-comment">##</span>
+
+server_name=$(hostname)
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">memory_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Memory usage on <span class="hljs-variable">${server_name}</span> is: "</span>
+	free -h
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">cpu_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"CPU load on <span class="hljs-variable">${server_name}</span> is: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uptime
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">tcp_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"TCP connections on <span class="hljs-variable">${server_name}</span>: "</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	cat  /proc/net/tcp | wc -l
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">kernel_check</span></span>() {
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">"Kernel version on <span class="hljs-variable">${server_name}</span> is: "</span>
+	<span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+	uname -r
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">""</span>
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">all_checks</span></span>() {
+	memory_check
+	cpu_check
+	tcp_check
+	kernel_check
+}
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Color  Variables</span>
+<span class="hljs-comment">##</span>
+green=<span class="hljs-string">'\e[32m'</span>
+blue=<span class="hljs-string">'\e[34m'</span>
+red=<span class="hljs-string">'\e[31m'</span>
+clear=<span class="hljs-string">'\e[0m'</span>
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Color Functions</span>
+<span class="hljs-comment">##</span>
+
+<span class="hljs-function"><span class="hljs-title">ColorGreen</span></span>(){
+	<span class="hljs-built_in">echo</span> -ne <span class="hljs-variable">$green</span><span class="hljs-variable">$1</span><span class="hljs-variable">$clear</span>
+}
+<span class="hljs-function"><span class="hljs-title">ColorBlue</span></span>(){
+	<span class="hljs-built_in">echo</span> -ne <span class="hljs-variable">$blue</span><span class="hljs-variable">$1</span><span class="hljs-variable">$clear</span>
+}
+
+<span class="hljs-function"><span class="hljs-title">menu</span></span>(){
+<span class="hljs-built_in">echo</span> -ne <span class="hljs-string">"
+My First Menu
+<span class="hljs-variable">$(ColorGreen '1)</span>') Memory usage
+<span class="hljs-variable">$(ColorGreen '2)</span>') CPU load
+<span class="hljs-variable">$(ColorGreen '3)</span>') Number of TCP connections 
+<span class="hljs-variable">$(ColorGreen '4)</span>') Kernel version
+<span class="hljs-variable">$(ColorGreen '5)</span>') Check All
+<span class="hljs-variable">$(ColorGreen '0)</span>') Exit
+<span class="hljs-variable">$(ColorBlue 'Choose an option:')</span> "</span>
+        <span class="hljs-built_in">read</span> a
+        <span class="hljs-keyword">case</span> <span class="hljs-variable">$a</span> <span class="hljs-keyword">in</span>
+	        1) memory_check ; menu ;;
+	        2) cpu_check ; menu ;;
+	        3) tcp_check ; menu ;;
+	        4) kernel_check ; menu ;;
+	        5) all_checks ; menu ;;
+		0) <span class="hljs-built_in">exit</span> 0 ;;
+		*) <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"<span class="hljs-variable">${red}</span>Wrong option.<span class="hljs-variable">${clear}</span>"</span>; menu ;;
+        <span class="hljs-keyword">esac</span>
+}
+
+<span class="hljs-comment"># Call the menu function</span>
+menu
+</code>
+    </pre>
+    <p>To test the script, create a new filed with a <code>.sh</code> extension, for example: <code>menu.sh</code> and then run it:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">bash menu.sh
+</code>
+    </pre>
+    <p>The output that you would get will look like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">My First Menu
+1) Memory usage
+2) CPU load
+3) Number of TCP connections
+4) Kernel version
+5) Check All
+0) Exit
+Choose an option:
+</code>
+    </pre>
+    <p>You will be able to choose a different option from the list and each number will call a different function from the script:</p>
+    <p>
+      <img src="images/https/imgur.com/8EgxX4m.png" alt="Nice Bash interactive menu"/>
+    </p>
+    <h2>Conclusion</h2>
+    <p>You now know how to create a Bash menu and implement it in your scripts so that users could select different values!</p>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> This content was initially posted on <a href="https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq">DevDojo.com</a></p>
+    </blockquote>
+  </body></html>

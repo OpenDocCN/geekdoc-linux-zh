@@ -1,0 +1,220 @@
+<html><head></head><body>
+    <div style="page-break-after: always;"/>
+    <h1>Work with JSON in BASH using jq</h1>
+    <p>The <code>jq</code> command-line tool is a lightweight and flexible command-line <strong>JSON</strong> processor. It is great for parsing JSON output in BASH.</p>
+    <p>One of the great things about <code>jq</code> is that it is written in portable C, and it has zero runtime dependencies. All you need to do is to download a single binary or use a package manager like apt and install it with a single command.</p>
+    <h2>Planning the script</h2>
+    <p>For the demo in this tutorial, I would use an external REST API that returns a simple JSON output called the <a href="https://quizapi.io/">QuizAPI</a>:</p>
+    <blockquote>
+      <p>
+        <a href="https://quizapi.io/">https://quizapi.io/</a>
+      </p>
+    </blockquote>
+    <p>If you want to follow along make sure to get a free API key here:</p>
+    <blockquote>
+      <p>
+        <a href="https://quizapi.io/clientarea/settings/token">https://quizapi.io/clientarea/settings/token</a>
+      </p>
+    </blockquote>
+    <p>The QuizAPI is free for developers.</p>
+    <h2>Installing jq</h2>
+    <p>There are many ways to install <code>jq</code> on your system. One of the most straight forward ways to do so is to use the package manager depending on your OS.</p>
+    <p>Here is a list of the commands that you would need to use depending on your OS:</p>
+    <ul>
+      <li>Install jq on Ubuntu/Debian:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo apt-get install jq
+</code>
+    </pre>
+    <ul>
+      <li>Install jq on Fedora:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo dnf install jq
+</code>
+    </pre>
+    <ul>
+      <li>Install jq on openSUSE:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo zypper install jq
+</code>
+    </pre>
+    <ul>
+      <li>Install jq on Arch:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">sudo pacman -S jq
+</code>
+    </pre>
+    <ul>
+      <li>Installing on Mac with Homebrew:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">brew install jq
+</code>
+    </pre>
+    <ul>
+      <li>Install on Mac with MacPort:</li>
+    </ul>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">port install jq
+</code>
+    </pre>
+    <p>If you are using other OS, I would recommend taking a look at the official documentation here for more information:</p>
+    <blockquote>
+      <p>
+        <a href="https://jqlang.org/download/">https://jqlang.org/download/</a>
+      </p>
+    </blockquote>
+    <p>Once you have jq installed you can check your current version by running this command:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">jq --version
+</code>
+    </pre>
+    <h2>Parsing JSON with jq</h2>
+    <p>Once you have <code>jq</code> installed and your QuizAPI API Key, you can parse the JSON output of the QuizAPI directly in your terminal.</p>
+    <p>First, create a variable that stores your API Key:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">API_KEY=YOUR_API_KEY_HERE
+</code>
+    </pre>
+    <p>In order to get some output from one of the endpoints of the QuizAPI you can use the curl command:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">curl <span class="hljs-string">"https://quizapi.io/api/v1/questions?apiKey=<span class="hljs-variable">${API_KEY}</span>&amp;limit=10"</span>
+</code>
+    </pre>
+    <p>For a more specific output, you can use the QuizAPI URL Generator here:</p>
+    <blockquote>
+      <p>
+        <a href="https://quizapi.io/api-config">https://quizapi.io/api-config</a>
+      </p>
+    </blockquote>
+    <p>After running the curl command, the output which you would get would look like this:</p>
+    <p>
+      <img src="images/https/imgur.com/KghOfzj.png" alt="Raw Json output"/>
+    </p>
+    <p>This could be quite hard to read, but thanks to the jq command-line tool, all we need to do is pipe the curl command to jq and we would see a nice formatted JSON output:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">curl <span class="hljs-string">"https://quizapi.io/api/v1/questions?apiKey=<span class="hljs-variable">${API_KEY}</span>&amp;limit=10"</span> | jq
+</code>
+    </pre>
+    <blockquote>
+      <p>Note the <code>| jq</code> at the end.</p>
+    </blockquote>
+    <p>In this case the output that you would get would look something like this:</p>
+    <p>
+      <img src="images/https/imgur.com/ebdTtVf.png" alt="bash jq formatting"/>
+    </p>
+    <p>Now, this looks much nicer! The jq command-line tool formatted the output for us and added some nice coloring!</p>
+    <h2>Getting the first element with jq</h2>
+    <p>Let's say that we only wanted to get the first element from the JSON output, in order to do that we have to just specify the index that we want to see with the following syntax:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">jq .[0]
+</code>
+    </pre>
+    <p>Now, if we run the curl command again and pipe the output to jq .[0] like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">curl <span class="hljs-string">"https://quizapi.io/api/v1/questions?apiKey=<span class="hljs-variable">${API_KEY}</span>&amp;limit=10"</span> | jq.[0]
+</code>
+    </pre>
+    <p>You will only get the first element and the output will look like this:</p>
+    <p>
+      <img src="images/https/imgur.com/h9bFMAL.png" alt="jq get first element only"/>
+    </p>
+    <h2>Getting a value only for specific key</h2>
+    <p>Sometimes you might want to get only the value of a specific key only, let's say in our example the QuizAPI returns a list of questions along with the answers, description and etc. but what if you wanted to get the Questions only without the additional information?</p>
+    <p>This is going to be quite straight forward with <code>jq</code>, all you need to do is add the key after jq command, so it would look something like this:</p>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash">jq .[].question
+</code>
+    </pre>
+    <p>We have to add  the <code>.[]</code> as the QuizAPI returns an array and by specifying <code>.[]</code> we tell jq that we want to get the .question value for all of the elements in the array.</p>
+    <p>The output that you would get would look like this:</p>
+    <p>
+      <img src="images/https/imgur.com/0701wHD.png" alt="jq get a value only for specific key"/>
+    </p>
+    <p>As you can see we now only get the questions without the rest of the values.</p>
+    <h2>Using jq in a BASH script</h2>
+    <p>Let's go ahead and create a small bash script which should output the following information for us:</p>
+    <ul>
+      <li>Get only the first question from the output</li>
+      <li>Get all of the answers for that question</li>
+      <li>Assign the answers to variables</li>
+      <li>Print the question and the answers</li>
+      <li>To do that I've put together the following script:</li>
+    </ul>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> make sure to change the API_KEY part with your actual QuizAPI key:</p>
+    </blockquote>
+    <pre>
+      <code class="language-bash hljs bash" data-lang="bash"><span class="hljs-meta">#!/bin/bash
+</span><span class="hljs-comment">##</span><span class="hljs-comment"># Make an API call to QuizAPI and store the output in a variable</span><span class="hljs-comment">##</span>
+output=$(curl <span class="hljs-string">'https://quizapi.io/api/v1/questions?apiKey=API_KEY&amp;limit=10'</span> 2&gt;/dev/null)
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Get only the first question</span>
+<span class="hljs-comment">##</span>
+output=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .[0])
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Get the question</span>
+<span class="hljs-comment">##</span>
+question=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .question)
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Get the answers</span>
+<span class="hljs-comment">##</span>
+
+answer_a=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .answers.answer_a)
+answer_b=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .answers.answer_b)
+answer_c=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .answers.answer_c)
+answer_d=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$output</span> | jq .answers.answer_d)
+
+<span class="hljs-comment">##</span>
+<span class="hljs-comment"># Output the question</span>
+<span class="hljs-comment">##</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"
+Question: <span class="hljs-variable">${question}</span>
+
+A) <span class="hljs-variable">${answer_a}</span>
+B) <span class="hljs-variable">${answer_b}</span>
+C) <span class="hljs-variable">${answer_c}</span>
+D) <span class="hljs-variable">${answer_d}</span>
+
+"</span>
+</code>
+    </pre>
+    <p>If you run the script you would get the following output:</p>
+    <p>
+      <img src="images/https/imgur.com/LKEsrbq.png" alt="Using jq in a bash script"/>
+    </p>
+    <p>We can even go further by making this interactive so that we could actually choose the answer directly in our terminal.</p>
+    <p>There is already a bash script that does this by using the QuizAPI and <code>jq</code>:</p>
+    <p>You can take a look at that script here:</p>
+    <ul>
+      <li>
+        <a href="https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh">https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh</a>
+      </li>
+    </ul>
+    <h2>Conclusion</h2>
+    <p>The <code>jq</code> command-line tool is an amazing tool that gives you the power to work with JSON directly in your BASH terminal.</p>
+    <p>That way you can easily interact with all kinds of different REST APIs with BASH.</p>
+    <p>For more information, you could take a look at the official documentation here:</p>
+    <ul>
+      <li>
+        <a href="https://stedolan.github.io/jq/manual/">https://stedolan.github.io/jq/manual/</a>
+      </li>
+    </ul>
+    <p>And for more information on the <strong>QuizAPI</strong>, you could take a look at the official documentation here:</p>
+    <ul>
+      <li>
+        <a href="https://quizapi.io/docs/1.0/overview">https://quizapi.io/docs/1.0/overview</a>
+      </li>
+    </ul>
+    <blockquote class="notice">
+      <p><strong>Notice:</strong> This content was initially posted on <a href="https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq">DevDojo.com</a></p>
+    </blockquote>
+  </body></html>
