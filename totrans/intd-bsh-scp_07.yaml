@@ -1,0 +1,79 @@
+- en: Bash Arguments
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'You can pass arguments to your shell script when you execute it. To pass an
+    argument, you just need to write it right after the name of your script. For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the script, we can then use `$1` in order to reference the first argument
+    that we specified.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If we pass a second argument, it would be available as `$2` and so on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Let''s create a short script called `arguments.sh` as an example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save the file and make it executable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then run the file and pass **3** arguments:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output that you would get would be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To reference all arguments, you can use `$@`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you run the script again:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You will get the following output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Another thing that you need to keep in mind is that `$0` is used to reference
+    the script itself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is an excellent way to create self destruct the file if you need to or
+    just get the name of the script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, let''s create a script that prints out the name of the file and
+    deletes the file after that:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: You need to be careful with the self deletion and ensure that you have your
+    script backed up before you self-delete it.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,470 @@
+- en: Common Bash Errors and Fixes
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Bash scripting is widely used for automation in Linux, but beginners often face
+    errors that can be confusing. This chapter explains common Bash errors, why they
+    occur, and how to fix them. Each explanation includes examples to make it easy
+    to understand and apply in real scenarios.
+  prefs: []
+  type: TYPE_NORMAL
+- en: By learning these common mistakes, you can debug scripts faster, write cleaner
+    code, and avoid repeated errors.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 1\. Permission Denied
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The script file is not executable, which prevents the shell from running it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Grant execute permission using:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then run the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Example:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Without `chmod +x`, running the script results in an error. After granting execute
+    permission, the script runs successfully.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Explanation:** Linux requires explicit permission to run scripts for security
+    reasons. Always set execute permission before running a new script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 2\. Bad Interpreter or No Such File
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: This occurs when a script is created on Windows. Windows uses carriage return
+    characters (`\r\n`) which Linux cannot read.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Convert the file to Unix format:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Or recreate the file using a Linux text editor such as **nano** or **vim**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Explanation:** The first line of a script (`#!/bin/bash`) tells the shell
+    which interpreter to use. Extra Windows characters break this line, causing the
+    error.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 3\. Command Not Found
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The shell cannot locate the command or script. It might not be in the system
+    PATH or is executed without specifying the path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Run the script from its current directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or add its directory to PATH:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** The shell searches for commands in directories listed in `$PATH`.
+    Scripts outside these directories require an explicit path.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 4\. Syntax Error Near Unexpected Token
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A missing `then`, semicolon (`;`) , or incorrect control structure causes Bash
+    to fail parsing the script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Ensure correct syntax for conditional statements.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Incorrect:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Correct:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Bash requires a specific structure for `if` statements: `[condition];
+    then` followed by commands and closed with `fi`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5\. Unexpected End of File (EOF)
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A block (like `if`, `for`, or `while`) or a quote is not properly closed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Example:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '**Incorrect:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Correct:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Every opening keyword like `if` or `for` must have a corresponding
+    closing keyword (`fi, done`) for Bash to understand the block.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 6\. Variable Not Expanding
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Issue:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: A variable prints empty or does not display its value.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The variable is not initialized or not exported correctly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Variables must be assigned a value before usage. Otherwise,
+    Bash prints nothing.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 7\. Integer Expression Expected
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: A non-numeric value is used in an arithmetic comparison.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Bash arithmetic comparisons work only with integers. Make
+    sure the variable contains a number.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 8\. Bad Substitution
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: Bash-specific syntax is used in a shell that does not support it (like `sh`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Run the script with Bash explicitly:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Not all shells support Bash extensions. Always use Bash when
+    using advanced syntax.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 9\. File Redirection Permission Denied
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The user does not have permission to write to the file or directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'Redirect output to a writable location:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or run with elevated permissions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Linux enforces strict file permissions. Writing to protected
+    directories requires proper rights.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 10\. Script Not Found
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Error:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Cause:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: The script is executed without specifying the relative or absolute path.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Fix:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or provide full path:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Bash will only execute scripts it can locate. Use relative
+    or absolute paths when needed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Practical Example: Loop Over Files'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Beginners often write loops that process a directory itself instead of the files
+    inside it. This is a logical mistake that runs without a syntax error but produces
+    unexpected results.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Incorrect:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Output:'
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Correct:**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE28]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Explanation:** Adding `/*` ensures the loop iterates over each file inside
+    the directory, rather than the directory itself.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Debugging Tips
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '`set -x` – Display each command before execution.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`$?` – Check the exit status of the last command.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`bash -n script.sh` – Validate syntax without running the script.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`bash -v script.sh` – Display commands as they execute.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`2> error.log` – Redirect errors to a file.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`trap ''echo "Error on line $LINENO"'' ERR` – Catch runtime errors with line
+    numbers.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Key Takeaways
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Most common Bash errors result from:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Missing permissions
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Syntax mistakes
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Unset variables
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Running scripts with the wrong shell
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Understanding these errors and using debugging techniques will help you write
+    reliable and maintainable Bash scripts.
+  prefs: []
+  type: TYPE_NORMAL

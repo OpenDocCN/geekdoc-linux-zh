@@ -1,0 +1,153 @@
+- en: Creating an interactive menu in Bash
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In this tutorial, I will show you how to create a multiple-choice menu in Bash
+    so that your users could choose between what action should be executed!
+  prefs: []
+  type: TYPE_NORMAL
+- en: We would reuse some of the code from the previous chapter, so if you have not
+    read it yet make sure to do so.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Planning the functionality
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Let''s start again by going over the main functionality of the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Checks the current Disk usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Checks the current CPU usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Checks the current RAM usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Checks the check the exact Kernel version
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'In case that you don''t have it on hand, here is the script itself:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: We will then build a menu that allows the user to choose which function to be
+    executed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, you can adjust the function or add new ones depending on your needs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding some colors
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: In order to make the menu a bit more 'readable' and easy to grasp at first glance,
+    we will add some color functions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'At the beginning of your script add the following color functions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the color functions as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: The above would output the `Some text here` string and it would be blue!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding the menu
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Finally, to add our menu, we will create a separate function with a case switch
+    for our menu options:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: A quick rundown of the code
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: 'First we just echo out the menu options with some color:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then we read the answer of the user and store it in a variable called `$a`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Finally, we have a switch case which triggers a different function depending
+    on the value of `$a`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'At the end we need to call the menu function to actually print out the menu:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Testing the script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In the end, your script will look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'To test the script, create a new filed with a `.sh` extension, for example:
+    `menu.sh` and then run it:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output that you would get will look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You will be able to choose a different option from the list and each number
+    will call a different function from the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Nice Bash interactive menu](images/https/imgur.com/8EgxX4m.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You now know how to create a Bash menu and implement it in your scripts so that
+    users could select different values!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** This content was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

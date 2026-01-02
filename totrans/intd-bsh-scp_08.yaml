@@ -1,0 +1,122 @@
+- en: Bash Arrays
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: If you have ever done any programming, you are probably already familiar with
+    arrays.
+  prefs: []
+  type: TYPE_NORMAL
+- en: But just in case you are not a developer, the main thing that you need to know
+    is that unlike variables, arrays can hold several values under one name.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can initialize an array by assigning values divided by space and enclosed
+    in `()`. Example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: To access the elements in the array, you need to reference them by their numeric
+    index.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** keep in mind that you need to use curly brackets.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Access a single element, this would output: `value 2`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This would return the last element: `value 4`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'As with command line arguments using `@` will return all elements in the array,
+    as follows: `value 1 value 2 value 3 value 4`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Prepending the array with a hash sign (`#`) would output the total number of
+    elements in the array, in our case it is `4`:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Make sure to test this and practice it at your end with different values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Array Slicing
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'While Bash doesn''t support true array slicing, you can achieve similar results
+    using a combination of array indexing and string slicing:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: When working with arrays, always use `[@]` to refer to all elements, and enclose
+    the parameter expansion in quotes to preserve spaces in array elements.
+  prefs: []
+  type: TYPE_NORMAL
+- en: String Slicing
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In Bash, you can extract portions of a string using slicing. The basic syntax
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Where:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`start` is the starting index (0-based)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`length` is the maximum number of characters to extract'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Let''s look at some examples:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that the second number in the slice notation represents the maximum length
+    of the extracted substring, not the ending index. This is different from some
+    other programming languages like Python. In Bash, if you specify a length that
+    would extend beyond the end of the string, it will simply stop at the end of the
+    string without raising an error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: In the second example, even though we asked for 10 characters, Bash only returns
+    the 6 available characters from index 7 to the end of the string. This behavior
+    can be particularly useful when you're not sure of the exact length of the string
+    you're working with.
+  prefs: []
+  type: TYPE_NORMAL

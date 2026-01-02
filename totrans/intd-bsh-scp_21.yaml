@@ -1,0 +1,137 @@
+- en: Sending emails with Bash and SSMTP
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: SSMTP is a tool that delivers emails from a computer or a server to a configured
+    mail host.
+  prefs: []
+  type: TYPE_NORMAL
+- en: SSMTP is not an email server itself and does not receive emails or manage a
+    queue.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One of its primary uses is for forwarding automated email (like system alerts)
+    off your machine and to an external email address.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Prerequisites
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'You would need the following things in order to be able to complete this tutorial
+    successfully:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Access to an Ubuntu 18.04 server as a non-root user with sudo privileges and
+    an active firewall installed on your server. To set these up, please refer to
+    our [Initial Server Setup Guide for Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: An SMTP server along with SMTP username and password, this would also work with
+    Gmail's SMTP server, or you could set up your own SMTP server by following the
+    steps from this tutorial on [How to Install and Configure Postfix as a Send-Only
+    SMTP Server on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-16-04)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Installing SSMTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'In order to install SSMTP, you’ll need to first update your apt cache with:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then run the following command to install SSMTP:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Another thing that you would need to install is `mailutils`, to do that run
+    the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Configuring SSMTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Now that you have `ssmtp` installed, in order to configure it to use your SMTP
+    server when sending emails, you need to edit the SSMTP configuration file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using your favourite text editor to open the `/etc/ssmtp/ssmtp.conf` file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You need to include your SMTP configuration:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Save the file and exit.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sending emails with SSMTP
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Once your configuration is done, in order to send an email just run the following
+    command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: You can run this directly in your terminal or include it in your bash scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sending A File with SSMTP (optional)
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: If you need to send files as attachments, you can use `mpack`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To install `mpack` run the following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, in order to send an email with a file attached, run the following command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: The above command would send an email to `<^>your_recepient_email@yourdomain.com<^>`
+    with the `<^>your_file.zip<^>` attached.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: SSMTP is a great and reliable way to implement SMTP email functionality directly
+    in bash scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For more information about SSMTP I would recommend checking the official documentation
+    [here](https://wiki.archlinux.org/index.php/SSMTP).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** This content was initially posted on the [DigitalOcean community
+    forum](https://www.digitalocean.com/community/questions/how-to-send-emails-from-a-bash-script-using-ssmtp).'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

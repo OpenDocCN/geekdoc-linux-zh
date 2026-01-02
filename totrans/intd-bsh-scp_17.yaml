@@ -1,0 +1,136 @@
+- en: Executing BASH scripts on Multiple Remote Servers
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Any command that you can run from the command line can be used in a bash script.
+    Scripts are used to run a series of commands. Bash is available by default on
+    Linux and macOS operating systems.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let's have a hypothetical scenario where you need to execute a BASH script on
+    multiple remote servers, but you don't want to manually copy the script to each
+    server, then again login to each server individually and only then execute the
+    script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course you could use a tool like Ansible but let's learn how to do that with
+    Bash!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Prerequisites
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For this example I will use 3 remote Ubuntu servers deployed on DigitalOcean.
+    If you don''t have a Digital Ocean account yet, you can sign up for DigitalOcean
+    and get $100 free credit via this referral link here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://m.do.co/c/2a9bba940f39](https://m.do.co/c/2a9bba940f39)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once you have your Digital Ocean account ready go ahead and deploy 3 droplets.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'I''ve gone ahead and created 3 Ubuntu servers:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![DigitalOcean Ubuntu servers](images/https/imgur.com/09xmq41.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: I'll put a those servers IP's in a `servers.txt` file which I would use to loop
+    though with our Bash script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you are new to DigitalOcean you can follow the steps on how to create a
+    Droplet here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[How to Create a Droplet from the DigitalOcean Control Panel](https://www.digitalocean.com/docs/droplets/how-to/create/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'You can also follow the steps from this video here on how to do your initial
+    server setup:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[How to do your Initial Server Setup with Ubuntu](https://youtu.be/7NL2_4HIgKU)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Or even better, you can follow this article here on how to automate your initial
+    server setup with Bash:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Automating Initial Server Setup with Ubuntu 18.04 with Bash](https://www.digitalocean.com/community/tutorials/automating-initial-server-setup-with-ubuntu-18-04)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: With the 3 new servers in place, we can go ahead and focus on running our Bash
+    script on all of them with a single command!
+  prefs: []
+  type: TYPE_NORMAL
+- en: The BASH Script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: I will reuse the demo script from the previous chapter with some slight changes.
+    It simply executes a few checks like the current memory usage, the current CPU
+    usage, the number of TCP connections and the version of the kernel.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: Copy the code bellow and add this in a file called `remote_check.sh`. You can
+    also get the script from [here](https://devdojo.com/bobbyiliev/executing-bash-script-on-multiple-remote-server).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Running the Script on all Servers
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Now that we have the script and the servers ready and that we've added those
+    servers in our servers.txt file we can run the following command to loop though
+    all servers and execute the script remotely without having to copy the script
+    to each server and individually connect to each server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'What this for loop does is, it goes through each server in the servers.txt
+    file and then it runs the following command for each item in the list:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You would get the following output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Running bash script on multiple remote servers](images/https/imgur.com/B1AmhUP.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is just a really simple example on how to execute a simple script on multiple
+    servers without having to copy the script to each server and without having to
+    access the servers individually.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course you could run a much more complex script and on many more servers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If you are interested in automation, I would recommend checking out the Ansible
+    resources page on the DigitalOcean website:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Ansible Resources](https://www.digitalocean.com/community/tags/ansible)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** This content was initially posted on [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

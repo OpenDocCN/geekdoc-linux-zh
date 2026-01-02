@@ -1,0 +1,235 @@
+- en: Automatic WordPress on LAMP installation with BASH
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Here is an example of a full LAMP and WordPress installation that works on any
+    Debian-based machine.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Prerequisites
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: A Debian-based machine (Ubuntu, Debian, Linux Mint, etc.)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Planning the functionality
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'Let''s start again by going over the main functionality of the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Lamp Installation**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Update the package manager
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install a firewall (ufw)
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Allow SSH, HTTP and HTTPS traffic
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install Apache2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install & Configure MariaDB
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install PHP and required plugins
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Enable all required Apache2 mods
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Apache Virtual Host Setup**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a directory in `/var/www`
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Configure permissions to the directory
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Create the `$domain` file under `/etc/apache2/sites-available` and append the
+    required Virtualhost content
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Enable the site
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Restart Apache2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**SSL Config**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Generate the OpenSSL certificate
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Append the SSL certificate to the `ssl-params.conf` file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Append the SSL config to the Virtualhost file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Enable SSL
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Reload Apache2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Database Config**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Create a database
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Create a user
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Flush Privileges
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**WordPress Config**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Install required WordPress PHP plugins
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install WordPress
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Append the required information to `wp-config.php` file
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Without further ado, let's start writing the script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'We start by setting our variables and asking the user to input their domain:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: We are now ready to start writing our functions. Start by creating the `lamp_install()`
+    function. Inside of it, we are going to update the system, install ufw, allow
+    SSH, HTTP and HTTPS traffic, install Apache2, install MariaDB and PHP. We are
+    also going to enable all required Apache2 mods.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, we are going to create the `apache_virtualhost_setup()` function. Inside
+    of it, we are going to create a directory in `/var/www`, configure permissions
+    to the directory, create the `$domain` file under `/etc/apache2/sites-available`
+    and append the required Virtualhost content, enable the site and restart Apache2.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, we are going to create the `ssl_config()` function. Inside of it, we are
+    going to generate the OpenSSL certificate, append the SSL certificate to the `ssl-params.conf`
+    file, append the SSL config to the Virtualhost file, enable SSL and reload Apache2.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, we are going to create the `db_setup()` function. Inside of it, we are
+    going to create the database, create the user and grant all privileges to the
+    user.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: Next, we are going to create the `wordpress_config()` function. Inside of it,
+    we are going to download the latest version of WordPress, extract it to the `/var/www/$DOMAIN`
+    directory, create the `wp-config.php` file and append the required content to
+    it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: And finally, we are going to create the `execute()` function. Inside of it,
+    we are going to call all the functions we created above.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: With this, you have the script ready and you are ready to run it. And if you
+    need the full script, you can find it in the next section.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The full script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Summary
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The script does the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Install LAMP
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Create a virtual host
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Configure SSL
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Install WordPress
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Configure WordPress
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: With this being said, I hope you enjoyed this example.
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,143 @@
+- en: Bash Variables
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: As in any other programming language, you can use variables in Bash Scripting
+    as well. However, there are no data types, and a variable in Bash can contain
+    numbers as well as characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To assign a value to a variable, all you need to do is use the `=` sign:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: '**Notice:** as an important note, you can not have spaces before and after
+    the `=` sign.'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'After that, to access the variable, you have to use the `$` and reference it
+    as shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Wrapping the variable name between curly brackets is not required, but is considered
+    a good practice, and I would advise you to use them whenever you can:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The above code would output: `DevDojo` as this is the value of our `name` variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Next, let's update our `devdojo.sh` script and include a variable in it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Again, you can open the file `devdojo.sh` with your favorite text editor, I''m
+    using nano here to open the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Adding our `name` variable here in the file, with a welcome message. Our file
+    now looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save it and run the file using the command below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You would see the following output on your screen:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here is a rundown of the script written in the file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`#!/bin/bash` - At first, we specified our shebang.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`name=DevDojo` - Then, we defined a variable called `name` and assigned a value
+    to it.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`echo "Hi there $name"` - Finally, we output the content of the variable on
+    the screen as a welcome message by using `echo`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'You can also add multiple variables in the file as shown below:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Save the file and run it again:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You would see the following output on your screen:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note that you don't necessarily need to add semicolon `;` at the end of each
+    line. It works both ways, a bit like other programming language such as JavaScript!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can also add variables in the Command Line outside the Bash script and
+    they can be read as parameters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'This script takes in two parameters `Bobby`and `buddy!` separated by space.
+    In the `devdojo.sh` file we have the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: '`$1` is the first input (`Bobby`) in the Command Line. Similarly, there could
+    be more inputs and they are all referenced to by the `$` sign and their respective
+    order of input. This means that `buddy!` is referenced to using `$2`. Another
+    useful method for reading variables is the `$@` which reads all inputs.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'So now let''s change the `devdojo.sh` file to better understand:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The output for:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Would be the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE

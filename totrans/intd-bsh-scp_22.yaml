@@ -1,0 +1,183 @@
+- en: Password Generator Bash Script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: It's not uncommon situation where you will need to generate a random password
+    that you can use for any software installation or when you sign-up to any website.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There are a lot of options in order to achieve this. You can use a password
+    manager/vault where you often have the option to randomly generate a password
+    or to use a website that can generate the password on your behalf.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can also use Bash in your terminal (command-line) to generate a password
+    that you can quickly use. There are a lot of ways to achieve that and I will make
+    sure to cover few of them and will leave up to you to choose which option is most
+    suitable with your needs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: ':warning: Security'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '**This script is intended to practice your bash scripting skills. You can have
+    fun while doing simple projects with BASH, but security is not a joke, so please
+    make sure you do not save your passwords in plain text in a local file or write
+    them down by hand on a piece of paper.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**I will highly recommend everyone to use secure and trusted providers to generate
+    and save the passwords.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Script summary
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Let me first do a quick summary of what our script is going to do.:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: We will have to option to choose the password characters length when the script
+    is executed.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The script will then generate 5 random passwords with the length that was specified
+    in step 1
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Prerequisites
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: You would need a bash terminal and a text editor. You can use any text editor
+    like vi, vim, nano or Visual Studio Code.
+  prefs: []
+  type: TYPE_NORMAL
+- en: I'm running the script locally on my Linux laptop but if you're using Windows
+    PC you can ssh to any server of your choice and execute the script there.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Although the script is pretty simple, having some basic BASH scripting knowledge
+    will help you to better understand the script and how it's working.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Generate a random password
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: One of the great benefits of Linux is that you can do a lot of things using
+    different methods. When it comes to generating a random string of characters it's
+    not different as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can use several commands in order to generate a random string of characters.
+    I will cover few of them and will provide some examples.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using the `date` command. The date command will output the current date and
+    time. However we also further manipulate the output in order to use it as randomly
+    generated password. We can hash the date using md5, sha or just run it through
+    base64\. These are few examples:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'using sha256sum:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'using base64:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can also use openssl in order to generate pseudo-random bytes and run the
+    output through base64\. An example output will be:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Keep in mind that openssl might not be installed on your system so it's likely
+    that you will need to install it first in order to use it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The most preferred way is to use the pseudorandom number generator - /dev/urandom
+    since it is intended for most cryptographic purposes. We would also need to manipulate
+    the output using `tr` in order to translate it. An example command is:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: With this command we take the output from /dev/urandom and translate it with
+    `tr` while using all letters and digits and print the desired number of characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: First we begin the script with the shebang. We use it to tell the operating
+    system which interpreter to use to parse the rest of the file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'We can then continue and ask the user for some input. In this case we would
+    like to know how many characters the password needs to be:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Generate the passwords and then print it so the user can use it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'The full script:'
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is pretty much how you can use simple bash script to generate random passwords.
+  prefs: []
+  type: TYPE_NORMAL
+- en: ':warning: **As already mentioned, please make sure to use strong passwords
+    in order to make sure your account is protected. Also whenever is possible use
+    2 factor authentication as this will provide additional layer of security for
+    your account.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: While the script is working fine, it expects that the user will provide the
+    requested input. In order to prevent any issues you would need to do some more
+    advance checks on the user input in order to make sure the script will continue
+    to work fine even if the provided input does not match our needs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Contributed by
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: '[Alex Georgiev](https://twitter.com/alexgeorgiev17)'
+  prefs: []
+  type: TYPE_NORMAL

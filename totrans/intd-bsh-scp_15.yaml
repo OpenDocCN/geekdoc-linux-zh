@@ -1,0 +1,203 @@
+- en: Write your first Bash script
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: Let's try to put together what we've learned so far and create our first Bash
+    script!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Planning the script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'As an example, we will write a script that would gather some useful information
+    about our server like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Current Disk usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Current CPU usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Current RAM usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Check the exact Kernel version
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Feel free to adjust the script by adding or removing functionality so that it
+    matches your needs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Writing the script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The first thing that you need to do is to create a new file with a `.sh` extension.
+    I will create a file called `status.sh` as the script that we will create would
+    give us the status of our server.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once you've created the file, open it with your favorite text editor.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As we''ve learned in chapter 1, on the very first line of our Bash script we
+    need to specify the so-called [Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: All that the shebang does is to instruct the operating system to run the script
+    with the /bin/bash executable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Adding comments
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Next, as discussed in chapter 6, let''s start by adding some comments so that
+    people could easily figure out what the script is used for. To do that right after
+    the shebang you can just add the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: Adding your first variable
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Then let's go ahead and apply what we've learned in chapter 4 and add some variables
+    which we might want to use throughout the script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To assign a value to a variable in bash, you just have to use the `=` sign.
+    For example, let''s store the hostname of our server in a variable so that we
+    could use it later:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: By using `$()` we tell bash to actually interpret the command and then assign
+    the value to our variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Now if we were to echo out the variable we would see the current hostname:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: Adding your first function
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'As you already know after reading chapter 12, in order to create a function
+    in bash you need to use the following structure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Let''s create a function that returns the current memory usage on our server:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Quick run down of the function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`function memory_check() {` - this is how we define the function'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`echo ""` - here we just print a new line'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`echo "The current memory usage on ${server_name} is: "` - here we print a
+    small message and the `$server_name` variable'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`}` - finally this is how we close the function'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Then once the function has been defined, in order to call it, just use the
+    name of the function:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Adding more functions challenge
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Before checking out the solution, I would challenge you to use the function
+    from above and write a few functions by yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The functions should do the following:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Current Disk usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Current CPU usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Current RAM usage
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Check the exact Kernel version
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Feel free to use google if you are not sure what commands you need to use in
+    order to get that information.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once you are ready, feel free to scroll down and check how we've done it and
+    compare the results!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that there are multiple correct ways of doing it!
+  prefs: []
+  type: TYPE_NORMAL
+- en: The sample script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Here''s what the end result would look like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Bash scripting is awesome! No matter if you are a DevOps/SysOps engineer, developer,
+    or just a Linux enthusiast, you can use Bash scripts to combine different Linux
+    commands and automate boring and repetitive daily tasks, so that you can focus
+    on more productive and fun things!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** This was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/introduction-to-bash-scripting)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

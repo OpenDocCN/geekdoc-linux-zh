@@ -1,0 +1,149 @@
+- en: BASH Script parser to Summarize Your NGINX and Apache Access Logs
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: One of the first things that I would usually do in case I notice a high CPU
+    usage on some of my Linux servers would be to check the process list with either
+    top or htop and in case that I notice a lot of Apache or Nginx process I would
+    quickly check my access logs to determine what has caused or is causing the CPU
+    spike on my server or to figure out if anything malicious is going on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Sometimes reading the logs could be quite intimidating as the log might be huge
+    and going though it manually could take a lot of time. Also, the raw log format
+    could be confusing for people with less experience.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Just like the previous chapter, this chapter is going to be a challenge! You
+    need to write a short bash script that would summarize the whole access log for
+    you without the need of installing any additional software.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Script requirements
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 'This BASH script needs to parse and summarize your access logs and provide
+    you with very useful information like:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The 20 top pages with the most POST requests
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The 20 top pages with the most GET requests
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Top 20 IP addresses and their geo-location
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Example script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: I already have prepared a demo script which you could use as a reference. But
+    I encourage you to try and write the script yourself first and only then take
+    a look at my script!
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In order to download the script, you can either clone the repository with the
+    following command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Or run the following command which would download the script in your current
+    directory:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: The script does not make any changes to your system, it only reads the content
+    of your access log and summarizes it for you, however, once you've downloaded
+    the file, make sure to review the content yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Running the script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: All that you have to do once the script has been downloaded is to make it executable
+    and run it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'To do that run the following command to make the script executable:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Then run the script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Make sure to change the path to the file with the actual path to your access
+    log. For example if you are using Apache on an Ubuntu server, the exact command
+    would look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you are using Nginx the exact command would be almost the same, but with
+    the path to the Nginx access log:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: Understanding the output
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Once you run the script, it might take a while depending on the size of the
+    log.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The output that you would see should look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Summarized access log](images/https/imgur.com/WWHVMrj.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Essentially what we can tell in this case is that we've received 16 POST requests
+    to our xmlrpc.php file which is often used by attackers to try and exploit WordPress
+    websites by using various username and password combinations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this specific case, this was not a huge brute force attack, but it gives
+    us an early indication and we can take action to prevent a larger attack in the
+    future.
+  prefs: []
+  type: TYPE_NORMAL
+- en: We can also see that there were a couple of Russian IP addresses accessing our
+    site, so in case that you do not expect any traffic from Russia, you might want
+    to block those IP addresses as well.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: This is an example of a simple BASH script that allows you to quickly summarize
+    your access logs and determine if anything malicious is going on.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, you might want to also manually go through the logs as well but it
+    is a good challenge to try and automate this with Bash!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Notice:** This content was initially posted on [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL

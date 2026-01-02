@@ -1,0 +1,240 @@
+- en: Bash Conditional Expressions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In computer science, conditional statements, conditional expressions, and conditional
+    constructs are features of a programming language, which perform different computations
+    or actions depending on whether a programmer-specified boolean condition evaluates
+    to true or false.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In Bash, conditional expressions are used by the `[[` compound command and the
+    `[`built-in commands to test file attributes and perform string and arithmetic
+    comparisons.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Here is a list of the most popular Bash conditional expressions. You do not
+    have to memorize them by heart. You can simply refer back to this list whenever
+    you need it!
+  prefs: []
+  type: TYPE_NORMAL
+- en: File expressions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: True if file exists.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a block special file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a character special file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a directory.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a regular file.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a symbolic link.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is readable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and has a size greater than zero.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is writable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is executable.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if file exists and is a symbolic link.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: String expressions
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: True if the shell variable varname is set (has been assigned a value).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: Here, `varname` is the name of the variable. The `-v` operator expects a variable
+    name as an argument rather than a value, so if you pass `${varname}` instead of
+    `varname`, the expression will return false.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: True if the length of the string is zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if the length of the string is non-zero.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE14]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if the strings are equal. `=` should be used with the test command for
+    POSIX conformance. When used with the `[[` command, this performs pattern matching
+    as described above (Compound Commands).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE15]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if the strings are not equal.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE16]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if string1 sorts before string2 lexicographically.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE17]'
+  prefs: []
+  type: TYPE_PRE
+- en: True if string1 sorts after string2 lexicographically.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE18]'
+  prefs: []
+  type: TYPE_PRE
+- en: Arithmetic operators
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Returns true if the numbers are **equal**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE19]'
+  prefs: []
+  type: TYPE_PRE
+- en: Returns true if the numbers are **not equal**
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE20]'
+  prefs: []
+  type: TYPE_PRE
+- en: Returns true if arg1 is **less than** arg2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE21]'
+  prefs: []
+  type: TYPE_PRE
+- en: Returns true if arg1 is **less than or equal** arg2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE22]'
+  prefs: []
+  type: TYPE_PRE
+- en: Returns true if arg1 is **greater than** arg2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE23]'
+  prefs: []
+  type: TYPE_PRE
+- en: Returns true if arg1 is **greater than or equal** arg2
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE24]'
+  prefs: []
+  type: TYPE_PRE
+- en: As a side note, arg1 and arg2 may be positive or negative integers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'As with other programming languages you can use `AND` & `OR` conditions:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE25]'
+  prefs: []
+  type: TYPE_PRE
+- en: Exit status operators
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: returns true if the command was successful without any errors
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE26]'
+  prefs: []
+  type: TYPE_PRE
+- en: returns true if the command was not successful or had errors
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE27]'
+  prefs: []
+  type: TYPE_PRE

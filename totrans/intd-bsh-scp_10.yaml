@@ -1,0 +1,159 @@
+- en: Bash Conditionals
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: In the last section, we covered some of the most popular conditional expressions.
+    We can now use them with standard conditional statements like `if`, `if-else`
+    and `switch case` statements.
+  prefs: []
+  type: TYPE_NORMAL
+- en: If statement
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'The format of an `if` statement in Bash is as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here is a quick example which would ask you to enter your name in case that
+    you''ve left it empty:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: If Else statement
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'With an `if-else` statement, you can specify an action in case that the condition
+    in the `if` statement does not match. We can combine this with the conditional
+    expressions from the previous section as follows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You can use the above if statement with all of the conditional expressions
+    from the previous chapters:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Here is another example of an `if` statement which would check your current
+    `User ID` and would not allow you to run the script as the `root` user:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you put this on top of your script it would exit in case that the EUID is
+    0 and would not execute the rest of the script. This was discussed on [the DigitalOcean
+    community forum](https://www.digitalocean.com/community/questions/how-to-check-if-running-as-root-in-a-bash-script).
+  prefs: []
+  type: TYPE_NORMAL
+- en: You can also test multiple conditions with an `if` statement. In this example
+    we want to make sure that the user is neither the admin user nor the root user
+    to ensure the script is incapable of causing too much damage. We'll use the `or`
+    operator in this example, noted by `||`. This means that either of the conditions
+    needs to be true. If we used the `and` operator of `&&` then both conditions would
+    need to be true.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: If you have multiple conditions and scenarios, then can use `elif` statement
+    with `if` and `else` statements.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Switch case statements
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: As in other programming languages, you can use a `case` statement to simplify
+    complex conditionals when there are multiple different choices. So rather than
+    using a few `if`, and `if-else` statements, you could use a single `case` statement.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The Bash `case` statement syntax looks like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'A quick rundown of the structure:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: All `case` statements start with the `case` keyword.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: On the same line as the `case` keyword, you need to specify a variable or an
+    expression followed by the `in` keyword.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: After that, you have your `case` patterns, where you need to use `)` to identify
+    the end of the pattern.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'You can specify multiple patterns divided by a pipe: `|`.'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: After the pattern, you specify the commands that you would like to be executed
+    in case that the pattern matches the variable or the expression that you've specified.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: All clauses have to be terminated by adding `;;` at the end.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: You can have a default statement by adding a `*` as the pattern.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: To close the `case` statement, use the `esac` (case typed backwards) keyword.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Here is an example of a Bash `case` statement:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: With this script, we are asking the user to input a name of a car brand like
+    Telsa, BMW, Mercedes and etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Then with a `case` statement, we check the brand name and if it matches any
+    of our patterns, and if so, we print out the factory's location.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'If the brand name does not match any of our `case` statements, we print out
+    a default message: `an unknown car brand`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: I would advise you to try and modify the script and play with it a bit so that
+    you could practice what you've just learned in the last two chapters!
+  prefs: []
+  type: TYPE_NORMAL
+- en: For more examples of Bash `case` statements, make sure to check chapter 16,
+    where we would create an interactive menu in Bash using a `cases` statement to
+    process the user input.
+  prefs: []
+  type: TYPE_NORMAL

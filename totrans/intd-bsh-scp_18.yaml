@@ -1,0 +1,302 @@
+- en: Work with JSON in BASH using jq
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: The `jq` command-line tool is a lightweight and flexible command-line **JSON**
+    processor. It is great for parsing JSON output in BASH.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One of the great things about `jq` is that it is written in portable C, and
+    it has zero runtime dependencies. All you need to do is to download a single binary
+    or use a package manager like apt and install it with a single command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Planning the script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'For the demo in this tutorial, I would use an external REST API that returns
+    a simple JSON output called the [QuizAPI](https://quizapi.io/):'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://quizapi.io/](https://quizapi.io/)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'If you want to follow along make sure to get a free API key here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://quizapi.io/clientarea/settings/token](https://quizapi.io/clientarea/settings/token)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: The QuizAPI is free for developers.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Installing jq
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: There are many ways to install `jq` on your system. One of the most straight
+    forward ways to do so is to use the package manager depending on your OS.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Here is a list of the commands that you would need to use depending on your
+    OS:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Install jq on Ubuntu/Debian:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE0]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Install jq on Fedora:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE1]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Install jq on openSUSE:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE2]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Install jq on Arch:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE3]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Installing on Mac with Homebrew:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE4]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Install on Mac with MacPort:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[PRE5]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you are using other OS, I would recommend taking a look at the official
+    documentation here for more information:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://jqlang.org/download/](https://jqlang.org/download/)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'Once you have jq installed you can check your current version by running this
+    command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE6]'
+  prefs: []
+  type: TYPE_PRE
+- en: Parsing JSON with jq
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Once you have `jq` installed and your QuizAPI API Key, you can parse the JSON
+    output of the QuizAPI directly in your terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'First, create a variable that stores your API Key:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE7]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'In order to get some output from one of the endpoints of the QuizAPI you can
+    use the curl command:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE8]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'For a more specific output, you can use the QuizAPI URL Generator here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://quizapi.io/api-config](https://quizapi.io/api-config)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'After running the curl command, the output which you would get would look like
+    this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Raw Json output](images/https/imgur.com/KghOfzj.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: 'This could be quite hard to read, but thanks to the jq command-line tool, all
+    we need to do is pipe the curl command to jq and we would see a nice formatted
+    JSON output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE9]'
+  prefs: []
+  type: TYPE_PRE
+- en: Note the `| jq` at the end.
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: 'In this case the output that you would get would look something like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![bash jq formatting](images/https/imgur.com/ebdTtVf.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Now, this looks much nicer! The jq command-line tool formatted the output for
+    us and added some nice coloring!
+  prefs: []
+  type: TYPE_NORMAL
+- en: Getting the first element with jq
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Let''s say that we only wanted to get the first element from the JSON output,
+    in order to do that we have to just specify the index that we want to see with
+    the following syntax:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE10]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'Now, if we run the curl command again and pipe the output to jq .[0] like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE11]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'You will only get the first element and the output will look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![jq get first element only](images/https/imgur.com/h9bFMAL.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: Getting a value only for specific key
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: Sometimes you might want to get only the value of a specific key only, let's
+    say in our example the QuizAPI returns a list of questions along with the answers,
+    description and etc. but what if you wanted to get the Questions only without
+    the additional information?
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This is going to be quite straight forward with `jq`, all you need to do is
+    add the key after jq command, so it would look something like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[PRE12]'
+  prefs: []
+  type: TYPE_PRE
+- en: We have to add the `.[]` as the QuizAPI returns an array and by specifying `.[]`
+    we tell jq that we want to get the .question value for all of the elements in
+    the array.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The output that you would get would look like this:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![jq get a value only for specific key](images/https/imgur.com/0701wHD.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: As you can see we now only get the questions without the rest of the values.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using jq in a BASH script
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: 'Let''s go ahead and create a small bash script which should output the following
+    information for us:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Get only the first question from the output
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Get all of the answers for that question
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Assign the answers to variables
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Print the question and the answers
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'To do that I''ve put together the following script:'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Notice:** make sure to change the API_KEY part with your actual QuizAPI key:'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[PRE13]'
+  prefs: []
+  type: TYPE_PRE
+- en: 'If you run the script you would get the following output:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '![Using jq in a bash script](images/https/imgur.com/LKEsrbq.png)'
+  prefs: []
+  type: TYPE_IMG
+- en: We can even go further by making this interactive so that we could actually
+    choose the answer directly in our terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'There is already a bash script that does this by using the QuizAPI and `jq`:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'You can take a look at that script here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh](https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Conclusion
+  prefs:
+  - PREF_H2
+  type: TYPE_NORMAL
+- en: The `jq` command-line tool is an amazing tool that gives you the power to work
+    with JSON directly in your BASH terminal.
+  prefs: []
+  type: TYPE_NORMAL
+- en: That way you can easily interact with all kinds of different REST APIs with
+    BASH.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more information, you could take a look at the official documentation here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://stedolan.github.io/jq/manual/](https://stedolan.github.io/jq/manual/)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'And for more information on the **QuizAPI**, you could take a look at the official
+    documentation here:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[https://quizapi.io/docs/1.0/overview](https://quizapi.io/docs/1.0/overview)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Notice:** This content was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
