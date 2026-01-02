@@ -5,6 +5,7 @@
 +   [嵌入式 Linux 知识库 (eLinux.org)](docs/emb-linux-wiki/README.md)
 +   [关于 CURL 的一切](docs/evrth-curl/README.md)
 +   [FreeBSD 使用手册](docs/fbsd-man/README.md)
++   [Bash 脚本编程入门](docs/intd-bsh-scp/README.md)
 +   [Java 程序员眼中的 Linux](docs/java-linux/README.md)
 +   [Linux 101 Hacks](docs/linux-101-hack/README.md)
 +   [Linux From Scratch](docs/linux-bd-gd/README.md)
