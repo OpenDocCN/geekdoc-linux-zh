@@ -1,302 +1,466 @@
 - en: Work with JSON in BASH using jq
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用jq在BASH中处理JSON
 - en: The `jq` command-line tool is a lightweight and flexible command-line **JSON**
     processor. It is great for parsing JSON output in BASH.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: '`jq`命令行工具是一个轻量级且灵活的命令行**JSON**处理器。它在解析BASH中的JSON输出时非常出色。'
 - en: One of the great things about `jq` is that it is written in portable C, and
     it has zero runtime dependencies. All you need to do is to download a single binary
     or use a package manager like apt and install it with a single command.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`jq`的一个优点是它是用可移植的C语言编写的，并且没有运行时依赖。你只需要下载一个二进制文件或使用包管理器如apt，通过一条命令安装它。'
 - en: Planning the script
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 编写脚本规划
 - en: 'For the demo in this tutorial, I would use an external REST API that returns
     a simple JSON output called the [QuizAPI](https://quizapi.io/):'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在本教程的演示中，我将使用一个外部REST API，它返回一个简单的JSON输出，称为[QuizAPI](https://quizapi.io/)：
 - en: '[https://quizapi.io/](https://quizapi.io/)'
+  id: totrans-5
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://quizapi.io/](https://quizapi.io/)'
 - en: 'If you want to follow along make sure to get a free API key here:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你想要跟随，请确保在这里获取一个免费的API密钥：
 - en: '[https://quizapi.io/clientarea/settings/token](https://quizapi.io/clientarea/settings/token)'
+  id: totrans-7
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://quizapi.io/clientarea/settings/token](https://quizapi.io/clientarea/settings/token)'
 - en: The QuizAPI is free for developers.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: QuizAPI对开发者免费。
 - en: Installing jq
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安装jq
 - en: There are many ways to install `jq` on your system. One of the most straight
     forward ways to do so is to use the package manager depending on your OS.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 在你的系统上安装`jq`有许多方法。其中最直接的方法之一是使用基于你的操作系统的包管理器。
 - en: 'Here is a list of the commands that you would need to use depending on your
     OS:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个根据你的操作系统需要使用的命令列表：
 - en: 'Install jq on Ubuntu/Debian:'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在Ubuntu/Debian上安装jq：
 - en: '[PRE0]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Install jq on Fedora:'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在Fedora上安装jq：
 - en: '[PRE1]'
+  id: totrans-15
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Install jq on openSUSE:'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在openSUSE上安装jq：
 - en: '[PRE2]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Install jq on Arch:'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在Arch上安装jq：
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Installing on Mac with Homebrew:'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用Homebrew在Mac上安装：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Install on Mac with MacPort:'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用MacPort在Mac上安装：
 - en: '[PRE5]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'If you are using other OS, I would recommend taking a look at the official
     documentation here for more information:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用的是其他操作系统，我建议查看这里的官方文档以获取更多信息：
 - en: '[https://jqlang.org/download/](https://jqlang.org/download/)'
+  id: totrans-25
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://jqlang.org/download/](https://jqlang.org/download/)'
 - en: 'Once you have jq installed you can check your current version by running this
     command:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦安装了jq，你可以通过运行此命令来检查你的当前版本：
 - en: '[PRE6]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Parsing JSON with jq
+  id: totrans-28
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用jq解析JSON
 - en: Once you have `jq` installed and your QuizAPI API Key, you can parse the JSON
     output of the QuizAPI directly in your terminal.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦安装了`jq`和QuizAPI API密钥，你就可以直接在终端中解析QuizAPI的JSON输出了。
 - en: 'First, create a variable that stores your API Key:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，创建一个变量来存储你的API密钥：
 - en: '[PRE7]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'In order to get some output from one of the endpoints of the QuizAPI you can
     use the curl command:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了从QuizAPI的一个端点获取一些输出，你可以使用curl命令：
 - en: '[PRE8]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'For a more specific output, you can use the QuizAPI URL Generator here:'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了获得更具体的输出，你可以在QuizAPI URL生成器这里使用：
 - en: '[https://quizapi.io/api-config](https://quizapi.io/api-config)'
+  id: totrans-35
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '[https://quizapi.io/api-config](https://quizapi.io/api-config)'
 - en: 'After running the curl command, the output which you would get would look like
     this:'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 在运行curl命令后，你会得到的输出看起来可能像这样：
 - en: '![Raw Json output](images/https/imgur.com/KghOfzj.png)'
+  id: totrans-37
   prefs: []
   type: TYPE_IMG
+  zh: '![原始JSON输出](images/https/imgur.com/KghOfzj.png)'
 - en: 'This could be quite hard to read, but thanks to the jq command-line tool, all
     we need to do is pipe the curl command to jq and we would see a nice formatted
     JSON output:'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 这可能很难阅读，但多亏了jq命令行工具，我们只需要将curl命令通过jq管道传输，我们就会看到一个格式良好的JSON输出：
 - en: '[PRE9]'
+  id: totrans-39
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: Note the `| jq` at the end.
+  id: totrans-40
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 注意最后的`| jq`。
 - en: 'In this case the output that you would get would look something like this:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这种情况下，你会得到的输出看起来可能像这样：
 - en: '![bash jq formatting](images/https/imgur.com/ebdTtVf.png)'
+  id: totrans-42
   prefs: []
   type: TYPE_IMG
+  zh: '![bash jq格式化](images/https/imgur.com/ebdTtVf.png)'
 - en: Now, this looks much nicer! The jq command-line tool formatted the output for
     us and added some nice coloring!
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，这看起来要好看得多！jq命令行工具为我们格式化了输出并添加了一些漂亮的颜色！
 - en: Getting the first element with jq
+  id: totrans-44
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用jq获取第一个元素
 - en: 'Let''s say that we only wanted to get the first element from the JSON output,
     in order to do that we have to just specify the index that we want to see with
     the following syntax:'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 假设我们只想从JSON输出中获取第一个元素，为了做到这一点，我们必须指定我们想要看到的索引，使用以下语法：
 - en: '[PRE10]'
+  id: totrans-46
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'Now, if we run the curl command again and pipe the output to jq .[0] like this:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，如果我们再次运行curl命令并将输出通过jq .[0]管道传输，就像这样：
 - en: '[PRE11]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: 'You will only get the first element and the output will look like this:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 你将只得到第一个元素，输出将看起来像这样：
 - en: '![jq get first element only](images/https/imgur.com/h9bFMAL.png)'
+  id: totrans-50
   prefs: []
   type: TYPE_IMG
+  zh: '![jq仅获取第一个元素](images/https/imgur.com/h9bFMAL.png)'
 - en: Getting a value only for specific key
+  id: totrans-51
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 仅获取特定键的值
 - en: Sometimes you might want to get only the value of a specific key only, let's
     say in our example the QuizAPI returns a list of questions along with the answers,
     description and etc. but what if you wanted to get the Questions only without
     the additional information?
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候您可能只想获取特定键的值，比如说在我们的例子中，QuizAPI返回了一个包含问题、答案、描述等信息的列表，但如果你只想获取问题而不想获取附加信息怎么办？
 - en: 'This is going to be quite straight forward with `jq`, all you need to do is
     add the key after jq command, so it would look something like this:'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`jq`将会非常直接，您只需要在`jq`命令后添加键，所以它看起来会是这样：
 - en: '[PRE12]'
+  id: totrans-54
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: We have to add the `.[]` as the QuizAPI returns an array and by specifying `.[]`
     we tell jq that we want to get the .question value for all of the elements in
     the array.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们必须添加`.[]`，因为QuizAPI返回的是一个数组，通过指定`.[]`，我们告诉jq我们想要获取数组中所有元素的`.question`值。
 - en: 'The output that you would get would look like this:'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 您将得到的输出将看起来像这样：
 - en: '![jq get a value only for specific key](images/https/imgur.com/0701wHD.png)'
+  id: totrans-57
   prefs: []
   type: TYPE_IMG
+  zh: '![jq获取特定键的值](images/https/imgur.com/0701wHD.png)'
 - en: As you can see we now only get the questions without the rest of the values.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 如您所见，我们现在只获取问题，而没有其他值。
 - en: Using jq in a BASH script
+  id: totrans-59
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在BASH脚本中使用jq
 - en: 'Let''s go ahead and create a small bash script which should output the following
     information for us:'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们创建一个小bash脚本，它应该输出以下信息：
 - en: Get only the first question from the output
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 仅从输出中获取第一个问题
 - en: Get all of the answers for that question
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 获取该问题的所有答案
 - en: Assign the answers to variables
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将答案分配给变量
 - en: Print the question and the answers
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 打印问题和答案
 - en: 'To do that I''ve put together the following script:'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为了做到这一点，我已经编写了以下脚本：
 - en: '**Notice:** make sure to change the API_KEY part with your actual QuizAPI key:'
+  id: totrans-66
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：**请确保将API_KEY部分替换为您的实际QuizAPI密钥：'
 - en: '[PRE13]'
+  id: totrans-67
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: 'If you run the script you would get the following output:'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您运行脚本，您将得到以下输出：
 - en: '![Using jq in a bash script](images/https/imgur.com/LKEsrbq.png)'
+  id: totrans-69
   prefs: []
   type: TYPE_IMG
+  zh: '![在bash脚本中使用jq](images/https/imgur.com/LKEsrbq.png)'
 - en: We can even go further by making this interactive so that we could actually
     choose the answer directly in our terminal.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们甚至可以更进一步，使其具有交互性，这样我们就可以直接在我们的终端中选择答案。
 - en: 'There is already a bash script that does this by using the QuizAPI and `jq`:'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 已经有一个bash脚本通过使用QuizAPI和`jq`来完成这个任务：
 - en: 'You can take a look at that script here:'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以在此查看该脚本：
 - en: '[https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh](https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh)'
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh](https://github.com/QuizApi/QuizAPI-BASH/blob/master/quiz.sh)'
 - en: Conclusion
+  id: totrans-74
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: The `jq` command-line tool is an amazing tool that gives you the power to work
     with JSON directly in your BASH terminal.
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '`jq`命令行工具是一个令人惊叹的工具，它赋予您在BASH终端中直接处理JSON的能力。'
 - en: That way you can easily interact with all kinds of different REST APIs with
     BASH.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 这样您就可以轻松地使用BASH与各种不同的REST API进行交互。
 - en: 'For more information, you could take a look at the official documentation here:'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多信息，您可以查看以下官方文档：
 - en: '[https://stedolan.github.io/jq/manual/](https://stedolan.github.io/jq/manual/)'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[https://stedolan.github.io/jq/manual/](https://stedolan.github.io/jq/manual/)'
 - en: 'And for more information on the **QuizAPI**, you could take a look at the official
     documentation here:'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于**QuizAPI**的更多信息，您可以查看以下官方文档：
 - en: '[https://quizapi.io/docs/1.0/overview](https://quizapi.io/docs/1.0/overview)'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[https://quizapi.io/docs/1.0/overview](https://quizapi.io/docs/1.0/overview)'
 - en: '**Notice:** This content was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)'
+  id: totrans-81
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：**此内容最初发布在[DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)。'

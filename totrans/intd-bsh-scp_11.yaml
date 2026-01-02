@@ -1,186 +1,288 @@
 - en: Bash Loops
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash 循环（Bash Loops）
 - en: As with any other language, loops are very convenient. With Bash you can use
     `for` loops, `while` loops, and `until` loops.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 与任何其他语言一样，循环非常方便。使用Bash，你可以使用`for`循环、`while`循环和`until`循环。
 - en: For loops
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 循环
 - en: 'Here is the structure of a for loop:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是`for`循环的结构：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Example:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'A quick rundown of the example:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 对示例的简要概述：
 - en: First, we specify a list of users and store the value in a variable called `$users`.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 首先，我们指定一个用户列表并将值存储在一个名为`$users`的变量中。
 - en: After that, we start our `for` loop with the `for` keyword.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后，我们使用`for`关键字开始我们的`for`循环。
 - en: Then we define a new variable which would represent each item from the list
     that we give. In our case, we define a variable called `user`, which would represent
     each user from the `$users` variable.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后，我们定义一个新变量，它将代表我们从列表中给出的每个项目。在我们的例子中，我们定义了一个名为`user`的变量，它将代表`$users`变量中的每个用户。
 - en: Then we specify the `in` keyword followed by our list that we will loop through.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后，我们指定`in`关键字，后跟我们将要循环的列表。
 - en: On the next line, we use the `do` keyword, which indicates what we will do for
     each iteration of the loop.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在下一行，我们使用`do`关键字，它表示我们将对循环的每次迭代执行什么操作。
 - en: Then we specify the commands that we want to run.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 然后我们指定要运行的命令。
 - en: Finally, we close the loop with the `done` keyword.
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最后，我们使用`done`关键字关闭循环。
 - en: 'You can also use `for` to process a series of numbers. For example here is
     one way to loop through from 1 to 10:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 你也可以使用`for`来处理一系列数字。例如，这里是从1到10循环的一种方法：
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: While loops
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 循环（While loops）
 - en: 'The structure of a while loop is quite similar to the `for` loop:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`while`循环的结构与`for`循环非常相似：'
 - en: '[PRE3]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Here is an example of a `while` loop:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个`while`循环的示例：
 - en: '[PRE4]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'First, we specified a counter variable and set it to `1`, then inside the loop,
     we added counter by using this statement here: `((counter++))`. That way, we make
     sure that the loop will run 10 times only and would not run forever. The loop
     will complete as soon as the counter becomes 10, as this is what we''ve set as
     the condition: `while [[ $counter -le 10 ]]`.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们指定了一个计数器变量并将其设置为`1`，然后在循环内部，我们使用此语句增加计数器：`((counter++))`。这样，我们确保循环只运行10次，不会无限运行。一旦计数器变为10，循环就会完成，因为这是我们设定的条件：`while
+    [[ $counter -le 10 ]]`。
 - en: 'Let''s create a script that asks the user for their name and not allow an empty
     input:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们创建一个脚本，询问用户他们的名字，并不允许空输入：
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Now, if you run the above and just press enter without providing input, the
     loop would run again and ask you for your name again and again until you actually
     provide some input.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，如果你运行上面的代码并只按回车键而不提供输入，循环将再次运行，并反复询问你的名字，直到你实际上提供了一些输入。
 - en: Until Loops
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 直到循环（Until Loops）
 - en: The difference between `until` and `while` loops is that the `until` loop will
     run the commands within the loop until the condition becomes true.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '`until`循环与`while`循环的区别在于，`until`循环将一直运行循环内的命令，直到条件变为真。'
 - en: 'Structure:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 结构：
 - en: '[PRE6]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Example:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE7]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Continue and Break
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 继续（Continue）和中断（Break）
 - en: 'As with other languages, you can use `continue` and `break` with your bash
     scripts as well:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其他语言一样，你可以在bash脚本中使用`continue`和`break`：
 - en: '`continue` tells your bash script to stop the current iteration of the loop
     and start the next iteration.'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`continue`告诉你的bash脚本停止当前循环的迭代并开始下一次迭代。'
 - en: 'The syntax of the continue statement is as follows:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: '`continue`语句的语法如下：'
 - en: '[PRE8]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: The [n] argument is optional and can be greater than or equal to 1\. When [n]
     is given, the n-th enclosing loop is resumed. continue 1 is equivalent to continue.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[n]`参数是可选的，可以大于或等于1。当提供`[n]`时，将恢复第n个嵌套循环。`continue 1`等同于`continue`。'
 - en: '[PRE9]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: We can also use continue command in similar way to break command for controlling
     multiple loops.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们也可以以与`break`命令类似的方式使用`continue`命令来控制多个循环。
 - en: '`break` tells your bash script to end the loop straight away.'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`break`告诉你的bash脚本立即结束循环。'
 - en: 'The syntax of the break statement takes the following form:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '`break`语句的语法如下所示：'
 - en: '[PRE10]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: '[n] is an optional argument and must be greater than or equal to 1\. When [n]
     is provided, the n-th enclosing loop is exited. break 1 is equivalent to break.'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '`[n]`是一个可选参数，必须大于或等于1。当提供`[n]`时，将退出第n个嵌套循环。`break 1`等同于`break`。'
 - en: 'Example:'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE11]'
+  id: totrans-45
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: We can also use break command with multiple loops. If we want to exit out of
     current working loop whether inner or outer loop, we simply use break but if we
     are in inner loop & want to exit out of outer loop, we use break 2.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们也可以使用`break`命令与多个循环一起使用。如果我们想退出当前工作循环（无论是内部循环还是外部循环），我们只需使用`break`，但如果我们在内部循环中，并想退出外部循环，我们使用`break
+    2`。
 - en: 'Example:'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 示例：
 - en: '[PRE12]'
+  id: totrans-48
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: The bash script will begin with a=1 & will move to inner loop and when it reaches
     b=5, it will break the outer loop. We can use break only instead of break 2, to
     break inner loop & see how it affects the output.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 脚本将从 a=1 开始，然后进入内部循环，当它达到 b=5 时，将跳出外部循环。我们可以使用 `break` 而不是 `break 2` 来跳出内部循环，并查看它如何影响输出。

@@ -1,203 +1,310 @@
 - en: Write your first Bash script
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 编写你的第一个Bash脚本
 - en: Let's try to put together what we've learned so far and create our first Bash
     script!
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们尝试将到目前为止所学的内容结合起来，创建我们的第一个Bash脚本！
 - en: Planning the script
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 规划脚本
 - en: 'As an example, we will write a script that would gather some useful information
     about our server like:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，我们将编写一个脚本来收集有关我们服务器的一些有用信息，例如：
 - en: Current Disk usage
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前磁盘使用率
 - en: Current CPU usage
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前CPU使用率
 - en: Current RAM usage
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前RAM使用率
 - en: Check the exact Kernel version
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查确切的内核版本
 - en: Feel free to adjust the script by adding or removing functionality so that it
     matches your needs.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 随意调整脚本，添加或删除功能，使其符合你的需求。
 - en: Writing the script
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 编写脚本
 - en: The first thing that you need to do is to create a new file with a `.sh` extension.
     I will create a file called `status.sh` as the script that we will create would
     give us the status of our server.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 你需要做的第一件事是创建一个具有`.sh`扩展名的新文件。我将创建一个名为`status.sh`的文件，因为我们将要创建的脚本将给我们提供服务器的状态。
 - en: Once you've created the file, open it with your favorite text editor.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦创建了文件，就用你喜欢的文本编辑器打开它。
 - en: 'As we''ve learned in chapter 1, on the very first line of our Bash script we
     need to specify the so-called [Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)):'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如我们在第1章中学到的，在我们的Bash脚本的第一行，我们需要指定所谓的[Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))：
 - en: '[PRE0]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: All that the shebang does is to instruct the operating system to run the script
     with the /bin/bash executable.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: Shebang所做的只是指示操作系统使用/bin/bash可执行文件来运行脚本。
 - en: Adding comments
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 添加注释
 - en: 'Next, as discussed in chapter 6, let''s start by adding some comments so that
     people could easily figure out what the script is used for. To do that right after
     the shebang you can just add the following:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，如第6章所讨论的，让我们先添加一些注释，这样人们就可以很容易地弄清楚脚本是用作什么的。要做到这一点，你可以在shebang之后直接添加以下内容：
 - en: '[PRE1]'
+  id: totrans-17
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: Adding your first variable
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 添加你的第一个变量
 - en: Then let's go ahead and apply what we've learned in chapter 4 and add some variables
     which we might want to use throughout the script.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后让我们继续应用第4章中学到的知识，并添加一些我们可能在脚本中想要使用的变量。
 - en: 'To assign a value to a variable in bash, you just have to use the `=` sign.
     For example, let''s store the hostname of our server in a variable so that we
     could use it later:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在bash中给变量赋值，你只需要使用`=`符号。例如，让我们将我们服务器的计算机名存储在一个变量中，这样我们以后就可以使用它：
 - en: '[PRE2]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: By using `$()` we tell bash to actually interpret the command and then assign
     the value to our variable.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过使用`$()`，我们告诉bash实际解释命令，然后将值赋给我们的变量。
 - en: 'Now if we were to echo out the variable we would see the current hostname:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在如果我们输出变量，我们会看到当前的计算机名：
 - en: '[PRE3]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Adding your first function
+  id: totrans-25
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 添加你的第一个函数
 - en: 'As you already know after reading chapter 12, in order to create a function
     in bash you need to use the following structure:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 如你阅读第12章后所知，为了在bash中创建一个函数，你需要使用以下结构：
 - en: '[PRE4]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Let''s create a function that returns the current memory usage on our server:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们创建一个函数，该函数返回我们服务器上的当前内存使用情况：
 - en: '[PRE5]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Quick run down of the function:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数的简要概述：
 - en: '`function memory_check() {` - this is how we define the function'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`function memory_check() {` - 这是我们定义函数的方式'
 - en: '`echo ""` - here we just print a new line'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`echo ""` - 这里我们只是打印一个新行'
 - en: '`echo "The current memory usage on ${server_name} is: "` - here we print a
     small message and the `$server_name` variable'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`echo "The current memory usage on ${server_name} is: "` - 这里我们打印一条小消息和`$server_name`变量'
 - en: '`}` - finally this is how we close the function'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`}` - 最后这是关闭函数的方式'
 - en: 'Then once the function has been defined, in order to call it, just use the
     name of the function:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后一旦定义了函数，为了调用它，只需使用函数名即可：
 - en: '[PRE6]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Adding more functions challenge
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 添加更多函数挑战
 - en: Before checking out the solution, I would challenge you to use the function
     from above and write a few functions by yourself.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 在查看解决方案之前，我挑战你使用上面的函数自己编写几个函数。
 - en: 'The functions should do the following:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数应该执行以下操作：
 - en: Current Disk usage
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前磁盘使用率
 - en: Current CPU usage
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前CPU使用率
 - en: Current RAM usage
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当前RAM使用率
 - en: Check the exact Kernel version
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查确切的内核版本
 - en: Feel free to use google if you are not sure what commands you need to use in
     order to get that information.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你不确定需要使用哪些命令来获取这些信息，请随时使用谷歌搜索。
 - en: Once you are ready, feel free to scroll down and check how we've done it and
     compare the results!
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你准备好了，请随意向下滚动并查看我们是如何做到的，并比较结果！
 - en: Note that there are multiple correct ways of doing it!
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，有多个正确的方法可以做到这一点！
 - en: The sample script
+  id: totrans-47
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例脚本
 - en: 'Here''s what the end result would look like:'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是最终结果的样子：
 - en: '[PRE7]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Conclusion
+  id: totrans-50
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: Bash scripting is awesome! No matter if you are a DevOps/SysOps engineer, developer,
     or just a Linux enthusiast, you can use Bash scripts to combine different Linux
     commands and automate boring and repetitive daily tasks, so that you can focus
     on more productive and fun things!
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 脚本非常棒！无论你是 DevOps/SysOps 工程师、开发者，还是仅仅是一个 Linux 爱好者，你都可以使用 Bash 脚本来组合不同的
+    Linux 命令，自动化无聊且重复的日常任务，这样你就可以专注于更有生产力和更有趣的事情了！
 - en: '**Notice:** This was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/introduction-to-bash-scripting)'
+  id: totrans-52
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 这篇文章最初发布在 [DevDojo.com](https://devdojo.com/bobbyiliev/introduction-to-bash-scripting)'

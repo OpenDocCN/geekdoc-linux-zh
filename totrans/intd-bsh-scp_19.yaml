@@ -1,168 +1,259 @@
 - en: Working with Cloudflare API with Bash
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用 Bash 与 Cloudflare API 一起工作
 - en: I host all of my websites on **DigitalOcean** Droplets and I also use Cloudflare
     as my CDN provider. One of the benefits of using Cloudflare is that it reduces
     the overall traffic to your user and also hides your actual server IP address
     behind their CDN.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 我所有的网站都托管在 **DigitalOcean** Droplets 上，我还使用 Cloudflare 作为我的 CDN 提供商。使用 Cloudflare
+    的一个好处是它减少了用户整体流量，同时也隐藏了您实际服务器的 IP 地址在其 CDN 后面。
 - en: My personal favorite Cloudflare feature is their free DDoS protection. It has
     saved my servers multiple times from different DDoS attacks. They have a cool
     API that you could use to enable and disable their DDoS protection easily.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我个人最喜欢的 Cloudflare 功能是他们的免费 DDoS 保护。它已经多次从不同的 DDoS 攻击中拯救了我的服务器。他们有一个很酷的 API，您可以使用它轻松地启用和禁用他们的
+    DDoS 保护。
 - en: This chapter is going to be an exercise! I challenge you to go ahead and write
     a short bash script that would enable and disable the Cloudflare DDoS protection
     for your server automatically if needed!
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 本章将是一个练习！我挑战您编写一个简短的 bash 脚本，该脚本可以在需要时自动启用和禁用服务器的 Cloudflare DDoS 保护！
 - en: Prerequisites
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 前提条件
 - en: 'Before following this guide here, please set up your Cloudflare account and
     get your website ready. If you are not sure how to do that you can follow these
     steps here: [Create a Cloudflare account and add a website](https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website).'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 在遵循此指南之前，请设置您的 Cloudflare 账户并准备好您的网站。如果您不确定如何操作，可以按照以下步骤进行：[创建 Cloudflare 账户并添加网站](https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-Cloudflare-account-and-add-a-website)。
 - en: 'Once you have your Cloudflare account, make sure to obtain the following information:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦您拥有 Cloudflare 账户，请确保获取以下信息：
 - en: A Cloudflare account
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个 Cloudflare 账户
 - en: Cloudflare API key
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Cloudflare API 密钥
 - en: Cloudflare Zone ID
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Cloudflare 区域 ID
 - en: 'Also, Make sure curl is installed on your server:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，确保您的服务器上已安装 curl：
 - en: '[PRE0]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'If curl is not installed you need to run the following:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果 curl 未安装，您需要运行以下命令：
 - en: 'For RedHat/CentOs:'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 RedHat/CentOs：
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: For Debian/Ubuntu
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于 Debian/Ubuntu：
 - en: '[PRE2]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Challenge - Script requirements
+  id: totrans-17
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 挑战 - 脚本要求
 - en: The script needs to monitor the CPU usage on your server and if the CPU usage
     gets high based on the number vCPU it would enable the Cloudflare DDoS protection
     automatically via the Cloudflare API.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本需要监控服务器的 CPU 使用情况，如果根据 vCPU 的数量 CPU 使用率变高，它将通过 Cloudflare API 自动启用 Cloudflare
+    DDoS 保护。
 - en: 'The main features of the script should be:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本的主要功能应包括：
 - en: Checks the script CPU load on the server
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查服务器上的脚本 CPU 负载
 - en: In case of a CPU spike the script triggers an API call to Cloudflare and enables
     the DDoS protection feature for the specified zone
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 CPU 峰值的情况下，脚本会触发对 Cloudflare 的 API 调用，并为指定的区域启用 DDoS 保护功能
 - en: After the CPU load is back to normal the script would disable the "I'm under
     attack" option and set it back to normal
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 当 CPU 负载恢复正常时，脚本将禁用“我正在遭受攻击”选项，并将其恢复到正常状态
 - en: Example script
+  id: totrans-23
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例脚本
 - en: I already have prepared a demo script which you could use as a reference. But
     I encourage you to try and write the script yourself first and only then take
     a look at my script!
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 我已经准备了一个演示脚本，您可以将其作为参考。但我鼓励您先尝试自己编写脚本，然后再查看我的脚本！
 - en: 'To download the script just run the following command:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 要下载脚本，只需运行以下命令：
 - en: '[PRE3]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Open the script with your favorite text editor:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用您最喜欢的文本编辑器打开脚本：
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'And update the following details with your Cloudflare details:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 并使用您的 Cloudflare 详细信息更新以下信息：
 - en: '[PRE5]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'After that make the script executable:'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，使脚本可执行：
 - en: '[PRE6]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Finally, set up 2 Cron jobs to run every 30 seconds. To edit your crontab run:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，设置两个每 30 秒运行一次的 Cron 任务。要编辑您的 crontab，请运行：
 - en: '[PRE7]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'And add the following content:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 并添加以下内容：
 - en: '[PRE8]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Note that you need to change the path to the script with the actual path where
     you've stored the script at.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，您需要将脚本的路径更改为实际存储脚本的路径。
 - en: Conclusion
+  id: totrans-38
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: This is quite straight forward and budget solution, one of the downsides of
     the script is that if your server gets unresponsive due to an attack, the script
     might not be triggered at all.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个相当直接且经济的解决方案，脚本的一个缺点是，如果您的服务器因攻击而变得无响应，脚本可能根本不会被触发。
 - en: Of course, a better approach would be to use a monitoring system like Nagios
     and based on the statistics from the monitoring system then you can trigger the
     script, but this script challenge could be a good learning experience!
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，更好的方法是使用像 Nagios 这样的监控系统，然后根据监控系统的统计数据来触发脚本，但这个脚本挑战可以是一个很好的学习经验！
 - en: 'Here is another great resource on how to use the Discord API and send notifications
     to your Discord Channel with a Bash script:'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是另一个关于如何使用 Discord API 以及如何通过 Bash 脚本向您的 Discord 频道发送通知的优质资源：
 - en: '[How To Use Discord Webhooks to Get Notifications for Your Website Status on
     Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-use-discord-webhooks-to-get-notifications-for-your-website-status-on-ubuntu-18-04)'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '[如何在 Ubuntu 18.04 上使用 Discord Webhooks 获取网站状态通知](https://www.digitalocean.com/community/tutorials/how-to-use-discord-webhooks-to-get-notifications-for-your-website-status-on-ubuntu-18-04)'
 - en: '**Notice:** This content was initially posted on [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-automatically-enable-cloudflare-ddos-protection)'
+  id: totrans-43
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 此内容最初发布在 [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-automatically-enable-cloudflare-ddos-protection)'

@@ -1,45 +1,71 @@
 - en: Bash Structure
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash 结构
 - en: Let's start by creating a new file with a `.sh` extension. As an example, we
     could create a file called `devdojo.sh`.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们先创建一个具有 `.sh` 扩展名的新文件。例如，我们可以创建一个名为 `devdojo.sh` 的文件。
 - en: 'To create that file, you can use the `touch` command:'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 要创建那个文件，你可以使用 `touch` 命令：
 - en: '[PRE0]'
+  id: totrans-3
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Or you can use your text editor instead:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者你可以使用你的文本编辑器：
 - en: '[PRE1]'
+  id: totrans-5
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'In order to execute/run a bash script file with the bash shell interpreter,
     the first line of a script file must indicate the absolute path to the bash executable:'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使用 bash shell 解释器执行/运行 bash 脚本文件，脚本文件的第一行必须指示到 bash 可执行文件的绝对路径：
 - en: '[PRE2]'
+  id: totrans-7
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: This is also called a [Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也被称为 [Shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))。
 - en: All that the shebang does is to instruct the operating system to run the script
     with the `/bin/bash` executable.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 唯一的作用就是指示操作系统使用 `/bin/bash` 可执行文件来运行脚本。
 - en: 'However, bash is not always in `/bin/bash` directory, particularly on non-Linux
     systems or due to installation as an optional package. Thus, you may want to use:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，bash 并不总是在 `/bin/bash` 目录中，尤其是在非 Linux 系统上，或者由于作为可选包安装，因此你可能需要使用：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: It searches for bash executable in directories, listed in PATH environmental
     variable.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 它会在 PATH 环境变量中列出的目录中搜索 bash 可执行文件。

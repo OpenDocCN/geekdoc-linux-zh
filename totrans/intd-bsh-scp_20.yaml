@@ -1,149 +1,223 @@
 - en: BASH Script parser to Summarize Your NGINX and Apache Access Logs
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: BASH脚本解析器以总结你的NGINX和Apache访问日志
 - en: One of the first things that I would usually do in case I notice a high CPU
     usage on some of my Linux servers would be to check the process list with either
     top or htop and in case that I notice a lot of Apache or Nginx process I would
     quickly check my access logs to determine what has caused or is causing the CPU
     spike on my server or to figure out if anything malicious is going on.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我注意到我的某些Linux服务器上的CPU使用率很高，我通常会做的第一件事是使用top或htop检查进程列表，如果我发现有很多Apache或Nginx进程，我会快速检查我的访问日志，以确定是什么导致了或正在导致我的服务器CPU峰值，或者找出是否有任何恶意活动正在进行。
 - en: Sometimes reading the logs could be quite intimidating as the log might be huge
     and going though it manually could take a lot of time. Also, the raw log format
     could be confusing for people with less experience.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时候阅读日志可能会相当令人畏惧，因为日志可能很大，手动查看可能需要花费大量时间。此外，原始日志格式可能对经验不足的人来说很令人困惑。
 - en: Just like the previous chapter, this chapter is going to be a challenge! You
     need to write a short bash script that would summarize the whole access log for
     you without the need of installing any additional software.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像上一章一样，这一章将会是一个挑战！你需要编写一个简短的bash脚本，它会为你总结整个访问日志，而不需要安装任何额外的软件。
 - en: Script requirements
+  id: totrans-4
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 脚本要求
 - en: 'This BASH script needs to parse and summarize your access logs and provide
     you with very useful information like:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个BASH脚本需要解析和总结你的访问日志，并提供非常有用的信息，例如：
 - en: The 20 top pages with the most POST requests
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最常请求的20个页面（POST请求）
 - en: The 20 top pages with the most GET requests
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最常请求的20个页面
 - en: Top 20 IP addresses and their geo-location
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 前20个IP地址及其地理位置
 - en: Example script
+  id: totrans-9
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 示例脚本
 - en: I already have prepared a demo script which you could use as a reference. But
     I encourage you to try and write the script yourself first and only then take
     a look at my script!
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我已经准备了一个演示脚本，你可以将其作为参考。但我鼓励你先尝试自己编写脚本，然后再看看我的脚本！
 - en: 'In order to download the script, you can either clone the repository with the
     following command:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了下载脚本，你可以使用以下命令克隆存储库：
 - en: '[PRE0]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Or run the following command which would download the script in your current
     directory:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者运行以下命令，它将在你的当前目录下下载脚本：
 - en: '[PRE1]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: The script does not make any changes to your system, it only reads the content
     of your access log and summarizes it for you, however, once you've downloaded
     the file, make sure to review the content yourself.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 该脚本不会对你的系统进行任何更改，它只读取你的访问日志内容，并为你总结，然而，一旦你下载了文件，请确保自己审查内容。
 - en: Running the script
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 运行脚本
 - en: All that you have to do once the script has been downloaded is to make it executable
     and run it.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 下载脚本后，你需要做的就是让它可执行并运行它。
 - en: 'To do that run the following command to make the script executable:'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 要做到这一点，请运行以下命令使脚本可执行：
 - en: '[PRE2]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Then run the script:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后运行脚本：
 - en: '[PRE3]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Make sure to change the path to the file with the actual path to your access
     log. For example if you are using Apache on an Ubuntu server, the exact command
     would look like this:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保将文件路径更改为实际的访问日志路径。例如，如果你在Ubuntu服务器上使用Apache，确切的命令将如下所示：
 - en: '[PRE4]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'If you are using Nginx the exact command would be almost the same, but with
     the path to the Nginx access log:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你使用Nginx，确切的命令几乎相同，但需要将路径更改为Nginx访问日志的路径：
 - en: '[PRE5]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: Understanding the output
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 理解输出
 - en: Once you run the script, it might take a while depending on the size of the
     log.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦运行脚本，它可能需要一段时间，具体取决于日志的大小。
 - en: 'The output that you would see should look like this:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 你会看到的输出应该看起来像这样：
 - en: '![Summarized access log](images/https/imgur.com/WWHVMrj.png)'
+  id: totrans-29
   prefs: []
   type: TYPE_IMG
+  zh: '![总结访问日志](images/https/imgur.com/WWHVMrj.png)'
 - en: Essentially what we can tell in this case is that we've received 16 POST requests
     to our xmlrpc.php file which is often used by attackers to try and exploit WordPress
     websites by using various username and password combinations.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际上，我们可以告诉你的情况是，我们已经收到了16次对xmlrpc.php文件的POST请求，该文件通常被攻击者用来尝试通过各种用户名和密码组合来利用WordPress网站。
 - en: In this specific case, this was not a huge brute force attack, but it gives
     us an early indication and we can take action to prevent a larger attack in the
     future.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个特定情况下，这并不是一次巨大的暴力攻击，但它给我们提供了早期的迹象，我们可以采取措施防止未来更大的攻击。
 - en: We can also see that there were a couple of Russian IP addresses accessing our
     site, so in case that you do not expect any traffic from Russia, you might want
     to block those IP addresses as well.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们还可以看到有几个俄罗斯IP地址访问了我们的网站，所以如果你不期望有任何来自俄罗斯的流量，你可能也想阻止这些IP地址。
 - en: Conclusion
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: This is an example of a simple BASH script that allows you to quickly summarize
     your access logs and determine if anything malicious is going on.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个简单的BASH脚本示例，它允许你快速总结访问日志，并确定是否有任何恶意行为正在进行。
 - en: Of course, you might want to also manually go through the logs as well but it
     is a good challenge to try and automate this with Bash!
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你也许还想手动检查日志，但用Bash自动化这个任务是一个很好的挑战！
 - en: '**Notice:** This content was initially posted on [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'
+  id: totrans-36
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 此内容最初发布在[DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'

@@ -1,240 +1,373 @@
 - en: Bash Conditional Expressions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash 条件表达式
 - en: In computer science, conditional statements, conditional expressions, and conditional
     constructs are features of a programming language, which perform different computations
     or actions depending on whether a programmer-specified boolean condition evaluates
     to true or false.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在计算机科学中，条件语句、条件表达式和条件构造是编程语言的特征，它们根据程序员指定的布尔条件是否评估为 true 或 false 来执行不同的计算或操作。
 - en: In Bash, conditional expressions are used by the `[[` compound command and the
     `[`built-in commands to test file attributes and perform string and arithmetic
     comparisons.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Bash 中，条件表达式通过 `[[` 复合命令和 `[` 内置命令用于测试文件属性和执行字符串和算术比较。
 - en: Here is a list of the most popular Bash conditional expressions. You do not
     have to memorize them by heart. You can simply refer back to this list whenever
     you need it!
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是 Bash 条件表达式中最受欢迎的列表。你不必死记硬背。你只需在需要时参考此列表即可！
 - en: File expressions
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 文件表达式
 - en: True if file exists.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在，则返回 true。
 - en: '[PRE0]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: True if file exists and is a block special file.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是块特殊文件，则返回 true。
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: True if file exists and is a character special file.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是字符特殊文件，则返回 true。
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: True if file exists and is a directory.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是目录，则返回 true。
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: True if file exists.
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在，则返回 true。
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: True if file exists and is a regular file.
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是常规文件，则返回 true。
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: True if file exists and is a symbolic link.
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是符号链接，则返回 true。
 - en: '[PRE6]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: True if file exists and is readable.
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且可读，则返回 true。
 - en: '[PRE7]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: True if file exists and has a size greater than zero.
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且大小大于零，则返回 true。
 - en: '[PRE8]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: True if file exists and is writable.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且可写，则返回 true。
 - en: '[PRE9]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: True if file exists and is executable.
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且可执行，则返回 true。
 - en: '[PRE10]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: True if file exists and is a symbolic link.
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果文件存在且是符号链接，则返回 true。
 - en: '[PRE11]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE11]'
 - en: String expressions
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 字符串表达式
 - en: True if the shell variable varname is set (has been assigned a value).
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 shell 变量 varname 已设置（已分配一个值），则返回 true。
 - en: '[PRE12]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE12]'
 - en: Here, `varname` is the name of the variable. The `-v` operator expects a variable
     name as an argument rather than a value, so if you pass `${varname}` instead of
     `varname`, the expression will return false.
+  id: totrans-32
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在这里，`varname` 是变量的名称。`-v` 运算符期望一个变量名作为参数而不是值，所以如果你传递 `${varname}` 而不是 `varname`，则表达式将返回
+    false。
 - en: True if the length of the string is zero.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果字符串长度为零，则返回 true。
 - en: '[PRE13]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE13]'
 - en: True if the length of the string is non-zero.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果字符串长度非零，则返回 true。
 - en: '[PRE14]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE14]'
 - en: True if the strings are equal. `=` should be used with the test command for
     POSIX conformance. When used with the `[[` command, this performs pattern matching
     as described above (Compound Commands).
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果字符串相等，则返回 true。`=` 应用于测试命令以符合 POSIX 标准。当与 `[[` 命令一起使用时，它执行上述描述的模式匹配（复合命令）。
 - en: '[PRE15]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE15]'
 - en: True if the strings are not equal.
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果字符串不相等，则返回 true。
 - en: '[PRE16]'
+  id: totrans-40
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE16]'
 - en: True if string1 sorts before string2 lexicographically.
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 string1 在 lexicographically 排序上位于 string2 之前，则返回 true。
 - en: '[PRE17]'
+  id: totrans-42
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE17]'
 - en: True if string1 sorts after string2 lexicographically.
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 string1 在 lexicographically 排序上位于 string2 之后，则返回 true。
 - en: '[PRE18]'
+  id: totrans-44
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE18]'
 - en: Arithmetic operators
+  id: totrans-45
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 算术运算符
 - en: Returns true if the numbers are **equal**
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果数字相等，则返回 true
 - en: '[PRE19]'
+  id: totrans-47
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE19]'
 - en: Returns true if the numbers are **not equal**
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果数字不相等，则返回 true
 - en: '[PRE20]'
+  id: totrans-49
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE20]'
 - en: Returns true if arg1 is **less than** arg2
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 arg1 小于 arg2，则返回 true
 - en: '[PRE21]'
+  id: totrans-51
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE21]'
 - en: Returns true if arg1 is **less than or equal** arg2
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 arg1 小于或等于 arg2，则返回 true
 - en: '[PRE22]'
+  id: totrans-53
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE22]'
 - en: Returns true if arg1 is **greater than** arg2
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 arg1 大于 arg2，则返回 true
 - en: '[PRE23]'
+  id: totrans-55
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE23]'
 - en: Returns true if arg1 is **greater than or equal** arg2
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果 arg1 大于或等于 arg2，则返回 true
 - en: '[PRE24]'
+  id: totrans-57
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE24]'
 - en: As a side note, arg1 and arg2 may be positive or negative integers.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为旁注，arg1 和 arg2 可能是正数或负整数。
 - en: 'As with other programming languages you can use `AND` & `OR` conditions:'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 与其他编程语言一样，你可以使用 `AND` & `OR` 条件：
 - en: '[PRE25]'
+  id: totrans-60
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE25]'
 - en: Exit status operators
+  id: totrans-61
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 退出状态运算符
 - en: returns true if the command was successful without any errors
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果命令成功执行且没有错误，则返回 true
 - en: '[PRE26]'
+  id: totrans-63
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE26]'
 - en: returns true if the command was not successful or had errors
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 如果命令未成功执行或出现错误，则返回 true
 - en: '[PRE27]'
+  id: totrans-65
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE27]'

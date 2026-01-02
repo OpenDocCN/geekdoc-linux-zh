@@ -1,79 +1,127 @@
 - en: Bash Arguments
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash 参数
 - en: 'You can pass arguments to your shell script when you execute it. To pass an
     argument, you just need to write it right after the name of your script. For example:'
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 当你执行shell脚本时，你可以传递参数。要传递一个参数，你只需将其直接写在脚本名称之后。例如：
 - en: '[PRE0]'
+  id: totrans-2
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: In the script, we can then use `$1` in order to reference the first argument
     that we specified.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中，我们可以使用 `$1` 来引用我们指定的第一个参数。
 - en: If we pass a second argument, it would be available as `$2` and so on.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果我们传递第二个参数，它将作为 `$2` 可用，依此类推。
 - en: 'Let''s create a short script called `arguments.sh` as an example:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们创建一个名为 `arguments.sh` 的简短脚本作为示例：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Save the file and make it executable:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存文件并使其可执行：
 - en: '[PRE2]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'Then run the file and pass **3** arguments:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后运行文件并传递 **3** 个参数：
 - en: '[PRE3]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'The output that you would get would be:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 你会得到的输出将是：
 - en: '[PRE4]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'To reference all arguments, you can use `$@`:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 要引用所有参数，你可以使用 `$@`：
 - en: '[PRE5]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'If you run the script again:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你再次运行脚本：
 - en: '[PRE6]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'You will get the following output:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 你将得到以下输出：
 - en: '[PRE7]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Another thing that you need to keep in mind is that `$0` is used to reference
     the script itself.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 另一件你需要记住的事情是 `$0` 用于引用脚本本身。
 - en: This is an excellent way to create self destruct the file if you need to or
     just get the name of the script.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你需要自我销毁文件或者只是获取脚本的名称，这是一个非常好的方法。
 - en: 'For example, let''s create a script that prints out the name of the file and
     deletes the file after that:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，让我们创建一个脚本，该脚本打印出文件名并在之后删除该文件：
 - en: '[PRE8]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: You need to be careful with the self deletion and ensure that you have your
     script backed up before you self-delete it.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 在自我删除之前，你需要小心处理自我删除，并确保你有脚本的备份。

@@ -1,159 +1,239 @@
 - en: Bash Conditionals
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash条件
 - en: In the last section, we covered some of the most popular conditional expressions.
     We can now use them with standard conditional statements like `if`, `if-else`
     and `switch case` statements.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在最后一节中，我们介绍了一些最受欢迎的条件表达式。现在我们可以使用它们与标准条件语句，如`if`、`if-else`和`switch case`语句结合使用。
 - en: If statement
+  id: totrans-2
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`if`语句'
 - en: 'The format of an `if` statement in Bash is as follows:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash中`if`语句的格式如下所示：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Here is a quick example which would ask you to enter your name in case that
     you''ve left it empty:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一个快速示例，它会要求你输入你的名字，以防你留空：
 - en: '[PRE1]'
+  id: totrans-6
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: If Else statement
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`if Else`语句'
 - en: 'With an `if-else` statement, you can specify an action in case that the condition
     in the `if` statement does not match. We can combine this with the conditional
     expressions from the previous section as follows:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`if-else`语句，你可以在`if`语句中的条件不匹配的情况下指定一个动作。我们可以将此与上一节中的条件表达式结合起来，如下所示：
 - en: '[PRE2]'
+  id: totrans-9
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You can use the above if statement with all of the conditional expressions
     from the previous chapters:'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用上一章中的所有条件表达式与上述if语句结合使用：
 - en: '[PRE3]'
+  id: totrans-11
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Here is another example of an `if` statement which would check your current
     `User ID` and would not allow you to run the script as the `root` user:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个`if`语句的另一个例子，它会检查你的当前`User ID`，并且不允许你以`root`用户身份运行脚本：
 - en: '[PRE4]'
+  id: totrans-13
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: If you put this on top of your script it would exit in case that the EUID is
     0 and would not execute the rest of the script. This was discussed on [the DigitalOcean
     community forum](https://www.digitalocean.com/community/questions/how-to-check-if-running-as-root-in-a-bash-script).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你将此放在脚本顶部，当EUID为0时，它会退出，并且不会执行脚本的其他部分。这已在[DigitalOcean社区论坛](https://www.digitalocean.com/community/questions/how-to-check-if-running-as-root-in-a-bash-script)上讨论过。
 - en: You can also test multiple conditions with an `if` statement. In this example
     we want to make sure that the user is neither the admin user nor the root user
     to ensure the script is incapable of causing too much damage. We'll use the `or`
     operator in this example, noted by `||`. This means that either of the conditions
     needs to be true. If we used the `and` operator of `&&` then both conditions would
     need to be true.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 你也可以使用`if`语句测试多个条件。在这个例子中，我们想确保用户既不是管理员用户也不是root用户，以确保脚本不会造成太大的损害。在这个例子中，我们将使用`or`运算符，记作`||`。这意味着任一条件都需要为真。如果我们使用`&&`运算符，则两个条件都需要为真。
 - en: '[PRE5]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: If you have multiple conditions and scenarios, then can use `elif` statement
     with `if` and `else` statements.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你有多重条件和场景，那么可以使用与`if`和`else`语句结合的`elif`语句。
 - en: '[PRE6]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Switch case statements
+  id: totrans-19
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: '`switch case`语句'
 - en: As in other programming languages, you can use a `case` statement to simplify
     complex conditionals when there are multiple different choices. So rather than
     using a few `if`, and `if-else` statements, you could use a single `case` statement.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 就像在其他编程语言中一样，当有多个不同选择时，你可以使用`case`语句来简化复杂条件。所以，而不是使用几个`if`和`if-else`语句，你可以使用一个单独的`case`语句。
 - en: 'The Bash `case` statement syntax looks like this:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash `case`语句的语法如下所示：
 - en: '[PRE7]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'A quick rundown of the structure:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 结构的简要概述：
 - en: All `case` statements start with the `case` keyword.
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所有`case`语句都以`case`关键字开头。
 - en: On the same line as the `case` keyword, you need to specify a variable or an
     expression followed by the `in` keyword.
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在`case`关键字相同的行上，你需要指定一个变量或表达式，后跟`in`关键字。
 - en: After that, you have your `case` patterns, where you need to use `)` to identify
     the end of the pattern.
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 之后，你有你的`case`模式，其中你需要使用`)`来标识模式的结束。
 - en: 'You can specify multiple patterns divided by a pipe: `|`.'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你可以使用管道`|`分隔多个模式。
 - en: After the pattern, you specify the commands that you would like to be executed
     in case that the pattern matches the variable or the expression that you've specified.
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在模式之后，你指定在模式与指定的变量或表达式匹配时需要执行的命令。
 - en: All clauses have to be terminated by adding `;;` at the end.
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 所有子句都必须在末尾添加`;;`来终止。
 - en: You can have a default statement by adding a `*` as the pattern.
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 你可以通过添加`*`作为模式来添加一个默认语句。
 - en: To close the `case` statement, use the `esac` (case typed backwards) keyword.
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 要关闭`case`语句，使用`esac`（case反向拼写）关键字。
 - en: 'Here is an example of a Bash `case` statement:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一个Bash `case`语句的示例：
 - en: '[PRE8]'
+  id: totrans-33
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: With this script, we are asking the user to input a name of a car brand like
     Telsa, BMW, Mercedes and etc.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这个脚本，我们要求用户输入一个汽车品牌名称，如特斯拉、宝马、奔驰等。
 - en: Then with a `case` statement, we check the brand name and if it matches any
     of our patterns, and if so, we print out the factory's location.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后使用`case`语句，我们检查品牌名称，如果它与我们的任何模式匹配，那么我们就打印出工厂的位置。
 - en: 'If the brand name does not match any of our `case` statements, we print out
     a default message: `an unknown car brand`.'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果品牌名称与我们的任何`case`语句都不匹配，我们将打印出一个默认消息：“一个未知的汽车品牌”。
 - en: Conclusion
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: I would advise you to try and modify the script and play with it a bit so that
     you could practice what you've just learned in the last two chapters!
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我建议你尝试修改脚本并稍微玩一下，这样你就可以练习你在前两章中学到的内容了！
 - en: For more examples of Bash `case` statements, make sure to check chapter 16,
     where we would create an interactive menu in Bash using a `cases` statement to
     process the user input.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 要了解更多关于Bash `case`语句的示例，请确保查看第16章，在那里我们将使用`cases`语句在Bash中创建一个交互式菜单来处理用户输入。

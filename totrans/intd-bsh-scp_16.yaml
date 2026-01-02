@@ -1,153 +1,241 @@
 - en: Creating an interactive menu in Bash
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在 Bash 中创建交互式菜单
 - en: In this tutorial, I will show you how to create a multiple-choice menu in Bash
     so that your users could choose between what action should be executed!
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个教程中，我将向你展示如何在 Bash 中创建一个多选菜单，以便你的用户可以选择要执行的操作！
 - en: We would reuse some of the code from the previous chapter, so if you have not
     read it yet make sure to do so.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将重用前一章中的一些代码，所以如果你还没有阅读它，请确保阅读。
 - en: Planning the functionality
+  id: totrans-3
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 规划功能
 - en: 'Let''s start again by going over the main functionality of the script:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们再次回顾脚本的主要功能：
 - en: Checks the current Disk usage
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查当前磁盘使用情况
 - en: Checks the current CPU usage
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查当前 CPU 使用情况
 - en: Checks the current RAM usage
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查当前 RAM 使用情况
 - en: Checks the check the exact Kernel version
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 检查确切的内核版本
 - en: 'In case that you don''t have it on hand, here is the script itself:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你手头没有，这里就是脚本本身：
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: We will then build a menu that allows the user to choose which function to be
     executed.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将构建一个允许用户选择要执行哪个函数的菜单。
 - en: Of course, you can adjust the function or add new ones depending on your needs.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你可以根据需要调整函数或添加新的函数。
 - en: Adding some colors
+  id: totrans-13
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 添加一些颜色
 - en: In order to make the menu a bit more 'readable' and easy to grasp at first glance,
     we will add some color functions.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了使菜单更易于阅读和一眼就能抓住，我们将添加一些颜色函数。
 - en: 'At the beginning of your script add the following color functions:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 在你的脚本开头添加以下颜色函数：
 - en: '[PRE1]'
+  id: totrans-16
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'You can use the color functions as follows:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用颜色函数如下：
 - en: '[PRE2]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: The above would output the `Some text here` string and it would be blue!
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述代码将输出 `Some text here` 字符串，并且它将是蓝色！
 - en: Adding the menu
+  id: totrans-20
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 添加菜单
 - en: 'Finally, to add our menu, we will create a separate function with a case switch
     for our menu options:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，为了添加我们的菜单，我们将创建一个带有菜单选项的 case switch 的单独函数：
 - en: '[PRE3]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: A quick rundown of the code
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 代码快速概述
 - en: 'First we just echo out the menu options with some color:'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们只是用一些颜色打印菜单选项：
 - en: '[PRE4]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: 'Then we read the answer of the user and store it in a variable called `$a`:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后我们读取用户的答案并将其存储在变量 `$a` 中：
 - en: '[PRE5]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'Finally, we have a switch case which triggers a different function depending
     on the value of `$a`:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们有一个根据变量 `$a` 的值触发不同函数的 switch case：
 - en: '[PRE6]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'At the end we need to call the menu function to actually print out the menu:'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，我们需要调用菜单函数来实际打印菜单：
 - en: '[PRE7]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Testing the script
+  id: totrans-32
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 测试脚本
 - en: 'In the end, your script will look like this:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，你的脚本将看起来像这样：
 - en: '[PRE8]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: 'To test the script, create a new filed with a `.sh` extension, for example:
     `menu.sh` and then run it:'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了测试脚本，创建一个新的文件，扩展名为 `.sh`，例如：`menu.sh`，然后运行它：
 - en: '[PRE9]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE9]'
 - en: 'The output that you would get will look like this:'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 你会得到的输出将如下所示：
 - en: '[PRE10]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE10]'
 - en: 'You will be able to choose a different option from the list and each number
     will call a different function from the script:'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 你将能够从列表中选择不同的选项，每个数字都会调用脚本中的不同函数：
 - en: '![Nice Bash interactive menu](images/https/imgur.com/8EgxX4m.png)'
+  id: totrans-40
   prefs: []
   type: TYPE_IMG
+  zh: '![漂亮的 Bash 交互式菜单](images/https/imgur.com/8EgxX4m.png)'
 - en: Conclusion
+  id: totrans-41
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: You now know how to create a Bash menu and implement it in your scripts so that
     users could select different values!
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，你已经知道如何创建 Bash 菜单并在你的脚本中实现它，以便用户可以选择不同的值！
 - en: '**Notice:** This content was initially posted on [DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)'
+  id: totrans-43
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 此内容最初发布在 [DevDojo.com](https://devdojo.com/bobbyiliev/how-to-work-with-json-in-bash-using-jq)'

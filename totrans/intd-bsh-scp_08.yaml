@@ -1,122 +1,186 @@
 - en: Bash Arrays
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: Bash 数组
 - en: If you have ever done any programming, you are probably already familiar with
     arrays.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您曾经进行过任何编程，您可能已经熟悉数组了。
 - en: But just in case you are not a developer, the main thing that you need to know
     is that unlike variables, arrays can hold several values under one name.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 但以防您不是开发者，您需要知道的主要事情是，与变量不同，数组可以在一个名称下存储多个值。
 - en: 'You can initialize an array by assigning values divided by space and enclosed
     in `()`. Example:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以通过在 `()` 中用空格分隔的值来初始化数组。例如：
 - en: '[PRE0]'
+  id: totrans-4
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: To access the elements in the array, you need to reference them by their numeric
     index.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 要访问数组中的元素，您需要通过它们的数字索引来引用它们。
 - en: '**Notice:** keep in mind that you need to use curly brackets.'
+  id: totrans-6
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：**请记住，您需要使用花括号。'
 - en: 'Access a single element, this would output: `value 2`'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 访问单个元素，这将输出：`值 2`
 - en: '[PRE1]'
+  id: totrans-8
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'This would return the last element: `value 4`'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 这将返回最后一个元素：`值 4`
 - en: '[PRE2]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'As with command line arguments using `@` will return all elements in the array,
     as follows: `value 1 value 2 value 3 value 4`'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 与使用 `@` 的命令行参数类似，这将返回数组中的所有元素，如下所示：`值 1 值 2 值 3 值 4`
 - en: '[PRE3]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'Prepending the array with a hash sign (`#`) would output the total number of
     elements in the array, in our case it is `4`:'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在数组前加上哈希符号（`#`）将输出数组中的元素总数，在我们的例子中是 `4`：
 - en: '[PRE4]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Make sure to test this and practice it at your end with different values.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 确保在您的端测试此功能并练习使用不同的值。
 - en: Array Slicing
+  id: totrans-16
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 数组切片
 - en: 'While Bash doesn''t support true array slicing, you can achieve similar results
     using a combination of array indexing and string slicing:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然 Bash 不支持真正的数组切片，但您可以通过组合数组索引和字符串切片来实现类似的结果：
 - en: '[PRE5]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: When working with arrays, always use `[@]` to refer to all elements, and enclose
     the parameter expansion in quotes to preserve spaces in array elements.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 当处理数组时，始终使用 `[@]` 来引用所有元素，并将参数扩展放在引号内以保留数组元素中的空格。
 - en: String Slicing
+  id: totrans-20
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 字符串切片
 - en: 'In Bash, you can extract portions of a string using slicing. The basic syntax
     is:'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 Bash 中，您可以使用切片提取字符串的一部分。基本语法是：
 - en: '[PRE6]'
+  id: totrans-22
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: 'Where:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 其中：
 - en: '`start` is the starting index (0-based)'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`start` 是起始索引（基于0）'
 - en: '`length` is the maximum number of characters to extract'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`length` 是要提取的最大字符数'
 - en: 'Let''s look at some examples:'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们看看一些例子：
 - en: '[PRE7]'
+  id: totrans-27
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: Note that the second number in the slice notation represents the maximum length
     of the extracted substring, not the ending index. This is different from some
     other programming languages like Python. In Bash, if you specify a length that
     would extend beyond the end of the string, it will simply stop at the end of the
     string without raising an error.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，切片表示法中的第二个数字表示提取子字符串的最大长度，而不是结束索引。这与一些其他编程语言（如 Python）不同。在 Bash 中，如果您指定的长度会超出字符串的末尾，它将简单地停止在字符串末尾而不会引发错误。
 - en: 'For example:'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如：
 - en: '[PRE8]'
+  id: totrans-30
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: In the second example, even though we asked for 10 characters, Bash only returns
     the 6 available characters from index 7 to the end of the string. This behavior
     can be particularly useful when you're not sure of the exact length of the string
     you're working with.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 在第二个例子中，尽管我们请求了10个字符，但 Bash 只返回从索引7到字符串末尾的6个可用字符。这种行为在您不确定正在处理的字符串的确切长度时尤其有用。

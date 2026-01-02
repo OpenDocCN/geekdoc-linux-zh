@@ -1,183 +1,273 @@
 - en: Password Generator Bash Script
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 密码生成器Bash脚本
 - en: It's not uncommon situation where you will need to generate a random password
     that you can use for any software installation or when you sign-up to any website.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 需要生成随机密码以用于任何软件安装或注册任何网站的情况并不少见。
 - en: There are a lot of options in order to achieve this. You can use a password
     manager/vault where you often have the option to randomly generate a password
     or to use a website that can generate the password on your behalf.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 有很多选项可以实现这一点。您可以使用密码管理器/保险库，通常您有随机生成密码或让网站代为生成密码的选项。
 - en: You can also use Bash in your terminal (command-line) to generate a password
     that you can quickly use. There are a lot of ways to achieve that and I will make
     sure to cover few of them and will leave up to you to choose which option is most
     suitable with your needs.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 您也可以在终端（命令行）中使用Bash生成一个您可以快速使用的密码。有很多方法可以实现这一点，我会确保涵盖其中的一些，并让您选择最适合您需求的方法。
 - en: ':warning: Security'
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: ':warning: 安全'
 - en: '**This script is intended to practice your bash scripting skills. You can have
     fun while doing simple projects with BASH, but security is not a joke, so please
     make sure you do not save your passwords in plain text in a local file or write
     them down by hand on a piece of paper.**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**此脚本旨在练习您的bash脚本编写技能。您可以在使用BASH进行简单项目时享受乐趣，但安全不是玩笑，所以请确保您不要将密码以纯文本形式保存在本地文件中，也不要将它们手写在一张纸上。**'
 - en: '**I will highly recommend everyone to use secure and trusted providers to generate
     and save the passwords.**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**我强烈建议每个人都使用安全和可信的提供商来生成和保存密码。**'
 - en: Script summary
+  id: totrans-7
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 脚本摘要
 - en: 'Let me first do a quick summary of what our script is going to do.:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我先快速总结一下我们的脚本将要做什么：
 - en: We will have to option to choose the password characters length when the script
     is executed.
+  id: totrans-9
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 当脚本执行时，我们将有选择密码字符长度的选项。
 - en: The script will then generate 5 random passwords with the length that was specified
     in step 1
+  id: totrans-10
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 脚本将生成5个随机密码，其长度在步骤1中指定
 - en: Prerequisites
+  id: totrans-11
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 前提条件
 - en: You would need a bash terminal and a text editor. You can use any text editor
     like vi, vim, nano or Visual Studio Code.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 您需要一个bash终端和一个文本编辑器。您可以使用任何文本编辑器，如vi、vim、nano或Visual Studio Code。
 - en: I'm running the script locally on my Linux laptop but if you're using Windows
     PC you can ssh to any server of your choice and execute the script there.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 我在本地的Linux笔记本电脑上运行此脚本，但如果您使用Windows PC，您可以通过ssh连接到您选择的任何服务器并执行该脚本。
 - en: Although the script is pretty simple, having some basic BASH scripting knowledge
     will help you to better understand the script and how it's working.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然脚本很简单，但具备一些基本的BASH脚本知识将帮助您更好地理解脚本及其工作原理。
 - en: Generate a random password
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 生成随机密码
 - en: One of the great benefits of Linux is that you can do a lot of things using
     different methods. When it comes to generating a random string of characters it's
     not different as well.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Linux的一个巨大优势是您可以使用不同的方法做很多事情。当涉及到生成随机字符串时，情况也是如此。
 - en: You can use several commands in order to generate a random string of characters.
     I will cover few of them and will provide some examples.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以使用多个命令来生成随机字符串。我会介绍其中的一些，并提供一些示例。
 - en: 'Using the `date` command. The date command will output the current date and
     time. However we also further manipulate the output in order to use it as randomly
     generated password. We can hash the date using md5, sha or just run it through
     base64\. These are few examples:'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用`date`命令。`date`命令将输出当前日期和时间。然而，我们进一步操作输出，以便将其用作随机生成的密码。我们可以使用md5、sha或直接通过base64。以下是一些示例：
 - en: '[PRE0]'
+  id: totrans-19
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'using sha256sum:'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用sha256sum：
 - en: '[PRE1]'
+  id: totrans-21
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'using base64:'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用base64：
 - en: '[PRE2]'
+  id: totrans-23
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'We can also use openssl in order to generate pseudo-random bytes and run the
     output through base64\. An example output will be:'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 我们也可以使用openssl来生成伪随机字节，并将输出通过base64编码。一个示例输出将是：
 - en: '[PRE3]'
+  id: totrans-25
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: Keep in mind that openssl might not be installed on your system so it's likely
     that you will need to install it first in order to use it.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 请记住，openssl可能没有安装到您的系统上，因此您可能需要首先安装它才能使用它。
 - en: 'The most preferred way is to use the pseudorandom number generator - /dev/urandom
     since it is intended for most cryptographic purposes. We would also need to manipulate
     the output using `tr` in order to translate it. An example command is:'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最受欢迎的方式是使用伪随机数生成器 - /dev/urandom，因为它适用于大多数加密目的。我们还需要使用`tr`来操作输出。一个示例命令是：
 - en: '[PRE4]'
+  id: totrans-28
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: With this command we take the output from /dev/urandom and translate it with
     `tr` while using all letters and digits and print the desired number of characters.
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用这个命令，我们将来自/dev/urandom的输出通过`tr`进行转换，同时使用所有字母和数字，并打印出所需数量的字符。
 - en: The script
+  id: totrans-30
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 脚本
 - en: First we begin the script with the shebang. We use it to tell the operating
     system which interpreter to use to parse the rest of the file.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 首先，我们通过shebang开始脚本。我们使用它来告诉操作系统使用哪个解释器来解析文件的其余部分。
 - en: '[PRE5]'
+  id: totrans-32
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: 'We can then continue and ask the user for some input. In this case we would
     like to know how many characters the password needs to be:'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们可以继续并要求用户输入一些信息。在这种情况下，我们想知道密码需要多少个字符：
 - en: '[PRE6]'
+  id: totrans-34
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Generate the passwords and then print it so the user can use it.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 生成密码，然后打印出来，以便用户可以使用它。
 - en: '[PRE7]'
+  id: totrans-36
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: 'The full script:'
+  id: totrans-37
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 完整的脚本：
 - en: '[PRE8]'
+  id: totrans-38
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE8]'
 - en: Conclusion
+  id: totrans-39
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: This is pretty much how you can use simple bash script to generate random passwords.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 这基本上就是您可以使用简单的bash脚本来生成随机密码的方法。
 - en: ':warning: **As already mentioned, please make sure to use strong passwords
     in order to make sure your account is protected. Also whenever is possible use
     2 factor authentication as this will provide additional layer of security for
     your account.**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: ':warning: **如前所述，请确保使用强密码以确保您的账户受到保护。同时，尽可能使用双因素认证，因为这将为您的账户提供额外的安全层。**'
 - en: While the script is working fine, it expects that the user will provide the
     requested input. In order to prevent any issues you would need to do some more
     advance checks on the user input in order to make sure the script will continue
     to work fine even if the provided input does not match our needs.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 虽然脚本运行良好，但它期望用户会提供所需输入。为了防止任何问题，您需要对用户输入进行一些更高级的检查，以确保即使提供的输入不符合我们的需求，脚本也能继续正常工作。
 - en: Contributed by
+  id: totrans-43
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 贡献者
 - en: '[Alex Georgiev](https://twitter.com/alexgeorgiev17)'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '[Alex Georgiev](https://twitter.com/alexgeorgiev17)'

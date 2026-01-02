@@ -1,137 +1,213 @@
 - en: Sending emails with Bash and SSMTP
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 使用Bash和SSMTP发送电子邮件
 - en: SSMTP is a tool that delivers emails from a computer or a server to a configured
     mail host.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: SSMTP是一个将电子邮件从计算机或服务器发送到配置的邮件主机的工具。
 - en: SSMTP is not an email server itself and does not receive emails or manage a
     queue.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: SSMTP本身不是一个电子邮件服务器，它不会接收电子邮件或管理队列。
 - en: One of its primary uses is for forwarding automated email (like system alerts)
     off your machine and to an external email address.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 它的主要用途之一是转发来自您的机器到外部电子邮件地址的自动化电子邮件（如系统警报）。
 - en: Prerequisites
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 前提条件
 - en: 'You would need the following things in order to be able to complete this tutorial
     successfully:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了成功完成本教程，您需要以下东西：
 - en: Access to an Ubuntu 18.04 server as a non-root user with sudo privileges and
     an active firewall installed on your server. To set these up, please refer to
     our [Initial Server Setup Guide for Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04)
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 以非root用户身份访问Ubuntu 18.04服务器，具有sudo权限，并在您的服务器上安装了活动防火墙。有关设置这些信息，请参阅我们的[Ubuntu
+    18.04初始服务器设置指南](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18.04)
 - en: An SMTP server along with SMTP username and password, this would also work with
     Gmail's SMTP server, or you could set up your own SMTP server by following the
     steps from this tutorial on [How to Install and Configure Postfix as a Send-Only
     SMTP Server on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-16-04)
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个SMTP服务器以及SMTP用户名和密码，这也可以与Gmail的SMTP服务器一起使用，或者您可以通过遵循本教程中的步骤来设置自己的SMTP服务器：[如何在Ubuntu
+    16.04上安装和配置Postfix作为仅发送的SMTP服务器](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-16.04)
 - en: Installing SSMTP
+  id: totrans-8
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 安装SSMTP
 - en: 'In order to install SSMTP, you’ll need to first update your apt cache with:'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 为了安装SSMTP，您首先需要使用以下命令更新您的apt缓存：
 - en: '[PRE0]'
+  id: totrans-10
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: 'Then run the following command to install SSMTP:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后运行以下命令来安装SSMTP：
 - en: '[PRE1]'
+  id: totrans-12
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'Another thing that you would need to install is `mailutils`, to do that run
     the following command:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 您还需要安装的是`mailutils`，为此请运行以下命令：
 - en: '[PRE2]'
+  id: totrans-14
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: Configuring SSMTP
+  id: totrans-15
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 配置SSMTP
 - en: Now that you have `ssmtp` installed, in order to configure it to use your SMTP
     server when sending emails, you need to edit the SSMTP configuration file.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在您已经安装了`ssmtp`，为了在发送电子邮件时配置它使用您的SMTP服务器，您需要编辑SSMTP配置文件。
 - en: 'Using your favourite text editor to open the `/etc/ssmtp/ssmtp.conf` file:'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用您喜欢的文本编辑器打开`/etc/ssmtp/ssmtp.conf`文件：
 - en: '[PRE3]'
+  id: totrans-18
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE3]'
 - en: 'You need to include your SMTP configuration:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 您需要包含您的SMTP配置：
 - en: '[PRE4]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE4]'
 - en: Save the file and exit.
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 保存文件并退出。
 - en: Sending emails with SSMTP
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用SSMTP发送电子邮件
 - en: 'Once your configuration is done, in order to send an email just run the following
     command:'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 完成配置后，为了发送电子邮件，只需运行以下命令：
 - en: '[PRE5]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE5]'
 - en: You can run this directly in your terminal or include it in your bash scripts.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 您可以直接在终端中运行此命令，或者将其包含在您的bash脚本中。
 - en: Sending A File with SSMTP (optional)
+  id: totrans-26
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 使用SSMTP发送文件（可选）
 - en: If you need to send files as attachments, you can use `mpack`.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果您需要发送文件作为附件，可以使用`mpack`。
 - en: 'To install `mpack` run the following command:'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 要安装`mpack`，请运行以下命令：
 - en: '[PRE6]'
+  id: totrans-29
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE6]'
 - en: Next, in order to send an email with a file attached, run the following command.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 接下来，为了发送带有附件的电子邮件，请运行以下命令。
 - en: '[PRE7]'
+  id: totrans-31
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE7]'
 - en: The above command would send an email to `<^>your_recepient_email@yourdomain.com<^>`
     with the `<^>your_file.zip<^>` attached.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述命令将发送一封带有`<^>your_file.zip<^>`附件的电子邮件到`<^>your_recepient_email@yourdomain.com<^>`。
 - en: Conclusion
+  id: totrans-33
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: SSMTP is a great and reliable way to implement SMTP email functionality directly
     in bash scripts.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: SSMTP是在bash脚本中直接实现SMTP电子邮件功能的一个很好的可靠方法。
 - en: For more information about SSMTP I would recommend checking the official documentation
     [here](https://wiki.archlinux.org/index.php/SSMTP).
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于SSMTP的更多信息，我建议您查看官方文档[这里](https://wiki.archlinux.org/index.php/SSMTP)。
 - en: '**Notice:** This content was initially posted on the [DigitalOcean community
     forum](https://www.digitalocean.com/community/questions/how-to-send-emails-from-a-bash-script-using-ssmtp).'
+  id: totrans-36
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：**此内容最初发布在[DigitalOcean社区论坛](https://www.digitalocean.com/community/questions/how-to-send-emails-from-a-bash-script-using-ssmtp)。'

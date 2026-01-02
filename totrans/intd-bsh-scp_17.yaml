@@ -1,136 +1,207 @@
 - en: Executing BASH scripts on Multiple Remote Servers
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 在多个远程服务器上执行 BASH 脚本
 - en: Any command that you can run from the command line can be used in a bash script.
     Scripts are used to run a series of commands. Bash is available by default on
     Linux and macOS operating systems.
+  id: totrans-1
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以在命令行中运行的任何命令都可以用在 bash 脚本中。脚本用于运行一系列命令。Bash 在 Linux 和 macOS 操作系统上是默认可用的。
 - en: Let's have a hypothetical scenario where you need to execute a BASH script on
     multiple remote servers, but you don't want to manually copy the script to each
     server, then again login to each server individually and only then execute the
     script.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 让我们假设一个场景，你需要在一个多个远程服务器上执行 BASH 脚本，但你不想手动将脚本复制到每个服务器，然后再次登录到每个服务器单独执行脚本。
 - en: Of course you could use a tool like Ansible but let's learn how to do that with
     Bash!
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你可以使用像 Ansible 这样的工具，但让我们学习如何使用 Bash 来完成这个任务！
 - en: Prerequisites
+  id: totrans-4
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 前提条件
 - en: 'For this example I will use 3 remote Ubuntu servers deployed on DigitalOcean.
     If you don''t have a Digital Ocean account yet, you can sign up for DigitalOcean
     and get $100 free credit via this referral link here:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于这个例子，我将使用 DigitalOcean 上部署的 3 个远程 Ubuntu 服务器。如果你还没有 Digital Ocean 账户，你可以通过此推荐链接注册
+    DigitalOcean 并获得 100 美元的免费信用额度：
 - en: '[https://m.do.co/c/2a9bba940f39](https://m.do.co/c/2a9bba940f39)'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '[https://m.do.co/c/2a9bba940f39](https://m.do.co/c/2a9bba940f39)'
 - en: Once you have your Digital Ocean account ready go ahead and deploy 3 droplets.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 一旦你的 Digital Ocean 账户准备就绪，继续部署 3 个 Droplet。
 - en: 'I''ve gone ahead and created 3 Ubuntu servers:'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 我已经创建了 3 个 Ubuntu 服务器：
 - en: '![DigitalOcean Ubuntu servers](images/https/imgur.com/09xmq41.png)'
+  id: totrans-9
   prefs: []
   type: TYPE_IMG
+  zh: '![DigitalOcean Ubuntu 服务器](images/https/imgur.com/09xmq41.png)'
 - en: I'll put a those servers IP's in a `servers.txt` file which I would use to loop
     though with our Bash script.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 我会把那些服务器的 IP 地址放入一个 `servers.txt` 文件中，我将使用这个文件来通过我们的 Bash 脚本进行循环。
 - en: 'If you are new to DigitalOcean you can follow the steps on how to create a
     Droplet here:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你刚接触 DigitalOcean，可以在此处遵循创建 Droplet 的步骤：
 - en: '[How to Create a Droplet from the DigitalOcean Control Panel](https://www.digitalocean.com/docs/droplets/how-to/create/)'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何在 DigitalOcean 控制面板中创建 Droplet](https://www.digitalocean.com/docs/droplets/how-to/create/)'
 - en: 'You can also follow the steps from this video here on how to do your initial
     server setup:'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 你也可以遵循此视频中的步骤来执行你的初始服务器设置：
 - en: '[How to do your Initial Server Setup with Ubuntu](https://youtu.be/7NL2_4HIgKU)'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[如何使用 Ubuntu 进行初始服务器设置](https://youtu.be/7NL2_4HIgKU)'
 - en: 'Or even better, you can follow this article here on how to automate your initial
     server setup with Bash:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，更好的是，你可以遵循此文章中的说明，了解如何使用 Bash 自动化你的初始服务器设置：
 - en: '[Automating Initial Server Setup with Ubuntu 18.04 with Bash](https://www.digitalocean.com/community/tutorials/automating-initial-server-setup-with-ubuntu-18-04)'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '[使用 Bash 在 Ubuntu 18.04 上自动化初始服务器设置](https://www.digitalocean.com/community/tutorials/automating-initial-server-setup-with-ubuntu-18-04)'
 - en: With the 3 new servers in place, we can go ahead and focus on running our Bash
     script on all of them with a single command!
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在放置了 3 个新服务器后，我们可以继续使用单个命令在所有服务器上运行我们的 Bash 脚本！
 - en: The BASH Script
+  id: totrans-18
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: BASH 脚本
 - en: I will reuse the demo script from the previous chapter with some slight changes.
     It simply executes a few checks like the current memory usage, the current CPU
     usage, the number of TCP connections and the version of the kernel.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 我将重复使用上一章中的演示脚本，并进行一些小的修改。它简单地执行一些检查，如当前内存使用情况、当前 CPU 使用情况、TCP 连接数和内核版本。
 - en: '[PRE0]'
+  id: totrans-20
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE0]'
 - en: Copy the code bellow and add this in a file called `remote_check.sh`. You can
     also get the script from [here](https://devdojo.com/bobbyiliev/executing-bash-script-on-multiple-remote-server).
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 复制下面的代码并将其添加到名为 `remote_check.sh` 的文件中。你也可以从[这里](https://devdojo.com/bobbyiliev/executing-bash-script-on-multiple-remote-server)获取脚本。
 - en: Running the Script on all Servers
+  id: totrans-22
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 在所有服务器上运行脚本
 - en: Now that we have the script and the servers ready and that we've added those
     servers in our servers.txt file we can run the following command to loop though
     all servers and execute the script remotely without having to copy the script
     to each server and individually connect to each server.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在我们有了脚本和服务器，并且已经将那些服务器添加到我们的 servers.txt 文件中，我们可以运行以下命令来遍历所有服务器并远程执行脚本，而无需将脚本复制到每个服务器并单独连接到每个服务器。
 - en: '[PRE1]'
+  id: totrans-24
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE1]'
 - en: 'What this for loop does is, it goes through each server in the servers.txt
     file and then it runs the following command for each item in the list:'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个 for 循环的作用是，它会遍历 servers.txt 文件中的每个服务器，然后对列表中的每个项目运行以下命令：
 - en: '[PRE2]'
+  id: totrans-26
   prefs: []
   type: TYPE_PRE
+  zh: '[PRE2]'
 - en: 'You would get the following output:'
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 你会得到以下输出：
 - en: '![Running bash script on multiple remote servers](images/https/imgur.com/B1AmhUP.png)'
+  id: totrans-28
   prefs: []
   type: TYPE_IMG
+  zh: '![在多个远程服务器上运行 bash 脚本](images/https/imgur.com/B1AmhUP.png)'
 - en: Conclusion
+  id: totrans-29
   prefs:
   - PREF_H2
   type: TYPE_NORMAL
+  zh: 结论
 - en: This is just a really simple example on how to execute a simple script on multiple
     servers without having to copy the script to each server and without having to
     access the servers individually.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个非常简单的例子，说明如何在多个服务器上执行一个简单的脚本，而无需将脚本复制到每个服务器，也无需单独访问服务器。
 - en: Of course you could run a much more complex script and on many more servers.
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，你也可以运行一个更复杂的脚本，并在更多的服务器上运行。
 - en: 'If you are interested in automation, I would recommend checking out the Ansible
     resources page on the DigitalOcean website:'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果你对自动化感兴趣，我建议你查看 DigitalOcean 网站上的 Ansible 资源页面：
 - en: '[Ansible Resources](https://www.digitalocean.com/community/tags/ansible)'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '[Ansible 资源](https://www.digitalocean.com/community/tags/ansible)'
 - en: '**Notice:** This content was initially posted on [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'
+  id: totrans-34
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '**注意：** 这篇内容最初发布在 [DevDojo](https://devdojo.com/bobbyiliev/bash-script-to-summarize-your-nginx-and-apache-access-logs)'
