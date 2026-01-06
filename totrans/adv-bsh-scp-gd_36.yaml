@@ -1,97 +1,155 @@
 - en: Chapter 31\. Of Zeros and Nulls
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 31 章. 零与空
 - en: 原文：[https://tldp.org/LDP/abs/html/zeros.html](https://tldp.org/LDP/abs/html/zeros.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/zeros.html](https://tldp.org/LDP/abs/html/zeros.html)
 - en: '|   |  **Faultily faultless, icily regular, splendidly null*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **完美无瑕，冰冷的规律，完美至极*'
 - en: '*Dead perfection; no more.*'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*完美的死亡；不再有更多。*'
 - en: '*--Alfred Lord Tennyson**  |'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--阿尔弗雷德·洛德·丁尼生**  |'
 - en: '**`/dev/zero` ... `/dev/null`**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**`/dev/zero` ... `/dev/null`**'
 - en: Uses of `/dev/null`
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/dev/null` 的用途'
 - en: Think of `/dev/null` as a *black hole*. It is essentially the equivalent of
     a write-only file. Everything written to it disappears. Attempts to read or output
     from it result in nothing. All the same, `/dev/null` can be quite useful from
     both the command-line and in scripts.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 将 `/dev/null` 想象成一个 *黑洞*。它本质上相当于一个只写文件。写入它的所有内容都会消失。尝试读取或从它输出都会导致无结果。尽管如此，`/dev/null`
+    在命令行和脚本中都可以非常有用。
 - en: Suppressing `stdout`.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 抑制 `stdout`。
 - en: '|  [PRE0]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: Suppressing `stderr` (from [Example 16-3](moreadv.html#EX57)).
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 抑制 `stderr`（参见 [示例 16-3](moreadv.html#EX57)）。
 - en: '|  [PRE1]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Suppressing output from *both* `stdout` and `stderr`.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 抑制 `stdout` 和 `stderr` 的输出。
 - en: '|  [PRE2]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: 'Deleting contents of a file, but preserving the file itself, with all attendant
     permissions (from [Example 2-1](sha-bang.html#EX1) and [Example 2-3](sha-bang.html#EX2)):'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 删除文件内容，但保留文件本身及其所有权限（参见 [示例 2-1](sha-bang.html#EX1) 和 [示例 2-3](sha-bang.html#EX2)）：
 - en: '|  [PRE3]  |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: 'Automatically emptying the contents of a logfile (especially good for dealing
     with those nasty "cookies" sent by commercial Web sites):'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 自动清空日志文件的内容（特别适合处理那些商业网站发送的讨厌的“cookies”）：
 - en: '**Example 31-1\. Hiding the cookie jar**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 31-1\. 隐藏 cookie jar**'
 - en: '|  [PRE4]  |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: Uses of `/dev/zero`
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/dev/zero` 的用途'
 - en: Like `/dev/null`, `/dev/zero` is a pseudo-device file, but it actually produces
     a stream of nulls (*binary* zeros, not the [ASCII](special-chars.html#ASCIIDEF)
     kind). Output written to `/dev/zero` disappears, and it is fairly difficult to
     actually read the nulls emitted there, though it can be done with [od](extmisc.html#ODREF)
     or a hex editor. The chief use of `/dev/zero` is creating an initialized dummy
     file of predetermined length intended as a temporary swap file.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 `/dev/null` 类似，`/dev/zero` 是一个伪设备文件，但它实际上产生的是一串空值（*二进制*零，不是 [ASCII](special-chars.html#ASCIIDEF)
+    类型的）。写入 `/dev/zero` 的输出会消失，实际上很难读取那里发出的空值，尽管可以使用 [od](extmisc.html#ODREF) 或十六进制编辑器做到。`/dev/zero`
+    的主要用途是创建一个预定长度的初始化虚拟文件，用作临时交换文件。
 - en: '**Example 31-2\. Setting up a swapfile using `/dev/zero`**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 31-2\. 使用 `/dev/zero` 设置交换文件**'
 - en: '|  [PRE5]  |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Another application of `/dev/zero` is to "zero out" a file of a designated size
     for a special purpose, such as mounting a filesystem on a [loopback device](devref1.html#LOOPBACKREF)
     (see [Example 17-8](system.html#CREATEFS)) or "securely" deleting a file (see
     [Example 16-61](extmisc.html#BLOTOUT)).
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/dev/zero` 的另一个应用是将指定大小的文件“清零”，用于特殊目的，例如在 [回环设备](devref1.html#LOOPBACKREF)
+    上挂载文件系统（参见 [示例 17-8](system.html#CREATEFS)）或“安全”地删除文件（参见 [示例 16-61](extmisc.html#BLOTOUT)）。'
 - en: '**Example 31-3\. Creating a ramdisk**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 31-3\. 创建 ramdisk**'
 - en: '|  [PRE6]  |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: In addition to all the above, `/dev/zero` is needed by ELF (*Executable and
     Linking Format*) UNIX/Linux binaries.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 除了上述所有内容外，`/dev/zero` 还被 ELF（*可执行和链接格式*）UNIX/Linux 二进制文件所需要。

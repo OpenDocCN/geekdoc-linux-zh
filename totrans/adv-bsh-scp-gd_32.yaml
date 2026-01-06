@@ -1,288 +1,458 @@
 - en: Chapter 27\. Arrays
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 27 章\. 数组
 - en: 原文：[https://tldp.org/LDP/abs/html/arrays.html](https://tldp.org/LDP/abs/html/arrays.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/arrays.html](https://tldp.org/LDP/abs/html/arrays.html)
 - en: Newer versions of Bash support one-dimensional arrays. Array elements may be
     initialized with the `**variable[xx]**` notation. Alternatively, a script may
     introduce the entire array by an explicit `**declare -a variable**` statement.
     To dereference (retrieve the contents of) an array element, use *curly bracket*
     notation, that is, `**${element[xx]}**`.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 新版本的 Bash 支持一维数组。数组元素可以使用 `**variable[xx]**` 符号初始化。或者，脚本可以通过显式的 `**declare -a
+    variable**` 语句引入整个数组。要取消引用（检索数组元素的值），使用 *花括号* 符号，即 `**${element[xx]}**`。
 - en: '**Example 27-1\. Simple array usage**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-1\. 简单数组使用**'
 - en: '|  [PRE0]  |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: As we have seen, a convenient way of initializing an entire array is the `array=(
     element1 element2 ... elementN )` notation.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 正如我们所见，初始化整个数组的一个方便方法是使用 `array=( element1 element2 ... elementN )` 符号。
 - en: '|  [PRE1]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '|'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Bash permits array operations on variables, even if the variables are not explicitly
     declared as arrays.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 允许对变量进行数组操作，即使这些变量没有明确声明为数组。
 - en: '&#124;  [PRE2]  &#124;'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE2]  &#124;'
 - en: Once again this demonstrates that [Bash variables are untyped](untyped.html#BVUNTYPED).
     |
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 再次证明 Bash 变量是无类型的 [Bash 变量无类型](untyped.html#BVUNTYPED)。|
 - en: '**Example 27-2\. Formatting a poem**'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-2\. 格式化诗歌**'
 - en: '|  [PRE3]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Array variables have a syntax all their own, and even standard Bash commands
     and operators have special options adapted for array use.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 数组变量有自己的语法，甚至标准的 Bash 命令和运算符也有针对数组使用的特殊选项。
 - en: '**Example 27-3\. Various array operations**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-3\. 各种数组操作**'
 - en: '|  [PRE4]  |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: Many of the standard [string operations](string-manipulation.html#STRINGMANIP)
     work on arrays.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多标准 [字符串操作](string-manipulation.html#STRINGMANIP) 都适用于数组。
 - en: '**Example 27-4\. String operations on arrays**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-4\. 数组上的字符串操作**'
 - en: '|  [PRE5]  |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: '[Command substitution](commandsub.html#COMMANDSUBREF) can construct the individual
     elements of an array.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '[命令替换](commandsub.html#COMMANDSUBREF) 可以构建数组的各个元素。'
 - en: '**Example 27-5\. Loading the contents of a script into an array**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-5\. 将脚本内容加载到数组中**'
 - en: '|  [PRE6]  |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: In an array context, some Bash [builtins](internal.html#BUILTINREF) have a slightly
     altered meaning. For example, [unset](internal.html#UNSETREF) deletes array elements,
     or even an entire array.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 在数组上下文中，一些 Bash [内置命令](internal.html#BUILTINREF) 的含义略有不同。例如，[unset](internal.html#UNSETREF)
+    删除数组元素，甚至整个数组。
 - en: '**Example 27-6\. Some special properties of arrays**'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-6\. 数组的某些特殊属性**'
 - en: '|  [PRE7]  |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: As seen in the previous example, either **${array_name[@]}** or **${array_name[*]}**
     refers to *all* the elements of the array. Similarly, to get a count of the number
     of elements in an array, use either **${#array_name[@]}** or **${#array_name[*]}**.
     **${#array_name}** is the length (number of characters) of **${array_name[0]}**,
     the first element of the array.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 如前例所示，**${array_name[@]}** 或 **${array_name[*]}** 指的是数组的 *所有* 元素。同样，要获取数组中元素的数量，可以使用
+    **${#array_name[@]}** 或 **${#array_name[*]}**。**${#array_name}** 是 **${array_name[0]}**
+    的长度（字符数），即数组的第一个元素。
 - en: '**Example 27-7\. Of empty arrays and empty elements**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-7\. 空数组和空元素**'
 - en: '|  [PRE8]  |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: The relationship of **${array_name[@]}** and **${array_name[*]}** is analogous
     to that between [$@ and $*](internalvariables.html#APPREF). This powerful array
     notation has a number of uses.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**${array_name[@]}** 和 **${array_name[*]}** 之间的关系类似于 [$@ 和 $*](internalvariables.html#APPREF)
+    之间的关系。这种强大的数组符号有许多用途。'
 - en: '|  [PRE9]  |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The **array=( element1
     element2 ... elementN )** initialization operation, with the help of [command
     substitution](commandsub.html#COMMANDSUBREF), makes it possible to load the contents
     of a text file into an array.'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 使用 **array=( element1
+    element2 ... elementN )** 初始化操作，借助 [命令替换](commandsub.html#COMMANDSUBREF)，可以将文本文件的内容加载到数组中。'
 - en: '&#124;  [PRE10]  &#124;'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE10]  &#124;'
 - en: '|'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Clever scripting makes it possible to add array operations.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 精巧的脚本使得添加数组操作成为可能。
 - en: '**Example 27-8\. Initializing arrays**'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-8\. 初始化数组**'
 - en: '|  [PRE11]  |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Adding a superfluous
     **declare -a** statement to an array declaration may speed up execution of subsequent
     operations on the array. |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 在数组声明中添加多余的 **declare
+    -a** 语句可能会加快对数组后续操作的执行速度。|'
 - en: '**Example 27-9\. Copying and concatenating arrays**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-9\. 复制和连接数组**'
 - en: '|  [PRE12]  |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: '**Example 27-10\. More on concatenating arrays**'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-10\. 关于连接数组的更多内容**'
 - en: '|  [PRE13]  |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE13]  |'
 - en: --
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Arrays permit deploying old familiar algorithms as shell scripts. Whether this
     is necessarily a good idea is left for the reader to decide.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 数组允许将旧熟悉算法作为 shell 脚本部署。是否这 necessarily 是一个好主意，留给读者决定。
 - en: '**Example 27-11\. The Bubble Sort**'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-11\. 冒泡排序**'
 - en: '|  [PRE14]  |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: --
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Is it possible to nest arrays within arrays?
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 是否可以在数组中嵌套数组？
 - en: '|  [PRE15]  |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE15]  |'
 - en: --
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Embedded arrays in combination with [indirect references](bashver2.html#VARREFNEW)
     create some fascinating possibilities
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 嵌入式数组与 [间接引用](bashver2.html#VARREFNEW) 结合使用，创造了一些有趣的可能性
 - en: '**Example 27-12\. Embedded arrays and indirect references**'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-12\. 嵌入式数组和间接引用**'
 - en: '|  [PRE16]  |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE16]  |'
 - en: --
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Arrays enable implementing a shell script version of the *Sieve of Eratosthenes*.
     Of course, a resource-intensive application of this nature should really be written
     in a compiled language, such as C. It runs excruciatingly slowly as a script.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 数组可以实现一个 shell 脚本版本的 *埃拉托斯特尼筛法*。当然，这种资源密集型应用实际上应该用编译语言编写，例如 C。作为脚本运行时速度极慢。
 - en: '**Example 27-13\. The Sieve of Eratosthenes**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-13\. 埃拉托斯特尼筛法**'
 - en: '|  [PRE17]  |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE17]  |'
 - en: '**Example 27-14\. The Sieve of Eratosthenes, Optimized**'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-14\. 埃拉托斯特尼筛法，优化版**'
 - en: '|  [PRE18]  |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE18]  |'
 - en: Compare these array-based prime number generators with alternatives that do
     not use arrays, [Example A-15](contributed-scripts.html#PRIMES), and [Example
     16-46](mathc.html#PRIMES2).
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 将这些基于数组的素数生成器与不使用数组的替代方案进行比较，[示例 A-15](contributed-scripts.html#PRIMES)，和 [示例
+    16-46](mathc.html#PRIMES2)。
 - en: --
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Arrays lend themselves, to some extent, to emulating data structures for which
     Bash has no native support.
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: 数组在一定程度上适合模拟 Bash 没有原生支持的复杂数据结构。
 - en: '**Example 27-15\. Emulating a push-down stack**'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-15\. 模拟后进先出栈**'
 - en: '|  [PRE19]  |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE19]  |'
 - en: --
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Fancy manipulation of array "subscripts" may require intermediate variables.
     For projects involving this, again consider using a more powerful programming
     language, such as Perl or C.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 对数组“下标”的复杂操作可能需要中间变量。对于涉及此类操作的项目，再次考虑使用更强大的编程语言，例如 Perl 或 C。
 - en: '**Example 27-16\. Complex array application: *Exploring a weird mathematical
     series***'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-16\. 复杂数组应用：*探索一个奇特的数学级数*** '
 - en: '|  [PRE20]  |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE20]  |'
 - en: --
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Bash supports only one-dimensional arrays, though a little trickery permits
     simulating multi-dimensional ones.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 只支持一维数组，尽管一些技巧可以模拟多维数组。
 - en: '**Example 27-17\. Simulating a two-dimensional array, then tilting it**'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 27-17\. 模拟二维数组，然后倾斜它**'
 - en: '|  [PRE21]  |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE21]  |'
 - en: A two-dimensional array is essentially equivalent to a one-dimensional one,
     but with additional addressing modes for referencing and manipulating the individual
     elements by *row* and *column* position.
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: 二维数组本质上等同于一维数组，但具有额外的寻址模式，可以通过 *行* 和 *列* 位置引用和操作单个元素。
 - en: For an even more elaborate example of simulating a two-dimensional array, see
     [Example A-10](contributed-scripts.html#LIFESLOW).
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看模拟二维数组的更复杂示例，请参阅 [示例 A-10](contributed-scripts.html#LIFESLOW)。
 - en: --
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: 'For more interesting scripts using arrays, see:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 想要了解更多使用数组的有趣脚本，请参阅：
 - en: '[Example 12-3](commandsub.html#AGRAM2)'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 12-3](commandsub.html#AGRAM2)'
 - en: '[Example 16-46](mathc.html#PRIMES2)'
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 16-46](mathc.html#PRIMES2)'
 - en: '[Example A-22](contributed-scripts.html#HASHEX2)'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 A-22](contributed-scripts.html#HASHEX2)'
 - en: '[Example A-44](contributed-scripts.html#HOMEWORK)'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 A-44](contributed-scripts.html#HOMEWORK)'
 - en: '[Example A-41](contributed-scripts.html#QKY)'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 A-41](contributed-scripts.html#QKY)'
 - en: '[Example A-42](contributed-scripts.html#NIM)'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[示例 A-42](contributed-scripts.html#NIM)'

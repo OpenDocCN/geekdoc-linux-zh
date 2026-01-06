@@ -1,94 +1,153 @@
 - en: Chapter 26\. List Constructs
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第26章\. 列表构造
 - en: 原文：[https://tldp.org/LDP/abs/html/list-cons.html](https://tldp.org/LDP/abs/html/list-cons.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/list-cons.html](https://tldp.org/LDP/abs/html/list-cons.html)
 - en: The *and list* and *or list* constructs provide a means of processing a number
     of commands consecutively. These can effectively replace complex nested [if/then](testconstructs.html#TESTCONSTRUCTS1)
     or even [case](testbranch.html#CASEESAC1) statements.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '*和列表* 和 *或列表* 构造提供了一种连续处理多个命令的方法。这些可以有效地替换复杂的嵌套 [if/then](testconstructs.html#TESTCONSTRUCTS1)
+    或甚至 [case](testbranch.html#CASEESAC1) 语句。'
 - en: '**Chaining together commands**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**链式命令**'
 - en: and list
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 和列表
 - en: '|  [PRE0]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: Each command executes in turn, provided that the previous command has given
     a return value of `*true*` (zero). At the first `*false*` (non-zero) return, the
     command chain terminates (the first command returning `*false*` is the last one
     to execute).
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前一个命令返回值为 `*true*`（零）的情况下，每个命令依次执行。在第一次返回 `*false*`（非零）时，命令链终止（返回 `*false*`
+    的第一个命令是最后执行的）。
 - en: 'An interesting use of a two-condition *and list* from an early version of YongYe''s
     [Tetris game script](http://bash.deta.in/Tetris_Game.sh):'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个有趣的用法是来自 YongYe 的 [Tetris 游戏脚本](http://bash.deta.in/Tetris_Game.sh) 早期版本的二条件
+    *和列表*：
 - en: '|  [PRE1]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '**Example 26-1\. Using an *and list* to test for command-line arguments**'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 26-1\. 使用 *和列表* 测试命令行参数**'
 - en: '|  [PRE2]  |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: '**Example 26-2\. Another command-line arg test using an *and list***'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 26-2\. 使用 *和列表* 进行另一个命令行参数测试**'
 - en: '|  [PRE3]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Of course, an *and list* can also *set* variables to a default value.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，*和列表* 也可以 *设置* 变量的默认值。
 - en: '|  [PRE4]  |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: or list
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 或列表
 - en: '|  [PRE5]  |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Each command executes in turn for as long as the previous command returns false.
     At the first true return, the command chain terminates (the first command returning
     true is the last one to execute). This is obviously the inverse of the "and list".
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 在前一个命令返回 false 的情况下，每个命令依次执行。在第一次返回 true 时，命令链终止（返回 true 的第一个命令是最后执行的）。这显然是
+    "和列表" 的逆。
 - en: '**Example 26-3\. Using *or lists* in combination with an *and list***'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 26-3\. 使用 *或列表* 与 *和列表* 结合**'
 - en: '|  [PRE6]  |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | If the first
     command in an *or list* returns true, it `*will*` execute. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 如果 *或列表* 中的第一个命令返回
+    true，它 `*将*` 执行。 |'
 - en: '|  [PRE7]  |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: '| ![Important](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | The [exit
     status](exit-status.html#EXITSTATUSREF) of an `**and list**` or an `**or list**`
     is the exit status of the last command executed. |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| ![重要](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | `**和列表**` 或 `**或列表**`
+    的退出状态是最后执行的命令的退出状态。 |'
 - en: Clever combinations of *and* and *or* lists are possible, but the logic may
     easily become convoluted and require close attention to [operator precedence rules](opprecedence.html#OPPRECEDENCE1),
     and possibly extensive debugging.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 可能的组合 *和* 和 *或* 列表是可能的，但逻辑可能很容易变得复杂，需要密切注意[运算符优先级规则](opprecedence.html#OPPRECEDENCE1)，并且可能需要进行大量的调试。
 - en: '|  [PRE8]  |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: See [Example A-7](contributed-scripts.html#DAYSBETWEEN) and [Example 7-4](fto.html#BROKENLINK)
     for illustrations of using `**and / or list**` constructs to test variables.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 请参阅 [示例 A-7](contributed-scripts.html#DAYSBETWEEN) 和 [示例 7-4](fto.html#BROKENLINK)
+    以了解使用 `**和/或列表**` 构造测试变量的示例。

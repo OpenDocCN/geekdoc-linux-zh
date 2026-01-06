@@ -1,127 +1,190 @@
 - en: O.2\. Writing Scripts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: O.2. 编写脚本
 - en: 原文：[https://tldp.org/LDP/abs/html/writingscripts.html](https://tldp.org/LDP/abs/html/writingscripts.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/writingscripts.html](https://tldp.org/LDP/abs/html/writingscripts.html)
 - en: Write a script to carry out each of the following tasks.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，执行以下每个任务。
 - en: '**EASY**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**简单**'
 - en: '**Self-reproducing Script**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**自复制脚本**'
 - en: Write a script that backs itself up, that is, copies itself to a file named
     `backup.sh`.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，将其自身备份，即将其复制到名为`backup.sh`的文件中。
 - en: 'Hint: Use the [cat](basic.html#CATREF) command and the appropriate [positional
     parameter](othertypesv.html#SCRNAMEPARAM).'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：使用[cat](basic.html#CATREF)命令和适当的[位置参数](othertypesv.html#SCRNAMEPARAM)。
 - en: '**Home Directory Listing**'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**主目录列表**'
 - en: Perform a recursive directory listing on the user's home directory and save
     the information to a file. Compress the file, have the script prompt the user
     to insert a USB flash drive, then press **ENTER**. Finally, save the file to the
     flash drive after making certain the flash drive has properly mounted by parsing
     the output of [df](system.html#DFREF). Note that the flash drive must be *unmounted*
     before it is removed.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在用户的主目录上执行递归目录列表并将信息保存到文件中。压缩文件，让脚本提示用户插入U盘，然后按**回车键**。最后，在确认U盘已正确挂载（通过解析[df](system.html#DFREF)的输出）后，将文件保存到U盘中。注意，在移除U盘之前必须将其**卸载**。
 - en: '**Converting [for](loops1.html#FORLOOPREF1) loops to [while](loops1.html#WHILELOOPREF)
     and [until](loops1.html#UNTILLOOPREF) loops**'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**将[for](loops1.html#FORLOOPREF1)循环转换为[while](loops1.html#WHILELOOPREF)和[until](loops1.html#UNTILLOOPREF)循环**'
 - en: 'Convert the *for loops* in [Example 11-1](loops1.html#EX22) to *while loops*.
     Hint: store the data in an [array](arrays.html#ARRAYREF) and step through the
     array elements.'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 将[示例11-1](loops1.html#EX22)中的*for循环*转换为*while循环*。提示：将数据存储在[数组](arrays.html#ARRAYREF)中并遍历数组元素。
 - en: Having already done the "heavy lifting," now convert the loops in the example
     to *until loops*.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 已经完成了“繁重的工作”，现在将示例中的循环转换为*直到循环*。
 - en: '**Changing the line spacing of a text file**'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**更改文本文件的行间距**'
 - en: Write a script that reads each line of a target file, then writes the line back
     to `stdout`, but with an extra blank line following. This has the effect of *double-spacing*
     the file.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，读取目标文件的每一行，然后将该行写回`stdout`，但后面跟一个额外的空白行。这会产生**双倍空格**的效果。
 - en: Include all necessary code to check whether the script gets the necessary command-line
     argument (a filename), and whether the specified file exists.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 包含所有必要的代码来检查脚本是否获取了必要的命令行参数（一个文件名），以及指定的文件是否存在。
 - en: When the script runs correctly, modify it to *triple-space* the target file.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当脚本正确运行时，修改它以将目标文件**三倍空格**。
 - en: Finally, write a script to remove all blank lines from the target file, *single-spacing*
     it.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，编写一个脚本，从目标文件中删除所有空白行，使其**单倍空格**。
 - en: '**Backwards Listing**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**反向列表**'
 - en: Write a script that echoes itself to `stdout`, but *backwards*.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，将自身输出到`stdout`，但**反向**。
 - en: '**Automatically Decompressing Files**'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**自动解压文件**'
 - en: Given a list of filenames as input, this script queries each target file (parsing
     the output of the [file](filearchiv.html#FILEREF) command) for the type of compression
     used on it. Then the script automatically invokes the appropriate decompression
     command (**gunzip**, **bunzip2**, **unzip**, **uncompress**, or whatever). If
     a target file is not compressed, the script emits a warning message, but takes
     no other action on that particular file.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个文件名列表作为输入，此脚本查询每个目标文件（解析[文件](filearchiv.html#FILEREF)命令的输出）上使用的压缩类型。然后脚本自动调用适当的解压命令（**gunzip**、**bunzip2**、**unzip**、**uncompress**或任何其他）。如果目标文件未压缩，脚本会发出警告消息，但对该特定文件不采取其他操作。
 - en: '**Unique System ID**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**唯一系统ID**'
 - en: 'Generate a "unique" 6-digit hexadecimal identifier for your computer. Do *not*
     use the flawed [hostid](system.html#HOSTIDREF) command. Hint: **[md5sum](filearchiv.html#MD5SUMREF)
     [`/etc/passwd`](files.html#DATAFILESREF1)**, then select the first 6 digits of
     output.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 为您的计算机生成一个“独特”的6位十六进制标识符。**不要**使用有缺陷的[hostid](system.html#HOSTIDREF)命令。提示：**[md5sum](filearchiv.html#MD5SUMREF)
+    `/etc/passwd`**，然后选择输出的前6位数字。
 - en: '**Backup**'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**备份**'
 - en: 'Archive as a "tarball" (`*.tar.gz` file) all the files in your home directory
     tree (`/home/your-name`) that have been modified in the last 24 hours. Hint: use
     [find](moreadv.html#FINDREF).'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 将您主目录树（`/home/your-name`）中在过去24小时内已修改的所有文件存档为“tarball”（`*.tar.gz`文件）。提示：使用[find](moreadv.html#FINDREF)。
 - en: 'Optional: you may use this as the basis of a *backup* script.'
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选：您可以使用此作为**备份**脚本的基础。
 - en: '**Checking whether a process is still running**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**检查进程是否仍在运行**'
 - en: Given a [process ID](special-chars.html#PROCESSIDREF) (*PID*) as an argument,
     this script will check, at user-specified intervals, whether the given process
     is still running. You may use the [ps](system.html#PPSSREF) and [sleep](timedate.html#SLEEPREF)
     commands.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个[进程ID](special-chars.html#PROCESSIDREF) (*PID*)作为参数，此脚本将在用户指定的间隔内检查指定的进程是否仍在运行。您可以使用[ps](system.html#PPSSREF)和[sleep](timedate.html#SLEEPREF)命令。
 - en: '**Primes**'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**质数**'
 - en: 'Print (to `stdout`) all prime numbers between 60000 and 63000\. The output
     should be nicely formatted in columns (hint: use [printf](internal.html#PRINTFREF)).'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 打印（到`stdout`）60000到63000之间的所有质数。输出应该格式良好，按列排列（提示：使用[printf](internal.html#PRINTFREF)）。
 - en: '**Lottery Numbers**'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '**彩票号码**'
 - en: One type of lottery involves picking five different numbers, in the range of
     1 - 50\. Write a script that generates five pseudorandom numbers in this range,
     *with no duplicates*. The script will give the option of echoing the numbers to
@@ -129,86 +192,128 @@
     number set was generated. (If your script consistently generates *winning* lottery
     numbers, then you can retire on the proceeds and leave shell scripting to those
     of us who have to work for a living.)
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 一种彩票涉及在1-50的范围内选择五个不同的数字。编写一个脚本，生成这个范围内的五个伪随机数，*没有重复*。脚本将提供将数字输出到`stdout`或保存到文件的选项，包括特定数字集生成的日期和时间。（如果您的脚本持续生成*中奖*的彩票号码，那么您可以用这些收益退休，并将shell脚本留给那些必须谋生的人。）
 - en: '**INTERMEDIATE**'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**中级**'
 - en: '**Integer or String**'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**整数或字符串**'
 - en: Write a script [function](functions.html#FUNCTIONREF) that determines if an
     argument passed to it is an integer or a string. The function will return TRUE
     (0) if passed an integer, and FALSE (1) if passed a string.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个[函数](functions.html#FUNCTIONREF)，确定传递给它的参数是整数还是字符串。如果传递整数，函数将返回TRUE（0），如果传递字符串，则返回FALSE（1）。
 - en: 'Hint: What does the following expression return when `$1` is *not* an integer?'
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：以下表达式在`$1`不是整数时返回什么？
 - en: '`expr $1 + 0`'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '`expr $1 + 0`'
 - en: '**[ASCII](special-chars.html#ASCIIDEF) to Integer**'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[ASCII转整数](special-chars.html#ASCIIDEF)**'
 - en: The *atoi* function in **C** converts a string character to an integer. Write
     a shell script function that performs the same operation. Likewise, write a shell
     script function that does the inverse, mirroring the **C** *itoa* function which
     converts an integer into an ASCII character.
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**C**中的*atoi*函数将字符串字符转换为整数。编写一个shell脚本函数执行相同的操作。同样，编写一个shell脚本函数执行相反的操作，类似于**C**中的*itoa*函数，该函数将整数转换为ASCII字符。'
 - en: '**Managing Disk Space**'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**管理磁盘空间**'
 - en: List, one at a time, all files larger than 100K in the `/home/username` directory
     tree. Give the user the option to delete or compress the file, then proceed to
     show the next one. Write to a logfile the names of all deleted files and the deletion
     times.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 逐个列出`/home/username`目录树中所有大于100K的文件。给用户选择删除或压缩文件，然后继续显示下一个文件。将所有已删除文件的名称和删除时间写入日志文件。
 - en: '**Banner**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**横幅**'
 - en: Simulate the functionality of the deprecated [banner](extmisc.html#BANNERREF)
     command in a script.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中模拟已弃用的[banner](extmisc.html#BANNERREF)命令的功能。
 - en: '**Removing Inactive Accounts**'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**删除非活动账户**'
 - en: Inactive accounts on a network server waste disk space and may become a security
     risk. Write an administrative script (to be invoked by *root* or the [cron daemon](system.html#CRONREF))
     that checks for and deletes user accounts that have not been accessed within the
     last 90 days.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 网络服务器上的非活动账户浪费磁盘空间，可能成为安全风险。编写一个管理脚本（由*root*或[cron守护进程](system.html#CRONREF)调用），检查并删除在过去90天内未被访问的用户账户。
 - en: '**Enforcing Disk Quotas**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**强制磁盘配额**'
 - en: Write a script for a multi-user system that checks users' disk usage. If a user
     surpasses a preset limit (500 MB, for example) in her `/home/username` directory,
     then the script automatically sends her a "pigout" warning e-mail.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个用于多用户系统的脚本，检查用户的磁盘使用情况。如果用户在`/home/username`目录中超过预设的限制（例如500MB），则脚本将自动发送给她一个“过度使用”警告电子邮件。
 - en: The script will use the [du](system.html#DUREF) and [mail](communications.html#COMMMAIL1)
     commands. As an option, it will allow setting and enforcing quotas using the [quota](system.html#QUOTAREF)
     and [setquota](system.html#SETQUOTAREF) commands.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 该脚本将使用[du](system.html#DUREF)和[mail](communications.html#COMMMAIL1)命令。作为选项，它将允许使用[quota](system.html#QUOTAREF)和[setquota](system.html#SETQUOTAREF)命令设置和强制配额。
 - en: '**Logged in User Information**'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '**已登录用户信息**'
 - en: For all logged in users, show their real names and the time and date of their
     last login.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于所有已登录用户，显示他们的真实姓名以及他们上次登录的时间和日期。
 - en: 'Hint: use [who](system.html#WHOREF), [lastlog](system.html#LASTLOGREF), and
     parse [`/etc/passwd`](files.html#DATAFILESREF1).'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：使用[who](system.html#WHOREF)，[lastlog](system.html#LASTLOGREF)和解析[`/etc/passwd`](files.html#DATAFILESREF1)。
 - en: '**Safe Delete**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**安全删除**'
 - en: Implement, as a script, a "safe" delete command, `sdel.sh`. Filenames passed
     as command-line arguments to this script are not deleted, but instead [gzipped](filearchiv.html#GZIPREF)
     if not already compressed (use [file](filearchiv.html#FILEREF) to check), then
@@ -216,542 +321,819 @@
     directory for files older than 48 hours and [permanently deletes](basic.html#RMREF)
     them. (An better alternative might be to have a second script handle this, periodically
     invoked by the [cron daemon](system.html#CRONREF).)
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 实现一个“安全”的删除命令，`sdel.sh`。传递给此脚本的命令行参数的文件名不会被删除，而是如果尚未压缩（使用[file](filearchiv.html#FILEREF)检查），则会被[gzip](filearchiv.html#GZIPREF)压缩，然后移动到`~/TRASH`目录。在调用脚本时，脚本会检查`~/TRASH`目录中是否有过期48小时以上的文件，并将它们[永久删除](basic.html#RMREF)。（更好的替代方案可能是有一个第二个脚本处理此任务，定期由[cron守护进程](system.html#CRONREF)调用。）
 - en: '*Extra credit:* Write the script so it can handle files and directories [recursively](basic.html#RMRECURS).
     This would give it the capability of "safely deleting" entire directory structures.'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '*额外加分:* 编写脚本使其能够递归地处理文件和目录[递归](basic.html#RMRECURS)。这将使其具有“安全删除”整个目录结构的能力。'
 - en: '**Making Change**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**改变货币**'
 - en: What is the most efficient way to make change for $1.68, using only coins in
     common circulations (up to 25c)? It's 6 quarters, 1 dime, a nickel, and three
     cents.
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用流通中的硬币（最多25美分）以最有效的方式为1.68美元找零是什么？答案是6个25美分，1个10美分，1个5美分和3个1美分。
 - en: 'Given any arbitrary command-line input in dollars and cents ($*.??), calculate
     the change, using the minimum number of coins. If your home country is not the
     United States, you may use your local currency units instead. The script will
     need to parse the command-line input, then change it to multiples of the smallest
     monetary unit (cents or whatever). Hint: look at [Example 24-8](complexfunct.html#EX61).'
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定任意命令行输入（以美元和美分表示，$*.??），使用最少的硬币计算零钱。如果你的家乡不是美国，你可以使用你当地的货币单位。脚本需要解析命令行输入，然后将其转换为最小货币单位（美分或任何其他单位）的倍数。提示：查看[示例
+    24-8](complexfunct.html#EX61)。
 - en: '**Quadratic Equations**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**二次方程**'
 - en: Solve a *quadratic* equation of the form `*Ax^2 + Bx + C = 0*`. Have a script
     take as arguments the coefficients, `**A**`, `**B**`, and `**C**`, and return
     the solutions to five decimal places.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 解一个形式为`*Ax^2 + Bx + C = 0*`的*二次*方程。让脚本接受系数`**A**`，`**B**`和`**C**`作为参数，并以五位小数返回解。
 - en: 'Hint: pipe the coefficients to [bc](mathc.html#BCREF), using the well-known
     formula, `*x = ( -B +/- sqrt( B^2 - 4AC ) ) / 2A*`.'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：将系数通过[bc](mathc.html#BCREF)管道传输，使用已知的公式，`*x = ( -B +/- sqrt( B^2 - 4AC )
+    ) / 2A*`。
 - en: '**Table of Logarithms**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对数表**'
 - en: Using the [bc](mathc.html#BCREF) and [printf](internal.html#PRINTFREF) commands,
     print out a nicely-formatted table of eight-place natural logarithms in the interval
     between 0.00 and 100.00, in steps of .01.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用[bc](mathc.html#BCREF)和[printf](internal.html#PRINTFREF)命令，以良好的格式打印出0.00到100.00之间的八位自然对数表，步长为.01。
 - en: 'Hint: *bc* requires the `-l` option to load the math library.'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：*bc*需要使用`-l`选项来加载数学库。
 - en: '**Unicode Table**'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Unicode 表**'
 - en: Using [Example T-1](asciitable.html#ASCIISH) as a template, write a script that
     prints to a file a complete [Unicode](bashver4.html#UNICODEREF) table.
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用[示例 T-1](asciitable.html#ASCIISH)作为模板，编写一个脚本，将一个完整的[Unicode](bashver4.html#UNICODEREF)表格打印到文件中。
 - en: 'Hint: Use the `-e` option to [echo](internal.html#ECHOREF): **echo -e ''\uXXXX''**,
     where `*XXXX*` is the Unicode numerical character designation. This requires [version
     4.2](bashver4.html#BASH42) or later of Bash.'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：使用[echo](internal.html#ECHOREF)的`-e`选项：**echo -e '\uXXXX'**，其中`*XXXX*`是Unicode数值字符标识。这需要Bash的版本4.2或更高版本。
 - en: '**Sum of Matching Numbers**'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '**匹配数字之和**'
 - en: 'Find the sum of all five-digit numbers (in the range 10000 - 99999) containing
     *exactly two* out of the following set of digits: { 4, 5, 6 }. These may repeat
     within the same number, and if so, they count once for each occurrence.'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: 找出所有包含以下集合中的两个数字（4，5，6）的五位数（10000 - 99999）的总和。这些数字可以在同一个数字中重复出现，如果这样，每个出现都只计算一次。
 - en: Some examples of *matching numbers* are 42057, 74638, and 89515.
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 一些*匹配数字*的例子是42057，74638和89515。
 - en: '**Lucky Numbers**'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '**幸运数字**'
 - en: A *lucky number* is one whose individual digits add up to 7, in successive additions.
     For example, 62431 is a *lucky number* (6 + 2 + 4 + 3 + 1 = 16, 1 + 6 = 7). Find
     all the *lucky numbers* between 1000 and 10000.
+  id: totrans-70
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个*幸运数字*是指其各个位数相加等于7的数字，在连续相加中。例如，62431是一个*幸运数字*（6 + 2 + 4 + 3 + 1 = 16，1 +
+    6 = 7）。找出1000到10000之间的所有*幸运数字*。
 - en: '**Craps**'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**骰子游戏**'
 - en: Borrowing the ASCII graphics from [Example A-40](contributed-scripts.html#PETALS),
     write a script that plays the well-known gambling game of *craps*. The script
     will accept bets from one or more players, roll the dice, and keep track of wins
     and losses, as well as of each player's bankroll.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 从[Example A-40](contributed-scripts.html#PETALS)借用ASCII图形，编写一个脚本，玩著名的赌场游戏*骰子游戏*。脚本将接受一个或多个玩家的赌注，掷骰子，并记录胜负以及每个玩家的银行余额。
 - en: '**Tic-tac-toe**'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**井字棋**'
 - en: 'Write a script that plays the child''s game of *tic-tac-toe* against a human
     player. The script will let the human choose whether to take the first move. The
     script will follow an optimal strategy, and therefore never lose. To simplify
     matters, you may use ASCII graphics:'
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，与人类玩家玩儿童游戏*井字棋*。脚本将让人类玩家选择是否先走。脚本将遵循最佳策略，因此永远不会输。为了简化问题，你可以使用ASCII图形：
 - en: '|  [PRE0]  |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '**Alphabetizing a String**'
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**字符串排序**'
 - en: Alphabetize (in ASCII order) an arbitrary string read from the command-line.
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: 按ASCII顺序对从命令行读取的任意字符串进行排序。
 - en: '**Parsing**'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**解析**'
 - en: Parse [`/etc/passwd`](files.html#DATAFILESREF1), and output its contents in
     nice, easy-to-read tabular form.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 解析`[`/etc/passwd](files.html#DATAFILESREF1)`，并以易于阅读的表格形式输出其内容。
 - en: '**Logging Logins**'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '**记录登录**'
 - en: 'Parse `/var/log/messages` to produce a nicely formatted file of user logins
     and login times. The script may need to run as *root*. (Hint: Search for the string
     "LOGIN.")'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 解析`/var/log/messages`以生成一个格式良好的用户登录和登录时间文件。脚本可能需要以*root*身份运行。（提示：搜索字符串"LOGIN"。）
 - en: '**Pretty-Printing a Data File**'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**美化打印数据文件**'
 - en: Certain database and spreadsheet packages use save-files with the fields separated
     by commas, commonly referred to as *comma-separated values* or CSVs. Other applications
     often need to parse these files.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 某些数据库和电子表格软件包使用以逗号分隔的字段保存文件，通常称为*逗号分隔值*或CSV。其他应用程序通常需要解析这些文件。
 - en: 'Given a data file with comma-separated [fields](special-chars.html#FIELDREF),
     of the form:'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个以逗号分隔的字段（[字段](special-chars.html#FIELDREF)）的数据文件，形式如下：
 - en: '|  [PRE1]  |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Reformat the data and print it out to `stdout` in labeled, evenly-spaced columns.
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: 重新格式化数据，并按标签和均匀间隔的列打印到`stdout`。
 - en: '**Justification**'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '**对齐**'
 - en: Given ASCII text input either from `stdin` or a file, adjust the word spacing
     to right-justify each line to a user-specified line-width, then send the output
     to `stdout`.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定来自`stdin`或文件的ASCII文本输入，调整单词间距以将每一行右对齐到用户指定的行宽，然后将输出发送到`stdout`。
 - en: '**Mailing List**'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '**邮件列表**'
 - en: Using the [mail](communications.html#COMMMAIL1) command, write a script that
     manages a simple mailing list. The script automatically e-mails the monthly company
     newsletter, read from a specified text file, and sends it to all the addresses
     on the mailing list, which the script reads from another specified file.
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用[mail](communications.html#COMMMAIL1)命令，编写一个脚本，管理一个简单的邮件列表。脚本会自动将每月的公司通讯稿从指定的文本文件中读取，并发送到邮件列表上的所有地址，该列表由脚本从另一个指定的文件中读取。
 - en: '**Generating Passwords**'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '**生成密码**'
 - en: Generate pseudorandom 8-character passwords, using characters in the ranges
     [0-9], [A-Z], [a-z]. Each password must contain at least two digits.
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: 生成使用范围[0-9]、[A-Z]、[a-z]中的字符的伪随机8位密码。每个密码必须包含至少两个数字。
 - en: '**Monitoring a User**'
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '**监控用户**'
 - en: You suspect that one particular user on the network has been abusing her privileges
     and possibly attempting to hack the system. Write a script to automatically monitor
     and log her activities when she's signed on. The log file will save entries for
     the previous week, and delete those entries more than seven days old.
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: 你怀疑网络上的某个特定用户一直在滥用她的权限，并可能试图黑客攻击系统。编写一个脚本，在用户登录时自动监控和记录她的活动。日志文件将保存前一周的条目，并删除超过七天的条目。
 - en: You may use [last](system.html#LASTREF), [lastlog](system.html#LASTLOGREF),
     and [lastcomm](system.html#LASTCOMMREF) to aid your surveillance of the suspected
     fiend.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可以使用[last](system.html#LASTREF)、[lastlog](system.html#LASTLOGREF)和[lastcomm](system.html#LASTCOMMREF)来帮助监视被怀疑的恶棍。
 - en: '**Checking for Broken Links**'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**检查断链**'
 - en: Using [lynx](communications.html#LYNXREF) with the `-traversal` option, write
     a script that checks a Web site for broken links.
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用带有`-traversal`选项的[lynx](communications.html#LYNXREF)，编写一个脚本来检查网站上的断链。
 - en: '**DIFFICULT**'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**困难**'
 - en: '**Testing Passwords**'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '**测试密码**'
 - en: Write a script to check and validate passwords. The object is to flag "weak"
     or easily guessed password candidates.
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本来检查和验证密码。目标是标记“弱”或容易被猜到的密码候选者。
 - en: 'A trial password will be input to the script as a command-line parameter. To
     be considered acceptable, a password must meet the following minimum qualifications:'
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 将一个试验密码作为命令行参数输入到脚本中。要被认为是可接受的，密码必须满足以下最低要求：
 - en: Minimum length of 8 characters
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 最小长度为8个字符
 - en: Must contain at least one numeric character
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 必须包含至少一个数字字符
 - en: 'Must contain at least one of the following non-alphabetic characters: @, #,
     $, %, &, *, +, -, ='
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '必须包含以下非字母字符之一：@, #, $, %, &, *, +, -, ='
 - en: 'Optional:'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选：
 - en: Do a dictionary check on every sequence of at least four consecutive alphabetic
     characters in the password under test. This will eliminate passwords containing
     embedded "words" found in a standard dictionary.
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对密码测试中至少四个连续字母字符的每个序列进行字典检查。这将消除包含标准字典中发现的“单词”的密码。
 - en: Enable the script to check all the passwords on your system. These do not reside
     in [`/etc/passwd`](files.html#DATAFILESREF1).
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使脚本能够检查系统上的所有密码。这些密码不位于`/etc/passwd`中。
 - en: This exercise tests mastery of [Regular Expressions](regexp.html#REGEXREF).
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个练习测试了对[正则表达式](regexp.html#REGEXREF)的掌握。
 - en: '**Cross Reference**'
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: '**交叉引用**'
 - en: Write a script that generates a *cross-reference* (*concordance*) on a target
     file. The output will be a listing of all word occurrences in the target file,
     along with the line numbers in which each word occurs. Traditionally, *linked
     list* constructs would be used in such applications. Therefore, you should investigate
     [arrays](arrays.html#ARRAYREF) in the course of this exercise. [Example 16-12](textproc.html#WF)
     is probably *not* a good place to start.
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，生成目标文件的*交叉引用*（*索引*）。输出将是目标文件中所有单词出现的列表，以及每个单词出现的行号。传统上，此类应用会使用*链表*结构。因此，你应该在这次练习中研究[数组](arrays.html#ARRAYREF)。[示例16-12](textproc.html#WF)可能*不是*一个好的开始点。
 - en: '**Square Root**'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**平方根**'
 - en: Write a script to calculate square roots of numbers using *Newton's Method*.
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，使用*牛顿法*计算数字的平方根。
 - en: 'The algorithm for this, expressed as a snippet of Bash [pseudo-code](assortedtips.html#PSEUDOCODEREF)
     is:'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个算法，用Bash[伪代码](assortedtips.html#PSEUDOCODEREF)表示，如下所示：
 - en: '|  [PRE2]  |'
+  id: totrans-114
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: It's a simple enough recipe, and *seems* at first glance easy enough to convert
     into a working Bash script. The problem, though, is that Bash has [no native support
     for floating point numbers](ops.html#NOFLOATINGPOINT). So, the script writer needs
     to use [bc](mathc.html#BCREF) or possibly [awk](awk.html#AWKREF) to convert the
     numbers and do the calculations. It could get rather messy . . .
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个足够简单的配方，乍一看似乎足够容易转换成可工作的Bash脚本。然而，问题是Bash[没有对浮点数的原生支持](ops.html#NOFLOATINGPOINT)。因此，脚本编写者需要使用[bc](mathc.html#BCREF)或可能[awk](awk.html#AWKREF)来转换数字并进行计算。这可能会变得相当混乱……
 - en: '**Logging File Accesses**'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '**记录文件访问**'
 - en: Log all accesses to the files in `/etc` during the course of a single day. This
     information should include the filename, user name, and access time. If any alterations
     to the files take place, that will be flagged. Write this data as tabular (tab-separated)
     formatted records in a logfile.
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 记录单日内对`/etc`中文件的访问。这些信息应包括文件名、用户名和访问时间。如果文件有任何更改，将会标记出来。将这些数据以表格（制表符分隔）格式记录在日志文件中。
 - en: '**Monitoring Processes**'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '**监控进程**'
 - en: Write a script to continually monitor all running processes and to keep track
     of how many child processes each parent spawns. If a process spawns more than
     five children, then the script sends an e-mail to the system administrator (or
     *root*) with all relevant information, including the time, PID of the parent,
     PIDs of the children, etc. The script appends a report to a log file every ten
     minutes.
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，持续监控所有运行进程，并跟踪每个父进程产生的子进程数量。如果一个进程产生了超过五个子进程，那么脚本将向系统管理员（或*root*）发送包含所有相关信息（包括时间、父进程PID、子进程PID等）的电子邮件。脚本每十分钟将报告追加到日志文件中。
 - en: '**Strip Comments**'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '**删除注释**'
 - en: Strip all comments from a shell script whose name is specified on the command-line.
     Note that the initial [#! line](sha-bang.html#SHABANGREF) must not be stripped
     out.
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: 从命令行指定的名称的 shell 脚本中移除所有注释。请注意，初始 [#! 行](sha-bang.html#SHABANGREF) 不能被移除。
 - en: '**Strip HTML Tags**'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**移除 HTML 标签**'
 - en: Strip all the HTML tags from a specified HTML file, then reformat it into lines
     between 60 and 75 characters in length. Reset paragraph and block spacing, as
     appropriate, and convert HTML tables to their approximate text equivalent.
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: 从指定的 HTML 文件中移除所有 HTML 标签，然后将其重新格式化为长度在 60 到 75 个字符之间的行。根据需要重置段落和块间距，并将 HTML
+    表格转换为它们的近似文本等价物。
 - en: '**XML Conversion**'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**XML 转换**'
 - en: Convert an XML file to both HTML and text format.
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: 将 XML 文件转换为 HTML 和文本格式。
 - en: 'Optional: A script that converts Docbook/SGML to XML.'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选：一个将 Docbook/SGML 转换为 XML 的脚本。
 - en: '**Chasing Spammers**'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '**追踪垃圾邮件发送者**'
 - en: Write a script that analyzes a spam e-mail by doing DNS lookups on the IP addresses
     in the headers to identify the relay hosts as well as the originating ISP. The
     script will forward the unaltered spam message to the responsible ISPs. Of course,
     it will be necessary to filter out *your own ISP's IP address*, so you don't end
     up complaining about yourself.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，通过在标题中的 IP 地址上执行 DNS 查询来分析垃圾邮件，以识别中继主机以及原始 ISP。该脚本将未修改的垃圾邮件消息转发给负责的 ISP。当然，将需要过滤掉
+    *你自己的 ISP 的 IP 地址*，这样你就不会对自己进行投诉。
 - en: As necessary, use the appropriate [network analysis commands](communications.html#COMMUNINFO1).
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: 如有必要，使用适当的 [网络分析命令](communications.html#COMMUNINFO1)。
 - en: For some ideas, see [Example 16-41](communications.html#ISSPAMMER) and [Example
     A-28](contributed-scripts.html#ISSPAMMER2).
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 对于一些想法，请参阅 [示例 16-41](communications.html#ISSPAMMER) 和 [示例 A-28](contributed-scripts.html#ISSPAMMER2)。
 - en: 'Optional: Write a script that searches through a list of e-mail messages and
     deletes the spam according to specified filters.'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选：编写一个脚本，通过指定过滤器删除电子邮件列表中的垃圾邮件。
 - en: '**Creating man pages**'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**创建 man 页面**'
 - en: Write a script that automates the process of creating [man pages](basic.html#MANREF).
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个自动化创建 [man 页面](basic.html#MANREF)过程的脚本。
 - en: Given a text file which contains information to be formatted into a *man page*,
     the script will read the file, then invoke the appropriate [groff](textproc.html#GROFFREF)
     commands to output the corresponding *man page* to `stdout`. The text file contains
     blocks of information under the standard *man page* headings, i.e., NAME, SYNOPSIS,
     DESCRIPTION, etc.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 给定一个包含要格式化为 man 页面信息的文本文件，该脚本将读取文件，然后调用适当的 [groff](textproc.html#GROFFREF) 命令，将相应的
+    *man 页面* 输出到 `stdout`。文本文件包含在标准 *man 页面* 标题下的信息块，例如 NAME、SYNOPSIS、DESCRIPTION
+    等。
 - en: '[Example A-39](contributed-scripts.html#MANED) is an instructive first step.'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '[示例 A-39](contributed-scripts.html#MANED) 是一个有教育意义的初步步骤。'
 - en: '**Hex Dump**'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**十六进制转储**'
 - en: Do a hex(adecimal) dump on a binary file specified as an argument to the script.
     The output should be in neat tabular [fields](special-chars.html#FIELDREF), with
     the first field showing the address, each of the next 8 fields a 4-byte hex number,
     and the final field the ASCII equivalent of the previous 8 fields.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: 对脚本作为参数指定的二进制文件进行十六进制转储。输出应整齐地显示在表格字段中，第一个字段显示地址，接下来的 8 个字段是 4 字节十六进制数，最后一个字段是前
+    8 个字段的 ASCII 等价物。
 - en: The obvious followup to this is to extend the hex dump script into a disassembler.
     Using a lookup table, or some other clever gimmick, convert the hex values into
     80x86 op codes.
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: 显然，接下来的步骤是将十六进制转储脚本扩展为反汇编器。使用查找表或其他巧妙的小技巧，将十六进制值转换为 80x86 操作码。
 - en: '**Emulating a Shift Register**'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**模拟移位寄存器**'
 - en: Using [Example 27-15](arrays.html#STACKEX) as an inspiration, write a script
     that emulates a 64-bit shift register as an [array](arrays.html#ARRAYREF). Implement
     functions to *load* the register, *shift left*, *shift right*, and *rotate* it.
     Finally, write a function that interprets the register contents as eight 8-bit
     ASCII characters.
+  id: totrans-140
   prefs: []
   type: TYPE_NORMAL
+  zh: 以 [示例 27-15](arrays.html#STACKEX) 为灵感，编写一个脚本，模拟一个 64 位移位寄存器作为 [数组](arrays.html#ARRAYREF)。实现加载寄存器、左移、右移和旋转寄存器的功能。最后，编写一个函数，将寄存器内容解释为八个
+    8 位 ASCII 字符。
 - en: '**Calculating Determinants**'
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: '**计算行列式**'
 - en: Write a script that calculates determinants [[1]](#FTN.AEN25254) by [recursively](localvar.html#RECURSIONREF0)
     expanding the *minors*. Use a 4 x 4 determinant as a test case.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个脚本，通过递归地 [展开](localvar.html#RECURSIONREF0) *余子式* 来计算行列式。使用 4x4 行列式作为测试案例。
 - en: '**Hidden Words**'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '**隐藏文字**'
 - en: Write a "word-find" puzzle generator, a script that hides 10 input words in
     a 10 x 10 array of random letters. The words may be hidden across, down, or diagonally.
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个“单词寻找”谜题生成器，一个脚本，将10个输入单词隐藏在10 x 10的随机字母数组中。单词可以隐藏在横排、竖排或对角线上。
 - en: 'Optional: Write a script that *solves* word-find puzzles. To keep this from
     becoming too difficult, the solution script will find only horizontal and vertical
     words. (Hint: Treat each row and column as a string, and search for substrings.)'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: 可选：编写一个脚本，*解决*单词寻找谜题。为了使问题不过于困难，解决方案脚本将只查找水平和垂直的单词。（提示：将每一行和每一列视为一个字符串，并搜索子字符串。）
 - en: '**Anagramming**'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**字母表**'
 - en: 'Anagram 4-letter input. For example, the anagrams of *word* are: *do or rod
     row word*. You may use `/usr/share/dict/linux.words` as the reference list.'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 四字母输入的字母表。例如，*word*的字母表是：*do or rod row word*。你可以使用`/usr/share/dict/linux.words`作为参考列表。
 - en: '**Word Ladders**'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '**单词梯子**'
 - en: A "word ladder" is a sequence of words, with each successive word in the sequence
     differing from the previous one by a single letter.
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: “单词梯子”是一系列单词，其中序列中的每个后续单词与前面的单词只差一个字母。
 - en: 'For example, to "ladder" from *mark* to *vase*:'
+  id: totrans-150
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，从*mark*到*vase*的“梯子”：
 - en: '|  [PRE3]  |'
+  id: totrans-151
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Write a script that solves word ladder puzzles. Given a starting and an ending
     word, the script will list all intermediate steps in the "ladder." Note that *all*
     words in the sequence must be legitimate dictionary words.
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 编写一个解决单词梯子谜题的脚本。给定一个起始单词和一个结束单词，脚本将列出“梯子”中的所有中间步骤。请注意，序列中的*所有*单词都必须是合法的词典单词。
 - en: '**Fog Index**'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '**雾度指数**'
 - en: The "fog index" of a passage of text estimates its reading difficulty, as a
     number corresponding roughly to a school grade level. For example, a passage with
     a fog index of 12 should be comprehensible to anyone with 12 years of schooling.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 文本段落的“雾度指数”估计其阅读难度，作为一个大致对应于学校年级水平的数字。例如，雾度指数为12的段落应该对接受过12年学校教育的人是可理解的。
 - en: The Gunning version of the fog index uses the following algorithm.
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: Gunning版本的雾度指数使用以下算法。
 - en: Choose a section of the text at least 100 words in length.
+  id: totrans-156
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 选择一段至少100个单词长度的文本。
 - en: Count the number of sentences (a portion of a sentence truncated by the boundary
     of the text section counts as one).
+  id: totrans-157
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算句子数量（文本部分被文本边界截断的部分算作一个句子）。
 - en: Find the average number of words per sentence.
+  id: totrans-158
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 找出每句话的平均单词数。
 - en: AVE_WDS_SEN = TOTAL_WORDS / SENTENCES
+  id: totrans-159
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: AVE_WDS_SEN = TOTAL_WORDS / SENTENCES
 - en: Count the number of "difficult" words in the segment -- those containing at
     least 3 syllables. Divide this quantity by total words to get the proportion of
     difficult words.
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 计算段落中“困难”单词的数量——那些包含至少3个音节的单词。将这个数量除以总单词数，得到困难单词的比例。
 - en: PRO_DIFF_WORDS = LONG_WORDS / TOTAL_WORDS
+  id: totrans-161
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: PRO_DIFF_WORDS = LONG_WORDS / TOTAL_WORDS
 - en: The Gunning fog index is the sum of the above two quantities, multiplied by
     0.4, then rounded to the nearest integer.
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: Gunning雾度指数是上述两个数量的总和，乘以0.4，然后四舍五入到最接近的整数。
 - en: G_FOG_INDEX = int ( 0.4 * ( AVE_WDS_SEN + PRO_DIFF_WORDS ) )
+  id: totrans-163
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: G_FOG_INDEX = int ( 0.4 * ( AVE_WDS_SEN + PRO_DIFF_WORDS ) )
 - en: Step 4 is by far the most difficult portion of the exercise. There exist various
     algorithms for estimating the syllable count of a word. A rule-of-thumb formula
     might consider the number of letters in a word and the vowel-consonant mix.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 第4步是这个练习中最困难的部分。存在各种算法用于估计单词的音节数量。一个经验公式可能会考虑单词中的字母数量和元音辅音混合。
 - en: A strict interpretation of the Gunning fog index does not count compound words
     and proper nouns as "difficult" words, but this would enormously complicate the
     script.
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: 严格解释Gunning雾度指数不计入复合词和专有名词为“困难”单词，但这将极大地复杂化脚本。
 - en: '**Calculating PI using Buffon''s Needle**'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '**使用蒲丰针计算π**'
 - en: The Eighteenth Century French mathematician de Buffon came up with a novel experiment.
     Repeatedly drop a needle of length `*n*` onto a wooden floor composed of long
     and narrow parallel boards. The cracks separating the equal-width floorboards
     are a fixed distance `*d*` apart. Keep track of the total drops and the number
     of times the needle intersects a crack on the floor. The ratio of these two quantities
     turns out to be a fractional multiple of PI.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 18世纪法国数学家de Buffon提出了一个新颖的实验。反复将长度为`*n*`的针掉落在由长而窄的平行木板组成的木地板上。相隔固定距离`*d*`的木板裂缝是固定的。记录总的掉落次数和针与地板裂缝相交的次数。这两个数量的比率最终被证明是π的分数倍数。
 - en: In the spirit of [Example 16-50](mathc.html#CANNON), write a script that runs
     a Monte Carlo simulation of *Buffon's Needle*. To simplify matters, set the needle
     length equal to the distance between the cracks, `*n = d*`.
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照示例 [16-50](mathc.html#CANNON) 的精神，编写一个运行 *布丰针实验* 的蒙特卡洛模拟脚本。为了简化问题，将针的长度设置为裂缝之间的距离，`*n
+    = d*`。
 - en: 'Hint: there are actually two critical variables: the distance from the center
     of the needle to the nearest crack, and the inclination angle of the needle to
     that crack. You may use [bc](mathc.html#BCREF) to handle the calculations.'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：实际上有两个关键变量：针中心到最近裂缝的距离，以及针相对于该裂缝的倾斜角度。你可以使用 [bc](mathc.html#BCREF) 来处理计算。
 - en: '**Playfair Cipher**'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Playfair 密码**'
 - en: Implement the Playfair (Wheatstone) Cipher in a script.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中实现 Playfair (Wheatstone) 密码。
 - en: The Playfair Cipher encrypts text by substitution of *digrams* (2-letter groupings).
     It is traditional to use a 5 x 5 letter scrambled-alphabet *key square* for the
     encryption and decryption.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: Playfair 密码通过替换 *双字母组*（2个字母的组合）来加密文本。传统上使用 5 x 5 个字母的打乱顺序 *密钥方阵* 进行加密和解密。
 - en: '|  [PRE4]  |'
+  id: totrans-173
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: This script will have three main sections
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 此脚本将包含三个主要部分
 - en: Generating the *key square*, based on a user-input keyword.
+  id: totrans-175
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 根据用户输入的关键词生成 *密钥方阵*。
 - en: Encrypting a *plaintext* message.
+  id: totrans-176
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 加密 *明文* 消息。
 - en: Decrypting encrypted text.
+  id: totrans-177
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 解密加密文本。
 - en: The script will make extensive use of [arrays](arrays.html#ARRAYREF) and [functions](functions.html#FUNCTIONREF).
     You may use [Example A-56](contributed-scripts.html#GRONSFELD) as an inspiration.
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本将大量使用 [数组](arrays.html#ARRAYREF) 和 [函数](functions.html#FUNCTIONREF)。你可以将 [示例
+    A-56](contributed-scripts.html#GRONSFELD) 作为灵感来源。
 - en: --
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: --
 - en: Please do not send the author your solutions to these exercises. There are more
     appropriate ways to impress him with your cleverness, such as submitting bugfixes
     and suggestions for improving the book.
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: 请不要向作者发送这些练习的解决方案。有更多合适的方式来展示你的聪明才智，例如提交错误修复和改进书籍的建议。
 - en: Notes
+  id: totrans-181
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](writingscripts.html#AEN25254) | For all you clever types who failed
     intermediate algebra, a *determinant* is a numerical value associated with a multidimensional
     *matrix* ([array](arrays.html#ARRAYREF) of numbers).'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[1]](writingscripts.html#AEN25254) | 对于所有那些未能通过中级代数考试的你聪明人，*行列式*是与多维 *矩阵*（[数组](arrays.html#ARRAYREF)）相关联的数值。'
 - en: '&#124;  [PRE5]  &#124;'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE5]  &#124;'
 - en: '|'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'

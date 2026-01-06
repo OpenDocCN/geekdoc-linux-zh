@@ -1,1468 +1,2309 @@
 - en: Chapter 3\. Special Characters
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第3章. 特殊字符
 - en: 原文：[https://tldp.org/LDP/abs/html/special-chars.html](https://tldp.org/LDP/abs/html/special-chars.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/special-chars.html](https://tldp.org/LDP/abs/html/special-chars.html)
 - en: What makes a character *special*? If it has a meaning beyond its *literal meaning*,
     a [meta-meaning](x17129.html#METAMEANINGREF), then we refer to it as a *special
     character*. Along with commands and [keywords](internal.html#KEYWORDREF), *special
     characters* are building blocks of Bash scripts.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 什么使一个字符*特殊*？如果它除了其*字面意义之外还有其他意义，即[元意义](x17129.html#METAMEANINGREF)，那么我们称它为*特殊字符*。与命令和[关键字](internal.html#KEYWORDREF)一样，*特殊字符*是Bash脚本的构建块。
 - en: '**Special Characters Found In Scripts and Elsewhere**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**脚本和其他地方找到的特殊字符**'
 - en: '#'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '#'
 - en: '**Comments.** Lines beginning with a # (with the exception of [#!](sha-bang.html#MAGNUMREF))
     are comments and will *not* be executed.'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**注释.** 以#开始的行（除了[#!](sha-bang.html#MAGNUMREF)）是注释，将*不会*被执行。'
 - en: '|  [PRE0]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: Comments may also occur following the end of a command.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 注释也可能出现在命令的末尾之后。
 - en: '|  [PRE1]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Comments may also follow [whitespace](special-chars.html#WHITESPACEREF) at the
     beginning of a line.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 注释也可能跟在行首的[空白字符](special-chars.html#WHITESPACEREF)之后。
 - en: '|  [PRE2]  |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Comments may even be embedded within a [pipe](special-chars.html#PIPEREF).
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 注释甚至可以嵌入到[管道](special-chars.html#PIPEREF)中。
 - en: '|  [PRE3]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | A command may
     not follow a comment on the same line. There is no method of terminating the comment,
     in order for "live code" to begin on the same line. Use a new line for the next
     command. |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 一条命令不能在同一行跟在注释之后。没有终止注释的方法，以便在同一行上开始“活代码”。使用新行作为下一个命令。
+    |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Of course, a [quoted](quoting.html#QUOTINGREF)
     or an [escaped](escapingsection.html#ESCP) # in an [echo](internal.html#ECHOREF)
     statement does *not* begin a comment. Likewise, a # appears in [certain parameter-substitution
     constructs](parameter-substitution.html#PSUB2) and in [numerical constant expressions](numerical-constants.html#NUMCONSTANTS).'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 当然，在[echo](internal.html#ECHOREF)语句中的[引号](quoting.html#QUOTINGREF)或[转义](escapingsection.html#ESCP)
+    # 不会开始一个注释。同样，# 也出现在[某些参数替换结构](parameter-substitution.html#PSUB2)和[数值常量表达式](numerical-constants.html#NUMCONSTANTS)中。'
 - en: '&#124;  [PRE4]  &#124;'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE4]  &#124;'
 - en: 'The standard [quoting and escape](quoting.html#QUOTINGREF) characters (" ''
     \) escape the #. |'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 标准的[引号和转义](quoting.html#QUOTINGREF)字符(" ' \)会转义#。
 - en: 'Certain [pattern matching operations](parameter-substitution.html#PSOREX1)
     also use the #.'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 某些[模式匹配操作](parameter-substitution.html#PSOREX1)也使用#。
 - en: ;
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: ;
 - en: '**Command separator [semicolon].** Permits putting two or more commands on
     the same line.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令分隔符[分号].** 允许在同一行上放置两个或更多命令。'
 - en: '|  [PRE5]  |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Note that the ";" [sometimes needs to be *escaped*](moreadv.html#FINDREF0).
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，分号（;）[有时需要被*转义*](moreadv.html#FINDREF0)。
 - en: ;;
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: ;;
 - en: '**Terminator in a [case](testbranch.html#CASEESAC1) option [double semicolon].**'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[case](testbranch.html#CASEESAC1)选项中的终止符[双分号].**'
 - en: '|  [PRE6]  |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: ;;&, ;&
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: ;;&, ;&
 - en: '**[Terminators](bashver4.html#NCTERM) in a *case* option ([version 4+](bashver4.html#BASH4REF)
     of Bash).**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[终止符](bashver4.html#NCTERM)在*case*选项中（Bash的[版本 4+](bashver4.html#BASH4REF)）**'
 - en: .
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: .
 - en: '**"dot" command [period].** Equivalent to [source](internal.html#SOURCEREF)
     (see [Example 15-22](internal.html#EX38)). This is a bash [builtin](internal.html#BUILTINREF).'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '**"点"命令[句点].** 等同于[source](internal.html#SOURCEREF)（参见[示例 15-22](internal.html#EX38)）。这是一个bash
+    [内建命令](internal.html#BUILTINREF)。'
 - en: .
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: .
 - en: '**"dot", as a component of a filename.** When working with filenames, a leading
     dot is the prefix of a "hidden" file, a file that an [ls](basic.html#LSREF) will
     not normally show.'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '**"点"，作为文件名的一部分.** 当处理文件名时，开头的点是一个“隐藏”文件的前缀，一个ls通常不会显示的文件。'
 - en: '|  [PRE7]  |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: When considering directory names, *a single dot* represents the current working
     directory, and *two dots* denote the parent directory.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 当考虑目录名时，*单个点*代表当前工作目录，而*两个点*表示父目录。
 - en: '|  [PRE8]  |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: The *dot* often appears as the destination (directory) of a file movement command,
     in this context meaning *current directory*.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '*点*经常出现在文件移动命令的目标（目录）中，在这种情况下意味着*当前目录*。'
 - en: '|  [PRE9]  |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: Copy all the "junk" files to [$PWD](internalvariables.html#PWDREF).
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 将所有“垃圾”文件复制到[$PWD](internalvariables.html#PWDREF)。
 - en: .
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: .
 - en: '**"dot" character match.** When [matching characters](x17129.html#REGEXDOT),
     as part of a [regular expression](regexp.html#REGEXREF), a "dot" [matches a single
     character](x17129.html#REGEXDOT).'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '**"点"字符匹配。** 当 [匹配字符](x17129.html#REGEXDOT) 作为 [正则表达式](regexp.html#REGEXREF)
+    的一部分时，一个 "点" [匹配单个字符](x17129.html#REGEXDOT)。'
 - en: '"'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '"'
 - en: '**[partial quoting](varsubn.html#DBLQUO) [double quote].** *"STRING"* preserves
     (from interpretation) most of the special characters within *STRING*. See [Chapter
     5](quoting.html).'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[部分引用](varsubn.html#DBLQUO) [双引号].** *"STRING"* 保留（从解释中）*STRING* 内的大部分特殊字符。参见
+    [第5章](quoting.html)。'
 - en: ''''
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: ''''
 - en: '**[full quoting](varsubn.html#SNGLQUO) [single quote].** *''STRING''* preserves
     all special characters within *STRING*. This is a stronger form of quoting than
     *"STRING"*. See [Chapter 5](quoting.html).'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[完全引用](varsubn.html#SNGLQUO) [单引号].** *''STRING''* 保留 *STRING* 内的所有特殊字符。这是一种比
+    *"STRING"* 更强的引用形式。参见 [第5章](quoting.html)。'
 - en: ','
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: ','
 - en: '**[comma operator](ops.html#COMMAOP).** The *comma operator* [[1]](#FTN.AEN612)
     links together a series of arithmetic operations. All are evaluated, but only
     the last one is returned.'
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[逗号操作符](ops.html#COMMAOP).** 逗号操作符将一系列算术操作连接起来。所有操作都会被评估，但只有最后一个操作的结果会被返回。'
 - en: '|  [PRE10]  |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE10]  |'
 - en: The *comma* operator can also concatenate strings.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 逗号操作符也可以连接字符串。
 - en: '|  [PRE11]  |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: ',, ,'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: ',, ,'
 - en: '**[Lowercase conversion](bashver4.html#CASEMODPARAMSUB) in *parameter substitution*
     (added in [version 4](bashver4.html#BASH4REF) of Bash).**'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[参数替换中的小写转换](bashver4.html#CASEMODPARAMSUB)（在 Bash 的 [版本4](bashver4.html#BASH4REF)
+    中添加）。**'
 - en: \
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: \
 - en: '**[escape](escapingsection.html#ESCP) [backslash].** A quoting mechanism for
     single characters.'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[转义](escapingsection.html#ESCP) [反斜杠].** 单个字符的引用机制。'
 - en: '`**\X**` *escapes* the character *X*. This has the effect of "quoting" *X*,
     equivalent to *''X''*. The \ may be used to quote " and '', so they are expressed
     literally.'
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**\X**` 会转义字符 *X*。这相当于“引用”*X*，等同于 *''X''*。反斜杠可以用来引用 " 和 ''，因此它们会被字面地表达出来。'
 - en: See [Chapter 5](quoting.html) for an in-depth explanation of escaped characters.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [第5章](quoting.html) 以深入了解转义字符。
 - en: /
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: /
 - en: '**Filename path separator [forward slash].** Separates the components of a
     filename (as in `/home/bozo/projects/Makefile`).'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**文件名路径分隔符 [正斜杠].** 分隔文件名的各个组成部分（例如 `/home/bozo/projects/Makefile`）。'
 - en: This is also the division [arithmetic operator](ops.html#AROPS1).
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: 这也是除法 [算术操作符](ops.html#AROPS1)。
 - en: '`'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '`'
 - en: '**[command substitution](commandsub.html#COMMANDSUBREF).** The **`command`**
     construct makes available the output of **command** for assignment to a variable.
     This is also known as [backquotes](commandsub.html#BACKQUOTESREF) or backticks.'
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[命令替换](commandsub.html#COMMANDSUBREF).** **`command`** 构造使得可以将 **command**
+    的输出分配给变量。这也被称为 [反引号](commandsub.html#BACKQUOTESREF) 或反引号。'
 - en: ':'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: ':'
 - en: '**null command [colon].** This is the shell equivalent of a "NOP" (`*no op*`,
     a do-nothing operation). It may be considered a synonym for the shell builtin
     [true](internal.html#TRUEREF). The ":" command is itself a *Bash* [builtin](internal.html#BUILTINREF),
     and its [exit status](exit-status.html#EXITSTATUSREF) is *true* (0).'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**空命令 [冒号].** 这是 shell 的 "NOP"（*no op*，不执行任何操作）的等价物。它可以被认为是 shell 内置命令 [true](internal.html#TRUEREF)
+    的同义词。":" 命令本身是一个 *Bash* [内置命令](internal.html#BUILTINREF)，其 [退出状态](exit-status.html#EXITSTATUSREF)
+    是 *true*（0）。'
 - en: '|  [PRE12]  |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: 'Endless loop:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 无限循环：
 - en: '|  [PRE13]  |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE13]  |'
 - en: 'Placeholder in if/then test:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 if/then 测试中的占位符：
 - en: '|  [PRE14]  |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: Provide a placeholder where a binary operation is expected, see [Example 8-2](ops.html#ARITHOPS)
     and [default parameters](parameter-substitution.html#DEFPARAM).
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: 在期望二进制操作的地方提供一个占位符，参见 [示例8-2](ops.html#ARITHOPS) 和 [默认参数](parameter-substitution.html#DEFPARAM)。
 - en: '|  [PRE15]  |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE15]  |'
 - en: Provide a placeholder where a command is expected in a [here document](here-docs.html#HEREDOCREF).
     See [Example 19-10](here-docs.html#ANONHEREDOC).
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [here document](here-docs.html#HEREDOCREF) 中期望命令的地方提供一个占位符。参见 [示例19-10](here-docs.html#ANONHEREDOC)。
 - en: Evaluate string of variables using [parameter substitution](parameter-substitution.html#PARAMSUBREF)
     (as in [Example 10-7](parameter-substitution.html#EX6)).
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 [参数替换](parameter-substitution.html#PARAMSUBREF) 评估变量字符串（如 [示例10-7](parameter-substitution.html#EX6)
+    所示）。
 - en: '|  [PRE16]  |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE16]  |'
 - en: '**[Variable expansion / substring replacement](parameter-substitution.html#EXPREPL1)**.'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[变量扩展/子串替换](parameter-substitution.html#EXPREPL1)**.'
 - en: In combination with the > [redirection operator](io-redirection.html#IOREDIRREF),
     truncates a file to zero length, without changing its permissions. If the file
     did not previously exist, creates it.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 > [重定向操作符](io-redirection.html#IOREDIRREF) 结合使用时，将文件截断为零长度，而不改变其权限。如果文件之前不存在，则创建它。
 - en: '|  [PRE17]  |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE17]  |'
 - en: See also [Example 16-15](textproc.html#EX12).
+  id: totrans-74
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [示例 16-15](textproc.html#EX12)。
 - en: 'In combination with the >> redirection operator, has no effect on a pre-existing
     target file (`**: >> target_file**`). If the file did not previously exist, creates
     it.'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '与 >> 重定向操作符结合使用时，对现有目标文件没有影响（`**: >> target_file**`）。如果文件之前不存在，则创建它。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This applies to
     regular files, not pipes, symlinks, and certain special files. |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 这适用于常规文件，而不是管道、符号链接和某些特殊文件。|'
 - en: 'May be used to begin a comment line, although this is not recommended. Using
     # for a comment turns off error checking for the remainder of that line, so almost
     anything may appear in a comment. However, this is not the case with :.'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '可以用来开始注释行，尽管这不被推荐。使用 # 作为注释将关闭该行剩余部分的错误检查，因此几乎任何内容都可以出现在注释中。然而，情况并非如此。'
 - en: '|  [PRE18]  |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE18]  |'
 - en: The ":" serves as a [field](special-chars.html#FIELDREF) separator, in [`/etc/passwd`](files.html#DATAFILESREF1),
     and in the [$PATH](internalvariables.html#PATHREF) variable.
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 冒号在 [etc/passwd](files.html#DATAFILESREF1) 和 [$PATH](internalvariables.html#PATHREF)
+    变量中充当 [字段](special-chars.html#FIELDREF) 分隔符。
 - en: '|  [PRE19]  |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE19]  |'
 - en: A *colon* is [acceptable as a function name](functions.html#FSTRANGEREF).
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 *冒号* 可以 [作为函数名接受](functions.html#FSTRANGEREF)。
 - en: '|  [PRE20]  |'
+  id: totrans-82
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE20]  |'
 - en: This is not [portable](portabilityissues.html) behavior, and therefore not a
     recommended practice. In fact, more recent releases of Bash do not permit this
     usage. An underscore **_** works, though.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 这不是 [可移植](portabilityissues.html) 的行为，因此不推荐这样做。事实上，Bash 的较新版本不允许这种用法。尽管如此，下划线
+    **_** 是有效的。
 - en: A *colon* can serve as a placeholder in an otherwise empty function.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个 *冒号* 可以在空函数中充当占位符。
 - en: '|  [PRE21]  |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE21]  |'
 - en: '!'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '!'
 - en: '**reverse (or negate) the sense of a test or exit status [bang].** The ! operator
     inverts the [exit status](exit-status.html#EXITSTATUSREF) of the command to which
     it is applied (see [Example 6-2](exit-status.html#NEGCOND)). It also inverts the
     meaning of a test operator. This can, for example, change the sense of *equal*
     ( [=](comparison-ops.html#EQUALSIGNREF) ) to *not-equal* ( != ). The ! operator
     is a Bash [keyword](internal.html#KEYWORDREF).'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '**反转（或否定）测试或退出状态的含义[感叹号]**。! 操作符反转它所应用的命令的 [退出状态](exit-status.html#EXITSTATUSREF)（参见
+    [示例 6-2](exit-status.html#NEGCOND)）。它还反转测试操作符的含义。例如，可以将 *等于*（ [=](comparison-ops.html#EQUALSIGNREF)
+    ）改为 *不等于*（ != ）。! 操作符是 Bash 的 [关键字](internal.html#KEYWORDREF)。'
 - en: In a different context, the ! also appears in [indirect variable references](ivr.html#IVRREF).
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在不同的上下文中，! 也出现在 [间接变量引用](ivr.html#IVRREF) 中。
 - en: In yet another context, from the *command line*, the ! invokes the Bash *history
     mechanism* (see [Appendix L](histcommands.html)). Note that within a script, the
     history mechanism is disabled.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: 在另一个上下文中，从 *命令行* 中，! 调用 Bash 的 *历史机制*（参见 [附录 L](histcommands.html)）。请注意，在脚本中，历史机制是禁用的。
 - en: '*'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '*'
 - en: '**wild card [asterisk].** The * character serves as a "wild card" for filename
     expansion in [globbing](globbingref.html). By itself, it matches every filename
     in a given directory.'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '**通配符[星号]**。* 字符在 [通配符](globbingref.html) 中的文件名扩展中充当 "通配符"。单独使用时，它匹配给定目录中的所有文件名。'
 - en: '|  [PRE22]  |'
+  id: totrans-92
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE22]  |'
 - en: The * also represents [any number (or zero) characters](x17129.html#ASTERISKREG)
     in a [regular expression](regexp.html#REGEXREF).
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '* 也代表 [任意数量（或零）字符](x17129.html#ASTERISKREG) 在 [正则表达式](regexp.html#REGEXREF)
+    中。'
 - en: '*'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '*'
 - en: '**[arithmetic operator](ops.html#AROPS1).** In the context of arithmetic operations,
     the * denotes multiplication.'
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[算术操作符](ops.html#AROPS1)**。在算术操作的上下文中，* 表示乘法。'
 - en: '** A double asterisk can represent the [exponentiation](ops.html#EXPONENTIATIONREF)
     operator or [extended file-match](bashver4.html#GLOBSTARREF) *globbing*.'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '**双星号可以表示 [指数](ops.html#EXPONENTIATIONREF) 操作符或 [扩展文件匹配](bashver4.html#GLOBSTARREF)
+    *通配符* globbing*。'
 - en: '?'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '?'
 - en: '**test operator.** Within certain expressions, the ? indicates a test for a
     condition.'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '**测试操作符**。在特定的表达式中，? 表示对条件的测试。'
 - en: In a [double-parentheses construct](dblparens.html), the ? can serve as an element
     of a C-style *trinary* operator. [[2]](#FTN.AEN888)
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: 在一个[双括号构造](dblparens.html)中，? 可以作为 C 风格的 *三元* 操作符的一个元素。[[2]](#FTN.AEN888)
 - en: '`condition`**?**`result-if-true`**:**`result-if-false`'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '`condition`**?**`result-if-true`**:**`result-if-false`'
 - en: '|  [PRE23]  |'
+  id: totrans-101
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE23]  |'
 - en: In a [parameter substitution](parameter-substitution.html#PARAMSUBREF) expression,
     the ? [tests whether a variable has been set](parameter-substitution.html#QERRMSG).
+  id: totrans-102
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [参数替换](parameter-substitution.html#PARAMSUBREF) 表达式中，? [测试变量是否已设置](parameter-substitution.html#QERRMSG)。
 - en: '?'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '?'
 - en: '**wild card.** The ? character serves as a single-character "wild card" for
     filename expansion in [globbing](globbingref.html), as well as [representing one
     character](x17129.html#QUEXREGEX) in an [extended regular expression](x17129.html#EXTREGEX).'
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: '**通配符**。问号（?）字符在[通配符匹配](globbingref.html)中充当单个字符的“通配符”，同时在[扩展正则表达式](x17129.html#EXTREGEX)中表示一个字符（x17129.html#QUEXREGEX）。'
 - en: $
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: $
 - en: '**[Variable substitution](varsubn.html) (contents of a variable).**'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[变量替换](varsubn.html)（变量的内容）。**'
 - en: '|  [PRE24]  |'
+  id: totrans-107
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE24]  |'
 - en: A $ prefixing a variable name indicates the *value* the variable holds.
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: 变量名前加$表示变量所持有的*值*。
 - en: $
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: $
 - en: '**end-of-line.** In a [regular expression](regexp.html#REGEXREF), a "$" addresses
     the [end of a line](x17129.html#DOLLARSIGNREF) of text.'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: '**行尾**。在[正则表达式](regexp.html#REGEXREF)中，$符号指向文本的[行尾](x17129.html#DOLLARSIGNREF)。'
 - en: ${}
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: ${}
 - en: '**[Parameter substitution](parameter-substitution.html#PARAMSUBREF).**'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[参数替换](parameter-substitution.html#PARAMSUBREF)。**'
 - en: $' ... '
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: $' ... '
 - en: '**[Quoted string expansion](escapingsection.html#STRQ).** This construct expands
     single or multiple escaped octal or hex values into ASCII [[3]](#FTN.AEN1001)
     or [Unicode](bashver4.html#UNICODEREF) characters.'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[引号字符串展开](escapingsection.html#STRQ)。** 此结构将单个或多个转义八进制或十六进制值展开为ASCII [[3]](#FTN.AEN1001)
+    或 [Unicode](bashver4.html#UNICODEREF) 字符。'
 - en: $*, $@
+  id: totrans-115
   prefs: []
   type: TYPE_NORMAL
+  zh: $*, $@
 - en: '**[positional parameters](internalvariables.html#APPREF).**'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[位置参数](internalvariables.html#APPREF)。**'
 - en: $?
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: $?
 - en: '**exit status variable.** The [$? variable](exit-status.html#EXSREF) holds
     the [exit status](exit-status.html#EXITSTATUSREF) of a command, a [function](functions.html#FUNCTIONREF),
     or of the script itself.'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '**退出状态变量**。[$? 变量](exit-status.html#EXSREF)保存命令、[函数](functions.html#FUNCTIONREF)或脚本本身的[退出状态](exit-status.html#EXITSTATUSREF)。'
 - en: $$
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: $$
 - en: '**process ID variable.** The [$$ variable](internalvariables.html#PROCCID)
     holds the *process ID* [[4]](#FTN.AEN1071) of the script in which it appears.'
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: '**进程ID变量**。[$$ 变量](internalvariables.html#PROCCID)保存脚本中出现的*进程ID* [[4]](#FTN.AEN1071)。'
 - en: ()
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: ()
 - en: '**command group.**'
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令组**。'
 - en: '|  [PRE25]  |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE25]  |'
 - en: '| ![Important](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | A listing
     of commands within `*parentheses*` starts a [subshell](subshells.html#SUBSHELLSREF).Variables
     inside parentheses, within the subshell, are not visible to the rest of the script.
     The parent process, the script, [cannot read variables created in the child process](subshells.html#PARVIS),
     the subshell.'
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![重要](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | 在括号内的命令列表开始一个[子shell](subshells.html#SUBSHELLSREF)。括号内的子shell中的变量对脚本的其他部分不可见。父进程，即脚本，[不能读取子进程中创建的变量](subshells.html#PARVIS)，子shell。'
 - en: '&#124;  [PRE26]  &#124;'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE26]  &#124;'
 - en: '|'
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**array initialization.**'
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: '**数组初始化**。'
 - en: '|  [PRE27]  |'
+  id: totrans-128
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE27]  |'
 - en: '{xxx,yyy,zzz,...}'
+  id: totrans-129
   prefs: []
   type: TYPE_NORMAL
+  zh: '{xxx,yyy,zzz,...}'
 - en: '**Brace expansion.**'
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: '**花括号展开**。'
 - en: '|  [PRE28]  |'
+  id: totrans-131
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE28]  |'
 - en: A command may act upon a comma-separated list of file specs within `*braces*`.
     [[5]](#FTN.AEN1124) Filename expansion ([globbing](globbingref.html)) applies
     to the file specs between the braces.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个命令可以作用于花括号内逗号分隔的文件规范列表。[[5]](#FTN.AEN1124) 文件名展开（[通配符匹配](globbingref.html)）应用于花括号之间的文件规范。
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | No spaces allowed
     within the braces *unless* the spaces are quoted or escaped.`**echo {file1,file2}\
     :{\ A," B",'' C''}**``file1 : A file1 : B file1 : C file2 : A file2 : B file2
     : C` |'
+  id: totrans-133
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 花括号内不允许有空格，除非空格被引号引用或转义。`**echo
+    {file1,file2}\ :{\ A," B",'' C''}**``file1 : A file1 : B file1 : C file2 : A file2
+    : B file2 : C` |'
 - en: '{a..z}'
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: '{a..z}'
 - en: '**Extended Brace expansion.**'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '**扩展花括号展开**。'
 - en: '|  [PRE29]  |'
+  id: totrans-136
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE29]  |'
 - en: The *{a..z}* [extended brace expansion](bashver3.html#BRACEEXPREF3) construction
     is a feature introduced in [version 3](bashver3.html#BASH3REF) of *Bash*.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '*{a..z}* [扩展花括号展开](bashver3.html#BRACEEXPREF3)构造是在*Bash*的[版本 3](bashver3.html#BASH3REF)中引入的特性。'
 - en: '{}'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '{}'
 - en: '**Block of code [curly brackets].** Also referred to as an *inline group*,
     this construct, in effect, creates an *anonymous function* (a function without
     a name). However, unlike in a "standard" [function](functions.html#FUNCTIONREF),
     the variables inside a code block remain visible to the remainder of the script.'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**代码块[花括号]。** 也称为*内联组*，此结构实际上创建了一个*匿名函数*（一个没有名称的函数）。然而，与“标准”[函数](functions.html#FUNCTIONREF)不同，代码块内的变量对脚本的其他部分仍然是可见的。'
 - en: '|  [PRE30]  |'
+  id: totrans-140
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE30]  |'
 - en: '|  [PRE31]  |'
+  id: totrans-141
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE31]  |'
 - en: The code block enclosed in braces may have [I/O redirected](io-redirection.html#IOREDIRREF)
     to and from it.
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: 花括号内的代码块可以将其输入/输出重定向到它。
 - en: '**Example 3-1\. Code blocks and I/O redirection**'
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 3-1\. 代码块和输入/输出重定向**'
 - en: '|  [PRE32]  |'
+  id: totrans-144
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE32]  |'
 - en: '**Example 3-2\. Saving the output of a code block to a file**'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 3-2\. 将代码块的输出保存到文件**'
 - en: '|  [PRE33]  |'
+  id: totrans-146
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE33]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unlike a command
     group within (parentheses), as above, a code block enclosed by {braces} will *not*
     normally launch a [subshell](subshells.html#SUBSHELLSREF). [[6]](#FTN.AEN1199)It
     is possible to [iterate](loops1.html#ITERATIONREF) a code block using a [non-standard
     *for-loop*](loops1.html#NODODONE). |'
+  id: totrans-147
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 与上面括号内的命令组不同，由大括号包围的代码块通常不会启动
+    [子shell](subshells.html#SUBSHELLSREF)。[[6]](#FTN.AEN1199)可以使用 [非标准 *for-loop*](loops1.html#NODODONE)
+    来迭代代码块。'
 - en: '{}'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '{}'
 - en: '**placeholder for text.** Used after [xargs `-i`](moreadv.html#XARGSCURLYREF)
     (*replace strings* option). The {} double curly brackets are a placeholder for
     output text.'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '**占位符文本**。在 [xargs `-i`](moreadv.html#XARGSCURLYREF) (*替换字符串*选项) 后使用。{} 双大括号是输出文本的占位符。'
 - en: '|  [PRE34]  |'
+  id: totrans-150
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE34]  |'
 - en: '{} \;'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '{} \;'
 - en: '**pathname.** Mostly used in [find](moreadv.html#FINDREF) constructs. This
     is *not* a shell [builtin](internal.html#BUILTINREF).'
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: '**路径名**。主要用于 [find](moreadv.html#FINDREF) 构造。这不是 shell [内置命令](internal.html#BUILTINREF)。'
 - en: '|'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: 'Definition: A *pathname* is a *filename* that includes the complete [path](internalvariables.html#PATHREF).
     As an example, `/home/bozo/Notes/Thursday/schedule.txt`. This is sometimes referred
     to as the *absolute path*.'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 定义：*路径名* 是包含完整 [路径](internalvariables.html#PATHREF) 的 *文件名*。例如，`/home/bozo/Notes/Thursday/schedule.txt`。这有时被称为
+    *绝对路径*。
 - en: '|'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The ";" ends the
     `-exec` option of a **find** command sequence. It needs to be escaped to protect
     it from interpretation by the shell. |'
+  id: totrans-156
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 分号 (;) 结束了 **find**
+    命令序列的 `-exec` 选项。需要转义以防止 shell 解释。 |'
 - en: '[ ]'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '[ ]'
 - en: '**test.**'
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '**测试**。'
 - en: '[Test](tests.html#IFTHEN) expression between **[ ]**. Note that **[** is part
     of the shell *builtin* [test](testconstructs.html#TTESTREF) (and a synonym for
     it), *not* a link to the external command `/usr/bin/test`.'
+  id: totrans-159
   prefs: []
   type: TYPE_NORMAL
+  zh: '[测试](tests.html#IFTHEN) 表达式在 **[ ]** 之间。请注意 **[** 是 shell *内置* [test](testconstructs.html#TTESTREF)
+    (及其同义词)，*不是* 对外部命令 `/usr/bin/test` 的链接。'
 - en: '[[ ]]'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: '[[ ]]'
 - en: '**test.**'
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: '**测试**。'
 - en: Test expression between [[ ]]. More flexible than the single-bracket [ ] test,
     this is a shell [keyword](internal.html#KEYWORDREF).
+  id: totrans-162
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [[ ]] 之间测试表达式。比单括号 [ ] 测试更灵活，这是一个 shell [关键字](internal.html#KEYWORDREF)。
 - en: See the discussion on the [[[ ... ]] construct](testconstructs.html#DBLBRACKETS).
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看关于 [[[ ... ]] 构造](testconstructs.html#DBLBRACKETS) 的讨论。
 - en: '[ ]'
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: '[ ]'
 - en: '**array element.**'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '**数组元素**。'
 - en: In the context of an [array](arrays.html#ARRAYREF), brackets set off the numbering
     of each element of that array.
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [数组](arrays.html#ARRAYREF) 的上下文中，括号用于标记该数组每个元素的编号。
 - en: '|  [PRE35]  |'
+  id: totrans-167
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE35]  |'
 - en: '[ ]'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '[ ]'
 - en: '**range of characters.**'
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: '**字符范围**。'
 - en: As part of a [regular expression](regexp.html#REGEXREF), brackets delineate
     a [range of characters](x17129.html#BRACKETSREF) to match.
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: 作为[正则表达式](regexp.html#REGEXREF)的一部分，括号定义了一个[字符范围](x17129.html#BRACKETSREF)以进行匹配。
 - en: $[ ... ]
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: $[ ... ]
 - en: '**integer expansion.**'
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: '**整数扩展**。'
 - en: Evaluate integer expression between $[ ].
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: 评估 $[ ] 之间的整数表达式。
 - en: '|  [PRE36]  |'
+  id: totrans-174
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE36]  |'
 - en: Note that this usage is *deprecated*, and has been replaced by the [(( ... ))](dblparens.html)
     construct.
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，这种用法已被弃用，并由 [(( ... ))](dblparens.html) 构造所取代。
 - en: (( ))
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: (( ))
 - en: '**integer expansion.**'
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: '**整数扩展**。'
 - en: Expand and evaluate integer expression between (( )).
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: 展开并评估 (( )) 之间的整数表达式。
 - en: See the discussion on the [(( ... )) construct](dblparens.html).
+  id: totrans-179
   prefs: []
   type: TYPE_NORMAL
+  zh: 查看关于[(( ... ))构造](dblparens.html)的讨论。
 - en: '&> >& >> < <>'
+  id: totrans-180
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: '&> >& >> < <>'
 - en: '**[redirection](io-redirection.html#IOREDIRREF).**'
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[重定向](io-redirection.html#IOREDIRREF)**。'
 - en: '`**scriptname >filename**` redirects the output of `scriptname` to file `filename`.
     Overwrite `filename` if it already exists.'
+  id: totrans-182
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**scriptname >filename**` 将 `scriptname` 的输出重定向到文件 `filename`。如果文件已存在，则覆盖它。'
 - en: '`**command &>filename**` redirects both the [`stdout`](ioredirintro.html#STDINOUTDEF)
     and the `stderr` of `command` to `filename`.'
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**command &>filename**` 将 `command` 的 `stdout` 和 `stderr` 都重定向到 `filename`。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This is useful
     for suppressing output when testing for a condition. For example, let us test
     whether a certain command exists.'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 这在测试条件时抑制输出很有用。例如，让我们测试某个命令是否存在。'
 - en: '&#124;  [PRE37]  &#124;'
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE37]  &#124;'
 - en: 'Or in a script:'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者在一个脚本中：
 - en: '&#124;  [PRE38]  &#124;'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE38]  &#124;'
 - en: '|'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '`**command >&2**` redirects `stdout` of `command` to `stderr`.'
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**command >&2**` 将 `command` 的 `stdout` 重定向到 `stderr`。'
 - en: '`**scriptname >>filename**` appends the output of `scriptname` to file `filename`.
     If `filename` does not already exist, it is created.'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**scriptname >>filename**` 将 `scriptname` 的输出追加到文件 `filename`。如果 `filename`
+    已经存在，则创建它。'
 - en: '`**[i]<>filename**` opens file `filename` for reading and writing, and assigns
     [file descriptor](io-redirection.html#FDREF) i to it. If `filename` does not exist,
     it is created.'
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**[i]<>filename**` 为文件 `filename` 打开读写权限，并将 [文件描述符](io-redirection.html#FDREF)
+    i 分配给它。如果 `filename` 不存在，则创建它。'
 - en: '**[process substitution](process-sub.html#PROCESSSUBREF).**'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[进程替换](process-sub.html#PROCESSSUBREF)。**'
 - en: '`**(command)>**`'
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**(命令)>**`'
 - en: '`**<(command)**`'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**<(命令)**`'
 - en: '[In a different context](comparison-ops.html#LTREF), the "<" and ">" characters
     act as [string comparison operators](comparison-ops.html#SCOMPARISON1).'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '[在另一个上下文中](comparison-ops.html#LTREF)，"<" 和 ">" 字符作为 [字符串比较运算符](comparison-ops.html#SCOMPARISON1)。'
 - en: '[In yet another context](comparison-ops.html#INTLT), the "<" and ">" characters
     act as [integer comparison operators](comparison-ops.html#ICOMPARISON1). See also
     [Example 16-9](moreadv.html#EX45).'
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: '[在另一个上下文中](comparison-ops.html#INTLT)，"<" 和 ">" 字符作为 [整数比较运算符](comparison-ops.html#ICOMPARISON1)。另见
+    [示例 16-9](moreadv.html#EX45)。'
 - en: '<<'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: '<<'
 - en: '**redirection used in a [here document](here-docs.html#HEREDOCREF).**'
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**在 [here 文档](here-docs.html#HEREDOCREF) 中使用的重定向。**'
 - en: <<<
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: <<<
 - en: '**redirection used in a [here string](x17837.html#HERESTRINGSREF).**'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**在 [here 字符串](x17837.html#HERESTRINGSREF) 中使用的重定向。**'
 - en: <, >
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: <, >
 - en: '**[ASCII comparison](comparison-ops.html#LTREF).**'
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[ASCII 比较操作](comparison-ops.html#LTREF)。**'
 - en: '|  [PRE39]  |'
+  id: totrans-203
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE39]  |'
 - en: \<, \>
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: \<, \>
 - en: '**[word boundary](x17129.html#ANGLEBRAC) in a [regular expression](regexp.html#REGEXREF).**'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[正则表达式中的单词边界](x17129.html#ANGLEBRAC)。**'
 - en: '`bash$` `**grep ''\<the\>'' textfile**`'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: '`bash$` `**grep ''\<the\>'' textfile**`'
 - en: '|'
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**pipe.** Passes the output (`stdout`) of a previous command to the input (`stdin`)
     of the next one, or to the shell. This is a method of chaining commands together.'
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: '**管道**。将前一个命令的输出 (`stdout`) 传递到下一个命令的输入 (`stdin`) 或传递到 shell。这是将命令链接在一起的方法。'
 - en: '|  [PRE40]  |'
+  id: totrans-209
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE40]  |'
 - en: '|'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: A pipe, as a classic method of interprocess communication, sends the `stdout`
     of one [process](special-chars.html#PROCESSREF) to the `stdin` of another. In
     a typical case, a command, such as [cat](basic.html#CATREF) or [echo](internal.html#ECHOREF),
     pipes a stream of data to a *filter*, a command that transforms its input for
     processing. [[7]](#FTN.AEN1564)
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: 管道作为一种经典的进程间通信方法，将一个 [进程](special-chars.html#PROCESSREF) 的 `stdout` 发送到另一个进程的
+    `stdin`。在典型情况下，例如 [cat](basic.html#CATREF) 或 [echo](internal.html#ECHOREF) 命令将数据流传递到
+    *过滤器*，这是一个将输入转换为处理过程的命令。[[7]](#FTN.AEN1564)
 - en: '`**cat $filename1 $filename2 &#124; grep $search_word**`'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**cat $filename1 $filename2 &#124; grep $search_word**`'
 - en: For an interesting note on the complexity of using UNIX pipes, see [the UNIX
     FAQ, Part 3](http://www.faqs.org/faqs/unix-faq/faq/part3/).
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于使用 UNIX 管道的复杂性的有趣说明，请参阅 [UNIX FAQ，第 3 部分](http://www.faqs.org/faqs/unix-faq/faq/part3/)。
 - en: '|'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: The output of a command or commands may be piped to a script.
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令或命令的输出可以传递到脚本。
 - en: '|  [PRE41]  |'
+  id: totrans-216
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE41]  |'
 - en: Now, let us pipe the output of **ls -l** to this script.
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，让我们将 `ls -l` 的输出通过管道传递到这个脚本。
 - en: '|  [PRE42]  |'
+  id: totrans-218
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE42]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `stdout` of
     each process in a pipe must be read as the `stdin` of the next. If this is not
     the case, the data stream will *block*, and the pipe will not behave as expected.'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 管道中每个进程的 `stdout`
+    必须作为下一个进程的 `stdin` 来读取。如果这不是这种情况，数据流将 *阻塞*，管道将不会按预期工作。'
 - en: '&#124;  [PRE43]  &#124;'
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE43]  &#124;'
 - en: A pipe runs as a [child process](othertypesv.html#CHILDREF), and therefore cannot
     alter script variables.
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: 管道作为一个 [子进程](othertypesv.html#CHILDREF) 运行，因此不能更改脚本变量。
 - en: '&#124;  [PRE44]  &#124;'
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE44]  &#124;'
 - en: If one of the commands in the pipe aborts, this prematurely terminates execution
     of the pipe. Called a *broken pipe*, this condition sends a `*SIGPIPE*` [signal](debugging.html#SIGNALD).
     |
+  id: totrans-223
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果管道中的某个命令终止，这将提前终止管道的执行。称为 *损坏的管道*，这种情况会发送一个 `*SIGPIPE*` [信号](debugging.html#SIGNALD)。
+    |
 - en: '>|'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: '>|'
 - en: '**force redirection (even if the [noclobber option](options.html#NOCLOBBERREF)
     is set).** This will forcibly overwrite an existing file.'
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: '**强制重定向（即使设置了 [noclobber 选项](options.html#NOCLOBBERREF)）。** 这将强制覆盖现有文件。'
 - en: '||'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '||'
 - en: '**[OR logical operator](ops.html#ORREF).** In a [test construct](testconstructs.html#TESTCONSTRUCTS1),
     the || operator causes a return of 0 (success) if *either* of the linked test
     conditions is true.'
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[逻辑或运算符](ops.html#ORREF)。** 在 [测试构造](testconstructs.html#TESTCONSTRUCTS1)
+    中，如果 *任一* 链接的测试条件为真，则 || 运算符会导致返回 0（成功）。'
 - en: '&'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: '&'
 - en: '**Run job in background.** A command followed by an & will run in the background.'
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: '**在后台运行作业。** 后跟一个 & 的命令将在后台运行。'
 - en: '|  [PRE45]  |'
+  id: totrans-230
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE45]  |'
 - en: Within a script, commands and even [loops](loops1.html#FORLOOPREF1) may run
     in the background.
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中，命令甚至 [循环](loops1.html#FORLOOPREF1) 也可以在后台运行。
 - en: '**Example 3-3\. Running a loop in the background**'
+  id: totrans-232
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 3-3\. 在后台运行循环**'
 - en: '|  [PRE46]  |'
+  id: totrans-233
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE46]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | A command run
     in the background within a script may cause the script to hang, waiting for a
     keystroke. Fortunately, there is a [remedy](x9644.html#WAITHANG) for this. |'
+  id: totrans-234
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 在脚本中运行的背景命令可能会导致脚本挂起，等待按键。幸运的是，有一个
+    [解决办法](x9644.html#WAITHANG)。'
 - en: '&&'
+  id: totrans-235
   prefs: []
   type: TYPE_NORMAL
+  zh: '&&'
 - en: '**[AND logical operator](ops.html#LOGOPS1).** In a [test construct](testconstructs.html#TESTCONSTRUCTS1),
     the && operator causes a return of 0 (success) only if *both* the linked test
     conditions are true.'
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[AND 逻辑运算符](ops.html#LOGOPS1)。** 在 [测试构造](testconstructs.html#TESTCONSTRUCTS1)
+    中，&& 运算符仅在 *两个* 链接的测试条件都为真时才返回 0（成功）。'
 - en: '-'
+  id: totrans-237
   prefs: []
   type: TYPE_NORMAL
+  zh: '-'
 - en: '**option, prefix.** Option flag for a command or filter. Prefix for an operator.
     Prefix for a [default parameter](parameter-substitution.html#DEFPARAM1) in [parameter
     substitution](parameter-substitution.html#PARAMSUBREF).'
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: '**选项，前缀。** 命令或过滤器的选项标志。运算符的前缀。在 [参数替换](parameter-substitution.html#PARAMSUBREF)
+    中 [默认参数](parameter-substitution.html#DEFPARAM1) 的前缀。'
 - en: '`**COMMAND -[Option1][Option2][...]**`'
+  id: totrans-239
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**COMMAND -[Option1][Option2][...]**`'
 - en: '`**ls -al**`'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**ls -al**`'
 - en: '`**sort -dfu $filename**`'
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**sort -dfu $filename**`'
 - en: '|  [PRE47]  |'
+  id: totrans-242
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE47]  |'
 - en: '**--**'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: '**--**'
 - en: The *double-dash* `--` prefixes *long* (verbatim) options to commands.
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: '*双横线* `--` 是命令的 *长*（文本）选项的前缀。'
 - en: '`**sort --ignore-leading-blanks**`'
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**sort --ignore-leading-blanks**`'
 - en: Used with a [Bash builtin](internal.html#BUILTINREF), it means the *end of options*
     to that particular command.
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 [Bash 内置命令](internal.html#BUILTINREF) 结合使用时，它表示该特定命令的 *选项结束*。
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | This provides a
     handy means of removing files whose *names begin with a dash*.'
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 这提供了一种方便的方法来删除以 *减号*
+    开头的文件名。'
 - en: '&#124;  [PRE48]  &#124;'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE48]  &#124;'
 - en: '|'
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: The *double-dash* is also used in conjunction with [set](internal.html#SETREF).
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: '*双横线* 也与 [set](internal.html#SETREF) 结合使用。'
 - en: '`**set -- $variable**` (as in [Example 15-18](internal.html#SETPOS))'
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**set -- $variable**`（如 [示例 15-18](internal.html#SETPOS)）'
 - en: '-'
+  id: totrans-252
   prefs: []
   type: TYPE_NORMAL
+  zh: '-'
 - en: '**redirection from/to `stdin` or `stdout` [dash].**'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '**从/to `stdin` 或 `stdout` 重定向 [减号]。**'
 - en: '|  [PRE49]  |'
+  id: totrans-254
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE49]  |'
 - en: As expected, `**cat -**` echoes `stdin`, in this case keyboarded user input,
     to `stdout`. But, does I/O redirection using **-** have real-world applications?
+  id: totrans-255
   prefs: []
   type: TYPE_NORMAL
+  zh: 如预期，`**cat -**` 将 `stdin`（在这种情况下是键盘输入的用户输入）回显到 `stdout`。但是，使用 **-** 的 I/O 重定向在现实世界中有什么应用？
 - en: '|  [PRE50]  |'
+  id: totrans-256
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE50]  |'
 - en: '|  [PRE51]  |'
+  id: totrans-257
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE51]  |'
 - en: Note that in this context the "-" is not itself a Bash operator, but rather
     an option recognized by certain UNIX utilities that write to `stdout`, such as
     **tar**, **cat**, etc.
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，在这个上下文中，“-” 本身不是一个 Bash 操作符，而是一个由某些 UNIX 实用程序（如 **tar**、**cat** 等）识别的选项，这些实用程序将输出写入
+    `stdout`。
 - en: '|  [PRE52]  |'
+  id: totrans-259
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE52]  |'
 - en: Where a filename is expected, `*-*` redirects output to `stdout` (sometimes
     seen with `**tar cf**`), or accepts input from `stdin`, rather than from a file.
     This is a method of using a file-oriented utility as a filter in a pipe.
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: 当期望文件名时，`*-*` 将输出重定向到 `stdout`（有时与 `**tar cf**` 一起看到），或从 `stdin` 而不是从文件接受输入。这是一种将面向文件实用程序用作管道中过滤器的使用方法。
 - en: '|  [PRE53]  |'
+  id: totrans-261
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE53]  |'
 - en: By itself on the command-line, [file](filearchiv.html#FILEREF) fails with an
     error message.
+  id: totrans-262
   prefs: []
   type: TYPE_NORMAL
+  zh: 在命令行上单独使用时，[file](filearchiv.html#FILEREF) 会报错。
 - en: Add a "-" for a more useful result. This causes the shell to await user input.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: 添加一个 "-" 以获得更有用的结果。这会导致 shell 等待用户输入。
 - en: '|  [PRE54]  |'
+  id: totrans-264
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE54]  |'
 - en: Now the command accepts input from `stdin` and analyzes it.
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在命令接受来自 `stdin` 的输入并进行分析。
 - en: The "-" can be used to pipe `stdout` to other commands. This permits such stunts
     as [prepending lines to a file](assortedtips.html#PREPENDREF).
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: “-” 可以用来将 `stdout` 输出到其他命令。这允许进行诸如 [向文件中添加行](assortedtips.html#PREPENDREF) 这样的技巧。
 - en: 'Using [diff](filearchiv.html#DIFFREF) to compare a file with a *section* of
     another:'
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 [diff](filearchiv.html#DIFFREF) 比较一个文件与另一个文件的 *部分*：
 - en: '`**grep Linux file1 | diff file2 -**`'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**grep Linux file1 | diff file2 -**`'
 - en: Finally, a real-world example using `*-*` with [tar](filearchiv.html#TARREF).
+  id: totrans-269
   prefs: []
   type: TYPE_NORMAL
+  zh: 最后，一个使用 `*-*` 与 [tar](filearchiv.html#TARREF) 的现实世界示例。
 - en: '**Example 3-4\. Backup of all files changed in last day**'
+  id: totrans-270
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 3-4\. 备份过去一天内更改的所有文件**'
 - en: '|  [PRE55]  |'
+  id: totrans-271
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE55]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Filenames beginning
     with "-" may cause problems when coupled with the "-" redirection operator. A
     script should check for this and add an appropriate prefix to such filenames,
     for example `./-FILENAME`, `$PWD/-FILENAME`, or `$PATHNAME/-FILENAME`.If the value
     of a variable begins with a `*-*`, this may likewise create problems.'
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 以“-”开头的文件名与“-”重定向操作符结合时可能会引起问题。脚本应检查此问题，并为这样的文件名添加适当的前缀，例如`./-FILENAME`，`$PWD/-FILENAME`或`$PATHNAME/-FILENAME`。如果变量的值以`*-*`开头，这也可能同样引起问题。'
 - en: '&#124;  [PRE56]  &#124;'
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE56]  &#124;'
 - en: '|'
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '-'
+  id: totrans-275
   prefs: []
   type: TYPE_NORMAL
+  zh: '-'
 - en: '**previous working directory.** A **cd -** command changes to the previous
     working directory. This uses the [$OLDPWD](internalvariables.html#OLDPWD) [environmental
     variable](othertypesv.html#ENVREF).'
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: '**前一个工作目录**。一个**cd -**命令会切换到前一个工作目录。这使用的是[$OLDPWD](internalvariables.html#OLDPWD)
+    [环境变量](othertypesv.html#ENVREF)。'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Do not confuse
     the "-" used in this sense with the "-" redirection operator just discussed. The
     interpretation of the "-" depends on the context in which it appears. |'
+  id: totrans-277
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 不要将此意义上的“-”与刚刚讨论的“-”重定向操作符混淆。对“-”的解释取决于其出现的环境。|'
 - en: '-'
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: '-'
 - en: '**Minus.** Minus sign in an [arithmetic operation](ops.html#AROPS1).'
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: '**减号。** [算术操作](ops.html#AROPS1)中的减号。'
 - en: '='
+  id: totrans-280
   prefs: []
   type: TYPE_NORMAL
+  zh: '='
 - en: '**Equals.** [Assignment operator](varassignment.html#EQREF)'
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: '**等于。** [赋值操作符](varassignment.html#EQREF)'
 - en: '|  [PRE57]  |'
+  id: totrans-282
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE57]  |'
 - en: In a [different context](comparison-ops.html#EQUALSIGNREF), the "=" is a [string
     comparison](comparison-ops.html#SCOMPARISON1) operator.
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[不同的环境](comparison-ops.html#EQUALSIGNREF)中，等号“=”是一个[字符串比较](comparison-ops.html#SCOMPARISON1)操作符。
 - en: +
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: +
 - en: '**Plus.** Addition [arithmetic operator](ops.html#AROPS1).'
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
+  zh: '**加号。** [加法算术操作符](ops.html#AROPS1)。'
 - en: In a [different context](x17129.html#PLUSREF), the + is a [Regular Expression](regexp.html)
     operator.
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[不同的环境](x17129.html#PLUSREF)中，"+"是一个[正则表达式](regexp.html)操作符。
 - en: +
+  id: totrans-287
   prefs: []
   type: TYPE_NORMAL
+  zh: +
 - en: '**Option.** Option flag for a command or filter.'
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: '**选项。** 命令或过滤器的选项标志。'
 - en: Certain commands and [builtins](internal.html#BUILTINREF) use the `+` to enable
     certain options and the `-` to disable them. In [parameter substitution](parameter-substitution.html#PARAMSUBREF),
     the `+` prefixes an [alternate value](parameter-substitution.html#PARAMALTV) that
     a variable expands to.
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: 某些命令和[内置命令](internal.html#BUILTINREF)使用“+”来启用某些选项，使用“-”来禁用它们。在[参数替换](parameter-substitution.html#PARAMSUBREF)中，“+”前缀一个变量扩展到的[备选值](parameter-substitution.html#PARAMALTV)。
 - en: '%'
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: '%'
 - en: '**[modulo](ops.html#MODULOREF).** Modulo (remainder of a division) [arithmetic
     operation](ops.html#AROPS1).'
+  id: totrans-291
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[取模](ops.html#MODULOREF)。** 取模（除法的余数）[算术操作](ops.html#AROPS1)。'
 - en: '|  [PRE58]  |'
+  id: totrans-292
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE58]  |'
 - en: In a [different context](parameter-substitution.html#PCTPATREF), the % is a
     [pattern matching](parameter-substitution.html#PSUB2) operator.
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: 在[不同的环境](parameter-substitution.html#PCTPATREF)中，百分号“%”是一个[模式匹配](parameter-substitution.html#PSUB2)操作符。
 - en: '~'
+  id: totrans-294
   prefs: []
   type: TYPE_NORMAL
+  zh: '~'
 - en: '**home directory [tilde].** This corresponds to the [$HOME](internalvariables.html#HOMEDIRREF)
     internal variable. `~bozo` is bozo''s home directory, and **ls ~bozo** lists the
     contents of it. ~/ is the current user''s home directory, and **ls ~/** lists
     the contents of it.'
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: '**主目录[波浪号]。** 这对应于内部变量[$HOME](internalvariables.html#HOMEDIRREF)。`~bozo`是bozo的主目录，**ls
+    ~bozo**列出其内容。`~/`是当前用户的家目录，**ls ~/**列出其内容。'
 - en: '|  [PRE59]  |'
+  id: totrans-296
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE59]  |'
 - en: ~+
+  id: totrans-297
   prefs: []
   type: TYPE_NORMAL
+  zh: ~+
 - en: '**current working directory.** This corresponds to the [$PWD](internalvariables.html#PWDREF)
     internal variable.'
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: '**当前工作目录**。这对应于内部变量[$PWD](internalvariables.html#PWDREF)。'
 - en: ~-
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: ~-
 - en: '**previous working directory.** This corresponds to the [$OLDPWD](internalvariables.html#OLDPWD)
     internal variable.'
+  id: totrans-300
   prefs: []
   type: TYPE_NORMAL
+  zh: '**前一个工作目录**。这对应于内部变量[$OLDPWD](internalvariables.html#OLDPWD)。'
 - en: =~
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: =~
 - en: '**[regular expression match](bashver3.html#REGEXMATCHREF).** This operator
     was introduced with [version 3](bashver3.html#BASH3REF) of Bash.'
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[正则表达式匹配](bashver3.html#REGEXMATCHREF)。** 这个操作符是在Bash的[版本3](bashver3.html#BASH3REF)中引入的。'
 - en: ^
+  id: totrans-303
   prefs: []
   type: TYPE_NORMAL
+  zh: ^
 - en: '**beginning-of-line.** In a [regular expression](regexp.html#REGEXREF), a "^"
     addresses the [beginning of a line](x17129.html#CARETREF) of text.'
+  id: totrans-304
   prefs: []
   type: TYPE_NORMAL
+  zh: '**行首。** 在[正则表达式](regexp.html#REGEXREF)中，"^"指向文本的[行首](x17129.html#CARETREF)。'
 - en: ^, ^^
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: ^, ^^
 - en: '**[Uppercase conversion](bashver4.html#CASEMODPARAMSUB) in *parameter substitution*
     (added in [version 4](bashver4.html#BASH4REF) of Bash).**'
+  id: totrans-306
   prefs: []
   type: TYPE_NORMAL
+  zh: '**[大写转换](bashver4.html#CASEMODPARAMSUB)在*参数替换*中（在Bash的[版本4](bashver4.html#BASH4REF)中添加）。**'
 - en: Control Characters
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 控制字符
 - en: '**change the behavior of the terminal or text display.** A control character
     is a **CONTROL** + **key** combination (pressed simultaneously). A control character
     may also be written in *octal* or *hexadecimal* notation, following an *escape*.'
+  id: totrans-308
   prefs: []
   type: TYPE_NORMAL
+  zh: '**改变终端或文本显示的行为**。控制字符是 **CONTROL** + **键** 组合（同时按下）。控制字符也可以用 *八进制* 或 *十六进制*
+    表示法，在 *转义* 后面。'
 - en: Control characters are not normally useful inside a script.
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: 控制字符通常在脚本中不常用。
 - en: '`**Ctl-A**`'
+  id: totrans-310
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-A**`'
 - en: Moves cursor to beginning of line of text (on the command-line).
+  id: totrans-311
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 将光标移到文本行的开头（在命令行中）。
 - en: '`**Ctl-B**`'
+  id: totrans-312
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-B**`'
 - en: '`**Backspace**` (nondestructive).'
+  id: totrans-313
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**退格**`（非破坏性）。'
 - en: '`**Ctl-C**`'
+  id: totrans-314
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-C**`'
 - en: '`**Break**`. Terminate a foreground job.'
+  id: totrans-315
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**Break**`。终止前台作业。'
 - en: '`**Ctl-D**`'
+  id: totrans-316
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-D**`'
 - en: '*Log out* from a shell (similar to [exit](exit-status.html#EXITCOMMANDREF)).'
+  id: totrans-317
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 从壳中 *登出*（类似于 [退出](exit-status.html#EXITCOMMANDREF)）。
 - en: '`**EOF**` (end-of-file). This also terminates input from `stdin`.'
+  id: totrans-318
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**EOF**`（文件结束）。这也会终止来自 `stdin` 的输入。'
 - en: When typing text on the console or in an *xterm* window, `**Ctl-D**` erases
     the character under the cursor. When there are no characters present, `**Ctl-D**`
     logs out of the session, as expected. In an *xterm* window, this has the effect
     of closing the window.
+  id: totrans-319
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当在控制台或 *xterm* 窗口中键入文本时，`**Ctl-D**` 会删除光标下的字符。当没有字符时，`**Ctl-D**` 会像预期的那样登出会话。在
+    *xterm* 窗口中，这会产生关闭窗口的效果。
 - en: '`**Ctl-E**`'
+  id: totrans-320
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-E**`'
 - en: Moves cursor to end of line of text (on the command-line).
+  id: totrans-321
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 将光标移到文本行的末尾（在命令行中）。
 - en: '`**Ctl-F**`'
+  id: totrans-322
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-F**`'
 - en: Moves cursor forward one character position (on the command-line).
+  id: totrans-323
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 将光标向前移动一个字符位置（在命令行中）。
 - en: '`**Ctl-G**`'
+  id: totrans-324
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-G**`'
 - en: '`**BEL**`. On some old-time teletype terminals, this would actually ring a
     bell. In an *xterm* it might beep.'
+  id: totrans-325
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**BEL**`。在一些老式的电传打字机上，这实际上会响铃。在 *xterm* 中可能会发出蜂鸣声。'
 - en: '`**Ctl-H**`'
+  id: totrans-326
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-H**`'
 - en: '`**Rubout**` (destructive backspace). Erases characters the cursor backs over
     while backspacing.'
+  id: totrans-327
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**Rubout**`（破坏性退格）。删除光标在退格时覆盖的字符。'
 - en: '|  [PRE60]  |'
+  id: totrans-328
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE60]  |'
 - en: '`**Ctl-I**`'
+  id: totrans-329
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-I**`'
 - en: '`**Horizontal tab**`.'
+  id: totrans-330
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**水平制表符**`.'
 - en: '`**Ctl-J**`'
+  id: totrans-331
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-J**`'
 - en: '`**Newline**` (line feed). In a script, may also be expressed in octal notation
     -- ''\012'' or in hexadecimal -- ''\x0a''.'
+  id: totrans-332
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**换行**`（换行符）。在脚本中，也可以用八进制表示法 -- `\012` 或十六进制表示法 -- `\x0a`。'
 - en: '`**Ctl-K**`'
+  id: totrans-333
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-K**`'
 - en: '`**Vertical tab**`.'
+  id: totrans-334
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**垂直制表符**`.'
 - en: When typing text on the console or in an *xterm* window, `**Ctl-K**` erases
     from the character under the cursor to end of line. Within a script, `**Ctl-K**`
     may behave differently, as in Lee Lee Maschmeyer's example, below.
+  id: totrans-335
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当在控制台或 *xterm* 窗口中键入文本时，`**Ctl-K**` 会从光标下的字符删除到行尾。在脚本中，`**Ctl-K**` 的行为可能不同，如下面的
+    Lee Lee Maschmeyer 的例子所示。
 - en: '`**Ctl-L**`'
+  id: totrans-336
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-L**`'
 - en: '`**Formfeed**` (clear the terminal screen). In a terminal, this has the same
     effect as the [clear](terminalccmds.html#CLEARREF) command. When sent to a printer,
     a `**Ctl-L**` causes an advance to end of the paper sheet.'
+  id: totrans-337
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**换页**`（清除终端屏幕）。在终端中，这具有与 [清除](terminalccmds.html#CLEARREF) 命令相同的效果。当发送到打印机时，一个
+    `**Ctl-L**` 会导致纸张的结束。'
 - en: '`**Ctl-M**`'
+  id: totrans-338
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-M**`'
 - en: '`**Carriage return**`.'
+  id: totrans-339
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**回车**`。'
 - en: '|  [PRE61]  |'
+  id: totrans-340
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE61]  |'
 - en: '`**Ctl-N**`'
+  id: totrans-341
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-N**`'
 - en: Erases a line of text recalled from *history buffer* [[8]](#FTN.AEN2107) (on
     the command-line).
+  id: totrans-342
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 从 *历史缓冲区* 中删除一行文本 [[8]](#FTN.AEN2107)（在命令行中）。
 - en: '`**Ctl-O**`'
+  id: totrans-343
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-O**`'
 - en: Issues a *newline* (on the command-line).
+  id: totrans-344
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在命令行中发出 *换行*。
 - en: '`**Ctl-P**`'
+  id: totrans-345
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-P**`'
 - en: Recalls last command from *history buffer* (on the command-line).
+  id: totrans-346
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 从 *历史缓冲区* 中调用最后一条命令（在命令行中）。
 - en: '`**Ctl-Q**`'
+  id: totrans-347
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-Q**`'
 - en: Resume (`**XON**`).
+  id: totrans-348
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 恢复（`**XON**`）。
 - en: This resumes `stdin` in a terminal.
+  id: totrans-349
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 这会在终端中恢复 `stdin`。
 - en: '`**Ctl-R**`'
+  id: totrans-350
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-R**`'
 - en: Backwards search for text in *history buffer* (on the command-line).
+  id: totrans-351
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在 *历史缓冲区*（在命令行中）中向后搜索文本。
 - en: '`**Ctl-S**`'
+  id: totrans-352
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-S**`'
 - en: Suspend (`**XOFF**`).
+  id: totrans-353
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 暂停 (`**XOFF**`).
 - en: This freezes `stdin` in a terminal. (Use Ctl-Q to restore input.)
+  id: totrans-354
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 这会在终端中冻结 `stdin`。（使用 Ctl-Q 来恢复输入。）
 - en: '`**Ctl-T**`'
+  id: totrans-355
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-T**`'
 - en: Reverses the position of the character the cursor is on with the previous character
     (on the command-line).
+  id: totrans-356
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 将光标所在位置与之前的字符位置交换（在命令行中）。
 - en: '`**Ctl-U**`'
+  id: totrans-357
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-U**`'
 - en: Erase a line of input, from the cursor backward to beginning of line. In some
     settings, `**Ctl-U**` erases the entire line of input, *regardless of cursor position*.
+  id: totrans-358
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 从输入行的光标位置向后删除整行。在某些设置中，`**Ctl-U**` 会删除整个输入行，*无论光标位置如何*。
 - en: '`**Ctl-V**`'
+  id: totrans-359
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-V**`'
 - en: 'When inputting text, `**Ctl-V**` permits inserting control characters. For
     example, the following two are equivalent:'
+  id: totrans-360
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当输入文本时，`**Ctl-V**` 允许插入控制字符。例如，以下两个是等效的：
 - en: '|  [PRE62]  |'
+  id: totrans-361
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE62]  |'
 - en: '`**Ctl-V**` is primarily useful from within a text editor.'
+  id: totrans-362
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**Ctl-V**` 主要在文本编辑器中使用。'
 - en: '`**Ctl-W**`'
+  id: totrans-363
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-W**`'
 - en: When typing text on the console or in an xterm window, `**Ctl-W**` erases from
     the character under the cursor backwards to the first instance of [whitespace](special-chars.html#WHITESPACEREF).
     In some settings, `**Ctl-W**` erases backwards to first non-alphanumeric character.
+  id: totrans-364
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在控制台或 xterm 窗口中键入文本时，`**Ctl-W**` 从光标下的字符开始向后删除到第一个 [空白](special-chars.html#WHITESPACEREF)
+    实例。在某些设置中，`**Ctl-W**` 向后删除到第一个非字母数字字符。
 - en: '`**Ctl-X**`'
+  id: totrans-365
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-X**`'
 - en: In certain word processing programs, *Cuts* highlighted text and copies to *clipboard*.
+  id: totrans-366
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在某些文字处理程序中，*剪切* 高亮文本并将其复制到 *剪贴板*。
 - en: '`**Ctl-Y**`'
+  id: totrans-367
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-Y**`'
 - en: '*Pastes* back text previously erased (with `**Ctl-U**` or `**Ctl-W**`).'
+  id: totrans-368
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '*粘贴* 回之前删除的文本（使用 `**Ctl-U**` 或 `**Ctl-W**`）。'
 - en: '`**Ctl-Z**`'
+  id: totrans-369
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '`**Ctl-Z**`'
 - en: '*Pauses* a foreground job.'
+  id: totrans-370
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '*暂停* 前台作业。'
 - en: '*Substitute* operation in certain word processing applications.'
+  id: totrans-371
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在某些文字处理应用程序中的 *替换* 操作。
 - en: '`**EOF**` (end-of-file) character in the MSDOS filesystem.'
+  id: totrans-372
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**EOF**`（文件结束）字符在 MSDOS 文件系统中。'
 - en: Whitespace
+  id: totrans-373
   prefs: []
   type: TYPE_NORMAL
+  zh: 空白
 - en: '**functions as a separator between commands and/or variables.** Whitespace
     consists of either *spaces*, *tabs*, *blank lines*, or any combination thereof.
     [[9]](#FTN.AEN2198) In some contexts, such as [variable assignment](gotchas.html#WSBAD),
     whitespace is not permitted, and results in a syntax error.'
+  id: totrans-374
   prefs: []
   type: TYPE_NORMAL
+  zh: '**作为命令和/或变量之间的分隔符**。空白由 *空格*、*制表符*、*空白行* 或它们的任意组合组成。[[9]](#FTN.AEN2198) 在某些上下文中，例如
+    [变量赋值](gotchas.html#WSBAD)，不允许使用空白，这会导致语法错误。'
 - en: Blank lines have no effect on the action of a script, and are therefore useful
     for visually separating functional sections.
+  id: totrans-375
   prefs: []
   type: TYPE_NORMAL
+  zh: 空白行对脚本的执行没有影响，因此对于视觉上分隔功能部分很有用。
 - en: '[$IFS](internalvariables.html#IFSREF), the special variable separating *fields*
     of input to certain commands. It defaults to whitespace.'
+  id: totrans-376
   prefs: []
   type: TYPE_NORMAL
+  zh: '[$IFS](internalvariables.html#IFSREF)，分隔某些命令输入 *字段* 的特殊变量。它默认为空白。'
 - en: '|'
+  id: totrans-377
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '`**Definition:**` A *field* is a discrete chunk of data expressed as a string
     of consecutive characters. Separating each field from adjacent fields is either
     *whitespace* or some other designated character (often determined by the $IFS).
     In some contexts, a field may be called a *record*.'
+  id: totrans-378
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**定义**:` *字段* 是以连续字符字符串形式表示的数据离散块。将每个字段与其相邻字段分开的是 *空白* 或其他指定的字符（通常由 $IFS 确定）。在某些上下文中，字段可能被称为
+    *记录*。'
 - en: '|'
+  id: totrans-379
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: To preserve *whitespace* within a string or in a variable, use [quoting](quoting.html#QUOTINGREF).
+  id: totrans-380
   prefs: []
   type: TYPE_NORMAL
+  zh: 要在字符串或变量中保留 *空白*，请使用 [引号](quoting.html#QUOTINGREF)。
 - en: UNIX [filters](special-chars.html#FILTERDEF) can target and operate on *whitespace*
     using the [POSIX](x17129.html#POSIXREF) character class [[:space:]](x17129.html#WSPOSIX).
+  id: totrans-381
   prefs: []
   type: TYPE_NORMAL
+  zh: UNIX [过滤器](special-chars.html#FILTERDEF) 可以使用 POSIX（x17129.html#POSIXREF）字符类
+    [[:space:]](x17129.html#WSPOSIX) 针对和操作 *空白*。
 - en: Notes
+  id: totrans-382
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](special-chars.html#AEN612) | An *operator* is an agent that carries
     out an *operation*. Some examples are the common [arithmetic operators](ops.html#AROPS1),
     **+ - * /**. In Bash, there is some overlap between the concepts of *operator*
     and [keyword](internal.html#KEYWORDREF). |'
+  id: totrans-383
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](special-chars.html#AEN612) | 一个 *操作符* 是执行 *操作* 的代理。一些例子包括常见的 [算术操作符](ops.html#AROPS1)，**+
+    - * /**。在 Bash 中，*操作符* 和 [关键字](internal.html#KEYWORDREF) 的概念存在一些重叠。|'
 - en: '| [[2]](special-chars.html#AEN888) | This is more commonly known as the *ternary*
     operator. Unfortunately, *ternary* is an ugly word. It doesn''t roll off the tongue,
     and it doesn''t elucidate. It obfuscates. *Trinary* is by far the more elegant
     usage. |'
+  id: totrans-384
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](special-chars.html#AEN888) | 这更常见地被称为 *三元* 操作符。不幸的是，*三元* 是一个丑陋的词。它听起来不悦耳，也不具有说明性。它使事情变得复杂。*三元*
+    是迄今为止更优雅的使用方式。|'
 - en: '| [[3]](special-chars.html#AEN1001) | **A**merican **S**tandard **C**ode for
     **I**nformation **I**nterchange. This is a system for encoding text characters
     (alphabetic, numeric, and a limited set of symbols) as 7-bit numbers that can
     be stored and manipulated by computers. Many of the ASCII characters are represented
     on a standard keyboard. |'
+  id: totrans-385
   prefs: []
   type: TYPE_TB
+  zh: '| [[3]](special-chars.html#AEN1001) | **美国** **标准** **信息** **交换** **代码**。这是一个将文本字符（字母、数字和有限数量的符号）编码为
+    7 位数字的系统，这些数字可以被计算机存储和处理。许多 ASCII 字符在标准键盘上都有表示。|'
 - en: '| [[4]](special-chars.html#AEN1071) | A *PID*, or *process ID*, is a number
     assigned to a running process. The *PID*s of running processes may be viewed with
     a [ps](system.html#PPSSREF) command.`**Definition:**` A *process* is a currently
     executing command (or program), sometimes referred to as a *job*. |'
+  id: totrans-386
   prefs: []
   type: TYPE_TB
+  zh: '| [[4]](special-chars.html#AEN1071) | *PID*，或 *进程ID*，是分配给正在运行进程的一个数字。可以使用 [ps](system.html#PPSSREF)
+    命令查看正在运行进程的 *PID*。`**定义**:` *进程* 是当前正在执行的命令（或程序），有时也称为 *作业*。|'
 - en: '| [[5]](special-chars.html#AEN1124) | The shell does the *brace expansion*.
     The command itself acts upon the *result* of the expansion. |'
+  id: totrans-387
   prefs: []
   type: TYPE_TB
+  zh: '| [[5]](special-chars.html#AEN1124) | shell执行*花括号展开*。命令本身作用于展开的*结果*。'
 - en: '| [[6]](special-chars.html#AEN1199) | Exception: a code block in braces as
     part of a pipe *may* run as a [subshell](subshells.html#SUBSHELLSREF).'
+  id: totrans-388
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[6]](special-chars.html#AEN1199) | 例外：作为管道部分的花括号代码块*可能*作为一个[子shell](subshells.html#SUBSHELLSREF)运行。'
 - en: '&#124;  [PRE63]  &#124;'
+  id: totrans-389
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE63]  &#124;'
 - en: '|'
+  id: totrans-390
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| [[7]](special-chars.html#AEN1564) | Even as in olden times a *philtre* denoted
     a potion alleged to have magical transformative powers, so does a UNIX *filter*
     transform its target in (roughly) analogous fashion. (The coder who comes up with
     a "love philtre" that runs on a Linux machine will likely win accolades and honors.)
     |'
+  id: totrans-391
   prefs: []
   type: TYPE_TB
+  zh: '| [[7]](special-chars.html#AEN1564) | 就像在古老时代，一个*药水*代表一种据说具有魔法转换力量的饮料，UNIX中的*过滤器*也以（大致）类似的方式转换其目标。（能够编写在Linux机器上运行的“爱情药水”的程序员可能会赢得赞誉和荣誉。）|'
 - en: '| [[8]](special-chars.html#AEN2107) | Bash stores a list of commands previously
     issued from the command-line in a *buffer*, or memory space, for recall with the
     [builtin](internal.html#BUILTINREF) *history* commands. |'
+  id: totrans-392
   prefs: []
   type: TYPE_TB
+  zh: '| [[8]](special-chars.html#AEN2107) | Bash将之前从命令行发出的命令列表存储在一个*缓冲区*或内存空间中，以便使用[builtin](internal.html#BUILTINREF)
+    *历史*命令进行回忆。|'
 - en: '| [[9]](special-chars.html#AEN2198) | A linefeed (*newline*) is also a whitespace
     character. This explains why a *blank line*, consisting only of a linefeed, is
     considered whitespace. |'
+  id: totrans-393
   prefs: []
   type: TYPE_TB
+  zh: '| [[9]](special-chars.html#AEN2198) | 换行符（*换行*）也是一个空白字符。这也解释了为什么只包含换行符的*空白行*被视为空白字符。|'

@@ -1,325 +1,480 @@
 - en: Chapter 34\. Gotchas
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 34 章\. 注意事项
 - en: 原文：[https://tldp.org/LDP/abs/html/gotchas.html](https://tldp.org/LDP/abs/html/gotchas.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/gotchas.html](https://tldp.org/LDP/abs/html/gotchas.html)
 - en: '|   |  **Turandot: *Gli enigmi sono tre, la morte una!**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **Turandot: *谜题有三个，一个关乎死亡！**'
 - en: '*Caleph: *No, no! Gli enigmi sono tre, una la vita!**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*Caleph: *不，不！谜题有三个，一个关乎生命！**'
 - en: '*--Puccini**  |'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--Puccini**  |'
 - en: Here are some (non-recommended!) scripting practices that will bring excitement
     into an otherwise dull life.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里有一些（非推荐！）脚本编写实践，可以让原本单调的生活变得有趣。
 - en: Assigning reserved words or characters to variable names.
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将保留词或字符分配给变量名。
 - en: '|  [PRE0]  |'
+  id: totrans-7
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: Using a hyphen or other reserved characters in a variable name (or function
     name).
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在变量名（或函数名）中使用连字符或其他保留字符。
 - en: '|  [PRE1]  |'
+  id: totrans-9
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Using the same name for a variable and a function. This can make a script difficult
     to understand.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为变量和函数使用相同的名称。这可能会使脚本难以理解。
 - en: '|  [PRE2]  |'
+  id: totrans-11
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Using [whitespace](special-chars.html#WHITESPACEREF) inappropriately. In contrast
     to other programming languages, Bash can be quite finicky about whitespace.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 不恰当地使用 [空白字符](special-chars.html#WHITESPACEREF)。与其它编程语言相比，Bash 对空白字符相当挑剔。
 - en: '|  [PRE3]  |'
+  id: totrans-13
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Not terminating with a [semicolon](special-chars.html#SEMICOLONREF) the final
     command in a [code block within curly brackets](special-chars.html#CODEBLOCKREF).
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在花括号内的 [代码块](special-chars.html#CODEBLOCKREF) 的最后一个命令后没有使用 [分号](special-chars.html#SEMICOLONREF)
+    结尾。
 - en: '|  [PRE4]  |'
+  id: totrans-15
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: Assuming uninitialized variables (variables before a value is assigned to them)
     are "zeroed out". An uninitialized variable has a value of *null*, *not* zero.
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 假设未初始化的变量（在给它们赋值之前）是“置零”的。未初始化的变量具有 *null* 值，而不是零。
 - en: '|  [PRE5]  |'
+  id: totrans-17
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Mixing up *=* and *-eq* in a test. Remember, *=* is for comparing literal variables
     and *-eq* for integers.
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在测试中混淆了 *=* 和 *-eq*。记住，*=* 用于比较字面变量，而 *-eq* 用于整数。
 - en: '|  [PRE6]  |'
+  id: totrans-19
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: Misusing [string comparison](comparison-ops.html#SCOMPARISON1) operators.
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 错误地使用 [字符串比较](comparison-ops.html#SCOMPARISON1) 操作符。
 - en: '**Example 34-1\. Numerical and string comparison are not equivalent**'
+  id: totrans-21
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '**示例 34-1\. 数字和字符串比较不等价**'
 - en: '|  [PRE7]  |'
+  id: totrans-22
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: Attempting to use [let](internal.html#LETREF) to set string variables.
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 尝试使用 [let](internal.html#LETREF) 来设置字符串变量。
 - en: '|  [PRE8]  |'
+  id: totrans-24
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: Sometimes variables within "test" brackets ([ ]) need to be quoted (double quotes).
     Failure to do so may cause unexpected behavior. See [Example 7-6](comparison-ops.html#STRTEST),
     [Example 20-5](redircb.html#REDIR2), and [Example 9-6](internalvariables.html#ARGLIST).
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 有时在 "test" 括号 ([ ]) 内的变量需要引用（双引号）。不这样做可能会导致意外的行为。参见 [示例 7-6](comparison-ops.html#STRTEST)，[示例
+    20-5](redircb.html#REDIR2)，和 [示例 9-6](internalvariables.html#ARGLIST)。
 - en: Quoting a variable containing whitespace [prevents splitting](quotingvar.html#WSQUO).
     Sometimes this produces [unintended consequences](quotingvar.html#VARSPLITTING).
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 引用包含空白的变量 [防止分割](quotingvar.html#WSQUO)。有时这会产生 [意外的后果](quotingvar.html#VARSPLITTING)。
 - en: Commands issued from a script may fail to execute because the script owner lacks
     execute permission for them. If a user cannot invoke a command from the command-line,
     then putting it into a script will likewise fail. Try changing the attributes
     of the command in question, perhaps even setting the suid bit (as *root*, of course).
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 从脚本中发出的命令可能无法执行，因为脚本所有者没有对这些命令的执行权限。如果用户无法从命令行调用命令，那么将其放入脚本中也会同样失败。尝试更改相关命令的属性，也许甚至设置
+    suid 位（当然，作为 *root*）。
 - en: Attempting to use **-** as a redirection operator (which it is not) will usually
     result in an unpleasant surprise.
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 尝试使用 **-** 作为重定向操作符（它并不是）通常会带来不愉快的惊喜。
 - en: '|  [PRE9]  |'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: Using Bash [version 2+](bashver2.html#BASH2REF) functionality may cause a bailout
     with error messages. Older Linux machines may have version 1.XX of Bash as the
     default installation.
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 Bash [版本 2+](bashver2.html#BASH2REF) 功能可能会导致错误信息下的退出。较老的 Linux 机器可能默认安装了
+    Bash 的 1.XX 版本。
 - en: '|  [PRE10]  |'
+  id: totrans-31
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE10]  |'
 - en: Using Bash-specific functionality in a [Bourne shell](why-shell.html#BASHDEF)
     script (`**#!/bin/sh**`) on a non-Linux machine [may cause unexpected behavior](gotchas.html#BINSH).
     A Linux system usually aliases **sh** to **bash**, but this does not necessarily
     hold true for a generic UNIX machine.
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在非 Linux 机器上的 [Bourne shell](why-shell.html#BASHDEF) 脚本（`**#!/bin/sh**`）中使用
+    Bash 特定功能 [可能会导致意外的行为](gotchas.html#BINSH)。Linux 系统通常将 **sh** 别名为 **bash**，但这并不一定适用于通用的
+    UNIX 机器。
 - en: Using undocumented features in Bash turns out to be a dangerous practice. In
     previous releases of this book there were several scripts that depended on the
     "feature" that, although the maximum value of an [exit](exit-status.html#EXITSTATUSREF)
     or [return](complexfunct.html#RETURNREF) value was 255, that limit did not apply
     to *negative* integers. Unfortunately, in version 2.05b and later, that loophole
     disappeared. See [Example 24-9](complexfunct.html#RETURNTEST).
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 Bash 中使用未记录的特性是一种危险的做法。在本书的先前版本中，有几个脚本依赖于“特性”，即尽管退出或返回值的最大值为 255，但该限制不适用于
+    *负数*。不幸的是，在 2.05b 及以后的版本中，这个漏洞消失了。参见 [示例 24-9](complexfunct.html#RETURNTEST)。
 - en: In certain contexts, a misleading [exit status](exit-status.html#EXITSTATUSREF)
     may be returned. This may occur when [setting a local variable within a function](localvar.html#EXITVALANOMALY01)
     or when [assigning an arithmetic value to a variable](internal.html#EXITVALANOMALY02).
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在某些上下文中，可能会返回一个误导性的 [退出状态](exit-status.html#EXITSTATUSREF)。这可能会发生在在函数中 [设置局部变量](localvar.html#EXITVALANOMALY01)
+    或将算术值分配给变量时（[内部](internal.html#EXITVALANOMALY02)）。
 - en: The [exit status of an arithmetic expression](testconstructs.html#ARXS) is *not*
     equivalent to an *error code*.
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 一个算术表达式的 [退出状态](testconstructs.html#ARXS) 并不等于一个 *错误代码*。
 - en: '|  [PRE11]  |'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: A script with DOS-type newlines (`*\r\n*`) will fail to execute, since `**#!/bin/bash\r\n**`
     is *not* recognized, *not* the same as the expected `**#!/bin/bash\n**`. The fix
     is to convert the script to UNIX-style newlines.
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 DOS 类型的换行符 (`*\r\n*`) 的脚本将无法执行，因为 `**#!/bin/bash\r\n**` 不会被识别，*不是*预期的 `**#!/bin/bash\n**`。修复方法是转换脚本为
+    UNIX 风格的换行符。
 - en: '|  [PRE12]  |'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: A shell script headed by `**#!/bin/sh**` will not run in full Bash-compatibility
     mode. Some Bash-specific functions might be disabled. Scripts that need complete
     access to all the Bash-specific extensions should start with `**#!/bin/bash**`.
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 以 `**#!/bin/sh**` 开头的 shell 脚本不会在完全的 Bash 兼容模式下运行。一些特定的 Bash 函数可能会被禁用。需要完全访问所有
+    Bash 特定扩展的脚本应该以 `**#!/bin/bash**` 开始。
 - en: '[Putting whitespace in front of the terminating limit string](here-docs.html#INDENTEDLS)
     of a [here document](here-docs.html#HEREDOCREF) will cause unexpected behavior
     in a script.'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 [here document](here-docs.html#HEREDOCREF) 的 [终止限制字符串](here-docs.html#INDENTEDLS)
+    前添加空格将导致脚本中出现意外的行为。
 - en: Putting more than one *echo* statement in a function [whose output is captured](assortedtips.html#RVT).
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在一个 [输出被捕获](assortedtips.html#RVT) 的函数中放入多个 *echo* 语句。
 - en: '|  [PRE13]  |'
+  id: totrans-42
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE13]  |'
 - en: This [will not work](assortedtips.html#RVTCAUTION).
+  id: totrans-43
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 这[将不会工作](assortedtips.html#RVTCAUTION)。
 - en: A script may not **export** variables back to its [parent process](internal.html#FORKREF),
     the shell, or to the environment. Just as we learned in biology, a child process
     can inherit from a parent, but not vice versa.
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 脚本可能无法将变量 **export** 回其 [父进程](internal.html#FORKREF)、shell 或环境。正如我们在生物学中学到的，子进程可以继承自父进程，但反之则不然。
 - en: '|  [PRE14]  |'
+  id: totrans-45
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: '|  [PRE15]  |'
+  id: totrans-46
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE15]  |'
 - en: Sure enough, back at the command prompt, $WHATEVER remains unset.
+  id: totrans-47
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当然，回到命令提示符，$WHATEVER 仍然没有被设置。
 - en: Setting and manipulating variables in a [subshell](subshells.html#SUBSHELLSREF),
     then attempting to use those same variables outside the scope of the subshell
     will result an unpleasant surprise.
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 [子shell](subshells.html#SUBSHELLSREF) 中设置和操作变量，然后尝试在子shell的作用域之外使用这些相同的变量，这会导致一个不愉快的惊喜。
 - en: '**Example 34-2\. Subshell Pitfalls**'
+  id: totrans-49
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '**示例 34-2\. 子shell 的陷阱**'
 - en: '|  [PRE16]  |'
+  id: totrans-50
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE16]  |'
 - en: '[Piping](special-chars.html#PIPEREF) **echo** output to a [read](internal.html#READREF)
     may produce unexpected results. In this scenario, the **read** acts as if it were
     running in a subshell. Instead, use the [set](internal.html#SETREF) command (as
     in [Example 15-18](internal.html#SETPOS)).'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 将 **echo** 输出通过 [read](internal.html#READREF) 管道传输可能会产生意外的结果。在这种情况下，**read**
+    行为就像它在子shell中运行一样。相反，使用 [set](internal.html#SETREF) 命令（如 [示例 15-18](internal.html#SETPOS)
+    中所示）。
 - en: '**Example 34-3\. Piping the output of *echo* to a *read***'
+  id: totrans-52
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '**示例 34-3\. 将 *echo* 的输出通过管道传输到 *read***'
 - en: '|  [PRE17]  |'
+  id: totrans-53
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE17]  |'
 - en: In fact, as Anthony Richardson points out, piping to *any* loop can cause a
     similar problem.
+  id: totrans-54
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 实际上，正如安东尼·理查德森所指出的，将输出通过管道传输到 *任何* 循环都可能导致类似的问题。
 - en: '|  [PRE18]  |'
+  id: totrans-55
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE18]  |'
 - en: A lookalike problem occurs when trying to write the `stdout` of a **tail -f**
     piped to [grep](textproc.html#GREPREF).
+  id: totrans-56
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当尝试将 `stdout` 的 `tail -f` 管道输出到 [grep](textproc.html#GREPREF) 时，会出现类似的问题。
 - en: '|  [PRE19]  |'
+  id: totrans-57
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE19]  |'
 - en: Using "suid" commands within scripts is risky, as it may compromise system security.
     [[1]](#FTN.AEN19993)
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在脚本中使用“suid”命令是危险的，因为它可能会损害系统安全。[1](#FTN.AEN19993)
 - en: Using shell scripts for CGI programming may be problematic. Shell script variables
     are not "typesafe," and this can cause undesirable behavior as far as CGI is concerned.
     Moreover, it is difficult to "cracker-proof" shell scripts.
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用shell脚本进行CGI编程可能存在问题。Shell脚本变量不是“类型安全的”，这可能导致CGI出现不希望的行为。此外，很难使shell脚本“防破解”。
 - en: Bash does not handle the [double slash (//) string](internal.html#DOUBLESLASHREF)
     correctly.
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: Bash无法正确处理[双斜杠(//)字符串](internal.html#DOUBLESLASHREF)。
 - en: Bash scripts written for Linux or BSD systems may need fixups to run on a commercial
     UNIX machine. Such scripts often employ the GNU set of commands and filters, which
     have greater functionality than their generic UNIX counterparts. This is particularly
     true of such text processing utilites as [tr](textproc.html#TRREF).
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 为Linux或BSD系统编写的Bash脚本可能需要在商业UNIX机器上运行时进行修复。这类脚本通常使用GNU命令集和过滤器，它们的功能比通用的UNIX对应工具更强大。这尤其适用于像[tr](textproc.html#TRREF)这样的文本处理工具。
 - en: Sadly, updates to Bash itself have broken older scripts that [used to work perfectly
     fine](string-manipulation.html#PARAGRAPHSPACE). Let us recall [how risky it is
     to use undocumented Bash features](gotchas.html#UNDOCF).
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 悲哀的是，Bash本身的更新破坏了以前运行良好的旧脚本[曾经完美运行](string-manipulation.html#PARAGRAPHSPACE)。让我们回忆一下[使用未经记录的Bash功能的风险有多大](gotchas.html#UNDOCF)。
 - en: '|   |  **Danger is near thee --*'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **危险近在咫尺--*'
 - en: '*Beware, beware, beware, beware.*'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '*务必小心，务必小心，务必小心，务必小心。*'
 - en: '*Many brave hearts are asleep in the deep.*'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '*许多勇敢的心已经沉睡在深渊之中。*'
 - en: '*So beware --*'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '*所以务必小心--*'
 - en: '*Beware.*'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '*务必小心。*'
 - en: '*--A.J. Lamb and H.W. Petrie**  |'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--A.J. Lamb 和 H.W. Petrie**  |'
 - en: Notes
+  id: totrans-69
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](gotchas.html#AEN19993) | Setting the [suid](fto.html#SUIDREF) permission
     on the script itself has no effect in Linux and most other UNIX flavors. |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](gotchas.html#AEN19993) | 在脚本本身上设置[suid](fto.html#SUIDREF)权限在Linux和大多数其他UNIX版本中没有任何效果。|'

@@ -1,152 +1,250 @@
 - en: Part 5\. Advanced Topics
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 5 部分：高级主题
 - en: 原文：[https://tldp.org/LDP/abs/html/part5.html](https://tldp.org/LDP/abs/html/part5.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/part5.html](https://tldp.org/LDP/abs/html/part5.html)
 - en: At this point, we are ready to delve into certain of the difficult and unusual
     aspects of scripting. Along the way, we will attempt to "push the envelope" in
     various ways and examine *boundary conditions* (what happens when we move into
     uncharted territory?).
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，我们准备深入研究脚本的一些困难和特殊方面。在这个过程中，我们将尝试以各种方式“突破界限”并检查*边界条件*（当我们进入未知领域时会发生什么？）。
 - en: '**Table of Contents**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 18\. [Regular Expressions](regexp.html)
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 18\. [正则表达式](regexp.html)
 - en: 18.1\. [A Brief Introduction to Regular Expressions](x17129.html)
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 18.1\. [正则表达式的简要介绍](x17129.html)
 - en: 18.2\. [Globbing](globbingref.html)
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 18.2\. [通配符](globbingref.html)
 - en: 19\. [Here Documents](here-docs.html)
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 19\. [这里文档](here-docs.html)
 - en: 19.1\. [Here Strings](x17837.html)
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 19.1\. [这里字符串](x17837.html)
 - en: 20\. [I/O Redirection](io-redirection.html)
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 20\. [输入/输出重定向](io-redirection.html)
 - en: 20.1\. [Using *exec*](x17974.html)
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.1\. [使用 *exec*](x17974.html)
 - en: 20.2\. [Redirecting Code Blocks](redircb.html)
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.2\. [重定向代码块](redircb.html)
 - en: 20.3\. [Applications](redirapps.html)
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.3\. [应用](redirapps.html)
 - en: 21\. [Subshells](subshells.html)
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 21\. [子 Shell](subshells.html)
 - en: 22\. [Restricted Shells](restricted-sh.html)
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 22\. [受限 Shell](restricted-sh.html)
 - en: 23\. [Process Substitution](process-sub.html)
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 23\. [进程替换](process-sub.html)
 - en: 24\. [Functions](functions.html)
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 24\. [函数](functions.html)
 - en: 24.1\. [Complex Functions and Function Complexities](complexfunct.html)
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.1\. [复杂函数和函数复杂度](complexfunct.html)
 - en: 24.2\. [Local Variables](localvar.html)
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.2\. [局部变量](localvar.html)
 - en: 24.3\. [Recursion Without Local Variables](recurnolocvar.html)
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.3\. [无局部变量的递归](recurnolocvar.html)
 - en: 25\. [Aliases](aliases.html)
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 25\. [别名](aliases.html)
 - en: 26\. [List Constructs](list-cons.html)
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 26\. [列表构造](list-cons.html)
 - en: 27\. [Arrays](arrays.html)
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 27\. [数组](arrays.html)
 - en: 28\. [Indirect References](ivr.html)
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 28\. [间接引用](ivr.html)
 - en: 29\. [`/dev` and `/proc`](devproc.html)
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 29\. [`/dev` 和 `/proc`](devproc.html)
 - en: 29.1\. [`/dev`](devref1.html)
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 29.1\. [`/dev`](devref1.html)
 - en: 29.2\. [`/proc`](procref1.html)
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 29.2\. [`/proc`](procref1.html)
 - en: 30\. [Network Programming](networkprogramming.html)
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 30\. [网络编程](networkprogramming.html)
 - en: 31\. [Of Zeros and Nulls](zeros.html)
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 31\. [零和空值](zeros.html)
 - en: 32\. [Debugging](debugging.html)
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: 32\. [调试](debugging.html)
 - en: 33\. [Options](options.html)
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 33\. [选项](options.html)
 - en: 34\. [Gotchas](gotchas.html)
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: 34\. [陷阱](gotchas.html)
 - en: 35\. [Scripting With Style](scrstyle.html)
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: 35\. [风格化的脚本](scrstyle.html)
 - en: 35.1\. [Unofficial Shell Scripting Stylesheet](unofficialst.html)
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 35.1\. [非官方 Shell 脚本样式表](unofficialst.html)
 - en: 36\. [Miscellany](miscellany.html)
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 36\. [杂项](miscellany.html)
 - en: 36.1\. [Interactive and non-interactive shells and scripts](intandnonint.html)
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.1\. [交互式和非交互式 Shell 和脚本](intandnonint.html)
 - en: 36.2\. [Shell Wrappers](wrapper.html)
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.2\. [Shell 包装器](wrapper.html)
 - en: '36.3\. [Tests and Comparisons: Alternatives](testsandcomparisons.html)'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.3\. [测试和比较：替代方案](testsandcomparisons.html)
 - en: '36.4\. [Recursion: a script calling itself](recursionsct.html)'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.4\. [递归：脚本调用自身](recursionsct.html)
 - en: 36.5\. ["Colorizing" Scripts](colorizing.html)
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.5\. [“着色”脚本](colorizing.html)
 - en: 36.6\. [Optimizations](optimizations.html)
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.6\. [优化](optimizations.html)
 - en: 36.7\. [Assorted Tips](assortedtips.html)
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.7\. [各种提示](assortedtips.html)
 - en: 36.8\. [Security Issues](securityissues.html)
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.8\. [安全问题](securityissues.html)
 - en: 36.9\. [Portability Issues](portabilityissues.html)
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.9\. [可移植性问题](portabilityissues.html)
 - en: 36.10\. [Shell Scripting Under Windows](winscript.html)
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 36.10\. [Windows 下的 Shell 脚本](winscript.html)
 - en: 37\. [Bash, versions 2, 3, and 4](bash2.html)
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 37\. [Bash，版本 2、3 和 4](bash2.html)
 - en: 37.1\. [Bash, version 2](bashver2.html)
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 37.1\. [Bash，版本 2](bashver2.html)
 - en: 37.2\. [Bash, version 3](bashver3.html)
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 37.2\. [Bash，版本 3](bashver3.html)
 - en: 37.3\. [Bash, version 4](bashver4.html)
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 37.3\. [Bash，版本 4](bashver4.html)

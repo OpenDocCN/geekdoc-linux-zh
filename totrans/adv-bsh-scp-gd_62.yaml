@@ -1,97 +1,153 @@
 - en: Appendix H. Important Files
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附录 H. 重要文件
 - en: 原文：[https://tldp.org/LDP/abs/html/files.html](https://tldp.org/LDP/abs/html/files.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/files.html](https://tldp.org/LDP/abs/html/files.html)
 - en: '**startup files**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**启动文件**'
 - en: These files contain the aliases and [environmental variables](othertypesv.html#ENVREF)
     made available to Bash running as a user shell and to all Bash scripts invoked
     after system initialization.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 这些文件包含提供给作为用户 shell 运行的 Bash 以及在系统初始化后调用的所有 Bash 脚本的别名和 [环境变量](othertypesv.html#ENVREF)。
 - en: '`/etc/profile`'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/profile`'
 - en: Systemwide defaults, mostly setting the environment (all Bourne-type shells,
     not just Bash [[1]](#FTN.AEN23892))
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统级默认设置，主要设置环境（所有 Bourne 类型的 shell，而不仅仅是 Bash [[1]](#FTN.AEN23892))
 - en: '`/etc/bashrc`'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/bashrc`'
 - en: systemwide functions and [aliases](aliases.html#ALIASREF) for Bash
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统级函数和 Bash 的 [别名](aliases.html#ALIASREF)
 - en: '`` `$HOME`/.bash_profile ``'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`` `$HOME`/.bash_profile ``'
 - en: user-specific Bash environmental default settings, found in each user's home
     directory (the local counterpart to `/etc/profile`)
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户特定的 Bash 环境默认设置，位于每个用户的家目录中（`/etc/profile` 的本地对应文件）
 - en: '`` `$HOME`/.bashrc ``'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '`` `$HOME`/.bashrc ``'
 - en: user-specific Bash init file, found in each user's home directory (the local
     counterpart to `/etc/bashrc`). Only interactive shells and user scripts read this
     file. See [Appendix M](sample-bashrc.html) for a sample `.bashrc` file.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户特定的 Bash 初始化文件，位于每个用户的家目录中（`/etc/bashrc` 的本地对应文件）。只有交互式 shell 和用户脚本会读取此文件。参见
+    [附录 M](sample-bashrc.html) 以获取 `.bashrc` 文件的示例。
 - en: '**logout file**'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**登出文件**'
 - en: '`` `$HOME`/.bash_logout ``'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`` `$HOME`/.bash_logout ``'
 - en: user-specific instruction file, found in each user's home directory. Upon exit
     from a login (Bash) shell, the commands in this file execute.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户特定的指令文件，位于每个用户的家目录中。从登录（Bash）shell 退出时，该文件中的命令将执行。
 - en: '**data files**'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**数据文件**'
 - en: '`/etc/passwd`'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/passwd`'
 - en: A listing of all the user accounts on the system, their identities, their home
     directories, the groups they belong to, and their default shell. Note that the
     user passwords are *not* stored in this file, [[2]](#FTN.AEN23937) but in `/etc/shadow`
     in encrypted form.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 系统上所有用户账户的列表，包括他们的身份、家目录、所属的组以及默认的 shell。请注意，用户密码并不存储在此文件中，[[2]](#FTN.AEN23937)
+    而是以加密形式存储在 `/etc/shadow` 中。
 - en: '**system configuration files**'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '**系统配置文件**'
 - en: '`/etc/sysconfig/hwconf`'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/sysconfig/hwconf`'
 - en: Listing and description of attached hardware devices. This information is in
     text form and can be extracted and parsed.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出和描述附加的硬件设备。这些信息以文本形式呈现，可以被提取和解析。
 - en: '|  [PRE0]  |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This file is present
     on Red Hat and Fedora Core installations, but may be missing from other distros.
     |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 此文件存在于 Red Hat 和
+    Fedora Core 安装中，但可能在其他发行版中缺失。|'
 - en: Notes
+  id: totrans-23
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](files.html#AEN23892) | This does not apply to **csh**, **tcsh**, and
     other shells not related to or descended from the classic Bourne shell (**sh**).
     |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](files.html#AEN23892) | 这不适用于 **csh**、**tcsh** 以及与经典 Bourne shell （**sh**）无关或不是其子类的其他
+    shell。|'
 - en: '| [[2]](files.html#AEN23937) | In older versions of UNIX, passwords *were*
     stored in `/etc/passwd`, and that explains the name of the file. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](files.html#AEN23937) | 在 UNIX 的旧版本中，密码曾经存储在 `/etc/passwd` 中，这也是文件名称的由来。|'

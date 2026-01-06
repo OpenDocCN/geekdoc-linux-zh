@@ -1,68 +1,105 @@
 - en: Chapter 2\. Starting Off With a Sha-Bang
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第二章. 从 Sha-Bang 开始
 - en: 原文：[https://tldp.org/LDP/abs/html/sha-bang.html](https://tldp.org/LDP/abs/html/sha-bang.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/sha-bang.html](https://tldp.org/LDP/abs/html/sha-bang.html)
 - en: '|   |  **Shell programming is a 1950s juke box . . .*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **Shell 脚本编程是 1950 年代的点唱机 . . .**'
 - en: '*--Larry Wall**  |'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--Larry Wall**  |'
 - en: '**Table of Contents**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 2.1\. [Invoking the script](invoking.html)
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 2.1\. [调用脚本](invoking.html)
 - en: 2.2\. [Preliminary Exercises](prelimexer.html)
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 2.2\. [预备练习](prelimexer.html)
 - en: In the simplest case, a script is nothing more than a list of system commands
     stored in a file. At the very least, this saves the effort of retyping that particular
     sequence of commands each time it is invoked.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在最简单的情况下，脚本不过是一系列存储在文件中的系统命令。至少，这可以节省每次调用时重新输入特定命令序列的麻烦。
 - en: '**Example 2-1\. *cleanup*: A script to clean up log files in /var/log**'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 2-1\. *cleanup*：用于清理 /var/log 中日志文件的脚本**'
 - en: '|  [PRE0]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: There is nothing unusual here, only a set of commands that could just as easily
     have been invoked one by one from the command-line on the console or in a terminal
     window. The advantages of placing the commands in a script go far beyond not having
     to retype them time and again. The script becomes a *program* -- a *tool* -- and
     it can easily be modified or customized for a particular application.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里没有什么不寻常的，只是一系列命令，这些命令也可以逐个从控制台或终端窗口的命令行中调用。将命令放在脚本中的优点远远超出了不必一次次重新输入它们。脚本变成了
+    *程序*——*工具*——并且它可以很容易地修改或定制以适应特定应用。
 - en: '**Example 2-2\. *cleanup*: An improved clean-up script**'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 2-2\. *cleanup*：改进的清理脚本**'
 - en: '|  [PRE1]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Now *that's* beginning to look like a real script. But we can go even farther
     . . .
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在看起来像是一个真正的脚本了。但我们还可以更进一步 . . .
 - en: '**Example 2-3\. *cleanup*: An enhanced and generalized version of above scripts.**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 2-3\. *cleanup*：上述脚本的增强和通用版本。**'
 - en: '|  [PRE2]  |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Since you may not wish to wipe out the entire system log, this version of the
     script keeps the last section of the message log intact. You will constantly discover
     ways of fine-tuning previously written scripts for increased effectiveness.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 由于你可能不想删除整个系统日志，这个版本的脚本保留了消息日志的最后部分。你将不断发现调整先前编写的脚本以增强效果的方法。
 - en: '* * *'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '* * *'
 - en: 'The *sha-bang* ( #!) [[1]](#FTN.AEN205) at the head of a script tells your
     system that this file is a set of commands to be fed to the command interpreter
     indicated. The #! is actually a two-byte [[2]](#FTN.AEN214) *magic number*, a
@@ -73,102 +110,155 @@
     or a utility. This command interpreter then executes the commands in the script,
     starting at the top (the line following the *sha-bang* line), and ignoring comments.
     [[3]](#FTN.AEN226)'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '脚本开头的 *sha-bang* ( #!) [[1]](#FTN.AEN205) 告诉系统这个文件是一组要传递给指定命令解释器的命令。#! 实际上是一个双字节
+    [[2]](#FTN.AEN214) *魔数*，一个特殊标记，用于指定文件类型，在这种情况下是一个可执行的 shell 脚本（使用 `**man magic**`
+    获取更多关于这个有趣主题的详细信息）。紧随 *sha-bang* 之后的是 *路径名*。这是解释脚本中命令的程序路径，无论是 shell、编程语言还是实用程序。然后，这个命令解释器从脚本顶部（紧随
+    *sha-bang* 行之后的行）开始执行命令，并忽略注释。[[3]](#FTN.AEN226)'
 - en: '|  [PRE3]  |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Each of the above script header lines calls a different command interpreter,
     be it `/bin/sh`, the default shell (**bash** in a Linux system) or otherwise.
     [[4]](#FTN.AEN242) Using `**#!/bin/sh**`, the default Bourne shell in most commercial
     variants of UNIX, makes the script [portable](portabilityissues.html) to non-Linux
     machines, though you [sacrifice Bash-specific features](gotchas.html#BINSH). The
     script will, however, conform to the POSIX [[5]](#FTN.AEN256) **sh** standard.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 上述每个脚本头部行都调用不同的命令解释器，无论是 `/bin/sh`、Linux 系统中的默认 shell（**bash**）还是其他。[[4]](#FTN.AEN242)
+    使用 `**#!/bin/sh**`，大多数商业 UNIX 变种的默认 Bourne shell，使得脚本 [可移植](portabilityissues.html)
+    到非 Linux 机器上，尽管你 [牺牲了 Bash 特定功能](gotchas.html#BINSH)。然而，脚本将符合 POSIX [[5]](#FTN.AEN256)
+    **sh** 标准。
 - en: Note that the path given at the "sha-bang" must be correct, otherwise an error
     message -- usually "Command not found." -- will be the only result of running
     the script. [[6]](#FTN.AEN269)
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，“sha-bang”处给出的路径必须正确，否则运行脚本时只会得到错误信息——通常是“命令未找到。” [[6]](#FTN.AEN269)
 - en: '#! can be omitted if the script consists only of a set of generic system commands,
     using no internal shell directives. The second example, above, requires the initial
     #!, since the variable assignment line, `**lines=50**`, uses a shell-specific
     construct. [[7]](#FTN.AEN279) Note again that `**#!/bin/sh**` invokes the default
     shell interpreter, which defaults to `/bin/bash` on a Linux machine.'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果脚本只包含一组通用系统命令，不使用内部shell指令，则可以省略#!。上面提到的第二个例子需要初始的#!，因为变量赋值行`**lines=50**`使用了shell特定的结构。[[7]](#FTN.AEN279)
+    再次注意，`**#!/bin/sh**`调用默认的shell解释器，在Linux机器上默认为`/bin/bash`。
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | This tutorial encourages
     a modular approach to constructing a script. Make note of and collect "boilerplate"
     code snippets that might be useful in future scripts. Eventually you will build
     quite an extensive library of nifty routines. As an example, the following script
     prolog tests whether the script has been invoked with the correct number of parameters.'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 这个教程鼓励采用模块化方法构建脚本。注意并收集可能在未来的脚本中有用的“样板”代码片段。最终，你将建立一个相当广泛的实用例程库。例如，以下脚本序言测试脚本是否以正确的参数数量调用。'
 - en: '&#124;  [PRE4]  &#124;'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[PRE4]] | '
 - en: Many times, you will write a script that carries out one particular task. The
     first script in this chapter is an example. Later, it might occur to you to generalize
     the script to do other, similar tasks. Replacing the literal ("hard-wired") constants
     by variables is a step in that direction, as is replacing repetitive code blocks
     by [functions](functions.html#FUNCTIONREF). |
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多时候，你会编写一个执行特定任务的脚本。本章的第一个脚本就是一个例子。后来，你可能想将脚本泛化以执行其他类似任务。用变量替换字面量（“硬编码”）的常量是朝着这个方向迈出的一步，同样，用[函数](functions.html#FUNCTIONREF)替换重复的代码块也是这样。
 - en: Notes
+  id: totrans-26
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](sha-bang.html#AEN205) | More commonly seen in the literature as *she-bang*
     or *sh-bang*. This derives from the concatenation of the tokens *sharp* (#) and
     *bang* (!). |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](sha-bang.html#AEN205) | 在文献中更常见的是*she-bang*或*sh-bang*。这源于*sharp* (#)和*bang*
+    (!)这两个标记的连接。|'
 - en: '| [[2]](sha-bang.html#AEN214) | Some flavors of UNIX (those based on 4.2 BSD)
     allegedly take a four-byte magic number, requiring a blank after the ! -- `**#!
     /bin/sh**`. [According to Sven Mascheck](http://www.in-ulm.de/~mascheck/various/shebang/#details)
     this is probably a myth. |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](sha-bang.html#AEN214) | 据说某些UNIX版本（基于4.2 BSD的版本）采用四个字节的魔数，需要在!后面留空格--`**#!
+    /bin/sh**`。[根据Sven Mascheck](http://www.in-ulm.de/~mascheck/various/shebang/#details)的说法，这可能是神话。|'
 - en: '| [[3]](sha-bang.html#AEN226) | The #! line in a shell script will be the first
     thing the command interpreter (**sh** or **bash**) sees. Since this line begins
     with a #, it will be correctly interpreted as a comment when the command interpreter
     finally executes the script. The line has already served its purpose - calling
     the command interpreter.If, in fact, the script includes an *extra* #! line, then
     **bash** will interpret it as a comment.'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[3]](sha-bang.html#AEN226) | 在shell脚本中的#!行将是命令解释器（**sh**或**bash**）首先看到的内容。由于这一行以#开头，当命令解释器最终执行脚本时，它将被正确地解释为注释。这一行已经完成了它的任务--调用命令解释器。如果脚本中确实包含一个*额外*的#!行，那么**bash**将把它解释为注释。'
 - en: '&#124;  [PRE5]  &#124;'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[PRE5]] | '
 - en: '|'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| [[4]](sha-bang.html#AEN242) | This allows some cute tricks.'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[4]](sha-bang.html#AEN242) | 这允许一些巧妙的技巧。'
 - en: '&#124;  [PRE6]  &#124;'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[PRE6]] | '
 - en: Also, try starting a `README` file with a `**#!/bin/more**`, and making it executable.
     The result is a self-listing documentation file. (A [here document](here-docs.html#HEREDOCREF)
     using [cat](basic.html#CATREF) is possibly a better alternative -- see [Example
     19-3](here-docs.html#EX71)). |
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 此外，尝试以`**#!/bin/more**`开始一个`README`文件，并使其可执行。结果是自列文档文件。（使用[cat](basic.html#CATREF)的[here
+    document](here-docs.html#HEREDOCREF)可能是更好的替代方案--见[示例19-3](here-docs.html#EX71)）。|
 - en: '| [[5]](sha-bang.html#AEN256) | **P**ortable **O**perating **S**ystem *I*nterface,
     an attempt to standardize UNI**X**-like OSes. The POSIX specifications are listed
     on the [Open Group site](http://www.opengroup.org/onlinepubs/007904975/toc.htm).
     |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| [[5]](sha-bang.html#AEN256) | **P**ortable **O**perating **S**ystem *I*nterface，试图标准化类似UNIX的操作系统。POSIX规范列在[Open
+    Group网站](http://www.opengroup.org/onlinepubs/007904975/toc.htm)上。|'
 - en: '| [[6]](sha-bang.html#AEN269) | To avoid this possibility, a script may begin
     with a [#!/bin/env bash](system.html#ENVV2REF) *sha-bang* line. This may be useful
     on UNIX machines where *bash* is not located in `/bin` |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| [[6]](sha-bang.html#AEN269) | 为了避免这种可能性，脚本可能以一个[#!/bin/env bash](system.html#ENVV2REF)
+    *sha-bang*行开始。在*bash*不在`/bin`目录的UNIX机器上，这可能很有用。'
 - en: '| [[7]](sha-bang.html#AEN279) | If *Bash* is your default shell, then the #!
     isn''t necessary at the beginning of a script. However, if launching a script
     from a different shell, such as *tcsh*, then you *will* need the #!. |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| [[7]](sha-bang.html#AEN279) | 如果 *Bash* 是您的默认 shell，那么脚本开头不需要 #!。然而，如果您从不同的
+    shell 中启动脚本，例如 *tcsh*，那么您*将需要* #!。 |'

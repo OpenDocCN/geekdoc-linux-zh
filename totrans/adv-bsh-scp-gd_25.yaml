@@ -1,31 +1,46 @@
 - en: Chapter 20\. I/O Redirection
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 20 章。I/O 重定向
 - en: 原文：[https://tldp.org/LDP/abs/html/io-redirection.html](https://tldp.org/LDP/abs/html/io-redirection.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/io-redirection.html](https://tldp.org/LDP/abs/html/io-redirection.html)
 - en: '**Table of Contents**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 20.1\. [Using *exec*](x17974.html)
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.1\. [使用 *exec*](x17974.html)
 - en: 20.2\. [Redirecting Code Blocks](redircb.html)
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.2\. [重定向代码块](redircb.html)
 - en: 20.3\. [Applications](redirapps.html)
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 20.3\. [应用](redirapps.html)
 - en: There are always three default *files* [[1]](#FTN.AEN17884) open, `stdin` (the
     keyboard), `stdout` (the screen), and `stderr` (error messages output to the screen).
     These, and any other open files, can be redirected. Redirection simply means capturing
     output from a file, command, program, script, or even code block within a script
     (see [Example 3-1](special-chars.html#EX8) and [Example 3-2](special-chars.html#RPMCHECK))
     and sending it as input to another file, command, program, or script.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 总是有三个默认的 *文件* [[1]](#FTN.AEN17884) 是打开的，`stdin`（键盘）、`stdout`（屏幕）和 `stderr`（错误信息输出到屏幕）。这些，以及任何其他打开的文件，都可以进行重定向。重定向简单地说就是捕获来自文件、命令、程序、脚本或甚至脚本中的代码块（参见
+    [示例 3-1](special-chars.html#EX8) 和 [示例 3-2](special-chars.html#RPMCHECK)）的输出，并将其作为输入发送到另一个文件、命令、程序或脚本。
 - en: Each open file gets assigned a file descriptor. [[2]](#FTN.AEN17894) The file
     descriptors for `stdin`, `stdout`, and `stderr` are 0, 1, and 2, respectively.
     For opening additional files, there remain descriptors 3 to 9\. It is sometimes
@@ -33,89 +48,145 @@
     or `stderr` as a temporary duplicate link. [[3]](#FTN.AEN17906) This simplifies
     restoration to normal after complex redirection and reshuffling (see [Example
     20-1](x17974.html#REDIR1)).
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个打开的文件都会分配一个文件描述符。 [[2]](#FTN.AEN17894) `stdin`、`stdout` 和 `stderr` 的文件描述符分别是
+    0、1 和 2。对于打开额外的文件，还剩下 3 到 9 的描述符。有时将其中一个额外的文件描述符分配给 `stdin`、`stdout` 或 `stderr`
+    作为临时的重复链接是有用的。 [[3]](#FTN.AEN17906) 这简化了在复杂重定向和重新排序后的恢复（参见 [示例 20-1](x17974.html#REDIR1)）。
 - en: '|  [PRE0]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '|  [PRE1]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '|  [PRE2]  |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Multiple instances of input and output redirection and/or pipes can be combined
     in a single command line.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以在单个命令行中组合多个输入和输出重定向和/或管道实例。
 - en: '|  [PRE3]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: See [Example 16-31](filearchiv.html#DERPM) and [Example A-14](contributed-scripts.html#FIFO).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 请参阅 [示例 16-31](filearchiv.html#DERPM) 和 [示例 A-14](contributed-scripts.html#FIFO)。
 - en: Multiple output streams may be redirected to one file.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 可以将多个输出流重定向到一个文件。
 - en: '|  [PRE4]  |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: '**Closing File Descriptors**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**关闭文件描述符**'
 - en: n<&-
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: n<&-
 - en: Close input file descriptor `*n*`.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 关闭输入文件描述符 `*n*`。
 - en: 0<&-, <&-
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 0<&-, <&-
 - en: Close `stdin`.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 关闭 `stdin`。
 - en: n>&-
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: n>&-
 - en: Close output file descriptor `*n*`.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 关闭输出文件描述符 `*n*`。
 - en: 1>&-, >&-
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 1>&-, >&-
 - en: Close `stdout`.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 关闭 `stdout`。
 - en: Child processes inherit open file descriptors. This is why pipes work. To prevent
     an fd from being inherited, close it.
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 子进程会继承打开的文件描述符。这就是管道为什么能工作的原因。为了防止 fd 被继承，请关闭它。
 - en: '|  [PRE5]  |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: For a more detailed introduction to I/O redirection see [Appendix F](ioredirintro.html).
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 有关 I/O 重定向的更详细介绍，请参阅 [附录 F](ioredirintro.html)。
 - en: Notes
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](io-redirection.html#AEN17884) | By convention in UNIX and Linux, data
     streams and peripherals ([device files](devref1.html#DEVFILEREF)) are treated
     as files, in a fashion analogous to ordinary files. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](io-redirection.html#AEN17884) | 在 UNIX 和 Linux 中，按照惯例，数据流和外设（[设备文件](devref1.html#DEVFILEREF)）被视为文件，类似于普通文件的处理方式。|'
 - en: '| [[2]](io-redirection.html#AEN17894) | A *file descriptor* is simply a number
     that the operating system assigns to an open file to keep track of it. Consider
     it a simplified type of file pointer. It is analogous to a *file handle* in **C**.
     |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](io-redirection.html#AEN17894) | 文件描述符只是一个操作系统分配给打开文件的数字，用于跟踪它。将其视为一种简化的文件指针。它与
+    **C** 中的 *文件句柄* 类似。|'
 - en: '| [[3]](io-redirection.html#AEN17906) | Using `*file descriptor 5*` might cause
     problems. When Bash creates a child process, as with [exec](internal.html#EXECREF),
     the child inherits fd 5 (see Chet Ramey''s archived e-mail, [SUBJECT: RE: File
     descriptor 5 is held open](http://groups.google.com/group/gnu.bash.bug/browse_thread/thread/13955daafded3b5c/18c17050087f9f37)).
     Best leave this particular fd alone. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| [[3]](io-redirection.html#AEN17906) | 使用 `*文件描述符 5*` 可能会引起问题。当 Bash 创建子进程时，就像
+    [exec](internal.html#EXECREF) 一样，子进程会继承 fd 5（参见 Chet Ramey 的存档电子邮件，[主题：RE: 文件描述符
+    5 保持打开](http://groups.google.com/group/gnu.bash.bug/browse_thread/thread/13955daafded3b5c/18c17050087f9f37)）。最好让这个特定的
+    fd 保持不动。|'

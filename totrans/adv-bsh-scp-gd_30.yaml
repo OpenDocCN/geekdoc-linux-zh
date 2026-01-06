@@ -1,11 +1,15 @@
 - en: Chapter 25\. Aliases
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第25章\. 别名
 - en: 原文：[https://tldp.org/LDP/abs/html/aliases.html](https://tldp.org/LDP/abs/html/aliases.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/aliases.html](https://tldp.org/LDP/abs/html/aliases.html)
 - en: A Bash *alias* is essentially nothing more than a keyboard shortcut, an abbreviation,
     a means of avoiding typing a long command sequence. If, for example, we include
     **alias lm="ls -l | more"** in the [`~/.bashrc` file](sample-bashrc.html), then
@@ -14,8 +18,12 @@
     command-line and avoid having to remember complex combinations of commands and
     options. Setting **alias rm="rm -i"** (interactive mode delete) may save a good
     deal of grief, since it can prevent inadvertently deleting important files.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash *别名* 实质上不过是一个键盘快捷键，一个缩写，一种避免输入长命令序列的方法。例如，如果我们把 **alias lm="ls -l | more"**
+    包含在 `[~/.bashrc` 文件](sample-bashrc.html)`中，那么在命令行中输入的每个 `**lm**` [[1]](#FTN.AEN18669)
+    将会自动被替换为 **ls -l | more**。这可以在命令行中节省大量的输入，并避免记住复杂的命令和选项组合。设置 **alias rm="rm -i"**（交互模式删除）可能会节省很多麻烦，因为它可以防止意外删除重要文件。
 - en: In a script, aliases have very limited usefulness. It would be nice if aliases
     could assume some of the functionality of the **C** preprocessor, such as macro
     expansion, but unfortunately Bash does not expand arguments within the alias body.
@@ -24,35 +32,57 @@
     and functions. An added limitation is that an alias will not expand recursively.
     Almost invariably, whatever we would like an alias to do could be accomplished
     much more effectively with a [function](functions.html#FUNCTIONREF).
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中，别名的作用非常有限。如果别名能够承担一些C预处理器（如宏展开）的功能那就太好了，但不幸的是，Bash不会在别名体内部展开参数。[[2]](#FTN.AEN18676)
+    此外，脚本本身在“复合结构”中（如 [if/then](tests.html#IFTHEN) 语句、循环和函数）也无法展开别名。另一个限制是别名不能递归展开。几乎总是，我们希望别名执行的操作都可以用
+    [函数](functions.html#FUNCTIONREF) 来更有效地完成。
 - en: '**Example 25-1\. Aliases within a script**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例25-1\. 脚本中的别名**'
 - en: '|  [PRE0]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: The **unalias** command removes a previously set *alias*.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**unalias** 命令用于删除之前设置的 *别名*。'
 - en: '**Example 25-2\. *unalias*: Setting and unsetting an alias**'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例25-2\. *unalias*：设置和取消别名**'
 - en: '|  [PRE1]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '|  [PRE2]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Notes
+  id: totrans-10
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](aliases.html#AEN18669) | ... as the first word of a command string.
     Obviously, an alias is only meaningful at the *beginning* of a command. |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](aliases.html#AEN18669) | ... 作为命令字符串的第一个单词。显然，别名仅在命令的 *开始* 处有意义。|'
 - en: '| [[2]](aliases.html#AEN18676) | However, aliases do seem to expand positional
     parameters. |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](aliases.html#AEN18676) | 然而，别名似乎可以展开位置参数。|'

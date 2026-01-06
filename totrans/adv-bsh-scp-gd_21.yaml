@@ -1,1329 +1,2083 @@
 - en: Chapter 17\. System and Administrative Commands
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第17章。系统和管理命令
 - en: 原文：[https://tldp.org/LDP/abs/html/system.html](https://tldp.org/LDP/abs/html/system.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/system.html](https://tldp.org/LDP/abs/html/system.html)
 - en: The startup and shutdown scripts in `/etc/rc.d` illustrate the uses (and usefulness)
     of many of these comands. These are usually invoked by *root* and used for system
     maintenance or emergency filesystem repairs. Use with caution, as some of these
     commands may damage your system if misused.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/rc.d`中的启动和关闭脚本说明了许多这些命令的用途（及其有用性）。这些通常由**root**调用，用于系统维护或紧急文件系统修复。使用时请谨慎，因为一些命令如果误用可能会损坏您的系统。'
 - en: '**Users and Groups**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**用户和组**'
 - en: '**users**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**users**'
 - en: Show all logged on users. This is the approximate equivalent of **who -q**.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示所有已登录用户。这大致等同于**who -q**。
 - en: '**groups**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**groups**'
 - en: Lists the current user and the groups she belongs to. This corresponds to the
     [$GROUPS](internalvariables.html#GROUPSREF) internal variable, but gives the group
     names, rather than the numbers.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出当前用户及其所属的组。这对应于[$GROUPS](internalvariables.html#GROUPSREF)内部变量，但给出的是组名，而不是数字。
 - en: '|  [PRE0]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '**chown**, **chgrp**'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chown**、**chgrp**'
 - en: The **chown** command changes the ownership of a file or files. This command
     is a useful method that *root* can use to shift file ownership from one user to
     another. An ordinary user may not change the ownership of files, not even her
     own files. [[1]](#FTN.AEN14695)
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chown**命令更改文件或文件的所有权。这是root可以将文件所有权从一个用户转移到另一个用户的有用方法。普通用户不能更改文件的所有权，甚至不能更改自己的文件所有权。[1](#FTN.AEN14695)'
 - en: '|  [PRE1]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: The **chgrp** command changes the `*group*` ownership of a file or files. You
     must be owner of the file(s) as well as a member of the destination group (or
     *root*) to use this operation.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chgrp**命令更改文件或文件的**组**所有权。您必须既是文件的所有者也是目标组的成员（或**root**），才能使用此操作。'
 - en: '|  [PRE2]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: '**useradd**, **userdel**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**useradd**、**userdel**'
 - en: The **useradd** administrative command adds a user account to the system and
     creates a home directory for that particular user, if so specified. The corresponding
     **userdel** command removes a user account from the system [[2]](#FTN.AEN14727)
     and deletes associated files.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '**useradd**管理命令将用户账户添加到系统，并在指定的情况下为该特定用户创建家目录。相应的**userdel**命令从系统中删除用户账户[[2](#FTN.AEN14727)]并删除相关文件。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The **adduser**
     command is a synonym for **useradd** and is usually a symbolic link to it. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | **adduser**命令是**useradd**的同义词，通常是一个指向它的符号链接。
+    |'
 - en: '**usermod**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**usermod**'
 - en: Modify a user account. Changes may be made to the password, group membership,
     expiration date, and other attributes of a given user's account. With this command,
     a user's password may be locked, which has the effect of disabling the account.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 修改用户账户。可以对指定用户的密码、组成员资格、到期日期和其他属性进行更改。使用此命令，可以锁定用户的密码，从而禁用账户。
 - en: '**groupmod**'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '**groupmod**'
 - en: Modify a given group. The group name and/or ID number may be changed using this
     command.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 修改指定的组。可以使用此命令更改组名和/或ID号。
 - en: '**id**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**id**'
 - en: The **id** command lists the real and effective user IDs and the group IDs of
     the user associated with the current process. This is the counterpart to the [$UID](internalvariables.html#UIDREF),
     [$EUID](internalvariables.html#EUIDREF), and [$GROUPS](internalvariables.html#GROUPSREF)
     internal Bash variables.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**id**命令列出与当前进程关联的用户的真实用户ID、有效用户ID和组ID。这是[$UID](internalvariables.html#UIDREF)、[$EUID](internalvariables.html#EUIDREF)和[$GROUPS](internalvariables.html#GROUPSREF)内部Bash变量的对应物。'
 - en: '|  [PRE3]  |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The **id** command
     shows the *effective* IDs only when they differ from the *real* ones. |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | **id**命令仅在有效ID与真实ID不同时显示有效ID。
+    |'
 - en: Also see [Example 9-5](internalvariables.html#AMIROOT).
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 也请参阅[示例 9-5](internalvariables.html#AMIROOT)。
 - en: '**lid**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lid**'
 - en: The *lid* (list ID) command shows the group(s) that a given user belongs to,
     or alternately, the users belonging to a given group. May be invoked only by root.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: '*lid*（列表ID）命令显示给定用户所属的组，或者，也可以显示属于给定组的用户。只能由root调用。'
 - en: '|  [PRE4]  |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: '**who**'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '**who**'
 - en: Show all users logged on to the system.
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示系统上所有已登录的用户。
 - en: '|  [PRE5]  |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: The `-m` gives detailed information about only the current user. Passing any
     two arguments to **who** is the equivalent of **who -m**, as in **who am i** or
     **who The Man**.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-m` 仅提供当前用户详细的信息。向 **who** 命令传递任意两个参数等同于 **who -m**，例如 **who am i** 或 **who
+    The Man**。'
 - en: '|  [PRE6]  |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: '**whoami** is similar to **who -m**, but only lists the user name.'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '**whoami** 与 **who -m** 类似，但仅列出用户名。'
 - en: '|  [PRE7]  |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: '**w**'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**w**'
 - en: Show all logged on users and the processes belonging to them. This is an extended
     version of **who**. The output of **w** may be piped to [grep](textproc.html#GREPREF)
     to find a specific user and/or process.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示所有登录用户及其进程。这是 **who** 命令的扩展版本。**w** 命令的输出可以管道到 [grep](textproc.html#GREPREF)
+    以查找特定的用户和/或进程。
 - en: '|  [PRE8]  |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: '**logname**'
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: '**logname**'
 - en: Show current user's login name (as found in `/var/run/utmp`). This is a near-equivalent
     to [whoami](system.html#WHOAMIREF), above.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示当前用户的登录名称（如在 `/var/run/utmp` 中找到的），这是上面提到的 [whoami](system.html#WHOAMIREF)
+    的近似等效。
 - en: '|  [PRE9]  |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: However . . .
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而……
 - en: '|  [PRE10]  |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE10]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | While **logname**
     prints the name of the logged in user, **whoami** gives the name of the user attached
     to the current process. As we have just seen, sometimes these are not the same.
     |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 虽然 **logname** 打印登录用户的名称，但
+    **whoami** 提供的是当前进程关联的用户的名称。正如我们刚才看到的，有时这些并不相同。|'
 - en: '**su**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**su**'
 - en: Runs a program or script as a **s**ubstitute **u**ser. **su rjones** starts
     a shell as user *rjones*. A naked **su** defaults to *root*. See [Example A-14](contributed-scripts.html#FIFO).
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 以 **s**ubstitute **u**ser 的身份运行程序或脚本。**su rjones** 以用户 *rjones* 的身份启动 shell。裸露的
+    **su** 默认为 *root*。请参阅 [示例 A-14](contributed-scripts.html#FIFO)。
 - en: '**sudo**'
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: '**sudo**'
 - en: Runs a command as *root* (or another user). This may be used in a script, thus
     permitting a *regular user* to run the script.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 以 *root*（或另一个用户）的身份运行命令。这可以在脚本中使用，从而允许普通用户运行脚本。
 - en: '|  [PRE11]  |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: The file `/etc/sudoers` holds the names of users permitted to invoke **sudo**.
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件 `/etc/sudoers` 存储了被允许调用 **sudo** 的用户名称。
 - en: '**passwd**'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**passwd**'
 - en: Sets, changes, or manages a user's password.
+  id: totrans-52
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置、更改或管理用户的密码。
 - en: The **passwd** command can be used in a script, but probably *should not* be.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**passwd** 命令可以在脚本中使用，但可能 *不应该* 这样做。'
 - en: '**Example 17-1\. Setting a new password**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-1\. 设置新密码**'
 - en: '|  [PRE12]  |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: The **passwd** command's `-l`, `-u`, and `-d` options permit locking, unlocking,
     and deleting a user's password. Only *root* may use these options.
+  id: totrans-56
   prefs: []
   type: TYPE_NORMAL
+  zh: '**passwd** 命令的 `-l`、`-u` 和 `-d` 选项允许锁定、解锁和删除用户的密码。只有 *root* 可以使用这些选项。'
 - en: '**ac**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ac**'
 - en: Show users' logged in time, as read from `/var/log/wtmp`. This is one of the
     GNU accounting utilities.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示用户的登录时间，从 `/var/log/wtmp` 中读取。这是 GNU 记账工具之一。
 - en: '|  [PRE13]  |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE13]  |'
 - en: '**last**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**last**'
 - en: List *last* logged in users, as read from `/var/log/wtmp`. This command can
     also show remote logins.
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出最后登录的用户，从 `/var/log/wtmp` 中读取。此命令还可以显示远程登录。
 - en: 'For example, to show the last few times the system rebooted:'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，要显示系统最近几次重启的时间：
 - en: '|  [PRE14]  |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: '**newgrp**'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**newgrp**'
 - en: Change user's *group ID* without logging out. This permits access to the new
     group's files. Since users may be members of multiple groups simultaneously, this
     command finds only limited use.
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: 不注销即可更改用户的 *组 ID*。这允许访问新组的文件。由于用户可能同时是多个组的成员，此命令的使用范围有限。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Kurt Glaesemann
     points out that the *newgrp* command could prove helpful in setting the default
     group permissions for files a user writes. However, the [chgrp](system.html#CHGRPREF)
     command might be more convenient for this purpose. |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 库尔特·格拉泽曼指出，*newgrp*
+    命令可能有助于为用户写入的文件设置默认组权限。然而，[chgrp](system.html#CHGRPREF) 命令可能更适合此目的。|'
 - en: '**Terminals**'
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '**终端**'
 - en: '**tty**'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tty**'
 - en: Echoes the name (filename) of the current user's terminal. Note that each separate
     *xterm* window counts as a different terminal.
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: 反射当前用户终端的名称（文件名）。请注意，每个单独的 *xterm* 窗口都被视为不同的终端。
 - en: '|  [PRE15]  |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE15]  |'
 - en: '**stty**'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**stty**'
 - en: Shows and/or changes terminal settings. This complex command, used in a script,
     can control terminal behavior and the way output displays. See the info page,
     and study it carefully.
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示和/或更改终端设置。这个复杂的命令在脚本中使用可以控制终端行为和输出显示的方式。请参阅 info 页面，并仔细研究。
 - en: '**Example 17-2\. Setting an *erase* character**'
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-2\. 设置 *擦除* 字符**'
 - en: '|  [PRE16]  |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE16]  |'
 - en: '**Example 17-3\. *secret password*: Turning off terminal echoing**'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-3\. *秘密密码*：关闭终端回显**'
 - en: '|  [PRE17]  |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE17]  |'
 - en: A creative use of **stty** is detecting a user keypress (without hitting **ENTER**).
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**stty** 的一个创造性用法是检测用户按键（无需按 **ENTER**）。'
 - en: '**Example 17-4\. Keypress detection**'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-4\. 按键检测**'
 - en: '|  [PRE18]  |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE18]  |'
 - en: Also see [Example 9-3](internalvariables.html#TIMEOUT) and [Example A-43](contributed-scripts.html#STOPWATCH).
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 还请参阅 [示例 9-3](internalvariables.html#TIMEOUT) 和 [示例 A-43](contributed-scripts.html#STOPWATCH)。
 - en: '|'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**terminals and modes**'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**终端和模式**'
 - en: Normally, a terminal works in the *canonical* mode. When a user hits a key,
     the resulting character does not immediately go to the program actually running
     in this terminal. A buffer local to the terminal stores keystrokes. When the user
     hits the **ENTER** key, this sends all the stored keystrokes to the program running.
     There is even a basic line editor inside the terminal.
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，终端在 *规范* 模式下工作。当用户按键时，生成的字符不会立即发送到在该终端实际运行的程序。终端本地有一个缓冲区存储按键。当用户按下 **ENTER**
+    键时，这会将所有存储的按键发送到运行的程序。终端内甚至还有一个基本的行编辑器。
 - en: '&#124;  [PRE19]  &#124;'
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE19]  &#124;'
 - en: Using canonical mode, it is possible to redefine the special keys for the local
     terminal line editor.
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用规范模式，可以重新定义本地终端行编辑器的特殊键。
 - en: '&#124;  [PRE20]  &#124;'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE20]  &#124;'
 - en: The process controlling the terminal receives only 12 characters (11 alphabetic
     ones, plus a newline), although the user hit 26 keys.
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: 控制终端的过程只接收 12 个字符（11 个字母字符，加上一个换行符），尽管用户按了 26 个键。
 - en: In non-canonical ("raw") mode, every key hit (including special editing keys
     such as **ctl-H**) sends a character immediately to the controlling process.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 在非规范（"raw"）模式下，每个按键（包括如 **ctl-H** 这样的特殊编辑键）都会立即将一个字符发送到控制进程。
 - en: The Bash prompt disables both `icanon` and `echo`, since it replaces the basic
     terminal line editor with its own more elaborate one. For example, when you hit
     **ctl-A** at the Bash prompt, there's no **^A** echoed by the terminal, but Bash
     gets a **\1** character, interprets it, and moves the cursor to the begining of
     the line.
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 提示符禁用了 `icanon` 和 `echo`，因为它用自己更复杂的行编辑器替换了基本的终端行编辑器。例如，当你在 Bash 提示符下按 **ctl-A**
+    时，终端不会回显 **^A**，但 Bash 会收到一个 **\1** 字符，解释它并将光标移到行首。
 - en: '*Stphane Chazelas*'
+  id: totrans-90
   prefs: []
   type: TYPE_NORMAL
+  zh: '*Stphane Chazelas*'
 - en: '|'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**setterm**'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**setterm**'
 - en: Set certain terminal attributes. This command writes to its terminal's `stdout`
     a string that changes the behavior of that terminal.
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置某些终端属性。此命令将其终端的 `stdout` 写入一个字符串，该字符串会改变该终端的行为。
 - en: '|  [PRE21]  |'
+  id: totrans-94
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE21]  |'
 - en: The **setterm** command can be used within a script to change the appearance
     of text written to `stdout`, although there are certainly [better tools](colorizing.html#COLORIZINGREF)
     available for this purpose.
+  id: totrans-95
   prefs: []
   type: TYPE_NORMAL
+  zh: '**setterm** 命令可以在脚本中使用，以改变写入 `stdout` 的文本外观，尽管确实有 [更好的工具](colorizing.html#COLORIZINGREF)
+    可以用于此目的。'
 - en: '|  [PRE22]  |'
+  id: totrans-96
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE22]  |'
 - en: '**tset**'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tset**'
 - en: Show or initialize terminal settings. This is a less capable version of **stty**.
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示或初始化终端设置。这是 **stty** 的一个功能较弱的版本。
 - en: '|  [PRE23]  |'
+  id: totrans-99
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE23]  |'
 - en: '**setserial**'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '**setserial**'
 - en: Set or display serial port parameters. This command must be run by *root* and
     is usually found in a system setup script.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置或显示串行端口参数。此命令必须由 *root* 运行，通常在系统设置脚本中找到。
 - en: '|  [PRE24]  |'
+  id: totrans-102
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE24]  |'
 - en: '**getty**, **agetty**'
+  id: totrans-103
   prefs: []
   type: TYPE_NORMAL
+  zh: '**getty**，**agetty**'
 - en: The initialization process for a terminal uses **getty** or **agetty** to set
     it up for login by a user. These commands are not used within user shell scripts.
     Their scripting counterpart is **stty**.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 终端初始化过程使用 **getty** 或 **agetty** 为用户设置登录。这些命令在用户 shell 脚本中不被使用。它们的脚本对应物是 **stty**。
 - en: '**mesg**'
+  id: totrans-105
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mesg**'
 - en: Enables or disables write access to the current user's terminal. Disabling access
     would prevent another user on the network to [write](communications.html#WRITEREF)
     to the terminal.
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: 启用或禁用当前用户终端的写访问。禁用访问将防止网络上的其他用户 [写入](communications.html#WRITEREF) 终端。
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | It can be quite
     annoying to have a message about ordering pizza suddenly appear in the middle
     of the text file you are editing. On a multi-user network, you might therefore
     wish to disable write access to your terminal when you need to avoid interruptions.
     |'
+  id: totrans-107
   prefs: []
   type: TYPE_TB
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 在编辑文本文件时，突然出现订购披萨的消息可能会相当烦人。在多用户网络中，因此你可能希望在需要避免中断时禁用对您的终端的写访问。
+    |'
 - en: '**wall**'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: '**wall**'
 - en: This is an acronym for "[write](communications.html#WRITEREF) all," i.e., sending
     a message to all users at every terminal logged into the network. It is primarily
     a system administrator's tool, useful, for example, when warning everyone that
     the system will shortly go down due to a problem (see [Example 19-1](here-docs.html#EX70)).
+  id: totrans-109
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是 "[write](communications.html#WRITEREF) all" 的缩写，即向网络中每个登录终端的所有用户发送消息。它主要是一个系统管理员的工具，例如，当警告每个人系统将因问题而很快关闭时很有用（见[示例
+    19-1](here-docs.html#EX70)）。
 - en: '|  [PRE25]  |'
+  id: totrans-110
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE25]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | If write access
     to a particular terminal has been disabled with **mesg**, then **wall** cannot
     send a message to that terminal. |'
+  id: totrans-111
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 如果使用 **mesg** 禁用了特定终端的写入访问，则
+    **wall** 无法向该终端发送消息。 |'
 - en: '**Information and Statistics**'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '**信息和统计**'
 - en: '**uname**'
+  id: totrans-113
   prefs: []
   type: TYPE_NORMAL
+  zh: '**uname**'
 - en: Output system specifications (OS, kernel version, etc.) to `stdout`. Invoked
     with the `-a` option, gives verbose system info (see [Example 16-5](moreadv.html#EX41)).
     The `-s` option shows only the OS type.
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: 将系统规范（OS、内核版本等）输出到 `stdout`。使用 `-a` 选项调用时，会提供详细的系统信息（见[示例 16-5](moreadv.html#EX41)）。使用
+    `-s` 选项仅显示操作系统类型。
 - en: '|  [PRE26]  |'
+  id: totrans-115
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE26]  |'
 - en: '**arch**'
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: '**arch**'
 - en: Show system architecture. Equivalent to **uname -m**. See [Example 11-27](testbranch.html#CASECMD).
+  id: totrans-117
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示系统架构。等同于**uname -m**。见[示例 11-27](testbranch.html#CASECMD)。
 - en: '|  [PRE27]  |'
+  id: totrans-118
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE27]  |'
 - en: '**lastcomm**'
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lastcomm**'
 - en: Gives information about previous commands, as stored in the `/var/account/pacct`
     file. Command name and user name can be specified by options. This is one of the
     GNU accounting utilities.
+  id: totrans-120
   prefs: []
   type: TYPE_NORMAL
+  zh: 提供有关存储在`/var/account/pacct`文件中的先前命令的信息。可以通过选项指定命令名和用户名。这是GNU会计工具之一。
 - en: '**lastlog**'
+  id: totrans-121
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lastlog**'
 - en: List the last login time of all system users. This references the `/var/log/lastlog`
     file.
+  id: totrans-122
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出所有系统用户的最后登录时间。这引用了`/var/log/lastlog`文件。
 - en: '|  [PRE28]  |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE28]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | This command
     will fail if the user invoking it does not have read permission for the `/var/log/lastlog`
     file. |'
+  id: totrans-124
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 如果调用此命令的用户没有对`/var/log/lastlog`文件的读取权限，则该命令将失败。
+    |'
 - en: '**lsof**'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsof**'
 - en: List open files. This command outputs a detailed table of all currently open
     files and gives information about their owner, size, the processes associated
     with them, and more. Of course, **lsof** may be piped to [grep](textproc.html#GREPREF)
     and/or [awk](awk.html#AWKREF) to parse and analyze its results.
+  id: totrans-126
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出打开的文件。此命令输出所有当前打开文件的详细表格，并提供有关其所有者、大小、与之关联的进程等信息。当然，**lsof**可以管道到[grep](textproc.html#GREPREF)和/或[awk](awk.html#AWKREF)以解析和分析其结果。
 - en: '|  [PRE29]  |'
+  id: totrans-127
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE29]  |'
 - en: The **lsof** command is a useful, if complex administrative tool. If you are
     unable to dismount a filesystem and get an error message that it is still in use,
     then running *lsof* helps determine which files are still open on that filesystem.
     The `-i` option lists open network socket files, and this can help trace intrusion
     or hack attempts.
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsof** 命令是一个有用的、如果复杂的系统管理工具。如果你无法卸载文件系统并收到错误消息，表明它仍在使用中，那么运行 *lsof* 帮助确定该文件系统上仍打开的哪些文件。`-i`
+    选项列出打开的网络套接字文件，这有助于追踪入侵或黑客攻击尝试。'
 - en: '|  [PRE30]  |'
+  id: totrans-129
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE30]  |'
 - en: See [Example 30-2](networkprogramming.html#IPADDRESSES) for an effective use
     of **lsof**.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 请参阅[示例 30-2](networkprogramming.html#IPADDRESSES)了解**lsof**的有效使用。
 - en: '**strace**'
+  id: totrans-131
   prefs: []
   type: TYPE_NORMAL
+  zh: '**strace**'
 - en: '**S**ystem **trace**: diagnostic and debugging tool for tracing *system calls*
     and signals. This command and **ltrace**, following, are useful for diagnosing
     why a given program or package fails to run . . . perhaps due to missing libraries
     or related causes.'
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: '**S**ystem **trace**：用于跟踪 *系统调用* 和信号的诊断和调试工具。此命令和随后的 **ltrace** 命令对于诊断为什么某个程序或包无法运行很有用……可能是因为缺少库或相关原因。'
 - en: '|  [PRE31]  |'
+  id: totrans-133
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE31]  |'
 - en: This is the Linux equivalent of the Solaris **truss** command.
+  id: totrans-134
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是Linux中Solaris **truss** 命令的等价物。
 - en: '**ltrace**'
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ltrace**'
 - en: '**L**ibrary **trace**: diagnostic and debugging tool that traces *library calls*
     invoked by a given command.'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**L**ibrary **trace**：跟踪给定命令调用的 *库调用* 的诊断和调试工具。'
 - en: '|  [PRE32]  |'
+  id: totrans-137
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE32]  |'
 - en: '**nc**'
+  id: totrans-138
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nc**'
 - en: The **nc** (*netcat*) utility is a complete toolkit for connecting to and listening
     to TCP and UDP ports. It is useful as a diagnostic and testing tool and as a component
     in simple script-based HTTP clients and servers.
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nc** (*netcat*) 实用程序是一个用于连接到和监听 TCP 和 UDP 端口的完整工具包。它作为诊断和测试工具以及简单脚本客户端和服务器组件很有用。'
 - en: '|  [PRE33]  |'
+  id: totrans-140
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE33]  |'
 - en: A real-life [usage example](process-sub.html#NETCATEXAMPLE).
+  id: totrans-141
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个真实的[使用示例](process-sub.html#NETCATEXAMPLE)。
 - en: '**Example 17-5\. Checking a remote server for *identd***'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例17-5\. 检查远程服务器上的*identd*** '
 - en: '|  [PRE34]  |'
+  id: totrans-143
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE34]  |'
 - en: 'And, of course, there''s Dr. Andrew Tridgell''s notorious one-line script in
     the BitKeeper Affair:'
+  id: totrans-144
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，还有Dr. Andrew Tridgell在BitKeeper事件中臭名昭著的一行脚本：
 - en: '|  [PRE35]  |'
+  id: totrans-145
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE35]  |'
 - en: '**free**'
+  id: totrans-146
   prefs: []
   type: TYPE_NORMAL
+  zh: '**free**'
 - en: Shows memory and cache usage in tabular form. The output of this command lends
     itself to parsing, using [grep](textproc.html#GREPREF), [awk](awk.html#AWKREF)
     or **Perl**. The **procinfo** command shows all the information that **free**
     does, and much more.
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: 以表格形式显示内存和缓存使用情况。此命令的输出便于使用[grep](textproc.html#GREPREF)、[awk](awk.html#AWKREF)或**Perl**进行解析。**procinfo**命令显示了**free**命令的所有信息以及更多。
 - en: '|  [PRE36]  |'
+  id: totrans-148
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE36]  |'
 - en: 'To show unused RAM memory:'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: 要显示未使用的RAM内存：
 - en: '|  [PRE37]  |'
+  id: totrans-150
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE37]  |'
 - en: '**procinfo**'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '**procinfo**'
 - en: Extract and list information and statistics from the [`/proc` pseudo-filesystem](devproc.html#DEVPROCREF).
     This gives a very extensive and detailed listing.
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: 从`/proc`伪文件系统（devproc.html#DEVPROCREF）提取并列出信息和统计数据。这提供了非常广泛和详细的列表。
 - en: '|  [PRE38]  |'
+  id: totrans-153
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE38]  |'
 - en: '**lsdev**'
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsdev**'
 - en: List devices, that is, show installed hardware.
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出设备，即显示已安装的硬件。
 - en: '|  [PRE39]  |'
+  id: totrans-156
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE39]  |'
 - en: '**du**'
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '**du**'
 - en: Show (disk) file usage, recursively. Defaults to current working directory,
     unless otherwise specified.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示（磁盘）文件使用情况，递归地。默认为当前工作目录，除非指定其他目录。
 - en: '|  [PRE40]  |'
+  id: totrans-159
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE40]  |'
 - en: '**df**'
+  id: totrans-160
   prefs: []
   type: TYPE_NORMAL
+  zh: '**df**'
 - en: Shows filesystem usage in tabular form.
+  id: totrans-161
   prefs: []
   type: TYPE_NORMAL
+  zh: 以表格形式显示文件系统使用情况。
 - en: '|  [PRE41]  |'
+  id: totrans-162
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE41]  |'
 - en: '**dmesg**'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dmesg**'
 - en: Lists all system bootup messages to `stdout`. Handy for debugging and ascertaining
     which device drivers were installed and which system interrupts in use. The output
     of **dmesg** may, of course, be parsed with [grep](textproc.html#GREPREF), [sed](sedawk.html#SEDREF),
     or [awk](awk.html#AWKREF) from within a script.
+  id: totrans-164
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出所有系统启动消息到`stdout`。这对于调试和确定已安装的设备驱动程序和正在使用的系统中断非常有用。**dmesg**的输出当然可以使用[grep](textproc.html#GREPREF)、[sed](sedawk.html#SEDREF)或[awk](awk.html#AWKREF)在脚本中进行解析。
 - en: '|  [PRE42]  |'
+  id: totrans-165
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE42]  |'
 - en: '**stat**'
+  id: totrans-166
   prefs: []
   type: TYPE_NORMAL
+  zh: '**stat**'
 - en: Gives detailed and verbose *stat*istics on a given file (even a directory or
     device file) or set of files.
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: 对给定文件（甚至目录或设备文件）或文件集提供详细和冗长的*stat*istics信息。
 - en: '|  [PRE43]  |'
+  id: totrans-168
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE43]  |'
 - en: If the target file does not exist, **stat** returns an error message.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果目标文件不存在，**stat**将返回错误信息。
 - en: '|  [PRE44]  |'
+  id: totrans-170
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE44]  |'
 - en: In a script, you can use **stat** to extract information about files (and filesystems)
     and set variables accordingly.
+  id: totrans-171
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中，你可以使用**stat**提取有关文件（和文件系统）的信息，并相应地设置变量。
 - en: '|  [PRE45]  |'
+  id: totrans-172
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE45]  |'
 - en: '**vmstat**'
+  id: totrans-173
   prefs: []
   type: TYPE_NORMAL
+  zh: '**vmstat**'
 - en: Display virtual memory statistics.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示虚拟内存统计数据。
 - en: '|  [PRE46]  |'
+  id: totrans-175
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE46]  |'
 - en: '**uptime**'
+  id: totrans-176
   prefs: []
   type: TYPE_NORMAL
+  zh: '**uptime**'
 - en: Shows how long the system has been running, along with associated statistics.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示系统运行时长以及相关统计数据。
 - en: '|  [PRE47]  |'
+  id: totrans-178
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE47]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A *load average*
     of 1 or less indicates that the system handles processes immediately. A load average
     greater than 1 means that processes are being queued. When the load average gets
     above 3 (on a single-core processor), then system performance is significantly
     degraded. |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 负载平均值为1或以下表示系统可以立即处理进程。负载平均值大于1表示进程正在排队。当负载平均值超过3（在单核处理器上）时，系统性能将显著下降。|'
 - en: '**hostname**'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hostname**'
 - en: Lists the system's host name. This command sets the host name in an `/etc/rc.d`
     setup script (`/etc/rc.d/rc.sysinit` or similar). It is equivalent to **uname
     -n**, and a counterpart to the [$HOSTNAME](internalvariables.html#HOSTNAMEREF)
     internal variable.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出系统的主机名。此命令在`/etc/rc.d`设置脚本中设置主机名（`/etc/rc.d/rc.sysinit`或类似）。它与**uname -n**等效，与[$HOSTNAME](internalvariables.html#HOSTNAMEREF)内部变量相对应。
 - en: '|  [PRE48]  |'
+  id: totrans-182
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE48]  |'
 - en: Similar to the **hostname** command are the **domainname**, **dnsdomainname**,
     **nisdomainname**, and **ypdomainname** commands. Use these to display or set
     the system DNS or NIS/YP domain name. Various options to **hostname** also perform
     these functions.
+  id: totrans-183
   prefs: []
   type: TYPE_NORMAL
+  zh: 与**hostname**命令类似的是**domainname**、**dnsdomainname**、**nisdomainname**和**ypdomainname**命令。使用这些命令显示或设置系统DNS或NIS/YP域名。**hostname**的某些选项也执行这些功能。
 - en: '**hostid**'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hostid**'
 - en: Echo a 32-bit hexadecimal numerical identifier for the host machine.
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出主机机的32位十六进制数值标识符。
 - en: '|  [PRE49]  |'
+  id: totrans-186
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE49]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This command allegedly
     fetches a "unique" serial number for a particular system. Certain product registration
     procedures use this number to brand a particular user license. Unfortunately,
     **hostid** only returns the machine network address in hexadecimal, with pairs
     of bytes transposed.The network address of a typical non-networked Linux machine,
     is found in `/etc/hosts`.'
+  id: totrans-187
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 此命令据说为特定系统获取一个“唯一”的序列号。某些产品注册程序使用此数字来标记特定的用户许可证。不幸的是，**hostid**只返回机器的网络地址，以十六进制形式表示，字节对进行了转置。典型非网络化Linux机器的网络地址可以在`/etc/hosts`中找到。'
 - en: '&#124;  [PRE50]  &#124;'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE50]  &#124;'
 - en: As it happens, transposing the bytes of `**127.0.0.1**`, we get `**0.127.1.0**`,
     which translates in hex to `**007f0100**`, the exact equivalent of what **hostid**
     returns, above. There exist only a few million other Linux machines with this
     identical *hostid*. |
+  id: totrans-189
   prefs: []
   type: TYPE_NORMAL
+  zh: 如同所发生的那样，将`**127.0.0.1**`的字节进行转置，我们得到`**0.127.1.0**`，这在十六进制中转换为`**007f0100**`，这与上面**hostid**返回的值完全相同。只有几百万台其他Linux机器具有这个相同的*hostid*。
 - en: '**sar**'
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '**sar**'
 - en: Invoking **sar** (System Activity Reporter) gives a very detailed rundown on
     system statistics. The Santa Cruz Operation ("Old" SCO) released **sar** as Open
     Source in June, 1999.
+  id: totrans-191
   prefs: []
   type: TYPE_NORMAL
+  zh: 调用**sar**（系统活动报告）会提供非常详细的系统统计信息。圣克拉拉操作公司（“旧”SCO）于1999年6月将**sar**作为开源软件发布。
 - en: This command is not part of the base Linux distribution, but may be obtained
     as part of the [sysstat utilities](http://perso.wanadoo.fr/sebastien.godard/)
     package, written by [Sebastien Godard](mailto:sebastien.godard@wanadoo.fr).
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令不是Linux基础发行版的一部分，但可以作为[sysstat实用程序](http://perso.wanadoo.fr/sebastien.godard/)包的一部分获得，该包由[Sebastien
+    Godard](mailto:sebastien.godard@wanadoo.fr)编写。
 - en: '|  [PRE51]  |'
+  id: totrans-193
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE51]  |'
 - en: '**readelf**'
+  id: totrans-194
   prefs: []
   type: TYPE_NORMAL
+  zh: '**readelf**'
 - en: Show information and statistics about a designated *elf* binary. This is part
     of the *binutils* package.
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示指定*elf*二进制文件的信息和统计信息。这是*binutils*包的一部分。
 - en: '|  [PRE52]  |'
+  id: totrans-196
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE52]  |'
 - en: '**size**'
+  id: totrans-197
   prefs: []
   type: TYPE_NORMAL
+  zh: '**size**'
 - en: The **size [/path/to/binary]** command gives the segment sizes of a binary executable
     or archive file. This is mainly of use to programmers.
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**size [/path/to/binary]**命令给出二进制可执行文件或归档文件的段大小。这主要对程序员有用。'
 - en: '|  [PRE53]  |'
+  id: totrans-199
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE53]  |'
 - en: '**System Logs**'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**系统日志**'
 - en: '**logger**'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: '**logger**'
 - en: Appends a user-generated message to the system log (`/var/log/messages`). You
     do not have to be *root* to invoke **logger**.
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 将用户生成的消息追加到系统日志（`/var/log/messages`）。调用**logger**不需要是*root*用户。
 - en: '|  [PRE54]  |'
+  id: totrans-203
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE54]  |'
 - en: By embedding a **logger** command in a script, it is possible to write debugging
     information to `/var/log/messages`.
+  id: totrans-204
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过在脚本中嵌入**logger**命令，可以将调试信息写入`/var/log/messages`。
 - en: '|  [PRE55]  |'
+  id: totrans-205
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE55]  |'
 - en: '**logrotate**'
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: '**logrotate**'
 - en: This utility manages the system log files, rotating, compressing, deleting,
     and/or e-mailing them, as appropriate. This keeps the `/var/log` from getting
     cluttered with old log files. Usually [cron](system.html#CRONREF) runs **logrotate**
     on a daily basis.
+  id: totrans-207
   prefs: []
   type: TYPE_NORMAL
+  zh: 此实用程序管理系统日志文件，根据需要旋转、压缩、删除和/或通过电子邮件发送它们。这可以防止`/var/log`目录因旧日志文件而变得杂乱。通常，[cron](system.html#CRONREF)每天运行**logrotate**。
 - en: Adding an appropriate entry to `/etc/logrotate.conf` makes it possible to manage
     personal log files, as well as system-wide ones.
+  id: totrans-208
   prefs: []
   type: TYPE_NORMAL
+  zh: 在`/etc/logrotate.conf`中添加适当的条目，可以管理个人日志文件以及系统范围内的日志文件。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Stefano Falsetto
     has created [rottlog](http://www.gnu.org/software/rottlog/), which he considers
     to be an improved version of **logrotate**. |'
+  id: totrans-209
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Stefano Falsetto创建了[rottlog](http://www.gnu.org/software/rottlog/)，他认为这是**logrotate**的改进版本。'
 - en: '**Job Control**'
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: '**作业控制**'
 - en: '**ps**'
+  id: totrans-211
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ps**'
 - en: '`*P*`rocess `*S*`tatistics: lists currently executing processes by owner and
     PID (process ID). This is usually invoked with `ax` or `aux` options, and may
     be piped to [grep](textproc.html#GREPREF) or [sed](sedawk.html#SEDREF) to search
     for a specific process (see [Example 15-14](internal.html#EX44) and [Example 29-3](procref1.html#PIDID)).'
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*P*`rocess `*S*`tatistics：按所有者和PID（进程ID）列出当前正在执行的过程。通常使用`ax`或`aux`选项调用此命令，并且可以将输出通过管道传递给[grep](textproc.html#GREPREF)或[sed](sedawk.html#SEDREF)以搜索特定进程（参见[示例15-14](internal.html#EX44)和[示例29-3](procref1.html#PIDID)）。'
 - en: '|  [PRE56]  |'
+  id: totrans-213
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE56]  |'
 - en: 'To display system processes in graphical "tree" format: **ps afjx** or **ps
     ax --forest**.'
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 要以图形“树”格式显示系统进程：**ps afjx**或**ps ax --forest**。
 - en: '**pgrep**, **pkill**'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pgrep**, **pkill**'
 - en: Combining the **ps** command with [grep](textproc.html#GREPREF) or [kill](x9644.html#KILLREF).
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: 将**ps**命令与[grep](textproc.html#GREPREF)或[kill](x9644.html#KILLREF)结合使用。
 - en: '|  [PRE57]  |'
+  id: totrans-217
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE57]  |'
 - en: Compare the action of **pkill** with [killall](x9644.html#KILLALLREF).
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 将**pkill**的行为与[killall](x9644.html#KILLALLREF)进行比较。
 - en: '**pstree**'
+  id: totrans-219
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pstree**'
 - en: Lists currently executing processes in "tree" format. The `-p` option shows
     the PIDs, as well as the process names.
+  id: totrans-220
   prefs: []
   type: TYPE_NORMAL
+  zh: 以“树”格式列出当前正在执行的过程。`-p`选项显示PID以及进程名称。
 - en: '**top**'
+  id: totrans-221
   prefs: []
   type: TYPE_NORMAL
+  zh: '**top**'
 - en: Continuously updated display of most cpu-intensive processes. The `-b` option
     displays in text mode, so that the output may be parsed or accessed from a script.
+  id: totrans-222
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示大多数CPU密集型进程的持续更新显示。`-b`选项以文本模式显示，因此输出可以被解析或从脚本中访问。
 - en: '|  [PRE58]  |'
+  id: totrans-223
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE58]  |'
 - en: '**nice**'
+  id: totrans-224
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nice**'
 - en: Run a background job with an altered priority. Priorities run from 19 (lowest)
     to -20 (highest). Only *root* may set the negative (higher) priorities. Related
     commands are **renice** and **snice**, which change the priority of a running
     process or processes, and **skill**, which sends a [kill](x9644.html#KILLREF)
     signal to a process or processes.
+  id: totrans-225
   prefs: []
   type: TYPE_NORMAL
+  zh: 以更改后的优先级运行后台作业。优先级从19（最低）到-20（最高）。只有*root*可以设置负（更高）优先级。相关的命令有**renice**和**snice**，它们可以改变运行进程或进程的优先级，以及**skill**，它向进程或进程发送[kill](x9644.html#KILLREF)信号。
 - en: '**nohup**'
+  id: totrans-226
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nohup**'
 - en: Keeps a command running even after user logs off. The command will run as a
     foreground process unless followed by &. If you use **nohup** within a script,
     consider coupling it with a [wait](x9644.html#WAITREF) to avoid creating an *orphan*
     or [zombie](x9644.html#ZOMBIEREF) process.
+  id: totrans-227
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使用户注销后，也能保持命令运行。除非跟在&后面，否则命令将以前台进程运行。如果你在脚本中使用**nohup**，考虑与[wait](x9644.html#WAITREF)结合使用，以避免创建*孤儿*或[僵尸](x9644.html#ZOMBIEREF)进程。
 - en: '**pidof**'
+  id: totrans-228
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pidof**'
 - en: Identifies *process ID (PID)* of a running job. Since job control commands,
     such as [kill](x9644.html#KILLREF) and [renice](system.html#NICE2REF) act on the
     *PID* of a process (not its name), it is sometimes necessary to identify that
     *PID*. The **pidof** command is the approximate counterpart to the [$PPID](internalvariables.html#PPIDREF)
     internal variable.
+  id: totrans-229
   prefs: []
   type: TYPE_NORMAL
+  zh: 识别正在运行的作业的*进程ID (PID)*。由于作业控制命令，如[kill](x9644.html#KILLREF)和[renice](system.html#NICE2REF)作用于进程的*PID*（而不是其名称），有时需要识别该*PID*。**pidof**命令是内部变量[$PPID](internalvariables.html#PPIDREF)的大致对应物。
 - en: '|  [PRE59]  |'
+  id: totrans-230
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE59]  |'
 - en: '**Example 17-6\. *pidof* helps kill a process**'
+  id: totrans-231
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Example 17-6\. *pidof* helps kill a process**'
 - en: '|  [PRE60]  |'
+  id: totrans-232
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE60]  |'
 - en: '**fuser**'
+  id: totrans-233
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fuser**'
 - en: Identifies the processes (by PID) that are accessing a given file, set of files,
     or directory. May also be invoked with the `-k` option, which kills those processes.
     This has interesting implications for system security, especially in scripts preventing
     unauthorized users from accessing system services.
+  id: totrans-234
   prefs: []
   type: TYPE_NORMAL
+  zh: 识别访问给定文件、文件集或目录的进程（通过PID）。也可以使用`-k`选项调用，该选项会终止这些进程。这对于系统安全有有趣的含义，尤其是在脚本中防止未经授权的用户访问系统服务时。
 - en: '|  [PRE61]  |'
+  id: totrans-235
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE61]  |'
 - en: One important application for **fuser** is when physically inserting or removing
     storage media, such as CD ROM disks or USB flash drives. Sometimes trying a [umount](system.html#UMOUNTREF)
     fails with a device is busy error message. This means that some user(s) and/or
     process(es) are accessing the device. An **fuser -um /dev/device_name** will clear
     up the mystery, so you can kill any relevant processes.
+  id: totrans-236
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fuser**的一个重要应用是在物理插入或移除存储介质时，例如CD ROM光盘或USB闪存驱动器。有时尝试[umount](system.html#UMOUNTREF)会失败，显示设备忙碌的错误信息。这意味着某些用户和/或进程正在访问该设备。使用**fuser
+    -um /dev/device_name**可以解开这个谜团，因此你可以终止任何相关进程。'
 - en: '|  [PRE62]  |'
+  id: totrans-237
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE62]  |'
 - en: The **fuser** command, invoked with the `-n` option identifies the processes
     accessing a *port*. This is especially useful in combination with [nmap](system.html#NMAPREF).
+  id: totrans-238
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用`-n`选项调用的**fuser**命令可以识别访问*端口*的进程。这特别适用于与[nmap](system.html#NMAPREF)结合使用。
 - en: '|  [PRE63]  |'
+  id: totrans-239
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE63]  |'
 - en: '**cron**'
+  id: totrans-240
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cron**'
 - en: Administrative program scheduler, performing such duties as cleaning up and
     deleting system log files and updating the slocate database. This is the *superuser*
     version of [at](timedate.html#ATREF) (although each user may have their own `crontab`
     file which can be changed with the **crontab** command). It runs as a [daemon](communications.html#DAEMONREF)
     and executes scheduled entries from `/etc/crontab`.
+  id: totrans-241
   prefs: []
   type: TYPE_NORMAL
+  zh: 管理程序调度器，执行诸如清理和删除系统日志文件以及更新slocate数据库等任务。这是[at](timedate.html#ATREF)（尽管每个用户可能都有自己的`crontab`文件，可以使用**crontab**命令进行更改）的*超级用户*版本。它作为[守护进程](communications.html#DAEMONREF)运行并执行`/etc/crontab`中的计划条目。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Some flavors of
     Linux run **crond**, Matthew Dillon''s version of **cron**. |'
+  id: totrans-242
   prefs: []
   type: TYPE_TB
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 一些Linux版本运行**crond**，这是Matthew
+    Dillon的**cron**版本。|'
 - en: '**Process Control and Booting**'
+  id: totrans-243
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Process Control and Booting**'
 - en: '**init**'
+  id: totrans-244
   prefs: []
   type: TYPE_NORMAL
+  zh: '**init**'
 - en: The **init** command is the [parent](internal.html#FORKREF) of all processes.
     Called in the final step of a bootup, **init** determines the runlevel of the
     system from `/etc/inittab`. Invoked by its alias **telinit**, and by *root* only.
+  id: totrans-245
   prefs: []
   type: TYPE_NORMAL
+  zh: '**init** 命令是所有进程的 [父进程](internal.html#FORKREF)。在启动的最后一步被调用，**init** 从 `/etc/inittab`
+    确定系统的运行级别。通过其别名 **telinit** 和仅由 *root* 调用。'
 - en: '**telinit**'
+  id: totrans-246
   prefs: []
   type: TYPE_NORMAL
+  zh: '**telinit**'
 - en: Symlinked to **init**, this is a means of changing the system runlevel, usually
     done for system maintenance or emergency filesystem repairs. Invoked only by *root*.
     This command can be dangerous -- be certain you understand it well before using!
+  id: totrans-247
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 **init** 链接，这是一种更改系统运行级别的手段，通常用于系统维护或紧急文件系统修复。仅由 *root* 调用。这个命令可能很危险——在使用之前务必确保你完全理解它！
 - en: '**runlevel**'
+  id: totrans-248
   prefs: []
   type: TYPE_NORMAL
+  zh: '**runlevel**'
 - en: Shows the current and last runlevel, that is, whether the system is halted (runlevel
     `0`), in single-user mode (`1`), in multi-user mode (`2` or `3`), in X Windows
     (`5`), or rebooting (`6`). This command accesses the `/var/run/utmp` file.
+  id: totrans-249
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示当前和最后的运行级别，即系统是否已停止（运行级别 `0`），是否处于单用户模式（`1`），多用户模式（`2` 或 `3`），X Windows（`5`），或正在重启（`6`）。此命令访问
+    `/var/run/utmp` 文件。
 - en: '**halt**, **shutdown**, **reboot**'
+  id: totrans-250
   prefs: []
   type: TYPE_NORMAL
+  zh: '**halt**、**shutdown**、**reboot**'
 - en: Command set to shut the system down, usually just prior to a power down.
+  id: totrans-251
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于关闭系统的命令集，通常在断电之前执行。
 - en: '| ![Warning](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | On some Linux
     distros, the **halt** command has 755 permissions, so it can be invoked by a non-root
     user. A careless *halt* in a terminal or a script may shut down the system! |'
+  id: totrans-252
   prefs: []
   type: TYPE_TB
+  zh: '| ![Warning](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | 在某些 Linux 发行版中，**halt**
+    命令具有 755 权限，因此可以被非 root 用户调用。在终端或脚本中不小心执行 **halt** 命令可能会导致系统关闭！|'
 - en: '**service**'
+  id: totrans-253
   prefs: []
   type: TYPE_NORMAL
+  zh: '**service**'
 - en: Starts or stops a system *service*. The startup scripts in `/etc/init.d` and
     `/etc/rc.d` use this command to start services at bootup.
+  id: totrans-254
   prefs: []
   type: TYPE_NORMAL
+  zh: 启动或停止系统 *服务*。`/etc/init.d` 和 `/etc/rc.d` 中的启动脚本使用此命令在启动时启动服务。
 - en: '|  [PRE64]  |'
+  id: totrans-255
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE64]  |'
 - en: '**Network**'
+  id: totrans-256
   prefs: []
   type: TYPE_NORMAL
+  zh: '**Network**'
 - en: '**nmap**'
+  id: totrans-257
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nmap**'
 - en: '**N**etwork **map**per and port scanner. This command scans a server to locate
     open ports and the services associated with those ports. It can also report information
     about packet filters and firewalls. This is an important security tool for locking
     down a network against hacking attempts.'
+  id: totrans-258
   prefs: []
   type: TYPE_NORMAL
+  zh: '**N**etwork **map**per 和端口扫描器。此命令扫描服务器以定位开放的端口和与这些端口关联的服务。它还可以报告有关数据包过滤器和防火墙的信息。这是锁定网络以防止黑客攻击的重要安全工具。'
 - en: '|  [PRE65]  |'
+  id: totrans-259
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE65]  |'
 - en: '**ifconfig**'
+  id: totrans-260
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ifconfig**'
 - en: Network *interface configuration* and tuning utility.
+  id: totrans-261
   prefs: []
   type: TYPE_NORMAL
+  zh: 网络接口配置和调整实用程序。
 - en: '|  [PRE66]  |'
+  id: totrans-262
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE66]  |'
 - en: The **ifconfig** command is most often used at bootup to set up the interfaces,
     or to shut them down when rebooting.
+  id: totrans-263
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ifconfig** 命令通常在启动时用于设置接口，或在重启时关闭它们。'
 - en: '|  [PRE67]  |'
+  id: totrans-264
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE67]  |'
 - en: See also [Example 32-6](debugging.html#ONLINE).
+  id: totrans-265
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [示例 32-6](debugging.html#ONLINE)。
 - en: '**netstat**'
+  id: totrans-266
   prefs: []
   type: TYPE_NORMAL
+  zh: '**netstat**'
 - en: Show current network statistics and information, such as routing tables and
     active connections. This utility accesses information in `/proc/net` ([Chapter
     29](devproc.html)). See [Example 29-4](procref1.html#CONSTAT).
+  id: totrans-267
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示当前网络统计信息和信息，例如路由表和活动连接。此实用程序访问 `/proc/net` 中的信息（[第 29 章](devproc.html)）。参见
+    [示例 29-4](procref1.html#CONSTAT)。
 - en: '**netstat -r** is equivalent to [route](system.html#ROUTEREF).'
+  id: totrans-268
   prefs: []
   type: TYPE_NORMAL
+  zh: '**netstat -r** 与 [route](system.html#ROUTEREF) 相当。'
 - en: '|  [PRE68]  |'
+  id: totrans-269
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE68]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A **netstat -lptu**
     shows [sockets](devref1.html#SOCKETREF) that are listening to ports, and the associated
     processes. This can be useful for determining whether a computer has been hacked
     or compromised. |'
+  id: totrans-270
   prefs: []
   type: TYPE_TB
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 一个 **netstat -lptu**
+    命令显示了正在监听端口的 [套接字](devref1.html#SOCKETREF) 以及相关的进程。这有助于确定计算机是否被黑客攻击或被破坏。|'
 - en: '**iwconfig**'
+  id: totrans-271
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iwconfig**'
 - en: This is the command set for configuring a wireless network. It is the wireless
     equivalent of **ifconfig**, above.
+  id: totrans-272
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是配置无线网络的命令集。它是上面 **ifconfig** 的无线等效命令。
 - en: '**ip**'
+  id: totrans-273
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ip**'
 - en: General purpose utility for setting up, changing, and analyzing *IP* (Internet
     Protocol) networks and attached devices. This command is part of the *iproute2*
     package.
+  id: totrans-274
   prefs: []
   type: TYPE_NORMAL
+  zh: 通用实用程序，用于设置、更改和分析 *IP*（互联网协议）网络和连接的设备。此命令是 *iproute2* 软件包的一部分。
 - en: '|  [PRE69]  |'
+  id: totrans-275
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE69]  |'
 - en: 'Or, in a script:'
+  id: totrans-276
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，在脚本中：
 - en: '|  [PRE70]  |'
+  id: totrans-277
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE70]  |'
 - en: '**route**'
+  id: totrans-278
   prefs: []
   type: TYPE_NORMAL
+  zh: '**route**'
 - en: Show info about or make changes to the kernel routing table.
+  id: totrans-279
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示关于内核路由表的信息或对其进行更改。
 - en: '|  [PRE71]  |'
+  id: totrans-280
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE71]  |'
 - en: '**iptables**'
+  id: totrans-281
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iptables**'
 - en: The **iptables** command set is a packet filtering tool used mainly for such
     security purposes as setting up network firewalls. This is a complex tool, and
     a detailed explanation of its use is beyond the scope of this document. [Oskar
     Andreasson's tutorial](http://www.frozentux.net/iptables-tutorial/iptables-tutorial.html)
     is a reasonable starting point.
+  id: totrans-282
   prefs: []
   type: TYPE_NORMAL
+  zh: '**iptables** 命令集是一个用于设置网络防火墙等安全目的的包过滤工具。这是一个复杂的工具，其详细使用说明超出了本文档的范围。[Oskar Andreasson
+    的教程](http://www.frozentux.net/iptables-tutorial/iptables-tutorial.html)是一个合理的起点。'
 - en: See also [shutting down *iptables*](system.html#IPTABLES01) and [Example 30-2](networkprogramming.html#IPADDRESSES).
+  id: totrans-283
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [关闭 *iptables*](system.html#IPTABLES01) 和 [示例 30-2](networkprogramming.html#IPADDRESSES)。
 - en: '**chkconfig**'
+  id: totrans-284
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chkconfig**'
 - en: Check network and system configuration. This command lists and manages the network
     and system services started at bootup in the `/etc/rc?.d` directory.
+  id: totrans-285
   prefs: []
   type: TYPE_NORMAL
+  zh: 检查网络和系统配置。此命令列出并管理在 `/etc/rc?.d` 目录中启动的网络和系统服务。
 - en: Originally a port from IRIX to Red Hat Linux, **chkconfig** may not be part
     of the core installation of some Linux flavors.
+  id: totrans-286
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chkconfig** 最初是从 IRIX 移植到 Red Hat Linux 的，可能不是某些 Linux 版本的内核安装的一部分。'
 - en: '|  [PRE72]  |'
+  id: totrans-287
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE72]  |'
 - en: '**tcpdump**'
+  id: totrans-288
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tcpdump**'
 - en: Network packet "sniffer." This is a tool for analyzing and troubleshooting traffic
     on a network by dumping packet headers that match specified criteria.
+  id: totrans-289
   prefs: []
   type: TYPE_NORMAL
+  zh: 网络数据包“嗅探器”。这是一个通过转储匹配指定标准的包头来分析和排除网络故障的工具。
 - en: 'Dump ip packet traffic between hosts *bozoville* and *caduceus*:'
+  id: totrans-290
   prefs: []
   type: TYPE_NORMAL
+  zh: 在主机 *bozoville* 和 *caduceus* 之间转储 IP 数据包流量：
 - en: '|  [PRE73]  |'
+  id: totrans-291
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE73]  |'
 - en: Of course, the output of **tcpdump** can be parsed with certain of the previously
     discussed [text processing utilities](textproc.html#TPCOMMANDLISTING1).
+  id: totrans-292
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，**tcpdump** 的输出可以用之前讨论过的某些 [文本处理工具](textproc.html#TPCOMMANDLISTING1) 进行解析。
 - en: '**Filesystem**'
+  id: totrans-293
   prefs: []
   type: TYPE_NORMAL
+  zh: '**文件系统**'
 - en: '**mount**'
+  id: totrans-294
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mount**'
 - en: Mount a filesystem, usually on an external device, such as a floppy or CDROM.
     The file `/etc/fstab` provides a handy listing of available filesystems, partitions,
     and devices, including options, that may be automatically or manually mounted.
     The file `/etc/mtab` shows the currently mounted filesystems and partitions (including
     the virtual ones, such as `/proc`).
+  id: totrans-295
   prefs: []
   type: TYPE_NORMAL
+  zh: 挂载文件系统，通常是在外部设备上，如软盘或 CDROM。`/etc/fstab` 文件提供了一个方便的可用文件系统、分区和设备的列表，包括可自动或手动挂载的选项。`/etc/mtab`
+    文件显示了当前挂载的文件系统和分区（包括虚拟的，如 `/proc`）。
 - en: '**mount -a** mounts all filesystems and partitions listed in `/etc/fstab`,
     except those with a `noauto` option. At bootup, a startup script in `/etc/rc.d`
     (`rc.sysinit` or something similar) invokes this to get everything mounted.'
+  id: totrans-296
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mount -a** 挂载 `/etc/fstab` 中列出的所有文件系统和分区，除了那些带有 `noauto` 选项的。在启动时，`/etc/rc.d`
+    目录中的启动脚本（`rc.sysinit` 或类似）调用此命令以挂载所有内容。'
 - en: '|  [PRE74]  |'
+  id: totrans-297
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE74]  |'
 - en: The versatile *mount* command can even mount an ordinary file on a block device,
     and the file will act as if it were a filesystem. *Mount* accomplishes that by
     associating the file with a [loopback device](devref1.html#LOOPBACKREF). One application
     of this is to mount and examine an ISO9660 filesystem image before burning it
     onto a CDR. [[3]](#FTN.AEN16255)
+  id: totrans-298
   prefs: []
   type: TYPE_NORMAL
+  zh: 多功能的 *mount* 命令甚至可以将普通文件挂载到块设备上，该文件将表现得像是一个文件系统。*Mount* 通过将文件与一个 [回环设备](devref1.html#LOOPBACKREF)
+    关联来实现这一点。一个应用实例是在将 ISO9660 文件系统镜像烧录到 CDR 之前挂载并检查它。[3](#FTN.AEN16255)
 - en: '**Example 17-7\. Checking a CD image**'
+  id: totrans-299
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-7\. 检查 CD 图像**'
 - en: '|  [PRE75]  |'
+  id: totrans-300
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE75]  |'
 - en: '**umount**'
+  id: totrans-301
   prefs: []
   type: TYPE_NORMAL
+  zh: '**umount**'
 - en: Unmount a currently mounted filesystem. Before physically removing a previously
     mounted floppy or CDROM disk, the device must be **umount**ed, else filesystem
     corruption may result.
+  id: totrans-302
   prefs: []
   type: TYPE_NORMAL
+  zh: 卸载当前挂载的文件系统。在物理移除之前已挂载的软盘或 CDROM 光盘之前，必须先 **umount**，否则可能会导致文件系统损坏。
 - en: '|  [PRE76]  |'
+  id: totrans-303
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE76]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The **automount**
     utility, if properly installed, can mount and unmount floppies or CDROM disks
     as they are accessed or removed. On "multispindle" laptops with swappable floppy
     and optical drives, this can cause problems, however. |'
+  id: totrans-304
   prefs: []
   type: TYPE_TB
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 如果正确安装，**automount**
+    实用程序可以挂载和卸载软盘或 CDROM 光盘，当它们被访问或移除时。然而，在具有可交换软盘和光驱的“多磁头”笔记本电脑上，这可能会引起问题。|'
 - en: '**gnome-mount**'
+  id: totrans-305
   prefs: []
   type: TYPE_NORMAL
+  zh: '**gnome-mount**'
 - en: The newer Linux distros have deprecated **mount** and **umount**. The successor,
     for command-line mounting of removable storage devices, is **gnome-mount**. It
     can take the `-d` option to mount a [device file](devref1.html#DEVFILEREF) by
     its listing in `/dev`.
+  id: totrans-306
   prefs: []
   type: TYPE_NORMAL
+  zh: 新的 Linux 发行版已经弃用了 **mount** 和 **umount**。其继任者，用于命令行挂载可移动存储设备的是 **gnome-mount**。它可以采用
+    `-d` 选项通过 `/dev` 中的列表来挂载一个 [设备文件](devref1.html#DEVFILEREF)。
 - en: 'For example, to mount a USB flash drive:'
+  id: totrans-307
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，要挂载一个 USB 闪存驱动器：
 - en: '|  [PRE77]  |'
+  id: totrans-308
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE77]  |'
 - en: '**sync**'
+  id: totrans-309
   prefs: []
   type: TYPE_NORMAL
+  zh: '**sync**'
 - en: Forces an immediate write of all updated data from buffers to hard drive (synchronize
     drive with buffers). While not strictly necessary, a **sync** assures the sys
     admin or user that the data just changed will survive a sudden power failure.
     In the olden days, a `**sync; sync**` (twice, just to make absolutely sure) was
     a useful precautionary measure before a system reboot.
+  id: totrans-310
   prefs: []
   type: TYPE_NORMAL
+  zh: 强制将所有更新的数据从缓冲区写入硬盘（同步硬盘与缓冲区）。虽然不是绝对必要的，但一个 **sync** 命令可以确保系统管理员或用户，刚刚更改的数据在突然断电的情况下能够幸存。在旧时代，一个
+    `**sync; sync**`（两次，只是为了绝对确保）在系统重启前是一个有用的预防措施。
 - en: At times, you may wish to force an immediate buffer flush, as when securely
     deleting a file (see [Example 16-61](extmisc.html#BLOTOUT)) or when the lights
     begin to flicker.
+  id: totrans-311
   prefs: []
   type: TYPE_NORMAL
+  zh: 有时，您可能希望强制立即缓冲区刷新，例如在安全删除文件（参见 [示例 16-61](extmisc.html#BLOTOUT)）或当灯光开始闪烁时。
 - en: '**losetup**'
+  id: totrans-312
   prefs: []
   type: TYPE_NORMAL
+  zh: '**losetup**'
 - en: Sets up and configures [loopback devices](devref1.html#LOOPBACKREF).
+  id: totrans-313
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置和配置 [回环设备](devref1.html#LOOPBACKREF)。
 - en: '**Example 17-8\. Creating a filesystem in a file**'
+  id: totrans-314
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-8\. 在文件中创建文件系统**'
 - en: '|  [PRE78]  |'
+  id: totrans-315
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE78]  |'
 - en: '**mkswap**'
+  id: totrans-316
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mkswap**'
 - en: Creates a swap partition or file. The swap area must subsequently be enabled
     with **swapon**.
+  id: totrans-317
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个交换分区或文件。随后必须使用 **swapon** 启用交换区域。
 - en: '**swapon**, **swapoff**'
+  id: totrans-318
   prefs: []
   type: TYPE_NORMAL
+  zh: '**swapon**, **swapoff**'
 - en: Enable / disable swap partitition or file. These commands usually take effect
     at bootup and shutdown.
+  id: totrans-319
   prefs: []
   type: TYPE_NORMAL
+  zh: 启用/禁用交换分区或文件。这些命令通常在启动和关闭时生效。
 - en: '**mke2fs**'
+  id: totrans-320
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mke2fs**'
 - en: Create a Linux *ext2* filesystem. This command must be invoked as *root*.
+  id: totrans-321
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个 Linux *ext2* 文件系统。此命令必须以 *root* 身份调用。
 - en: '**Example 17-9\. Adding a new hard drive**'
+  id: totrans-322
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-9\. 添加新的硬盘**'
 - en: '|  [PRE79]  |'
+  id: totrans-323
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE79]  |'
 - en: See also [Example 17-8](system.html#CREATEFS) and [Example 31-3](zeros.html#RAMDISK).
+  id: totrans-324
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [示例 17-8](system.html#CREATEFS) 和 [示例 31-3](zeros.html#RAMDISK)。
 - en: '**mkdosfs**'
+  id: totrans-325
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mkdosfs**'
 - en: Create a DOS *FAT* filesystem.
+  id: totrans-326
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个 DOS *FAT* 文件系统。
 - en: '**tune2fs**'
+  id: totrans-327
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tune2fs**'
 - en: Tune *ext2* filesystem. May be used to change filesystem parameters, such as
     maximum mount count. This must be invoked as *root*.
+  id: totrans-328
   prefs: []
   type: TYPE_NORMAL
+  zh: 调整 *ext2* 文件系统。可能用于更改文件系统参数，例如最大挂载次数。此命令必须以 *root* 身份调用。
 - en: '| ![Warning](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | This is an extremely
     dangerous command. Use it at your own risk, as you may inadvertently destroy your
     filesystem. |'
+  id: totrans-329
   prefs: []
   type: TYPE_TB
+  zh: '| ![警告](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | 这是一个极其危险的命令。使用时请自行承担风险，因为您可能会意外地破坏您的文件系统。|'
 - en: '**dumpe2fs**'
+  id: totrans-330
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dumpe2fs**'
 - en: Dump (list to `stdout`) very verbose filesystem info. This must be invoked as
     *root*.
+  id: totrans-331
   prefs: []
   type: TYPE_NORMAL
+  zh: 将非常详细的文件系统信息输出到 `stdout`。此命令必须以 *root* 身份调用。
 - en: '|  [PRE80]  |'
+  id: totrans-332
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE80]  |'
 - en: '**hdparm**'
+  id: totrans-333
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hdparm**'
 - en: List or change hard disk parameters. This command must be invoked as *root*,
     and it may be dangerous if misused.
+  id: totrans-334
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出或更改硬盘参数。此命令必须以 *root* 身份调用，并且如果误用可能很危险。
 - en: '**fdisk**'
+  id: totrans-335
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fdisk**'
 - en: Create or change a partition table on a storage device, usually a hard drive.
     This command must be invoked as *root*.
+  id: totrans-336
   prefs: []
   type: TYPE_NORMAL
+  zh: 在存储设备上创建或更改分区表，通常是硬盘。此命令必须以 *root* 身份调用。
 - en: '| ![Warning](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | Use this command
     with extreme caution. If something goes wrong, you may destroy an existing filesystem.
     |'
+  id: totrans-337
   prefs: []
   type: TYPE_TB
+  zh: '| ![警告](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | 使用此命令时请极其小心。如果出现问题，您可能会破坏现有的文件系统。|'
 - en: '**fsck**, **e2fsck**, **debugfs**'
+  id: totrans-338
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fsck**, **e2fsck**, **debugfs**'
 - en: Filesystem check, repair, and debug command set.
+  id: totrans-339
   prefs: []
   type: TYPE_NORMAL
+  zh: 文件系统检查、修复和调试命令集。
 - en: '**fsck**: a front end for checking a UNIX filesystem (may invoke other utilities).
     The actual filesystem type generally defaults to *ext2*.'
+  id: totrans-340
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fsck**：检查 UNIX 文件系统的前端（可能调用其他实用程序）。实际的文件系统类型通常默认为 *ext2*。'
 - en: '**e2fsck**: ext2 filesystem checker.'
+  id: totrans-341
   prefs: []
   type: TYPE_NORMAL
+  zh: '**e2fsck**：ext2 文件系统检查器。'
 - en: '**debugfs**: ext2 filesystem debugger. One of the uses of this versatile, but
     dangerous command is to (attempt to) recover deleted files. For advanced users
     only!'
+  id: totrans-342
   prefs: []
   type: TYPE_NORMAL
+  zh: '**debugfs**：ext2 文件系统调试器。此多功能但危险的命令的一个用途是（尝试）恢复已删除的文件。仅适用于高级用户！'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | All of these
     should be invoked as *root*, and they can damage or destroy a filesystem if misused.
     |'
+  id: totrans-343
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 所有这些命令都应作为 *root*
+    调用，并且如果误用可能会损坏或破坏文件系统。|'
 - en: '**badblocks**'
+  id: totrans-344
   prefs: []
   type: TYPE_NORMAL
+  zh: '**badblocks**'
 - en: Checks for bad blocks (physical media flaws) on a storage device. This command
     finds use when formatting a newly installed hard drive or testing the integrity
     of backup media. [[4]](#FTN.AEN16504) As an example, **badblocks /dev/fd0** tests
     a floppy disk.
+  id: totrans-345
   prefs: []
   type: TYPE_NORMAL
+  zh: 在存储设备上检查坏块（物理媒体缺陷）。此命令在格式化新安装的硬盘或测试备份媒体的完整性时很有用。[[4]](#FTN.AEN16504) 例如，**badblocks
+    /dev/fd0** 测试软盘。
 - en: The **badblocks** command may be invoked destructively (overwrite all data)
     or in non-destructive read-only mode. If *root user* owns the device to be tested,
     as is generally the case, then *root* must invoke this command.
+  id: totrans-346
   prefs: []
   type: TYPE_NORMAL
+  zh: '**badblocks**命令可以以破坏性（覆盖所有数据）或非破坏性只读模式调用。如果*root用户*拥有要测试的设备，通常情况下是这样的，那么*root*必须调用此命令。'
 - en: '**lsusb**, **usbmodules**'
+  id: totrans-347
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsusb**，**usbmodules**'
 - en: The **lsusb** command lists all USB (Universal Serial Bus) buses and the devices
     hooked up to them.
+  id: totrans-348
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsusb**命令列出所有USB（通用串行总线）总线及其连接的设备。'
 - en: The **usbmodules** command outputs information about the driver modules for
     connected USB devices.
+  id: totrans-349
   prefs: []
   type: TYPE_NORMAL
+  zh: '**usbmodules**命令输出有关连接的USB设备的驱动模块信息。'
 - en: '|  [PRE81]  |'
+  id: totrans-350
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE81]  |'
 - en: '**lspci**'
+  id: totrans-351
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lspci**'
 - en: Lists *pci* busses present.
+  id: totrans-352
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出现有的*pci*总线。
 - en: '|  [PRE82]  |'
+  id: totrans-353
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE82]  |'
 - en: '**mkbootdisk**'
+  id: totrans-354
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mkbootdisk**'
 - en: Creates a boot floppy which can be used to bring up the system if, for example,
     the MBR (master boot record) becomes corrupted. Of special interest is the `--iso`
     option, which uses **mkisofs** to create a bootable *ISO9660* filesystem image
     suitable for burning a bootable CDR.
+  id: totrans-355
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个启动软盘，可用于在MBR（主引导记录）损坏的情况下启动系统。特别值得注意的是`--iso`选项，它使用**mkisofs**创建一个可启动的*ISO9660*文件系统镜像，适合烧录可启动的CDR。
 - en: The **mkbootdisk** command is actually a Bash script, written by Erik Troan,
     in the `/sbin` directory.
+  id: totrans-356
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mkbootdisk**命令实际上是一个由Erik Troan编写的Bash脚本，位于`/sbin`目录下。'
 - en: '**mkisofs**'
+  id: totrans-357
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mkisofs**'
 - en: Creates an *ISO9660* filesystem suitable for a CDR image.
+  id: totrans-358
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建一个适合CDR镜像的*ISO9660*文件系统。
 - en: '**chroot**'
+  id: totrans-359
   prefs: []
   type: TYPE_NORMAL
+  zh: '**chroot**'
 - en: CHange ROOT directory. Normally commands are fetched from [$PATH](internalvariables.html#PATHREF),
     relative to `/`, the default *root directory*. This changes the *root* directory
     to a different one (and also changes the working directory to there). This is
@@ -1332,170 +2086,260 @@
     in, to a secured portion of the filesystem (this is sometimes referred to as confining
     a guest user to a "chroot jail"). Note that after a **chroot**, the execution
     path for system binaries is no longer valid.
+  id: totrans-360
   prefs: []
   type: TYPE_NORMAL
+  zh: CHange ROOT directory. 通常命令是从[$PATH](internalvariables.html#PATHREF)获取的，相对于`/`，默认的*root*目录。这会将*root*目录更改为另一个目录（并且也将工作目录更改为那里）。这对于安全目的很有用，例如当系统管理员希望将某些用户，如[telnetting](communications.html#TELNETREF)的用户，限制在文件系统的安全部分时（这有时被称为将访客用户限制在“chroot监狱”中）。请注意，在**chroot**之后，系统二进制文件的执行路径不再有效。
 - en: A `**chroot /opt**` would cause references to `/usr/bin` to be translated to
     `/opt/usr/bin`. Likewise, `**chroot /aaa/bbb /bin/ls**` would redirect future
     instances of **ls** to `/aaa/bbb` as the base directory, rather than `/` as is
     normally the case. An **alias XX 'chroot /aaa/bbb ls'** in a user's [`~/.bashrc`](sample-bashrc.html)
     effectively restricts which portion of the filesystem she may run command "XX"
     on.
+  id: totrans-361
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**chroot /opt**`会导致对`/usr/bin`的引用被转换为`/opt/usr/bin`。同样，`**chroot /aaa/bbb
+    /bin/ls**`会将未来的**ls**实例重定向到`/aaa/bbb`作为基础目录，而不是通常的`/`。用户在`[`~/.bashrc](sample-bashrc.html)`中的**alias
+    XX ''chroot /aaa/bbb ls''**实际上限制了用户可以运行命令"XX"的文件系统部分。'
 - en: The **chroot** command is also handy when running from an emergency boot floppy
     (**chroot** to `/dev/fd0`), or as an option to **lilo** when recovering from a
     system crash. Other uses include installation from a different filesystem (an
     [rpm](filearchiv.html#RPMREF) option) or running a readonly filesystem from a
     CD ROM. Invoke only as *root*, and use with care.
+  id: totrans-362
   prefs: []
   type: TYPE_NORMAL
+  zh: 当从紧急启动软盘运行（**chroot**到`/dev/fd0`）或作为从系统崩溃中恢复时**lilo**的选项时，**chroot**命令也很有用。其他用途包括从不同的文件系统安装（[rpm](filearchiv.html#RPMREF)选项）或从CD
+    ROM运行只读文件系统。仅作为*root*调用，并小心使用。
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | It might be
     necessary to copy certain system files to a *chrooted* directory, since the normal
     `$PATH` can no longer be relied upon. |'
+  id: totrans-363
   prefs: []
   type: TYPE_TB
+  zh: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 可能需要将某些系统文件复制到*chrooted*目录中，因为正常的`$PATH`不能再被依赖。
+    |'
 - en: '**lockfile**'
+  id: totrans-364
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lockfile**'
 - en: This utility is part of the **procmail** package ([www.procmail.org](http://www.procmail.org)).
     It creates a *lock file*, a *semaphore* that controls access to a file, device,
     or resource.
+  id: totrans-365
   prefs: []
   type: TYPE_NORMAL
+  zh: 此实用程序是**procmail**包的一部分([www.procmail.org](http://www.procmail.org))。它创建一个*锁文件*，一个控制对文件、设备或资源访问的*信号量*。
 - en: '|'
+  id: totrans-366
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '`**Definition:**` A *semaphore* is a flag or signal. (The usage originated
     in railroading, where a colored flag, lantern, or striped movable arm *semaphore*
     indicated whether a particular track was in use and therefore unavailable for
     another train.) A UNIX process can check the appropriate semaphore to determine
     whether a particular resource is available/accessible.'
+  id: totrans-367
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**定义：**` 一个 *信号量* 是一个标志或信号。（这种用法起源于铁路，一个彩色旗帜、灯笼或条纹可移动臂 *信号量* 表示特定的轨道是否在使用中，因此不可用于另一列火车。）UNIX进程可以检查适当的信号量以确定特定资源是否可用/可访问。'
 - en: '|'
+  id: totrans-368
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: The lock file serves as a flag that this particular file, device, or resource
     is in use by a process (and is therefore "busy"). The presence of a lock file
     permits only restricted access (or no access) to other processes.
+  id: totrans-369
   prefs: []
   type: TYPE_NORMAL
+  zh: 锁文件作为标志，表明该特定文件、设备或资源正在被一个进程使用（因此是“忙碌”的）。锁文件的存在仅允许对其他进程进行有限的访问（或无访问）。
 - en: '|  [PRE83]  |'
+  id: totrans-370
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE83]  |'
 - en: Lock files are used in such applications as protecting system mail folders from
     simultaneously being changed by multiple users, indicating that a modem port is
     being accessed, and showing that an instance of Firefox is using its cache. Scripts
     may check for the existence of a lock file created by a certain process to check
     if that process is running. Note that if a script attempts to create a lock file
     that already exists, the script will likely hang.
+  id: totrans-371
   prefs: []
   type: TYPE_NORMAL
+  zh: 锁文件用于保护系统邮件文件夹免受多个用户同时更改，指示调制解调器端口正在被访问，以及显示Firefox的一个实例正在使用其缓存。脚本可能会检查由某个进程创建的锁文件是否存在，以检查该进程是否正在运行。请注意，如果脚本尝试创建一个已经存在的锁文件，脚本可能会挂起。
 - en: Normally, applications create and check for lock files in the `/var/lock` directory.
     [[5]](#FTN.AEN16659) A script can test for the presence of a lock file by something
     like the following.
+  id: totrans-372
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，应用程序在 `/var/lock` 目录中创建和检查锁文件。[[5]](#FTN.AEN16659) 一个脚本可以通过以下方式测试锁文件的存在。
 - en: '|  [PRE84]  |'
+  id: totrans-373
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE84]  |'
 - en: '**flock**'
+  id: totrans-374
   prefs: []
   type: TYPE_NORMAL
+  zh: '**flock**'
 - en: Much less useful than the **lockfile** command is **flock**. It sets an "advisory"
     lock on a file and then executes a command while the lock is on. This is to prevent
     any other process from setting a lock on that file until completion of the specified
     command.
+  id: totrans-375
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 **lockfile** 命令相比，**flock** 的用途要少得多。它会在文件上设置一个“建议性”锁，然后在锁存在的情况下执行一个命令。这是为了防止其他进程在指定命令完成之前对该文件设置锁。
 - en: '|  [PRE85]  |'
+  id: totrans-376
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE85]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unlike **lockfile**,
     **flock** does *not* automatically create a lock file. |'
+  id: totrans-377
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 与 **lockfile** 不同，**flock**
+    并不会自动创建锁文件。|'
 - en: '**mknod**'
+  id: totrans-378
   prefs: []
   type: TYPE_NORMAL
+  zh: '**mknod**'
 - en: Creates block or character [device files](devref1.html#DEVFILEREF) (may be necessary
     when installing new hardware on the system). The **MAKEDEV** utility has virtually
     all of the functionality of **mknod**, and is easier to use.
+  id: totrans-379
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建块或字符 [设备文件](devref1.html#DEVFILEREF)（在系统上安装新硬件时可能需要）。**MAKEDEV** 实用程序几乎具有
+    **mknod** 的所有功能，并且更容易使用。
 - en: '**MAKEDEV**'
+  id: totrans-380
   prefs: []
   type: TYPE_NORMAL
+  zh: '**MAKEDEV**'
 - en: Utility for creating device files. It must be run as *root*, and in the `/dev`
     directory. It is a sort of advanced version of **mknod**.
+  id: totrans-381
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建设备文件的实用程序。必须以 *root* 身份运行，并在 `/dev` 目录下。它是 **mknod** 的高级版本。
 - en: '**tmpwatch**'
+  id: totrans-382
   prefs: []
   type: TYPE_NORMAL
+  zh: '**tmpwatch**'
 - en: Automatically deletes files which have not been accessed within a specified
     period of time. Usually invoked by [cron](system.html#CRONREF) to remove stale
     log files.
+  id: totrans-383
   prefs: []
   type: TYPE_NORMAL
+  zh: 自动删除在指定时间内未被访问的文件。通常由 [cron](system.html#CRONREF) 调用来删除旧的日志文件。
 - en: '**Backup**'
+  id: totrans-384
   prefs: []
   type: TYPE_NORMAL
+  zh: '**备份**'
 - en: '**dump**, **restore**'
+  id: totrans-385
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dump**, **restore**'
 - en: The **dump** command is an elaborate filesystem backup utility, generally used
     on larger installations and networks. [[6]](#FTN.AEN16748) It reads raw disk partitions
     and writes a backup file in a binary format. Files to be backed up may be saved
     to a variety of storage media, including disks and tape drives. The **restore**
     command restores backups made with **dump**.
+  id: totrans-386
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dump** 命令是一个复杂的文件系统备份实用程序，通常用于较大的安装和网络。[[6]](#FTN.AEN16748) 它读取原始磁盘分区，并以二进制格式写入备份文件。要备份的文件可以保存到各种存储介质上，包括磁盘和磁带驱动器。**restore**
+    命令用于恢复使用 **dump** 创建的备份。'
 - en: '**fdformat**'
+  id: totrans-387
   prefs: []
   type: TYPE_NORMAL
+  zh: '**fdformat**'
 - en: Perform a low-level format on a floppy disk (`/dev/fd0*`).
+  id: totrans-388
   prefs: []
   type: TYPE_NORMAL
+  zh: 对软盘（`/dev/fd0*`）执行低级格式化。
 - en: '**System Resources**'
+  id: totrans-389
   prefs: []
   type: TYPE_NORMAL
+  zh: '**系统资源**'
 - en: '**ulimit**'
+  id: totrans-390
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ulimit**'
 - en: Sets an *upper limit* on use of system resources. Usually invoked with the `-f`
     option, which sets a limit on file size (**ulimit -f 1000** limits files to 1
     meg maximum). [[7]](#FTN.AEN16782) The `-t` option limits the coredump size (**ulimit
     -c 0** eliminates coredumps). Normally, the value of **ulimit** would be set in
     `/etc/profile` and/or `~/.bash_profile` (see [Appendix H](files.html)).
+  id: totrans-391
   prefs: []
   type: TYPE_NORMAL
+  zh: 设置系统资源使用的 *上限*。通常使用 `-f` 选项，该选项设置文件大小限制（**ulimit -f 1000** 将文件限制在 1 兆最大）。[[7]](#FTN.AEN16782)
+    `-t` 选项限制核心转储大小（**ulimit -c 0** 消除核心转储）。通常，**ulimit** 的值会在 `/etc/profile` 和/或
+    `~/.bash_profile` 中设置（参见 [附录 H](files.html)）。
 - en: '| ![Important](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | Judicious
     use of **ulimit** can protect a system against the dreaded *fork bomb*.'
+  id: totrans-392
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![重要](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | 聪明地使用 **ulimit**
+    可以保护系统免受可怕的 *fork bomb* 的侵害。'
 - en: '&#124;  [PRE86]  &#124;'
+  id: totrans-393
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE86]  &#124;'
 - en: A **ulimit -Hu XX** (where *XX* is the user process limit) in `/etc/profile`
     would abort this script when it exceeded the preset limit. |
+  id: totrans-394
   prefs: []
   type: TYPE_NORMAL
+  zh: '`/etc/profile` 中的 **ulimit -Hu XX**（其中 *XX* 是用户进程限制）在超过预设限制时会终止此脚本。|'
 - en: '**quota**'
+  id: totrans-395
   prefs: []
   type: TYPE_NORMAL
+  zh: '**quota**'
 - en: Display user or group disk quotas.
+  id: totrans-396
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示用户或组磁盘配额。
 - en: '**setquota**'
+  id: totrans-397
   prefs: []
   type: TYPE_NORMAL
+  zh: '**setquota**'
 - en: Set user or group disk quotas from the command-line.
+  id: totrans-398
   prefs: []
   type: TYPE_NORMAL
+  zh: 从命令行设置用户或组磁盘配额。
 - en: '**umask**'
+  id: totrans-399
   prefs: []
   type: TYPE_NORMAL
+  zh: '**umask**'
 - en: User file creation permissions *mask*. Limit the default file attributes for
     a particular user. All files created by that user take on the attributes specified
     by **umask**. The (octal) value passed to **umask** defines the file permissions
@@ -1504,213 +2348,348 @@
     change the attributes of particular files with [chmod](basic.html#CHMODREF). The
     usual practice is to set the value of **umask** in `/etc/profile` and/or `~/.bash_profile`
     (see [Appendix H](files.html)).
+  id: totrans-400
   prefs: []
   type: TYPE_NORMAL
+  zh: 用户文件创建权限 *掩码*。限制特定用户的默认文件属性。该用户创建的所有文件都将采用由 **umask** 指定的属性。传递给 **umask** 的（八进制）值定义了文件权限
+    *被禁用*。例如，**umask 022** 确保新文件的最大权限为 755（777 与 022 的交集）。[[8]](#FTN.AEN16847) 当然，用户可以稍后使用
+    [chmod](basic.html#CHMODREF) 改变特定文件的属性。通常的做法是在 `/etc/profile` 和/或 `~/.bash_profile`
+    中设置 **umask** 的值（参见 [附录 H](files.html)）。
 - en: '**Example 17-10\. Using *umask* to hide an output file from prying eyes**'
+  id: totrans-401
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-10\. 使用 *umask* 隐藏输出文件以防止好奇的目光**'
 - en: '|  [PRE87]  |'
+  id: totrans-402
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE87]  |'
 - en: '**rdev**'
+  id: totrans-403
   prefs: []
   type: TYPE_NORMAL
+  zh: '**rdev**'
 - en: Get info about or make changes to root device, swap space, or video mode. The
     functionality of **rdev** has generally been taken over by **lilo**, but **rdev**
     remains useful for setting up a ram disk. This is a dangerous command, if misused.
+  id: totrans-404
   prefs: []
   type: TYPE_NORMAL
+  zh: 获取关于根设备、交换空间或视频模式的信息或进行更改。**rdev** 的功能通常已被 **lilo** 取代，但 **rdev** 仍然在设置 ram
+    磁盘时很有用。这是一个危险的命令，如果误用。
 - en: '**Modules**'
+  id: totrans-405
   prefs: []
   type: TYPE_NORMAL
+  zh: '**模块**'
 - en: '**lsmod**'
+  id: totrans-406
   prefs: []
   type: TYPE_NORMAL
+  zh: '**lsmod**'
 - en: List installed kernel modules.
+  id: totrans-407
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出已安装的内核模块。
 - en: '|  [PRE88]  |'
+  id: totrans-408
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE88]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Doing a **cat /proc/modules**
     gives the same information. |'
+  id: totrans-409
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 执行 **cat /proc/modules**
+    会给出相同的信息。|'
 - en: '**insmod**'
+  id: totrans-410
   prefs: []
   type: TYPE_NORMAL
+  zh: '**insmod**'
 - en: Force installation of a kernel module (use **modprobe** instead, when possible).
     Must be invoked as *root*.
+  id: totrans-411
   prefs: []
   type: TYPE_NORMAL
+  zh: 强制安装内核模块（如果可能，请使用 **modprobe**）。必须以 *root* 身份调用。
 - en: '**rmmod**'
+  id: totrans-412
   prefs: []
   type: TYPE_NORMAL
+  zh: '**rmmod**'
 - en: Force unloading of a kernel module. Must be invoked as *root*.
+  id: totrans-413
   prefs: []
   type: TYPE_NORMAL
+  zh: 强制卸载内核模块。必须以 *root* 身份调用。
 - en: '**modprobe**'
+  id: totrans-414
   prefs: []
   type: TYPE_NORMAL
+  zh: '**modprobe**'
 - en: Module loader that is normally invoked automatically in a startup script. Must
     be invoked as *root*.
+  id: totrans-415
   prefs: []
   type: TYPE_NORMAL
+  zh: 模块加载器，通常在启动脚本中自动调用。必须以 *root* 身份调用。
 - en: '**depmod**'
+  id: totrans-416
   prefs: []
   type: TYPE_NORMAL
+  zh: '**depmod**'
 - en: Creates module dependency file. Usually invoked from a startup script.
+  id: totrans-417
   prefs: []
   type: TYPE_NORMAL
+  zh: 创建模块依赖文件。通常从启动脚本中调用。
 - en: '**modinfo**'
+  id: totrans-418
   prefs: []
   type: TYPE_NORMAL
+  zh: '**modinfo**'
 - en: Output information about a loadable module.
+  id: totrans-419
   prefs: []
   type: TYPE_NORMAL
+  zh: 输出有关可加载模块的信息。
 - en: '|  [PRE89]  |'
+  id: totrans-420
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE89]  |'
 - en: '**Miscellaneous**'
+  id: totrans-421
   prefs: []
   type: TYPE_NORMAL
+  zh: '**杂项**'
 - en: '**env**'
+  id: totrans-422
   prefs: []
   type: TYPE_NORMAL
+  zh: '**env**'
 - en: Runs a program or script with certain [environmental variables](othertypesv.html#ENVREF)
     set or changed (without changing the overall system environment). The `[varname=xxx]`
     permits changing the environmental variable `varname` for the duration of the
     script. With no options specified, this command lists all the environmental variable
     settings. [[9]](#FTN.AEN16975)
+  id: totrans-423
   prefs: []
   type: TYPE_NORMAL
+  zh: 运行程序或脚本，并设置或更改特定的 [环境变量](othertypesv.html#ENVREF)（而不更改整个系统环境）。`[varname=xxx]`
+    允许在脚本执行期间更改环境变量 `varname`。如果没有指定选项，则此命令列出所有环境变量设置。[[9]](#FTN.AEN16975)
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The first line
     of a script (the "sha-bang" line) may use **env** when the path to the shell or
     interpreter is unknown.'
+  id: totrans-424
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 脚本的第 一行（“sha-bang”行）在不知道
+    shell 或解释器的路径时可以使用 **env**。'
 - en: '&#124;  [PRE90]  &#124;'
+  id: totrans-425
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE90]  &#124;'
 - en: Or even ...
+  id: totrans-426
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者甚至 ...
 - en: '&#124;  [PRE91]  &#124;'
+  id: totrans-427
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE91]  &#124;'
 - en: '|'
+  id: totrans-428
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**ldd**'
+  id: totrans-429
   prefs: []
   type: TYPE_NORMAL
+  zh: '**ldd**'
 - en: Show shared lib dependencies for an executable file.
+  id: totrans-430
   prefs: []
   type: TYPE_NORMAL
+  zh: 显示可执行文件的共享库依赖关系。
 - en: '|  [PRE92]  |'
+  id: totrans-431
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE92]  |'
 - en: '**watch**'
+  id: totrans-432
   prefs: []
   type: TYPE_NORMAL
+  zh: '**watch**'
 - en: Run a command repeatedly, at specified time intervals.
+  id: totrans-433
   prefs: []
   type: TYPE_NORMAL
+  zh: 重复运行命令，在指定的时间间隔内。
 - en: The default is two-second intervals, but this may be changed with the `-n` option.
+  id: totrans-434
   prefs: []
   type: TYPE_NORMAL
+  zh: 默认为两秒间隔，但可以通过 `-n` 选项进行更改。
 - en: '|  [PRE93]  |'
+  id: totrans-435
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE93]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unfortunately,
     [piping](special-chars.html#PIPEREF) the output of **watch command** to [grep](textproc.html#GREPREF)
     does not work. |'
+  id: totrans-436
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 不幸的是，将 **watch 命令**
+    的输出通过 [管道](special-chars.html#PIPEREF) 传递给 [grep](textproc.html#GREPREF) 并不工作。
+    |'
 - en: '**strip**'
+  id: totrans-437
   prefs: []
   type: TYPE_NORMAL
+  zh: '**strip**'
 - en: Remove the debugging symbolic references from an executable binary. This decreases
     its size, but makes debugging it impossible.
+  id: totrans-438
   prefs: []
   type: TYPE_NORMAL
+  zh: 从可执行二进制文件中移除调试符号引用。这会减小其大小，但使得调试变得不可能。
 - en: This command often occurs in a [Makefile](filearchiv.html#MAKEFILEREF), but
     rarely in a shell script.
+  id: totrans-439
   prefs: []
   type: TYPE_NORMAL
+  zh: 此命令通常出现在 [Makefile](filearchiv.html#MAKEFILEREF) 中，但很少出现在 shell 脚本中。
 - en: '**nm**'
+  id: totrans-440
   prefs: []
   type: TYPE_NORMAL
+  zh: '**nm**'
 - en: List symbols in an unstripped compiled binary.
+  id: totrans-441
   prefs: []
   type: TYPE_NORMAL
+  zh: 列出未剥离编译二进制文件中的符号。
 - en: '**xrandr**'
+  id: totrans-442
   prefs: []
   type: TYPE_NORMAL
+  zh: '**xrandr**'
 - en: Command-line tool for manipulating the root window of the screen.
+  id: totrans-443
   prefs: []
   type: TYPE_NORMAL
+  zh: 用于操作屏幕根窗口的命令行工具。
 - en: '**Example 17-11\. *Backlight*: changes the brightness of the (laptop) screen
     backlight**'
+  id: totrans-444
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 17-11\. *背光*：改变（笔记本电脑）屏幕背光的亮度**'
 - en: '|  [PRE94]  |'
+  id: totrans-445
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE94]  |'
 - en: '**rdist**'
+  id: totrans-446
   prefs: []
   type: TYPE_NORMAL
+  zh: '**rdist**'
 - en: 'Remote distribution client: synchronizes, clones, or backs up a file system
     on a remote server.'
+  id: totrans-447
   prefs: []
   type: TYPE_NORMAL
+  zh: 远程分发客户端：同步、克隆或备份远程服务器上的文件系统。
 - en: Notes
+  id: totrans-448
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](system.html#AEN14695) | This is the case on a Linux machine or a UNIX
     system with disk quotas. |'
+  id: totrans-449
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](system.html#AEN14695) | 在 Linux 机器或具有磁盘配额的 UNIX 系统中，情况就是这样。 |'
 - en: '| [[2]](system.html#AEN14727) | The **userdel** command will fail if the particular
     user being deleted is still logged on. |'
+  id: totrans-450
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](system.html#AEN14727) | 如果要删除的用户仍然登录，则 **userdel** 命令将失败。 |'
 - en: '| [[3]](system.html#AEN16255) | For more detail on burning CDRs, see Alex Withers''
     article, [Creating CDs](http://www2.linuxjournal.com/lj-issues/issue66/3335.html),
     in the October, 1999 issue of [*Linux Journal*](http://www.linuxjournal.com).
     |'
+  id: totrans-451
   prefs: []
   type: TYPE_TB
+  zh: '| [[3]](system.html#AEN16255) | 关于烧录 CDR 的更多详细信息，请参阅 Alex Withers 的文章，[创建 CD](http://www2.linuxjournal.com/lj-issues/issue66/3335.html)，该文章发表在
+    1999 年 10 月的 [*Linux Journal*](http://www.linuxjournal.com) 期。 |'
 - en: '| [[4]](system.html#AEN16504) | The `-c` option to [mke2fs](system.html#MKE2FSREF)
     also invokes a check for bad blocks. |'
+  id: totrans-452
   prefs: []
   type: TYPE_TB
+  zh: '| [[4]](system.html#AEN16504) | [mke2fs](system.html#MKE2FSREF) 的 `-c` 选项也会调用对坏块的检查。
+    |'
 - en: '| [[5]](system.html#AEN16659) | Since only *root* has write permission in the
     `/var/lock` directory, a user script cannot set a lock file there. |'
+  id: totrans-453
   prefs: []
   type: TYPE_TB
+  zh: '| [[5]](system.html#AEN16659) | 由于 `/var/lock` 目录中只有 *root* 拥有写权限，因此用户脚本不能在那里设置锁文件。
+    |'
 - en: '| [[6]](system.html#AEN16748) | Operators of single-user Linux systems generally
     prefer something simpler for backups, such as **tar**. |'
+  id: totrans-454
   prefs: []
   type: TYPE_TB
+  zh: '| [[6]](system.html#AEN16748) | 单用户 Linux 系统的运营商通常更喜欢备份时使用更简单的工具，例如 **tar**。
+    |'
 - en: '| [[7]](system.html#AEN16782) | As of the [version 4 update](bashver4.html#BASH4REF)
     of Bash, the `-f` and `-c` options take a block size of 512 when in [POSIX](sha-bang.html#POSIX2REF)
     mode. Additionally, there are two new options: `-b` for [socket](devref1.html#SOCKETREF)
     buffer size, and `-T` for the limit on the number of *threads*. |'
+  id: totrans-455
   prefs: []
   type: TYPE_TB
+  zh: '| [[7]](system.html#AEN16782) | 截至 Bash 的 [版本 4 更新](bashver4.html#BASH4REF)，在
+    POSIX 模式下，`-f` 和 `-c` 选项使用 512 字节块大小。此外，还有两个新选项：`-b` 用于 [套接字](devref1.html#SOCKETREF)
+    缓冲区大小，以及 `-T` 用于 *线程* 数量的限制。 |'
 - en: '| [[8]](system.html#AEN16847) | NAND is the logical *not-and* operator. Its
     effect is somewhat similar to subtraction. |'
+  id: totrans-456
   prefs: []
   type: TYPE_TB
+  zh: '| [[8]](system.html#AEN16847) | NAND 是逻辑 **非与** 操作符。其效果与减法有些类似。 |'
 - en: '| [[9]](system.html#AEN16975) | In Bash and other Bourne shell derivatives,
     it is possible to set variables in a single command''s environment.'
+  id: totrans-457
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[9]](system.html#AEN16975) | 在 Bash 和其他 Bourne shell 衍生版本中，可以在单个命令的环境中设置变量。'
 - en: '&#124;  [PRE95]  &#124;'
+  id: totrans-458
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE95]  &#124;'
 - en: '|'
+  id: totrans-459
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'

@@ -1,61 +1,92 @@
 - en: Chapter 22\. Restricted Shells
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第22章\. 受限壳
 - en: 原文：[https://tldp.org/LDP/abs/html/restricted-sh.html](https://tldp.org/LDP/abs/html/restricted-sh.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/restricted-sh.html](https://tldp.org/LDP/abs/html/restricted-sh.html)
 - en: '**Disabled commands in restricted shells**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**受限壳中的禁用命令**'
 - en: '**.** Running a script or portion of a script in *restricted mode* disables
     certain commands that would otherwise be available. This is a security measure
     intended to limit the privileges of the script user and to minimize possible damage
     from running the script.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**.** 在 *受限模式* 下运行脚本或脚本的一部分将禁用某些在其他情况下可用的命令。这是一个安全措施，旨在限制脚本用户的权限，并最小化运行脚本可能造成的损害。'
 - en: 'The following commands and actions are disabled:'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下命令和操作被禁用：
 - en: Using `*cd*` to change the working directory.
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 使用 `*cd*` 来更改工作目录。
 - en: Changing the values of the `*$PATH*`, `*$SHELL*`, `*$BASH_ENV*`, or `*$ENV*`
     [environmental variables](othertypesv.html#ENVREF).
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 修改 `*$PATH*`, `*$SHELL*`, `*$BASH_ENV*`, 或 `*$ENV*` [环境变量](othertypesv.html#ENVREF)
+    的值。
 - en: Reading or changing the `*$SHELLOPTS*`, shell environmental options.
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 读取或更改 `*$SHELLOPTS*`，壳的环境选项。
 - en: Output redirection.
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 输出重定向。
 - en: Invoking commands containing one or more /'s.
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 调用包含一个或多个 / 的命令。
 - en: Invoking [exec](internal.html#EXECREF) to substitute a different process for
     the shell.
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 调用 [exec](internal.html#EXECREF) 以替换壳的进程。
 - en: Various other commands that would enable monkeying with or attempting to subvert
     the script for an unintended purpose.
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 各种其他命令，这些命令可能会被用于篡改脚本或试图以非预期目的执行脚本。
 - en: Getting out of restricted mode within the script.
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在脚本中退出受限模式。
 - en: '**Example 22-1\. Running a script in restricted mode**'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例22-1\. 在受限模式下运行脚本**'
 - en: '|  [PRE0]  |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'

@@ -1,347 +1,534 @@
 - en: Chapter 32\. Debugging
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第32章\. 调试
 - en: 原文：[https://tldp.org/LDP/abs/html/debugging.html](https://tldp.org/LDP/abs/html/debugging.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/debugging.html](https://tldp.org/LDP/abs/html/debugging.html)
 - en: '|   |  **Debugging is twice as hard as writing the code in the first place.
     Therefore, if you write the code as cleverly as possible, you are, by definition,
     not smart enough to debug it.*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **调试比最初编写代码难两倍。因此，如果你尽可能聪明地编写代码，那么按照定义，你不够聪明来调试它。**'
 - en: '*--Brian Kernighan**  |'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--Brian Kernighan**  |'
 - en: The Bash shell contains no built-in debugger, and only bare-bones debugging-specific
     commands and constructs. Syntax errors or outright typos in the script generate
     cryptic error messages that are often of no help in debugging a non-functional
     script.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash shell 不包含内置的调试器，只有一些基本的调试特定命令和结构。脚本中的语法错误或明显的错误会导致难以理解的错误信息，这些信息在调试无法正常工作的脚本时通常没有帮助。
 - en: '**Example 32-1\. A buggy script**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例32-1\. 一个有缺陷的脚本**'
 - en: '|  [PRE0]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: 'Output from script:'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本的输出：
 - en: '|  [PRE1]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: 'What''s wrong with the above script? Hint: after the *if*.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的脚本有什么问题？提示：在 *if* 之后。
 - en: '**Example 32-2\. Missing [keyword](internal.html#KEYWORDREF)**'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例32-2\. 缺少的 [关键字](internal.html#KEYWORDREF)**'
 - en: '|  [PRE2]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: 'Output from script:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本的输出：
 - en: '|  [PRE3]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Note that the error message does *not* necessarily reference the line in which
     the error occurs, but the line where the Bash interpreter finally becomes aware
     of the error.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，错误信息不一定引用错误发生的行，而是Bash解释器最终意识到错误的行。
 - en: Error messages may disregard comment lines in a script when reporting the line
     number of a syntax error.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 当报告语法错误的行号时，错误信息可能会忽略脚本中的注释行。
 - en: What if the script executes, but does not work as expected? This is the all
     too familiar logic error.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果脚本执行了，但不符合预期呢？这是过于熟悉的逻辑错误。
 - en: '**Example 32-3\. *test24*: another buggy script**'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例32-3\. *test24*: 另一个有缺陷的脚本**'
 - en: '|  [PRE4]  |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: Try to find out what's wrong with [Example 32-3](debugging.html#EX75) by uncommenting
     the `**echo "$badname"**` line. Echo statements are useful for seeing whether
     what you expect is actually what you get.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 通过取消注释 `**echo "$badname"**` 行来找出[示例32-3](debugging.html#EX75)中有什么问题。回显语句有助于查看你期望的实际上是否得到。
 - en: In this particular case, `**rm "$badname"**` will not give the desired results
     because `$badname` should not be quoted. Placing it in quotes ensures that **rm**
     has only one argument (it will match only one filename). A partial fix is to remove
     to quotes from `$badname` and to reset `$IFS` to contain only a newline, `**IFS=$'\n'**`.
     However, there are simpler ways of going about it.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这个特定的情况下，`**rm "$badname"**` 不会给出期望的结果，因为 `$badname` 不应该被引号括起来。将其放在引号中确保 **rm**
+    只有一个参数（它将匹配一个文件名）。一个部分修复方法是取消 `$badname` 的引号，并将 `$IFS` 重置为只包含换行符，`**IFS=$'\n'**`。然而，有更简单的方法可以做到这一点。
 - en: '|  [PRE5]  |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Summarizing the symptoms of a buggy script,
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 总结有缺陷脚本的症状，
 - en: It bombs with a "syntax error" message, or
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它会因“语法错误”信息而崩溃，
 - en: It runs, but does not work as expected (logic error).
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它运行了，但不符合预期（逻辑错误）。
 - en: It runs, works as expected, but has nasty side effects (logic bomb).
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 它运行了，按预期工作，但有一些讨厌的副作用（逻辑炸弹）。
 - en: Tools for debugging non-working scripts include
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 调试无法正常工作的脚本的工具包括
 - en: Inserting [echo](internal.html#ECHOREF) statements at critical points in the
     script to trace the variables, and otherwise give a snapshot of what is going
     on.
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 在脚本的关键点插入 [echo](internal.html#ECHOREF) 语句以跟踪变量，并在其他情况下提供一个正在发生的事情的快照。
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | Even better is an
     **echo** that echoes only when *debug* is on.'
+  id: totrans-28
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 更好的是当 *调试* 开启时才回显的
+    **echo**。'
 - en: '&#124;  [PRE6]  &#124;'
+  id: totrans-29
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE6]  &#124;'
 - en: '|'
+  id: totrans-30
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '|'
 - en: Using the [tee](extmisc.html#TEEREF) filter to check processes or data flows
     at critical points.
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 [tee](extmisc.html#TEEREF) 过滤器在关键点检查进程或数据流。
 - en: Setting option flags `-n -v -x`
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 设置选项标志 `-n -v -x`
 - en: '`**sh -n scriptname**` checks for syntax errors without actually running the
     script. This is the equivalent of inserting `**set -n**` or `**set -o noexec**`
     into the script. Note that certain types of syntax errors can slip past this check.'
+  id: totrans-33
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**sh -n scriptname**` 在实际运行脚本之前检查语法错误。这相当于在脚本中插入 `**set -n**` 或 `**set -o
+    noexec**`。注意，某些类型的语法错误可能会绕过此检查。'
 - en: '`**sh -v scriptname**` echoes each command before executing it. This is the
     equivalent of inserting `**set -v**` or `**set -o verbose**` in the script.'
+  id: totrans-34
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**sh -v scriptname**` 在执行之前会回显每个命令。这相当于在脚本中插入 `**set -v**` 或 `**set -o verbose**`。'
 - en: The `-n` and `-v` flags work well together. `**sh -nv scriptname**` gives a
     verbose syntax check.
+  id: totrans-35
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`-n` 和 `-v` 标志配合使用效果很好。`**sh -nv scriptname**` 提供详细的语法检查。'
 - en: '`**sh -x scriptname**` echoes the result each command, but in an abbreviated
     manner. This is the equivalent of inserting `**set -x**` or `**set -o xtrace**`
     in the script.'
+  id: totrans-36
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '`**sh -x scriptname**` 以简化的方式回显每条命令的结果。这相当于在脚本中插入 `**set -x**` 或 `**set -o
+    xtrace**`。'
 - en: Inserting `**set -u**` or `**set -o nounset**` in the script runs it, but gives
     an unbound variable error message and aborts the script.
+  id: totrans-37
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在脚本中插入 `**set -u**` 或 `**set -o nounset**` 并运行它，但会显示未绑定变量的错误消息并终止脚本。
 - en: '|  [PRE7]  |'
+  id: totrans-38
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: Using an "assert" function to test a variable or condition at critical points
     in a script. (This is an idea borrowed from C.)
+  id: totrans-39
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用“assert”函数在脚本的关键点测试变量或条件。（这是从 C 中借鉴的一个想法。）
 - en: '**Example 32-4\. Testing a condition with an *assert***'
+  id: totrans-40
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: '**示例 32-4\. 使用 *assert* 测试条件**'
 - en: '|  [PRE8]  |'
+  id: totrans-41
   prefs:
   - PREF_IND
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: Using the [$LINENO](internalvariables.html#LINENOREF) variable and the [caller](internal.html#CALLERREF)
     builtin.
+  id: totrans-42
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 使用 [$LINENO](internalvariables.html#LINENOREF) 变量和 [caller](internal.html#CALLERREF)
+    内置函数。
 - en: Trapping at exit.
+  id: totrans-43
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 退出时的捕获。
 - en: The [exit](internal.html#EXITREF) command in a script triggers a signal 0, terminating
     the process, that is, the script itself. [[1]](#FTN.AEN19460) It is often useful
     to trap the *exit*, forcing a "printout" of variables, for example. The *trap*
     must be the first command in the script.
+  id: totrans-44
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 脚本中的 [exit](internal.html#EXITREF) 命令触发信号 0，终止进程，即脚本本身。 [[1]](#FTN.AEN19460)
+    通常情况下，捕获 `exit`，强制变量“打印”，例如。`trap` 必须是脚本中的第一个命令。
 - en: '**Trapping signals**'
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: '**捕获信号**'
 - en: '**trap**'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**trap**'
 - en: Specifies an action on receipt of a signal; also useful for debugging.
+  id: totrans-47
   prefs: []
   type: TYPE_NORMAL
+  zh: 在收到信号时指定动作；也适用于调试。
 - en: '|'
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: A *signal* is a message sent to a process, either by the kernel or another process,
     telling it to take some specified action (usually to terminate). For example,
     hitting a [Control-C](special-chars.html#CTLCREF) sends a user interrupt, an INT
     signal, to a running program.
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '*信号* 是发送给进程的消息，无论是内核还是另一个进程，告诉它执行某些指定的动作（通常是为了终止）。例如，按下 [Control-C](special-chars.html#CTLCREF)
+    会发送用户中断，即 INT 信号，给正在运行的程序。'
 - en: '|'
+  id: totrans-50
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '*A simple instance:*'
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '*一个简单的例子：*'
 - en: '|  [PRE9]  |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: '**Example 32-5\. Trapping at exit**'
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 32-5\. 退出时的捕获**'
 - en: '|  [PRE10]  |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE10]  |'
 - en: '**Example 32-6\. Cleaning up after **Control-C****'
+  id: totrans-55
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 32-6\. 处理 **Control-C** 后的清理**'
 - en: '|  [PRE11]  |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: '**Example 32-7\. A Simple Implementation of a Progress Bar**'
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 32-7\. 进度条的简单实现**'
 - en: '|  [PRE12]  |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `DEBUG` argument
     to **trap** causes a specified action to execute after every command in a script.
     This permits tracing variables, for example.'
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | `DEBUG` 参数传递给 `trap`
+    会使得在脚本中的每条命令执行后执行指定的动作。这允许跟踪变量，例如。'
 - en: '**Example 32-8\. Tracing a variable**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 32-8\. 跟踪一个变量**'
 - en: '&#124;  [PRE13]  &#124;'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE13]  &#124;'
 - en: '|'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Of course, the **trap** command has other uses aside from debugging, such as
     disabling certain keystrokes within a script (see [Example A-43](contributed-scripts.html#STOPWATCH)).
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，`trap` 命令除了调试之外还有其他用途，例如在脚本中禁用某些按键（参见 [示例 A-43](contributed-scripts.html#STOPWATCH)）。
 - en: '**Example 32-9\. Running multiple processes (on an SMP box)**'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 32-9\. 运行多个进程（在 SMP 箱子上）**'
 - en: '|  [PRE14]  |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | `**trap '''' SIGNAL**`
     (two adjacent apostrophes) disables SIGNAL for the remainder of the script. `**trap
     SIGNAL**` restores the functioning of SIGNAL once more. This is useful to protect
     a critical portion of a script from an undesirable interrupt. |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | `**trap '''' SIGNAL**`（两个相邻的单引号）禁用脚本剩余部分的
+    SIGNAL。`**trap SIGNAL**` 再次恢复 SIGNAL 的功能。这有助于保护脚本的关键部分免受不希望的干扰。'
 - en: '|  [PRE15]  |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE15]  |'
 - en: '|'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '[Version 3](bashver3.html#BASH3REF) of Bash adds the following [internal variables](internalvariables.html#INTERNALVARIABLES1)
     for use by the debugger.'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 的 [版本 3](bashver3.html#BASH3REF) 为调试器添加了以下 [内部变量](internalvariables.html#INTERNALVARIABLES1)
+    以供使用。
 - en: '`$BASH_ARGC`'
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_ARGC`'
 - en: Number of command-line arguments passed to script, similar to [`$#`](internalvariables.html#CLACOUNTREF).
+  id: totrans-71
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 传递给脚本的命令行参数数量，类似于 [`${#}`](internalvariables.html#CLACOUNTREF)。
 - en: '`$BASH_ARGV`'
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_ARGV`'
 - en: Final command-line parameter passed to script, equivalent [`${!#}`](othertypesv.html#LASTARGREF).
+  id: totrans-73
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 传递给脚本的最终命令行参数，相当于 [`${!#}`](othertypesv.html#LASTARGREF)。
 - en: '`$BASH_COMMAND`'
+  id: totrans-74
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_COMMAND`'
 - en: Command currently executing.
+  id: totrans-75
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 当前正在执行的命令。
 - en: '`$BASH_EXECUTION_STRING`'
+  id: totrans-76
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_EXECUTION_STRING`'
 - en: The *option string* following the `-c` [option](bash-options.html#CLOPTS) to
     Bash.
+  id: totrans-77
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: Bash中 `-c` [选项](bash-options.html#CLOPTS) 后跟的 *选项字符串*。
 - en: '`$BASH_LINENO`'
+  id: totrans-78
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_LINENO`'
 - en: In a [function](functions.html#FUNCTIONREF), indicates the line number of the
     function call.
+  id: totrans-79
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 在一个[函数](functions.html#FUNCTIONREF)中，表示函数调用的行号。
 - en: '`$BASH_REMATCH`'
+  id: totrans-80
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_REMATCH`'
 - en: Array variable associated with **=~** [conditional regex matching](bashver3.html#REGEXMATCHREF).
+  id: totrans-81
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 与 **=~** [条件正则表达式匹配](bashver3.html#REGEXMATCHREF) 相关的数组变量。
 - en: '`$BASH_SOURCE`'
+  id: totrans-82
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '`$BASH_SOURCE`'
 - en: This is the name of the script, usually the same as [$0](othertypesv.html#ARG0).
+  id: totrans-83
   prefs:
   - PREF_IND
   type: TYPE_NORMAL
+  zh: 这是脚本的名称，通常与 [$0](othertypesv.html#ARG0) 相同。
 - en: '[`$BASH_SUBSHELL`](internalvariables.html#BASHSUBSHELLREF)'
+  id: totrans-84
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[`$BASH_SUBSHELL`](internalvariables.html#BASHSUBSHELLREF)'
 - en: '|'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Notes
+  id: totrans-86
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](debugging.html#AEN19460) | By convention, `*signal 0*` is assigned
     to [exit](exit-status.html#EXITCOMMANDREF). |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](debugging.html#AEN19460) | 按照惯例，`*信号 0*` 被分配给 [退出](exit-status.html#EXITCOMMANDREF)
+    命令。|'

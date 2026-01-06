@@ -1,638 +1,1008 @@
 - en: Chapter 15\. Internal Commands and Builtins
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第15章. 内部命令和内置命令
 - en: 原文：[https://tldp.org/LDP/abs/html/internal.html](https://tldp.org/LDP/abs/html/internal.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/internal.html](https://tldp.org/LDP/abs/html/internal.html)
 - en: A *builtin* is a **command** contained within the Bash tool set, literally *built
     in*. This is either for performance reasons -- builtins execute faster than external
     commands, which usually require *forking off* [[1]](#FTN.AEN8607) a separate process
     -- or because a particular builtin needs direct access to the shell internals.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个*内置命令*是包含在Bash工具集中的**命令**，字面上是*内置的*。这可能是出于性能原因——内置命令比通常需要*派生*（[[1]](#FTN.AEN8607)一个单独的进程的外部命令）执行得更快——或者因为某个特定的内置命令需要直接访问shell内部。
 - en: '|'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: When a command or the shell itself initiates (or *spawns*) a new subprocess
     to carry out a task, this is called *forking*. This new process is the *child*,
     and the process that *forked* it off is the *parent*. While the *child process*
     is doing its work, the *parent process* is still executing.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 当一个命令或shell本身启动（或*生成*）一个新的子进程来执行一个任务时，这被称为*派生*。这个新进程是*子进程*，而派生它的*父进程*仍在执行。
 - en: Note that while a *parent process* gets the *process ID* of the *child process*,
     and can thus pass arguments to it, *the reverse is not true*. [This can create
     problems that are subtle and hard to track down.](gotchas.html#PARCHILDPROBREF)
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，虽然*父进程*会得到*子进程*的*进程ID*，因此可以向它传递参数，但*反之则不然*。[这可能会造成微妙且难以追踪的问题。](gotchas.html#PARCHILDPROBREF)
 - en: '**Example 15-1\. A script that spawns multiple instances of itself**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例15-1. 生成多个自身实例的脚本**'
 - en: '&#124;  [PRE0]  &#124;'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE0]  &#124;'
 - en: Generally, a Bash *builtin* does not fork a subprocess when it executes within
     a script. An external system command or filter in a script usually *will* fork
     a subprocess.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常情况下，Bash 内置命令在脚本中执行时不会派生子进程。脚本中的外部系统命令或过滤器通常*会*派生子进程。
 - en: '|'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: A builtin may be a synonym to a system command of the same name, but Bash reimplements
     it internally. For example, the Bash **echo** command is not the same as `/bin/echo`,
     although their behavior is almost identical.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个内置命令可能是一个同义词，与同名的系统命令，但Bash内部重新实现了它。例如，Bash的**echo**命令与**/bin/echo**不同，尽管它们的行为几乎相同。
 - en: '|  [PRE1]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: A *keyword* is a *reserved* word, token or operator. Keywords have a special
     meaning to the shell, and indeed are the building blocks of the shell's syntax.
     As examples, *for*, *while*, *do*, and *!* are keywords. Similar to a [builtin](internal.html#BUILTINREF),
     a keyword is hard-coded into Bash, but unlike a *builtin*, a keyword is not in
     itself a command, but *a subunit of a command construct*. [[2]](#FTN.AEN8650)
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个*关键字*是一个*保留*的词、标记或运算符。关键字对shell有特殊的意义，实际上构成了shell语法的构建块。例如，*for*、*while*、*do*和*!*都是关键字。与[内置命令](internal.html#BUILTINREF)类似，关键字是硬编码到Bash中的，但与*内置命令*不同，关键字本身不是一个命令，而是*命令构造的子单元*。[[2]](#FTN.AEN8650)
 - en: '**I/O**'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '**I/O**'
 - en: '**echo**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**echo**'
 - en: prints (to `stdout`) an expression or variable (see [Example 4-1](varsubn.html#EX9)).
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 打印（到`stdout`）一个表达式或变量（参见[示例4-1](varsubn.html#EX9)）。
 - en: '|  [PRE2]  |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: An **echo** requires the `-e` option to print escaped characters. See [Example
     5-2](escapingsection.html#ESCAPED).
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 要打印转义字符，**echo**需要`-e`选项。参见[示例5-2](escapingsection.html#ESCAPED)。
 - en: Normally, each **echo** command prints a terminal newline, but the `-n` option
     suppresses this.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，每个**echo**命令都会打印一个终端换行符，但`-n`选项会抑制这个行为。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **echo** can
     be used to feed a sequence of commands down a pipe.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 可以使用**echo**将一系列命令传递到管道中。'
 - en: '&#124;  [PRE3]  &#124;'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE3]  &#124;'
 - en: '|'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **echo**, in
     combination with [command substitution](commandsub.html#COMMANDSUBREF) can set
     a variable.``**a=`echo "HELLO" &#124; tr A-Z a-z`**``See also [Example 16-22](textproc.html#LOWERCASE),
     [Example 16-3](moreadv.html#EX57), [Example 16-47](mathc.html#MONTHLYPMT), and
     [Example 16-48](mathc.html#BASE). |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 结合[命令替换](commandsub.html#COMMANDSUBREF)，**echo**可以设置变量。``**a=`echo
+    "HELLO" &#124; tr A-Z a-z`**``参见[示例16-22](textproc.html#LOWERCASE)、[示例16-3](moreadv.html#EX57)、[示例16-47](mathc.html#MONTHLYPMT)和[示例16-48](mathc.html#BASE)。'
 - en: Be aware that **echo `command`** deletes any linefeeds that the output of `*command*`
     generates.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，**echo `command`**会删除`*command*`输出产生的任何换行符。
 - en: The [$IFS](internalvariables.html#IFSREF) (internal field separator) variable
     normally contains \n (linefeed) as one of its set of [whitespace](special-chars.html#WHITESPACEREF)
     characters. Bash therefore splits the output of `*command*` at linefeeds into
     arguments to **echo**. Then **echo** outputs these arguments, separated by spaces.
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '[$IFS](internalvariables.html#IFSREF)（内部字段分隔符）变量通常包含 \n（换行符）作为其集合中的 [空白字符](special-chars.html#WHITESPACEREF)
+    之一。因此，Bash 会将 `*command*` 的输出在换行符处拆分为 **echo** 的参数。然后 **echo** 输出这些参数，并用空格分隔。'
 - en: '|  [PRE4]  |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: So, how can we embed a linefeed within an [echoed](internal.html#ECHOREF) character
     string?
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 那么，我们如何在 [echoed](internal.html#ECHOREF) 字符串中嵌入换行符呢？
 - en: '|  [PRE5]  |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This command is
     a shell builtin, and not the same as `/bin/echo`, although its behavior is similar.'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 此命令是 shell 内置命令，与
+    `/bin/echo` 不同，尽管其行为相似。'
 - en: '&#124;  [PRE6]  &#124;'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE6]  &#124;'
 - en: '|'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**printf**'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '**printf**'
 - en: The **printf**, formatted print, command is an enhanced **echo**. It is a limited
     variant of the *C* language `printf()` library function, and its syntax is somewhat
     different.
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '**printf**，格式化打印命令，是 **echo** 的增强版。它是 *C* 语言 `printf()` 库函数的有限变体，其语法略有不同。'
 - en: '**printf** `*format-string*`... `*parameter*`...'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '**printf** `*format-string*`... `*parameter*`...'
 - en: This is the Bash *builtin* version of the `/bin/printf` or `/usr/bin/printf`
     command. See the **printf** [manpage](basic.html#MANREF) (of the system command)
     for in-depth coverage.
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是 Bash 的 *内置* 版本的 `/bin/printf` 或 `/usr/bin/printf` 命令。有关系统命令的深入内容，请参阅 **printf**
+    [手册页](basic.html#MANREF)。
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Older versions
     of Bash may not support **printf**. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 旧版本的 Bash 可能不支持 **printf**。
+    |'
 - en: '**Example 15-2\. *printf* in action**'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-2\. **printf** 的实际应用**'
 - en: '|  [PRE7]  |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: Formatting error messages is a useful application of **printf**
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 格式化错误信息是 **printf** 的一个有用应用。
 - en: '|  [PRE8]  |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: See also [Example 36-17](assortedtips.html#PROGRESSBAR).
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [示例 36-17](assortedtips.html#PROGRESSBAR)。
 - en: '**read**'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '**read**'
 - en: '"Reads" the value of a variable from `stdin`, that is, interactively fetches
     input from the keyboard. The `-a` option lets **read** get array variables (see
     [Example 27-6](arrays.html#EX67)).'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: “从 `stdin` 读取变量的值”，即交互式地从键盘获取输入。`-a` 选项允许 **read** 获取数组变量（参见 [示例 27-6](arrays.html#EX67)）。
 - en: '**Example 15-3\. Variable assignment, using *read***'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-3\. 变量赋值，使用 **read****'
 - en: '|  [PRE9]  |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE9]  |'
 - en: A **read** without an associated variable assigns its input to the dedicated
     variable [$REPLY](internalvariables.html#REPLYREF).
+  id: totrans-45
   prefs: []
   type: TYPE_NORMAL
+  zh: 没有相关变量的 **read** 将其输入分配给专用变量 [$REPLY](internalvariables.html#REPLYREF)。
 - en: '**Example 15-4\. What happens when *read* has no variable**'
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-4\. 当 **read** 没有变量时会发生什么**'
 - en: '|  [PRE10]  |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE10]  |'
 - en: Normally, inputting a `**\**` suppresses a newline during input to a **read**.
     The `-r` option causes an inputted `**\**` to be interpreted literally.
+  id: totrans-48
   prefs: []
   type: TYPE_NORMAL
+  zh: 通常，输入一个 `**\**` 会抑制对 **read** 的输入中的换行符。`-r` 选项会导致输入的 `**\**` 被字面地解释。
 - en: '**Example 15-5\. Multi-line input to *read***'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-5\. **read** 的多行输入**'
 - en: '|  [PRE11]  |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE11]  |'
 - en: The **read** command has some interesting options that permit echoing a prompt
     and even reading keystrokes without hitting **ENTER**.
+  id: totrans-51
   prefs: []
   type: TYPE_NORMAL
+  zh: '**read** 命令有一些有趣的可选参数，允许回显提示并甚至读取按键而不按 **ENTER**。'
 - en: '|  [PRE12]  |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE12]  |'
 - en: The `-n` option to **read** also allows detection of the **arrow keys** and
     certain of the other unusual keys.
+  id: totrans-53
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-n` 选项对 **read** 命令也允许检测 **箭头键** 和某些其他不寻常的键。'
 - en: '**Example 15-6\. Detecting the arrow keys**'
+  id: totrans-54
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-6\. 检测箭头键**'
 - en: '|  [PRE13]  |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE13]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `-n` option
     to **read** will not detect the **ENTER** (newline) key. |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | **read** 的 `-n` 选项不会检测
+    **ENTER**（换行符）键。 |'
 - en: The `-t` option to **read** permits timed input (see [Example 9-4](internalvariables.html#TOUT)
     and [Example A-41](contributed-scripts.html#QKY)).
+  id: totrans-57
   prefs: []
   type: TYPE_NORMAL
+  zh: '**read** 的 `-t` 选项允许定时输入（参见 [示例 9-4](internalvariables.html#TOUT) 和 [示例 A-41](contributed-scripts.html#QKY)）。'
 - en: The `-u` option takes the [file descriptor](io-redirection.html#FDREF) of the
     target file.
+  id: totrans-58
   prefs: []
   type: TYPE_NORMAL
+  zh: '`-u` 选项接受目标文件的 [文件描述符](io-redirection.html#FDREF)。'
 - en: The **read** command may also "read" its variable value from a file [redirected](io-redirection.html#IOREDIRREF)
     to `stdin`. If the file contains more than one line, only the first line is assigned
     to the variable. If **read** has more than one parameter, then each of these variables
     gets assigned a successive [whitespace-delineated](special-chars.html#WHITESPACEREF)
     string. Caution!
+  id: totrans-59
   prefs: []
   type: TYPE_NORMAL
+  zh: '**read** 命令也可能从重定向到 `stdin` 的文件中“读取”其变量的值 [重定向](io-redirection.html#IOREDIRREF)。如果文件包含多于一行，只有第一行会被分配给变量。如果
+    **read** 有多个参数，那么这些变量中的每一个都会分配一个连续的 [空白分隔](special-chars.html#WHITESPACEREF) 字符串。注意！'
 - en: '**Example 15-7\. Using *read* with [file redirection](io-redirection.html#IOREDIRREF)**'
+  id: totrans-60
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-7\. 使用 *read* 与 [文件重定向](io-redirection.html#IOREDIRREF)**'
 - en: '|  [PRE14]  |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE14]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | [Piping](special-chars.html#PIPEREF)
     output to a *read*, using [echo](internal.html#ECHOREF) to set variables [will
     fail](gotchas.html#BADREAD0).Yet, piping the output of [cat](basic.html#CATREF)
     *seems* to work.'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 将输出通过 [管道](special-chars.html#PIPEREF)
+    输送到一个 *读取*，使用 [echo](internal.html#ECHOREF) 来设置变量 [将会失败](gotchas.html#BADREAD0)。然而，将
+    [cat](basic.html#CATREF) 的输出通过管道 *似乎* 可以工作。'
 - en: '&#124;  [PRE15]  &#124;'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE15]  &#124;'
 - en: 'However, as Bjn Eriksson shows:'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，正如 Bjn Eriksson 所展示的：
 - en: '**Example 15-8\. Problems reading from a pipe**'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-8\. 从管道读取的问题**'
 - en: '&#124;  [PRE16]  &#124;'
+  id: totrans-66
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE16]  &#124;'
 - en: The *gendiff* script, usually found in `/usr/bin` on many Linux distros, pipes
     the output of [find](moreadv.html#FINDREF) to a *while read* construct.
+  id: totrans-67
   prefs: []
   type: TYPE_NORMAL
+  zh: '*gendiff* 脚本通常在许多 Linux 发行版的 `/usr/bin` 中找到，它将 [find](moreadv.html#FINDREF)
+    的输出通过管道输送到一个 *while read* 构造。'
 - en: '&#124;  [PRE17]  &#124;'
+  id: totrans-68
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE17]  &#124;'
 - en: '|'
+  id: totrans-69
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | It is possible to
     *paste* text into the input field of a *read* (but *not* multiple lines!). See
     [Example A-38](contributed-scripts.html#PADSW). |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 可以将文本 *粘贴* 到 *read*
+    的输入字段中（但不能粘贴多行！）。参见 [示例 A-38](contributed-scripts.html#PADSW)。|'
 - en: '**Filesystem**'
+  id: totrans-71
   prefs: []
   type: TYPE_NORMAL
+  zh: '**文件系统**'
 - en: '**cd**'
+  id: totrans-72
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cd**'
 - en: The familiar **cd** change directory command finds use in scripts where execution
     of a command requires being in a specified directory.
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 熟悉的 **cd** 改变目录命令在脚本中很有用，其中执行命令需要位于指定的目录中。
 - en: '|  [PRE18]  |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE18]  |'
 - en: '[from the [previously cited](special-chars.html#COXEX) example by Alan Cox]'
+  id: totrans-75
   prefs: []
   type: TYPE_NORMAL
+  zh: '[来自 [之前引用](special-chars.html#COXEX) 的 Alan Cox 示例]'
 - en: The `-P` (physical) option to **cd** causes it to ignore symbolic links.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cd** 的 `-P`（物理）选项会导致它忽略符号链接。'
 - en: '**cd -** changes to [$OLDPWD](internalvariables.html#OLDPWD), the previous
     working directory.'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**cd -** 将目录更改为 [$OLDPWD](internalvariables.html#OLDPWD)，即上一个工作目录。'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The **cd** command
     does not function as expected when presented with two forward slashes.'
+  id: totrans-78
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 当遇到两个正斜杠时，**cd**
+    命令的行为可能不符合预期。'
 - en: '&#124;  [PRE19]  &#124;'
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE19]  &#124;'
 - en: The output should, of course, be `/`. This is a problem both from the command-line
     and in a script. |
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: 当然，输出应该是 `/`。这在命令行和脚本中都是一个问题。|
 - en: '**pwd**'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pwd**'
 - en: Print Working Directory. This gives the user's (or script's) current directory
     (see [Example 15-9](internal.html#EX37)). The effect is identical to reading the
     value of the builtin variable [$PWD](internalvariables.html#PWDREF).
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: 打印工作目录。这会给出用户（或脚本）的当前目录（参见 [示例 15-9](internal.html#EX37)）。效果等同于读取内置变量 [$PWD](internalvariables.html#PWDREF)
+    的值。
 - en: '**pushd**, **popd**, **dirs**'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '**pushd**, **popd**, **dirs**'
 - en: This command set is a mechanism for bookmarking working directories, a means
     of moving back and forth through directories in an orderly manner. A pushdown
     [stack](internalvariables.html#STACKDEFREF) is used to keep track of directory
     names. Options allow various manipulations of the directory stack.
+  id: totrans-84
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令集是一个用于标记工作目录的机制，是一种有序地在目录间来回移动的方法。使用一个下推 [栈](internalvariables.html#STACKDEFREF)
+    来跟踪目录名称。选项允许对目录栈进行各种操作。
 - en: '`**pushd dir-name**` pushes the path `*dir-name*` onto the directory stack
     (to the *top* of the stack) and simultaneously changes the current working directory
     to `*dir-name*`'
+  id: totrans-85
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**pushd dir-name**` 将路径 `*dir-name*` 压入目录栈（到栈的 *顶部*）并同时将当前工作目录更改为 `*dir-name*`'
 - en: '**popd** removes (pops) the top directory path name off the directory stack
     and simultaneously changes the current working directory to the directory now
     at the *top* of the stack.'
+  id: totrans-86
   prefs: []
   type: TYPE_NORMAL
+  zh: '**popd** 从目录栈中移除（弹出）顶部目录路径名称，并同时将当前工作目录更改为栈顶的目录。'
 - en: '**dirs** lists the contents of the directory stack (compare this with the [$DIRSTACK](internalvariables.html#DIRSTACKREF)
     variable). A successful **pushd** or **popd** will automatically invoke **dirs**.'
+  id: totrans-87
   prefs: []
   type: TYPE_NORMAL
+  zh: '**dirs** 列出目录栈的内容（与 [$DIRSTACK](internalvariables.html#DIRSTACKREF) 变量进行比较）。成功的
+    **pushd** 或 **popd** 将自动调用 **dirs**。'
 - en: Scripts that require various changes to the current working directory without
     hard-coding the directory name changes can make good use of these commands. Note
     that the implicit `$DIRSTACK` array variable, accessible from within a script,
     holds the contents of the directory stack.
+  id: totrans-88
   prefs: []
   type: TYPE_NORMAL
+  zh: 需要对当前工作目录进行各种更改而不硬编码目录名称更改的脚本可以利用这些命令。请注意，隐含的 `$DIRSTACK` 数组变量，可以从脚本内部访问，包含目录栈的内容。
 - en: '**Example 15-9\. Changing the current working directory**'
+  id: totrans-89
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-9\. 更改当前工作目录**'
 - en: '|  [PRE20]  |'
+  id: totrans-90
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE20]  |'
 - en: '**Variables**'
+  id: totrans-91
   prefs: []
   type: TYPE_NORMAL
+  zh: '**变量**'
 - en: '**let**'
+  id: totrans-92
   prefs: []
   type: TYPE_NORMAL
+  zh: '**let**'
 - en: The **let** command carries out *arithmetic* operations on variables. [[3]](#FTN.AEN9009)
     In many cases, it functions as a less complex version of [expr](moreadv.html#EXPRREF).
+  id: totrans-93
   prefs: []
   type: TYPE_NORMAL
+  zh: '**let** 命令在变量上执行 *算术* 操作。 [[3]](#FTN.AEN9009) 在许多情况下，它作为一个更简单的 [expr](moreadv.html#EXPRREF)
+    版本。'
 - en: '**Example 15-10\. Letting *let* do arithmetic.**'
+  id: totrans-94
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-10\. 让 *let* 执行算术运算。**'
 - en: '|  [PRE21]  |'
+  id: totrans-95
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE21]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The *let* command
     can, in certain contexts, return a surprising [exit status](exit-status.html#EXITSTATUSREF).'
+  id: totrans-96
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 在某些情况下，*let* 命令可能会返回一个令人惊讶的
+    [退出状态](exit-status.html#EXITSTATUSREF)。'
 - en: '&#124;  [PRE22]  &#124;'
+  id: totrans-97
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE22]  &#124;'
 - en: '|'
+  id: totrans-98
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '**eval**'
+  id: totrans-99
   prefs: []
   type: TYPE_NORMAL
+  zh: '**eval**'
 - en: '`**eval arg1 [arg2] ... [argN]**`'
+  id: totrans-100
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**eval arg1 [arg2] ... [argN]**`'
 - en: Combines the arguments in an expression or list of expressions and `*evaluates*`
     them. Any variables within the expression are expanded. The net result is to **convert
     a string into a command**.
+  id: totrans-101
   prefs: []
   type: TYPE_NORMAL
+  zh: 将表达式或表达式列表中的参数合并，并 `*评估*` 它们。表达式中的任何变量都会被展开。最终结果是 **将字符串转换为命令**。
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The **eval** command
     can be used for code generation from the command-line or within a script. |'
+  id: totrans-102
   prefs: []
   type: TYPE_TB
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | *eval* 命令可以用于从命令行或脚本中生成代码。'
 - en: '|  [PRE23]  |'
+  id: totrans-103
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE23]  |'
 - en: Each invocation of *eval* forces a re-*evaluation* of its arguments.
+  id: totrans-104
   prefs: []
   type: TYPE_NORMAL
+  zh: 每次调用 *eval* 都会强制重新评估其参数。
 - en: '|  [PRE24]  |'
+  id: totrans-105
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE24]  |'
 - en: '**Example 15-11\. Showing the effect of *eval***'
+  id: totrans-106
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-11\. 展示 *eval* 的效果**'
 - en: '|  [PRE25]  |'
+  id: totrans-107
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE25]  |'
 - en: '**Example 15-12\. Using *eval* to select among variables**'
+  id: totrans-108
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-12\. 使用 *eval* 在变量之间进行选择**'
 - en: '|  [PRE26]  |'
+  id: totrans-109
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE26]  |'
 - en: '**Example 15-13\. *Echoing* the *command-line parameters***'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-13\. **回显** 命令行参数***'
 - en: '|  [PRE27]  |'
+  id: totrans-111
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE27]  |'
 - en: '**Example 15-14\. Forcing a log-off**'
+  id: totrans-112
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-14\. 强制注销**'
 - en: '|  [PRE28]  |'
+  id: totrans-113
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE28]  |'
 - en: '**Example 15-15\. A version of *rot13***'
+  id: totrans-114
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-15\. 一种 *rot13* 版本**'
 - en: '|  [PRE29]  |'
+  id: totrans-115
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE29]  |'
 - en: Here is another example of using *eval* to *evaluate* a complex expression,
     this one from an earlier version of YongYe's [Tetris game script](https://github.com/yongye/shell/blob/master/Tetris_Game.sh).
+  id: totrans-116
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是使用 *eval* 来 *评估* 一个复杂表达式的另一个例子，这个例子来自 YongYe 的 [俄罗斯方块游戏脚本](https://github.com/yongye/shell/blob/master/Tetris_Game.sh)
+    的早期版本。
 - en: '|  [PRE30]  |'
+  id: totrans-117
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE30]  |'
 - en: '[Example A-53](contributed-scripts.html#SAMORSE) uses *eval* to convert [array](arrays.html#ARRAYREF)
     elements into a command list.'
+  id: totrans-118
   prefs: []
   type: TYPE_NORMAL
+  zh: '[示例 A-53](contributed-scripts.html#SAMORSE) 使用 *eval* 将 [数组](arrays.html#ARRAYREF)
+    元素转换为命令列表。'
 - en: The *eval* command occurs in the older version of [indirect referencing](ivr.html#IVRREF).
+  id: totrans-119
   prefs: []
   type: TYPE_NORMAL
+  zh: '*eval* 命令出现在 [间接引用](ivr.html#IVRREF) 的旧版本中。'
 - en: '|  [PRE31]  |'
+  id: totrans-120
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE31]  |'
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The *eval* command
     can be used to [parameterize *brace expansion*](bashver3.html#BRACEEXPREF3). |'
+  id: totrans-121
   prefs: []
   type: TYPE_TB
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | *eval* 命令可以用于 [参数化花括号扩展](bashver3.html#BRACEEXPREF3)。'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The **eval**
     command can be risky, and normally should be avoided when there exists a reasonable
     alternative. An `**eval $COMMANDS**` executes the contents of `*COMMANDS*`, which
     may contain such unpleasant surprises as **rm -rf ***. Running an **eval** on
     unfamiliar code written by persons unknown is living dangerously. |'
+  id: totrans-122
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | *eval* 命令可能存在风险，通常在存在合理替代方案时应该避免使用。`**eval
+    $COMMANDS**` 执行 `*COMMANDS*` 的内容，可能包含诸如 **rm -rf *** 这样的不愉快惊喜。在未知作者编写的未知代码上运行
+    **eval** 是非常危险的。'
 - en: '**set**'
+  id: totrans-123
   prefs: []
   type: TYPE_NORMAL
+  zh: '**set**'
 - en: The **set** command changes the value of internal script variables/options.
     One use for this is to toggle [option flags](options.html#OPTIONSREF) which help
     determine the behavior of the script. Another application for it is to reset the
     [positional parameters](internalvariables.html#POSPARAMREF) that a script sees
     as the result of a command (``**set `command`**``). The script can then parse
     the [fields](special-chars.html#FIELDREF) of the command output.
+  id: totrans-124
   prefs: []
   type: TYPE_NORMAL
+  zh: '**set** 命令更改内部脚本变量/选项的值。这种用法之一是切换 [选项标志](options.html#OPTIONSREF)，这有助于确定脚本的行为。另一个应用是重置脚本视为命令（``**set
+    `command`**``）结果的 [位置参数](internalvariables.html#POSPARAMREF)。然后脚本可以解析命令输出的 [字段](special-chars.html#FIELDREF)。'
 - en: '**Example 15-16\. Using *set* with positional parameters**'
+  id: totrans-125
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-16\. 使用 *set* 与位置参数**'
 - en: '|  [PRE32]  |'
+  id: totrans-126
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE32]  |'
 - en: More fun with positional parameters.
+  id: totrans-127
   prefs: []
   type: TYPE_NORMAL
+  zh: 更多关于位置参数的乐趣。
 - en: '**Example 15-17\. Reversing the positional parameters**'
+  id: totrans-128
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-17\. 反转位置参数**'
 - en: '|  [PRE33]  |'
+  id: totrans-129
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE33]  |'
 - en: Invoking **set** without any options or arguments simply lists all the [environmental](othertypesv.html#ENVREF)
     and other variables that have been initialized.
+  id: totrans-130
   prefs: []
   type: TYPE_NORMAL
+  zh: 不带任何选项或参数调用 **set** 仅列出所有已初始化的 [环境](othertypesv.html#ENVREF) 和其他变量。
 - en: '|  [PRE34]  |'
+  id: totrans-131
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE34]  |'
 - en: Using **set** with the `--` option explicitly assigns the contents of a variable
     to the positional parameters. If no variable follows the `--` it *unsets* the
     positional parameters.
+  id: totrans-132
   prefs: []
   type: TYPE_NORMAL
+  zh: 使用 `--` 选项与 **set** 显式地将变量的内容分配给位置参数。如果没有变量跟在 `--` 后面，它将 *取消设置* 位置参数。
 - en: '**Example 15-18\. Reassigning the positional parameters**'
+  id: totrans-133
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-18\. 重新分配位置参数**'
 - en: '|  [PRE35]  |'
+  id: totrans-134
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE35]  |'
 - en: See also [Example 11-2](loops1.html#EX22A) and [Example 16-56](extmisc.html#EX33A).
+  id: totrans-135
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见 [示例 11-2](loops1.html#EX22A) 和 [示例 16-56](extmisc.html#EX33A)。
 - en: '**unset**'
+  id: totrans-136
   prefs: []
   type: TYPE_NORMAL
+  zh: '**取消设置**'
 - en: The **unset** command deletes a shell variable, effectively setting it to *null*.
     Note that this command does not affect positional parameters.
+  id: totrans-137
   prefs: []
   type: TYPE_NORMAL
+  zh: '**unset** 命令删除壳变量，实际上将其设置为 *null*。请注意，此命令不会影响位置参数。'
 - en: '|  [PRE36]  |'
+  id: totrans-138
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE36]  |'
 - en: '**Example 15-19\. "Unsetting" a variable**'
+  id: totrans-139
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-19\. "取消设置" 变量**'
 - en: '|  [PRE37]  |'
+  id: totrans-140
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE37]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | In most contexts,
     an *undeclared* variable and one that has been *unset* are equivalent. However,
     the [${parameter:-default}](parameter-substitution.html#UNDDR) parameter substitution
     construct can distinguish between the two. |'
+  id: totrans-141
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 在大多数情况下，一个未声明的变量和一个已被取消设置的变量是等效的。然而，[${parameter:-default}](parameter-substitution.html#UNDDR)
+    参数替换结构可以区分这两个变量。|'
 - en: '**export**'
+  id: totrans-142
   prefs: []
   type: TYPE_NORMAL
+  zh: '**export**'
 - en: The **export** [[4]](#FTN.AEN9199) command makes available variables to all
     child processes of the running script or shell. One important use of the **export**
     command is in [startup files](files.html#FILESREF1), to initialize and make accessible
     [environmental variables](othertypesv.html#ENVREF) to subsequent user processes.
+  id: totrans-143
   prefs: []
   type: TYPE_NORMAL
+  zh: '**export** [[4]](#FTN.AEN9199) 命令使运行脚本或壳的所有子进程可用变量。**export** 命令的一个重要用途是在 [启动文件](files.html#FILESREF1)
+    中，初始化并使后续用户进程可访问 [环境变量](othertypesv.html#ENVREF)。'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Unfortunately,
     [there is no way to export variables back to the parent process](gotchas.html#PARCHILDPROBREF),
     to the process that called or invoked the script or shell. |'
+  id: totrans-144
   prefs: []
   type: TYPE_TB
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 很遗憾，[没有方法可以将变量导回父进程](gotchas.html#PARCHILDPROBREF)，即调用或调用脚本的进程或壳。|'
 - en: '**Example 15-20\. Using *export* to pass a variable to an embedded *awk* script**'
+  id: totrans-145
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-20\. 使用 *export* 将变量传递给嵌入的 *awk* 脚本**'
 - en: '|  [PRE38]  |'
+  id: totrans-146
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE38]  |'
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | It is possible to
     initialize and export variables in the same operation, as in **export var1=xxx**.However,
     as Greg Keraunen points out, in certain situations this may have a different effect
     than setting a variable, then exporting it.'
+  id: totrans-147
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 可以在同一个操作中初始化和导出变量，例如
+    **export var1=xxx**。然而，正如 Greg Keraunen 指出的，在某些情况下，这可能会产生与设置变量然后导出它的不同效果。|'
 - en: '&#124;  [PRE39]  &#124;'
+  id: totrans-148
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE39]  &#124;'
 - en: '|'
+  id: totrans-149
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A variable to be
     exported may require special treatment. See [Example M-2](sample-bashrc.html#BASHPROF).
     |'
+  id: totrans-150
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 要导出的变量可能需要特殊处理。参见
+    [示例 M-2](sample-bashrc.html#BASHPROF)。|'
 - en: '**declare**, **typeset**'
+  id: totrans-151
   prefs: []
   type: TYPE_NORMAL
+  zh: '**声明**, **排版**'
 - en: The [declare](declareref.html) and [typeset](declareref.html) commands specify
     and/or restrict properties of variables.
+  id: totrans-152
   prefs: []
   type: TYPE_NORMAL
+  zh: The [declare](declareref.html) 和 [typeset](declareref.html) 命令指定和/或限制变量的属性。
 - en: '**readonly**'
+  id: totrans-153
   prefs: []
   type: TYPE_NORMAL
+  zh: '**只读**'
 - en: Same as [declare -r](declareref.html), sets a variable as read-only, or, in
     effect, as a constant. Attempts to change the variable fail with an error message.
     This is the shell analog of the *C* language **const** type qualifier.
+  id: totrans-154
   prefs: []
   type: TYPE_NORMAL
+  zh: 与 [declare -r](declareref.html) 相同，将变量设置为只读，或者实际上作为常量。尝试更改变量的操作将失败并显示错误消息。这是
+    shell 中 *C* 语言 **const** 类型限定符的类似物。
 - en: '**getopts**'
+  id: totrans-155
   prefs: []
   type: TYPE_NORMAL
+  zh: '**getopts**'
 - en: This powerful tool parses command-line arguments passed to the script. This
     is the Bash analog of the [getopt](extmisc.html#GETOPTY) external command and
     the *getopt* library function familiar to *C* programmers. It permits passing
     and concatenating multiple options [[5]](#FTN.AEN9289) and associated arguments
     to a script (for example `**scriptname -abc -e /usr/local**`).
+  id: totrans-156
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个强大的工具解析传递给脚本的命令行参数。这是 Bash 中 [getopt](extmisc.html#GETOPTY) 外部命令和 *C* 程序员熟悉的
+    *getopt* 库函数的类似物。它允许将多个选项 [[5]](#FTN.AEN9289) 和相关参数传递并连接到脚本（例如 `**scriptname -abc
+    -e /usr/local**`）。
 - en: The **getopts** construct uses two implicit variables. `$OPTIND` is the argument
     pointer (*OPTion INDex*) and `$OPTARG` (*OPTion ARGument*) the (optional) argument
     attached to an option. A colon following the option name in the declaration tags
     that option as having an associated argument.
+  id: totrans-157
   prefs: []
   type: TYPE_NORMAL
+  zh: '**getopts** 构造使用两个隐含变量。`$OPTIND` 是参数指针（*OPTion INDex*），而 `$OPTARG`（*OPTion
+    ARGument*）是与选项关联的（可选的）参数。在声明标签中的冒号后面，该选项被标记为具有关联的参数。'
 - en: A **getopts** construct usually comes packaged in a [while loop](loops1.html#WHILELOOPREF),
     which processes the options and arguments one at a time, then increments the implicit
     `$OPTIND` variable to point to the next.
+  id: totrans-158
   prefs: []
   type: TYPE_NORMAL
+  zh: '**getopts** 构造通常包含在一个 [while 循环](loops1.html#WHILELOOPREF) 中，它逐个处理选项和参数，然后递增隐含的
+    `$OPTIND` 变量以指向下一个。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) |'
+  id: totrans-159
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) |'
 - en: The arguments passed from the command-line to the script must be preceded by
     a dash (`-`). It is the prefixed `-` that lets **getopts** recognize command-line
     arguments as *options*. In fact, **getopts** will not process arguments without
     the prefixed `-`, and will terminate option processing at the first argument encountered
     lacking them.
+  id: totrans-160
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: 从命令行传递给脚本的参数必须以短横线（`-`）开头。正是这个前缀 `-` 让 **getopts** 能够识别命令行参数为 *选项*。实际上，**getopts**
+    不会处理没有前缀 `-` 的参数，并且会在遇到第一个缺少它们的参数时终止选项处理。
 - en: The **getopts** template differs slightly from the standard [while loop](loops1.html#WHILELOOPREF),
     in that it lacks condition brackets.
+  id: totrans-161
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**getopts** 模板与标准 [while 循环](loops1.html#WHILELOOPREF) 略有不同，因为它缺少条件括号。'
 - en: The **getopts** construct is a highly functional replacement for the traditional
     [getopt](extmisc.html#GETOPTY) external command.
+  id: totrans-162
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '**getopts** 构造是传统 [getopt](extmisc.html#GETOPTY) 外部命令的高度功能性替代品。'
 - en: '|'
+  id: totrans-163
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '|  [PRE40]  |'
+  id: totrans-164
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE40]  |'
 - en: '**Example 15-21\. Using *getopts* to read the options/arguments passed to a
     script**'
+  id: totrans-165
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-21\. 使用 *getopts* 读取传递给脚本的选项/参数**'
 - en: '|  [PRE41]  |'
+  id: totrans-166
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE41]  |'
 - en: '**Script Behavior**'
+  id: totrans-167
   prefs: []
   type: TYPE_NORMAL
+  zh: '**脚本行为**'
 - en: '**source**, . ([dot](special-chars.html#DOTREF) command)'
+  id: totrans-168
   prefs: []
   type: TYPE_NORMAL
+  zh: '**source**，. ([点](special-chars.html#DOTREF) 命令)'
 - en: This command, when invoked from the command-line, executes a script. Within
     a script, a `**source file-name**` loads the file `file-name`. *Sourcing* a file
     (dot-command) *imports* code into the script, appending to the script (same effect
@@ -640,230 +1010,370 @@
     as if the "sourced" lines of code were physically present in the body of the script.
     This is useful in situations when multiple scripts use a common data file or function
     library.
+  id: totrans-169
   prefs: []
   type: TYPE_NORMAL
+  zh: 当从命令行调用此命令时，它将执行一个脚本。在脚本内部，一个 `**source file-name**` 加载文件 `file-name`。*Sourcing*
+    一个文件（点命令）*导入*代码到脚本中，附加到脚本（与 *C* 程序中的 `**#include**` 指令具有相同的效果）。最终结果是，如果源代码行物理上存在于脚本主体中，效果是相同的。这在多个脚本使用公共数据文件或函数库的情况下非常有用。
 - en: '**Example 15-22\. "Including" a data file**'
+  id: totrans-170
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-22\. “包含”数据文件**'
 - en: '|  [PRE42]  |'
+  id: totrans-171
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE42]  |'
 - en: File `data-file` for [Example 15-22](internal.html#EX38), above. Must be present
     in same directory.
+  id: totrans-172
   prefs: []
   type: TYPE_NORMAL
+  zh: 上面的 [示例 15-22](internal.html#EX38) 中的文件 `data-file`。必须在同一目录中存在。
 - en: '|  [PRE43]  |'
+  id: totrans-173
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE43]  |'
 - en: If the *sourced* file is itself an executable script, then it will run, then
     return control to the script that called it. A *sourced* executable script may
     use a [return](complexfunct.html#RETURNREF) for this purpose.
+  id: totrans-174
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果源文件本身是一个可执行脚本，那么它将运行，然后返回控制权给调用它的脚本。一个源可执行脚本可以使用 [return](complexfunct.html#RETURNREF)
+    来实现此目的。
 - en: Arguments may be (optionally) passed to the *sourced* file as [positional parameters](othertypesv.html#POSPARAMREF1).
+  id: totrans-175
   prefs: []
   type: TYPE_NORMAL
+  zh: 参数可以作为（可选的）位置参数传递给源文件。[positional parameters](othertypesv.html#POSPARAMREF1)。
 - en: '|  [PRE44]  |'
+  id: totrans-176
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE44]  |'
 - en: It is even possible for a script to *source* itself, though this does not seem
     to have any practical applications.
+  id: totrans-177
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本甚至可以 *源* 自身，尽管这似乎没有实际应用。
 - en: '**Example 15-23\. A (useless) script that sources itself**'
+  id: totrans-178
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-23\. 一个（无用的）自引用脚本**'
 - en: '|  [PRE45]  |'
+  id: totrans-179
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE45]  |'
 - en: '**exit**'
+  id: totrans-180
   prefs: []
   type: TYPE_NORMAL
+  zh: '**exit**'
 - en: Unconditionally terminates a script. [[6]](#FTN.AEN9393) The **exit** command
     may optionally take an integer argument, which is returned to the shell as the
     [exit status](exit-status.html#EXITSTATUSREF) of the script. It is good practice
     to end all but the simplest scripts with an `**exit 0**`, indicating a successful
     run.
+  id: totrans-181
   prefs: []
   type: TYPE_NORMAL
+  zh: 无条件终止一个脚本。[[6]](#FTN.AEN9393) **exit** 命令可以可选地接受一个整数参数，该参数作为脚本的 [退出状态](exit-status.html#EXITSTATUSREF)
+    返回给 shell。在所有但最简单的脚本中结束 `**exit 0**` 是一个好习惯，表示成功运行。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | If a script terminates
     with an **exit** lacking an argument, the exit status of the script is the exit
     status of the last command executed in the script, not counting the **exit**.
     This is equivalent to an **exit $?**. |'
+  id: totrans-182
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 如果一个脚本在没有参数的情况下终止
+    **exit**，则脚本的退出状态是脚本中最后执行的命令的退出状态，不包括 **exit**。这相当于 **exit $?**。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **exit** command
     may also be used to terminate a [subshell](subshells.html#SUBSHELLSREF). |'
+  id: totrans-183
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | **exit** 命令也可以用来终止一个
+    [子shell](subshells.html#SUBSHELLSREF)。'
 - en: '**exec**'
+  id: totrans-184
   prefs: []
   type: TYPE_NORMAL
+  zh: '**exec**'
 - en: This shell builtin replaces the current process with a specified command. Normally,
     when the shell encounters a command, it [forks off](internal.html#FORKREF) a child
     process to actually execute the command. Using the **exec** builtin, the shell
     does not fork, and the command *exec*'ed replaces the shell. When used in a script,
     therefore, it forces an exit from the script when the **exec**'ed command terminates.
     [[7]](#FTN.AEN9425)
+  id: totrans-185
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个 shell 内建命令用指定的命令替换当前进程。通常，当 shell 遇到命令时，它会 [派生](internal.html#FORKREF) 一个子进程来实际执行该命令。使用
+    **exec** 内建命令时，shell 不会派生，被 *exec* 的命令替换了 shell。因此，在脚本中使用时，当 *exec* 的命令终止时，它强制脚本退出。[[7]](#FTN.AEN9425)
 - en: '**Example 15-24\. Effects of *exec***'
+  id: totrans-186
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-24\. *exec*** 的影响'
 - en: '|  [PRE46]  |'
+  id: totrans-187
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE46]  |'
 - en: '**Example 15-25\. A script that *exec''s* itself**'
+  id: totrans-188
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 15-25\. 自 **exec** 的脚本**'
 - en: '|  [PRE47]  |'
+  id: totrans-189
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE47]  |'
 - en: An **exec** also serves to [reassign file descriptors](x17974.html#USINGEXECREF).
     For example, `**exec <zzz-file**` replaces `stdin` with the file `zzz-file`.
+  id: totrans-190
   prefs: []
   type: TYPE_NORMAL
+  zh: '**exec** 也可以用于 [重新分配文件描述符](x17974.html#USINGEXECREF)。例如，`**exec <zzz-file**`
+    将 `stdin` 替换为文件 `zzz-file`。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `-exec` option
     to [find](moreadv.html#FINDREF) is `*not*` the same as the **exec** shell builtin.
     |'
+  id: totrans-191
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | `find` 的 `-exec`
+    选项与 **exec** 命令内建功能 **不相同**。'
 - en: '**shopt**'
+  id: totrans-192
   prefs: []
   type: TYPE_NORMAL
+  zh: '**shopt**'
 - en: This command permits changing *shell options* on the fly (see [Example 25-1](aliases.html#AL)
     and [Example 25-2](aliases.html#UNAL)). It often appears in the Bash [startup
     files](files.html#FILESREF1), but also has its uses in scripts. Needs [version
     2](bashver2.html#BASH2REF) or later of Bash.
+  id: totrans-193
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个命令允许动态更改 *shell 选项*（参见 [示例 25-1](aliases.html#AL) 和 [示例 25-2](aliases.html#UNAL)）。它通常出现在
+    Bash [启动文件](files.html#FILESREF1) 中，但在脚本中也有其用途。需要 Bash 的 [版本 2](bashver2.html#BASH2REF)
+    或更高版本。
 - en: '|  [PRE48]  |'
+  id: totrans-194
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE48]  |'
 - en: '**caller**'
+  id: totrans-195
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caller**'
 - en: Putting a **caller** command inside a [function](functions.html#FUNCTIONREF)
     echoes to `stdout` information about the *caller* of that function.
+  id: totrans-196
   prefs: []
   type: TYPE_NORMAL
+  zh: 在 [函数](functions.html#FUNCTIONREF) 中放置 **caller** 命令会向 `stdout` 输出有关该函数 *caller*
+    的信息。
 - en: '|  [PRE49]  |'
+  id: totrans-197
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE49]  |'
 - en: A **caller** command can also return *caller* information from a script [sourced](internal.html#SOURCEREF)
     within another script. Analogous to a function, this is a "subroutine call."
+  id: totrans-198
   prefs: []
   type: TYPE_NORMAL
+  zh: '**caller** 命令还可以从另一个脚本中 [源](internal.html#SOURCEREF) 的脚本中返回 *caller* 信息。类似于函数，这是一个“子程序调用”。'
 - en: You may find this command useful in debugging.
+  id: totrans-199
   prefs: []
   type: TYPE_NORMAL
+  zh: 你可能会在调试时发现这个命令很有用。
 - en: '**Commands**'
+  id: totrans-200
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令**'
 - en: '**true**'
+  id: totrans-201
   prefs: []
   type: TYPE_NORMAL
+  zh: '**true**'
 - en: A command that returns a successful (zero) [exit status](exit-status.html#EXITSTATUSREF),
     but does nothing else.
+  id: totrans-202
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个返回成功（零）[退出状态](exit-status.html#EXITSTATUSREF) 但没有做其他事情的命令。
 - en: '|  [PRE50]  |'
+  id: totrans-203
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE50]  |'
 - en: '|  [PRE51]  |'
+  id: totrans-204
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE51]  |'
 - en: '**false**'
+  id: totrans-205
   prefs: []
   type: TYPE_NORMAL
+  zh: '**false**'
 - en: A command that returns an unsuccessful [exit status](exit-status.html#EXITSTATUSREF),
     but does nothing else.
+  id: totrans-206
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个返回不成功 [退出状态](exit-status.html#EXITSTATUSREF) 但没有做其他事情的命令。
 - en: '|  [PRE52]  |'
+  id: totrans-207
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE52]  |'
 - en: '|  [PRE53]  |'
+  id: totrans-208
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE53]  |'
 - en: '**type [cmd]**'
+  id: totrans-209
   prefs: []
   type: TYPE_NORMAL
+  zh: '**type [cmd]**'
 - en: Similar to the [which](filearchiv.html#WHICHREF) external command, **type cmd**
     identifies "cmd." Unlike **which**, **type** is a Bash builtin. The useful `-a`
     option to **type** identifies `*keywords*` and `*builtins*`, and also locates
     system commands with identical names.
+  id: totrans-210
   prefs: []
   type: TYPE_NORMAL
+  zh: 与外部命令 [which](filearchiv.html#WHICHREF) 类似，**type cmd** 识别 "cmd"。与 **which**
+    不同，**type** 是 Bash 内置命令。**type** 的有用 `-a` 选项识别 `*keywords*` 和 `*builtins*`，并且还能定位具有相同名称的系统命令。
 - en: '|  [PRE54]  |'
+  id: totrans-211
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE54]  |'
 - en: The **type** command can be useful for [testing whether a certain command exists](special-chars.html#DEVNULLREDIRECT).
+  id: totrans-212
   prefs: []
   type: TYPE_NORMAL
+  zh: '**type** 命令可以用于 [测试某个命令是否存在](special-chars.html#DEVNULLREDIRECT)。'
 - en: '**hash [cmds]**'
+  id: totrans-213
   prefs: []
   type: TYPE_NORMAL
+  zh: '**hash [cmds**]'
 - en: Records the *path* name of specified commands -- in the shell *hash table* [[8]](#FTN.AEN9591)
     -- so the shell or script will not need to search the [$PATH](internalvariables.html#PATHREF)
     on subsequent calls to those commands. When **hash** is called with no arguments,
     it simply lists the commands that have been hashed. The `-r` option resets the
     hash table.
+  id: totrans-214
   prefs: []
   type: TYPE_NORMAL
+  zh: 记录指定命令的 *路径* 名称——在 shell 的 *哈希表* [[8]](#FTN.AEN9591) 中——这样在后续调用这些命令时，shell 或脚本就不需要搜索
+    [$PATH](internalvariables.html#PATHREF) 了。当 **hash** 不带参数调用时，它简单地列出已哈希的命令。`-r`
+    选项重置哈希表。
 - en: '**bind**'
+  id: totrans-215
   prefs: []
   type: TYPE_NORMAL
+  zh: '**绑定**'
 - en: The **bind** builtin displays or modifies *readline* [[9]](#FTN.AEN9621) key
     bindings.
+  id: totrans-216
   prefs: []
   type: TYPE_NORMAL
+  zh: '**bind** 内置命令显示或修改 *readline* [[9]](#FTN.AEN9621) 键绑定。'
 - en: '**help**'
+  id: totrans-217
   prefs: []
   type: TYPE_NORMAL
+  zh: '**帮助**'
 - en: Gets a short usage summary of a shell builtin. This is the counterpart to [whatis](filearchiv.html#WHATISREF),
     but for builtins. The display of *help* information got a much-needed update in
     the [version 4 release](bashver4.html#BASH4REF) of Bash.
+  id: totrans-218
   prefs: []
   type: TYPE_NORMAL
+  zh: 获取 shell 内置命令的简短用法摘要。这是 [whatis](filearchiv.html#WHATISREF) 的对应物，但用于内置命令。*帮助*
+    信息的显示在 Bash 的 [版本 4 发布](bashver4.html#BASH4REF) 中得到了急需的更新。
 - en: '|  [PRE55]  |'
+  id: totrans-219
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE55]  |'
 - en: Notes
+  id: totrans-220
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**笔记**'
 - en: '| [[1]](internal.html#AEN8607) | As Nathan Coulter points out, "while forking
     a process is a low-cost operation, executing a new program in the newly-forked
     child process adds more overhead." |'
+  id: totrans-221
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](internal.html#AEN8607) | 正如内森·考尔特所指出的，“虽然进程分叉是一个低成本的操作，但在新分叉的子进程中执行新的程序会增加更多的开销。”
+    |'
 - en: '| [[2]](internal.html#AEN8650) | An exception to this is the [time](timedate.html#TIMREF)
     command, listed in the official Bash documentation as a keyword ("reserved word").
     |'
+  id: totrans-222
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](internal.html#AEN8650) | 这里的一个例外是 [time](timedate.html#TIMREF) 命令，在官方
+    Bash 文档中被列为关键字（“保留词”）。 |'
 - en: '| [[3]](internal.html#AEN9009) | Note that *let* [cannot be used for setting
     *string* variables.](gotchas.html#LETBAD) |'
+  id: totrans-223
   prefs: []
   type: TYPE_TB
+  zh: '| [[3]](internal.html#AEN9009) | 注意，*let* [不能用于设置 *字符串* 变量。](gotchas.html#LETBAD)
+    |'
 - en: '| [[4]](internal.html#AEN9199) | To *Export* information is to make it available
     in a more general context. See also [scope](subshells.html#SCOPEREF). |'
+  id: totrans-224
   prefs: []
   type: TYPE_TB
+  zh: '| [[4]](internal.html#AEN9199) | 要 *导出* 信息，就是使其在更广泛的环境中可用。另请参阅 [作用域](subshells.html#SCOPEREF)。
+    |'
 - en: '| [[5]](internal.html#AEN9289) | An *option* is an argument that acts as a
     flag, switching script behaviors on or off. The argument associated with a particular
     option indicates the behavior that the option (flag) switches on or off. |'
+  id: totrans-225
   prefs: []
   type: TYPE_TB
+  zh: '| [[5]](internal.html#AEN9289) | *选项* 是一个作为标志的参数，用于切换脚本的开启或关闭行为。与特定选项关联的参数表示该选项（标志）切换开启或关闭的行为。
+    |'
 - en: '| [[6]](internal.html#AEN9393) | Technically, an **exit** only terminates the
     process (or shell) in which it is running, *not* the *parent process*. |'
+  id: totrans-226
   prefs: []
   type: TYPE_TB
+  zh: '| [[6]](internal.html#AEN9393) | 技术上，**exit** 只会终止它正在运行的进程（或 shell），*不会* 终止
+    *父进程*。 |'
 - en: '| [[7]](internal.html#AEN9425) | Unless the **exec** is used to [reassign file
     descriptors](x17974.html#USINGEXECREF). |'
+  id: totrans-227
   prefs: []
   type: TYPE_TB
+  zh: '| [[7]](internal.html#AEN9425) | 除非使用 **exec** 来 [重新分配文件描述符](x17974.html#USINGEXECREF)。
+    |'
 - en: '| [[8]](internal.html#AEN9591) | *Hashing* is a method of creating lookup keys
     for data stored in a table. The *data items themselves* are "scrambled" to create
     keys, using one of a number of simple mathematical *algorithms* (methods, or recipes).An
@@ -871,9 +1381,16 @@
     -- where a single key maps to more than one data item -- are possible.For examples
     of hashing see [Example A-20](contributed-scripts.html#HASHLIB) and [Example A-21](contributed-scripts.html#HASHEXAMPLE).
     |'
+  id: totrans-228
   prefs: []
   type: TYPE_TB
+  zh: '| [[8]](internal.html#AEN9591) | *哈希* 是为存储在表中的数据创建查找键的方法。*数据项本身* 被使用多种简单的数学
+    *算法*（方法或配方）进行“打乱”以创建键。*哈希* 的一个优点是它速度快。一个缺点是可能出现 *冲突* —— 即单个键映射到多个数据项。有关哈希的示例，请参阅
+    [示例 A-20](contributed-scripts.html#HASHLIB) 和 [示例 A-21](contributed-scripts.html#HASHEXAMPLE)。
+    |'
 - en: '| [[9]](internal.html#AEN9621) | The *readline* library is what Bash uses for
     reading input in an interactive shell. |'
+  id: totrans-229
   prefs: []
   type: TYPE_TB
+  zh: '| [[9]](internal.html#AEN9621) | Bash 用于在交互式 shell 中读取输入的 *readline* 库。 |'

@@ -1,246 +1,378 @@
 - en: Chapter 12\. Command Substitution
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第12章\. 命令替换
 - en: 原文：[https://tldp.org/LDP/abs/html/commandsub.html](https://tldp.org/LDP/abs/html/commandsub.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/commandsub.html](https://tldp.org/LDP/abs/html/commandsub.html)
 - en: '**Command substitution** reassigns the output of a command [[1]](#FTN.AEN7205)
     or even multiple commands; it literally plugs the command output into another
     context. [[2]](#FTN.AEN7211)'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令替换**重新分配命令[[1]](#FTN.AEN7205)或多个命令的输出；它实际上是将命令输出插入到另一个上下文中。[2]](#FTN.AEN7211)'
 - en: The classic form of command substitution uses *backquotes* (`...`). Commands
     within backquotes (backticks) generate command-line text.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换的经典形式使用*反引号*(`...`)。反引号（backticks）内的命令生成命令行文本。
 - en: '|  [PRE0]  |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '**The output of commands can be used as arguments to another command, to set
     a variable, and even for generating the argument list in a [for](loops1.html#FORLOOPREF1)
     loop.**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**命令的输出可以用作另一个命令的参数，用于设置变量，甚至用于在[for](loops1.html#FORLOOPREF1)循环中生成参数列表。**'
 - en: '|  [PRE1]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Command substitution
     invokes a [subshell](subshells.html#SUBSHELLSREF). |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 命令替换调用一个[子shell](subshells.html#SUBSHELLSREF)。|'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Command substitution
     may result in [word splitting](quotingvar.html#WSPLITREF).'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 命令替换可能会导致[单词分割](quotingvar.html#WSPLITREF)。|'
 - en: '&#124;  [PRE2]  &#124;'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE2]  &#124;'
 - en: Even when there is no word splitting, command substitution can remove trailing
     newlines.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 即使没有单词分割，命令替换也可以删除尾随的新行。
 - en: '&#124;  [PRE3]  &#124;'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE3]  &#124;'
 - en: '|'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Using **echo**
     to output an *unquoted* variable set with command substitution removes trailing
     newlines characters from the output of the reassigned command(s). This can cause
     unpleasant surprises.'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 使用**echo**输出通过命令替换设置的*未引用*变量会从重新分配的命令的输出中删除尾随的新行字符。这可能会导致不愉快的惊喜。|'
 - en: '&#124;  [PRE4]  &#124;'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE4]  &#124;'
 - en: '|'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Command substitution even permits setting a variable to the contents of a file,
     using either [redirection](io-redirection.html#IOREDIRREF) or the [cat](basic.html#CATREF)
     command.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换甚至允许使用[重定向](io-redirection.html#IOREDIRREF)或[cat](basic.html#CATREF)命令将变量设置为文件的内容。
 - en: '|  [PRE5]  |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: '|  [PRE6]  |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Do not set a
     variable to the contents of a *long* text file unless you have a very good reason
     for doing so. Do not set a variable to the contents of a *binary* file, even as
     a joke.'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 除非你有非常充分的理由，否则不要将变量设置为*长*文本文件的内容。不要将变量设置为*二进制*文件的内容，即使是为了开玩笑。|'
 - en: '**Example 12-1\. Stupid script tricks**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例12-1\. 愚蠢的脚本技巧**'
 - en: '&#124;  [PRE7]  &#124;'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE7]  &#124;'
 - en: Notice that a *buffer overrun* does not occur. This is one instance where an
     interpreted language, such as Bash, provides more protection from programmer mistakes
     than a compiled language. |
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，不会发生*缓冲区溢出*。这是解释语言（如Bash）比编译语言提供更多保护以防止程序员错误的一个例子。|
 - en: Command substitution permits setting a variable to the output of a [loop](loops1.html#FORLOOPREF1).
     The key to this is grabbing the output of an [echo](internal.html#ECHOREF) command
     within the loop.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换允许将变量设置为[循环](loops1.html#FORLOOPREF1)的输出。这个问题的关键是在循环中捕获一个[echo](internal.html#ECHOREF)命令的输出。
 - en: '**Example 12-2\. Generating a variable from a loop**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例12-2\. 从循环生成变量**'
 - en: '|  [PRE8]  |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: '|'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Command substitution makes it possible to extend the toolset available to Bash.
     It is simply a matter of writing a program or script that outputs to `stdout`
     (like a well-behaved UNIX tool should) and assigning that output to a variable.
+  id: totrans-27
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换使得扩展Bash可用的工具集成为可能。这仅仅是一个编写输出到`stdout`（就像一个表现良好的UNIX工具应该做的那样）的程序或脚本，并将该输出分配给变量的简单问题。
 - en: '&#124;  [PRE9]  &#124;'
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE9]  &#124;'
 - en: '&#124;  [PRE10]  &#124;'
+  id: totrans-29
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE10]  &#124;'
 - en: '&#124;  [PRE11]  &#124;'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE11]  &#124;'
 - en: '&#124;  [PRE12]  &#124;'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE12]  &#124;'
 - en: '|'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The **$(...)**
     form has superseded backticks for command substitution.'
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | **$(...)**形式已经取代了反引号用于命令替换。|'
 - en: '&#124;  [PRE13]  &#124;'
+  id: totrans-34
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE13]  &#124;'
 - en: The **$(...)** form of command substitution treats a double backslash in a different
     way than **`...`**.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换的**$(...)**形式与**`...`**处理双反斜杠的方式不同。
 - en: '&#124;  [PRE14]  &#124;'
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE14]  &#124;'
 - en: The **$(...)** form of command substitution permits nesting. [[3]](#FTN.AEN7308)
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 命令替换的**$(...)**形式允许嵌套。[[3]](#FTN.AEN7308)
 - en: '&#124;  [PRE15]  &#124;'
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE15]  &#124;'
 - en: Or, for something a bit more elaborate . . .
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者，对于更复杂的情况……
 - en: '**Example 12-3\. Finding anagrams**'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 12-3. 寻找字母表异序词**'
 - en: '&#124;  [PRE16]  &#124;'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE16]  &#124;'
 - en: '|'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: 'Examples of command substitution in shell scripts:'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 在shell脚本中命令替换的示例：
 - en: '[Example 11-8](loops1.html#BINGREP)'
+  id: totrans-44
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-8](loops1.html#BINGREP)'
 - en: '[Example 11-27](testbranch.html#CASECMD)'
+  id: totrans-45
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-27](testbranch.html#CASECMD)'
 - en: '[Example 9-16](randomvar.html#SEEDINGRANDOM)'
+  id: totrans-46
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 9-16](randomvar.html#SEEDINGRANDOM)'
 - en: '[Example 16-3](moreadv.html#EX57)'
+  id: totrans-47
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-3](moreadv.html#EX57)'
 - en: '[Example 16-22](textproc.html#LOWERCASE)'
+  id: totrans-48
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-22](textproc.html#LOWERCASE)'
 - en: '[Example 16-17](textproc.html#GRP)'
+  id: totrans-49
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-17](textproc.html#GRP)'
 - en: '[Example 16-54](extmisc.html#EX53)'
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-54](extmisc.html#EX53)'
 - en: '[Example 11-14](loops1.html#EX24)'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-14](loops1.html#EX24)'
 - en: '[Example 11-11](loops1.html#SYMLINKS)'
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-11](loops1.html#SYMLINKS)'
 - en: '[Example 16-32](filearchiv.html#STRIPC)'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-32](filearchiv.html#STRIPC)'
 - en: '[Example 20-8](redircb.html#REDIR4)'
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 20-8](redircb.html#REDIR4)'
 - en: '[Example A-16](contributed-scripts.html#TREE)'
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-16](contributed-scripts.html#TREE)'
 - en: '[Example 29-3](procref1.html#PIDID)'
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 29-3](procref1.html#PIDID)'
 - en: '[Example 16-47](mathc.html#MONTHLYPMT)'
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-47](mathc.html#MONTHLYPMT)'
 - en: '[Example 16-48](mathc.html#BASE)'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-48](mathc.html#BASE)'
 - en: '[Example 16-49](mathc.html#ALTBC)'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-49](mathc.html#ALTBC)'
 - en: Notes
+  id: totrans-60
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](commandsub.html#AEN7205) | For purposes of *command substitution*,
     a **command** may be an external system command, an internal scripting [builtin](internal.html#BUILTINREF),
     or even [a script function](assortedtips.html#RVT). |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](commandsub.html#AEN7205) | 为了**命令替换**的目的，一个**命令**可能是一个外部系统命令，一个内部脚本[内置函数](internal.html#BUILTINREF)，甚至是一个[脚本函数](assortedtips.html#RVT)。|'
 - en: '| [[2]](commandsub.html#AEN7211) | In a more technically correct sense, *command
     substitution* extracts the `stdout` of a command, then assigns it to a variable
     using the = operator. |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](commandsub.html#AEN7211) | 在更严格的技术意义上，**命令替换**提取命令的`stdout`，然后使用等号运算符将其赋值给变量。|'
 - en: '| [[3]](commandsub.html#AEN7308) | In fact, nesting with backticks is also
     possible, but only by escaping the inner backticks, as John Default points out.'
+  id: totrans-63
   prefs: []
   type: TYPE_NORMAL
+  zh: '| [[3]](commandsub.html#AEN7308) | 实际上，使用反引号嵌套也是可能的，但只能通过转义内部的反引号，正如John Default所指出的。'
 - en: '&#124;  [PRE17]  &#124;'
+  id: totrans-64
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE17]  &#124;'
 - en: '|'
+  id: totrans-65
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'

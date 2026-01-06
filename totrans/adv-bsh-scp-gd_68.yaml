@@ -1,278 +1,451 @@
 - en: Appendix N. Converting DOS Batch Files to Shell Scripts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附录N. 将DOS批处理文件转换为Shell脚本
 - en: 原文：[https://tldp.org/LDP/abs/html/dosbatch.html](https://tldp.org/LDP/abs/html/dosbatch.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/dosbatch.html](https://tldp.org/LDP/abs/html/dosbatch.html)
 - en: Quite a number of programmers learned scripting on a PC running DOS. Even the
     crippled DOS batch file language allowed writing some fairly powerful scripts
     and applications, though they often required extensive kludges and workarounds.
     Occasionally, the need still arises to convert an old DOS batch file to a UNIX
     shell script. This is generally not difficult, as DOS batch file operators are
     only a limited subset of the equivalent shell scripting ones.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 许多程序员在运行DOS的PC上学习脚本编写。即使功能受限的DOS批处理文件语言也允许编写一些相当强大的脚本和应用程序，尽管它们通常需要大量的修正和解决方案。偶尔，仍然需要将旧的DOS批处理文件转换为UNIX
+    shell脚本。这通常不难，因为DOS批处理文件操作符只是等效shell脚本操作符的一个子集。
 - en: '**Table N-1\. Batch file keywords / variables / operators, and their shell
     equivalents**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表N-1. 批处理文件关键字/变量/操作符及其shell等效**'
 - en: '| Batch File Operator | Shell Script Equivalent | Meaning |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| 批处理文件操作符 | Shell脚本等效 | 含义 |'
 - en: '| --- | --- | --- |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `%` | $ | command-line parameter prefix |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| `%` | $ | 命令行参数前缀 |'
 - en: '| `/` | - | command option flag |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `/` | - | 命令选项标志 |'
 - en: '| `\` | / | directory path separator |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `\` | / | 目录路径分隔符 |'
 - en: '| `==` | = | (equal-to) string comparison test |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `==` | = | (等于) 字符串比较测试 |'
 - en: '| `!==!` | != | (not equal-to) string comparison test |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `!==!` | != | (不等于) 字符串比较测试 |'
 - en: '| `&#124;` | &#124; | pipe |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `&#124;` | &#124; | 管道 |'
 - en: '| `@` | set `+v` | do not echo current command |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `@` | set `+v` | 不回显当前命令 |'
 - en: '| `*` | * | filename "wild card" |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `*` | * | 文件名 "通配符" |'
 - en: '| `>` | > | file redirection (overwrite) |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `>` | > | 文件重定向（覆盖） |'
 - en: '| `>>` | >> | file redirection (append) |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `>>` | >> | 文件重定向（追加） |'
 - en: '| `<` | < | redirect `stdin` |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `<` | < | 重定向 `stdin` |'
 - en: '| `%VAR%` | $VAR | environmental variable |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `%VAR%` | $VAR | 环境变量 |'
 - en: '| `REM` | # | comment |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `REM` | # | 注释 |'
 - en: '| `NOT` | ! | negate following test |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `NOT` | ! | 取消后续测试 |'
 - en: '| `NUL` | `/dev/null` | "black hole" for burying command output |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `NUL` | `/dev/null` | "黑洞"用于隐藏命令输出 |'
 - en: '| `ECHO` | echo | echo (many more option in Bash) |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `ECHO` | echo | echo（Bash中有更多选项） |'
 - en: '| `ECHO.` | echo | echo blank line |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `ECHO.` | echo | 输出空行 |'
 - en: '| `ECHO OFF` | set `+v` | do not echo command(s) following |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `ECHO OFF` | set `+v` | 不回显后续命令 |'
 - en: '| `FOR %%VAR IN (LIST) DO` | for var in [list]; do | "for" loop |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `FOR %%VAR IN (LIST) DO` | for var in [list]; do | "for" 循环 |'
 - en: '| `:LABEL` | none (unnecessary) | label |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `:LABEL` | none (unnecessary) | 标签 |'
 - en: '| `GOTO` | none (use a function) | jump to another location in the script |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `GOTO` | none (use a function) | 跳转到脚本中的另一个位置 |'
 - en: '| `PAUSE` | sleep | pause or wait an interval |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `PAUSE` | sleep | 暂停或等待一段时间 |'
 - en: '| `CHOICE` | case or select | menu choice |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `CHOICE` | case 或 select | 菜单选择 |'
 - en: '| `IF` | if | if-test |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `IF` | if | if测试 |'
 - en: '| `` IF EXIST `*FILENAME*` `` | if [ -e filename ] | test if file exists |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `` IF EXIST `*FILENAME*` `` | if [ -e filename ] | 测试文件是否存在 |'
 - en: '| `IF !%N==!` | if [ -z "$N" ] | if replaceable parameter "N" not present |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `IF !%N==!` | if [ -z "$N" ] | 如果可替换参数 "N" 不存在 |'
 - en: '| `CALL` | source or . (dot operator) | "include" another script |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `CALL` | source 或 . (点操作符) | "包含"另一个脚本 |'
 - en: '| `COMMAND /C` | source or . (dot operator) | "include" another script (same
     as CALL) |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `COMMAND /C` | source 或 . (点操作符) | "包含"另一个脚本（与 CALL 相同） |'
 - en: '| `SET` | export | set an environmental variable |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `SET` | export | 设置环境变量 |'
 - en: '| `SHIFT` | shift | left shift command-line argument list |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `SHIFT` | shift | 左移命令行参数列表 |'
 - en: '| `SGN` | -lt or -gt | sign (of integer) |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `SGN` | -lt 或 -gt | 符号（整数） |'
 - en: '| `ERRORLEVEL` | $? | exit status |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `ERRORLEVEL` | $? | 退出状态 |'
 - en: '| `CON` | `stdin` | "console" (`stdin`) |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `CON` | `stdin` | "控制台"（`stdin`） |'
 - en: '| `PRN` | `/dev/lp0` | (generic) printer device |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `PRN` | `/dev/lp0` | (通用) 打印机设备 |'
 - en: '| `LPT1` | `/dev/lp0` | first printer device |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `LPT1` | `/dev/lp0` | 第一台打印机设备 |'
 - en: '| `COM1` | `/dev/ttyS0` | first serial port |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `COM1` | `/dev/ttyS0` | 第一台串行端口 |'
 - en: Batch files usually contain DOS commands. These must be translated into their
     UNIX equivalents in order to convert a batch file into a shell script.
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: 批处理文件通常包含DOS命令。这些命令必须翻译成它们的UNIX等效命令，以便将批处理文件转换为shell脚本。
 - en: '**Table N-2\. DOS commands and their UNIX equivalents**'
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表N-2. DOS命令及其UNIX等效** '
 - en: '| DOS Command | UNIX Equivalent | Effect |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| DOS命令 | UNIX等效命令 | 影响 |'
 - en: '| --- | --- | --- |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `ASSIGN` | ln | link file or directory |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `ASSIGN` | ln | 链接文件或目录 |'
 - en: '| `ATTRIB` | chmod | change file permissions |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `ATTRIB` | chmod | 更改文件权限 |'
 - en: '| `CD` | cd | change directory |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `CD` | cd | 改变目录 |'
 - en: '| `CHDIR` | cd | change directory |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `CHDIR` | cd | 改变目录 |'
 - en: '| `CLS` | clear | clear screen |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `CLS` | clear | 清屏 |'
 - en: '| `COMP` | diff, comm, cmp | file compare |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `COMP` | diff, comm, cmp | 文件比较 |'
 - en: '| `COPY` | cp | file copy |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `COPY` | cp | 文件复制 |'
 - en: '| `Ctl-C` | Ctl-C | break (signal) |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctl-C` | Ctl-C | 中断（信号） |'
 - en: '| `Ctl-Z` | Ctl-D | EOF (end-of-file) |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `Ctl-Z` | Ctl-D | 文件结束（EOF） |'
 - en: '| `DEL` | rm | delete file(s) |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '| `DEL` | rm | 删除文件（们） |'
 - en: '| `DELTREE` | rm -rf | delete directory recursively |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `DELTREE` | rm -rf | 递归删除目录 |'
 - en: '| `DIR` | ls -l | directory listing |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `DIR` | ls -l | 目录列表 |'
 - en: '| `ERASE` | rm | delete file(s) |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `ERASE` | rm | 删除文件（们） |'
 - en: '| `EXIT` | exit | exit current process |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '| `EXIT` | exit | 退出当前进程 |'
 - en: '| `FC` | comm, cmp | file compare |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `FC` | comm, cmp | 文件比较 |'
 - en: '| `FIND` | grep | find strings in files |'
+  id: totrans-61
   prefs: []
   type: TYPE_TB
+  zh: '| `FIND` | grep | 在文件中查找字符串 |'
 - en: '| `MD` | mkdir | make directory |'
+  id: totrans-62
   prefs: []
   type: TYPE_TB
+  zh: '| `MD` | mkdir | 创建目录 |'
 - en: '| `MKDIR` | mkdir | make directory |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| `MKDIR` | mkdir | 创建目录 |'
 - en: '| `MORE` | more | text file paging filter |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| `MORE` | more | 文本文件分页过滤器 |'
 - en: '| `MOVE` | mv | move |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `MOVE` | mv | 移动 |'
 - en: '| `PATH` | $PATH | path to executables |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '| `PATH` | $PATH | 可执行文件路径 |'
 - en: '| `REN` | mv | rename (move) |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `REN` | mv | 重命名（移动） |'
 - en: '| `RENAME` | mv | rename (move) |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `RENAME` | mv | 重命名（移动） |'
 - en: '| `RD` | rmdir | remove directory |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '| `RD` | rmdir | 删除目录 |'
 - en: '| `RMDIR` | rmdir | remove directory |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `RMDIR` | rmdir | 删除目录 |'
 - en: '| `SORT` | sort | sort file |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `SORT` | sort | 排序文件 |'
 - en: '| `TIME` | date | display system time |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '| `TIME` | date | 显示系统时间 |'
 - en: '| `TYPE` | cat | output file to `stdout` |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `TYPE` | cat | 输出文件到`stdout` |'
 - en: '| `XCOPY` | cp | (extended) file copy |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `XCOPY` | cp | （扩展）文件复制 |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Virtually all UNIX
     and shell operators and commands have many more options and enhancements than
     their DOS and batch file counterparts. Many DOS batch files rely on auxiliary
     utilities, such as **ask.com**, a crippled counterpart to [read](internal.html#READREF).DOS
     supports only a very limited and incompatible subset of filename [wild-card expansion](globbingref.html),
     recognizing just the * and ? characters. |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 几乎所有UNIX和shell操作员和命令都比它们的DOS和批处理文件对应物有更多的选项和增强功能。许多DOS批处理文件依赖于辅助工具，例如**ask.com**，这是[read](internal.html#READREF)的受损对应物。DOS只支持一个非常有限且不兼容的文件名[通配符扩展](globbingref.html)子集，仅识别*和?字符。
+    |'
 - en: Converting a DOS batch file into a shell script is generally straightforward,
     and the result ofttimes reads better than the original.
+  id: totrans-76
   prefs: []
   type: TYPE_NORMAL
+  zh: 将DOS批处理文件转换为shell脚本通常很简单，而且结果往往比原始文件读起来更好。
 - en: '**Example N-1\. VIEWDATA.BAT: DOS Batch File**'
+  id: totrans-77
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例N-1\. VIEWDATA.BAT: DOS批处理文件**'
 - en: '|  [PRE0]  |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: The script conversion is somewhat of an improvement. [[1]](#FTN.AEN24713)
+  id: totrans-79
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本转换是一种某种程度的改进。[[1]](#FTN.AEN24713)
 - en: '**Example N-2\. *viewdata.sh*: Shell Script Conversion of VIEWDATA.BAT**'
+  id: totrans-80
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例N-2\. *viewdata.sh*: VIEWDATA.BAT的Shell脚本转换**'
 - en: '|  [PRE1]  |'
+  id: totrans-81
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Ted Davis' [Shell Scripts on the PC](http://www.maem.umr.edu/batch/) site had
     a set of comprehensive tutorials on the old-fashioned art of batch file programming.
     Unfortunately the page has vanished without a trace.
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: Ted Davis的[PC上的Shell脚本](http://www.maem.umr.edu/batch/)网站有一套关于旧式批处理文件编程艺术的全面教程。不幸的是，该页面已经无影无踪。
 - en: Notes
+  id: totrans-83
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意事项
 - en: '| [[1]](dosbatch.html#AEN24713) | Various readers have suggested modifications
     of the above batch file to prettify it and make it more compact and efficient.
     In the opinion of the *ABS Guide* author, this is wasted effort. A Bash script
     can access a DOS filesystem, or even an NTFS partition (with the help of [ntfs-3g](http://www.ntfs-3g.org))
     to do batch or scripted operations. |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](dosbatch.html#AEN24713) | 众多读者建议对上述批处理文件进行修改以使其更美观、更紧凑和更高效。在*ABS指南*作者的看法中，这是徒劳的努力。Bash脚本可以访问DOS文件系统，甚至可以通过[ntfs-3g](http://www.ntfs-3g.org)帮助访问NTFS分区来进行批处理或脚本操作。
+    |'

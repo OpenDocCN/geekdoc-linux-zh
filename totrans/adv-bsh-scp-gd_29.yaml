@@ -1,143 +1,229 @@
 - en: Chapter 24\. Functions
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第24章。函数
 - en: 原文：[https://tldp.org/LDP/abs/html/functions.html](https://tldp.org/LDP/abs/html/functions.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/functions.html](https://tldp.org/LDP/abs/html/functions.html)
 - en: '**Table of Contents**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 24.1\. [Complex Functions and Function Complexities](complexfunct.html)
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.1\. [复杂函数和函数复杂性](complexfunct.html)
 - en: 24.2\. [Local Variables](localvar.html)
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.2\. [局部变量](localvar.html)
 - en: 24.3\. [Recursion Without Local Variables](recurnolocvar.html)
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 24.3\. [无局部变量的递归](recurnolocvar.html)
 - en: Like "real" programming languages, Bash has functions, though in a somewhat
     limited implementation. A function is a subroutine, a [code block](special-chars.html#CODEBLOCKREF)
     that implements a set of operations, a "black box" that performs a specified task.
     Wherever there is repetitive code, when a task repeats with only slight variations
     in procedure, then consider using a function.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 类似于“真实”的编程语言，Bash 有函数，尽管实现上有些受限。函数是一个子程序，一个实现一系列操作的 [代码块](special-chars.html#CODEBLOCKREF)，一个执行指定任务的“黑盒”。无论哪里有重复的代码，当任务在程序上只有细微的变化时，考虑使用函数。
 - en: '**function** `*function_name*` {'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**函数** `*function_name*` {'
 - en: '`*command*`...'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*command*`...'
 - en: '}'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '}'
 - en: or
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 或者
 - en: '`*function_name*` () {'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*function_name*` () {'
 - en: '`*command*`...'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*command*`...'
 - en: '}'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '}'
 - en: This second form will cheer the hearts of C programmers (and is more [portable](portabilityissues.html)).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 这种第二种形式将使C语言程序员的内心感到欣慰（并且更[可移植](portabilityissues.html)）。
 - en: As in C, the function's opening bracket may optionally appear on the second
     line.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 与C语言一样，函数的起始括号可以可选地出现在第二行。
 - en: '`*function_name*` ()'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*function_name*` ()'
 - en: '{'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '{'
 - en: '`*command*`...'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '`*command*`...'
 - en: '}'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '}'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A function may
     be "compacted" into a single line.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 函数可以被“压缩”成单行。'
 - en: '&#124;  [PRE0]  &#124;'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE0]  &#124;'
 - en: In this case, however, a *semicolon* must follow the final command in the function.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 然而，在这种情况下，函数中的最后一个命令后面必须跟一个分号。
 - en: '&#124;  [PRE1]  &#124;'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE1]  &#124;'
 - en: '|'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Functions are called, *triggered*, simply by invoking their names. *A function
     call is equivalent to a command.*
+  id: totrans-25
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数通过调用其名称来调用，*触发*，函数调用等同于一个命令。
 - en: '**Example 24-1\. Simple functions**'
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 24-1。简单函数**'
 - en: '|  [PRE2]  |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: The function definition must precede the first call to it. There is no method
     of "declaring" the function, as, for example, in C.
+  id: totrans-28
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数定义必须出现在对其第一次调用的前面。没有像C语言中那样的“声明”函数的方法。
 - en: '|  [PRE3]  |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Functions may not
     be empty!'
+  id: totrans-30
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 函数可能不为空！'
 - en: '&#124;  [PRE4]  &#124;'
+  id: totrans-31
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE4]  &#124;'
 - en: '|'
+  id: totrans-32
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: It is even possible to nest a function within another function, although this
     is not very useful.
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 甚至可以在一个函数内部嵌套另一个函数，尽管这并不很有用。
 - en: '|  [PRE5]  |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Function declarations can appear in unlikely places, even where a command would
     otherwise go.
+  id: totrans-35
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数声明可以出现在不太可能的位置，甚至是在命令本应出现的地方。
 - en: '|  [PRE6]  |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: Function names can take strange forms.
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 函数名可以采取奇怪的形式。
 - en: '|  [PRE7]  |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: See also [Example A-56](contributed-scripts.html#GRONSFELD)
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 参见[示例 A-56](contributed-scripts.html#GRONSFELD)
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | What happens when
     different versions of the same function appear in a script?'
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 当脚本中出现同一函数的不同版本时会发生什么？'
 - en: '&#124;  [PRE8]  &#124;'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE8]  &#124;'
 - en: '|'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'

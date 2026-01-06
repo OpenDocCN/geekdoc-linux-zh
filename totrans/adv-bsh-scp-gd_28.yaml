@@ -1,108 +1,174 @@
 - en: Chapter 23\. Process Substitution
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第23章。进程替换
 - en: 原文：[https://tldp.org/LDP/abs/html/process-sub.html](https://tldp.org/LDP/abs/html/process-sub.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/process-sub.html](https://tldp.org/LDP/abs/html/process-sub.html)
 - en: '[Piping](special-chars.html#PIPEREF) the `stdout` of a command into the `stdin`
     of another is a powerful technique. But, what if you need to pipe the `stdout`
     of *multiple* commands? This is where `*process substitution*` comes in.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '[管道](special-chars.html#PIPEREF) 命令的 `stdout` 到另一个命令的 `stdin` 是一种强大的技术。但是，如果你需要将多个命令的
+    `stdout` 进行管道传输呢？这就是 `*进程替换*` 发挥作用的地方。'
 - en: '*Process substitution* feeds the output of a [process](special-chars.html#PROCESSREF)
     (or processes) into the `stdin` of another process.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*进程替换* 将一个 [进程](special-chars.html#PROCESSREF)（或多个进程）的输出喂入另一个进程的 `stdin`。'
 - en: '**Template**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**模板**'
 - en: Command list enclosed within parentheses
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 括号内的命令列表
 - en: '**>(command_list)**'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '**>(命令列表)**'
 - en: '**<(command_list)**'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '**<(命令列表)**'
 - en: Process substitution uses `/dev/fd/<n>` files to send the results of the process(es)
     within parentheses to another process. [[1]](#FTN.AEN18244)
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 进程替换使用 `/dev/fd/<n>` 文件将括号内进程的结果发送到另一个进程。 [[1]](#FTN.AEN18244)
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | There is *no*
     space between the the "<" or ">" and the parentheses. Space there would give an
     error message. |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| ![警告](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | "<" 或 ">" 和括号之间没有空格。那里有空格会给出错误信息。
+    |'
 - en: '|  [PRE0]  |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bash creates a
     pipe with two [file descriptors](io-redirection.html#FDREF), `--fIn` and `fOut--`.
     The `stdin` of [true](internal.html#TRUEREF) connects to `fOut` (dup2(fOut, 0)),
     then Bash passes a `/dev/fd/fIn` argument to **echo**. On systems lacking `/dev/fd/<n>`
     files, Bash may use temporary files. (Thanks, S.C.) |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bash 创建了一个包含两个 [文件描述符](io-redirection.html#FDREF)，`--fIn`
+    和 `fOut--` 的管道。[true](internal.html#TRUEREF) 的 `stdin` 连接到 `fOut`（dup2(fOut, 0)），然后
+    Bash 将 `/dev/fd/fIn` 参数传递给 **echo**。在缺少 `/dev/fd/<n>` 文件系统的系统上，Bash 可能会使用临时文件。（感谢，S.C.）
+    |'
 - en: Process substitution can compare the output of two different commands, or even
     the output of different options to the same command.
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 进程替换可以比较两个不同命令的输出，甚至可以比较同一命令不同选项的输出。
 - en: '|  [PRE1]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Process substitution can compare the contents of two directories -- to see which
     filenames are in one, but not the other.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 进程替换可以比较两个目录的内容 -- 看看哪些文件名在一个目录中，但在另一个目录中不存在。
 - en: '|  [PRE2]  |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: 'Some other usages and uses of process substitution:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 进程替换的一些其他用法和用途：
 - en: '|  [PRE3]  |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: '|  [PRE4]  |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: '|  [PRE5]  |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: Here is a method of circumventing the problem of an [*echo* piped to a *while-read
     loop*](gotchas.html#BADREAD0) running in a subshell.
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 这里是一种绕过在子shell中运行的[*echo*管道到*while-read循环*](gotchas.html#BADREAD0)问题的方法。
 - en: '**Example 23-1\. Code block redirection without forking**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 23-1\. 无fork的代码块重定向**'
 - en: '|  [PRE6]  |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: This is a similar example.
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: 这是一个类似的例子。
 - en: '**Example 23-2\. Redirecting the output of *process substitution* into a loop.**'
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 23-2\. 将 *进程替换* 的输出重定向到循环中。**'
 - en: '|  [PRE7]  |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE7]  |'
 - en: A reader sent in the following interesting example of process substitution.
+  id: totrans-26
   prefs: []
   type: TYPE_NORMAL
+  zh: 一位读者发送了以下有趣的进程替换示例。
 - en: '|  [PRE8]  |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE8]  |'
 - en: Notes
+  id: totrans-28
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: '| [[1]](process-sub.html#AEN18244) | This has the same effect as a [named pipe](extmisc.html#NAMEDPIPEREF)
     (temp file), and, in fact, named pipes were at one time used in process substitution.
     |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](process-sub.html#AEN18244) | 这与一个 [命名管道](extmisc.html#NAMEDPIPEREF)（临时文件）具有相同的效果，实际上，命名管道曾经被用于进程替换。
+    |'

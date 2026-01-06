@@ -1,155 +1,249 @@
 - en: Chapter 33\. Options
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第 33 章。选项
 - en: 原文：[https://tldp.org/LDP/abs/html/options.html](https://tldp.org/LDP/abs/html/options.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/options.html](https://tldp.org/LDP/abs/html/options.html)
 - en: Options are settings that change shell and/or script behavior.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 选项是改变 shell 和/或脚本行为的设置。
 - en: The [set](internal.html#SETREF) command enables options within a script. At
     the point in the script where you want the options to take effect, use **set -o
     option-name** or, in short form, **set -option-abbrev**. These two forms are equivalent.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: The [set](internal.html#SETREF) 命令允许在脚本中启用选项。在脚本中你想让选项生效的点，使用 **set -o option-name**
+    或简短形式 **set -option-abbrev**。这两种形式是等效的。
 - en: '|  [PRE0]  |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '|  [PRE1]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | To *disable* an
     option within a script, use **set +o option-name** or **set +option-abbrev**.
     |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 要在脚本中 *禁用* 选项，使用
+    **set +o option-name** 或 **set +option-abbrev**。|'
 - en: '|  [PRE2]  |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: An alternate method of enabling options in a script is to specify them immediately
     following the `*#!*` script header.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在脚本中启用选项的另一种方法是立即在 `*#!*` 脚本标题之后指定它们。
 - en: '|  [PRE3]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: It is also possible to enable script options from the command line. Some options
     that will not work with **set** are available this way. Among these are `*-i*`,
     force script to run interactive.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 还可以从命令行启用脚本选项。一些与 **set** 不兼容的选项可以通过这种方式使用。其中一些是 `*-i*`，强制脚本以交互式方式运行。
 - en: '`**bash -v script-name**`'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**bash -v script-name**`'
 - en: '`**bash -o verbose script-name**`'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**bash -o verbose script-name**`'
 - en: The following is a listing of some useful options. They may be specified in
     either abbreviated form (preceded by a single dash) or by complete name (preceded
     by a *double* dash or by `-o`).
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下是一些有用的选项列表。它们可以是缩写形式（以单个短横线开头）或完整名称（以*双*短横线或`-o`开头）。
 - en: '**Table 33-1\. Bash options**'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 33-1\. Bash 选项**'
 - en: '| Abbreviation | Name | Effect |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| 缩写 | 名称 | 影响 |'
 - en: '| --- | --- | --- |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `-B` | brace expansion | *Enable* [brace expansion](special-chars.html#BRACEEXPREF)
     (default setting = *on*) |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `-B` | brace expansion | *启用* [花括号展开](special-chars.html#BRACEEXPREF)（默认设置
+    = *开启*）|'
 - en: '| `+B` | brace expansion | *Disable* brace expansion |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `+B` | 花括号展开 | *禁用* 花括号展开 |'
 - en: '| `-C` | noclobber | Prevent overwriting of files by redirection (may be overridden
     by >&#124;) |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `-C` | noclobber | 防止通过重定向覆盖文件（可能被 >&#124; 覆盖）|'
 - en: '| `-D` | (none) | List double-quoted strings prefixed by $, but do not execute
     commands in script |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| `-D` | (无) | 列出以 $ 开头的双引号字符串，但在脚本中不执行命令 |'
 - en: '| `-a` | allexport | Export all defined variables |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '| `-a` | allexport | 导出所有定义的变量 |'
 - en: '| `-b` | notify | Notify when jobs running in background terminate (not of
     much use in a script) |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | 通知 | 当在后台运行的任务终止时通知（在脚本中不太有用）|'
 - en: '| `-c ...` | (none) | Read commands from **...** |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| `-c ...` | (无) | 从 **...** 读取命令 |'
 - en: '| `checkjobs` |   | Informs user of any open [jobs](x9644.html#JOBSREF) upon
     shell exit. Introduced in [version 4](bashver4.html#BASH4REF) of Bash, and still
     "experimental." *Usage:* shopt -s checkjobs (*Caution:* may hang!) |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| `checkjobs` |   | 在 shell 退出时通知用户任何打开的 [作业](x9644.html#JOBSREF)。在 Bash 的
+    [版本 4](bashver4.html#BASH4REF) 中引入，并且仍然是“实验性的”。*用法:* shopt -s checkjobs (*注意:*
+    可能会挂起!) |'
 - en: '| `-e` | errexit | Abort script at first error, when a command exits with non-zero
     status (except in [until](loops1.html#UNTILLOOPREF) or [while loops](loops1.html#WHILELOOPREF),
     [if-tests](testconstructs.html#TESTCONSTRUCTS1), [list constructs](list-cons.html#LCONS1))
     |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | errexit | 在命令以非零状态退出时（除了在 [until](loops1.html#UNTILLOOPREF) 或 [while
+    loops](loops1.html#WHILELOOPREF), [if-tests](testconstructs.html#TESTCONSTRUCTS1),
+    [list constructs](list-cons.html#LCONS1) 中）终止脚本 |'
 - en: '| `-f` | noglob | Filename expansion (globbing) disabled |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | noglob | 禁用文件名展开（通配符）|'
 - en: '| `globstar` | [*globbing* star-match](bashver4.html#GLOBSTARREF) | Enables
     the ** [globbing](globbingref.html) operator ([version 4+](bashver4.html#BASH4REF)
     of Bash). *Usage:* shopt -s globstar |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `globstar` | [*通配符星号匹配*](bashver4.html#GLOBSTARREF) | 启用 **[通配符](globbingref.html)
+    操作符 ([version 4+](bashver4.html#BASH4REF) 的 Bash)。*用法:* shopt -s globstar |'
 - en: '| `-i` | interactive | Script runs in *interactive* mode |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-i` | interactive | 脚本以 *交互式* 模式运行 |'
 - en: '| `-n` | noexec | Read commands in script, but do not execute them (syntax
     check) |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-n` | noexec | 读取脚本中的命令，但不执行它们（语法检查）|'
 - en: '| `-o Option-Name` | (none) | Invoke the *Option-Name* option |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-o Option-Name` | (无) | 调用 *Option-Name* 选项 |'
 - en: '| `-o posix` | POSIX | Change the behavior of Bash, or invoked script, to conform
     to [POSIX](sha-bang.html#POSIX2REF) standard. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-o posix` | POSIX | 将 Bash 或调用的脚本的行为更改为符合 [POSIX](sha-bang.html#POSIX2REF)
+    标准。|'
 - en: '| `-o pipefail` | pipe failure | Causes a pipeline to return the [exit status](exit-status.html#EXITSTATUSREF)
     of the last command in the pipe that returned a non-zero return value. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-o pipefail` | 管道失败 | 导致管道返回管道中最后一个返回非零返回值的命令的[退出状态](exit-status.html#EXITSTATUSREF)
+    |'
 - en: '| `-p` | privileged | Script runs as "suid" (caution!) |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | 特权 | 脚本以 "suid" 运行（注意！） |'
 - en: '| `-r` | restricted | Script runs in *restricted* mode (see [Chapter 22](restricted-sh.html)).
     |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `-r` | 限制 | 脚本在 *限制* 模式下运行（见[第22章](restricted-sh.html)） |'
 - en: '| `-s` | stdin | Read commands from `stdin` |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `-s` | 标准输入 | 从 `stdin` 读取命令 |'
 - en: '| `-t` | (none) | Exit after first command |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | (无) | 执行第一个命令后退出 |'
 - en: '| `-u` | nounset | Attempt to use undefined variable outputs error message,
     and forces an exit |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `-u` | nounset | 尝试使用未定义的变量会输出错误信息，并强制退出 |'
 - en: '| `-v` | verbose | Print each command to `stdout` before executing it |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `-v` | 详细 | 在执行之前将每个命令打印到 `stdout` |'
 - en: '| `-x` | xtrace | Similar to `-v`, but expands commands |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `-x` | 跟踪 | 与 `-v` 类似，但会展开命令 |'
 - en: '| `-` | (none) | End of options flag. All other arguments are [positional parameters](internalvariables.html#POSPARAMREF).
     |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `-` | (无) | 选项标志的结束。所有其他参数都是[位置参数](internalvariables.html#POSPARAMREF) |'
 - en: '| `--` | (none) | Unset positional parameters. If arguments given (`*-- arg1
     arg2*`), positional parameters set to arguments. |'
+  id: totrans-41
   prefs: []
   type: TYPE_TB
+  zh: '| `--` | (无) | 取消位置参数。如果提供了参数（`*-- arg1 arg2*`），则位置参数设置为参数 |'

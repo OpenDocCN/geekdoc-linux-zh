@@ -1,66 +1,104 @@
 - en: Chapter 5\. Quoting
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第五章. 引号
 - en: 原文：[https://tldp.org/LDP/abs/html/quoting.html](https://tldp.org/LDP/abs/html/quoting.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/quoting.html](https://tldp.org/LDP/abs/html/quoting.html)
 - en: '**Table of Contents**'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 5.1\. [Quoting Variables](quotingvar.html)
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 5.1\. [引号变量](quotingvar.html)
 - en: 5.2\. [Escaping](escapingsection.html)
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 5.2\. [转义](escapingsection.html)
 - en: Quoting means just that, bracketing a string in quotes. This has the effect
     of protecting [special characters](special-chars.html#SCHARLIST1) in the string
     from reinterpretation or expansion by the shell or shell script. (A character
     is "special" if it has an interpretation other than its literal meaning. For example,
     the [asterisk *](special-chars.html#ASTERISKREF) represents a *wild card* character
     in [globbing](globbingref.html) and [Regular Expressions](regexp.html#REGEXREF)).
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 引号的意思就是用引号括起一个字符串。这会使得字符串中的 [特殊字符](special-chars.html#SCHARLIST1) 免受shell或shell脚本的重新解释或扩展。（如果一个字符除了其字面意义外还有其他解释，则该字符是“特殊”的。例如，[星号
+    *](special-chars.html#ASTERISKREF) 在 [通配符匹配](globbingref.html) 和 [正则表达式](regexp.html#REGEXREF)
+    中代表通配符。）
 - en: '|  [PRE0]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '|'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: In everyday speech or writing, when we "quote" a phrase, we set it apart and
     give it special meaning. In a Bash script, when we *quote* a string, we set it
     apart and protect its *literal* meaning.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在日常口语或写作中，当我们“引用”一个短语时，我们会将其区分开来并赋予它特殊的意义。在Bash脚本中，当我们 *引用* 一个字符串时，我们会将其区分开来并保护其
+    *字面* 意义。
 - en: '|'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Certain programs and utilities reinterpret or expand special characters in a
     quoted string. An important use of quoting is protecting a command-line parameter
     from the shell, but still letting the calling program expand it.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 某些程序和实用工具会重新解释或扩展引号字符串中的特殊字符。引号的一个重要用途是保护命令行参数免受shell的影响，同时仍然允许调用程序对其进行扩展。
 - en: '|  [PRE1]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: Note that the unquoted `**grep [Ff]irst *.txt**` works under the Bash shell.
     [[1]](#FTN.AEN2609)
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 注意，未引用的 `**grep [Ff]irst *.txt**` 在Bash shell下是有效的。[[1]](#FTN.AEN2609)
 - en: Quoting can also suppress [echo's](internal.html#ECHOREF) "appetite" for newlines.
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 引号还可以抑制 [echo的](internal.html#ECHOREF) 对新行的“渴望”。
 - en: '|  [PRE2]  |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Notes
+  id: totrans-15
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](quoting.html#AEN2609) | Unless there is a file named `first` in the
     current working directory. Yet another reason to *quote*. (Thank you, Harald Koenig,
     for pointing this out. |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](quoting.html#AEN2609) | 除非当前工作目录中存在名为 `first` 的文件。这是引用的另一个原因。（感谢Harald
+    Koenig指出这一点。|'

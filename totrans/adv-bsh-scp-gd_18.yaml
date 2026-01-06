@@ -1,1588 +1,2388 @@
 - en: Part 4\. Commands
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第四部分。命令
 - en: 原文：[https://tldp.org/LDP/abs/html/part4.html](https://tldp.org/LDP/abs/html/part4.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/part4.html](https://tldp.org/LDP/abs/html/part4.html)
 - en: Mastering the commands on your Linux machine is an indispensable prelude to
     writing effective shell scripts.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 掌握Linux机器上的命令是编写有效shell脚本不可或缺的序曲。
 - en: 'This section covers the following commands:'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 本节涵盖以下命令：
 - en: '[.](special-chars.html#DOTREF) (See also [source](internal.html#SOURCEREF))'
+  id: totrans-4
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[.](special-chars.html#DOTREF) (See also [source](internal.html#SOURCEREF))'
 - en: '[ac](system.html#ACREF)'
+  id: totrans-5
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ac](system.html#ACREF)'
 - en: '[adduser](system.html#USERADDREF)'
+  id: totrans-6
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[adduser](system.html#USERADDREF)'
 - en: '[agetty](system.html#AGETTYREF)'
+  id: totrans-7
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[agetty](system.html#AGETTYREF)'
 - en: '[agrep](textproc.html#AGREPREF)'
+  id: totrans-8
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[agrep](textproc.html#AGREPREF)'
 - en: '[ar](filearchiv.html#ARREF)'
+  id: totrans-9
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ar](filearchiv.html#ARREF)'
 - en: '[arch](system.html#ARCHREF)'
+  id: totrans-10
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[arch](system.html#ARCHREF)'
 - en: '[at](timedate.html#ATREF)'
+  id: totrans-11
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[at](timedate.html#ATREF)'
 - en: '[autoload](x9644.html#AUTOLOADREF)'
+  id: totrans-12
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[autoload](x9644.html#AUTOLOADREF)'
 - en: '[awk](awk.html#AWKREF) (See also [Using **awk** for math operations](mathc.html#AWKMATH))'
+  id: totrans-13
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[awk](awk.html#AWKREF) (See also [Using **awk** for math operations](mathc.html#AWKMATH))'
 - en: '[badblocks](system.html#BADBLOCKSREF)'
+  id: totrans-14
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[badblocks](system.html#BADBLOCKSREF)'
 - en: '[banner](extmisc.html#BANNERREF)'
+  id: totrans-15
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[banner](extmisc.html#BANNERREF)'
 - en: '[basename](filearchiv.html#BASENAMEREF)'
+  id: totrans-16
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[basename](filearchiv.html#BASENAMEREF)'
 - en: '[batch](timedate.html#BATCHREF)'
+  id: totrans-17
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[batch](timedate.html#BATCHREF)'
 - en: '[bc](mathc.html#BCREF)'
+  id: totrans-18
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bc](mathc.html#BCREF)'
 - en: '[bg](x9644.html#BGREF)'
+  id: totrans-19
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bg](x9644.html#BGREF)'
 - en: '[bind](internal.html#BINDREF)'
+  id: totrans-20
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bind](internal.html#BINDREF)'
 - en: '[bison](textproc.html#BISONREF)'
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bison](textproc.html#BISONREF)'
 - en: '[builtin](x9644.html#BLTREF)'
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[builtin](x9644.html#BLTREF)'
 - en: '[bzgrep](textproc.html#BZGREPREF)'
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bzgrep](textproc.html#BZGREPREF)'
 - en: '[bzip2](filearchiv.html#BZIPREF)'
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[bzip2](filearchiv.html#BZIPREF)'
 - en: '[cal](timedate.html#CALREF)'
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cal](timedate.html#CALREF)'
 - en: '[caller](internal.html#CALLERREF)'
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[caller](internal.html#CALLERREF)'
 - en: '[cat](basic.html#CATREF)'
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cat](basic.html#CATREF)'
 - en: '[cd](internal.html#CDREF)'
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cd](internal.html#CDREF)'
 - en: '[chattr](basic.html#CHATTRREF)'
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chattr](basic.html#CHATTRREF)'
 - en: '[chfn](communications.html#CHFNREF)'
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chfn](communications.html#CHFNREF)'
 - en: '[chgrp](system.html#CHGRPREF)'
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chgrp](system.html#CHGRPREF)'
 - en: '[chkconfig](system.html#CHKCONFIGREF)'
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chkconfig](system.html#CHKCONFIGREF)'
 - en: '[chmod](basic.html#CHMODREF)'
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chmod](basic.html#CHMODREF)'
 - en: '[chown](system.html#CHOWNREF)'
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chown](system.html#CHOWNREF)'
 - en: '[chroot](system.html#CHROOTREF)'
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[chroot](system.html#CHROOTREF)'
 - en: '[cksum](filearchiv.html#CKSUMREF)'
+  id: totrans-36
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cksum](filearchiv.html#CKSUMREF)'
 - en: '[clear](terminalccmds.html#CLEARREF)'
+  id: totrans-37
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[clear](terminalccmds.html#CLEARREF)'
 - en: '[clock](timedate.html#CLOCKREF)'
+  id: totrans-38
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[clock](timedate.html#CLOCKREF)'
 - en: '[cmp](filearchiv.html#CMPREF)'
+  id: totrans-39
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cmp](filearchiv.html#CMPREF)'
 - en: '[col](textproc.html#COLREF)'
+  id: totrans-40
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[col](textproc.html#COLREF)'
 - en: '[colrm](textproc.html#COLRMREF)'
+  id: totrans-41
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[colrm](textproc.html#COLRMREF)'
 - en: '[column](textproc.html#COLUMNREF)'
+  id: totrans-42
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[column](textproc.html#COLUMNREF)'
 - en: '[comm](filearchiv.html#COMMREF)'
+  id: totrans-43
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[comm](filearchiv.html#COMMREF)'
 - en: '[command](x9644.html#COMMANDREF)'
+  id: totrans-44
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[command](x9644.html#COMMANDREF)'
 - en: '[compgen](tabexpansion.html#COMPGENREF)'
+  id: totrans-45
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[compgen](tabexpansion.html#COMPGENREF)'
 - en: '[complete](tabexpansion.html#COMPLETEREF)'
+  id: totrans-46
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[complete](tabexpansion.html#COMPLETEREF)'
 - en: '[compress](filearchiv.html#COMPRESSREF)'
+  id: totrans-47
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[compress](filearchiv.html#COMPRESSREF)'
 - en: '[coproc](bashver4.html#COPROCREF)'
+  id: totrans-48
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[coproc](bashver4.html#COPROCREF)'
 - en: '[cp](basic.html#CPREF)'
+  id: totrans-49
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cp](basic.html#CPREF)'
 - en: '[cpio](filearchiv.html#CPIOREF)'
+  id: totrans-50
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cpio](filearchiv.html#CPIOREF)'
 - en: '[cron](system.html#CRONREF)'
+  id: totrans-51
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cron](system.html#CRONREF)'
 - en: '[crypt](filearchiv.html#CRYPTREF)'
+  id: totrans-52
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[crypt](filearchiv.html#CRYPTREF)'
 - en: '[csplit](filearchiv.html#CSPLITREF)'
+  id: totrans-53
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[csplit](filearchiv.html#CSPLITREF)'
 - en: '[cu](communications.html#CUREF)'
+  id: totrans-54
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cu](communications.html#CUREF)'
 - en: '[cut](textproc.html#CUTREF)'
+  id: totrans-55
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[cut](textproc.html#CUTREF)'
 - en: '[date](timedate.html#DATEREF)'
+  id: totrans-56
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[date](timedate.html#DATEREF)'
 - en: '[dc](mathc.html#DCREF)'
+  id: totrans-57
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dc](mathc.html#DCREF)'
 - en: '[dd](extmisc.html#DDREF)'
+  id: totrans-58
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dd](extmisc.html#DDREF)'
 - en: '[debugfs](system.html#DEBUGFSREF)'
+  id: totrans-59
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[debugfs](system.html#DEBUGFSREF)'
 - en: '[declare](declareref.html)'
+  id: totrans-60
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[declare](declareref.html)'
 - en: '[depmod](system.html#DEPMODREF)'
+  id: totrans-61
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[depmod](system.html#DEPMODREF)'
 - en: '[df](system.html#DFREF)'
+  id: totrans-62
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[df](system.html#DFREF)'
 - en: '[dialog](assortedtips.html#DIALOGREF)'
+  id: totrans-63
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dialog](assortedtips.html#DIALOGREF)'
 - en: '[diff](filearchiv.html#DIFFREF)'
+  id: totrans-64
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[diff](filearchiv.html#DIFFREF)'
 - en: '[diff3](filearchiv.html#DIFF3REF)'
+  id: totrans-65
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[diff3](filearchiv.html#DIFF3REF)'
 - en: '[diffstat](filearchiv.html#DIFFSTATREF)'
+  id: totrans-66
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[diffstat](filearchiv.html#DIFFSTATREF)'
 - en: '[dig](communications.html#DIGREF)'
+  id: totrans-67
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dig](communications.html#DIGREF)'
 - en: '[dirname](filearchiv.html#DIRNAMEREF)'
+  id: totrans-68
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dirname](filearchiv.html#DIRNAMEREF)'
 - en: '[dirs](internal.html#DIRSD)'
+  id: totrans-69
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dirs](internal.html#DIRSD)'
 - en: '[disown](x9644.html#DISOWNREF)'
+  id: totrans-70
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[disown](x9644.html#DISOWNREF)'
 - en: '[dmesg](system.html#DMESGREF)'
+  id: totrans-71
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dmesg](system.html#DMESGREF)'
 - en: '[doexec](extmisc.html#DOEXECREF)'
+  id: totrans-72
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[doexec](extmisc.html#DOEXECREF)'
 - en: '[dos2unix](filearchiv.html#DOS2UNIXREF)'
+  id: totrans-73
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dos2unix](filearchiv.html#DOS2UNIXREF)'
 - en: '[du](system.html#DUREF)'
+  id: totrans-74
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[du](system.html#DUREF)'
 - en: '[dump](system.html#DUMPREF)'
+  id: totrans-75
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dump](system.html#DUMPREF)'
 - en: '[dumpe2fs](system.html#DUMPE2FSREF)'
+  id: totrans-76
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[dumpe2fs](system.html#DUMPE2FSREF)'
 - en: '[e2fsck](system.html#E2FSCKREF)'
+  id: totrans-77
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[e2fsck](system.html#E2FSCKREF)'
 - en: '[echo](internal.html#ECHOREF)'
+  id: totrans-78
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[echo](internal.html#ECHOREF)'
 - en: '[egrep](textproc.html#EGREPREF)'
+  id: totrans-79
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[egrep](textproc.html#EGREPREF)'
 - en: '[enable](x9644.html#ENABLEREF)'
+  id: totrans-80
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[enable](x9644.html#ENABLEREF)'
 - en: '[enscript](textproc.html#ENSCRIPTREF)'
+  id: totrans-81
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[enscript](textproc.html#ENSCRIPTREF)'
 - en: '[env](system.html#ENVVREF)'
+  id: totrans-82
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[env](system.html#ENVVREF)'
 - en: '[eqn](textproc.html#EQNREF)'
+  id: totrans-83
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[eqn](textproc.html#EQNREF)'
 - en: '[eval](internal.html#EVALREF)'
+  id: totrans-84
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[eval](internal.html#EVALREF)'
 - en: '[exec](internal.html#EXECREF)'
+  id: totrans-85
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[exec](internal.html#EXECREF)'
 - en: '[exit](internal.html#EXITREF) (Related topic: [exit status](exit-status.html#EXITSTATUSREF))'
+  id: totrans-86
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[exit](internal.html#EXITREF) (相关主题：[退出状态](exit-status.html#EXITSTATUSREF))'
 - en: '[expand](textproc.html#EXPANDREF)'
+  id: totrans-87
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[expand](textproc.html#EXPANDREF)'
 - en: '[export](internal.html#EXPORTREF)'
+  id: totrans-88
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[export](internal.html#EXPORTREF)'
 - en: '[expr](moreadv.html#EXPRREF)'
+  id: totrans-89
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[expr](moreadv.html#EXPRREF)'
 - en: '[factor](mathc.html#FACTORREF)'
+  id: totrans-90
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[factor](mathc.html#FACTORREF)'
 - en: '[false](internal.html#FALSEREF)'
+  id: totrans-91
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[false](internal.html#FALSEREF)'
 - en: '[fdformat](system.html#FDFORMATREF)'
+  id: totrans-92
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fdformat](system.html#FDFORMATREF)'
 - en: '[fdisk](system.html#FDISKREF)'
+  id: totrans-93
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fdisk](system.html#FDISKREF)'
 - en: '[fg](x9644.html#FGREF)'
+  id: totrans-94
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fg](x9644.html#FGREF)'
 - en: '[fgrep](textproc.html#FGREPREF)'
+  id: totrans-95
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fgrep](textproc.html#FGREPREF)'
 - en: '[file](filearchiv.html#FILEREF)'
+  id: totrans-96
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[file](filearchiv.html#FILEREF)'
 - en: '[find](moreadv.html#FINDREF)'
+  id: totrans-97
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[find](moreadv.html#FINDREF)'
 - en: '[finger](communications.html#FINGERREF)'
+  id: totrans-98
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[finger](communications.html#FINGERREF)'
 - en: '[flex](textproc.html#FLEXREF)'
+  id: totrans-99
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[flex](textproc.html#FLEXREF)'
 - en: '[flock](system.html#FLOCKREF)'
+  id: totrans-100
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[flock](system.html#FLOCKREF)'
 - en: '[fmt](textproc.html#FMTREF)'
+  id: totrans-101
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fmt](textproc.html#FMTREF)'
 - en: '[fold](textproc.html#FOLDREF)'
+  id: totrans-102
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fold](textproc.html#FOLDREF)'
 - en: '[free](system.html#FREEREF)'
+  id: totrans-103
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[free](system.html#FREEREF)'
 - en: '[fsck](system.html#FSCKREF)'
+  id: totrans-104
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fsck](system.html#FSCKREF)'
 - en: '[ftp](communications.html#FTPREF)'
+  id: totrans-105
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ftp](communications.html#FTPREF)'
 - en: '[fuser](system.html#FUSERREF)'
+  id: totrans-106
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[fuser](system.html#FUSERREF)'
 - en: '[getfacl](filearchiv.html#GETFACLREF)'
+  id: totrans-107
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[getfacl](filearchiv.html#GETFACLREF)'
 - en: '[getopt](extmisc.html#GETOPTY)'
+  id: totrans-108
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[getopt](extmisc.html#GETOPTY)'
 - en: '[getopts](internal.html#GETOPTSX)'
+  id: totrans-109
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[getopts](internal.html#GETOPTSX)'
 - en: '[gettext](textproc.html#GETTEXTREF)'
+  id: totrans-110
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[gettext](textproc.html#GETTEXTREF)'
 - en: '[getty](system.html#GETTYREF)'
+  id: totrans-111
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[getty](system.html#GETTYREF)'
 - en: '[gnome-mount](system.html#GNOMEMOUNTREF)'
+  id: totrans-112
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[gnome-mount](system.html#GNOMEMOUNTREF)'
 - en: '[grep](textproc.html#GREPREF)'
+  id: totrans-113
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[grep](textproc.html#GREPREF)'
 - en: '[groff](textproc.html#GROFFREF)'
+  id: totrans-114
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[groff](textproc.html#GROFFREF)'
 - en: '[groupmod](system.html#GROUPMODREF)'
+  id: totrans-115
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[groupmod](system.html#GROUPMODREF)'
 - en: '[groups](system.html#GROUPSCMDREF) (Related topic: the [$GROUPS](internalvariables.html#GROUPSREF)
     variable)'
+  id: totrans-116
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[groups](system.html#GROUPSCMDREF) (相关主题：变量[$GROUPS](internalvariables.html#GROUPSREF))'
 - en: '[gs](textproc.html#GSREF)'
+  id: totrans-117
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[gs](textproc.html#GSREF)'
 - en: '[gzip](filearchiv.html#GZIPREF)'
+  id: totrans-118
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[gzip](filearchiv.html#GZIPREF)'
 - en: '[halt](system.html#HALTREF)'
+  id: totrans-119
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[halt](system.html#HALTREF)'
 - en: '[hash](internal.html#HASHCMDREF)'
+  id: totrans-120
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hash](internal.html#HASHCMDREF)'
 - en: '[hdparm](system.html#HDPARMREF)'
+  id: totrans-121
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hdparm](system.html#HDPARMREF)'
 - en: '[head](textproc.html#HEADREF)'
+  id: totrans-122
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[head](textproc.html#HEADREF)'
 - en: '[help](internal.html#HELPREF)'
+  id: totrans-123
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[help](internal.html#HELPREF)'
 - en: '[hexdump](extmisc.html#HEXDUMPREF)'
+  id: totrans-124
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hexdump](extmisc.html#HEXDUMPREF)'
 - en: '[host](communications.html#HOSTREF)'
+  id: totrans-125
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[host](communications.html#HOSTREF)'
 - en: '[hostid](system.html#HOSTIDREF)'
+  id: totrans-126
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hostid](system.html#HOSTIDREF)'
 - en: '[hostname](system.html#HNAMEREF) (Related topic: the [$HOSTNAME](internalvariables.html#HOSTNAMEREF)
     variable)'
+  id: totrans-127
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hostname](system.html#HNAMEREF) (相关主题：变量[$HOSTNAME](internalvariables.html#HOSTNAMEREF))'
 - en: '[hwclock](timedate.html#HWCLOCKREF)'
+  id: totrans-128
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[hwclock](timedate.html#HWCLOCKREF)'
 - en: '[iconv](textproc.html#ICONVREF)'
+  id: totrans-129
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[iconv](textproc.html#ICONVREF)'
 - en: '[id](system.html#IDREF) (Related topic: the [$UID](internalvariables.html#UIDREF)
     variable)'
+  id: totrans-130
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[id](system.html#IDREF) (相关主题：变量[$UID](internalvariables.html#UIDREF))'
 - en: '[ifconfig](system.html#IFCONFIGREF)'
+  id: totrans-131
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ifconfig](system.html#IFCONFIGREF)'
 - en: '[info](basic.html#INFOREF)'
+  id: totrans-132
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[info](basic.html#INFOREF)'
 - en: '[infocmp](terminalccmds.html#INFOCMPREF)'
+  id: totrans-133
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[infocmp](terminalccmds.html#INFOCMPREF)'
 - en: '[init](system.html#INITREF)'
+  id: totrans-134
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[init](system.html#INITREF)'
 - en: '[insmod](system.html#INSMODREF)'
+  id: totrans-135
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[insmod](system.html#INSMODREF)'
 - en: '[install](filearchiv.html#INSTALLREF)'
+  id: totrans-136
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[install](filearchiv.html#INSTALLREF)'
 - en: '[ip](system.html#IPREF)'
+  id: totrans-137
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ip](system.html#IPREF)'
 - en: '[ipcalc](communications.html#IPCALCREF)'
+  id: totrans-138
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ipcalc](communications.html#IPCALCREF)'
 - en: '[iptables](system.html#IPTABLESREF)'
+  id: totrans-139
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[iptables](system.html#IPTABLESREF)'
 - en: '[iwconfig](system.html#IWCONFIGREF)'
+  id: totrans-140
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[iwconfig](system.html#IWCONFIGREF)'
 - en: '[jobs](x9644.html#JOBSREF)'
+  id: totrans-141
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[jobs](x9644.html#JOBSREF)'
 - en: '[join](textproc.html#JOINREF)'
+  id: totrans-142
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[join](textproc.html#JOINREF)'
 - en: '[jot](extmisc.html#JOTREF)'
+  id: totrans-143
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[jot](extmisc.html#JOTREF)'
 - en: '[kill](x9644.html#KILLREF)'
+  id: totrans-144
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[kill](x9644.html#KILLREF)'
 - en: '[killall](x9644.html#KILLALLREF)'
+  id: totrans-145
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[killall](x9644.html#KILLALLREF)'
 - en: '[last](system.html#LASTREF)'
+  id: totrans-146
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[last](system.html#LASTREF)'
 - en: '[lastcomm](system.html#LASTCOMMREF)'
+  id: totrans-147
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lastcomm](system.html#LASTCOMMREF)'
 - en: '[lastlog](system.html#LASTLOGREF)'
+  id: totrans-148
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lastlog](system.html#LASTLOGREF)'
 - en: '[ldd](system.html#LDDREF)'
+  id: totrans-149
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ldd](system.html#LDDREF)'
 - en: '[less](filearchiv.html#LESSREF)'
+  id: totrans-150
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[less](filearchiv.html#LESSREF)'
 - en: '[let](internal.html#LETREF)'
+  id: totrans-151
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[let](internal.html#LETREF)'
 - en: '[lex](textproc.html#LEXREF)'
+  id: totrans-152
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lex](textproc.html#LEXREF)'
 - en: '[lid](system.html#LIDREF)'
+  id: totrans-153
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lid](system.html#LIDREF)'
 - en: '[ln](basic.html#LINKREF)'
+  id: totrans-154
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ln](basic.html#LINKREF)'
 - en: '[locate](filearchiv.html#LOCATEREF)'
+  id: totrans-155
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[locate](filearchiv.html#LOCATEREF)'
 - en: '[lockfile](system.html#LOCKFILEREF)'
+  id: totrans-156
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lockfile](system.html#LOCKFILEREF)'
 - en: '[logger](system.html#LOGGERREF)'
+  id: totrans-157
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[logger](system.html#LOGGERREF)'
 - en: '[logname](system.html#LOGNAMEREF)'
+  id: totrans-158
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[logname](system.html#LOGNAMEREF)'
 - en: '[logout](x9644.html#LOGOUTREF)'
+  id: totrans-159
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[logout](x9644.html#LOGOUTREF)'
 - en: '[logrotate](system.html#LOGROTATEREF)'
+  id: totrans-160
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[logrotate](system.html#LOGROTATEREF)'
 - en: '[look](textproc.html#LOOKREF)'
+  id: totrans-161
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[look](textproc.html#LOOKREF)'
 - en: '[losetup](system.html#LOSETUPREF)'
+  id: totrans-162
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[losetup](system.html#LOSETUPREF)'
 - en: '[lp](extmisc.html#LPREF)'
+  id: totrans-163
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lp](extmisc.html#LPREF)'
 - en: '[ls](basic.html#LSREF)'
+  id: totrans-164
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ls](basic.html#LSREF)'
 - en: '[lsdev](system.html#LSDEVREF)'
+  id: totrans-165
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lsdev](system.html#LSDEVREF)'
 - en: '[lsmod](system.html#LSMODREF)'
+  id: totrans-166
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lsmod](system.html#LSMODREF)'
 - en: '[lsof](system.html#LSOFREF)'
+  id: totrans-167
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lsof](system.html#LSOFREF)'
 - en: '[lspci](system.html#LSPCIREF)'
+  id: totrans-168
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lspci](system.html#LSPCIREF)'
 - en: '[lsusb](system.html#LSUSBREF)'
+  id: totrans-169
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lsusb](system.html#LSUSBREF)'
 - en: '[ltrace](system.html#LTRACEREF)'
+  id: totrans-170
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ltrace](system.html#LTRACEREF)'
 - en: '[lynx](communications.html#LYNXREF)'
+  id: totrans-171
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lynx](communications.html#LYNXREF)'
 - en: '[lzcat](filearchiv.html#LZMAREF)'
+  id: totrans-172
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lzcat](filearchiv.html#LZMAREF)'
 - en: '[lzma](filearchiv.html#LZMAREF)'
+  id: totrans-173
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[lzma](filearchiv.html#LZMAREF)'
 - en: '[m4](extmisc.html#M4REF)'
+  id: totrans-174
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[m4](extmisc.html#M4REF)'
 - en: '[mail](communications.html#COMMMAIL1)'
+  id: totrans-175
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mail](communications.html#COMMMAIL1)'
 - en: '[mailstats](communications.html#MAILSTATSREF)'
+  id: totrans-176
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mailstats](communications.html#MAILSTATSREF)'
 - en: '[mailto](communications.html#MAILTOREF)'
+  id: totrans-177
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mailto](communications.html#MAILTOREF)'
 - en: '[make](filearchiv.html#MAKEREF)'
+  id: totrans-178
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[make](filearchiv.html#MAKEREF)'
 - en: '[MAKEDEV](system.html#MAKEDEVREF)'
+  id: totrans-179
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[MAKEDEV](system.html#MAKEDEVREF)'
 - en: '[man](basic.html#MANREF)'
+  id: totrans-180
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[man](basic.html#MANREF)'
 - en: '[mapfile](bashver4.html#MAPFILEREF)'
+  id: totrans-181
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mapfile](bashver4.html#MAPFILEREF)'
 - en: '[mcookie](extmisc.html#MCOOKIEREF)'
+  id: totrans-182
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mcookie](extmisc.html#MCOOKIEREF)'
 - en: '[md5sum](filearchiv.html#MD5SUMREF)'
+  id: totrans-183
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[md5sum](filearchiv.html#MD5SUMREF)'
 - en: '[merge](filearchiv.html#MERGEREF)'
+  id: totrans-184
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[合并](filearchiv.html#MERGEREF)'
 - en: '[mesg](system.html#MESGREF)'
+  id: totrans-185
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mesg](system.html#MESGREF)'
 - en: '[mimencode](filearchiv.html#MIMENCODEREF)'
+  id: totrans-186
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mimencode](filearchiv.html#MIMENCODEREF)'
 - en: '[mkbootdisk](system.html#MKBOOTDISKREF)'
+  id: totrans-187
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkbootdisk](system.html#MKBOOTDISKREF)'
 - en: '[mkdir](basic.html#MKDIRREF)'
+  id: totrans-188
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkdir](basic.html#MKDIRREF)'
 - en: '[mkdosfs](system.html#MKDOSFSREF)'
+  id: totrans-189
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkdosfs](system.html#MKDOSFSREF)'
 - en: '[mke2fs](system.html#MKE2FSREF)'
+  id: totrans-190
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mke2fs](system.html#MKE2FSREF)'
 - en: '[mkfifo](extmisc.html#MKFIFOREF)'
+  id: totrans-191
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkfifo](extmisc.html#MKFIFOREF)'
 - en: '[mkisofs](system.html#MKISOFSREF)'
+  id: totrans-192
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkisofs](system.html#MKISOFSREF)'
 - en: '[mknod](system.html#MKNODREF)'
+  id: totrans-193
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mknod](system.html#MKNODREF)'
 - en: '[mkswap](system.html#MKSWAPREF)'
+  id: totrans-194
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mkswap](system.html#MKSWAPREF)'
 - en: '[mktemp](filearchiv.html#MKTEMPREF)'
+  id: totrans-195
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mktemp](filearchiv.html#MKTEMPREF)'
 - en: '[mmencode](filearchiv.html#MMENCODEREF)'
+  id: totrans-196
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mmencode](filearchiv.html#MMENCODEREF)'
 - en: '[modinfo](system.html#MODINFOREF)'
+  id: totrans-197
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[modinfo](system.html#MODINFOREF)'
 - en: '[modprobe](system.html#MODPROBEREF)'
+  id: totrans-198
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[modprobe](system.html#MODPROBEREF)'
 - en: '[more](filearchiv.html#MOREREF)'
+  id: totrans-199
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[more](filearchiv.html#MOREREF)'
 - en: '[mount](system.html#MOUNTREF)'
+  id: totrans-200
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mount](system.html#MOUNTREF)'
 - en: '[msgfmt](textproc.html#MSGFMTREF)'
+  id: totrans-201
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[msgfmt](textproc.html#MSGFMTREF)'
 - en: '[mv](basic.html#MVREF)'
+  id: totrans-202
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[mv](basic.html#MVREF)'
 - en: '[nc](system.html#NCREF)'
+  id: totrans-203
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nc](system.html#NCREF)'
 - en: '[netconfig](communications.html#NETCONFIGREF)'
+  id: totrans-204
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[netconfig](communications.html#NETCONFIGREF)'
 - en: '[netstat](system.html#NETSTATREF)'
+  id: totrans-205
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[netstat](system.html#NETSTATREF)'
 - en: '[newgrp](system.html#NEWGRPREF)'
+  id: totrans-206
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[newgrp](system.html#NEWGRPREF)'
 - en: '[nice](system.html#NICEREF)'
+  id: totrans-207
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nice](system.html#NICEREF)'
 - en: '[nl](textproc.html#NLREF)'
+  id: totrans-208
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nl](textproc.html#NLREF)'
 - en: '[nm](system.html#NMREF)'
+  id: totrans-209
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nm](system.html#NMREF)'
 - en: '[nmap](system.html#NMAPREF)'
+  id: totrans-210
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nmap](system.html#NMAPREF)'
 - en: '[nohup](system.html#NOHUPREF)'
+  id: totrans-211
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nohup](system.html#NOHUPREF)'
 - en: '[nslookup](communications.html#NSLOOKUPREF)'
+  id: totrans-212
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[nslookup](communications.html#NSLOOKUPREF)'
 - en: '[objdump](extmisc.html#OBJDUMPREF)'
+  id: totrans-213
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[objdump](extmisc.html#OBJDUMPREF)'
 - en: '[od](extmisc.html#ODREF)'
+  id: totrans-214
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[od](extmisc.html#ODREF)'
 - en: '[openssl](filearchiv.html#OPENSSLREF)'
+  id: totrans-215
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[openssl](filearchiv.html#OPENSSLREF)'
 - en: '[passwd](system.html#PASSWDREF)'
+  id: totrans-216
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[passwd](system.html#PASSWDREF)'
 - en: '[paste](textproc.html#PASTEREF)'
+  id: totrans-217
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[paste](textproc.html#PASTEREF)'
 - en: '[patch](filearchiv.html#PATCHREF) (Related topic: [diff](filearchiv.html#DIFFREF))'
+  id: totrans-218
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[patch](filearchiv.html#PATCHREF) (相关主题：[diff](filearchiv.html#DIFFREF))'
 - en: '[pathchk](extmisc.html#PATHCHKREF)'
+  id: totrans-219
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pathchk](extmisc.html#PATHCHKREF)'
 - en: '[pax](filearchiv.html#PAXREF)'
+  id: totrans-220
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pax](filearchiv.html#PAXREF)'
 - en: '[pgrep](system.html#PGREPREF)'
+  id: totrans-221
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pgrep](system.html#PGREPREF)'
 - en: '[pidof](system.html#PIDOFREF)'
+  id: totrans-222
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pidof](system.html#PIDOFREF)'
 - en: '[ping](communications.html#PINGREF)'
+  id: totrans-223
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ping](communications.html#PINGREF)'
 - en: '[pkill](system.html#PKILLREF)'
+  id: totrans-224
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pkill](system.html#PKILLREF)'
 - en: '[popd](internal.html#DIRSD)'
+  id: totrans-225
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[popd](internal.html#DIRSD)'
 - en: '[pr](textproc.html#PRREF)'
+  id: totrans-226
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pr](textproc.html#PRREF)'
 - en: '[printenv](extmisc.html#PRINTENVREF)'
+  id: totrans-227
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[printenv](extmisc.html#PRINTENVREF)'
 - en: '[printf](internal.html#PRINTFREF)'
+  id: totrans-228
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[printf](internal.html#PRINTFREF)'
 - en: '[procinfo](system.html#PROCINFOREF)'
+  id: totrans-229
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[procinfo](system.html#PROCINFOREF)'
 - en: '[ps](system.html#PPSSREF)'
+  id: totrans-230
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ps](system.html#PPSSREF)'
 - en: '[pstree](system.html#PSTREEREF)'
+  id: totrans-231
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pstree](system.html#PSTREEREF)'
 - en: '[ptx](filearchiv.html#PTXREF)'
+  id: totrans-232
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ptx](filearchiv.html#PTXREF)'
 - en: '[pushd](internal.html#DIRSD)'
+  id: totrans-233
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pushd](internal.html#DIRSD)'
 - en: '[pwd](internal.html#PWD2REF) (Related topic: the [$PWD](internalvariables.html#PWDREF)
     variable)'
+  id: totrans-234
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[pwd](internal.html#PWD2REF) (相关主题：变量[$PWD](internalvariables.html#PWDREF))'
 - en: '[quota](system.html#QUOTAREF)'
+  id: totrans-235
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[quota](system.html#QUOTAREF)'
 - en: '[rcp](communications.html#RCPREF)'
+  id: totrans-236
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rcp](communications.html#RCPREF)'
 - en: '[rdev](system.html#RDEVREF)'
+  id: totrans-237
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rdev](system.html#RDEVREF)'
 - en: '[rdist](system.html#RDISTREF)'
+  id: totrans-238
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rdist](system.html#RDISTREF)'
 - en: '[read](internal.html#READREF)'
+  id: totrans-239
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[read](internal.html#READREF)'
 - en: '[readelf](system.html#READELFREF)'
+  id: totrans-240
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[readelf](system.html#READELFREF)'
 - en: '[readlink](filearchiv.html#READLINKREF)'
+  id: totrans-241
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[readlink](filearchiv.html#READLINKREF)'
 - en: '[readonly](internal.html#READONLYREF)'
+  id: totrans-242
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[readonly](internal.html#READONLYREF)'
 - en: '[reboot](system.html#REBOOTREF)'
+  id: totrans-243
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[重启](system.html#REBOOTREF)'
 - en: '[recode](textproc.html#RECODEREF)'
+  id: totrans-244
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[recode](textproc.html#RECODEREF)'
 - en: '[renice](system.html#NICE2REF)'
+  id: totrans-245
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[renice](system.html#NICE2REF)'
 - en: '[reset](terminalccmds.html#RESETREF)'
+  id: totrans-246
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[reset](terminalccmds.html#RESETREF)'
 - en: '[resize](terminalccmds.html#RESIZEREF)'
+  id: totrans-247
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[resize](terminalccmds.html#RESIZEREF)'
 - en: '[restore](system.html#RESTOREREF)'
+  id: totrans-248
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[恢复](system.html#RESTOREREF)'
 - en: '[rev](basic.html#REVREF)'
+  id: totrans-249
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rev](basic.html#REVREF)'
 - en: '[rlogin](communications.html#RLOGINREF)'
+  id: totrans-250
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rlogin](communications.html#RLOGINREF)'
 - en: '[rm](basic.html#RMREF)'
+  id: totrans-251
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[删除](basic.html#RMREF)'
 - en: '[rmdir](basic.html#RMDIRREF)'
+  id: totrans-252
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rmdir](basic.html#RMDIRREF)'
 - en: '[rmmod](system.html#RMMODREF)'
+  id: totrans-253
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rmmod](system.html#RMMODREF)'
 - en: '[route](system.html#ROUTEREF)'
+  id: totrans-254
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[route](system.html#ROUTEREF)'
 - en: '[rpm](filearchiv.html#RPMREF)'
+  id: totrans-255
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rpm](filearchiv.html#RPMREF)'
 - en: '[rpm2cpio](filearchiv.html#RPM2CPIOREF)'
+  id: totrans-256
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rpm2cpio](filearchiv.html#RPM2CPIOREF)'
 - en: '[rsh](communications.html#RSHREF)'
+  id: totrans-257
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rsh](communications.html#RSHREF)'
 - en: '[rsync](communications.html#RSYNCREF)'
+  id: totrans-258
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rsync](communications.html#RSYNCREF)'
 - en: '[runlevel](system.html#RUNLEVELREF)'
+  id: totrans-259
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[runlevel](system.html#RUNLEVELREF)'
 - en: '[run-parts](extmisc.html#RUNPARTSREF)'
+  id: totrans-260
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[run-parts](extmisc.html#RUNPARTSREF)'
 - en: '[rx](communications.html#RXREF)'
+  id: totrans-261
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rx](communications.html#RXREF)'
 - en: '[rz](communications.html#RZREF)'
+  id: totrans-262
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[rz](communications.html#RZREF)'
 - en: '[sar](system.html#SARREF)'
+  id: totrans-263
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sar](system.html#SARREF)'
 - en: '[scp](communications.html#SCPREF)'
+  id: totrans-264
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[scp](communications.html#SCPREF)'
 - en: '[script](terminalccmds.html#SCRIPTREF)'
+  id: totrans-265
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[script](terminalccmds.html#SCRIPTREF)'
 - en: '[sdiff](filearchiv.html#SDIFFREF)'
+  id: totrans-266
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sdiff](filearchiv.html#SDIFFREF)'
 - en: '[sed](sedawk.html#SEDREF)'
+  id: totrans-267
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sed](sedawk.html#SEDREF)'
 - en: '[seq](extmisc.html#SEQREF)'
+  id: totrans-268
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[seq](extmisc.html#SEQREF)'
 - en: '[service](system.html#SERVICEREF)'
+  id: totrans-269
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[service](system.html#SERVICEREF)'
 - en: '[set](internal.html#SETREF)'
+  id: totrans-270
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[set](internal.html#SETREF)'
 - en: '[setfacl](filearchiv.html#SETFACLREF)'
+  id: totrans-271
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[setfacl](filearchiv.html#SETFACLREF)'
 - en: '[setquota](system.html#SETQUOTAREF)'
+  id: totrans-272
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[setquota](system.html#SETQUOTAREF)'
 - en: '[setserial](system.html#SETSERIALREF)'
+  id: totrans-273
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[setserial](system.html#SETSERIALREF)'
 - en: '[setterm](system.html#SETTERMREF)'
+  id: totrans-274
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[setterm](system.html#SETTERMREF)'
 - en: '[sha1sum](filearchiv.html#SHA1SUMREF)'
+  id: totrans-275
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sha1sum](filearchiv.html#SHA1SUMREF)'
 - en: '[shar](filearchiv.html#SHARREF)'
+  id: totrans-276
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[shar](filearchiv.html#SHARREF)'
 - en: '[shopt](internal.html#SHOPTREF)'
+  id: totrans-277
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[shopt](internal.html#SHOPTREF)'
 - en: '[shred](filearchiv.html#SHREDREF)'
+  id: totrans-278
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[shred](filearchiv.html#SHREDREF)'
 - en: '[shutdown](system.html#SHUTDOWNREF)'
+  id: totrans-279
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[shutdown](system.html#SHUTDOWNREF)'
 - en: '[size](system.html#SIZEREF)'
+  id: totrans-280
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[size](system.html#SIZEREF)'
 - en: '[skill](system.html#NICE2REF)'
+  id: totrans-281
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[skill](system.html#NICE2REF)'
 - en: '[sleep](timedate.html#SLEEPREF)'
+  id: totrans-282
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sleep](timedate.html#SLEEPREF)'
 - en: '[slocate](filearchiv.html#SLOCATEREF)'
+  id: totrans-283
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[slocate](filearchiv.html#SLOCATEREF)'
 - en: '[snice](system.html#NICE2REF)'
+  id: totrans-284
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[snice](system.html#NICE2REF)'
 - en: '[sort](textproc.html#SORTREF)'
+  id: totrans-285
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sort](textproc.html#SORTREF)'
 - en: '[source](internal.html#SOURCEREF)'
+  id: totrans-286
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[source](internal.html#SOURCEREF)'
 - en: '[sox](extmisc.html#SOXREF)'
+  id: totrans-287
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sox](extmisc.html#SOXREF)'
 - en: '[split](filearchiv.html#SPLITREF)'
+  id: totrans-288
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[split](filearchiv.html#SPLITREF)'
 - en: '[sq](filearchiv.html#SQREF)'
+  id: totrans-289
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sq](filearchiv.html#SQREF)'
 - en: '[ssh](communications.html#SSHREF)'
+  id: totrans-290
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ssh](communications.html#SSHREF)'
 - en: '[stat](system.html#STATREF)'
+  id: totrans-291
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[stat](system.html#STATREF)'
 - en: '[strace](system.html#STRACEREF)'
+  id: totrans-292
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[strace](system.html#STRACEREF)'
 - en: '[strings](filearchiv.html#STRINGSREF)'
+  id: totrans-293
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[strings](filearchiv.html#STRINGSREF)'
 - en: '[strip](system.html#STRIPREF)'
+  id: totrans-294
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[strip](system.html#STRIPREF)'
 - en: '[stty](system.html#STTYREF)'
+  id: totrans-295
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[stty](system.html#STTYREF)'
 - en: '[su](system.html#SUREF)'
+  id: totrans-296
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[su](system.html#SUREF)'
 - en: '[sudo](system.html#SUDOREF)'
+  id: totrans-297
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sudo](system.html#SUDOREF)'
 - en: '[sum](filearchiv.html#SUMREF)'
+  id: totrans-298
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sum](filearchiv.html#SUMREF)'
 - en: '[suspend](x9644.html#SUSPENDREF)'
+  id: totrans-299
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[suspend](x9644.html#SUSPENDREF)'
 - en: '[swapoff](system.html#SWAPONREF)'
+  id: totrans-300
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[swapoff](system.html#SWAPONREF)'
 - en: '[swapon](system.html#SWAPONREF)'
+  id: totrans-301
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[swapon](system.html#SWAPONREF)'
 - en: '[sx](communications.html#RXREF)'
+  id: totrans-302
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sx](communications.html#RXREF)'
 - en: '[sync](system.html#SYNCREF)'
+  id: totrans-303
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sync](system.html#SYNCREF)'
 - en: '[sz](communications.html#RZREF)'
+  id: totrans-304
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[sz](communications.html#RZREF)'
 - en: '[tac](basic.html#CATREF)'
+  id: totrans-305
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tac](basic.html#CATREF)'
 - en: '[tail](textproc.html#TAILREF)'
+  id: totrans-306
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tail](textproc.html#TAILREF)'
 - en: '[tar](filearchiv.html#TARREF)'
+  id: totrans-307
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tar](filearchiv.html#TARREF)'
 - en: '[tbl](textproc.html#TBLREF)'
+  id: totrans-308
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tbl](textproc.html#TBLREF)'
 - en: '[tcpdump](system.html#TCPDUMPREF)'
+  id: totrans-309
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tcpdump](system.html#TCPDUMPREF)'
 - en: '[tee](extmisc.html#TEEREF)'
+  id: totrans-310
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tee](extmisc.html#TEEREF)'
 - en: '[telinit](system.html#TELINITREF)'
+  id: totrans-311
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[telinit](system.html#TELINITREF)'
 - en: '[telnet](communications.html#TELNETREF)'
+  id: totrans-312
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[telnet](communications.html#TELNETREF)'
 - en: '[Tex](textproc.html#TEXREF)'
+  id: totrans-313
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[Tex](textproc.html#TEXREF)'
 - en: '[texexec](textproc.html#TEXEXECREF)'
+  id: totrans-314
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[texexec](textproc.html#TEXEXECREF)'
 - en: '[time](timedate.html#TIMREF)'
+  id: totrans-315
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[time](timedate.html#TIMREF)'
 - en: '[times](x9644.html#TIMESREF)'
+  id: totrans-316
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[times](x9644.html#TIMESREF)'
 - en: '[tmpwatch](system.html#TMPWATCHREF)'
+  id: totrans-317
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tmpwatch](system.html#TMPWATCHREF)'
 - en: '[top](system.html#TOPREF)'
+  id: totrans-318
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[top](system.html#TOPREF)'
 - en: '[touch](timedate.html#TOUCHREF)'
+  id: totrans-319
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[touch](timedate.html#TOUCHREF)'
 - en: '[tput](terminalccmds.html#TPUTREF)'
+  id: totrans-320
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tput](terminalccmds.html#TPUTREF)'
 - en: '[tr](textproc.html#TRREF)'
+  id: totrans-321
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tr](textproc.html#TRREF)'
 - en: '[traceroute](communications.html#TRACEROUTEREF)'
+  id: totrans-322
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[traceroute](communications.html#TRACEROUTEREF)'
 - en: '[true](internal.html#TRUEREF)'
+  id: totrans-323
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[true](internal.html#TRUEREF)'
 - en: '[tset](system.html#TSETREF)'
+  id: totrans-324
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tset](system.html#TSETREF)'
 - en: '[tsort](textproc.html#TSORTREF)'
+  id: totrans-325
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tsort](textproc.html#TSORTREF)'
 - en: '[tty](system.html#TTYREF)'
+  id: totrans-326
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tty](system.html#TTYREF)'
 - en: '[tune2fs](system.html#TUNE2FSREF)'
+  id: totrans-327
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[tune2fs](system.html#TUNE2FSREF)'
 - en: '[type](internal.html#TYPEREF)'
+  id: totrans-328
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[type](internal.html#TYPEREF)'
 - en: '[typeset](declareref.html)'
+  id: totrans-329
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[typeset](declareref.html)'
 - en: '[ulimit](system.html#ULIMITREF)'
+  id: totrans-330
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[ulimit](system.html#ULIMITREF)'
 - en: '[umask](system.html#UMASKREF)'
+  id: totrans-331
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[umask](system.html#UMASKREF)'
 - en: '[umount](system.html#UMOUNTREF)'
+  id: totrans-332
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[umount](system.html#UMOUNTREF)'
 - en: '[uname](system.html#UNAMEREF)'
+  id: totrans-333
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uname](system.html#UNAMEREF)'
 - en: '[unarc](filearchiv.html#UNARCREF)'
+  id: totrans-334
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unarc](filearchiv.html#UNARCREF)'
 - en: '[unarj](filearchiv.html#UNARCREF)'
+  id: totrans-335
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unarj](filearchiv.html#UNARCREF)'
 - en: '[uncompress](filearchiv.html#UNCOMPRESSREF)'
+  id: totrans-336
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uncompress](filearchiv.html#UNCOMPRESSREF)'
 - en: '[unexpand](textproc.html#EXPANDREF)'
+  id: totrans-337
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unexpand](textproc.html#EXPANDREF)'
 - en: '[uniq](textproc.html#UNIQREF)'
+  id: totrans-338
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uniq](textproc.html#UNIQREF)'
 - en: '[units](extmisc.html#UNITSREF)'
+  id: totrans-339
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[units](extmisc.html#UNITSREF)'
 - en: '[unlzma](filearchiv.html#LZMAREF)'
+  id: totrans-340
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unlzma](filearchiv.html#LZMAREF)'
 - en: '[unrar](filearchiv.html#UNARCREF)'
+  id: totrans-341
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unrar](filearchiv.html#UNARCREF)'
 - en: '[unset](internal.html#UNSETREF)'
+  id: totrans-342
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unset](internal.html#UNSETREF)'
 - en: '[unsq](filearchiv.html#SQREF)'
+  id: totrans-343
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unsq](filearchiv.html#SQREF)'
 - en: '[unzip](filearchiv.html#ZIPREF)'
+  id: totrans-344
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[unzip](filearchiv.html#ZIPREF)'
 - en: '[uptime](system.html#UPTIMEREF)'
+  id: totrans-345
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uptime](system.html#UPTIMEREF)'
 - en: '[usbmodules](system.html#LSUSBREF)'
+  id: totrans-346
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[usbmodules](system.html#LSUSBREF)'
 - en: '[useradd](system.html#USERADDREF)'
+  id: totrans-347
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[useradd](system.html#USERADDREF)'
 - en: '[userdel](system.html#USERADDREF)'
+  id: totrans-348
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[userdel](system.html#USERADDREF)'
 - en: '[usermod](system.html#USERMODREF)'
+  id: totrans-349
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[usermod](system.html#USERMODREF)'
 - en: '[users](system.html#USERSREF)'
+  id: totrans-350
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[users](system.html#USERSREF)'
 - en: '[usleep](timedate.html#USLEEPREF)'
+  id: totrans-351
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[usleep](timedate.html#USLEEPREF)'
 - en: '[uucp](communications.html#UUCPREF)'
+  id: totrans-352
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uucp](communications.html#UUCPREF)'
 - en: '[uudecode](filearchiv.html#UUDECODEREF)'
+  id: totrans-353
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uudecode](filearchiv.html#UUDECODEREF)'
 - en: '[uuencode](filearchiv.html#UUENCODEREF)'
+  id: totrans-354
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uuencode](filearchiv.html#UUENCODEREF)'
 - en: '[uux](communications.html#UUXREF)'
+  id: totrans-355
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[uux](communications.html#UUXREF)'
 - en: '[vacation](communications.html#VACATIONREF)'
+  id: totrans-356
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[vacation](communications.html#VACATIONREF)'
 - en: '[vdir](filearchiv.html#VDIRREF)'
+  id: totrans-357
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[vdir](filearchiv.html#VDIRREF)'
 - en: '[vmstat](system.html#VMSTATREF)'
+  id: totrans-358
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[vmstat](system.html#VMSTATREF)'
 - en: '[vrfy](communications.html#VRFYREF)'
+  id: totrans-359
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[vrfy](communications.html#VRFYREF)'
 - en: '[w](system.html#WREF)'
+  id: totrans-360
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[w](system.html#WREF)'
 - en: '[wait](x9644.html#WAITREF)'
+  id: totrans-361
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wait](x9644.html#WAITREF)'
 - en: '[wall](system.html#WALLREF)'
+  id: totrans-362
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wall](system.html#WALLREF)'
 - en: '[watch](system.html#WATCHREF)'
+  id: totrans-363
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[watch](system.html#WATCHREF)'
 - en: '[wc](textproc.html#WCREF)'
+  id: totrans-364
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wc](textproc.html#WCREF)'
 - en: '[wget](communications.html#WGETREF)'
+  id: totrans-365
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[wget](communications.html#WGETREF)'
 - en: '[whatis](filearchiv.html#WHATISREF)'
+  id: totrans-366
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[whatis](filearchiv.html#WHATISREF)'
 - en: '[whereis](filearchiv.html#WHEREISREF)'
+  id: totrans-367
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[whereis](filearchiv.html#WHEREISREF)'
 - en: '[which](filearchiv.html#WHICHREF)'
+  id: totrans-368
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[which](filearchiv.html#WHICHREF)'
 - en: '[who](system.html#WHOREF)'
+  id: totrans-369
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[who](system.html#WHOREF)'
 - en: '[whoami](system.html#WHOAMIREF)'
+  id: totrans-370
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[whoami](system.html#WHOAMIREF)'
 - en: '[whois](communications.html#WHOISREF)'
+  id: totrans-371
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[whois](communications.html#WHOISREF)'
 - en: '[write](communications.html#WRITEREF)'
+  id: totrans-372
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[write](communications.html#WRITEREF)'
 - en: '[xargs](moreadv.html#XARGSREF)'
+  id: totrans-373
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[xargs](moreadv.html#XARGSREF)'
 - en: '[xrandr](system.html#XRANDRREF)'
+  id: totrans-374
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[xrandr](system.html#XRANDRREF)'
 - en: '[xz](filearchiv.html#XZREF)'
+  id: totrans-375
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[xz](filearchiv.html#XZREF)'
 - en: '[yacc](textproc.html#YACCREF)'
+  id: totrans-376
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[yacc](textproc.html#YACCREF)'
 - en: '[yes](extmisc.html#YESREF)'
+  id: totrans-377
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[yes](extmisc.html#YESREF)'
 - en: '[zcat](filearchiv.html#ZCATREF)'
+  id: totrans-378
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zcat](filearchiv.html#ZCATREF)'
 - en: '[zdiff](filearchiv.html#ZDIFFREF)'
+  id: totrans-379
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zdiff](filearchiv.html#ZDIFFREF)'
 - en: '[zdump](timedate.html#ZDUMPREF)'
+  id: totrans-380
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zdump](timedate.html#ZDUMPREF)'
 - en: '[zegrep](textproc.html#ZEGREPREF)'
+  id: totrans-381
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zegrep](textproc.html#ZEGREPREF)'
 - en: '[zfgrep](textproc.html#ZEGREPREF)'
+  id: totrans-382
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zfgrep](textproc.html#ZEGREPREF)'
 - en: '[zgrep](textproc.html#ZEGREPREF)'
+  id: totrans-383
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zgrep](textproc.html#ZEGREPREF)'
 - en: '[zip](filearchiv.html#ZIPREF)'
+  id: totrans-384
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: '[zip](filearchiv.html#ZIPREF)'
 - en: '**Table of Contents**'
+  id: totrans-385
   prefs: []
   type: TYPE_NORMAL
+  zh: '**目录**'
 - en: 15\. [Internal Commands and Builtins](internal.html)
+  id: totrans-386
   prefs: []
   type: TYPE_NORMAL
+  zh: 15\. [内部命令和内置命令](internal.html)
 - en: 15.1\. [Job Control Commands](x9644.html)
+  id: totrans-387
   prefs: []
   type: TYPE_NORMAL
+  zh: 15.1\. [作业控制命令](x9644.html)
 - en: 16\. [External Filters, Programs and Commands](external.html)
+  id: totrans-388
   prefs: []
   type: TYPE_NORMAL
+  zh: 16\. [外部过滤器、程序和命令](external.html)
 - en: 16.1\. [Basic Commands](basic.html)
+  id: totrans-389
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.1\. [基本命令](basic.html)
 - en: 16.2\. [Complex Commands](moreadv.html)
+  id: totrans-390
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.2\. [复杂命令](moreadv.html)
 - en: 16.3\. [Time / Date Commands](timedate.html)
+  id: totrans-391
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.3\. [时间和日期命令](timedate.html)
 - en: 16.4\. [Text Processing Commands](textproc.html)
+  id: totrans-392
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.4\. [文本处理命令](textproc.html)
 - en: 16.5\. [File and Archiving Commands](filearchiv.html)
+  id: totrans-393
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.5\. [文件和归档命令](filearchiv.html)
 - en: 16.6\. [Communications Commands](communications.html)
+  id: totrans-394
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.6\. [通信命令](communications.html)
 - en: 16.7\. [Terminal Control Commands](terminalccmds.html)
+  id: totrans-395
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.7\. [终端控制命令](terminalccmds.html)
 - en: 16.8\. [Math Commands](mathc.html)
+  id: totrans-396
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.8\. [数学命令](mathc.html)
 - en: 16.9\. [Miscellaneous Commands](extmisc.html)
+  id: totrans-397
   prefs: []
   type: TYPE_NORMAL
+  zh: 16.9\. [杂项命令](extmisc.html)
 - en: 17\. [System and Administrative Commands](system.html)
+  id: totrans-398
   prefs: []
   type: TYPE_NORMAL
+  zh: 17\. [系统和管理命令](system.html)
 - en: 17.1\. [Analyzing a System Script](sysscripts.html)
+  id: totrans-399
   prefs: []
   type: TYPE_NORMAL
+  zh: 17.1\. [分析系统脚本](sysscripts.html)

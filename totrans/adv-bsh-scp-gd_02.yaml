@@ -1,178 +1,254 @@
 - en: Chapter 1\. Shell Programming!
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第一章：Shell编程！
 - en: 原文：[https://tldp.org/LDP/abs/html/why-shell.html](https://tldp.org/LDP/abs/html/why-shell.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/why-shell.html](https://tldp.org/LDP/abs/html/why-shell.html)
 - en: '|   |  **No programming language is perfect. There is not even a single best
     language; there are only languages well suited or perhaps poorly suited for particular
     purposes.*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|  **没有一种编程语言是完美的。甚至没有一种最佳语言；只有适合或可能不适合特定目的的语言。**'
 - en: '*--Herbert Mayer**  |'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--Herbert Mayer**  |'
 - en: A working knowledge of shell scripting is essential to anyone wishing to become
     reasonably proficient at system administration, even if they do not anticipate
     ever having to actually write a script. Consider that as a Linux machine boots
     up, it executes the shell scripts in `/etc/rc.d` to restore the system configuration
     and set up services. A detailed understanding of these startup scripts is important
     for analyzing the behavior of a system, and possibly modifying it.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 掌握shell脚本是希望成为系统管理员的人必备的技能，即使他们不打算实际编写脚本。考虑一下，当Linux机器启动时，它会执行`/etc/rc.d`中的shell脚本以恢复系统配置并设置服务。对这些启动脚本有详细的理解对于分析系统的行为以及可能对其进行修改非常重要。
 - en: The craft of scripting is not hard to master, since scripts can be built in
     bite-sized sections and there is only a fairly small set of shell-specific operators
     and options [[1]](#FTN.AEN62) to learn. The syntax is simple -- even austere --
     similar to that of invoking and chaining together utilities at the command line,
     and there are only a few "rules" governing their use. Most short scripts work
     right the first time, and debugging even the longer ones is straightforward.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本制作工艺不难掌握，因为脚本可以分块构建，而且只需要学习一小套shell特定的操作符和选项 [[1]](#FTN.AEN62)。语法简单——甚至简朴——类似于在命令行中调用和链接实用程序，而且只有少数“规则”规范了它们的使用。大多数简短脚本第一次就能正常工作，即使是较长的脚本调试也很直接。
 - en: In the early days of personal computing, the BASIC language enabled
+  id: totrans-6
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 在个人计算机的早期阶段，BASIC语言使
 - en: anyone reasonably computer proficient to write programs on an early
+  id: totrans-7
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 任何具备一定计算机技能的人都能编写程序。
 - en: generation of microcomputers. Decades later, the Bash scripting
+  id: totrans-8
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 微型计算机的生成。几十年后，Bash脚本
 - en: language enables anyone with a rudimentary knowledge of Linux or
+  id: totrans-9
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 语言使任何具备基本Linux知识的人都能编写程序。
 - en: UNIX to do the same on modern machines.
+  id: totrans-10
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: UNIX在现代机器上做同样的事情。
 - en: ''
+  id: totrans-11
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
 - en: We now have miniaturized single-board computers with amazing
+  id: totrans-12
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 我们现在有了微型单板计算机，这些设备令人惊叹。
 - en: capabilities, such as the [Raspberry Pi](http://www.raspberrypi.org/).
+  id: totrans-13
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 功能，例如[树莓派](http://www.raspberrypi.org/)。
 - en: Bash scripting provides a way to explore the capabilities of these
+  id: totrans-14
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: Bash脚本提供了一种探索这些功能的方法。
 - en: fascinating devices.
+  id: totrans-15
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 令人着迷的设备。
 - en: A shell script is a quick-and-dirty method of prototyping a complex application.
     Getting even a limited subset of the functionality to work in a script is often
     a useful first stage in project development. In this way, the structure of the
     application can be tested and tinkered with, and the major pitfalls found before
     proceeding to the final coding in *C*, *C++*, *Java*, [Perl](wrapper.html#PERLREF),
     or *Python*.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Shell脚本是一种快速且粗糙的复杂应用程序原型设计方法。在脚本中实现功能的一个有限子集通常是项目开发的有用第一阶段。通过这种方式，可以测试和调整应用程序的结构，并在最终用*C*、*C++*、*Java*、[Perl](wrapper.html#PERLREF)或*Python*进行编码之前发现主要陷阱。
 - en: Shell scripting hearkens back to the classic UNIX philosophy of breaking complex
     projects into simpler subtasks, of chaining together components and utilities.
     Many consider this a better, or at least more esthetically pleasing approach to
     problem solving than using one of the new generation of high-powered all-in-one
     languages, such as *Perl*, which attempt to be all things to all people, but at
     the cost of forcing you to alter your thinking processes to fit the tool.
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: Shell脚本回溯到经典的UNIX哲学，即将复杂项目分解成更简单的子任务，将组件和实用程序链接在一起。许多人认为，这种方法比使用新一代全能型高能语言（如*Perl*）解决问题更好，或者至少更令人愉悦，全能型语言试图满足所有人的需求，但代价是迫使你改变思维方式以适应工具。
 - en: According to [Herbert Mayer](biblio.html#MAYERREF), "a useful language needs
     arrays, pointers, and a generic mechanism for building data structures." By these
     criteria, shell scripting falls somewhat short of being "useful." Or, perhaps
     not. . . .
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 根据[Herbert Mayer](biblio.html#MAYERREF)的说法，“一个有用的语言需要数组、指针以及构建数据结构的通用机制。”根据这些标准，shell脚本在“有用”方面略有不足。或者，也许不是……
 - en: '|'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: When not to use shell scripts
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 不应使用shell脚本的情况
 - en: Resource-intensive tasks, especially where speed is a factor (sorting, hashing,
     recursion [[2]](#FTN.AEN87) ...)
+  id: totrans-21
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 资源密集型任务，尤其是速度是关键因素时（排序、散列、递归 [[2]](#FTN.AEN87) ...）
 - en: Procedures involving heavy-duty math operations, especially floating point arithmetic,
     arbitrary precision calculations, or complex numbers (use *C++* or *FORTRAN* instead)
+  id: totrans-22
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 涉及大量数学运算的过程，尤其是浮点运算、任意精度计算或复数运算（建议使用 *C++* 或 *FORTRAN*）
 - en: Cross-platform portability required (use *C* or *Java* instead)
+  id: totrans-23
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要跨平台可移植性（建议使用 *C* 或 *Java*）
 - en: Complex applications, where structured programming is a necessity (type-checking
     of variables, function prototypes, etc.)
+  id: totrans-24
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 复杂的应用程序，其中结构化编程是必需的（变量类型检查、函数原型等）
 - en: Mission-critical applications upon which you are betting the future of the company
+  id: totrans-25
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 对于公司未来至关重要的任务
 - en: Situations where *security* is important, where you need to guarantee the integrity
     of your system and protect against intrusion, cracking, and vandalism
+  id: totrans-26
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 在 *安全* 至关重要的情况下，需要保证系统的完整性并防止入侵、破解和破坏
 - en: Project consists of subcomponents with interlocking dependencies
+  id: totrans-27
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 项目由相互依赖的子组件组成
 - en: Extensive file operations required (*Bash* is limited to serial file access,
     and that only in a particularly clumsy and inefficient line-by-line fashion.)
+  id: totrans-28
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要大量文件操作（*Bash* 仅限于串行文件访问，而且方式特别笨拙且效率低下。）
 - en: Need native support for multi-dimensional arrays
+  id: totrans-29
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要原生支持多维数组
 - en: Need data structures, such as linked lists or trees
+  id: totrans-30
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要数据结构，例如链表或树
 - en: Need to generate / manipulate graphics or GUIs
+  id: totrans-31
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要生成或操作图形或 GUI
 - en: Need direct access to system hardware or external peripherals
+  id: totrans-32
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要直接访问系统硬件或外部外围设备
 - en: Need port or [socket](devref1.html#SOCKETREF) I/O
+  id: totrans-33
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要端口或 [套接字](devref1.html#SOCKETREF) I/O
 - en: Need to use libraries or interface with legacy code
+  id: totrans-34
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 需要使用库或与旧代码接口
 - en: Proprietary, closed-source applications (Shell scripts put the source code right
     out in the open for all the world to see.)
+  id: totrans-35
   prefs:
   - PREF_UL
   type: TYPE_NORMAL
+  zh: 专有、闭源应用程序（Shell 脚本将源代码公之于众，供全世界查看。）
 - en: If any of the above applies, consider a more powerful scripting language --
     perhaps *Perl*, *Tcl*, *Python*, *Ruby* -- or possibly a compiled language such
     as *C*, *C++*, or *Java*. Even then, prototyping the application as a shell script
     might still be a useful development step.
+  id: totrans-36
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果上述任何一点适用，考虑使用更强大的脚本语言——可能是 *Perl*、*Tcl*、*Python*、*Ruby*——或者可能是编译语言，如 *C*、*C++*
+    或 *Java*。即便如此，将应用程序作为 shell 脚本进行原型设计可能仍然是一个有用的开发步骤。
 - en: '|'
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: We will be using Bash, an acronym [[3]](#FTN.AEN139) for "Bourne-Again shell"
     and a pun on Stephen Bourne's now classic *Bourne* shell. Bash has become a *de
     facto* standard for shell scripting on most flavors of UNIX. Most of the principles
@@ -181,8 +257,14 @@
     and the *C Shell* and its variants. (Note that *C Shell* programming is not recommended
     due to certain inherent problems, as pointed out in an October, 1993 [Usenet post](http://www.faqs.org/faqs/unix-faq/shell/csh-whynot/)
     by Tom Christiansen.)
+  id: totrans-38
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们将使用 Bash，这是“Bourne-Again shell”的缩写 [[3]](#FTN.AEN139)，也是对斯蒂芬·鲍恩的经典 *Bourne*
+    shell 的双关语。Bash 已成为大多数 UNIX 版本上 shell 脚本编写的 *de facto* 标准。本书涵盖的大部分原则同样适用于使用其他
+    shell 脚本，例如 Bash 的来源之一 *Korn Shell*，以及 *C Shell* 和其变体。（请注意，由于某些固有的问题，*C Shell*
+    编程不建议使用，正如汤姆·克里斯蒂安森在 1993 年 10 月的一篇 [Usenet 帖子](http://www.faqs.org/faqs/unix-faq/shell/csh-whynot/)
+    中所指出的。）
 - en: What follows is a tutorial on shell scripting. It relies heavily on examples
     to illustrate various features of the shell. The example scripts work -- they've
     been tested, insofar as possible -- and some of them are even useful in real life.
@@ -194,44 +276,72 @@
     or [pdf](http://bash.deta.in/abs-guide.pdf) rendered versions. Be aware that some
     of the scripts presented here introduce features before they are explained, and
     this may require the reader to temporarily skip ahead for enlightenment.
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 下文是一个关于 shell 脚本编写的教程。它大量依赖于示例来展示 shell 的各种功能。示例脚本是可以工作的——它们尽可能进行了测试——其中一些在实际生活中甚至很有用。读者可以在源存档中实际操作示例的代码（`scriptname.sh`
+    或 `scriptname.bash`），[[5]](#FTN.AEN157) 给它们执行权限（`**chmod u+rx scriptname**`），然后运行它们看看会发生什么。如果
+    [源存档](http://bash.deta.in/abs-guide-latest.tar.bz2) 不可用，则从 [HTML](http://www.tldp.org/LDP/abs/abs-guide.html.tar.gz)
+    或 [pdf](http://bash.deta.in/abs-guide.pdf) 渲染版本中剪切粘贴。请注意，这里展示的一些脚本在解释之前就引入了功能，这可能要求读者暂时跳读以获得启示。|
 - en: Unless otherwise noted, [the author](mailto:thegrendel.abs@gmail.com) of this
     book wrote the example scripts that follow.
+  id: totrans-40
   prefs: []
   type: TYPE_NORMAL
+  zh: 除非另有说明，本书的 [作者](mailto:thegrendel.abs@gmail.com) 编写了以下示例脚本。
 - en: '|   |  **His countenance was bold and bashed not.*'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **他的面容大胆而坚定。**'
 - en: '*--Edmund Spenser**  |'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--埃德蒙·斯宾塞**  |'
 - en: Notes
+  id: totrans-43
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: '**注意**'
 - en: '| [[1]](why-shell.html#AEN62) | These are referred to as [builtins](internal.html#BUILTINREF),
     features internal to the shell. |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](why-shell.html#AEN62) | 这些被称为 [内置命令](internal.html#BUILTINREF)，是 shell
+    内部的功能。|'
 - en: '| [[2]](why-shell.html#AEN87) | Although [recursion *is* possible in a shell
     script](localvar.html#RECURSIONREF0), it tends to be slow and its implementation
     is often an [ugly kludge](recurnolocvar.html#FIBOREF). |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](why-shell.html#AEN87) | 虽然在 shell 脚本中 [递归是可能的](localvar.html#RECURSIONREF0)，但它通常运行缓慢，其实现通常是
+    [丑陋的修补](recurnolocvar.html#FIBOREF)。|'
 - en: '| [[3]](why-shell.html#AEN139) | An *acronym* is an *ersatz* word formed by
     pasting together the initial letters of the words into a tongue-tripping phrase.
     This morally corrupt and pernicious practice deserves appropriately severe punishment.
     Public flogging suggests itself. |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| [[3]](why-shell.html#AEN139) | 一个 *首字母缩略词* 是通过将单词的首字母粘贴在一起形成一个令人舌头打结的短语而形成的
+    *替代词*。这种道德败坏且有害的做法应受到适当的严厉惩罚。公开鞭打似乎是一个合适的选择。|'
 - en: '| [[4]](why-shell.html#AEN147) | Many of the features of *ksh88*, and even
     a few from the updated *ksh93* have been merged into Bash. |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| [[4]](why-shell.html#AEN147) | 许多 *ksh88* 的功能，甚至一些来自更新版的 *ksh93* 的功能，已经被合并到
+    Bash 中。|'
 - en: '| [[5]](why-shell.html#AEN157) | By convention, user-written shell scripts
     that are Bourne shell compliant generally take a name with a `.sh` extension.
     System scripts, such as those found in `/etc/rc.d`, do not necessarily conform
     to this nomenclature. |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| [[5]](why-shell.html#AEN157) | 按照惯例，符合 Bourne shell 的用户编写的 shell 脚本通常以 `.sh`
+    扩展名命名。例如 `/etc/rc.d` 中的系统脚本不一定遵循这种命名法。|'

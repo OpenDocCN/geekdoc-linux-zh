@@ -1,80 +1,122 @@
 - en: O.1\. Analyzing Scripts
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: O.1\. 分析脚本
 - en: 原文：[https://tldp.org/LDP/abs/html/scriptanalysis.html](https://tldp.org/LDP/abs/html/scriptanalysis.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/scriptanalysis.html](https://tldp.org/LDP/abs/html/scriptanalysis.html)
 - en: Examine the following script. Run it, then explain what it does. Annotate the
     script and rewrite it in a more compact and elegant manner.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 检查以下脚本。运行它，然后解释它做了什么。注释脚本，并以更紧凑、更优雅的方式重写它。
 - en: '|  [PRE0]  |'
+  id: totrans-3
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '---'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: Explain what the following script does. It is really just a parameterized command-line
     pipe.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 解释以下脚本做了什么。它实际上只是一个参数化的命令行管道。
 - en: '|  [PRE1]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '---'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: Examine and explain the following script. For hints, you might refer to the
     listings for [find](moreadv.html#FINDREF) and [stat](system.html#STATREF).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 检查并解释以下脚本。提示可能参考[find](moreadv.html#FINDREF)和[stat](system.html#STATREF)的列表。
 - en: '|  [PRE2]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: '---'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: A reader sent in the following code snippet.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 有读者发送了以下代码片段。
 - en: '|  [PRE3]  |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: 'He wished to write a script tracking changes to the system log file, `/var/log/messages`.
     Unfortunately, the above code block hangs and does nothing useful. Why? Fix this
     so it does work. (Hint: rather than [redirecting the `stdin` of the loop](redircb.html#REDIRREF),
     try a [pipe](special-chars.html#PIPEREF).)'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: 他希望编写一个跟踪系统日志文件`/var/log/messages`更改的脚本。不幸的是，上述代码块挂起并且没有任何有用的操作。为什么？修复它，让它能够工作。（提示：与其[重定向循环的`stdin`](redircb.html#REDIRREF)，尝试使用[管道](special-chars.html#PIPEREF)。）
 - en: '---'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: 'Analyze the following "one-liner" (here split into two lines for clarity) contributed
     by Rory Winston:'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 分析以下由Rory Winston提供的“一行脚本”（为了清晰起见分成两行）：
 - en: '|  [PRE4]  |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: 'Hint: First, break the script up into bite-sized sections. Then, carefully
     examine its use of [double-parentheses](dblparens.html) arithmetic, the [export](internal.html#EXPORTREF)
     command, the [find](moreadv.html#FINDREF) command, the [wc](textproc.html#WCREF)
     command, and [awk](awk.html#AWKREF).'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: 提示：首先，将脚本分解成小块。然后，仔细检查其使用[双括号](dblparens.html)算术、[export](internal.html#EXPORTREF)命令、[find](moreadv.html#FINDREF)命令、[wc](textproc.html#WCREF)命令和[awk](awk.html#AWKREF)。
 - en: '---'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: Analyze [Example A-10](contributed-scripts.html#LIFESLOW), and reorganize it
     in a simplified and more logical style. See how many of the variables can be eliminated,
     and try to optimize the script to speed up its execution time.
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: 分析[示例 A-10](contributed-scripts.html#LIFESLOW)，并以更简化、更逻辑的方式重新组织。看看可以消除多少变量，并尝试优化脚本以加快其执行时间。
 - en: 'Alter the script so that it accepts any ordinary ASCII text file as input for
     its initial "generation". The script will read the first `*$ROW*$COL*` characters,
     and set the occurrences of vowels as "living" cells. Hint: be sure to translate
     the spaces in the input file to underscore characters.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: 修改脚本，使其接受任何普通ASCII文本文件作为其初始“生成”的输入。脚本将读取前`*$ROW*$COL*`个字符，并将元音的出现设置为“活细胞”。提示：务必将输入文件中的空格转换为下划线字符。

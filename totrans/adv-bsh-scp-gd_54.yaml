@@ -1,300 +1,461 @@
 - en: C.1\. Sed
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: C.1\. Sed
 - en: 原文：[https://tldp.org/LDP/abs/html/x23170.html](https://tldp.org/LDP/abs/html/x23170.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/x23170.html](https://tldp.org/LDP/abs/html/x23170.html)
 - en: '*Sed* is a non-interactive [[1]](#FTN.AEN23174) **s**tream **ed**itor. It receives
     text input, whether from `stdin` or from a file, performs certain operations on
     specified lines of the input, one line at a time, then outputs the result to `stdout`
     or to a file. Within a shell script, *sed* is usually one of several tool components
     in a pipe.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '*sed*是一个非交互式[[1]](#FTN.AEN23174) **流** **编辑器**。它接收文本输入，无论是来自`stdin`还是来自文件，对输入的指定行执行某些操作，一次一行，然后将结果输出到`stdout`或文件。在shell脚本中，sed通常是管道中的几个工具组件之一。'
 - en: '*Sed* determines which lines of its input that it will operate on from the
     *address range* passed to it. [[2]](#FTN.AEN23185) Specify this address range
     either by line number or by a pattern to match. For example, `*3d*` signals *sed*
     to delete line 3 of the input, and `*/Windows/d*` tells sed that you want every
     line of the input containing a match to "Windows" deleted.'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*sed*确定它将操作其输入的哪些行，从传递给它的地址范围。[[2]](#FTN.AEN23185) 通过行号或匹配模式指定此地址范围。例如，`*3d*`指示sed删除输入的第3行，而`*/Windows/d*`告诉sed您想要删除包含"Windows"匹配的每一行输入。'
 - en: Of all the operations in the *sed* toolkit, we will focus primarily on the three
     most commonly used ones. These are **p**rinting (to `stdout`), **d**eletion, and
     **s**ubstitution.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 在sed工具包的所有操作中，我们将主要关注三个最常用的操作。这些是打印（到`stdout`）、删除和替换。
 - en: '**Table C-1\. Basic sed operators**'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表C-1\. 基本sed操作符**'
 - en: '| Operator | Name | Effect |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| 操作符 | 名称 | 效果 |'
 - en: '| --- | --- | --- |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `[address-range]/p` | print | Print [specified address range] |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `[地址范围]/p` | 打印 | 打印指定的地址范围 |'
 - en: '| `[address-range]/d` | delete | Delete [specified address range] |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `[地址范围]/d` | 删除 | 删除指定的地址范围 |'
 - en: '| `s/pattern1/pattern2/` | substitute | Substitute pattern2 for first instance
     of pattern1 in a line |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `s/模式1/模式2/` | 替换 | 在行的第一个模式1实例中替换为模式2 |'
 - en: '| `[address-range]/s/pattern1/pattern2/` | substitute | Substitute pattern2
     for first instance of pattern1 in a line, over `*address-range*` |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `[地址范围]/s/模式1/模式2/` | 替换 | 在行的第一个模式1实例中替换为模式2，在`*地址范围*`内进行 |'
 - en: '| `[address-range]/y/pattern1/pattern2/` | transform | replace any character
     in pattern1 with the corresponding character in pattern2, over `*address-range*`
     (equivalent of **tr**) |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `[地址范围]/y/模式1/模式2/` | 转换 | 在`*地址范围*`内将模式1中的任何字符替换为模式2中的对应字符（相当于**tr**） |'
 - en: '| `[address] i pattern Filename` | insert | Insert pattern at address indicated
     in file Filename. Usually used with `-i` `*in-place*` option. |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `[地址] i 模式 文件名` | 插入 | 在文件名中指定的地址插入模式。通常与`-i` `*就地*`选项一起使用。'
 - en: '| `g` | global | Operate on *every* pattern match within each matched line
     of input |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `g` | 全局 | 在每个匹配行的每个匹配模式上操作 |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unless the `g`
     (*global*) operator is appended to a *substitute* command, the substitution operates
     only on the *first* instance of a pattern match within each line. |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 除非将`g`（*全局*）操作符附加到替换命令，否则替换操作仅在每行的模式匹配的第一个实例上操作。
+    |'
 - en: From the command-line and in a shell script, a sed operation may require quoting
     and certain options.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 在命令行和shell脚本中，sed操作可能需要引号和某些选项。
 - en: '|  [PRE0]  |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: In certain cases, a *sed* editing command will not work with single quotes.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 在某些情况下，sed编辑命令不会与单引号一起使用。
 - en: '|  [PRE1]  |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | *Sed* uses the
     `-e` option to specify that the following string is an instruction or set of instructions.
     If there is only a single instruction contained in the string, then this may be
     omitted. |'
+  id: totrans-20
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | *sed*使用`-e`选项指定以下字符串是指令或指令集。如果字符串中只包含一个指令，则可以省略。
+    |'
 - en: '|  [PRE2]  |'
+  id: totrans-21
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: '**Table C-2\. Examples of sed operators**'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表C-2\. sed操作符示例**'
 - en: '| Notation | Effect |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| 符号 | 效果 |'
 - en: '| --- | --- |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- |'
 - en: '| `8d` | Delete 8th line of input. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| `8d` | 删除输入的第8行。 |'
 - en: '| `/^$/d` | Delete all blank lines. |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `/^$/d` | 删除所有空白行。 |'
 - en: '| `1,/^$/d` | Delete from beginning of input up to, and including first blank
     line. |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '| `1,/^$/d` | 删除 | 从输入的开始删除，包括第一行空白行。 |'
 - en: '| `/Jones/p` | Print only lines containing "Jones" (with -n option). |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `/Jones/p` | 仅打印包含"Jones"（使用-n选项）的行。 |'
 - en: '| `s/Windows/Linux/` | Substitute "Linux" for first instance of "Windows" found
     in each input line. |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `s/Windows/Linux/` | 将每个输入行中找到的第一个"Windows"替换为"Linux"。 |'
 - en: '| `s/BSOD/stability/g` | Substitute "stability" for every instance of "BSOD"
     found in each input line. |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `s/BSOD/stability/g` | 将每行中找到的每个 "BSOD" 替换为 "stability" |'
 - en: '| `s/ *$//` | Delete all spaces at the end of every line. |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `s/ *$//` | 删除每行末尾的所有空格 |'
 - en: '| `s/00*/0/g` | Compress all consecutive sequences of zeroes into a single
     zero. |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `s/00*/0/g` | 将所有连续的零压缩成一个零 |'
 - en: '| `echo "Working on it." &#124; sed -e ''1i How far are you along?''` | Prints
     "How far are you along?" as first line, "Working on it" as second. |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '| `echo "Working on it." &#124; sed -e ''1i How far are you along?''` | 打印
+    "How far are you along?" 作为第一行，"Working on it" 作为第二行 |'
 - en: '| `5i ''Linux is great.'' file.txt` | Inserts ''Linux is great.'' at line 5
     of the file file.txt. |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '| `5i ''Linux is great.'' file.txt` | 在文件 file.txt 的第 5 行插入 ''Linux is great.''
+    |'
 - en: '| `/GUI/d` | Delete all lines containing "GUI". |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| `/GUI/d` | 删除包含 "GUI" 的所有行 |'
 - en: '| `s/GUI//g` | Delete all instances of "GUI", leaving the remainder of each
     line intact. |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| `s/GUI//g` | 删除所有 "GUI" 实例，保留每行的其余部分 |'
 - en: Substituting a zero-length string for another is equivalent to deleting that
     string within a line of input. This leaves the remainder of the line intact. Applying
     `**s/GUI//**` to the line
+  id: totrans-37
   prefs: []
   type: TYPE_NORMAL
+  zh: 用零长度字符串替换另一个字符串相当于在输入行的字符串中删除该字符串。这会保留行的其余部分。将 `**s/GUI//**` 应用到该行
 - en: '|  [PRE3]  |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: results in
+  id: totrans-39
   prefs: []
   type: TYPE_NORMAL
+  zh: 结果为
 - en: '|  [PRE4]  |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: A backslash forces the **sed** replacement command to continue on to the next
     line. This has the effect of using the *newline* at the end of the first line
     as the *replacement string*.
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: 反斜杠强制 *sed* 替换命令继续到下一行。这相当于使用第一行末尾的 *换行符* 作为 *替换字符串*。
 - en: '|  [PRE5]  |'
+  id: totrans-42
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE5]  |'
 - en: This substitution replaces line-beginning spaces with a newline. The net result
     is to replace paragraph indents with a blank line between paragraphs.
+  id: totrans-43
   prefs: []
   type: TYPE_NORMAL
+  zh: 这个替换将行首的空格替换为换行符。最终结果是替换段落缩进为段落之间的空白行。
 - en: An address range followed by one or more operations may require open and closed
     curly brackets, with appropriate newlines.
+  id: totrans-44
   prefs: []
   type: TYPE_NORMAL
+  zh: 地址范围后面跟一个或多个操作可能需要开闭花括号，以及适当的新行。
 - en: '|  [PRE6]  |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE6]  |'
 - en: This deletes only the first of each set of consecutive blank lines. That might
     be useful for single-spacing a text file, but retaining the blank line(s) between
     paragraphs.
+  id: totrans-46
   prefs: []
   type: TYPE_NORMAL
+  zh: 这只删除了每组连续空行中的第一行。这可能对单倍空行文本文件有用，但保留段落之间的空行。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The usual delimiter
     that *sed* uses is /. However, *sed* allows other delimiters, such as %. This
     is useful when / is part of a replacement string, as in a file pathname. See [Example
     11-10](loops1.html#FINDSTRING) and [Example 16-32](filearchiv.html#STRIPC). |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | *sed* 通常使用的分隔符是 /.
+    然而，*sed* 允许使用其他分隔符，例如 %. 当 / 是替换字符串的一部分时，这很有用，例如在文件路径名中。参见 [示例 11-10](loops1.html#FINDSTRING)
+    和 [示例 16-32](filearchiv.html#STRIPC)。 |'
 - en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | A quick way to double-space
     a text file is `**sed G filename**`. |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| ![提示](../Images/753d054f4c48fb039314a9e5947964cd.png) | 快速将文本文件双倍空行的方法是 `**sed
+    G filename**` |'
 - en: 'For illustrative examples of sed within shell scripts, see:'
+  id: totrans-49
   prefs: []
   type: TYPE_NORMAL
+  zh: 关于 shell 脚本中 sed 的示例，请参阅：
 - en: '[Example 36-1](wrapper.html#EX3)'
+  id: totrans-50
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 36-1](wrapper.html#EX3)'
 - en: '[Example 36-2](wrapper.html#EX4)'
+  id: totrans-51
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 36-2](wrapper.html#EX4)'
 - en: '[Example 16-3](moreadv.html#EX57)'
+  id: totrans-52
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-3](moreadv.html#EX57)'
 - en: '[Example A-2](contributed-scripts.html#RN)'
+  id: totrans-53
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-2](contributed-scripts.html#RN)'
 - en: '[Example 16-17](textproc.html#GRP)'
+  id: totrans-54
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-17](textproc.html#GRP)'
 - en: '[Example 16-27](textproc.html#COL)'
+  id: totrans-55
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-27](textproc.html#COL)'
 - en: '[Example A-12](contributed-scripts.html#BEHEAD)'
+  id: totrans-56
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-12](contributed-scripts.html#BEHEAD)'
 - en: '[Example A-16](contributed-scripts.html#TREE)'
+  id: totrans-57
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-16](contributed-scripts.html#TREE)'
 - en: '[Example A-17](contributed-scripts.html#TREE2)'
+  id: totrans-58
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-17](contributed-scripts.html#TREE2)'
 - en: '[Example 16-32](filearchiv.html#STRIPC)'
+  id: totrans-59
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-32](filearchiv.html#STRIPC)'
 - en: '[Example 11-10](loops1.html#FINDSTRING)'
+  id: totrans-60
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-10](loops1.html#FINDSTRING)'
 - en: '[Example 16-48](mathc.html#BASE)'
+  id: totrans-61
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-48](mathc.html#BASE)'
 - en: '[Example A-1](contributed-scripts.html#MAILFORMAT)'
+  id: totrans-62
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-1](contributed-scripts.html#MAILFORMAT)'
 - en: '[Example 16-14](textproc.html#RND)'
+  id: totrans-63
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-14](textproc.html#RND)'
 - en: '[Example 16-12](textproc.html#WF)'
+  id: totrans-64
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-12](textproc.html#WF)'
 - en: '[Example A-10](contributed-scripts.html#LIFESLOW)'
+  id: totrans-65
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-10](contributed-scripts.html#LIFESLOW)'
 - en: '[Example 19-12](here-docs.html#SELFDOCUMENT)'
+  id: totrans-66
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 19-12](here-docs.html#SELFDOCUMENT)'
 - en: '[Example 16-19](textproc.html#DICTLOOKUP)'
+  id: totrans-67
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-19](textproc.html#DICTLOOKUP)'
 - en: '[Example A-29](contributed-scripts.html#WHX)'
+  id: totrans-68
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-29](contributed-scripts.html#WHX)'
 - en: '[Example A-31](contributed-scripts.html#BASHPODDER)'
+  id: totrans-69
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-31](contributed-scripts.html#BASHPODDER)'
 - en: '[Example A-24](contributed-scripts.html#TOHTML)'
+  id: totrans-70
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-24](contributed-scripts.html#TOHTML)'
 - en: '[Example A-43](contributed-scripts.html#STOPWATCH)'
+  id: totrans-71
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-43](contributed-scripts.html#STOPWATCH)'
 - en: '[Example A-55](contributed-scripts.html#SEDAPPEND)'
+  id: totrans-72
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 A-55](contributed-scripts.html#SEDAPPEND)'
 - en: For a more extensive treatment of *sed*, refer to the [pertinent references](biblio.html#DGSEDREF)
     in the [*Bibliography*](biblio.html).
+  id: totrans-73
   prefs: []
   type: TYPE_NORMAL
+  zh: 若想更深入地了解 *sed*，请参阅 [*参考文献*](biblio.html#DGSEDREF) 中的相关 [参考资料](biblio.html)。
 - en: Notes
+  id: totrans-74
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](x23170.html#AEN23174) | *Sed* executes without user intervention. |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](x23170.html#AEN23174) | *Sed* 在没有用户干预的情况下执行。 |'
 - en: '| [[2]](x23170.html#AEN23185) | If no address range is specified, the default
     is *all* lines. |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| [[2]](x23170.html#AEN23185) | 如果未指定地址范围，则默认为 *所有* 行。 |'

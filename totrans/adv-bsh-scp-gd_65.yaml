@@ -1,41 +1,62 @@
 - en: Appendix K. Localization
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附录 K. 本地化
 - en: 原文：[https://tldp.org/LDP/abs/html/localization.html](https://tldp.org/LDP/abs/html/localization.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/localization.html](https://tldp.org/LDP/abs/html/localization.html)
 - en: Localization is an undocumented Bash feature.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地化是 Bash 的一个未记录功能。
 - en: A localized shell script echoes its text output in the language defined as the
     system's locale. A Linux user in Berlin, Germany, would get script output in German,
     whereas his cousin in Berlin, Maryland, would get output from the same script
     in English.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 本地化的 shell 脚本会以系统区域设置定义的语言输出其文本输出。德国柏林的 Linux 用户将获得德语的脚本输出，而他在马里兰州柏林的堂兄将获得相同脚本的英文输出。
 - en: To create a localized script, use the following template to write all messages
     to the user (error messages, prompts, etc.).
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 要创建本地化脚本，请使用以下模板将所有消息写入用户（错误消息、提示等）。
 - en: '|  [PRE0]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '|  [PRE1]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: This lists all the localized text. (The `-D` option lists double-quoted strings
     prefixed by a $, without executing the script.)
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 这列出了所有本地化文本。（`-D` 选项列出了以 $ 为前缀的双引号字符串，而不执行脚本。）
 - en: '|  [PRE2]  |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: The `--dump-po-strings` option to Bash resembles the `-D` option, but uses [gettext](textproc.html#GETTEXTREF)
     "po" format.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash 的 `--dump-po-strings` 选项类似于 `-D` 选项，但使用 [gettext](textproc.html#GETTEXTREF)
+    的 "po" 格式。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bruno Haible points
     out:Starting with gettext-0.12.2, **xgettext -o - localized.sh** is recommended
     instead of **bash --dump-po-strings localized.sh**, because **xgettext** . . .1\.
@@ -44,53 +65,89 @@
     by the programmer, intended to be read by the translator.This shell code is then
     not specific to Bash any more; it works the same way with Bash 1.x and other /bin/sh
     implementations. |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bruno Haible 指出：从
+    gettext-0.12.2 版本开始，建议使用 **xgettext -o - localized.sh** 而不是 **bash --dump-po-strings
+    localized.sh**，因为 **xgettext** . . .1\. 理解 gettext 和 eval_gettext 命令（而 bash --dump-po-strings
+    只理解其已弃用的 $"..." 语法）2\. 可以提取程序员放置的注释，这些注释旨在由翻译者阅读。这个 shell 代码现在不再特定于 Bash；它以相同的方式与
+    Bash 1.x 和其他 /bin/sh 实现一起工作。 |'
 - en: 'Now, build a `language.po` file for each language that the script will be translated
     into, specifying the `*msgstr*`. Alfredo Pironti gives the following example:'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 现在，为脚本将要翻译成每种语言创建一个 `language.po` 文件，并指定 `*msgstr*`。Alfredo Pironti 提供了以下示例：
 - en: 'fr.po:'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: 'fr.po:'
 - en: '|  [PRE3]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: Then, run [msgfmt](textproc.html#MSGFMTREF).
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 然后，运行 [msgfmt](textproc.html#MSGFMTREF)。
 - en: '`**msgfmt -o localized.sh.mo fr.po**`'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**msgfmt -o localized.sh.mo fr.po**`'
 - en: 'Place the resulting `localized.sh.mo` file in the `/usr/local/share/locale/fr/LC_MESSAGES`
     directory, and at the beginning of the script, insert the lines:'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: 将生成的 `localized.sh.mo` 文件放置在 `/usr/local/share/locale/fr/LC_MESSAGES` 目录中，并在脚本开头插入以下行：
 - en: '|  [PRE4]  |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE4]  |'
 - en: If a user on a French system runs the script, she will get French messages.
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: 如果一个法语系统的用户运行该脚本，她将获得法语消息。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | With older versions
     of Bash or other shells, localization requires [gettext](textproc.html#GETTEXTREF),
     using the `-s` option. In this case, the script becomes:'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![注意](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 在较旧的 Bash 或其他 shell
+    版本中，本地化需要使用 [gettext](textproc.html#GETTEXTREF)，并使用 `-s` 选项。在这种情况下，脚本将变为：'
 - en: '&#124;  [PRE5]  &#124;'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE5]  &#124;'
 - en: '|'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: The `TEXTDOMAIN` and `TEXTDOMAINDIR` variables need to be set and exported to
     the environment. This should be done within the script itself.
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: 需要设置并导出 `TEXTDOMAIN` 和 `TEXTDOMAINDIR` 变量到环境变量中。这应该在脚本内部完成。
 - en: '---'
+  id: totrans-23
   prefs: []
   type: TYPE_NORMAL
+  zh: '---'
 - en: This appendix written by Stphane Chazelas, with modifications suggested by Alfredo
     Pironti, and by Bruno Haible, maintainer of GNU [gettext](textproc.html#GETTEXTREF).
+  id: totrans-24
   prefs: []
   type: TYPE_NORMAL
+  zh: 本附录由 Stphane Chazelas 编写，Alfredo Pironti 提供了修改建议，以及 Bruno Haible（GNU [gettext](textproc.html#GETTEXTREF)
+    的维护者）。

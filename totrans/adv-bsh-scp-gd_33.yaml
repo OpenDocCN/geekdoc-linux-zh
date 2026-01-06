@@ -1,57 +1,86 @@
 - en: Chapter 28\. Indirect References
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第28章. 间接引用
 - en: 原文：[https://tldp.org/LDP/abs/html/ivr.html](https://tldp.org/LDP/abs/html/ivr.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/ivr.html](https://tldp.org/LDP/abs/html/ivr.html)
 - en: We have seen that [referencing a variable](varsubn.html), `$var`, fetches its
     *value*. But, what about the *value of a value*? What about `$$var`?
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们已经看到，[引用一个变量](varsubn.html)，`$var`，可以获取其*值*。但是，关于*值的值*呢？`$$var`又是怎么回事？
 - en: The actual notation is `*\$$var*`, usually preceded by an [eval](internal.html#EVALREF)
     (and sometimes an [echo](internal.html#ECHOREF)). This is called an *indirect
     reference*.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 实际的表示法是`*\$$var*`，通常在[eval](internal.html#EVALREF)（有时是[echo](internal.html#ECHOREF)）之前。这被称为*间接引用*。
 - en: '**Example 28-1\. Indirect Variable References**'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例28-1. 间接变量引用**'
 - en: '|  [PRE0]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: '|'
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: 'Indirect referencing in Bash is a multi-step process. First, take the name
     of a variable: `varname`. Then, reference it: `$varname`. Then, reference the
     reference: `$$varname`. Then, *escape* the first $: `\$$varname`. Finally, force
     a reevaluation of the expression and assign it: **eval newvar=\$$varname**.'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 在Bash中，间接引用是一个多步骤的过程。首先，取一个变量的名称：`varname`。然后，引用它：`$varname`。接着，引用引用：`$$varname`。然后，*转义*第一个$：`\$$varname`。最后，强制重新评估表达式并分配它：**eval
+    newvar=\$$varname**。
 - en: '|'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Of what practical use is indirect referencing of variables? It gives Bash a
     little of the functionality of [pointers](varsubn.html#POINTERREF) in *C*, for
     instance, in [table lookup](bashver2.html#RESISTOR). And, it also has some other
     very interesting applications. . . .
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 变量的间接引用在实践中有何用途？它给Bash带来了一点点类似*指针*的功能，例如在[C语言](varsubn.html#POINTERREF)中的[表格查找](bashver2.html#RESISTOR)。它还有一些其他非常有趣的应用……
 - en: Nils Radtke shows how to build "dynamic" variable names and evaluate their contents.
     This can be useful when [sourcing](internal.html#SOURCEREF) configuration files.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: Nils Radtke展示了如何构建“动态”变量名并评估其内容。这在[源文件](internal.html#SOURCEREF)配置文件时非常有用。
 - en: '|  [PRE1]  |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: '**Example 28-2\. Passing an indirect reference to *awk***'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例28-2. 将间接引用传递给*awk*** '
 - en: '|  [PRE2]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | This method
     of indirect referencing is a bit tricky. If the second order variable changes
     its value, then the first order variable must be properly dereferenced (as in
@@ -59,16 +88,25 @@
     [version 2](bashver2.html#BASH2REF) of Bash (see [Example 37-2](bashver2.html#EX78)
     and [Example A-22](contributed-scripts.html#HASHEX2)) makes indirect referencing
     more intuitive. |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| ![注意](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 这种间接引用的方法有点棘手。如果二阶变量改变了它的值，那么一阶变量必须正确地取消引用（如上例所示）。幸运的是，Bash
+    [版本2](bashver2.html#BASH2REF)中引入的`*${!variable}*`表示法（参见[示例37-2](bashver2.html#EX78)和[示例A-22](contributed-scripts.html#HASHEX2)）使间接引用更加直观。|'
 - en: '|'
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: Bash does not support pointer arithmetic, and this severely limits the usefulness
     of indirect referencing. In fact, indirect referencing in a scripting language
     is, at best, something of an afterthought.
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: Bash不支持指针算术，这严重限制了间接引用的实用性。实际上，在脚本语言中的间接引用，最多只是一种事后考虑。
 - en: '|'
+  id: totrans-17
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'

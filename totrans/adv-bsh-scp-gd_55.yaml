@@ -1,145 +1,217 @@
 - en: C.2\. Awk
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: C.2\. Awk
 - en: 原文：[https://tldp.org/LDP/abs/html/awk.html](https://tldp.org/LDP/abs/html/awk.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/awk.html](https://tldp.org/LDP/abs/html/awk.html)
 - en: '*Awk* [[1]](#FTN.AEN23443) is a full-featured text processing language with
     a syntax reminiscent of *C*. While it possesses an extensive set of operators
     and capabilities, we will cover only a few of these here - the ones most useful
     in shell scripts.'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '*Awk* [[1]](#FTN.AEN23443) 是一种功能齐全的文本处理语言，其语法类似于 *C*。虽然它具有广泛的操作符和功能，但在这里我们将只介绍其中的一些——在shell脚本中最有用的那些。'
 - en: Awk breaks each line of input passed to it into [fields](special-chars.html#FIELDREF).
     By default, a field is a string of consecutive characters delimited by [whitespace](special-chars.html#WHITESPACEREF),
     though there are options for changing this. Awk parses and operates on each separate
     field. This makes it ideal for handling structured text files -- especially tables
     -- data organized into consistent chunks, such as rows and columns.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: Awk将其接收到的每一行输入分解为[字段](special-chars.html#FIELDREF)。默认情况下，字段是由空白字符分隔的连续字符字符串，尽管有选项可以更改这一点。Awk解析并操作每个单独的字段。这使得它非常适合处理结构化文本文件——特别是表格——数据组织成一致的块，如行和列。
 - en: '[Strong quoting](varsubn.html#SNGLQUO) and [curly brackets](special-chars.html#CODEBLOCKREF)
     enclose blocks of awk code within a shell script.'
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '[强引用](varsubn.html#SNGLQUO)和[花括号](special-chars.html#CODEBLOCKREF)将awk代码块包围在shell脚本中。'
 - en: '|  [PRE0]  |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: We have just seen the awk *print* command in action. The only other feature
     of awk we need to deal with here is variables. Awk handles variables similarly
     to shell scripts, though a bit more flexibly.
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 我们刚刚看到了awk *print*命令的实际应用。awk在这里需要处理的另一个功能是变量。awk处理变量的方式与shell脚本类似，但更加灵活。
 - en: '|  [PRE1]  |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: This adds the value of `*column_number*` to the running total of `*total*`>.
     Finally, to print "total", there is an **END** command block, executed after the
     script has processed all its input.
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 这会将`*column_number*`的值添加到`*total*`的累计总和中。最后，为了打印"total"，有一个**END**命令块，在脚本处理完所有输入后执行。
 - en: '|  [PRE2]  |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'
 - en: Corresponding to the **END**, there is a **BEGIN**, for a code block to be performed
     before awk starts processing its input.
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: 与**END**相对应的是**BEGIN**，用于在awk开始处理输入之前执行代码块。
 - en: The following example illustrates how **awk** can add text-parsing tools to
     a shell script.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下示例说明了**awk**如何将文本解析工具添加到shell脚本中。
 - en: '**Example C-1\. Counting Letter Occurrences**'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 C-1\. 计数字母出现次数**'
 - en: '|  [PRE3]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: 'For simpler examples of awk within shell scripts, see:'
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 要查看shell脚本中awk的更简单示例，请参阅：
 - en: '[Example 15-14](internal.html#EX44)'
+  id: totrans-15
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 15-14](internal.html#EX44)'
 - en: '[Example 20-8](redircb.html#REDIR4)'
+  id: totrans-16
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 20-8](redircb.html#REDIR4)'
 - en: '[Example 16-32](filearchiv.html#STRIPC)'
+  id: totrans-17
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-32](filearchiv.html#STRIPC)'
 - en: '[Example 36-5](wrapper.html#COLTOTALER)'
+  id: totrans-18
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 36-5](wrapper.html#COLTOTALER)'
 - en: '[Example 28-2](ivr.html#COLTOTALER2)'
+  id: totrans-19
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 28-2](ivr.html#COLTOTALER2)'
 - en: '[Example 15-20](internal.html#COLTOTALER3)'
+  id: totrans-20
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 15-20](internal.html#COLTOTALER3)'
 - en: '[Example 29-3](procref1.html#PIDID)'
+  id: totrans-21
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 29-3](procref1.html#PIDID)'
 - en: '[Example 29-4](procref1.html#CONSTAT)'
+  id: totrans-22
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 29-4](procref1.html#CONSTAT)'
 - en: '[Example 11-3](loops1.html#FILEINFO)'
+  id: totrans-23
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-3](loops1.html#FILEINFO)'
 - en: '[Example 16-61](extmisc.html#BLOTOUT)'
+  id: totrans-24
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-61](extmisc.html#BLOTOUT)'
 - en: '[Example 9-16](randomvar.html#SEEDINGRANDOM)'
+  id: totrans-25
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 9-16](randomvar.html#SEEDINGRANDOM)'
 - en: '[Example 16-4](moreadv.html#IDELETE)'
+  id: totrans-26
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-4](moreadv.html#IDELETE)'
 - en: '[Example 10-6](string-manipulation.html#SUBSTRINGEX)'
+  id: totrans-27
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 10-6](string-manipulation.html#SUBSTRINGEX)'
 - en: '[Example 36-19](assortedtips.html#SUMPRODUCT)'
+  id: totrans-28
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 36-19](assortedtips.html#SUMPRODUCT)'
 - en: '[Example 11-9](loops1.html#USERLIST)'
+  id: totrans-29
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 11-9](loops1.html#USERLIST)'
 - en: '[Example 36-4](wrapper.html#PRASC)'
+  id: totrans-30
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 36-4](wrapper.html#PRASC)'
 - en: '[Example 16-53](mathc.html#HYPOT)'
+  id: totrans-31
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 16-53](mathc.html#HYPOT)'
 - en: '[Example T-3](asciitable.html#ASCII3SH)'
+  id: totrans-32
   prefs:
   - PREF_OL
   type: TYPE_NORMAL
+  zh: '[示例 T-3](asciitable.html#ASCII3SH)'
 - en: That's all the awk we'll cover here, folks, but there's lots more to learn.
     See the appropriate references in the [*Bibliography*](biblio.html).
+  id: totrans-33
   prefs: []
   type: TYPE_NORMAL
+  zh: 好了，这就是我们要在这里介绍的awk，但还有很多东西要学习。请参阅[参考文献](biblio.html)中的适当参考。
 - en: Notes
+  id: totrans-34
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 注意
 - en: '| [[1]](awk.html#AEN23443) | Its name derives from the initials of its authors,
     **A**ho, **W**einberg, and **K**ernighan. |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](awk.html#AEN23443) | 它的名字来源于其作者的缩写**A**ho, **W**einberg, 和 **K**ernighan。|'

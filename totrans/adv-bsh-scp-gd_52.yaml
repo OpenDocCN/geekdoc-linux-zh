@@ -1,511 +1,831 @@
 - en: Appendix B. Reference Cards
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附录 B. 参考卡
 - en: 原文：[https://tldp.org/LDP/abs/html/refcards.html](https://tldp.org/LDP/abs/html/refcards.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/refcards.html](https://tldp.org/LDP/abs/html/refcards.html)
 - en: The following reference cards provide a useful *summary* of certain scripting
     concepts. The foregoing text treats these matters in more depth, as well as giving
     usage examples.
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: 以下参考卡提供了一些脚本概念的实用 *总结*。前面的文本更深入地讨论了这些问题，并给出了使用示例。
 - en: '**Table B-1\. Special Shell Variables**'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-1\. 特殊 Shell 变量**'
 - en: '| Variable | Meaning |'
+  id: totrans-4
   prefs: []
   type: TYPE_TB
+  zh: '| 变量 | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-5
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `$0` | Filename of script |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '| `$0` | 脚本文件名 |'
 - en: '| `$1` | Positional parameter #1 |'
+  id: totrans-7
   prefs: []
   type: TYPE_TB
+  zh: '| `$1` | 位置参数 #1 |'
 - en: '| `$2 - $9` | Positional parameters #2 - #9 |'
+  id: totrans-8
   prefs: []
   type: TYPE_TB
+  zh: '| `$2 - $9` | 位置参数 #2 - #9 |'
 - en: '| `${10}` | Positional parameter #10 |'
+  id: totrans-9
   prefs: []
   type: TYPE_TB
+  zh: '| `${10}` | 位置参数 #10 |'
 - en: '| `$#` | Number of positional parameters |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '| `$#` | 位置参数的数量 |'
 - en: '| `"$*"` | All the positional parameters (as a single word) * |'
+  id: totrans-11
   prefs: []
   type: TYPE_TB
+  zh: '| `"$*"` | 所有位置参数（作为一个单词） * |'
 - en: '| `"$@"` | All the positional parameters (as separate strings) |'
+  id: totrans-12
   prefs: []
   type: TYPE_TB
+  zh: '| `"$@"` | 所有位置参数（作为单独的字符串） |'
 - en: '| `${#*}` | Number of positional parameters |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '| `${#*}` | 位置参数的数量 |'
 - en: '| `${#@}` | Number of positional parameters |'
+  id: totrans-14
   prefs: []
   type: TYPE_TB
+  zh: '| `${#@}` | 位置参数的数量 |'
 - en: '| `$?` | Return value |'
+  id: totrans-15
   prefs: []
   type: TYPE_TB
+  zh: '| `$?` | 返回值 |'
 - en: '| `$$` | Process ID (PID) of script |'
+  id: totrans-16
   prefs: []
   type: TYPE_TB
+  zh: '| `$$` | 脚本的进程 ID (PID) |'
 - en: '| `$-` | Flags passed to script (using *set*) |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '| `$-` | 传递给脚本的标志（使用 *set*） |'
 - en: '| `$_` | Last argument of previous command |'
+  id: totrans-18
   prefs: []
   type: TYPE_TB
+  zh: '| `$_` | 上一个命令的最后一个参数 |'
 - en: '| `$!` | Process ID (PID) of last job run in background |'
+  id: totrans-19
   prefs: []
   type: TYPE_TB
+  zh: '| `$!` | 最后在后台运行的作业的进程 ID (PID) |'
 - en: '***** *Must be quoted*, otherwise it defaults to `$@`.'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '***** *必须引用，否则默认为 `$@`。*'
 - en: '**Table B-2\. TEST Operators: Binary Comparison**'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-2\. 测试操作符：二进制比较**'
 - en: '| Operator | Meaning | ----- | Operator | Meaning |'
+  id: totrans-22
   prefs: []
   type: TYPE_TB
+  zh: '| 操作符 | 含义 | ----- | 操作符 | 含义 |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '|   |   |   |   |   |'
+  id: totrans-24
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   |   |   |'
 - en: '| [Arithmetic Comparison](comparison-ops.html#ICOMPARISON1) |   |   | [String
     Comparison](comparison-ops.html#SCOMPARISON1) |   |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| [算术比较](comparison-ops.html#ICOMPARISON1) |   |   | [字符串比较](comparison-ops.html#SCOMPARISON1)
+    |   |'
 - en: '| `-eq` | Equal to |   | `=` | Equal to |'
+  id: totrans-26
   prefs: []
   type: TYPE_TB
+  zh: '| `-eq` | 等于 |   | `=` | 等于 |'
 - en: '|   |   |   | `==` | Equal to |'
+  id: totrans-27
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   | `==` | 等于 |'
 - en: '| `-ne` | Not equal to |   | `!=` | Not equal to |'
+  id: totrans-28
   prefs: []
   type: TYPE_TB
+  zh: '| `-ne` | 不等于 |   | `!=` | 不等于 |'
 - en: '| `-lt` | Less than |   | `\<` | Less than ([ASCII](special-chars.html#ASCIIDEF))
     * |'
+  id: totrans-29
   prefs: []
   type: TYPE_TB
+  zh: '| `-lt` | 小于 |   | `\<` | 小于 ([ASCII](special-chars.html#ASCIIDEF)) * |'
 - en: '| `-le` | Less than or equal to |   |   |   |'
+  id: totrans-30
   prefs: []
   type: TYPE_TB
+  zh: '| `-le` | 小于或等于 |   |   |   |'
 - en: '| `-gt` | Greater than |   | `\>` | Greater than (ASCII) * |'
+  id: totrans-31
   prefs: []
   type: TYPE_TB
+  zh: '| `-gt` | 大于 |   | `\>` | 大于 (ASCII) * |'
 - en: '| `-ge` | Greater than or equal to |   |   |   |'
+  id: totrans-32
   prefs: []
   type: TYPE_TB
+  zh: '| `-ge` | 大于或等于 |   |   |   |'
 - en: '|   |   |   | `-z` | String is empty |'
+  id: totrans-33
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   | `-z` | 字符串为空 |'
 - en: '|   |   |   | `-n` | String is not empty |'
+  id: totrans-34
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   | `-n` | 字符串不为空 |'
 - en: '|   |   |   |   |   |'
+  id: totrans-35
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   |   |   |'
 - en: '| Arithmetic Comparison | [within double parentheses](testconstructs.html#DBLPRX)
     (( ... )) |   |   |   |'
+  id: totrans-36
   prefs: []
   type: TYPE_TB
+  zh: '| 算术比较 | [在双括号内](testconstructs.html#DBLPRX) (( ... )) |   |   |   |'
 - en: '| `>` | Greater than |   |   |   |'
+  id: totrans-37
   prefs: []
   type: TYPE_TB
+  zh: '| `>` | 大于 |   |   |   |'
 - en: '| `>=` | Greater than or equal to |   |   |   |'
+  id: totrans-38
   prefs: []
   type: TYPE_TB
+  zh: '| `>=` | 大于或等于 |   |   |   |'
 - en: '| `<` | Less than |   |   |   |'
+  id: totrans-39
   prefs: []
   type: TYPE_TB
+  zh: '| `<` | 小于 |   |   |   |'
 - en: '| `<=` | Less than or equal to |   |   |   |'
+  id: totrans-40
   prefs: []
   type: TYPE_TB
+  zh: '| `<=` | 小于或等于 |   |   |   |'
 - en: '***** *If within a double-bracket* [[ ... ]] *test construct, then no escape*
     \ *is needed.*'
+  id: totrans-41
   prefs: []
   type: TYPE_NORMAL
+  zh: '***** *如果在一个双括号* [[ ... ]] *测试结构中，则不需要转义* \ *。*'
 - en: '**Table B-3\. TEST Operators: Files**'
+  id: totrans-42
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-3\. 测试操作符：文件**'
 - en: '| Operator | Tests Whether | ----- | Operator | Tests Whether |'
+  id: totrans-43
   prefs: []
   type: TYPE_TB
+  zh: '| 操作符 | 测试是否 | ----- | 操作符 | 测试是否 |'
 - en: '| --- | --- | --- | --- | --- |'
+  id: totrans-44
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- | --- | --- | --- |'
 - en: '| `-e` | File exists |   | `-s` | File is not zero size |'
+  id: totrans-45
   prefs: []
   type: TYPE_TB
+  zh: '| `-e` | 文件存在 |   | `-s` | 文件不是零大小 |'
 - en: '| `-f` | File is a *regular* file |   |   |   |'
+  id: totrans-46
   prefs: []
   type: TYPE_TB
+  zh: '| `-f` | 文件是一个 *常规* 文件 |   |   |   |'
 - en: '| `-d` | File is a *directory* |   | `-r` | File has *read* permission |'
+  id: totrans-47
   prefs: []
   type: TYPE_TB
+  zh: '| `-d` | 文件是一个 *目录* |   | `-r` | 文件有 *读* 权限 |'
 - en: '| `-h` | File is a [symbolic link](basic.html#SYMLINKREF) |   | `-w` | File
     has *write* permission |'
+  id: totrans-48
   prefs: []
   type: TYPE_TB
+  zh: '| `-h` | 文件是一个 [符号链接](basic.html#SYMLINKREF) |   | `-w` | 文件有 *写* 权限 |'
 - en: '| `-L` | File is a *symbolic link* |   | `-x` | File has *execute* permission
     |'
+  id: totrans-49
   prefs: []
   type: TYPE_TB
+  zh: '| `-L` | 文件是一个 *符号链接* |   | `-x` | 文件有 *执行* 权限 |'
 - en: '| `-b` | File is a [block device](devref1.html#BLOCKDEVREF) |   |   |   |'
+  id: totrans-50
   prefs: []
   type: TYPE_TB
+  zh: '| `-b` | 文件是一个 [块设备](devref1.html#BLOCKDEVREF) |   |   |   |'
 - en: '| `-c` | File is a [character device](devref1.html#CHARDEVREF) |   | `-g` |
     *sgid* flag set |'
+  id: totrans-51
   prefs: []
   type: TYPE_TB
+  zh: '| `-c` | 文件是一个 [字符设备](devref1.html#CHARDEVREF) |   | `-g` | *sgid* 标志设置 |'
 - en: '| `-p` | File is a [pipe](special-chars.html#PIPEREF) |   | `-u` | *suid* flag
     set |'
+  id: totrans-52
   prefs: []
   type: TYPE_TB
+  zh: '| `-p` | 文件是一个 [管道](special-chars.html#PIPEREF) |   | `-u` | *suid* 标志设置 |'
 - en: '| `-S` | File is a [socket](devref1.html#SOCKETREF) |   | `-k` | "sticky bit"
     set |'
+  id: totrans-53
   prefs: []
   type: TYPE_TB
+  zh: '| `-S` | 文件是一个 [套接字](devref1.html#SOCKETREF) |   | `-k` | 设置了 "粘性位" |'
 - en: '| `-t` | File is associated with a *terminal* |   |   |   |'
+  id: totrans-54
   prefs: []
   type: TYPE_TB
+  zh: '| `-t` | 文件与一个 *终端* 关联 |   |   |   |'
 - en: '|   |   |   |   |   |'
+  id: totrans-55
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   |   |   |'
 - en: '| `-N` | File modified since it was last read |   | `F1 -nt F2` | File F1 is
     *newer* than F2 * |'
+  id: totrans-56
   prefs: []
   type: TYPE_TB
+  zh: '| `-N` | 文件自上次读取以来已修改 |   | `F1 -nt F2` | 文件 F1 比 F2 *新* |'
 - en: '| `-O` | You own the file |   | `F1 -ot F2` | File F1 is *older* than F2 *
     |'
+  id: totrans-57
   prefs: []
   type: TYPE_TB
+  zh: '| `-O` | 你拥有该文件 |   | `F1 -ot F2` | 文件 F1 比 F2 *旧* |'
 - en: '| `-G` | *Group id* of file same as yours |   | `F1 -ef F2` | Files F1 and
     F2 are *hard links* to the same file * |'
+  id: totrans-58
   prefs: []
   type: TYPE_TB
+  zh: '| `-G` | 文件的 *组 id* 与你的相同 |   | `F1 -ef F2` | 文件 F1 和 F2 是指向同一文件的 *硬链接* * |'
 - en: '|   |   |   |   |   |'
+  id: totrans-59
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |   |   |   |'
 - en: '| `!` | NOT (inverts sense of above tests) |   |   |   |'
+  id: totrans-60
   prefs: []
   type: TYPE_TB
+  zh: '| `!` | NOT（反转上述测试的意义） |   |   |   |'
 - en: '***** *Binary* operator (requires two operands).'
+  id: totrans-61
   prefs: []
   type: TYPE_NORMAL
+  zh: '***** 二元运算符（需要两个操作数）。'
 - en: '**Table B-4\. Parameter Substitution and Expansion**'
+  id: totrans-62
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-4\. 参数替换和扩展**'
 - en: '| Expression | Meaning |'
+  id: totrans-63
   prefs: []
   type: TYPE_TB
+  zh: '| 表达式 | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-64
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `${var}` | Value of `*var*` (same as `*$var*`) |'
+  id: totrans-65
   prefs: []
   type: TYPE_TB
+  zh: '| `${var}` | `*var*` 的值（与 `*$var*` 相同） |'
 - en: '|   |   |'
+  id: totrans-66
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${var-$DEFAULT}` | If `*var*` not set, [evaluate](internal.html#EVALREF)
     expression as `*$DEFAULT*` * |'
+  id: totrans-67
   prefs: []
   type: TYPE_TB
+  zh: '| `${var-$DEFAULT}` | 如果 `*var*` 未设置，[评估](internal.html#EVALREF) 表达式为 `*$DEFAULT*`
+    * |'
 - en: '| `${var:-$DEFAULT}` | If `*var*` not set or is empty, *evaluate* expression
     as `*$DEFAULT*` * |'
+  id: totrans-68
   prefs: []
   type: TYPE_TB
+  zh: '| `${var:-$DEFAULT}` | 如果 `*var*` 未设置或为空，则 *评估* 表达式为 `*$DEFAULT*` * |'
 - en: '|   |   |'
+  id: totrans-69
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${var=$DEFAULT}` | If `*var*` not set, evaluate expression as `*$DEFAULT*`
     * |'
+  id: totrans-70
   prefs: []
   type: TYPE_TB
+  zh: '| `${var=$DEFAULT}` | 如果 `*var*` 未设置，则将表达式评估为 `*$DEFAULT*` * |'
 - en: '| `${var:=$DEFAULT}` | If `*var*` not set or is empty, evaluate expression
     as `*$DEFAULT*` * |'
+  id: totrans-71
   prefs: []
   type: TYPE_TB
+  zh: '| `${var:=$DEFAULT}` | 如果 `*var*` 未设置或为空，则将表达式评估为 `*$DEFAULT*` * |'
 - en: '|   |   |'
+  id: totrans-72
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${var+$OTHER}` | If `*var*` set, evaluate expression as `*$OTHER*`, otherwise
     as null string |'
+  id: totrans-73
   prefs: []
   type: TYPE_TB
+  zh: '| `${var+$OTHER}` | 如果 `*var*` 已设置，则将表达式评估为 `*$OTHER*`，否则为空字符串 |'
 - en: '| `${var:+$OTHER}` | If `*var*` set, evaluate expression as `*$OTHER*`, otherwise
     as null string |'
+  id: totrans-74
   prefs: []
   type: TYPE_TB
+  zh: '| `${var:+$OTHER}` | 如果 `*var*` 已设置，则将表达式评估为 `*$OTHER*`，否则为空字符串 |'
 - en: '|   |   |'
+  id: totrans-75
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${var?$ERR_MSG}` | If `*var*` not set, print `*$ERR_MSG*` and abort script
     with an exit status of 1.* |'
+  id: totrans-76
   prefs: []
   type: TYPE_TB
+  zh: '| `${var?$ERR_MSG}` | 如果 `*var*` 未设置，打印 `*$ERR_MSG*` 并以退出状态 1 中断脚本。* |'
 - en: '| `${var:?$ERR_MSG}` | If `*var*` not set, print `*$ERR_MSG*` and abort script
     with an exit status of 1.* |'
+  id: totrans-77
   prefs: []
   type: TYPE_TB
+  zh: '| `${var:?$ERR_MSG}` | 如果 `*var*` 未设置，打印 `*$ERR_MSG*` 并以退出状态 1 中断脚本。* |'
 - en: '|   |   |'
+  id: totrans-78
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${!varprefix*}` | Matches all previously declared variables beginning with
     `*varprefix*` |'
+  id: totrans-79
   prefs: []
   type: TYPE_TB
+  zh: '| `${!varprefix*}` | 匹配所有以前声明的以 `*varprefix*` 开头的变量 |'
 - en: '| `${!varprefix@}` | Matches all previously declared variables beginning with
     `*varprefix*` |'
+  id: totrans-80
   prefs: []
   type: TYPE_TB
+  zh: '| `${!varprefix@}` | 匹配所有以前声明的以 `*varprefix*` 开头的变量 |'
 - en: '***** If `*var*` *is* set, evaluate the expression as `*$var*` with no side-effects.'
+  id: totrans-81
   prefs: []
   type: TYPE_NORMAL
+  zh: '***** 如果 `*var*` *已*设置，则评估表达式为 `*$var*`，没有副作用。'
 - en: '**# Note** that some of the above behavior of operators has changed from earlier
     versions of Bash.'
+  id: totrans-82
   prefs: []
   type: TYPE_NORMAL
+  zh: '**# 注意**，上述运算符的一些行为与 Bash 的早期版本有所不同。'
 - en: '**Table B-5\. String Operations**'
+  id: totrans-83
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-5\. 字符串操作**'
 - en: '| Expression | Meaning |'
+  id: totrans-84
   prefs: []
   type: TYPE_TB
+  zh: '| 表达式 | 含义 |'
 - en: '| --- | --- |'
+  id: totrans-85
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '| `${#string}` | Length of `*$string*` |'
+  id: totrans-86
   prefs: []
   type: TYPE_TB
+  zh: '| `${#string}` | `*$string*` 的长度 |'
 - en: '|   |   |'
+  id: totrans-87
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${string:position}` | Extract substring from `*$string*` at `*$position*`
     |'
+  id: totrans-88
   prefs: []
   type: TYPE_TB
+  zh: '| `${string:position}` | 从 `*$string*` 中提取 `*$position*` 位置的子字符串 |'
 - en: '| `${string:position:length}` | Extract `*$length*` characters substring from
     `*$string*` at `*$position*` [zero-indexed, first character is at position 0]
     |'
+  id: totrans-89
   prefs: []
   type: TYPE_TB
+  zh: '| `${string:position:length}` | 从 `*$string*` 的 `*$position*` 位置提取 `*$length*`
+    个字符的子字符串 [零索引，第一个字符位于位置 0] |'
 - en: '|   |   |'
+  id: totrans-90
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${string#substring}` | Strip shortest match of `*$substring*` from front
     of `*$string*` |'
+  id: totrans-91
   prefs: []
   type: TYPE_TB
+  zh: '| `${string#substring}` | 从 `*$string*` 的前面移除最短的 `*$substring*` 匹配项 |'
 - en: '| `${string##substring}` | Strip longest match of `*$substring*` from front
     of `*$string*` |'
+  id: totrans-92
   prefs: []
   type: TYPE_TB
+  zh: '| `${string##substring}` | 从 `*$string*` 的前面移除最长的 `*$substring*` 匹配项 |'
 - en: '| `${string%substring}` | Strip shortest match of `*$substring*` from back
     of `*$string*` |'
+  id: totrans-93
   prefs: []
   type: TYPE_TB
+  zh: '| `${string%substring}` | 从 `*$string*` 的后面移除最短的 `*$substring*` 匹配项 |'
 - en: '| `${string%%substring}` | Strip longest match of `*$substring*` from back
     of `*$string*` |'
+  id: totrans-94
   prefs: []
   type: TYPE_TB
+  zh: '| `${string%%substring}` | 从 `*$string*` 的后面移除最长的 `*$substring*` 匹配项 |'
 - en: '|   |   |'
+  id: totrans-95
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `${string/substring/replacement}` | Replace first match of `*$substring*`
     with `*$replacement*` |'
+  id: totrans-96
   prefs: []
   type: TYPE_TB
+  zh: '| `${string/substring/replacement}` | 将 `*$substring*` 的第一个匹配项替换为 `*$replacement*`
+    |'
 - en: '| `${string//substring/replacement}` | Replace *all* matches of `*$substring*`
     with `*$replacement*` |'
+  id: totrans-97
   prefs: []
   type: TYPE_TB
+  zh: '| `${string//substring/replacement}` | 将 `*$substring*` 的所有匹配项替换为 `*$replacement*`
+    |'
 - en: '| `${string/#substring/replacement}` | If `*$substring*` matches *front* end
     of `*$string*`, substitute `*$replacement*` for `*$substring*` |'
+  id: totrans-98
   prefs: []
   type: TYPE_TB
+  zh: '| `${string/#substring/replacement}` | 如果 `*$substring*` 匹配 `*$string*` 的 *开头*，则用
+    `*$replacement*` 替换 `*$substring*` |'
 - en: '| `${string/%substring/replacement}` | If `*$substring*` matches *back* end
     of `*$string*`, substitute `*$replacement*` for `*$substring*` |'
+  id: totrans-99
   prefs: []
   type: TYPE_TB
+  zh: '| `${string/%substring/replacement}` | 如果 `*$substring*` 匹配 `*$string*` 的 *末尾*，则用
+    `*$replacement*` 替换 `*$substring*` |'
 - en: '|   |   |'
+  id: totrans-100
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '|   |   |'
+  id: totrans-101
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| `expr match "$string" ''$substring''` | Length of matching `*$substring*`*
     at beginning of `*$string*` |'
+  id: totrans-102
   prefs: []
   type: TYPE_TB
+  zh: '| `expr match "$string" ''$substring''` | 在 `*$string*` 开头匹配的 `*$substring*`
+    的长度 |'
 - en: '| `expr "$string" : ''$substring''` | Length of matching `*$substring*`* at
     beginning of `*$string*` |'
+  id: totrans-103
   prefs: []
   type: TYPE_TB
+  zh: '| `expr "$string" : ''$substring''` | 在 `*$string*` 开头匹配的 `*$substring*` 的长度
+    |'
 - en: '| `expr index "$string" $substring` | Numerical position in `*$string*` of
     first character in `*$substring*`* that matches [0 if no match, first character
     counts as position 1] |'
+  id: totrans-104
   prefs: []
   type: TYPE_TB
+  zh: '| `expr index "$string" $substring` | `*$string*` 中匹配 `*$substring*` 的第一个字符的数值位置
+    [如果没有匹配，则位置为 0，第一个字符计为位置 1] |'
 - en: '| `expr substr $string $position $length` | Extract `*$length*` characters
     from `*$string*` starting at `*$position*` [0 if no match, first character counts
     as position 1] |'
+  id: totrans-105
   prefs: []
   type: TYPE_TB
+  zh: '| `expr substr $string $position $length` | 从 `*$string*` 的 `*$position*` 开始提取
+    `*$length*` 个字符 [如果没有匹配，则位置为 0，第一个字符计为位置 1] |'
 - en: '| `expr match "$string" ''\($substring\)''` | Extract `*$substring*`*, searching
     from beginning of `*$string*` |'
+  id: totrans-106
   prefs: []
   type: TYPE_TB
+  zh: '| `expr match "$string" ''\($substring\)''` | 提取 `*$substring*`，从 `*$string*`
+    的开头搜索 |'
 - en: '| `expr "$string" : ''\($substring\)''` | Extract `*$substring*`* , searching
     from beginning of `*$string*` |'
+  id: totrans-107
   prefs: []
   type: TYPE_TB
+  zh: '| `expr "$string" : ''\($substring\)''` | 提取 `*$substring*`，从 `*$string*` 的开头搜索
+    |'
 - en: '| `expr match "$string" ''.*\($substring\)''` | Extract `*$substring*`*, searching
     from end of `*$string*` |'
+  id: totrans-108
   prefs: []
   type: TYPE_TB
+  zh: '| `expr match "$string" ''.*\($substring\)''` | 从 `*$string*` 的末尾提取 `*$substring*`
+    |'
 - en: '| `expr "$string" : ''.*\($substring\)''` | Extract `*$substring*`*, searching
     from end of `*$string*` |'
+  id: totrans-109
   prefs: []
   type: TYPE_TB
+  zh: '| `expr "$string" : ''.*\($substring\)''` | 从 `*$string*` 的末尾提取 `*$substring*`
+    |'
 - en: '***** Where `*$substring*` is a [Regular Expression](regexp.html#REGEXREF).'
+  id: totrans-110
   prefs: []
   type: TYPE_NORMAL
+  zh: '***** 其中 `*$substring*` 是一个 [正则表达式](regexp.html#REGEXREF)。'
 - en: '**Table B-6\. Miscellaneous Constructs**'
+  id: totrans-111
   prefs: []
   type: TYPE_NORMAL
+  zh: '**表 B-6. 其他构造**'
 - en: '| Expression | Interpretation |'
+  id: totrans-112
   prefs: []
   type: TYPE_TB
+  zh: '| 表达式 | 解释 |'
 - en: '| --- | --- |'
+  id: totrans-113
   prefs: []
   type: TYPE_TB
+  zh: '| --- | --- |'
 - en: '|   |   |'
+  id: totrans-114
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| [Brackets](x17129.html#BRACKETSREF) |   |'
+  id: totrans-115
   prefs: []
   type: TYPE_TB
+  zh: '| [方括号](x17129.html#BRACKETSREF) |   |'
 - en: '| `if [ CONDITION ]` | [Test construct](special-chars.html#LEFTBRACKET) |'
+  id: totrans-116
   prefs: []
   type: TYPE_TB
+  zh: '| `if [ CONDITION ]` | [测试构造](special-chars.html#LEFTBRACKET) |'
 - en: '| `if [[ CONDITION ]]` | [Extended test construct](testconstructs.html#DBLBRACKETS)
     |'
+  id: totrans-117
   prefs: []
   type: TYPE_TB
+  zh: '| `if [[ CONDITION ]]` | [扩展测试构造](testconstructs.html#DBLBRACKETS) |'
 - en: '| `Array[1]=element1` | [Array initialization](arrays.html#ARRAYREF) |'
+  id: totrans-118
   prefs: []
   type: TYPE_TB
+  zh: '| `Array[1]=element1` | [数组初始化](arrays.html#ARRAYREF) |'
 - en: '| `[a-z]` | [Range of characters](x17129.html#BRACKETSREF) within a [Regular
     Expression](regexp.html#REGEXREF) |'
+  id: totrans-119
   prefs: []
   type: TYPE_TB
+  zh: '| `[a-z]` | [正则表达式](regexp.html#REGEXREF) 中 [字符范围](x17129.html#BRACKETSREF)
+    |'
 - en: '|   |   |'
+  id: totrans-120
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| Curly Brackets |   |'
+  id: totrans-121
   prefs: []
   type: TYPE_TB
+  zh: '| 大括号 |   |'
 - en: '| `${variable}` | [Parameter substitution](parameter-substitution.html#PARAMSUBREF)
     |'
+  id: totrans-122
   prefs: []
   type: TYPE_TB
+  zh: '| `${variable}` | [参数替换](parameter-substitution.html#PARAMSUBREF) |'
 - en: '| `${!variable}` | [Indirect variable reference](ivr.html#IVRREF) |'
+  id: totrans-123
   prefs: []
   type: TYPE_TB
+  zh: '| `${!variable}` | [间接变量引用](ivr.html#IVRREF) |'
 - en: '| `{ command1; command2; . . . commandN; }` | [Block of code](special-chars.html#CODEBLOCKREF)
     |'
+  id: totrans-124
   prefs: []
   type: TYPE_TB
+  zh: '| `{ command1; command2; . . . commandN; }` | [代码块](special-chars.html#CODEBLOCKREF)
+    |'
 - en: '| `{string1,string2,string3,...}` | [Brace expansion](special-chars.html#BRACEEXPREF)
     |'
+  id: totrans-125
   prefs: []
   type: TYPE_TB
+  zh: '| `{string1,string2,string3,...}` | [大括号展开](special-chars.html#BRACEEXPREF)
+    |'
 - en: '| `{a..z}` | [Extended brace expansion](bashver3.html#BRACEEXPREF3) |'
+  id: totrans-126
   prefs: []
   type: TYPE_TB
+  zh: '| `{a..z}` | [扩展大括号展开](bashver3.html#BRACEEXPREF3) |'
 - en: '| `{}` | Text replacement, after [find](moreadv.html#CURLYBRACKETSREF) and
     [xargs](moreadv.html#XARGSCURLYREF) |'
+  id: totrans-127
   prefs: []
   type: TYPE_TB
+  zh: '| `{}` | 文本替换，在 [find](moreadv.html#CURLYBRACKETSREF) 和 [xargs](moreadv.html#XARGSCURLYREF)
+    之后 |'
 - en: '|   |   |'
+  id: totrans-128
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '|   |   |'
+  id: totrans-129
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| [Parentheses](special-chars.html#PARENSREF) |   |'
+  id: totrans-130
   prefs: []
   type: TYPE_TB
+  zh: '| [圆括号](special-chars.html#PARENSREF) |   |'
 - en: '| `( command1; command2 )` | Command group executed within a [subshell](subshells.html#SUBSHELLSREF)
     |'
+  id: totrans-131
   prefs: []
   type: TYPE_TB
+  zh: '| `( command1; command2 )` | 在 [子shell](subshells.html#SUBSHELLSREF) 中执行的命令组
+    |'
 - en: '| `Array=(element1 element2 element3)` | [Array initialization](arrays.html#ARRAYINIT0)
     |'
+  id: totrans-132
   prefs: []
   type: TYPE_TB
+  zh: '| `Array=(element1 element2 element3)` | [数组初始化](arrays.html#ARRAYINIT0) |'
 - en: '| `result=$(COMMAND)` | [Command substitution](commandsub.html#CSPARENS), new
     style |'
+  id: totrans-133
   prefs: []
   type: TYPE_TB
+  zh: '| `result=$(COMMAND)` | [命令替换](commandsub.html#CSPARENS)，新样式 |'
 - en: '| `>(COMMAND)` | [Process substitution](process-sub.html#PROCESSSUBREF) |'
+  id: totrans-134
   prefs: []
   type: TYPE_TB
+  zh: '| `>(COMMAND)` | [进程替换](process-sub.html#PROCESSSUBREF) |'
 - en: '| `<(COMMAND)` | Process substitution |'
+  id: totrans-135
   prefs: []
   type: TYPE_TB
+  zh: '| `<(COMMAND)` | 进程替换 |'
 - en: '|   |   |'
+  id: totrans-136
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| [Double Parentheses](dblparens.html) |   |'
+  id: totrans-137
   prefs: []
   type: TYPE_TB
+  zh: '| [双圆括号](dblparens.html) |   |'
 - en: '| `(( var = 78 ))` | [Integer arithmetic](dblparens.html#DBLPARENSREF) |'
+  id: totrans-138
   prefs: []
   type: TYPE_TB
+  zh: '| `(( var = 78 ))` | [整数算术](dblparens.html#DBLPARENSREF) |'
 - en: '| `var=$(( 20 + 5 ))` | Integer arithmetic, with variable assignment |'
+  id: totrans-139
   prefs: []
   type: TYPE_TB
+  zh: '| `var=$(( 20 + 5 ))` | 整数运算，带有变量赋值 |'
 - en: '| `(( var++ ))` | *C-style* [variable increment](dblparens.html#PLUSPLUSREF)
     |'
+  id: totrans-140
   prefs: []
   type: TYPE_TB
+  zh: '| `(( var++ ))` | *C风格* [变量递增](dblparens.html#PLUSPLUSREF) |'
 - en: '| `(( var-- ))` | *C-style* [variable decrement](dblparens.html#PLUSPLUSREF)
     |'
+  id: totrans-141
   prefs: []
   type: TYPE_TB
+  zh: '| `(( var-- ))` | *C风格* [变量递减](dblparens.html#PLUSPLUSREF) |'
 - en: '| `(( var0 = var1<98?9:21 ))` | *C-style* [ternary](special-chars.html#CSTRINARY)
     operation |'
+  id: totrans-142
   prefs: []
   type: TYPE_TB
+  zh: '| `(( var0 = var1<98?9:21 ))` | *C风格* [三元](special-chars.html#CSTRINARY)操作'
 - en: '|   |   |'
+  id: totrans-143
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| [Quoting](quoting.html#QUOTINGREF) |   |'
+  id: totrans-144
   prefs: []
   type: TYPE_TB
+  zh: '| [引用](quoting.html#QUOTINGREF) |   |'
 - en: '| `"$variable"` | ["Weak" quoting](varsubn.html#DBLQUO) |'
+  id: totrans-145
   prefs: []
   type: TYPE_TB
+  zh: '| `"$variable"` | ["弱引用"](varsubn.html#DBLQUO) |'
 - en: '| `''string''` | [''Strong'' quoting](varsubn.html#SNGLQUO) |'
+  id: totrans-146
   prefs: []
   type: TYPE_TB
+  zh: '| `''string''` | [''强引用''](varsubn.html#SNGLQUO) |'
 - en: '|   |   |'
+  id: totrans-147
   prefs: []
   type: TYPE_TB
+  zh: '|   |   |'
 - en: '| [Back Quotes](commandsub.html#BACKQUOTESREF) |   |'
+  id: totrans-148
   prefs: []
   type: TYPE_TB
+  zh: '| [反引号](commandsub.html#BACKQUOTESREF) |   |'
 - en: '| `` result=`COMMAND` `` | [Command substitution](commandsub.html#COMMANDSUBREF),
     classic style |'
+  id: totrans-149
   prefs: []
   type: TYPE_TB
+  zh: '| `` result=`COMMAND` `` | [命令替换](commandsub.html#COMMANDSUBREF)，经典风格 |'

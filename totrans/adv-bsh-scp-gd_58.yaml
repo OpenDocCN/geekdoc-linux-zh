@@ -1,37 +1,56 @@
 - en: Appendix F. A Detailed Introduction to I/O and I/O Redirection
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 附录 F. I/O 和 I/O 重定向的详细介绍
 - en: 原文：[https://tldp.org/LDP/abs/html/ioredirintro.html](https://tldp.org/LDP/abs/html/ioredirintro.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/ioredirintro.html](https://tldp.org/LDP/abs/html/ioredirintro.html)
 - en: '*written by Stphane Chazelas, and revised by the document author*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '*由 Stphane Chazelas 撰写，并由文档作者修订*'
 - en: A command expects the first three [file descriptors](io-redirection.html#FDREF)
     to be available. The first, *fd 0* (standard input, `stdin`), is for reading.
     The other two (*fd 1*, `stdout` and *fd 2*, `stderr`) are for writing.
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: 一个命令期望前三个 [文件描述符](io-redirection.html#FDREF) 可用。第一个，*fd 0*（标准输入，`stdin`），用于读取。其他两个（*fd
+    1*，`stdout` 和 *fd 2*，`stderr`）用于写入。
 - en: There is a `stdin`, `stdout`, and a `stderr` associated with each command. `**ls
     2>&1**` means temporarily connecting the `stderr` of the **ls** command to the
     same "resource" as the shell's `stdout`.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个命令都与 `stdin`、`stdout` 和 `stderr` 相关联。`**ls 2>&1**` 表示临时将 **ls** 命令的 `stderr`
+    连接到与 shell 的 `stdout` 相同的“资源”。
 - en: 'By convention, a command reads its input from fd 0 (`stdin`), prints normal
     output to fd 1 (`stdout`), and error ouput to fd 2 (`stderr`). If one of those
     three fd''s is not open, you may encounter problems:'
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 按照惯例，一个命令从 fd 0 (`stdin`) 读取输入，将正常输出打印到 fd 1 (`stdout`)，将错误输出打印到 fd 2 (`stderr`)。如果这三个文件描述符中的任何一个没有打开，你可能会遇到问题：
 - en: '|  [PRE0]  |'
+  id: totrans-6
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE0]  |'
 - en: For example, when **xterm** runs, it first initializes itself. Before running
     the user's shell, **xterm** opens the terminal device (/dev/pts/<n> or something
     similar) three times.
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: 例如，当 **xterm** 运行时，它首先初始化自己。在运行用户的 shell 之前，**xterm** 会三次打开终端设备 (/dev/pts/<n>
+    或类似的东西)。
 - en: At this point, Bash inherits these three file descriptors, and each command
     (child process) run by Bash inherits them in turn, except when you redirect the
     command. [Redirection](io-redirection.html#IOREDIRREF) means reassigning one of
@@ -39,20 +58,33 @@
     descriptors may be reassigned locally (for a command, a command group, a [subshell](subshells.html#SUBSHELLSREF),
     a [while or if or case or for loop](redircb.html#REDIRREF)...), or globally, for
     the remainder of the shell (using [exec](internal.html#EXECREF)).
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: 在这一点上，Bash 继承了这三个文件描述符，并且每个由 Bash 运行的命令（子进程）依次继承它们，除非你重定向了命令。[重定向](io-redirection.html#IOREDIRREF)意味着将一个文件描述符重新分配给另一个文件（或管道，或任何允许的）。文件描述符可以在本地重新分配（对于命令、命令组、[子shell](subshells.html#SUBSHELLSREF)、[while
+    或 if 或 case 或 for 循环](redircb.html#REDIRREF)…），或者全局地，对于 shell 的剩余部分（使用[exec](internal.html#EXECREF)）。
 - en: '`**ls > /dev/null**` means running **ls** with its fd 1 connected to `/dev/null`.'
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**ls > /dev/null**` 表示运行 **ls** 时将其 fd 1 连接到 `/dev/null`。'
 - en: '|  [PRE1]  |'
+  id: totrans-10
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE1]  |'
 - en: This works for different types of redirection.
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: 这适用于不同类型的重定向。
 - en: '`**Exercise:**` Analyze the following script.'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '`**练习：**` 分析以下脚本。'
 - en: '|  [PRE2]  |'
+  id: totrans-13
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE2]  |'

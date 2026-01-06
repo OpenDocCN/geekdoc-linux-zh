@@ -1,105 +1,164 @@
 - en: Chapter 6\. Exit and Exit Status
+  id: totrans-0
   prefs:
   - PREF_H1
   type: TYPE_NORMAL
+  zh: 第六章. 退出和退出状态
 - en: 原文：[https://tldp.org/LDP/abs/html/exit-status.html](https://tldp.org/LDP/abs/html/exit-status.html)
+  id: totrans-1
   prefs:
   - PREF_BQ
   type: TYPE_NORMAL
+  zh: 原文：[https://tldp.org/LDP/abs/html/exit-status.html](https://tldp.org/LDP/abs/html/exit-status.html)
 - en: '|   |  **... there are dark corners in the Bourne shell, and people use all
     of them.*'
+  id: totrans-2
   prefs: []
   type: TYPE_NORMAL
+  zh: '|   |  **... 在 Bourne shell 中存在一些暗角，人们都使用了它们。**'
 - en: '*--Chet Ramey**  |'
+  id: totrans-3
   prefs: []
   type: TYPE_NORMAL
+  zh: '*--Chet Ramey**  |'
 - en: The **exit** command terminates a script, just as in a **C** program. It can
     also return a value, which is available to the script's parent process.
+  id: totrans-4
   prefs: []
   type: TYPE_NORMAL
+  zh: '**exit** 命令终止脚本，就像在 **C** 程序中一样。它也可以返回一个值，该值对脚本的父进程可用。'
 - en: Every command returns an *exit status* (sometimes referred to as a *return status*
     or *exit code*). A successful command returns a 0, while an unsuccessful one returns
     a non-zero value that usually can be interpreted as an *error code*. Well-behaved
     UNIX commands, programs, and utilities return a 0 exit code upon successful completion,
     though there are some exceptions.
+  id: totrans-5
   prefs: []
   type: TYPE_NORMAL
+  zh: 每个命令都返回一个 *退出状态*（有时也称为 *返回状态* 或 *退出码*）。成功的命令返回 0，而不成功的命令返回非零值，通常可以解释为 *错误码*。行为良好的
+    UNIX 命令、程序和实用程序在成功完成后返回 0 退出码，尽管有一些例外。
 - en: Likewise, [functions](functions.html#FUNCTIONREF) within a script and the script
     itself return an exit status. The last command executed in the function or script
     determines the exit status. Within a script, an ``**exit `*nnn*`**`` command may
     be used to deliver an `*nnn*` exit status to the shell (`*nnn*` must be an integer
     in the 0 - 255 range).
+  id: totrans-6
   prefs: []
   type: TYPE_NORMAL
+  zh: 同样，脚本内的 [函数](functions.html#FUNCTIONREF) 和脚本本身也会返回一个退出状态。函数或脚本中最后执行的命令决定了退出状态。在脚本中，可以使用
+    `**exit `*nnn*`**` 命令向 shell 传递 `*nnn*` 退出状态（*nnn* 必须是 0 - 255 范围内的整数）。
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | When a script ends
     with an **exit** that has no parameter, the exit status of the script is the exit
     status of the last command executed in the script (previous to the **exit**).'
+  id: totrans-7
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | 当脚本以没有参数的 **exit**
+    结束时，脚本的退出状态是脚本中最后执行的命令的退出状态（在 **exit** 之前）。'
 - en: '&#124;  [PRE0]  &#124;'
+  id: totrans-8
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE0]  &#124;'
 - en: The equivalent of a bare **exit** is **exit $?** or even just omitting the **exit**.
+  id: totrans-9
   prefs: []
   type: TYPE_NORMAL
+  zh: 等效于裸露的 **exit** 是 **exit $?** 或甚至可以省略 **exit**。
 - en: '&#124;  [PRE1]  &#124;'
+  id: totrans-10
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE1]  &#124;'
 - en: '&#124;  [PRE2]  &#124;'
+  id: totrans-11
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE2]  &#124;'
 - en: '|'
+  id: totrans-12
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '`$?` reads the exit status of the last command executed. After a function returns,
     `$?` gives the exit status of the last command executed in the function. This
     is Bash''s way of giving functions a "return value." [[1]](#FTN.AEN2981)'
+  id: totrans-13
   prefs: []
   type: TYPE_NORMAL
+  zh: '`$?` 读取最后执行的命令的退出状态。函数返回后，`$?` 提供函数中最后执行的命令的退出状态。这是 Bash 为函数提供“返回值”的方式。[1](#FTN.AEN2981)'
 - en: Following the execution of a [pipe](special-chars.html#PIPEREF), a `$?` gives
     the exit status of the last command executed.
+  id: totrans-14
   prefs: []
   type: TYPE_NORMAL
+  zh: 在管道执行之后，`$?` 提供最后执行的命令的退出状态。
 - en: After a script terminates, a `$?` from the command-line gives the exit status
     of the script, that is, the last command executed in the script, which is, by
     convention, `**0**` on success or an integer in the range 1 - 255 on error.
+  id: totrans-15
   prefs: []
   type: TYPE_NORMAL
+  zh: 脚本终止后，命令行中的 `$?` 提供脚本的退出状态，即脚本中最后执行的命令，按照惯例，成功时为 `**0**`，错误时为 1 - 255 范围内的整数。
 - en: '**Example 6-1\. exit / exit status**'
+  id: totrans-16
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 6-1\. exit / exit status**'
 - en: '|  [PRE3]  |'
+  id: totrans-17
   prefs: []
   type: TYPE_TB
+  zh: '|  [PRE3]  |'
 - en: '[$?](internalvariables.html#XSTATVARREF) is especially useful for testing the
     result of a command in a script (see [Example 16-35](filearchiv.html#FILECOMP)
     and [Example 16-20](textproc.html#LOOKUP)).'
+  id: totrans-18
   prefs: []
   type: TYPE_NORMAL
+  zh: '[$?](internalvariables.html#XSTATVARREF) 在测试脚本中命令的结果时特别有用（参见[示例 16-35](filearchiv.html#FILECOMP)
+    和 [示例 16-20](textproc.html#LOOKUP))。'
 - en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The [!](special-chars.html#NOTREF),
     the *logical not* qualifier, reverses the outcome of a test or command, and this
     affects its [exit status](exit-status.html#EXITSTATUSREF).'
+  id: totrans-19
   prefs: []
   type: TYPE_NORMAL
+  zh: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | [!](special-chars.html#NOTREF)，即
+    *逻辑非* 修饰符，反转测试或命令的结果，并影响其 [退出状态](exit-status.html#EXITSTATUSREF)。'
 - en: '**Example 6-2\. Negating a condition using !**'
+  id: totrans-20
   prefs: []
   type: TYPE_NORMAL
+  zh: '**示例 6-2\. 使用 ! 取消条件**'
 - en: '&#124;  [PRE4]  &#124;'
+  id: totrans-21
   prefs: []
   type: TYPE_NORMAL
+  zh: '&#124;  [PRE4]  &#124;'
 - en: '|'
+  id: totrans-22
   prefs: []
   type: TYPE_NORMAL
+  zh: '|'
 - en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Certain exit
     status codes have [reserved meanings](exitcodes.html#EXITCODESREF) and should
     not be user-specified in a script. |'
+  id: totrans-23
   prefs: []
   type: TYPE_TB
+  zh: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | 某些退出状态码有 [保留含义](exitcodes.html#EXITCODESREF)
+    并且不应在脚本中由用户指定。'
 - en: Notes
+  id: totrans-24
   prefs:
   - PREF_H3
   type: TYPE_NORMAL
+  zh: 备注
 - en: '| [[1]](exit-status.html#AEN2981) | In those instances when there is no [return](complexfunct.html#RETURNREF)
     terminating the function. |'
+  id: totrans-25
   prefs: []
   type: TYPE_TB
+  zh: '| [[1]](exit-status.html#AEN2981) | 在那些没有 [返回](complexfunct.html#RETURNREF)
+    终止函数的实例中。|'
