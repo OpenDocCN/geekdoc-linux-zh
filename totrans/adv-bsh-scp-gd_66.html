@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Appendix L. History Commands</title>
+<link href="../Styles/Style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<h1>Appendix L. History Commands</h1>
+<blockquote>原文：<a href="https://tldp.org/LDP/abs/html/histcommands.html">https://tldp.org/LDP/abs/html/histcommands.html</a></blockquote><div class="APPENDIX"><p>The Bash shell provides command-line tools for editing and
+       manipulating a user's <i class="FIRSTTERM">command history</i>. This
+       is primarily a convenience, a means of saving keystrokes.</p><p>Bash history commands:
+       </p><p/><ol type="1"><li><p><b class="COMMAND">history</b></p></li><li><p><b class="COMMAND">fc</b></p></li></ol>
+     <p>	      </p><table border="1" bgcolor="#E0E0E0" width="100%"><tr><td><font color="#000000"><pre class="SCREEN"><tt class="PROMPT">bash$ </tt><tt class="USERINPUT"><b>history</b></tt>
+<tt class="COMPUTEROUTPUT">   1  mount /mnt/cdrom
+    2  cd /mnt/cdrom
+    3  ls
+     ...</tt>
+	      </pre></font></td></tr></table>
+	    <p>Internal variables associated with Bash history commands:
+       </p><p/><ol type="1"><li><p>$HISTCMD</p></li><li><p>$HISTCONTROL</p></li><li><p>$HISTIGNORE</p></li><li><p>$HISTFILE</p></li><li><p>$HISTFILESIZE</p></li><li><p>$HISTSIZE</p></li><li><p>$HISTTIMEFORMAT (Bash, ver. 3.0 or later)</p></li><li><p>!!</p></li><li><p>!$</p></li><li><p>!#</p></li><li><p>!N</p></li><li><p>!-N</p></li><li><p>!STRING</p></li><li><p>!?STRING?</p></li><li><p>^STRING^string^</p></li></ol>
+     <p>Unfortunately, the Bash history tools find no use in
+       scripting.</p><p/><table border="0" bgcolor="#E0E0E0" width="100%"><tr><td><font color="#000000"><pre class="PROGRAMLISTING">#!/bin/bash
+# history.sh
+# A (vain) attempt to use the 'history' command in a script.
+
+history                      # No output.
+
+var=$(history); echo "$var"  # $var is empty.
+
+#  History commands are, by default, disabled within a script.
+#  However, as dhw points out,
+#+ set -o history
+#+ enables the history mechanism.
+
+set -o history
+var=$(history); echo "$var"   # 1  var=$(history)</pre></font></td></tr></table>
+     <p>	      </p><table border="1" bgcolor="#E0E0E0" width="100%"><tr><td><font color="#000000"><pre class="SCREEN"><tt class="PROMPT">bash$ </tt><tt class="USERINPUT"><b>./history.sh</b></tt>
+<tt class="COMPUTEROUTPUT">(no output)</tt>	      
+	      </pre></font></td></tr></table>
+	  <p>The <a href="http://samrowe.com/wordpress/advancing-in-the-bash-shell/" target="_top">Advancing
+	    in the Bash Shell</a> site gives a good introduction to
+	    the use of history commands in Bash.</p></div>    
+</body>
+</html>
