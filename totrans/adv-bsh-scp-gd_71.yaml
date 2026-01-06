@@ -1,0 +1,757 @@
+- en: O.2\. Writing Scripts
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/writingscripts.html](https://tldp.org/LDP/abs/html/writingscripts.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Write a script to carry out each of the following tasks.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**EASY**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Self-reproducing Script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that backs itself up, that is, copies itself to a file named
+    `backup.sh`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: Use the [cat](basic.html#CATREF) command and the appropriate [positional
+    parameter](othertypesv.html#SCRNAMEPARAM).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Home Directory Listing**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Perform a recursive directory listing on the user's home directory and save
+    the information to a file. Compress the file, have the script prompt the user
+    to insert a USB flash drive, then press **ENTER**. Finally, save the file to the
+    flash drive after making certain the flash drive has properly mounted by parsing
+    the output of [df](system.html#DFREF). Note that the flash drive must be *unmounted*
+    before it is removed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Converting [for](loops1.html#FORLOOPREF1) loops to [while](loops1.html#WHILELOOPREF)
+    and [until](loops1.html#UNTILLOOPREF) loops**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Convert the *for loops* in [Example 11-1](loops1.html#EX22) to *while loops*.
+    Hint: store the data in an [array](arrays.html#ARRAYREF) and step through the
+    array elements.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Having already done the "heavy lifting," now convert the loops in the example
+    to *until loops*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Changing the line spacing of a text file**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that reads each line of a target file, then writes the line back
+    to `stdout`, but with an extra blank line following. This has the effect of *double-spacing*
+    the file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Include all necessary code to check whether the script gets the necessary command-line
+    argument (a filename), and whether the specified file exists.
+  prefs: []
+  type: TYPE_NORMAL
+- en: When the script runs correctly, modify it to *triple-space* the target file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, write a script to remove all blank lines from the target file, *single-spacing*
+    it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Backwards Listing**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that echoes itself to `stdout`, but *backwards*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Automatically Decompressing Files**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Given a list of filenames as input, this script queries each target file (parsing
+    the output of the [file](filearchiv.html#FILEREF) command) for the type of compression
+    used on it. Then the script automatically invokes the appropriate decompression
+    command (**gunzip**, **bunzip2**, **unzip**, **uncompress**, or whatever). If
+    a target file is not compressed, the script emits a warning message, but takes
+    no other action on that particular file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Unique System ID**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Generate a "unique" 6-digit hexadecimal identifier for your computer. Do *not*
+    use the flawed [hostid](system.html#HOSTIDREF) command. Hint: **[md5sum](filearchiv.html#MD5SUMREF)
+    [`/etc/passwd`](files.html#DATAFILESREF1)**, then select the first 6 digits of
+    output.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Backup**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Archive as a "tarball" (`*.tar.gz` file) all the files in your home directory
+    tree (`/home/your-name`) that have been modified in the last 24 hours. Hint: use
+    [find](moreadv.html#FINDREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optional: you may use this as the basis of a *backup* script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Checking whether a process is still running**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Given a [process ID](special-chars.html#PROCESSIDREF) (*PID*) as an argument,
+    this script will check, at user-specified intervals, whether the given process
+    is still running. You may use the [ps](system.html#PPSSREF) and [sleep](timedate.html#SLEEPREF)
+    commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Primes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Print (to `stdout`) all prime numbers between 60000 and 63000\. The output
+    should be nicely formatted in columns (hint: use [printf](internal.html#PRINTFREF)).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Lottery Numbers**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: One type of lottery involves picking five different numbers, in the range of
+    1 - 50\. Write a script that generates five pseudorandom numbers in this range,
+    *with no duplicates*. The script will give the option of echoing the numbers to
+    `stdout` or saving them to a file, along with the date and time the particular
+    number set was generated. (If your script consistently generates *winning* lottery
+    numbers, then you can retire on the proceeds and leave shell scripting to those
+    of us who have to work for a living.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**INTERMEDIATE**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Integer or String**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script [function](functions.html#FUNCTIONREF) that determines if an
+    argument passed to it is an integer or a string. The function will return TRUE
+    (0) if passed an integer, and FALSE (1) if passed a string.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: What does the following expression return when `$1` is *not* an integer?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`expr $1 + 0`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[ASCII](special-chars.html#ASCIIDEF) to Integer**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *atoi* function in **C** converts a string character to an integer. Write
+    a shell script function that performs the same operation. Likewise, write a shell
+    script function that does the inverse, mirroring the **C** *itoa* function which
+    converts an integer into an ASCII character.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Managing Disk Space**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: List, one at a time, all files larger than 100K in the `/home/username` directory
+    tree. Give the user the option to delete or compress the file, then proceed to
+    show the next one. Write to a logfile the names of all deleted files and the deletion
+    times.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Banner**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Simulate the functionality of the deprecated [banner](extmisc.html#BANNERREF)
+    command in a script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Removing Inactive Accounts**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Inactive accounts on a network server waste disk space and may become a security
+    risk. Write an administrative script (to be invoked by *root* or the [cron daemon](system.html#CRONREF))
+    that checks for and deletes user accounts that have not been accessed within the
+    last 90 days.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Enforcing Disk Quotas**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script for a multi-user system that checks users' disk usage. If a user
+    surpasses a preset limit (500 MB, for example) in her `/home/username` directory,
+    then the script automatically sends her a "pigout" warning e-mail.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The script will use the [du](system.html#DUREF) and [mail](communications.html#COMMMAIL1)
+    commands. As an option, it will allow setting and enforcing quotas using the [quota](system.html#QUOTAREF)
+    and [setquota](system.html#SETQUOTAREF) commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Logged in User Information**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For all logged in users, show their real names and the time and date of their
+    last login.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: use [who](system.html#WHOREF), [lastlog](system.html#LASTLOGREF), and
+    parse [`/etc/passwd`](files.html#DATAFILESREF1).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Safe Delete**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Implement, as a script, a "safe" delete command, `sdel.sh`. Filenames passed
+    as command-line arguments to this script are not deleted, but instead [gzipped](filearchiv.html#GZIPREF)
+    if not already compressed (use [file](filearchiv.html#FILEREF) to check), then
+    moved to a `~/TRASH` directory. Upon invocation, the script checks the `~/TRASH`
+    directory for files older than 48 hours and [permanently deletes](basic.html#RMREF)
+    them. (An better alternative might be to have a second script handle this, periodically
+    invoked by the [cron daemon](system.html#CRONREF).)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Extra credit:* Write the script so it can handle files and directories [recursively](basic.html#RMRECURS).
+    This would give it the capability of "safely deleting" entire directory structures.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Making Change**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: What is the most efficient way to make change for $1.68, using only coins in
+    common circulations (up to 25c)? It's 6 quarters, 1 dime, a nickel, and three
+    cents.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Given any arbitrary command-line input in dollars and cents ($*.??), calculate
+    the change, using the minimum number of coins. If your home country is not the
+    United States, you may use your local currency units instead. The script will
+    need to parse the command-line input, then change it to multiples of the smallest
+    monetary unit (cents or whatever). Hint: look at [Example 24-8](complexfunct.html#EX61).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Quadratic Equations**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Solve a *quadratic* equation of the form `*Ax^2 + Bx + C = 0*`. Have a script
+    take as arguments the coefficients, `**A**`, `**B**`, and `**C**`, and return
+    the solutions to five decimal places.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: pipe the coefficients to [bc](mathc.html#BCREF), using the well-known
+    formula, `*x = ( -B +/- sqrt( B^2 - 4AC ) ) / 2A*`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Table of Logarithms**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using the [bc](mathc.html#BCREF) and [printf](internal.html#PRINTFREF) commands,
+    print out a nicely-formatted table of eight-place natural logarithms in the interval
+    between 0.00 and 100.00, in steps of .01.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: *bc* requires the `-l` option to load the math library.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Unicode Table**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using [Example T-1](asciitable.html#ASCIISH) as a template, write a script that
+    prints to a file a complete [Unicode](bashver4.html#UNICODEREF) table.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: Use the `-e` option to [echo](internal.html#ECHOREF): **echo -e ''\uXXXX''**,
+    where `*XXXX*` is the Unicode numerical character designation. This requires [version
+    4.2](bashver4.html#BASH42) or later of Bash.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Sum of Matching Numbers**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Find the sum of all five-digit numbers (in the range 10000 - 99999) containing
+    *exactly two* out of the following set of digits: { 4, 5, 6 }. These may repeat
+    within the same number, and if so, they count once for each occurrence.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Some examples of *matching numbers* are 42057, 74638, and 89515.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Lucky Numbers**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A *lucky number* is one whose individual digits add up to 7, in successive additions.
+    For example, 62431 is a *lucky number* (6 + 2 + 4 + 3 + 1 = 16, 1 + 6 = 7). Find
+    all the *lucky numbers* between 1000 and 10000.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Craps**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Borrowing the ASCII graphics from [Example A-40](contributed-scripts.html#PETALS),
+    write a script that plays the well-known gambling game of *craps*. The script
+    will accept bets from one or more players, roll the dice, and keep track of wins
+    and losses, as well as of each player's bankroll.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Tic-tac-toe**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Write a script that plays the child''s game of *tic-tac-toe* against a human
+    player. The script will let the human choose whether to take the first move. The
+    script will follow an optimal strategy, and therefore never lose. To simplify
+    matters, you may use ASCII graphics:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Alphabetizing a String**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Alphabetize (in ASCII order) an arbitrary string read from the command-line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Parsing**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Parse [`/etc/passwd`](files.html#DATAFILESREF1), and output its contents in
+    nice, easy-to-read tabular form.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Logging Logins**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Parse `/var/log/messages` to produce a nicely formatted file of user logins
+    and login times. The script may need to run as *root*. (Hint: Search for the string
+    "LOGIN.")'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Pretty-Printing a Data File**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Certain database and spreadsheet packages use save-files with the fields separated
+    by commas, commonly referred to as *comma-separated values* or CSVs. Other applications
+    often need to parse these files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Given a data file with comma-separated [fields](special-chars.html#FIELDREF),
+    of the form:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Reformat the data and print it out to `stdout` in labeled, evenly-spaced columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Justification**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Given ASCII text input either from `stdin` or a file, adjust the word spacing
+    to right-justify each line to a user-specified line-width, then send the output
+    to `stdout`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Mailing List**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using the [mail](communications.html#COMMMAIL1) command, write a script that
+    manages a simple mailing list. The script automatically e-mails the monthly company
+    newsletter, read from a specified text file, and sends it to all the addresses
+    on the mailing list, which the script reads from another specified file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Generating Passwords**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Generate pseudorandom 8-character passwords, using characters in the ranges
+    [0-9], [A-Z], [a-z]. Each password must contain at least two digits.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Monitoring a User**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: You suspect that one particular user on the network has been abusing her privileges
+    and possibly attempting to hack the system. Write a script to automatically monitor
+    and log her activities when she's signed on. The log file will save entries for
+    the previous week, and delete those entries more than seven days old.
+  prefs: []
+  type: TYPE_NORMAL
+- en: You may use [last](system.html#LASTREF), [lastlog](system.html#LASTLOGREF),
+    and [lastcomm](system.html#LASTCOMMREF) to aid your surveillance of the suspected
+    fiend.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Checking for Broken Links**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using [lynx](communications.html#LYNXREF) with the `-traversal` option, write
+    a script that checks a Web site for broken links.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**DIFFICULT**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Testing Passwords**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script to check and validate passwords. The object is to flag "weak"
+    or easily guessed password candidates.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'A trial password will be input to the script as a command-line parameter. To
+    be considered acceptable, a password must meet the following minimum qualifications:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Minimum length of 8 characters
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Must contain at least one numeric character
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Must contain at least one of the following non-alphabetic characters: @, #,
+    $, %, &, *, +, -, ='
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'Optional:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Do a dictionary check on every sequence of at least four consecutive alphabetic
+    characters in the password under test. This will eliminate passwords containing
+    embedded "words" found in a standard dictionary.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Enable the script to check all the passwords on your system. These do not reside
+    in [`/etc/passwd`](files.html#DATAFILESREF1).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: This exercise tests mastery of [Regular Expressions](regexp.html#REGEXREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Cross Reference**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that generates a *cross-reference* (*concordance*) on a target
+    file. The output will be a listing of all word occurrences in the target file,
+    along with the line numbers in which each word occurs. Traditionally, *linked
+    list* constructs would be used in such applications. Therefore, you should investigate
+    [arrays](arrays.html#ARRAYREF) in the course of this exercise. [Example 16-12](textproc.html#WF)
+    is probably *not* a good place to start.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Square Root**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script to calculate square roots of numbers using *Newton's Method*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The algorithm for this, expressed as a snippet of Bash [pseudo-code](assortedtips.html#PSEUDOCODEREF)
+    is:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: It's a simple enough recipe, and *seems* at first glance easy enough to convert
+    into a working Bash script. The problem, though, is that Bash has [no native support
+    for floating point numbers](ops.html#NOFLOATINGPOINT). So, the script writer needs
+    to use [bc](mathc.html#BCREF) or possibly [awk](awk.html#AWKREF) to convert the
+    numbers and do the calculations. It could get rather messy . . .
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Logging File Accesses**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Log all accesses to the files in `/etc` during the course of a single day. This
+    information should include the filename, user name, and access time. If any alterations
+    to the files take place, that will be flagged. Write this data as tabular (tab-separated)
+    formatted records in a logfile.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Monitoring Processes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script to continually monitor all running processes and to keep track
+    of how many child processes each parent spawns. If a process spawns more than
+    five children, then the script sends an e-mail to the system administrator (or
+    *root*) with all relevant information, including the time, PID of the parent,
+    PIDs of the children, etc. The script appends a report to a log file every ten
+    minutes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Strip Comments**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Strip all comments from a shell script whose name is specified on the command-line.
+    Note that the initial [#! line](sha-bang.html#SHABANGREF) must not be stripped
+    out.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Strip HTML Tags**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Strip all the HTML tags from a specified HTML file, then reformat it into lines
+    between 60 and 75 characters in length. Reset paragraph and block spacing, as
+    appropriate, and convert HTML tables to their approximate text equivalent.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**XML Conversion**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Convert an XML file to both HTML and text format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optional: A script that converts Docbook/SGML to XML.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Chasing Spammers**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that analyzes a spam e-mail by doing DNS lookups on the IP addresses
+    in the headers to identify the relay hosts as well as the originating ISP. The
+    script will forward the unaltered spam message to the responsible ISPs. Of course,
+    it will be necessary to filter out *your own ISP's IP address*, so you don't end
+    up complaining about yourself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: As necessary, use the appropriate [network analysis commands](communications.html#COMMUNINFO1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: For some ideas, see [Example 16-41](communications.html#ISSPAMMER) and [Example
+    A-28](contributed-scripts.html#ISSPAMMER2).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optional: Write a script that searches through a list of e-mail messages and
+    deletes the spam according to specified filters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Creating man pages**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that automates the process of creating [man pages](basic.html#MANREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Given a text file which contains information to be formatted into a *man page*,
+    the script will read the file, then invoke the appropriate [groff](textproc.html#GROFFREF)
+    commands to output the corresponding *man page* to `stdout`. The text file contains
+    blocks of information under the standard *man page* headings, i.e., NAME, SYNOPSIS,
+    DESCRIPTION, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Example A-39](contributed-scripts.html#MANED) is an instructive first step.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Hex Dump**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Do a hex(adecimal) dump on a binary file specified as an argument to the script.
+    The output should be in neat tabular [fields](special-chars.html#FIELDREF), with
+    the first field showing the address, each of the next 8 fields a 4-byte hex number,
+    and the final field the ASCII equivalent of the previous 8 fields.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The obvious followup to this is to extend the hex dump script into a disassembler.
+    Using a lookup table, or some other clever gimmick, convert the hex values into
+    80x86 op codes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Emulating a Shift Register**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using [Example 27-15](arrays.html#STACKEX) as an inspiration, write a script
+    that emulates a 64-bit shift register as an [array](arrays.html#ARRAYREF). Implement
+    functions to *load* the register, *shift left*, *shift right*, and *rotate* it.
+    Finally, write a function that interprets the register contents as eight 8-bit
+    ASCII characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Calculating Determinants**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a script that calculates determinants [[1]](#FTN.AEN25254) by [recursively](localvar.html#RECURSIONREF0)
+    expanding the *minors*. Use a 4 x 4 determinant as a test case.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Hidden Words**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Write a "word-find" puzzle generator, a script that hides 10 input words in
+    a 10 x 10 array of random letters. The words may be hidden across, down, or diagonally.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Optional: Write a script that *solves* word-find puzzles. To keep this from
+    becoming too difficult, the solution script will find only horizontal and vertical
+    words. (Hint: Treat each row and column as a string, and search for substrings.)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Anagramming**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Anagram 4-letter input. For example, the anagrams of *word* are: *do or rod
+    row word*. You may use `/usr/share/dict/linux.words` as the reference list.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Word Ladders**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A "word ladder" is a sequence of words, with each successive word in the sequence
+    differing from the previous one by a single letter.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For example, to "ladder" from *mark* to *vase*:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Write a script that solves word ladder puzzles. Given a starting and an ending
+    word, the script will list all intermediate steps in the "ladder." Note that *all*
+    words in the sequence must be legitimate dictionary words.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Fog Index**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The "fog index" of a passage of text estimates its reading difficulty, as a
+    number corresponding roughly to a school grade level. For example, a passage with
+    a fog index of 12 should be comprehensible to anyone with 12 years of schooling.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Gunning version of the fog index uses the following algorithm.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Choose a section of the text at least 100 words in length.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Count the number of sentences (a portion of a sentence truncated by the boundary
+    of the text section counts as one).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Find the average number of words per sentence.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: AVE_WDS_SEN = TOTAL_WORDS / SENTENCES
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Count the number of "difficult" words in the segment -- those containing at
+    least 3 syllables. Divide this quantity by total words to get the proportion of
+    difficult words.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: PRO_DIFF_WORDS = LONG_WORDS / TOTAL_WORDS
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: The Gunning fog index is the sum of the above two quantities, multiplied by
+    0.4, then rounded to the nearest integer.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: G_FOG_INDEX = int ( 0.4 * ( AVE_WDS_SEN + PRO_DIFF_WORDS ) )
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Step 4 is by far the most difficult portion of the exercise. There exist various
+    algorithms for estimating the syllable count of a word. A rule-of-thumb formula
+    might consider the number of letters in a word and the vowel-consonant mix.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A strict interpretation of the Gunning fog index does not count compound words
+    and proper nouns as "difficult" words, but this would enormously complicate the
+    script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Calculating PI using Buffon''s Needle**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Eighteenth Century French mathematician de Buffon came up with a novel experiment.
+    Repeatedly drop a needle of length `*n*` onto a wooden floor composed of long
+    and narrow parallel boards. The cracks separating the equal-width floorboards
+    are a fixed distance `*d*` apart. Keep track of the total drops and the number
+    of times the needle intersects a crack on the floor. The ratio of these two quantities
+    turns out to be a fractional multiple of PI.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the spirit of [Example 16-50](mathc.html#CANNON), write a script that runs
+    a Monte Carlo simulation of *Buffon's Needle*. To simplify matters, set the needle
+    length equal to the distance between the cracks, `*n = d*`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Hint: there are actually two critical variables: the distance from the center
+    of the needle to the nearest crack, and the inclination angle of the needle to
+    that crack. You may use [bc](mathc.html#BCREF) to handle the calculations.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Playfair Cipher**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Implement the Playfair (Wheatstone) Cipher in a script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Playfair Cipher encrypts text by substitution of *digrams* (2-letter groupings).
+    It is traditional to use a 5 x 5 letter scrambled-alphabet *key square* for the
+    encryption and decryption.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This script will have three main sections
+  prefs: []
+  type: TYPE_NORMAL
+- en: Generating the *key square*, based on a user-input keyword.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Encrypting a *plaintext* message.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Decrypting encrypted text.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The script will make extensive use of [arrays](arrays.html#ARRAYREF) and [functions](functions.html#FUNCTIONREF).
+    You may use [Example A-56](contributed-scripts.html#GRONSFELD) as an inspiration.
+  prefs: []
+  type: TYPE_NORMAL
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Please do not send the author your solutions to these exercises. There are more
+    appropriate ways to impress him with your cleverness, such as submitting bugfixes
+    and suggestions for improving the book.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](writingscripts.html#AEN25254) | For all you clever types who failed
+    intermediate algebra, a *determinant* is a numerical value associated with a multidimensional
+    *matrix* ([array](arrays.html#ARRAYREF) of numbers).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE5]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL

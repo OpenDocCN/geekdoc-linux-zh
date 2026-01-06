@@ -1,0 +1,278 @@
+- en: Appendix N. Converting DOS Batch Files to Shell Scripts
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/dosbatch.html](https://tldp.org/LDP/abs/html/dosbatch.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Quite a number of programmers learned scripting on a PC running DOS. Even the
+    crippled DOS batch file language allowed writing some fairly powerful scripts
+    and applications, though they often required extensive kludges and workarounds.
+    Occasionally, the need still arises to convert an old DOS batch file to a UNIX
+    shell script. This is generally not difficult, as DOS batch file operators are
+    only a limited subset of the equivalent shell scripting ones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Table N-1\. Batch file keywords / variables / operators, and their shell
+    equivalents**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Batch File Operator | Shell Script Equivalent | Meaning |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%` | $ | command-line parameter prefix |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/` | - | command option flag |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `\` | / | directory path separator |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `==` | = | (equal-to) string comparison test |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `!==!` | != | (not equal-to) string comparison test |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `&#124;` | &#124; | pipe |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `@` | set `+v` | do not echo current command |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `*` | * | filename "wild card" |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `>` | > | file redirection (overwrite) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `>>` | >> | file redirection (append) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `<` | < | redirect `stdin` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `%VAR%` | $VAR | environmental variable |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `REM` | # | comment |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `NOT` | ! | negate following test |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `NUL` | `/dev/null` | "black hole" for burying command output |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ECHO` | echo | echo (many more option in Bash) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ECHO.` | echo | echo blank line |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ECHO OFF` | set `+v` | do not echo command(s) following |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `FOR %%VAR IN (LIST) DO` | for var in [list]; do | "for" loop |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `:LABEL` | none (unnecessary) | label |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `GOTO` | none (use a function) | jump to another location in the script |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `PAUSE` | sleep | pause or wait an interval |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CHOICE` | case or select | menu choice |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `IF` | if | if-test |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `` IF EXIST `*FILENAME*` `` | if [ -e filename ] | test if file exists |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `IF !%N==!` | if [ -z "$N" ] | if replaceable parameter "N" not present |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CALL` | source or . (dot operator) | "include" another script |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `COMMAND /C` | source or . (dot operator) | "include" another script (same
+    as CALL) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `SET` | export | set an environmental variable |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `SHIFT` | shift | left shift command-line argument list |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `SGN` | -lt or -gt | sign (of integer) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ERRORLEVEL` | $? | exit status |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CON` | `stdin` | "console" (`stdin`) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `PRN` | `/dev/lp0` | (generic) printer device |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `LPT1` | `/dev/lp0` | first printer device |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `COM1` | `/dev/ttyS0` | first serial port |'
+  prefs: []
+  type: TYPE_TB
+- en: Batch files usually contain DOS commands. These must be translated into their
+    UNIX equivalents in order to convert a batch file into a shell script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Table N-2\. DOS commands and their UNIX equivalents**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| DOS Command | UNIX Equivalent | Effect |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ASSIGN` | ln | link file or directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ATTRIB` | chmod | change file permissions |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CD` | cd | change directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CHDIR` | cd | change directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `CLS` | clear | clear screen |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `COMP` | diff, comm, cmp | file compare |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `COPY` | cp | file copy |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctl-C` | Ctl-C | break (signal) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `Ctl-Z` | Ctl-D | EOF (end-of-file) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `DEL` | rm | delete file(s) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `DELTREE` | rm -rf | delete directory recursively |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `DIR` | ls -l | directory listing |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `ERASE` | rm | delete file(s) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `EXIT` | exit | exit current process |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `FC` | comm, cmp | file compare |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `FIND` | grep | find strings in files |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `MD` | mkdir | make directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `MKDIR` | mkdir | make directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `MORE` | more | text file paging filter |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `MOVE` | mv | move |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `PATH` | $PATH | path to executables |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `REN` | mv | rename (move) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `RENAME` | mv | rename (move) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `RD` | rmdir | remove directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `RMDIR` | rmdir | remove directory |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `SORT` | sort | sort file |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `TIME` | date | display system time |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `TYPE` | cat | output file to `stdout` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `XCOPY` | cp | (extended) file copy |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Virtually all UNIX
+    and shell operators and commands have many more options and enhancements than
+    their DOS and batch file counterparts. Many DOS batch files rely on auxiliary
+    utilities, such as **ask.com**, a crippled counterpart to [read](internal.html#READREF).DOS
+    supports only a very limited and incompatible subset of filename [wild-card expansion](globbingref.html),
+    recognizing just the * and ? characters. |'
+  prefs: []
+  type: TYPE_TB
+- en: Converting a DOS batch file into a shell script is generally straightforward,
+    and the result ofttimes reads better than the original.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example N-1\. VIEWDATA.BAT: DOS Batch File**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The script conversion is somewhat of an improvement. [[1]](#FTN.AEN24713)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example N-2\. *viewdata.sh*: Shell Script Conversion of VIEWDATA.BAT**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Ted Davis' [Shell Scripts on the PC](http://www.maem.umr.edu/batch/) site had
+    a set of comprehensive tutorials on the old-fashioned art of batch file programming.
+    Unfortunately the page has vanished without a trace.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](dosbatch.html#AEN24713) | Various readers have suggested modifications
+    of the above batch file to prettify it and make it more compact and efficient.
+    In the opinion of the *ABS Guide* author, this is wasted effort. A Bash script
+    can access a DOS filesystem, or even an NTFS partition (with the help of [ntfs-3g](http://www.ntfs-3g.org))
+    to do batch or scripted operations. |'
+  prefs: []
+  type: TYPE_TB

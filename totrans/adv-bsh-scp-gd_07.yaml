@@ -1,0 +1,66 @@
+- en: Chapter 5\. Quoting
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/quoting.html](https://tldp.org/LDP/abs/html/quoting.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Table of Contents**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.1\. [Quoting Variables](quotingvar.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 5.2\. [Escaping](escapingsection.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Quoting means just that, bracketing a string in quotes. This has the effect
+    of protecting [special characters](special-chars.html#SCHARLIST1) in the string
+    from reinterpretation or expansion by the shell or shell script. (A character
+    is "special" if it has an interpretation other than its literal meaning. For example,
+    the [asterisk *](special-chars.html#ASTERISKREF) represents a *wild card* character
+    in [globbing](globbingref.html) and [Regular Expressions](regexp.html#REGEXREF)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In everyday speech or writing, when we "quote" a phrase, we set it apart and
+    give it special meaning. In a Bash script, when we *quote* a string, we set it
+    apart and protect its *literal* meaning.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Certain programs and utilities reinterpret or expand special characters in a
+    quoted string. An important use of quoting is protecting a command-line parameter
+    from the shell, but still letting the calling program expand it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that the unquoted `**grep [Ff]irst *.txt**` works under the Bash shell.
+    [[1]](#FTN.AEN2609)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Quoting can also suppress [echo's](internal.html#ECHOREF) "appetite" for newlines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](quoting.html#AEN2609) | Unless there is a file named `first` in the
+    current working directory. Yet another reason to *quote*. (Thank you, Harald Koenig,
+    for pointing this out. |'
+  prefs: []
+  type: TYPE_TB

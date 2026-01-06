@@ -1,0 +1,145 @@
+- en: C.2\. Awk
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/awk.html](https://tldp.org/LDP/abs/html/awk.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '*Awk* [[1]](#FTN.AEN23443) is a full-featured text processing language with
+    a syntax reminiscent of *C*. While it possesses an extensive set of operators
+    and capabilities, we will cover only a few of these here - the ones most useful
+    in shell scripts.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Awk breaks each line of input passed to it into [fields](special-chars.html#FIELDREF).
+    By default, a field is a string of consecutive characters delimited by [whitespace](special-chars.html#WHITESPACEREF),
+    though there are options for changing this. Awk parses and operates on each separate
+    field. This makes it ideal for handling structured text files -- especially tables
+    -- data organized into consistent chunks, such as rows and columns.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Strong quoting](varsubn.html#SNGLQUO) and [curly brackets](special-chars.html#CODEBLOCKREF)
+    enclose blocks of awk code within a shell script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: We have just seen the awk *print* command in action. The only other feature
+    of awk we need to deal with here is variables. Awk handles variables similarly
+    to shell scripts, though a bit more flexibly.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This adds the value of `*column_number*` to the running total of `*total*`>.
+    Finally, to print "total", there is an **END** command block, executed after the
+    script has processed all its input.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Corresponding to the **END**, there is a **BEGIN**, for a code block to be performed
+    before awk starts processing its input.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The following example illustrates how **awk** can add text-parsing tools to
+    a shell script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example C-1\. Counting Letter Occurrences**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'For simpler examples of awk within shell scripts, see:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Example 15-14](internal.html#EX44)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 20-8](redircb.html#REDIR4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-32](filearchiv.html#STRIPC)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 36-5](wrapper.html#COLTOTALER)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 28-2](ivr.html#COLTOTALER2)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 15-20](internal.html#COLTOTALER3)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 29-3](procref1.html#PIDID)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 29-4](procref1.html#CONSTAT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-3](loops1.html#FILEINFO)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-61](extmisc.html#BLOTOUT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 9-16](randomvar.html#SEEDINGRANDOM)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-4](moreadv.html#IDELETE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 10-6](string-manipulation.html#SUBSTRINGEX)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 36-19](assortedtips.html#SUMPRODUCT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-9](loops1.html#USERLIST)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 36-4](wrapper.html#PRASC)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-53](mathc.html#HYPOT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example T-3](asciitable.html#ASCII3SH)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: That's all the awk we'll cover here, folks, but there's lots more to learn.
+    See the appropriate references in the [*Bibliography*](biblio.html).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](awk.html#AEN23443) | Its name derives from the initials of its authors,
+    **A**ho, **W**einberg, and **K**ernighan. |'
+  prefs: []
+  type: TYPE_TB

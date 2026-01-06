@@ -1,0 +1,288 @@
+- en: Chapter 27\. Arrays
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/arrays.html](https://tldp.org/LDP/abs/html/arrays.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Newer versions of Bash support one-dimensional arrays. Array elements may be
+    initialized with the `**variable[xx]**` notation. Alternatively, a script may
+    introduce the entire array by an explicit `**declare -a variable**` statement.
+    To dereference (retrieve the contents of) an array element, use *curly bracket*
+    notation, that is, `**${element[xx]}**`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-1\. Simple array usage**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: As we have seen, a convenient way of initializing an entire array is the `array=(
+    element1 element2 ... elementN )` notation.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash permits array operations on variables, even if the variables are not explicitly
+    declared as arrays.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE2]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Once again this demonstrates that [Bash variables are untyped](untyped.html#BVUNTYPED).
+    |
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-2\. Formatting a poem**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Array variables have a syntax all their own, and even standard Bash commands
+    and operators have special options adapted for array use.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-3\. Various array operations**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Many of the standard [string operations](string-manipulation.html#STRINGMANIP)
+    work on arrays.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-4\. String operations on arrays**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '[Command substitution](commandsub.html#COMMANDSUBREF) can construct the individual
+    elements of an array.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-5\. Loading the contents of a script into an array**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In an array context, some Bash [builtins](internal.html#BUILTINREF) have a slightly
+    altered meaning. For example, [unset](internal.html#UNSETREF) deletes array elements,
+    or even an entire array.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-6\. Some special properties of arrays**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: As seen in the previous example, either **${array_name[@]}** or **${array_name[*]}**
+    refers to *all* the elements of the array. Similarly, to get a count of the number
+    of elements in an array, use either **${#array_name[@]}** or **${#array_name[*]}**.
+    **${#array_name}** is the length (number of characters) of **${array_name[0]}**,
+    the first element of the array.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-7\. Of empty arrays and empty elements**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The relationship of **${array_name[@]}** and **${array_name[*]}** is analogous
+    to that between [$@ and $*](internalvariables.html#APPREF). This powerful array
+    notation has a number of uses.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE9]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The **array=( element1
+    element2 ... elementN )** initialization operation, with the help of [command
+    substitution](commandsub.html#COMMANDSUBREF), makes it possible to load the contents
+    of a text file into an array.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE10]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Clever scripting makes it possible to add array operations.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-8\. Initializing arrays**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE11]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Adding a superfluous
+    **declare -a** statement to an array declaration may speed up execution of subsequent
+    operations on the array. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 27-9\. Copying and concatenating arrays**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE12]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 27-10\. More on concatenating arrays**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE13]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Arrays permit deploying old familiar algorithms as shell scripts. Whether this
+    is necessarily a good idea is left for the reader to decide.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-11\. The Bubble Sort**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE14]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Is it possible to nest arrays within arrays?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE15]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Embedded arrays in combination with [indirect references](bashver2.html#VARREFNEW)
+    create some fascinating possibilities
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-12\. Embedded arrays and indirect references**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE16]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Arrays enable implementing a shell script version of the *Sieve of Eratosthenes*.
+    Of course, a resource-intensive application of this nature should really be written
+    in a compiled language, such as C. It runs excruciatingly slowly as a script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-13\. The Sieve of Eratosthenes**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE17]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 27-14\. The Sieve of Eratosthenes, Optimized**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE18]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Compare these array-based prime number generators with alternatives that do
+    not use arrays, [Example A-15](contributed-scripts.html#PRIMES), and [Example
+    16-46](mathc.html#PRIMES2).
+  prefs: []
+  type: TYPE_NORMAL
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Arrays lend themselves, to some extent, to emulating data structures for which
+    Bash has no native support.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-15\. Emulating a push-down stack**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE19]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Fancy manipulation of array "subscripts" may require intermediate variables.
+    For projects involving this, again consider using a more powerful programming
+    language, such as Perl or C.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-16\. Complex array application: *Exploring a weird mathematical
+    series***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE20]  |'
+  prefs: []
+  type: TYPE_TB
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash supports only one-dimensional arrays, though a little trickery permits
+    simulating multi-dimensional ones.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 27-17\. Simulating a two-dimensional array, then tilting it**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE21]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A two-dimensional array is essentially equivalent to a one-dimensional one,
+    but with additional addressing modes for referencing and manipulating the individual
+    elements by *row* and *column* position.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For an even more elaborate example of simulating a two-dimensional array, see
+    [Example A-10](contributed-scripts.html#LIFESLOW).
+  prefs: []
+  type: TYPE_NORMAL
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'For more interesting scripts using arrays, see:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Example 12-3](commandsub.html#AGRAM2)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example 16-46](mathc.html#PRIMES2)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example A-22](contributed-scripts.html#HASHEX2)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example A-44](contributed-scripts.html#HOMEWORK)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example A-41](contributed-scripts.html#QKY)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Example A-42](contributed-scripts.html#NIM)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL

@@ -1,0 +1,1588 @@
+- en: Part 4\. Commands
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/part4.html](https://tldp.org/LDP/abs/html/part4.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Mastering the commands on your Linux machine is an indispensable prelude to
+    writing effective shell scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'This section covers the following commands:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[.](special-chars.html#DOTREF) (See also [source](internal.html#SOURCEREF))'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ac](system.html#ACREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[adduser](system.html#USERADDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[agetty](system.html#AGETTYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[agrep](textproc.html#AGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ar](filearchiv.html#ARREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[arch](system.html#ARCHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[at](timedate.html#ATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[autoload](x9644.html#AUTOLOADREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[awk](awk.html#AWKREF) (See also [Using **awk** for math operations](mathc.html#AWKMATH))'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[badblocks](system.html#BADBLOCKSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[banner](extmisc.html#BANNERREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[basename](filearchiv.html#BASENAMEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[batch](timedate.html#BATCHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bc](mathc.html#BCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bg](x9644.html#BGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bind](internal.html#BINDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bison](textproc.html#BISONREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[builtin](x9644.html#BLTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bzgrep](textproc.html#BZGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[bzip2](filearchiv.html#BZIPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cal](timedate.html#CALREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[caller](internal.html#CALLERREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cat](basic.html#CATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cd](internal.html#CDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chattr](basic.html#CHATTRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chfn](communications.html#CHFNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chgrp](system.html#CHGRPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chkconfig](system.html#CHKCONFIGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chmod](basic.html#CHMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chown](system.html#CHOWNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[chroot](system.html#CHROOTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cksum](filearchiv.html#CKSUMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[clear](terminalccmds.html#CLEARREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[clock](timedate.html#CLOCKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cmp](filearchiv.html#CMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[col](textproc.html#COLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[colrm](textproc.html#COLRMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[column](textproc.html#COLUMNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[comm](filearchiv.html#COMMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[command](x9644.html#COMMANDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[compgen](tabexpansion.html#COMPGENREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[complete](tabexpansion.html#COMPLETEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[compress](filearchiv.html#COMPRESSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[coproc](bashver4.html#COPROCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cp](basic.html#CPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cpio](filearchiv.html#CPIOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cron](system.html#CRONREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[crypt](filearchiv.html#CRYPTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[csplit](filearchiv.html#CSPLITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cu](communications.html#CUREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[cut](textproc.html#CUTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[date](timedate.html#DATEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dc](mathc.html#DCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dd](extmisc.html#DDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[debugfs](system.html#DEBUGFSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[declare](declareref.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[depmod](system.html#DEPMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[df](system.html#DFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dialog](assortedtips.html#DIALOGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[diff](filearchiv.html#DIFFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[diff3](filearchiv.html#DIFF3REF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[diffstat](filearchiv.html#DIFFSTATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dig](communications.html#DIGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dirname](filearchiv.html#DIRNAMEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dirs](internal.html#DIRSD)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[disown](x9644.html#DISOWNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dmesg](system.html#DMESGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[doexec](extmisc.html#DOEXECREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dos2unix](filearchiv.html#DOS2UNIXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[du](system.html#DUREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dump](system.html#DUMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[dumpe2fs](system.html#DUMPE2FSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[e2fsck](system.html#E2FSCKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[echo](internal.html#ECHOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[egrep](textproc.html#EGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[enable](x9644.html#ENABLEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[enscript](textproc.html#ENSCRIPTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[env](system.html#ENVVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[eqn](textproc.html#EQNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[eval](internal.html#EVALREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[exec](internal.html#EXECREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[exit](internal.html#EXITREF) (Related topic: [exit status](exit-status.html#EXITSTATUSREF))'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[expand](textproc.html#EXPANDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[export](internal.html#EXPORTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[expr](moreadv.html#EXPRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[factor](mathc.html#FACTORREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[false](internal.html#FALSEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fdformat](system.html#FDFORMATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fdisk](system.html#FDISKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fg](x9644.html#FGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fgrep](textproc.html#FGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[file](filearchiv.html#FILEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[find](moreadv.html#FINDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[finger](communications.html#FINGERREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[flex](textproc.html#FLEXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[flock](system.html#FLOCKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fmt](textproc.html#FMTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fold](textproc.html#FOLDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[free](system.html#FREEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fsck](system.html#FSCKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ftp](communications.html#FTPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[fuser](system.html#FUSERREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[getfacl](filearchiv.html#GETFACLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[getopt](extmisc.html#GETOPTY)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[getopts](internal.html#GETOPTSX)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[gettext](textproc.html#GETTEXTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[getty](system.html#GETTYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[gnome-mount](system.html#GNOMEMOUNTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[grep](textproc.html#GREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[groff](textproc.html#GROFFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[groupmod](system.html#GROUPMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[groups](system.html#GROUPSCMDREF) (Related topic: the [$GROUPS](internalvariables.html#GROUPSREF)
+    variable)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[gs](textproc.html#GSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[gzip](filearchiv.html#GZIPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[halt](system.html#HALTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hash](internal.html#HASHCMDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hdparm](system.html#HDPARMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[head](textproc.html#HEADREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[help](internal.html#HELPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hexdump](extmisc.html#HEXDUMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[host](communications.html#HOSTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hostid](system.html#HOSTIDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hostname](system.html#HNAMEREF) (Related topic: the [$HOSTNAME](internalvariables.html#HOSTNAMEREF)
+    variable)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[hwclock](timedate.html#HWCLOCKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[iconv](textproc.html#ICONVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[id](system.html#IDREF) (Related topic: the [$UID](internalvariables.html#UIDREF)
+    variable)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ifconfig](system.html#IFCONFIGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[info](basic.html#INFOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[infocmp](terminalccmds.html#INFOCMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[init](system.html#INITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[insmod](system.html#INSMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[install](filearchiv.html#INSTALLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ip](system.html#IPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ipcalc](communications.html#IPCALCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[iptables](system.html#IPTABLESREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[iwconfig](system.html#IWCONFIGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[jobs](x9644.html#JOBSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[join](textproc.html#JOINREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[jot](extmisc.html#JOTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[kill](x9644.html#KILLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[killall](x9644.html#KILLALLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[last](system.html#LASTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lastcomm](system.html#LASTCOMMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lastlog](system.html#LASTLOGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ldd](system.html#LDDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[less](filearchiv.html#LESSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[let](internal.html#LETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lex](textproc.html#LEXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lid](system.html#LIDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ln](basic.html#LINKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[locate](filearchiv.html#LOCATEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lockfile](system.html#LOCKFILEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[logger](system.html#LOGGERREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[logname](system.html#LOGNAMEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[logout](x9644.html#LOGOUTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[logrotate](system.html#LOGROTATEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[look](textproc.html#LOOKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[losetup](system.html#LOSETUPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lp](extmisc.html#LPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ls](basic.html#LSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lsdev](system.html#LSDEVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lsmod](system.html#LSMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lsof](system.html#LSOFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lspci](system.html#LSPCIREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lsusb](system.html#LSUSBREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ltrace](system.html#LTRACEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lynx](communications.html#LYNXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lzcat](filearchiv.html#LZMAREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[lzma](filearchiv.html#LZMAREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[m4](extmisc.html#M4REF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mail](communications.html#COMMMAIL1)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mailstats](communications.html#MAILSTATSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mailto](communications.html#MAILTOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[make](filearchiv.html#MAKEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[MAKEDEV](system.html#MAKEDEVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[man](basic.html#MANREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mapfile](bashver4.html#MAPFILEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mcookie](extmisc.html#MCOOKIEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[md5sum](filearchiv.html#MD5SUMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[merge](filearchiv.html#MERGEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mesg](system.html#MESGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mimencode](filearchiv.html#MIMENCODEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkbootdisk](system.html#MKBOOTDISKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkdir](basic.html#MKDIRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkdosfs](system.html#MKDOSFSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mke2fs](system.html#MKE2FSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkfifo](extmisc.html#MKFIFOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkisofs](system.html#MKISOFSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mknod](system.html#MKNODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mkswap](system.html#MKSWAPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mktemp](filearchiv.html#MKTEMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mmencode](filearchiv.html#MMENCODEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[modinfo](system.html#MODINFOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[modprobe](system.html#MODPROBEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[more](filearchiv.html#MOREREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mount](system.html#MOUNTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[msgfmt](textproc.html#MSGFMTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[mv](basic.html#MVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nc](system.html#NCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[netconfig](communications.html#NETCONFIGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[netstat](system.html#NETSTATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[newgrp](system.html#NEWGRPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nice](system.html#NICEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nl](textproc.html#NLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nm](system.html#NMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nmap](system.html#NMAPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nohup](system.html#NOHUPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[nslookup](communications.html#NSLOOKUPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[objdump](extmisc.html#OBJDUMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[od](extmisc.html#ODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[openssl](filearchiv.html#OPENSSLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[passwd](system.html#PASSWDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[paste](textproc.html#PASTEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[patch](filearchiv.html#PATCHREF) (Related topic: [diff](filearchiv.html#DIFFREF))'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pathchk](extmisc.html#PATHCHKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pax](filearchiv.html#PAXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pgrep](system.html#PGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pidof](system.html#PIDOFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ping](communications.html#PINGREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pkill](system.html#PKILLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[popd](internal.html#DIRSD)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pr](textproc.html#PRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[printenv](extmisc.html#PRINTENVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[printf](internal.html#PRINTFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[procinfo](system.html#PROCINFOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ps](system.html#PPSSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pstree](system.html#PSTREEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ptx](filearchiv.html#PTXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pushd](internal.html#DIRSD)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[pwd](internal.html#PWD2REF) (Related topic: the [$PWD](internalvariables.html#PWDREF)
+    variable)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[quota](system.html#QUOTAREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rcp](communications.html#RCPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rdev](system.html#RDEVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rdist](system.html#RDISTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[read](internal.html#READREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[readelf](system.html#READELFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[readlink](filearchiv.html#READLINKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[readonly](internal.html#READONLYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[reboot](system.html#REBOOTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[recode](textproc.html#RECODEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[renice](system.html#NICE2REF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[reset](terminalccmds.html#RESETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[resize](terminalccmds.html#RESIZEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[restore](system.html#RESTOREREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rev](basic.html#REVREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rlogin](communications.html#RLOGINREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rm](basic.html#RMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rmdir](basic.html#RMDIRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rmmod](system.html#RMMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[route](system.html#ROUTEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rpm](filearchiv.html#RPMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rpm2cpio](filearchiv.html#RPM2CPIOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rsh](communications.html#RSHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rsync](communications.html#RSYNCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[runlevel](system.html#RUNLEVELREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[run-parts](extmisc.html#RUNPARTSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rx](communications.html#RXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[rz](communications.html#RZREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sar](system.html#SARREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[scp](communications.html#SCPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[script](terminalccmds.html#SCRIPTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sdiff](filearchiv.html#SDIFFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sed](sedawk.html#SEDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[seq](extmisc.html#SEQREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[service](system.html#SERVICEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[set](internal.html#SETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[setfacl](filearchiv.html#SETFACLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[setquota](system.html#SETQUOTAREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[setserial](system.html#SETSERIALREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[setterm](system.html#SETTERMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sha1sum](filearchiv.html#SHA1SUMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[shar](filearchiv.html#SHARREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[shopt](internal.html#SHOPTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[shred](filearchiv.html#SHREDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[shutdown](system.html#SHUTDOWNREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[size](system.html#SIZEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[skill](system.html#NICE2REF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sleep](timedate.html#SLEEPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[slocate](filearchiv.html#SLOCATEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[snice](system.html#NICE2REF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sort](textproc.html#SORTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[source](internal.html#SOURCEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sox](extmisc.html#SOXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[split](filearchiv.html#SPLITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sq](filearchiv.html#SQREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ssh](communications.html#SSHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[stat](system.html#STATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[strace](system.html#STRACEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[strings](filearchiv.html#STRINGSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[strip](system.html#STRIPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[stty](system.html#STTYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[su](system.html#SUREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sudo](system.html#SUDOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sum](filearchiv.html#SUMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[suspend](x9644.html#SUSPENDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[swapoff](system.html#SWAPONREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[swapon](system.html#SWAPONREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sx](communications.html#RXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sync](system.html#SYNCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[sz](communications.html#RZREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tac](basic.html#CATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tail](textproc.html#TAILREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tar](filearchiv.html#TARREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tbl](textproc.html#TBLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tcpdump](system.html#TCPDUMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tee](extmisc.html#TEEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[telinit](system.html#TELINITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[telnet](communications.html#TELNETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[Tex](textproc.html#TEXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[texexec](textproc.html#TEXEXECREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[time](timedate.html#TIMREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[times](x9644.html#TIMESREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tmpwatch](system.html#TMPWATCHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[top](system.html#TOPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[touch](timedate.html#TOUCHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tput](terminalccmds.html#TPUTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tr](textproc.html#TRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[traceroute](communications.html#TRACEROUTEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[true](internal.html#TRUEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tset](system.html#TSETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tsort](textproc.html#TSORTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tty](system.html#TTYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[tune2fs](system.html#TUNE2FSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[type](internal.html#TYPEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[typeset](declareref.html)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[ulimit](system.html#ULIMITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[umask](system.html#UMASKREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[umount](system.html#UMOUNTREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uname](system.html#UNAMEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unarc](filearchiv.html#UNARCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unarj](filearchiv.html#UNARCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uncompress](filearchiv.html#UNCOMPRESSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unexpand](textproc.html#EXPANDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uniq](textproc.html#UNIQREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[units](extmisc.html#UNITSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unlzma](filearchiv.html#LZMAREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unrar](filearchiv.html#UNARCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unset](internal.html#UNSETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unsq](filearchiv.html#SQREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[unzip](filearchiv.html#ZIPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uptime](system.html#UPTIMEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[usbmodules](system.html#LSUSBREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[useradd](system.html#USERADDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[userdel](system.html#USERADDREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[usermod](system.html#USERMODREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[users](system.html#USERSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[usleep](timedate.html#USLEEPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uucp](communications.html#UUCPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uudecode](filearchiv.html#UUDECODEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uuencode](filearchiv.html#UUENCODEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[uux](communications.html#UUXREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[vacation](communications.html#VACATIONREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[vdir](filearchiv.html#VDIRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[vmstat](system.html#VMSTATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[vrfy](communications.html#VRFYREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[w](system.html#WREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wait](x9644.html#WAITREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wall](system.html#WALLREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[watch](system.html#WATCHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wc](textproc.html#WCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[wget](communications.html#WGETREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[whatis](filearchiv.html#WHATISREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[whereis](filearchiv.html#WHEREISREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[which](filearchiv.html#WHICHREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[who](system.html#WHOREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[whoami](system.html#WHOAMIREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[whois](communications.html#WHOISREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[write](communications.html#WRITEREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[xargs](moreadv.html#XARGSREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[xrandr](system.html#XRANDRREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[xz](filearchiv.html#XZREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[yacc](textproc.html#YACCREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[yes](extmisc.html#YESREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zcat](filearchiv.html#ZCATREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zdiff](filearchiv.html#ZDIFFREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zdump](timedate.html#ZDUMPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zegrep](textproc.html#ZEGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zfgrep](textproc.html#ZEGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zgrep](textproc.html#ZEGREPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '[zip](filearchiv.html#ZIPREF)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Table of Contents**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 15\. [Internal Commands and Builtins](internal.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 15.1\. [Job Control Commands](x9644.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16\. [External Filters, Programs and Commands](external.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.1\. [Basic Commands](basic.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.2\. [Complex Commands](moreadv.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.3\. [Time / Date Commands](timedate.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.4\. [Text Processing Commands](textproc.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.5\. [File and Archiving Commands](filearchiv.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.6\. [Communications Commands](communications.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.7\. [Terminal Control Commands](terminalccmds.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.8\. [Math Commands](mathc.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 16.9\. [Miscellaneous Commands](extmisc.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 17\. [System and Administrative Commands](system.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 17.1\. [Analyzing a System Script](sysscripts.html)
+  prefs: []
+  type: TYPE_NORMAL

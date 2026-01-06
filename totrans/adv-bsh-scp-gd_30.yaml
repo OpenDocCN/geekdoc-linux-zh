@@ -1,0 +1,58 @@
+- en: Chapter 25\. Aliases
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/aliases.html](https://tldp.org/LDP/abs/html/aliases.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: A Bash *alias* is essentially nothing more than a keyboard shortcut, an abbreviation,
+    a means of avoiding typing a long command sequence. If, for example, we include
+    **alias lm="ls -l | more"** in the [`~/.bashrc` file](sample-bashrc.html), then
+    each `**lm**` [[1]](#FTN.AEN18669) typed at the command-line will automatically
+    be replaced by a **ls -l | more**. This can save a great deal of typing at the
+    command-line and avoid having to remember complex combinations of commands and
+    options. Setting **alias rm="rm -i"** (interactive mode delete) may save a good
+    deal of grief, since it can prevent inadvertently deleting important files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a script, aliases have very limited usefulness. It would be nice if aliases
+    could assume some of the functionality of the **C** preprocessor, such as macro
+    expansion, but unfortunately Bash does not expand arguments within the alias body.
+    [[2]](#FTN.AEN18676) Moreover, a script fails to expand an alias itself within
+    "compound constructs," such as [if/then](tests.html#IFTHEN) statements, loops,
+    and functions. An added limitation is that an alias will not expand recursively.
+    Almost invariably, whatever we would like an alias to do could be accomplished
+    much more effectively with a [function](functions.html#FUNCTIONREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 25-1\. Aliases within a script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The **unalias** command removes a previously set *alias*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 25-2\. *unalias*: Setting and unsetting an alias**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](aliases.html#AEN18669) | ... as the first word of a command string.
+    Obviously, an alias is only meaningful at the *beginning* of a command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](aliases.html#AEN18676) | However, aliases do seem to expand positional
+    parameters. |'
+  prefs: []
+  type: TYPE_TB

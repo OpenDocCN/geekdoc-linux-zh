@@ -1,0 +1,246 @@
+- en: Chapter 12\. Command Substitution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/commandsub.html](https://tldp.org/LDP/abs/html/commandsub.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Command substitution** reassigns the output of a command [[1]](#FTN.AEN7205)
+    or even multiple commands; it literally plugs the command output into another
+    context. [[2]](#FTN.AEN7211)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The classic form of command substitution uses *backquotes* (`...`). Commands
+    within backquotes (backticks) generate command-line text.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**The output of commands can be used as arguments to another command, to set
+    a variable, and even for generating the argument list in a [for](loops1.html#FORLOOPREF1)
+    loop.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Command substitution
+    invokes a [subshell](subshells.html#SUBSHELLSREF). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Command substitution
+    may result in [word splitting](quotingvar.html#WSPLITREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE2]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Even when there is no word splitting, command substitution can remove trailing
+    newlines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE3]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Using **echo**
+    to output an *unquoted* variable set with command substitution removes trailing
+    newlines characters from the output of the reassigned command(s). This can cause
+    unpleasant surprises.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE4]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command substitution even permits setting a variable to the contents of a file,
+    using either [redirection](io-redirection.html#IOREDIRREF) or the [cat](basic.html#CATREF)
+    command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Do not set a
+    variable to the contents of a *long* text file unless you have a very good reason
+    for doing so. Do not set a variable to the contents of a *binary* file, even as
+    a joke.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 12-1\. Stupid script tricks**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE7]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notice that a *buffer overrun* does not occur. This is one instance where an
+    interpreted language, such as Bash, provides more protection from programmer mistakes
+    than a compiled language. |
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command substitution permits setting a variable to the output of a [loop](loops1.html#FORLOOPREF1).
+    The key to this is grabbing the output of an [echo](internal.html#ECHOREF) command
+    within the loop.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 12-2\. Generating a variable from a loop**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command substitution makes it possible to extend the toolset available to Bash.
+    It is simply a matter of writing a program or script that outputs to `stdout`
+    (like a well-behaved UNIX tool should) and assigning that output to a variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE9]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE10]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE11]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE12]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The **$(...)**
+    form has superseded backticks for command substitution.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE13]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **$(...)** form of command substitution treats a double backslash in a different
+    way than **`...`**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE14]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **$(...)** form of command substitution permits nesting. [[3]](#FTN.AEN7308)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE15]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Or, for something a bit more elaborate . . .
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 12-3\. Finding anagrams**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE16]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Examples of command substitution in shell scripts:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Example 11-8](loops1.html#BINGREP)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-27](testbranch.html#CASECMD)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 9-16](randomvar.html#SEEDINGRANDOM)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-3](moreadv.html#EX57)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-22](textproc.html#LOWERCASE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-17](textproc.html#GRP)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-54](extmisc.html#EX53)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-14](loops1.html#EX24)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-11](loops1.html#SYMLINKS)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-32](filearchiv.html#STRIPC)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 20-8](redircb.html#REDIR4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-16](contributed-scripts.html#TREE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 29-3](procref1.html#PIDID)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-47](mathc.html#MONTHLYPMT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-48](mathc.html#BASE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-49](mathc.html#ALTBC)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](commandsub.html#AEN7205) | For purposes of *command substitution*,
+    a **command** may be an external system command, an internal scripting [builtin](internal.html#BUILTINREF),
+    or even [a script function](assortedtips.html#RVT). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](commandsub.html#AEN7211) | In a more technically correct sense, *command
+    substitution* extracts the `stdout` of a command, then assigns it to a variable
+    using the = operator. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[3]](commandsub.html#AEN7308) | In fact, nesting with backticks is also
+    possible, but only by escaping the inner backticks, as John Default points out.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE17]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL

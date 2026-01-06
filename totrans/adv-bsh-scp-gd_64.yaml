@@ -1,0 +1,111 @@
+- en: Appendix J. An Introduction to Programmable Completion
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/tabexpansion.html](https://tldp.org/LDP/abs/html/tabexpansion.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: The *programmable completion* feature in Bash permits typing a partial command,
+    then pressing the **[Tab]** key to auto-complete the command sequence. [[1]](#FTN.AEN24082)
+    If multiple completions are possible, then **[Tab]** lists them all. Let's see
+    how it works.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Tab completion also works for variables and path names.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The Bash **complete** and **compgen** [builtins](internal.html#BUILTINREF) make
+    it possible for *tab completion* to recognize partial *parameters* and *options*
+    to commands. In a very simple case, we can use **complete** from the command-line
+    to specify a short list of acceptable parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The `-f` option to *complete* specifies filenames, and `-X` the filter pattern.
+  prefs: []
+  type: TYPE_NORMAL
+- en: For anything more complex, we could write a script that specifies a list of
+    acceptable command-line parameters. The **compgen** builtin expands a list of
+    *arguments* to *generate* completion matches.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Let us take a [modified version](contributed-scripts.html#USEGETOPT2) of the
+    *UseGetOpt.sh* script as an example command. This script accepts a number of command-line
+    parameters, preceded by either a single or double dash. And here is the corresponding
+    *completion script*, by convention given a filename corresponding to its associated
+    command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example J-1\. Completion script for *UseGetOpt.sh***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Now, let's try it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: We begin by [sourcing](internal.html#SOURCEREF) the "completion script." This
+    sets the command-line parameters. [[2]](#FTN.AEN24160)
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the first instance, hitting **[Tab]** after a single dash, the output is
+    all the possible parameters preceded by *one or more* dashes. Hitting **[Tab]**
+    after *two* dashes gives the possible parameters preceded by *two or more* dashes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Now, just what is the point of having to jump through flaming hoops to enable
+    command-line tab completion? *It saves keystrokes.* [[3]](#FTN.AEN24173)
+  prefs: []
+  type: TYPE_NORMAL
+- en: --
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Resources:*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash [programmable completion](http://freshmeat.net/projects/bashcompletion)
+    project
+  prefs: []
+  type: TYPE_NORMAL
+- en: Mitch Frazier's [*Linux Journal*](http://www.linuxjournal.com) article, [*More
+    on Using the Bash Complete Command*](http://www.linuxjournal.com/content/more-using-bash-complete-command)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Steve''s excellent two-part article, "An Introduction to Bash Completion":
+    [Part 1](http://www.debian-administration.org/article/An_introduction_to_bash_completion_part_1)
+    and [Part 2](http://www.debian-administration.org/article/An_introduction_to_bash_completion_part_2)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](tabexpansion.html#AEN24082) | This works only from the *command line*,
+    of course, and not within a script. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](tabexpansion.html#AEN24160) | Normally the default parameter completion
+    files reside in either the `/etc/profile.d` directory or in `/etc/bash_completion`.
+    These autoload on system startup. So, after writing a useful completion script,
+    you might wish to move it (as *root*, of course) to one of these directories.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[3]](tabexpansion.html#AEN24173) | It has been extensively documented that
+    programmers are willing to put in long hours of effort in order to save ten minutes
+    of "unnecessary" labor. This is known as *optimization*. |'
+  prefs: []
+  type: TYPE_TB

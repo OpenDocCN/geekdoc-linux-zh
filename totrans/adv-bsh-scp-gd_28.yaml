@@ -1,0 +1,108 @@
+- en: Chapter 23\. Process Substitution
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/process-sub.html](https://tldp.org/LDP/abs/html/process-sub.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '[Piping](special-chars.html#PIPEREF) the `stdout` of a command into the `stdin`
+    of another is a powerful technique. But, what if you need to pipe the `stdout`
+    of *multiple* commands? This is where `*process substitution*` comes in.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Process substitution* feeds the output of a [process](special-chars.html#PROCESSREF)
+    (or processes) into the `stdin` of another process.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Template**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Command list enclosed within parentheses
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**>(command_list)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**<(command_list)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Process substitution uses `/dev/fd/<n>` files to send the results of the process(es)
+    within parentheses to another process. [[1]](#FTN.AEN18244)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | There is *no*
+    space between the the "<" or ">" and the parentheses. Space there would give an
+    error message. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bash creates a
+    pipe with two [file descriptors](io-redirection.html#FDREF), `--fIn` and `fOut--`.
+    The `stdin` of [true](internal.html#TRUEREF) connects to `fOut` (dup2(fOut, 0)),
+    then Bash passes a `/dev/fd/fIn` argument to **echo**. On systems lacking `/dev/fd/<n>`
+    files, Bash may use temporary files. (Thanks, S.C.) |'
+  prefs: []
+  type: TYPE_TB
+- en: Process substitution can compare the output of two different commands, or even
+    the output of different options to the same command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Process substitution can compare the contents of two directories -- to see which
+    filenames are in one, but not the other.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Some other usages and uses of process substitution:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Here is a method of circumventing the problem of an [*echo* piped to a *while-read
+    loop*](gotchas.html#BADREAD0) running in a subshell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 23-1\. Code block redirection without forking**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This is a similar example.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 23-2\. Redirecting the output of *process substitution* into a loop.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A reader sent in the following interesting example of process substitution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](process-sub.html#AEN18244) | This has the same effect as a [named pipe](extmisc.html#NAMEDPIPEREF)
+    (temp file), and, in fact, named pipes were at one time used in process substitution.
+    |'
+  prefs: []
+  type: TYPE_TB

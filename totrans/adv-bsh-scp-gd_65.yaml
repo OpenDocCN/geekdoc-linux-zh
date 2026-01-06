@@ -1,0 +1,96 @@
+- en: Appendix K. Localization
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/localization.html](https://tldp.org/LDP/abs/html/localization.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Localization is an undocumented Bash feature.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A localized shell script echoes its text output in the language defined as the
+    system's locale. A Linux user in Berlin, Germany, would get script output in German,
+    whereas his cousin in Berlin, Maryland, would get output from the same script
+    in English.
+  prefs: []
+  type: TYPE_NORMAL
+- en: To create a localized script, use the following template to write all messages
+    to the user (error messages, prompts, etc.).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This lists all the localized text. (The `-D` option lists double-quoted strings
+    prefixed by a $, without executing the script.)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The `--dump-po-strings` option to Bash resembles the `-D` option, but uses [gettext](textproc.html#GETTEXTREF)
+    "po" format.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Bruno Haible points
+    out:Starting with gettext-0.12.2, **xgettext -o - localized.sh** is recommended
+    instead of **bash --dump-po-strings localized.sh**, because **xgettext** . . .1\.
+    understands the gettext and eval_gettext commands (whereas bash --dump-po-strings
+    understands only its deprecated $"..." syntax)2\. can extract comments placed
+    by the programmer, intended to be read by the translator.This shell code is then
+    not specific to Bash any more; it works the same way with Bash 1.x and other /bin/sh
+    implementations. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Now, build a `language.po` file for each language that the script will be translated
+    into, specifying the `*msgstr*`. Alfredo Pironti gives the following example:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'fr.po:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Then, run [msgfmt](textproc.html#MSGFMTREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**msgfmt -o localized.sh.mo fr.po**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Place the resulting `localized.sh.mo` file in the `/usr/local/share/locale/fr/LC_MESSAGES`
+    directory, and at the beginning of the script, insert the lines:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: If a user on a French system runs the script, she will get French messages.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | With older versions
+    of Bash or other shells, localization requires [gettext](textproc.html#GETTEXTREF),
+    using the `-s` option. In this case, the script becomes:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE5]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `TEXTDOMAIN` and `TEXTDOMAINDIR` variables need to be set and exported to
+    the environment. This should be done within the script itself.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '---'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This appendix written by Stphane Chazelas, with modifications suggested by Alfredo
+    Pironti, and by Bruno Haible, maintainer of GNU [gettext](textproc.html#GETTEXTREF).
+  prefs: []
+  type: TYPE_NORMAL

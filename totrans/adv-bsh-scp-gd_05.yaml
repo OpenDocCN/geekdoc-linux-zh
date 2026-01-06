@@ -1,0 +1,1468 @@
+- en: Chapter 3\. Special Characters
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/special-chars.html](https://tldp.org/LDP/abs/html/special-chars.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: What makes a character *special*? If it has a meaning beyond its *literal meaning*,
+    a [meta-meaning](x17129.html#METAMEANINGREF), then we refer to it as a *special
+    character*. Along with commands and [keywords](internal.html#KEYWORDREF), *special
+    characters* are building blocks of Bash scripts.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Special Characters Found In Scripts and Elsewhere**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '#'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Comments.** Lines beginning with a # (with the exception of [#!](sha-bang.html#MAGNUMREF))
+    are comments and will *not* be executed.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Comments may also occur following the end of a command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Comments may also follow [whitespace](special-chars.html#WHITESPACEREF) at the
+    beginning of a line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Comments may even be embedded within a [pipe](special-chars.html#PIPEREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | A command may
+    not follow a comment on the same line. There is no method of terminating the comment,
+    in order for "live code" to begin on the same line. Use a new line for the next
+    command. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Of course, a [quoted](quoting.html#QUOTINGREF)
+    or an [escaped](escapingsection.html#ESCP) # in an [echo](internal.html#ECHOREF)
+    statement does *not* begin a comment. Likewise, a # appears in [certain parameter-substitution
+    constructs](parameter-substitution.html#PSUB2) and in [numerical constant expressions](numerical-constants.html#NUMCONSTANTS).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE4]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The standard [quoting and escape](quoting.html#QUOTINGREF) characters (" ''
+    \) escape the #. |'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Certain [pattern matching operations](parameter-substitution.html#PSOREX1)
+    also use the #.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ;
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command separator [semicolon].** Permits putting two or more commands on
+    the same line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that the ";" [sometimes needs to be *escaped*](moreadv.html#FINDREF0).
+  prefs: []
+  type: TYPE_NORMAL
+- en: ;;
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Terminator in a [case](testbranch.html#CASEESAC1) option [double semicolon].**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: ;;&, ;&
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Terminators](bashver4.html#NCTERM) in a *case* option ([version 4+](bashver4.html#BASH4REF)
+    of Bash).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: .
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**"dot" command [period].** Equivalent to [source](internal.html#SOURCEREF)
+    (see [Example 15-22](internal.html#EX38)). This is a bash [builtin](internal.html#BUILTINREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: .
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**"dot", as a component of a filename.** When working with filenames, a leading
+    dot is the prefix of a "hidden" file, a file that an [ls](basic.html#LSREF) will
+    not normally show.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: When considering directory names, *a single dot* represents the current working
+    directory, and *two dots* denote the parent directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The *dot* often appears as the destination (directory) of a file movement command,
+    in this context meaning *current directory*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE9]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Copy all the "junk" files to [$PWD](internalvariables.html#PWDREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: .
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**"dot" character match.** When [matching characters](x17129.html#REGEXDOT),
+    as part of a [regular expression](regexp.html#REGEXREF), a "dot" [matches a single
+    character](x17129.html#REGEXDOT).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '"'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[partial quoting](varsubn.html#DBLQUO) [double quote].** *"STRING"* preserves
+    (from interpretation) most of the special characters within *STRING*. See [Chapter
+    5](quoting.html).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ''''
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[full quoting](varsubn.html#SNGLQUO) [single quote].** *''STRING''* preserves
+    all special characters within *STRING*. This is a stronger form of quoting than
+    *"STRING"*. See [Chapter 5](quoting.html).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ','
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[comma operator](ops.html#COMMAOP).** The *comma operator* [[1]](#FTN.AEN612)
+    links together a series of arithmetic operations. All are evaluated, but only
+    the last one is returned.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE10]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The *comma* operator can also concatenate strings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE11]  |'
+  prefs: []
+  type: TYPE_TB
+- en: ',, ,'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Lowercase conversion](bashver4.html#CASEMODPARAMSUB) in *parameter substitution*
+    (added in [version 4](bashver4.html#BASH4REF) of Bash).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: \
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[escape](escapingsection.html#ESCP) [backslash].** A quoting mechanism for
+    single characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**\X**` *escapes* the character *X*. This has the effect of "quoting" *X*,
+    equivalent to *''X''*. The \ may be used to quote " and '', so they are expressed
+    literally.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: See [Chapter 5](quoting.html) for an in-depth explanation of escaped characters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: /
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Filename path separator [forward slash].** Separates the components of a
+    filename (as in `/home/bozo/projects/Makefile`).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is also the division [arithmetic operator](ops.html#AROPS1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[command substitution](commandsub.html#COMMANDSUBREF).** The **`command`**
+    construct makes available the output of **command** for assignment to a variable.
+    This is also known as [backquotes](commandsub.html#BACKQUOTESREF) or backticks.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ':'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**null command [colon].** This is the shell equivalent of a "NOP" (`*no op*`,
+    a do-nothing operation). It may be considered a synonym for the shell builtin
+    [true](internal.html#TRUEREF). The ":" command is itself a *Bash* [builtin](internal.html#BUILTINREF),
+    and its [exit status](exit-status.html#EXITSTATUSREF) is *true* (0).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE12]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Endless loop:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE13]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Placeholder in if/then test:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE14]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Provide a placeholder where a binary operation is expected, see [Example 8-2](ops.html#ARITHOPS)
+    and [default parameters](parameter-substitution.html#DEFPARAM).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE15]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Provide a placeholder where a command is expected in a [here document](here-docs.html#HEREDOCREF).
+    See [Example 19-10](here-docs.html#ANONHEREDOC).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Evaluate string of variables using [parameter substitution](parameter-substitution.html#PARAMSUBREF)
+    (as in [Example 10-7](parameter-substitution.html#EX6)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE16]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**[Variable expansion / substring replacement](parameter-substitution.html#EXPREPL1)**.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In combination with the > [redirection operator](io-redirection.html#IOREDIRREF),
+    truncates a file to zero length, without changing its permissions. If the file
+    did not previously exist, creates it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE17]  |'
+  prefs: []
+  type: TYPE_TB
+- en: See also [Example 16-15](textproc.html#EX12).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'In combination with the >> redirection operator, has no effect on a pre-existing
+    target file (`**: >> target_file**`). If the file did not previously exist, creates
+    it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This applies to
+    regular files, not pipes, symlinks, and certain special files. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'May be used to begin a comment line, although this is not recommended. Using
+    # for a comment turns off error checking for the remainder of that line, so almost
+    anything may appear in a comment. However, this is not the case with :.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE18]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The ":" serves as a [field](special-chars.html#FIELDREF) separator, in [`/etc/passwd`](files.html#DATAFILESREF1),
+    and in the [$PATH](internalvariables.html#PATHREF) variable.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE19]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A *colon* is [acceptable as a function name](functions.html#FSTRANGEREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE20]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This is not [portable](portabilityissues.html) behavior, and therefore not a
+    recommended practice. In fact, more recent releases of Bash do not permit this
+    usage. An underscore **_** works, though.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A *colon* can serve as a placeholder in an otherwise empty function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE21]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**reverse (or negate) the sense of a test or exit status [bang].** The ! operator
+    inverts the [exit status](exit-status.html#EXITSTATUSREF) of the command to which
+    it is applied (see [Example 6-2](exit-status.html#NEGCOND)). It also inverts the
+    meaning of a test operator. This can, for example, change the sense of *equal*
+    ( [=](comparison-ops.html#EQUALSIGNREF) ) to *not-equal* ( != ). The ! operator
+    is a Bash [keyword](internal.html#KEYWORDREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a different context, the ! also appears in [indirect variable references](ivr.html#IVRREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: In yet another context, from the *command line*, the ! invokes the Bash *history
+    mechanism* (see [Appendix L](histcommands.html)). Note that within a script, the
+    history mechanism is disabled.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**wild card [asterisk].** The * character serves as a "wild card" for filename
+    expansion in [globbing](globbingref.html). By itself, it matches every filename
+    in a given directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE22]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The * also represents [any number (or zero) characters](x17129.html#ASTERISKREG)
+    in a [regular expression](regexp.html#REGEXREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[arithmetic operator](ops.html#AROPS1).** In the context of arithmetic operations,
+    the * denotes multiplication.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '** A double asterisk can represent the [exponentiation](ops.html#EXPONENTIATIONREF)
+    operator or [extended file-match](bashver4.html#GLOBSTARREF) *globbing*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**test operator.** Within certain expressions, the ? indicates a test for a
+    condition.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a [double-parentheses construct](dblparens.html), the ? can serve as an element
+    of a C-style *trinary* operator. [[2]](#FTN.AEN888)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`condition`**?**`result-if-true`**:**`result-if-false`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE23]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In a [parameter substitution](parameter-substitution.html#PARAMSUBREF) expression,
+    the ? [tests whether a variable has been set](parameter-substitution.html#QERRMSG).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**wild card.** The ? character serves as a single-character "wild card" for
+    filename expansion in [globbing](globbingref.html), as well as [representing one
+    character](x17129.html#QUEXREGEX) in an [extended regular expression](x17129.html#EXTREGEX).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Variable substitution](varsubn.html) (contents of a variable).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE24]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A $ prefixing a variable name indicates the *value* the variable holds.
+  prefs: []
+  type: TYPE_NORMAL
+- en: $
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**end-of-line.** In a [regular expression](regexp.html#REGEXREF), a "$" addresses
+    the [end of a line](x17129.html#DOLLARSIGNREF) of text.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ${}
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Parameter substitution](parameter-substitution.html#PARAMSUBREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $' ... '
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Quoted string expansion](escapingsection.html#STRQ).** This construct expands
+    single or multiple escaped octal or hex values into ASCII [[3]](#FTN.AEN1001)
+    or [Unicode](bashver4.html#UNICODEREF) characters.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $*, $@
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[positional parameters](internalvariables.html#APPREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**exit status variable.** The [$? variable](exit-status.html#EXSREF) holds
+    the [exit status](exit-status.html#EXITSTATUSREF) of a command, a [function](functions.html#FUNCTIONREF),
+    or of the script itself.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: $$
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**process ID variable.** The [$$ variable](internalvariables.html#PROCCID)
+    holds the *process ID* [[4]](#FTN.AEN1071) of the script in which it appears.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ()
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**command group.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE25]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Important](../Images/d8e2c61a4ebc25a8846b6825b6029167.png) | A listing
+    of commands within `*parentheses*` starts a [subshell](subshells.html#SUBSHELLSREF).Variables
+    inside parentheses, within the subshell, are not visible to the rest of the script.
+    The parent process, the script, [cannot read variables created in the child process](subshells.html#PARVIS),
+    the subshell.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE26]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**array initialization.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE27]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '{xxx,yyy,zzz,...}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Brace expansion.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE28]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A command may act upon a comma-separated list of file specs within `*braces*`.
+    [[5]](#FTN.AEN1124) Filename expansion ([globbing](globbingref.html)) applies
+    to the file specs between the braces.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | No spaces allowed
+    within the braces *unless* the spaces are quoted or escaped.`**echo {file1,file2}\
+    :{\ A," B",'' C''}**``file1 : A file1 : B file1 : C file2 : A file2 : B file2
+    : C` |'
+  prefs: []
+  type: TYPE_TB
+- en: '{a..z}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Extended Brace expansion.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE29]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The *{a..z}* [extended brace expansion](bashver3.html#BRACEEXPREF3) construction
+    is a feature introduced in [version 3](bashver3.html#BASH3REF) of *Bash*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '{}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Block of code [curly brackets].** Also referred to as an *inline group*,
+    this construct, in effect, creates an *anonymous function* (a function without
+    a name). However, unlike in a "standard" [function](functions.html#FUNCTIONREF),
+    the variables inside a code block remain visible to the remainder of the script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE30]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE31]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The code block enclosed in braces may have [I/O redirected](io-redirection.html#IOREDIRREF)
+    to and from it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 3-1\. Code blocks and I/O redirection**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE32]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 3-2\. Saving the output of a code block to a file**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE33]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unlike a command
+    group within (parentheses), as above, a code block enclosed by {braces} will *not*
+    normally launch a [subshell](subshells.html#SUBSHELLSREF). [[6]](#FTN.AEN1199)It
+    is possible to [iterate](loops1.html#ITERATIONREF) a code block using a [non-standard
+    *for-loop*](loops1.html#NODODONE). |'
+  prefs: []
+  type: TYPE_TB
+- en: '{}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**placeholder for text.** Used after [xargs `-i`](moreadv.html#XARGSCURLYREF)
+    (*replace strings* option). The {} double curly brackets are a placeholder for
+    output text.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE34]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '{} \;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**pathname.** Mostly used in [find](moreadv.html#FINDREF) constructs. This
+    is *not* a shell [builtin](internal.html#BUILTINREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Definition: A *pathname* is a *filename* that includes the complete [path](internalvariables.html#PATHREF).
+    As an example, `/home/bozo/Notes/Thursday/schedule.txt`. This is sometimes referred
+    to as the *absolute path*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The ";" ends the
+    `-exec` option of a **find** command sequence. It needs to be escaped to protect
+    it from interpretation by the shell. |'
+  prefs: []
+  type: TYPE_TB
+- en: '[ ]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**test.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Test](tests.html#IFTHEN) expression between **[ ]**. Note that **[** is part
+    of the shell *builtin* [test](testconstructs.html#TTESTREF) (and a synonym for
+    it), *not* a link to the external command `/usr/bin/test`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[[ ]]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**test.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Test expression between [[ ]]. More flexible than the single-bracket [ ] test,
+    this is a shell [keyword](internal.html#KEYWORDREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: See the discussion on the [[[ ... ]] construct](testconstructs.html#DBLBRACKETS).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[ ]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**array element.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In the context of an [array](arrays.html#ARRAYREF), brackets set off the numbering
+    of each element of that array.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE35]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '[ ]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**range of characters.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: As part of a [regular expression](regexp.html#REGEXREF), brackets delineate
+    a [range of characters](x17129.html#BRACKETSREF) to match.
+  prefs: []
+  type: TYPE_NORMAL
+- en: $[ ... ]
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**integer expansion.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Evaluate integer expression between $[ ].
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE36]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that this usage is *deprecated*, and has been replaced by the [(( ... ))](dblparens.html)
+    construct.
+  prefs: []
+  type: TYPE_NORMAL
+- en: (( ))
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**integer expansion.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Expand and evaluate integer expression between (( )).
+  prefs: []
+  type: TYPE_NORMAL
+- en: See the discussion on the [(( ... )) construct](dblparens.html).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&> >& >> < <>'
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**[redirection](io-redirection.html#IOREDIRREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**scriptname >filename**` redirects the output of `scriptname` to file `filename`.
+    Overwrite `filename` if it already exists.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**command &>filename**` redirects both the [`stdout`](ioredirintro.html#STDINOUTDEF)
+    and the `stderr` of `command` to `filename`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This is useful
+    for suppressing output when testing for a condition. For example, let us test
+    whether a certain command exists.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE37]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Or in a script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE38]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**command >&2**` redirects `stdout` of `command` to `stderr`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**scriptname >>filename**` appends the output of `scriptname` to file `filename`.
+    If `filename` does not already exist, it is created.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**[i]<>filename**` opens file `filename` for reading and writing, and assigns
+    [file descriptor](io-redirection.html#FDREF) i to it. If `filename` does not exist,
+    it is created.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[process substitution](process-sub.html#PROCESSSUBREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**(command)>**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**<(command)**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[In a different context](comparison-ops.html#LTREF), the "<" and ">" characters
+    act as [string comparison operators](comparison-ops.html#SCOMPARISON1).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[In yet another context](comparison-ops.html#INTLT), the "<" and ">" characters
+    act as [integer comparison operators](comparison-ops.html#ICOMPARISON1). See also
+    [Example 16-9](moreadv.html#EX45).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '<<'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**redirection used in a [here document](here-docs.html#HEREDOCREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <<<
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**redirection used in a [here string](x17837.html#HERESTRINGSREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: <, >
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[ASCII comparison](comparison-ops.html#LTREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE39]  |'
+  prefs: []
+  type: TYPE_TB
+- en: \<, \>
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[word boundary](x17129.html#ANGLEBRAC) in a [regular expression](regexp.html#REGEXREF).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`bash$` `**grep ''\<the\>'' textfile**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**pipe.** Passes the output (`stdout`) of a previous command to the input (`stdin`)
+    of the next one, or to the shell. This is a method of chaining commands together.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE40]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A pipe, as a classic method of interprocess communication, sends the `stdout`
+    of one [process](special-chars.html#PROCESSREF) to the `stdin` of another. In
+    a typical case, a command, such as [cat](basic.html#CATREF) or [echo](internal.html#ECHOREF),
+    pipes a stream of data to a *filter*, a command that transforms its input for
+    processing. [[7]](#FTN.AEN1564)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**cat $filename1 $filename2 &#124; grep $search_word**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: For an interesting note on the complexity of using UNIX pipes, see [the UNIX
+    FAQ, Part 3](http://www.faqs.org/faqs/unix-faq/faq/part3/).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The output of a command or commands may be piped to a script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE41]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Now, let us pipe the output of **ls -l** to this script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE42]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `stdout` of
+    each process in a pipe must be read as the `stdin` of the next. If this is not
+    the case, the data stream will *block*, and the pipe will not behave as expected.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE43]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A pipe runs as a [child process](othertypesv.html#CHILDREF), and therefore cannot
+    alter script variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE44]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: If one of the commands in the pipe aborts, this prematurely terminates execution
+    of the pipe. Called a *broken pipe*, this condition sends a `*SIGPIPE*` [signal](debugging.html#SIGNALD).
+    |
+  prefs: []
+  type: TYPE_NORMAL
+- en: '>|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**force redirection (even if the [noclobber option](options.html#NOCLOBBERREF)
+    is set).** This will forcibly overwrite an existing file.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '||'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[OR logical operator](ops.html#ORREF).** In a [test construct](testconstructs.html#TESTCONSTRUCTS1),
+    the || operator causes a return of 0 (success) if *either* of the linked test
+    conditions is true.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Run job in background.** A command followed by an & will run in the background.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE45]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Within a script, commands and even [loops](loops1.html#FORLOOPREF1) may run
+    in the background.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 3-3\. Running a loop in the background**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE46]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | A command run
+    in the background within a script may cause the script to hang, waiting for a
+    keystroke. Fortunately, there is a [remedy](x9644.html#WAITHANG) for this. |'
+  prefs: []
+  type: TYPE_TB
+- en: '&&'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[AND logical operator](ops.html#LOGOPS1).** In a [test construct](testconstructs.html#TESTCONSTRUCTS1),
+    the && operator causes a return of 0 (success) only if *both* the linked test
+    conditions are true.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '-'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**option, prefix.** Option flag for a command or filter. Prefix for an operator.
+    Prefix for a [default parameter](parameter-substitution.html#DEFPARAM1) in [parameter
+    substitution](parameter-substitution.html#PARAMSUBREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**COMMAND -[Option1][Option2][...]**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**ls -al**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**sort -dfu $filename**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE47]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**--**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *double-dash* `--` prefixes *long* (verbatim) options to commands.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**sort --ignore-leading-blanks**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Used with a [Bash builtin](internal.html#BUILTINREF), it means the *end of options*
+    to that particular command.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | This provides a
+    handy means of removing files whose *names begin with a dash*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE48]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *double-dash* is also used in conjunction with [set](internal.html#SETREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**set -- $variable**` (as in [Example 15-18](internal.html#SETPOS))'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '-'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**redirection from/to `stdin` or `stdout` [dash].**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE49]  |'
+  prefs: []
+  type: TYPE_TB
+- en: As expected, `**cat -**` echoes `stdin`, in this case keyboarded user input,
+    to `stdout`. But, does I/O redirection using **-** have real-world applications?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE50]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE51]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that in this context the "-" is not itself a Bash operator, but rather
+    an option recognized by certain UNIX utilities that write to `stdout`, such as
+    **tar**, **cat**, etc.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE52]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Where a filename is expected, `*-*` redirects output to `stdout` (sometimes
+    seen with `**tar cf**`), or accepts input from `stdin`, rather than from a file.
+    This is a method of using a file-oriented utility as a filter in a pipe.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE53]  |'
+  prefs: []
+  type: TYPE_TB
+- en: By itself on the command-line, [file](filearchiv.html#FILEREF) fails with an
+    error message.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Add a "-" for a more useful result. This causes the shell to await user input.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE54]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Now the command accepts input from `stdin` and analyzes it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The "-" can be used to pipe `stdout` to other commands. This permits such stunts
+    as [prepending lines to a file](assortedtips.html#PREPENDREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Using [diff](filearchiv.html#DIFFREF) to compare a file with a *section* of
+    another:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**grep Linux file1 | diff file2 -**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Finally, a real-world example using `*-*` with [tar](filearchiv.html#TARREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 3-4\. Backup of all files changed in last day**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE55]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Filenames beginning
+    with "-" may cause problems when coupled with the "-" redirection operator. A
+    script should check for this and add an appropriate prefix to such filenames,
+    for example `./-FILENAME`, `$PWD/-FILENAME`, or `$PATHNAME/-FILENAME`.If the value
+    of a variable begins with a `*-*`, this may likewise create problems.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE56]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '-'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**previous working directory.** A **cd -** command changes to the previous
+    working directory. This uses the [$OLDPWD](internalvariables.html#OLDPWD) [environmental
+    variable](othertypesv.html#ENVREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Do not confuse
+    the "-" used in this sense with the "-" redirection operator just discussed. The
+    interpretation of the "-" depends on the context in which it appears. |'
+  prefs: []
+  type: TYPE_TB
+- en: '-'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Minus.** Minus sign in an [arithmetic operation](ops.html#AROPS1).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '='
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Equals.** [Assignment operator](varassignment.html#EQREF)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE57]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In a [different context](comparison-ops.html#EQUALSIGNREF), the "=" is a [string
+    comparison](comparison-ops.html#SCOMPARISON1) operator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: +
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Plus.** Addition [arithmetic operator](ops.html#AROPS1).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In a [different context](x17129.html#PLUSREF), the + is a [Regular Expression](regexp.html)
+    operator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: +
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Option.** Option flag for a command or filter.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Certain commands and [builtins](internal.html#BUILTINREF) use the `+` to enable
+    certain options and the `-` to disable them. In [parameter substitution](parameter-substitution.html#PARAMSUBREF),
+    the `+` prefixes an [alternate value](parameter-substitution.html#PARAMALTV) that
+    a variable expands to.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '%'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[modulo](ops.html#MODULOREF).** Modulo (remainder of a division) [arithmetic
+    operation](ops.html#AROPS1).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE58]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In a [different context](parameter-substitution.html#PCTPATREF), the % is a
+    [pattern matching](parameter-substitution.html#PSUB2) operator.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '~'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**home directory [tilde].** This corresponds to the [$HOME](internalvariables.html#HOMEDIRREF)
+    internal variable. `~bozo` is bozo''s home directory, and **ls ~bozo** lists the
+    contents of it. ~/ is the current user''s home directory, and **ls ~/** lists
+    the contents of it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE59]  |'
+  prefs: []
+  type: TYPE_TB
+- en: ~+
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**current working directory.** This corresponds to the [$PWD](internalvariables.html#PWDREF)
+    internal variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ~-
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**previous working directory.** This corresponds to the [$OLDPWD](internalvariables.html#OLDPWD)
+    internal variable.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: =~
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[regular expression match](bashver3.html#REGEXMATCHREF).** This operator
+    was introduced with [version 3](bashver3.html#BASH3REF) of Bash.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ^
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**beginning-of-line.** In a [regular expression](regexp.html#REGEXREF), a "^"
+    addresses the [beginning of a line](x17129.html#CARETREF) of text.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ^, ^^
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**[Uppercase conversion](bashver4.html#CASEMODPARAMSUB) in *parameter substitution*
+    (added in [version 4](bashver4.html#BASH4REF) of Bash).**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Control Characters
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**change the behavior of the terminal or text display.** A control character
+    is a **CONTROL** + **key** combination (pressed simultaneously). A control character
+    may also be written in *octal* or *hexadecimal* notation, following an *escape*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Control characters are not normally useful inside a script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**Ctl-A**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Moves cursor to beginning of line of text (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-B**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Backspace**` (nondestructive).'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-C**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Break**`. Terminate a foreground job.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-D**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Log out* from a shell (similar to [exit](exit-status.html#EXITCOMMANDREF)).'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**EOF**` (end-of-file). This also terminates input from `stdin`.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: When typing text on the console or in an *xterm* window, `**Ctl-D**` erases
+    the character under the cursor. When there are no characters present, `**Ctl-D**`
+    logs out of the session, as expected. In an *xterm* window, this has the effect
+    of closing the window.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-E**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Moves cursor to end of line of text (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-F**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Moves cursor forward one character position (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-G**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**BEL**`. On some old-time teletype terminals, this would actually ring a
+    bell. In an *xterm* it might beep.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-H**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Rubout**` (destructive backspace). Erases characters the cursor backs over
+    while backspacing.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|  [PRE60]  |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: '`**Ctl-I**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Horizontal tab**`.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-J**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Newline**` (line feed). In a script, may also be expressed in octal notation
+    -- ''\012'' or in hexadecimal -- ''\x0a''.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-K**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Vertical tab**`.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: When typing text on the console or in an *xterm* window, `**Ctl-K**` erases
+    from the character under the cursor to end of line. Within a script, `**Ctl-K**`
+    may behave differently, as in Lee Lee Maschmeyer's example, below.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-L**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Formfeed**` (clear the terminal screen). In a terminal, this has the same
+    effect as the [clear](terminalccmds.html#CLEARREF) command. When sent to a printer,
+    a `**Ctl-L**` causes an advance to end of the paper sheet.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-M**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '`**Carriage return**`.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|  [PRE61]  |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: '`**Ctl-N**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Erases a line of text recalled from *history buffer* [[8]](#FTN.AEN2107) (on
+    the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-O**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Issues a *newline* (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-P**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Recalls last command from *history buffer* (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-Q**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Resume (`**XON**`).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: This resumes `stdin` in a terminal.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-R**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Backwards search for text in *history buffer* (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-S**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Suspend (`**XOFF**`).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: This freezes `stdin` in a terminal. (Use Ctl-Q to restore input.)
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-T**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Reverses the position of the character the cursor is on with the previous character
+    (on the command-line).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-U**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Erase a line of input, from the cursor backward to beginning of line. In some
+    settings, `**Ctl-U**` erases the entire line of input, *regardless of cursor position*.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-V**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: 'When inputting text, `**Ctl-V**` permits inserting control characters. For
+    example, the following two are equivalent:'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|  [PRE62]  |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: '`**Ctl-V**` is primarily useful from within a text editor.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-W**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: When typing text on the console or in an xterm window, `**Ctl-W**` erases from
+    the character under the cursor backwards to the first instance of [whitespace](special-chars.html#WHITESPACEREF).
+    In some settings, `**Ctl-W**` erases backwards to first non-alphanumeric character.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-X**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In certain word processing programs, *Cuts* highlighted text and copies to *clipboard*.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-Y**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Pastes* back text previously erased (with `**Ctl-U**` or `**Ctl-W**`).'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**Ctl-Z**`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Pauses* a foreground job.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '*Substitute* operation in certain word processing applications.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**EOF**` (end-of-file) character in the MSDOS filesystem.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Whitespace
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**functions as a separator between commands and/or variables.** Whitespace
+    consists of either *spaces*, *tabs*, *blank lines*, or any combination thereof.
+    [[9]](#FTN.AEN2198) In some contexts, such as [variable assignment](gotchas.html#WSBAD),
+    whitespace is not permitted, and results in a syntax error.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Blank lines have no effect on the action of a script, and are therefore useful
+    for visually separating functional sections.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[$IFS](internalvariables.html#IFSREF), the special variable separating *fields*
+    of input to certain commands. It defaults to whitespace.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**Definition:**` A *field* is a discrete chunk of data expressed as a string
+    of consecutive characters. Separating each field from adjacent fields is either
+    *whitespace* or some other designated character (often determined by the $IFS).
+    In some contexts, a field may be called a *record*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: To preserve *whitespace* within a string or in a variable, use [quoting](quoting.html#QUOTINGREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: UNIX [filters](special-chars.html#FILTERDEF) can target and operate on *whitespace*
+    using the [POSIX](x17129.html#POSIXREF) character class [[:space:]](x17129.html#WSPOSIX).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](special-chars.html#AEN612) | An *operator* is an agent that carries
+    out an *operation*. Some examples are the common [arithmetic operators](ops.html#AROPS1),
+    **+ - * /**. In Bash, there is some overlap between the concepts of *operator*
+    and [keyword](internal.html#KEYWORDREF). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](special-chars.html#AEN888) | This is more commonly known as the *ternary*
+    operator. Unfortunately, *ternary* is an ugly word. It doesn''t roll off the tongue,
+    and it doesn''t elucidate. It obfuscates. *Trinary* is by far the more elegant
+    usage. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[3]](special-chars.html#AEN1001) | **A**merican **S**tandard **C**ode for
+    **I**nformation **I**nterchange. This is a system for encoding text characters
+    (alphabetic, numeric, and a limited set of symbols) as 7-bit numbers that can
+    be stored and manipulated by computers. Many of the ASCII characters are represented
+    on a standard keyboard. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[4]](special-chars.html#AEN1071) | A *PID*, or *process ID*, is a number
+    assigned to a running process. The *PID*s of running processes may be viewed with
+    a [ps](system.html#PPSSREF) command.`**Definition:**` A *process* is a currently
+    executing command (or program), sometimes referred to as a *job*. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[5]](special-chars.html#AEN1124) | The shell does the *brace expansion*.
+    The command itself acts upon the *result* of the expansion. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[6]](special-chars.html#AEN1199) | Exception: a code block in braces as
+    part of a pipe *may* run as a [subshell](subshells.html#SUBSHELLSREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE63]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| [[7]](special-chars.html#AEN1564) | Even as in olden times a *philtre* denoted
+    a potion alleged to have magical transformative powers, so does a UNIX *filter*
+    transform its target in (roughly) analogous fashion. (The coder who comes up with
+    a "love philtre" that runs on a Linux machine will likely win accolades and honors.)
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[8]](special-chars.html#AEN2107) | Bash stores a list of commands previously
+    issued from the command-line in a *buffer*, or memory space, for recall with the
+    [builtin](internal.html#BUILTINREF) *history* commands. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[9]](special-chars.html#AEN2198) | A linefeed (*newline*) is also a whitespace
+    character. This explains why a *blank line*, consisting only of a linefeed, is
+    considered whitespace. |'
+  prefs: []
+  type: TYPE_TB

@@ -1,0 +1,347 @@
+- en: Chapter 32\. Debugging
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/debugging.html](https://tldp.org/LDP/abs/html/debugging.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '|   |  **Debugging is twice as hard as writing the code in the first place.
+    Therefore, if you write the code as cleverly as possible, you are, by definition,
+    not smart enough to debug it.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*--Brian Kernighan**  |'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The Bash shell contains no built-in debugger, and only bare-bones debugging-specific
+    commands and constructs. Syntax errors or outright typos in the script generate
+    cryptic error messages that are often of no help in debugging a non-functional
+    script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 32-1\. A buggy script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Output from script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'What''s wrong with the above script? Hint: after the *if*.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 32-2\. Missing [keyword](internal.html#KEYWORDREF)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Output from script:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Note that the error message does *not* necessarily reference the line in which
+    the error occurs, but the line where the Bash interpreter finally becomes aware
+    of the error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Error messages may disregard comment lines in a script when reporting the line
+    number of a syntax error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: What if the script executes, but does not work as expected? This is the all
+    too familiar logic error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 32-3\. *test24*: another buggy script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Try to find out what's wrong with [Example 32-3](debugging.html#EX75) by uncommenting
+    the `**echo "$badname"**` line. Echo statements are useful for seeing whether
+    what you expect is actually what you get.
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this particular case, `**rm "$badname"**` will not give the desired results
+    because `$badname` should not be quoted. Placing it in quotes ensures that **rm**
+    has only one argument (it will match only one filename). A partial fix is to remove
+    to quotes from `$badname` and to reset `$IFS` to contain only a newline, `**IFS=$'\n'**`.
+    However, there are simpler ways of going about it.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Summarizing the symptoms of a buggy script,
+  prefs: []
+  type: TYPE_NORMAL
+- en: It bombs with a "syntax error" message, or
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It runs, but does not work as expected (logic error).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: It runs, works as expected, but has nasty side effects (logic bomb).
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Tools for debugging non-working scripts include
+  prefs: []
+  type: TYPE_NORMAL
+- en: Inserting [echo](internal.html#ECHOREF) statements at critical points in the
+    script to trace the variables, and otherwise give a snapshot of what is going
+    on.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | Even better is an
+    **echo** that echoes only when *debug* is on.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE6]  &#124;'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Using the [tee](extmisc.html#TEEREF) filter to check processes or data flows
+    at critical points.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Setting option flags `-n -v -x`
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '`**sh -n scriptname**` checks for syntax errors without actually running the
+    script. This is the equivalent of inserting `**set -n**` or `**set -o noexec**`
+    into the script. Note that certain types of syntax errors can slip past this check.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**sh -v scriptname**` echoes each command before executing it. This is the
+    equivalent of inserting `**set -v**` or `**set -o verbose**` in the script.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: The `-n` and `-v` flags work well together. `**sh -nv scriptname**` gives a
+    verbose syntax check.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`**sh -x scriptname**` echoes the result each command, but in an abbreviated
+    manner. This is the equivalent of inserting `**set -x**` or `**set -o xtrace**`
+    in the script.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Inserting `**set -u**` or `**set -o nounset**` in the script runs it, but gives
+    an unbound variable error message and aborts the script.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: Using an "assert" function to test a variable or condition at critical points
+    in a script. (This is an idea borrowed from C.)
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '**Example 32-4\. Testing a condition with an *assert***'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: Using the [$LINENO](internalvariables.html#LINENOREF) variable and the [caller](internal.html#CALLERREF)
+    builtin.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Trapping at exit.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The [exit](internal.html#EXITREF) command in a script triggers a signal 0, terminating
+    the process, that is, the script itself. [[1]](#FTN.AEN19460) It is often useful
+    to trap the *exit*, forcing a "printout" of variables, for example. The *trap*
+    must be the first command in the script.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '**Trapping signals**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**trap**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Specifies an action on receipt of a signal; also useful for debugging.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A *signal* is a message sent to a process, either by the kernel or another process,
+    telling it to take some specified action (usually to terminate). For example,
+    hitting a [Control-C](special-chars.html#CTLCREF) sends a user interrupt, an INT
+    signal, to a running program.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*A simple instance:*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE9]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 32-5\. Trapping at exit**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE10]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 32-6\. Cleaning up after **Control-C****'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE11]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 32-7\. A Simple Implementation of a Progress Bar**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE12]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `DEBUG` argument
+    to **trap** causes a specified action to execute after every command in a script.
+    This permits tracing variables, for example.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 32-8\. Tracing a variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE13]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of course, the **trap** command has other uses aside from debugging, such as
+    disabling certain keystrokes within a script (see [Example A-43](contributed-scripts.html#STOPWATCH)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 32-9\. Running multiple processes (on an SMP box)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE14]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | `**trap '''' SIGNAL**`
+    (two adjacent apostrophes) disables SIGNAL for the remainder of the script. `**trap
+    SIGNAL**` restores the functioning of SIGNAL once more. This is useful to protect
+    a critical portion of a script from an undesirable interrupt. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE15]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Version 3](bashver3.html#BASH3REF) of Bash adds the following [internal variables](internalvariables.html#INTERNALVARIABLES1)
+    for use by the debugger.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`$BASH_ARGC`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Number of command-line arguments passed to script, similar to [`$#`](internalvariables.html#CLACOUNTREF).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_ARGV`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Final command-line parameter passed to script, equivalent [`${!#}`](othertypesv.html#LASTARGREF).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_COMMAND`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Command currently executing.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_EXECUTION_STRING`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The *option string* following the `-c` [option](bash-options.html#CLOPTS) to
+    Bash.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_LINENO`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: In a [function](functions.html#FUNCTIONREF), indicates the line number of the
+    function call.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_REMATCH`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: Array variable associated with **=~** [conditional regex matching](bashver3.html#REGEXMATCHREF).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`$BASH_SOURCE`'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: This is the name of the script, usually the same as [$0](othertypesv.html#ARG0).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '[`$BASH_SUBSHELL`](internalvariables.html#BASHSUBSHELLREF)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](debugging.html#AEN19460) | By convention, `*signal 0*` is assigned
+    to [exit](exit-status.html#EXITCOMMANDREF). |'
+  prefs: []
+  type: TYPE_TB

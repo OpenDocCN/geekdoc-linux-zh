@@ -1,0 +1,300 @@
+- en: C.1\. Sed
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/x23170.html](https://tldp.org/LDP/abs/html/x23170.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '*Sed* is a non-interactive [[1]](#FTN.AEN23174) **s**tream **ed**itor. It receives
+    text input, whether from `stdin` or from a file, performs certain operations on
+    specified lines of the input, one line at a time, then outputs the result to `stdout`
+    or to a file. Within a shell script, *sed* is usually one of several tool components
+    in a pipe.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*Sed* determines which lines of its input that it will operate on from the
+    *address range* passed to it. [[2]](#FTN.AEN23185) Specify this address range
+    either by line number or by a pattern to match. For example, `*3d*` signals *sed*
+    to delete line 3 of the input, and `*/Windows/d*` tells sed that you want every
+    line of the input containing a match to "Windows" deleted.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of all the operations in the *sed* toolkit, we will focus primarily on the three
+    most commonly used ones. These are **p**rinting (to `stdout`), **d**eletion, and
+    **s**ubstitution.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Table C-1\. Basic sed operators**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Operator | Name | Effect |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[address-range]/p` | print | Print [specified address range] |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[address-range]/d` | delete | Delete [specified address range] |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/pattern1/pattern2/` | substitute | Substitute pattern2 for first instance
+    of pattern1 in a line |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[address-range]/s/pattern1/pattern2/` | substitute | Substitute pattern2
+    for first instance of pattern1 in a line, over `*address-range*` |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[address-range]/y/pattern1/pattern2/` | transform | replace any character
+    in pattern1 with the corresponding character in pattern2, over `*address-range*`
+    (equivalent of **tr**) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `[address] i pattern Filename` | insert | Insert pattern at address indicated
+    in file Filename. Usually used with `-i` `*in-place*` option. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `g` | global | Operate on *every* pattern match within each matched line
+    of input |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Unless the `g`
+    (*global*) operator is appended to a *substitute* command, the substitution operates
+    only on the *first* instance of a pattern match within each line. |'
+  prefs: []
+  type: TYPE_TB
+- en: From the command-line and in a shell script, a sed operation may require quoting
+    and certain options.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In certain cases, a *sed* editing command will not work with single quotes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | *Sed* uses the
+    `-e` option to specify that the following string is an instruction or set of instructions.
+    If there is only a single instruction contained in the string, then this may be
+    omitted. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Table C-2\. Examples of sed operators**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| Notation | Effect |'
+  prefs: []
+  type: TYPE_TB
+- en: '| --- | --- |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `8d` | Delete 8th line of input. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/^$/d` | Delete all blank lines. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `1,/^$/d` | Delete from beginning of input up to, and including first blank
+    line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/Jones/p` | Print only lines containing "Jones" (with -n option). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/Windows/Linux/` | Substitute "Linux" for first instance of "Windows" found
+    in each input line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/BSOD/stability/g` | Substitute "stability" for every instance of "BSOD"
+    found in each input line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/ *$//` | Delete all spaces at the end of every line. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/00*/0/g` | Compress all consecutive sequences of zeroes into a single
+    zero. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `echo "Working on it." &#124; sed -e ''1i How far are you along?''` | Prints
+    "How far are you along?" as first line, "Working on it" as second. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `5i ''Linux is great.'' file.txt` | Inserts ''Linux is great.'' at line 5
+    of the file file.txt. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `/GUI/d` | Delete all lines containing "GUI". |'
+  prefs: []
+  type: TYPE_TB
+- en: '| `s/GUI//g` | Delete all instances of "GUI", leaving the remainder of each
+    line intact. |'
+  prefs: []
+  type: TYPE_TB
+- en: Substituting a zero-length string for another is equivalent to deleting that
+    string within a line of input. This leaves the remainder of the line intact. Applying
+    `**s/GUI//**` to the line
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: results in
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A backslash forces the **sed** replacement command to continue on to the next
+    line. This has the effect of using the *newline* at the end of the first line
+    as the *replacement string*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This substitution replaces line-beginning spaces with a newline. The net result
+    is to replace paragraph indents with a blank line between paragraphs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: An address range followed by one or more operations may require open and closed
+    curly brackets, with appropriate newlines.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This deletes only the first of each set of consecutive blank lines. That might
+    be useful for single-spacing a text file, but retaining the blank line(s) between
+    paragraphs.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The usual delimiter
+    that *sed* uses is /. However, *sed* allows other delimiters, such as %. This
+    is useful when / is part of a replacement string, as in a file pathname. See [Example
+    11-10](loops1.html#FINDSTRING) and [Example 16-32](filearchiv.html#STRIPC). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | A quick way to double-space
+    a text file is `**sed G filename**`. |'
+  prefs: []
+  type: TYPE_TB
+- en: 'For illustrative examples of sed within shell scripts, see:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '[Example 36-1](wrapper.html#EX3)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 36-2](wrapper.html#EX4)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-3](moreadv.html#EX57)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-2](contributed-scripts.html#RN)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-17](textproc.html#GRP)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-27](textproc.html#COL)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-12](contributed-scripts.html#BEHEAD)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-16](contributed-scripts.html#TREE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-17](contributed-scripts.html#TREE2)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-32](filearchiv.html#STRIPC)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 11-10](loops1.html#FINDSTRING)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-48](mathc.html#BASE)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-1](contributed-scripts.html#MAILFORMAT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-14](textproc.html#RND)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-12](textproc.html#WF)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-10](contributed-scripts.html#LIFESLOW)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 19-12](here-docs.html#SELFDOCUMENT)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example 16-19](textproc.html#DICTLOOKUP)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-29](contributed-scripts.html#WHX)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-31](contributed-scripts.html#BASHPODDER)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-24](contributed-scripts.html#TOHTML)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-43](contributed-scripts.html#STOPWATCH)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '[Example A-55](contributed-scripts.html#SEDAPPEND)'
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: For a more extensive treatment of *sed*, refer to the [pertinent references](biblio.html#DGSEDREF)
+    in the [*Bibliography*](biblio.html).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](x23170.html#AEN23174) | *Sed* executes without user intervention. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](x23170.html#AEN23185) | If no address range is specified, the default
+    is *all* lines. |'
+  prefs: []
+  type: TYPE_TB

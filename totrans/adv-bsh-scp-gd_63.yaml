@@ -1,0 +1,212 @@
+- en: Appendix I. Important System Directories
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/systemdirs.html](https://tldp.org/LDP/abs/html/systemdirs.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Sysadmins and anyone else writing administrative scripts should be intimately
+    familiar with the following system directories.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`/bin`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Binaries (executables). Basic system programs and utilities (such as **bash**).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/bin` [[1]](#FTN.AEN23969)'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: More system binaries.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/local/bin`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Miscellaneous binaries local to the particular machine.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/sbin`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: System binaries. Basic system administrative programs and utilities (such as
+    **fsck**).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/sbin`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: More system administrative programs and utilities.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/etc`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Et cetera*. Systemwide configuration scripts.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: Of particular interest are the [`/etc/fstab`](system.html#FSTABREF) (filesystem
+    table), `/etc/mtab` (mounted filesystem table), and the [`/etc/inittab`](system.html#INITTABREF)
+    files.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/etc/rc.d`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Boot scripts, on Red Hat and derivative distributions of Linux.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/share/doc`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Documentation for installed packages.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/man`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: The systemwide [manpages](basic.html#MANREF).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/dev`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Device directory. Entries (but *not* mount points) for physical and virtual
+    devices. See [Chapter 29](devproc.html).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/proc`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Process directory. Contains information and statistics about running processes
+    and kernel parameters. See [Chapter 29](devproc.html).
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/sys`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Systemwide device directory. Contains information and statistics about device
+    and device names. This is newly added to Linux with the 2.6.X kernels.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/mnt`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Mount*. Directory for mounting hard drive partitions, such as `/mnt/dos`,
+    and physical devices. In newer Linux distros, the `/media` directory has taken
+    over as the preferred mount point for I/O devices.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/media`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: In newer Linux distros, the preferred mount point for I/O devices, such as CD/DVD
+    drives or USB flash drives.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/var`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '*Variable* (changeable) system files. This is a catchall "scratchpad" directory
+    for data generated while a Linux/UNIX machine is running.'
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/var/log`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Systemwide log files.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/var/spool/mail`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: User mail spool.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/lib`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Systemwide library files.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/usr/lib`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: More systemwide library files.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/tmp`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: System temporary files.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '`/boot`'
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: System *boot* directory. The kernel, module links, system map, and boot manager
+    reside here.
+  prefs:
+  - PREF_IND
+  type: TYPE_NORMAL
+- en: '| ![Warning](../Images/9d1b374742c319dd43bb1c5d95d6e008.png) | Altering files
+    in this directory may result in an unbootable system. |'
+  prefs:
+  - PREF_IND
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](systemdirs.html#AEN23969) | Some early UNIX systems had a fast, small-capacity
+    fixed disk (containing `/`, the root partition), and a second drive which was
+    larger, but slower (containing `/usr` and other partitions). The most frequently
+    used programs and utilities therefore resided on the small-but-fast drive, in
+    `/bin`, and the others on the slower drive, in `/usr/bin`.This likewise accounts
+    for the split between `/sbin` and `/usr/sbin`, `/lib` and `/usr/lib`, etc. |'
+  prefs: []
+  type: TYPE_TB

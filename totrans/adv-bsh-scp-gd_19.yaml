@@ -1,0 +1,879 @@
+- en: Chapter 15\. Internal Commands and Builtins
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/internal.html](https://tldp.org/LDP/abs/html/internal.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: A *builtin* is a **command** contained within the Bash tool set, literally *built
+    in*. This is either for performance reasons -- builtins execute faster than external
+    commands, which usually require *forking off* [[1]](#FTN.AEN8607) a separate process
+    -- or because a particular builtin needs direct access to the shell internals.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: When a command or the shell itself initiates (or *spawns*) a new subprocess
+    to carry out a task, this is called *forking*. This new process is the *child*,
+    and the process that *forked* it off is the *parent*. While the *child process*
+    is doing its work, the *parent process* is still executing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Note that while a *parent process* gets the *process ID* of the *child process*,
+    and can thus pass arguments to it, *the reverse is not true*. [This can create
+    problems that are subtle and hard to track down.](gotchas.html#PARCHILDPROBREF)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-1\. A script that spawns multiple instances of itself**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE0]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Generally, a Bash *builtin* does not fork a subprocess when it executes within
+    a script. An external system command or filter in a script usually *will* fork
+    a subprocess.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A builtin may be a synonym to a system command of the same name, but Bash reimplements
+    it internally. For example, the Bash **echo** command is not the same as `/bin/echo`,
+    although their behavior is almost identical.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A *keyword* is a *reserved* word, token or operator. Keywords have a special
+    meaning to the shell, and indeed are the building blocks of the shell's syntax.
+    As examples, *for*, *while*, *do*, and *!* are keywords. Similar to a [builtin](internal.html#BUILTINREF),
+    a keyword is hard-coded into Bash, but unlike a *builtin*, a keyword is not in
+    itself a command, but *a subunit of a command construct*. [[2]](#FTN.AEN8650)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**I/O**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**echo**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: prints (to `stdout`) an expression or variable (see [Example 4-1](varsubn.html#EX9)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: An **echo** requires the `-e` option to print escaped characters. See [Example
+    5-2](escapingsection.html#ESCAPED).
+  prefs: []
+  type: TYPE_NORMAL
+- en: Normally, each **echo** command prints a terminal newline, but the `-n` option
+    suppresses this.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **echo** can
+    be used to feed a sequence of commands down a pipe.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE3]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **echo**, in
+    combination with [command substitution](commandsub.html#COMMANDSUBREF) can set
+    a variable.``**a=`echo "HELLO" &#124; tr A-Z a-z`**``See also [Example 16-22](textproc.html#LOWERCASE),
+    [Example 16-3](moreadv.html#EX57), [Example 16-47](mathc.html#MONTHLYPMT), and
+    [Example 16-48](mathc.html#BASE). |'
+  prefs: []
+  type: TYPE_TB
+- en: Be aware that **echo `command`** deletes any linefeeds that the output of `*command*`
+    generates.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The [$IFS](internalvariables.html#IFSREF) (internal field separator) variable
+    normally contains \n (linefeed) as one of its set of [whitespace](special-chars.html#WHITESPACEREF)
+    characters. Bash therefore splits the output of `*command*` at linefeeds into
+    arguments to **echo**. Then **echo** outputs these arguments, separated by spaces.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: So, how can we embed a linefeed within an [echoed](internal.html#ECHOREF) character
+    string?
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | This command is
+    a shell builtin, and not the same as `/bin/echo`, although its behavior is similar.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE6]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**printf**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **printf**, formatted print, command is an enhanced **echo**. It is a limited
+    variant of the *C* language `printf()` library function, and its syntax is somewhat
+    different.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**printf** `*format-string*`... `*parameter*`...'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This is the Bash *builtin* version of the `/bin/printf` or `/usr/bin/printf`
+    command. See the **printf** [manpage](basic.html#MANREF) (of the system command)
+    for in-depth coverage.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Older versions
+    of Bash may not support **printf**. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-2\. *printf* in action**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Formatting error messages is a useful application of **printf**
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE8]  |'
+  prefs: []
+  type: TYPE_TB
+- en: See also [Example 36-17](assortedtips.html#PROGRESSBAR).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**read**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '"Reads" the value of a variable from `stdin`, that is, interactively fetches
+    input from the keyboard. The `-a` option lets **read** get array variables (see
+    [Example 27-6](arrays.html#EX67)).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-3\. Variable assignment, using *read***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE9]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A **read** without an associated variable assigns its input to the dedicated
+    variable [$REPLY](internalvariables.html#REPLYREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-4\. What happens when *read* has no variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE10]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Normally, inputting a `**\**` suppresses a newline during input to a **read**.
+    The `-r` option causes an inputted `**\**` to be interpreted literally.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-5\. Multi-line input to *read***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE11]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The **read** command has some interesting options that permit echoing a prompt
+    and even reading keystrokes without hitting **ENTER**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE12]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The `-n` option to **read** also allows detection of the **arrow keys** and
+    certain of the other unusual keys.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-6\. Detecting the arrow keys**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE13]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `-n` option
+    to **read** will not detect the **ENTER** (newline) key. |'
+  prefs: []
+  type: TYPE_TB
+- en: The `-t` option to **read** permits timed input (see [Example 9-4](internalvariables.html#TOUT)
+    and [Example A-41](contributed-scripts.html#QKY)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `-u` option takes the [file descriptor](io-redirection.html#FDREF) of the
+    target file.
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **read** command may also "read" its variable value from a file [redirected](io-redirection.html#IOREDIRREF)
+    to `stdin`. If the file contains more than one line, only the first line is assigned
+    to the variable. If **read** has more than one parameter, then each of these variables
+    gets assigned a successive [whitespace-delineated](special-chars.html#WHITESPACEREF)
+    string. Caution!
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-7\. Using *read* with [file redirection](io-redirection.html#IOREDIRREF)**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE14]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | [Piping](special-chars.html#PIPEREF)
+    output to a *read*, using [echo](internal.html#ECHOREF) to set variables [will
+    fail](gotchas.html#BADREAD0).Yet, piping the output of [cat](basic.html#CATREF)
+    *seems* to work.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE15]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'However, as Bjn Eriksson shows:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-8\. Problems reading from a pipe**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE16]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *gendiff* script, usually found in `/usr/bin` on many Linux distros, pipes
+    the output of [find](moreadv.html#FINDREF) to a *while read* construct.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE17]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | It is possible to
+    *paste* text into the input field of a *read* (but *not* multiple lines!). See
+    [Example A-38](contributed-scripts.html#PADSW). |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Filesystem**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**cd**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The familiar **cd** change directory command finds use in scripts where execution
+    of a command requires being in a specified directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE18]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '[from the [previously cited](special-chars.html#COXEX) example by Alan Cox]'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The `-P` (physical) option to **cd** causes it to ignore symbolic links.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**cd -** changes to [$OLDPWD](internalvariables.html#OLDPWD), the previous
+    working directory.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The **cd** command
+    does not function as expected when presented with two forward slashes.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE19]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The output should, of course, be `/`. This is a problem both from the command-line
+    and in a script. |
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**pwd**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Print Working Directory. This gives the user's (or script's) current directory
+    (see [Example 15-9](internal.html#EX37)). The effect is identical to reading the
+    value of the builtin variable [$PWD](internalvariables.html#PWDREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**pushd**, **popd**, **dirs**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This command set is a mechanism for bookmarking working directories, a means
+    of moving back and forth through directories in an orderly manner. A pushdown
+    [stack](internalvariables.html#STACKDEFREF) is used to keep track of directory
+    names. Options allow various manipulations of the directory stack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**pushd dir-name**` pushes the path `*dir-name*` onto the directory stack
+    (to the *top* of the stack) and simultaneously changes the current working directory
+    to `*dir-name*`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**popd** removes (pops) the top directory path name off the directory stack
+    and simultaneously changes the current working directory to the directory now
+    at the *top* of the stack.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**dirs** lists the contents of the directory stack (compare this with the [$DIRSTACK](internalvariables.html#DIRSTACKREF)
+    variable). A successful **pushd** or **popd** will automatically invoke **dirs**.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Scripts that require various changes to the current working directory without
+    hard-coding the directory name changes can make good use of these commands. Note
+    that the implicit `$DIRSTACK` array variable, accessible from within a script,
+    holds the contents of the directory stack.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-9\. Changing the current working directory**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE20]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Variables**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**let**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **let** command carries out *arithmetic* operations on variables. [[3]](#FTN.AEN9009)
+    In many cases, it functions as a less complex version of [expr](moreadv.html#EXPRREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-10\. Letting *let* do arithmetic.**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE21]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The *let* command
+    can, in certain contexts, return a surprising [exit status](exit-status.html#EXITSTATUSREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE22]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**eval**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**eval arg1 [arg2] ... [argN]**`'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Combines the arguments in an expression or list of expressions and `*evaluates*`
+    them. Any variables within the expression are expanded. The net result is to **convert
+    a string into a command**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The **eval** command
+    can be used for code generation from the command-line or within a script. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE23]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Each invocation of *eval* forces a re-*evaluation* of its arguments.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE24]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-11\. Showing the effect of *eval***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE25]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-12\. Using *eval* to select among variables**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE26]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-13\. *Echoing* the *command-line parameters***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE27]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-14\. Forcing a log-off**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE28]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-15\. A version of *rot13***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE29]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Here is another example of using *eval* to *evaluate* a complex expression,
+    this one from an earlier version of YongYe's [Tetris game script](https://github.com/yongye/shell/blob/master/Tetris_Game.sh).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE30]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '[Example A-53](contributed-scripts.html#SAMORSE) uses *eval* to convert [array](arrays.html#ARRAYREF)
+    elements into a command list.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The *eval* command occurs in the older version of [indirect referencing](ivr.html#IVRREF).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE31]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | The *eval* command
+    can be used to [parameterize *brace expansion*](bashver3.html#BRACEEXPREF3). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | The **eval**
+    command can be risky, and normally should be avoided when there exists a reasonable
+    alternative. An `**eval $COMMANDS**` executes the contents of `*COMMANDS*`, which
+    may contain such unpleasant surprises as **rm -rf ***. Running an **eval** on
+    unfamiliar code written by persons unknown is living dangerously. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**set**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **set** command changes the value of internal script variables/options.
+    One use for this is to toggle [option flags](options.html#OPTIONSREF) which help
+    determine the behavior of the script. Another application for it is to reset the
+    [positional parameters](internalvariables.html#POSPARAMREF) that a script sees
+    as the result of a command (``**set `command`**``). The script can then parse
+    the [fields](special-chars.html#FIELDREF) of the command output.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-16\. Using *set* with positional parameters**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE32]  |'
+  prefs: []
+  type: TYPE_TB
+- en: More fun with positional parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-17\. Reversing the positional parameters**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE33]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Invoking **set** without any options or arguments simply lists all the [environmental](othertypesv.html#ENVREF)
+    and other variables that have been initialized.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE34]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Using **set** with the `--` option explicitly assigns the contents of a variable
+    to the positional parameters. If no variable follows the `--` it *unsets* the
+    positional parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-18\. Reassigning the positional parameters**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE35]  |'
+  prefs: []
+  type: TYPE_TB
+- en: See also [Example 11-2](loops1.html#EX22A) and [Example 16-56](extmisc.html#EX33A).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**unset**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **unset** command deletes a shell variable, effectively setting it to *null*.
+    Note that this command does not affect positional parameters.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE36]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-19\. "Unsetting" a variable**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE37]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | In most contexts,
+    an *undeclared* variable and one that has been *unset* are equivalent. However,
+    the [${parameter:-default}](parameter-substitution.html#UNDDR) parameter substitution
+    construct can distinguish between the two. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**export**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **export** [[4]](#FTN.AEN9199) command makes available variables to all
+    child processes of the running script or shell. One important use of the **export**
+    command is in [startup files](files.html#FILESREF1), to initialize and make accessible
+    [environmental variables](othertypesv.html#ENVREF) to subsequent user processes.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Unfortunately,
+    [there is no way to export variables back to the parent process](gotchas.html#PARCHILDPROBREF),
+    to the process that called or invoked the script or shell. |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-20\. Using *export* to pass a variable to an embedded *awk* script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE38]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Tip](../Images/753d054f4c48fb039314a9e5947964cd.png) | It is possible to
+    initialize and export variables in the same operation, as in **export var1=xxx**.However,
+    as Greg Keraunen points out, in certain situations this may have a different effect
+    than setting a variable, then exporting it.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE39]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A variable to be
+    exported may require special treatment. See [Example M-2](sample-bashrc.html#BASHPROF).
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '**declare**, **typeset**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The [declare](declareref.html) and [typeset](declareref.html) commands specify
+    and/or restrict properties of variables.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**readonly**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Same as [declare -r](declareref.html), sets a variable as read-only, or, in
+    effect, as a constant. Attempts to change the variable fail with an error message.
+    This is the shell analog of the *C* language **const** type qualifier.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**getopts**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This powerful tool parses command-line arguments passed to the script. This
+    is the Bash analog of the [getopt](extmisc.html#GETOPTY) external command and
+    the *getopt* library function familiar to *C* programmers. It permits passing
+    and concatenating multiple options [[5]](#FTN.AEN9289) and associated arguments
+    to a script (for example `**scriptname -abc -e /usr/local**`).
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **getopts** construct uses two implicit variables. `$OPTIND` is the argument
+    pointer (*OPTion INDex*) and `$OPTARG` (*OPTion ARGument*) the (optional) argument
+    attached to an option. A colon following the option name in the declaration tags
+    that option as having an associated argument.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A **getopts** construct usually comes packaged in a [while loop](loops1.html#WHILELOOPREF),
+    which processes the options and arguments one at a time, then increments the implicit
+    `$OPTIND` variable to point to the next.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) |'
+  prefs: []
+  type: TYPE_TB
+- en: The arguments passed from the command-line to the script must be preceded by
+    a dash (`-`). It is the prefixed `-` that lets **getopts** recognize command-line
+    arguments as *options*. In fact, **getopts** will not process arguments without
+    the prefixed `-`, and will terminate option processing at the first argument encountered
+    lacking them.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The **getopts** template differs slightly from the standard [while loop](loops1.html#WHILELOOPREF),
+    in that it lacks condition brackets.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: The **getopts** construct is a highly functional replacement for the traditional
+    [getopt](extmisc.html#GETOPTY) external command.
+  prefs:
+  - PREF_OL
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE40]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-21\. Using *getopts* to read the options/arguments passed to a
+    script**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE41]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Script Behavior**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**source**, . ([dot](special-chars.html#DOTREF) command)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This command, when invoked from the command-line, executes a script. Within
+    a script, a `**source file-name**` loads the file `file-name`. *Sourcing* a file
+    (dot-command) *imports* code into the script, appending to the script (same effect
+    as the `**#include**` directive in a *C* program). The net result is the same
+    as if the "sourced" lines of code were physically present in the body of the script.
+    This is useful in situations when multiple scripts use a common data file or function
+    library.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-22\. "Including" a data file**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE42]  |'
+  prefs: []
+  type: TYPE_TB
+- en: File `data-file` for [Example 15-22](internal.html#EX38), above. Must be present
+    in same directory.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE43]  |'
+  prefs: []
+  type: TYPE_TB
+- en: If the *sourced* file is itself an executable script, then it will run, then
+    return control to the script that called it. A *sourced* executable script may
+    use a [return](complexfunct.html#RETURNREF) for this purpose.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Arguments may be (optionally) passed to the *sourced* file as [positional parameters](othertypesv.html#POSPARAMREF1).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE44]  |'
+  prefs: []
+  type: TYPE_TB
+- en: It is even possible for a script to *source* itself, though this does not seem
+    to have any practical applications.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-23\. A (useless) script that sources itself**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE45]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**exit**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Unconditionally terminates a script. [[6]](#FTN.AEN9393) The **exit** command
+    may optionally take an integer argument, which is returned to the shell as the
+    [exit status](exit-status.html#EXITSTATUSREF) of the script. It is good practice
+    to end all but the simplest scripts with an `**exit 0**`, indicating a successful
+    run.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | If a script terminates
+    with an **exit** lacking an argument, the exit status of the script is the exit
+    status of the last command executed in the script, not counting the **exit**.
+    This is equivalent to an **exit $?**. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | An **exit** command
+    may also be used to terminate a [subshell](subshells.html#SUBSHELLSREF). |'
+  prefs: []
+  type: TYPE_TB
+- en: '**exec**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This shell builtin replaces the current process with a specified command. Normally,
+    when the shell encounters a command, it [forks off](internal.html#FORKREF) a child
+    process to actually execute the command. Using the **exec** builtin, the shell
+    does not fork, and the command *exec*'ed replaces the shell. When used in a script,
+    therefore, it forces an exit from the script when the **exec**'ed command terminates.
+    [[7]](#FTN.AEN9425)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 15-24\. Effects of *exec***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE46]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 15-25\. A script that *exec''s* itself**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE47]  |'
+  prefs: []
+  type: TYPE_TB
+- en: An **exec** also serves to [reassign file descriptors](x17974.html#USINGEXECREF).
+    For example, `**exec <zzz-file**` replaces `stdin` with the file `zzz-file`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The `-exec` option
+    to [find](moreadv.html#FINDREF) is `*not*` the same as the **exec** shell builtin.
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '**shopt**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This command permits changing *shell options* on the fly (see [Example 25-1](aliases.html#AL)
+    and [Example 25-2](aliases.html#UNAL)). It often appears in the Bash [startup
+    files](files.html#FILESREF1), but also has its uses in scripts. Needs [version
+    2](bashver2.html#BASH2REF) or later of Bash.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE48]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**caller**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Putting a **caller** command inside a [function](functions.html#FUNCTIONREF)
+    echoes to `stdout` information about the *caller* of that function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE49]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A **caller** command can also return *caller* information from a script [sourced](internal.html#SOURCEREF)
+    within another script. Analogous to a function, this is a "subroutine call."
+  prefs: []
+  type: TYPE_NORMAL
+- en: You may find this command useful in debugging.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Commands**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**true**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A command that returns a successful (zero) [exit status](exit-status.html#EXITSTATUSREF),
+    but does nothing else.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE50]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE51]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**false**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A command that returns an unsuccessful [exit status](exit-status.html#EXITSTATUSREF),
+    but does nothing else.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE52]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|  [PRE53]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**type [cmd]**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Similar to the [which](filearchiv.html#WHICHREF) external command, **type cmd**
+    identifies "cmd." Unlike **which**, **type** is a Bash builtin. The useful `-a`
+    option to **type** identifies `*keywords*` and `*builtins*`, and also locates
+    system commands with identical names.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE54]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The **type** command can be useful for [testing whether a certain command exists](special-chars.html#DEVNULLREDIRECT).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**hash [cmds]**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Records the *path* name of specified commands -- in the shell *hash table* [[8]](#FTN.AEN9591)
+    -- so the shell or script will not need to search the [$PATH](internalvariables.html#PATHREF)
+    on subsequent calls to those commands. When **hash** is called with no arguments,
+    it simply lists the commands that have been hashed. The `-r` option resets the
+    hash table.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**bind**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **bind** builtin displays or modifies *readline* [[9]](#FTN.AEN9621) key
+    bindings.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**help**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Gets a short usage summary of a shell builtin. This is the counterpart to [whatis](filearchiv.html#WHATISREF),
+    but for builtins. The display of *help* information got a much-needed update in
+    the [version 4 release](bashver4.html#BASH4REF) of Bash.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE55]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](internal.html#AEN8607) | As Nathan Coulter points out, "while forking
+    a process is a low-cost operation, executing a new program in the newly-forked
+    child process adds more overhead." |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[2]](internal.html#AEN8650) | An exception to this is the [time](timedate.html#TIMREF)
+    command, listed in the official Bash documentation as a keyword ("reserved word").
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[3]](internal.html#AEN9009) | Note that *let* [cannot be used for setting
+    *string* variables.](gotchas.html#LETBAD) |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[4]](internal.html#AEN9199) | To *Export* information is to make it available
+    in a more general context. See also [scope](subshells.html#SCOPEREF). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[5]](internal.html#AEN9289) | An *option* is an argument that acts as a
+    flag, switching script behaviors on or off. The argument associated with a particular
+    option indicates the behavior that the option (flag) switches on or off. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[6]](internal.html#AEN9393) | Technically, an **exit** only terminates the
+    process (or shell) in which it is running, *not* the *parent process*. |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[7]](internal.html#AEN9425) | Unless the **exec** is used to [reassign file
+    descriptors](x17974.html#USINGEXECREF). |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[8]](internal.html#AEN9591) | *Hashing* is a method of creating lookup keys
+    for data stored in a table. The *data items themselves* are "scrambled" to create
+    keys, using one of a number of simple mathematical *algorithms* (methods, or recipes).An
+    advantage of *hashing* is that it is fast. A disadvantage is that *collisions*
+    -- where a single key maps to more than one data item -- are possible.For examples
+    of hashing see [Example A-20](contributed-scripts.html#HASHLIB) and [Example A-21](contributed-scripts.html#HASHEXAMPLE).
+    |'
+  prefs: []
+  type: TYPE_TB
+- en: '| [[9]](internal.html#AEN9621) | The *readline* library is what Bash uses for
+    reading input in an interactive shell. |'
+  prefs: []
+  type: TYPE_TB

@@ -1,0 +1,157 @@
+- en: Chapter 21\. Subshells
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/subshells.html](https://tldp.org/LDP/abs/html/subshells.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: Running a shell script launches a new process, a *subshell*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**Definition:**` A *subshell* is a [child process](othertypesv.html#CHILDREF2)
+    launched by a shell (or *shell script*).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A subshell is a separate instance of the command processor -- the *shell* that
+    gives you the prompt at the console or in an *xterm* window. Just as your commands
+    are interpreted at the command-line prompt, similarly does a script [batch-process](timedate.html#BATCHPROCREF)
+    a list of commands. Each shell script running is, in effect, a subprocess (*child
+    process*) of the [parent](internal.html#FORKREF) shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: A shell script can itself launch subprocesses. These *subshells* let the script
+    do parallel processing, in effect executing multiple subtasks simultaneously.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: In general, an [external command](external.html#EXTERNALREF) in a script [forks
+    off](internal.html#FORKREF) a subprocess, [[1]](#FTN.AEN18102) whereas a Bash
+    [builtin](internal.html#BUILTINREF) does not. For this reason, builtins execute
+    more quickly and use fewer system resources than their external command equivalents.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Command List within Parentheses**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: ( command1; command2; command3; ... )
+  prefs: []
+  type: TYPE_NORMAL
+- en: A command list embedded between `*parentheses*` runs as a subshell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Variables in a subshell are *not* visible outside the block of code in the subshell.
+    They are not accessible to the [parent process](internal.html#FORKREF), to the
+    shell that launched the subshell. These are, in effect, variables [local](localvar.html#LOCALREF)
+    to the *child process*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 21-1\. Variable scope in a subshell**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: See also [$BASHPID](internalvariables.html#BASHPIDREF) and [Example 34-2](gotchas.html#SUBPIT).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**Definition:**` The *scope* of a variable is the context in which it has
+    meaning, in which it has a *value* that can be referenced. For example, the scope
+    of a [local variable](localvar.html#LOCALREF1) lies only within the function,
+    block of code, or subshell within which it is defined, while the scope of a *global*
+    variable is the entire script in which it appears.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | While the [$BASH_SUBSHELL](internalvariables.html#BASHSUBSHELLREF)
+    internal variable indicates the nesting level of a subshell, the [$SHLVL](internalvariables.html#SHLVLREF)
+    variable *shows no change* within a subshell.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE2]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Directory changes made in a subshell do not carry over to the parent shell.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 21-2\. List User Profiles**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: A subshell may be used to set up a "dedicated environment" for a command group.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE4]  |'
+  prefs: []
+  type: TYPE_TB
+- en: As seen here, the [exit](internal.html#EXITREF) command only terminates the
+    subshell in which it is running, *not* the parent shell or script.
+  prefs: []
+  type: TYPE_NORMAL
+- en: One application of such a "dedicated environment" is testing whether a variable
+    is defined.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: 'Another application is checking for a lock file:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: +
+  prefs: []
+  type: TYPE_NORMAL
+- en: Processes may execute in parallel within different subshells. This permits breaking
+    a complex task into subcomponents processed concurrently.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 21-3\. Running parallel processes in subshells**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Redirecting I/O to a subshell uses the "|" pipe operator, as in `**ls -al |
+    (command)**`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A code block between
+    [curly brackets](special-chars.html#CODEBLOCKREF) does *not* launch a subshell.{
+    command1; command2; command3; . . . commandN; }'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE8]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](subshells.html#AEN18102) | An external command invoked with an [exec](internal.html#EXECREF)
+    does *not* (usually) fork off a subprocess / subshell. |'
+  prefs: []
+  type: TYPE_TB

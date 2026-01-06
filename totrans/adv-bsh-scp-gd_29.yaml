@@ -1,0 +1,143 @@
+- en: Chapter 24\. Functions
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/functions.html](https://tldp.org/LDP/abs/html/functions.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Table of Contents**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 24.1\. [Complex Functions and Function Complexities](complexfunct.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 24.2\. [Local Variables](localvar.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: 24.3\. [Recursion Without Local Variables](recurnolocvar.html)
+  prefs: []
+  type: TYPE_NORMAL
+- en: Like "real" programming languages, Bash has functions, though in a somewhat
+    limited implementation. A function is a subroutine, a [code block](special-chars.html#CODEBLOCKREF)
+    that implements a set of operations, a "black box" that performs a specified task.
+    Wherever there is repetitive code, when a task repeats with only slight variations
+    in procedure, then consider using a function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**function** `*function_name*` {'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*command*`...'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: or
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*function_name*` () {'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*command*`...'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: This second form will cheer the hearts of C programmers (and is more [portable](portabilityissues.html)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: As in C, the function's opening bracket may optionally appear on the second
+    line.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*function_name*` ()'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '{'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`*command*`...'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '}'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | A function may
+    be "compacted" into a single line.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE0]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: In this case, however, a *semicolon* must follow the final command in the function.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE1]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Functions are called, *triggered*, simply by invoking their names. *A function
+    call is equivalent to a command.*
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 24-1\. Simple functions**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: The function definition must precede the first call to it. There is no method
+    of "declaring" the function, as, for example, in C.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | Functions may not
+    be empty!'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE4]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: It is even possible to nest a function within another function, although this
+    is not very useful.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE5]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Function declarations can appear in unlikely places, even where a command would
+    otherwise go.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE6]  |'
+  prefs: []
+  type: TYPE_TB
+- en: Function names can take strange forms.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE7]  |'
+  prefs: []
+  type: TYPE_TB
+- en: See also [Example A-56](contributed-scripts.html#GRONSFELD)
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | What happens when
+    different versions of the same function appear in a script?'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE8]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL

@@ -1,0 +1,74 @@
+- en: Chapter 28\. Indirect References
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/ivr.html](https://tldp.org/LDP/abs/html/ivr.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: We have seen that [referencing a variable](varsubn.html), `$var`, fetches its
+    *value*. But, what about the *value of a value*? What about `$$var`?
+  prefs: []
+  type: TYPE_NORMAL
+- en: The actual notation is `*\$$var*`, usually preceded by an [eval](internal.html#EVALREF)
+    (and sometimes an [echo](internal.html#ECHOREF)). This is called an *indirect
+    reference*.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 28-1\. Indirect Variable References**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'Indirect referencing in Bash is a multi-step process. First, take the name
+    of a variable: `varname`. Then, reference it: `$varname`. Then, reference the
+    reference: `$$varname`. Then, *escape* the first $: `\$$varname`. Finally, force
+    a reevaluation of the expression and assign it: **eval newvar=\$$varname**.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Of what practical use is indirect referencing of variables? It gives Bash a
+    little of the functionality of [pointers](varsubn.html#POINTERREF) in *C*, for
+    instance, in [table lookup](bashver2.html#RESISTOR). And, it also has some other
+    very interesting applications. . . .
+  prefs: []
+  type: TYPE_NORMAL
+- en: Nils Radtke shows how to build "dynamic" variable names and evaluate their contents.
+    This can be useful when [sourcing](internal.html#SOURCEREF) configuration files.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '**Example 28-2\. Passing an indirect reference to *awk***'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | This method
+    of indirect referencing is a bit tricky. If the second order variable changes
+    its value, then the first order variable must be properly dereferenced (as in
+    the above example). Fortunately, the `*${!variable}*` notation introduced with
+    [version 2](bashver2.html#BASH2REF) of Bash (see [Example 37-2](bashver2.html#EX78)
+    and [Example A-22](contributed-scripts.html#HASHEX2)) makes indirect referencing
+    more intuitive. |'
+  prefs: []
+  type: TYPE_TB
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Bash does not support pointer arithmetic, and this severely limits the usefulness
+    of indirect referencing. In fact, indirect referencing in a scripting language
+    is, at best, something of an afterthought.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL

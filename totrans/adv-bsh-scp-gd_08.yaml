@@ -1,0 +1,105 @@
+- en: Chapter 6\. Exit and Exit Status
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/exit-status.html](https://tldp.org/LDP/abs/html/exit-status.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '|   |  **... there are dark corners in the Bourne shell, and people use all
+    of them.*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '*--Chet Ramey**  |'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The **exit** command terminates a script, just as in a **C** program. It can
+    also return a value, which is available to the script's parent process.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Every command returns an *exit status* (sometimes referred to as a *return status*
+    or *exit code*). A successful command returns a 0, while an unsuccessful one returns
+    a non-zero value that usually can be interpreted as an *error code*. Well-behaved
+    UNIX commands, programs, and utilities return a 0 exit code upon successful completion,
+    though there are some exceptions.
+  prefs: []
+  type: TYPE_NORMAL
+- en: Likewise, [functions](functions.html#FUNCTIONREF) within a script and the script
+    itself return an exit status. The last command executed in the function or script
+    determines the exit status. Within a script, an ``**exit `*nnn*`**`` command may
+    be used to deliver an `*nnn*` exit status to the shell (`*nnn*` must be an integer
+    in the 0 - 255 range).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | When a script ends
+    with an **exit** that has no parameter, the exit status of the script is the exit
+    status of the last command executed in the script (previous to the **exit**).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE0]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: The equivalent of a bare **exit** is **exit $?** or even just omitting the **exit**.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE1]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE2]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`$?` reads the exit status of the last command executed. After a function returns,
+    `$?` gives the exit status of the last command executed in the function. This
+    is Bash''s way of giving functions a "return value." [[1]](#FTN.AEN2981)'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Following the execution of a [pipe](special-chars.html#PIPEREF), a `$?` gives
+    the exit status of the last command executed.
+  prefs: []
+  type: TYPE_NORMAL
+- en: After a script terminates, a `$?` from the command-line gives the exit status
+    of the script, that is, the last command executed in the script, which is, by
+    convention, `**0**` on success or an integer in the range 1 - 255 on error.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 6-1\. exit / exit status**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE3]  |'
+  prefs: []
+  type: TYPE_TB
+- en: '[$?](internalvariables.html#XSTATVARREF) is especially useful for testing the
+    result of a command in a script (see [Example 16-35](filearchiv.html#FILECOMP)
+    and [Example 16-20](textproc.html#LOOKUP)).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Note](../Images/068cd6dc5ba56f1437f9ae6e0cb52ede.png) | The [!](special-chars.html#NOTREF),
+    the *logical not* qualifier, reverses the outcome of a test or command, and this
+    affects its [exit status](exit-status.html#EXITSTATUSREF).'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**Example 6-2\. Negating a condition using !**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '&#124;  [PRE4]  &#124;'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '| ![Caution](../Images/05aa79b283e0d53b5a94a522ee0b6cfe.png) | Certain exit
+    status codes have [reserved meanings](exitcodes.html#EXITCODESREF) and should
+    not be user-specified in a script. |'
+  prefs: []
+  type: TYPE_TB
+- en: Notes
+  prefs:
+  - PREF_H3
+  type: TYPE_NORMAL
+- en: '| [[1]](exit-status.html#AEN2981) | In those instances when there is no [return](complexfunct.html#RETURNREF)
+    terminating the function. |'
+  prefs: []
+  type: TYPE_TB

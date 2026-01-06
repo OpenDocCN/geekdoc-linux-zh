@@ -1,0 +1,58 @@
+- en: Appendix F. A Detailed Introduction to I/O and I/O Redirection
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/ioredirintro.html](https://tldp.org/LDP/abs/html/ioredirintro.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '*written by Stphane Chazelas, and revised by the document author*'
+  prefs: []
+  type: TYPE_NORMAL
+- en: A command expects the first three [file descriptors](io-redirection.html#FDREF)
+    to be available. The first, *fd 0* (standard input, `stdin`), is for reading.
+    The other two (*fd 1*, `stdout` and *fd 2*, `stderr`) are for writing.
+  prefs: []
+  type: TYPE_NORMAL
+- en: There is a `stdin`, `stdout`, and a `stderr` associated with each command. `**ls
+    2>&1**` means temporarily connecting the `stderr` of the **ls** command to the
+    same "resource" as the shell's `stdout`.
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'By convention, a command reads its input from fd 0 (`stdin`), prints normal
+    output to fd 1 (`stdout`), and error ouput to fd 2 (`stderr`). If one of those
+    three fd''s is not open, you may encounter problems:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
+- en: For example, when **xterm** runs, it first initializes itself. Before running
+    the user's shell, **xterm** opens the terminal device (/dev/pts/<n> or something
+    similar) three times.
+  prefs: []
+  type: TYPE_NORMAL
+- en: At this point, Bash inherits these three file descriptors, and each command
+    (child process) run by Bash inherits them in turn, except when you redirect the
+    command. [Redirection](io-redirection.html#IOREDIRREF) means reassigning one of
+    the file descriptors to another file (or a pipe, or anything permissible). File
+    descriptors may be reassigned locally (for a command, a command group, a [subshell](subshells.html#SUBSHELLSREF),
+    a [while or if or case or for loop](redircb.html#REDIRREF)...), or globally, for
+    the remainder of the shell (using [exec](internal.html#EXECREF)).
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**ls > /dev/null**` means running **ls** with its fd 1 connected to `/dev/null`.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE1]  |'
+  prefs: []
+  type: TYPE_TB
+- en: This works for different types of redirection.
+  prefs: []
+  type: TYPE_NORMAL
+- en: '`**Exercise:**` Analyze the following script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE2]  |'
+  prefs: []
+  type: TYPE_TB

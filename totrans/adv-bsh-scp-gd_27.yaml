@@ -1,0 +1,61 @@
+- en: Chapter 22\. Restricted Shells
+  prefs:
+  - PREF_H1
+  type: TYPE_NORMAL
+- en: 原文：[https://tldp.org/LDP/abs/html/restricted-sh.html](https://tldp.org/LDP/abs/html/restricted-sh.html)
+  prefs:
+  - PREF_BQ
+  type: TYPE_NORMAL
+- en: '**Disabled commands in restricted shells**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '**.** Running a script or portion of a script in *restricted mode* disables
+    certain commands that would otherwise be available. This is a security measure
+    intended to limit the privileges of the script user and to minimize possible damage
+    from running the script.'
+  prefs: []
+  type: TYPE_NORMAL
+- en: 'The following commands and actions are disabled:'
+  prefs: []
+  type: TYPE_NORMAL
+- en: Using `*cd*` to change the working directory.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Changing the values of the `*$PATH*`, `*$SHELL*`, `*$BASH_ENV*`, or `*$ENV*`
+    [environmental variables](othertypesv.html#ENVREF).
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Reading or changing the `*$SHELLOPTS*`, shell environmental options.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Output redirection.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Invoking commands containing one or more /'s.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Invoking [exec](internal.html#EXECREF) to substitute a different process for
+    the shell.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Various other commands that would enable monkeying with or attempting to subvert
+    the script for an unintended purpose.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: Getting out of restricted mode within the script.
+  prefs:
+  - PREF_UL
+  type: TYPE_NORMAL
+- en: '**Example 22-1\. Running a script in restricted mode**'
+  prefs: []
+  type: TYPE_NORMAL
+- en: '|  [PRE0]  |'
+  prefs: []
+  type: TYPE_TB
